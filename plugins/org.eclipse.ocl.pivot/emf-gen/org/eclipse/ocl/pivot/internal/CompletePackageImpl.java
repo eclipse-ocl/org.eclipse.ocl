@@ -517,7 +517,7 @@ public class CompletePackageImpl extends NamedElementImpl implements CompletePac
 
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		getOwnedCompleteClasses().didAddClass(partialClass);
-		if ((partialClass.eContainer() instanceof Orphanage) || (partialClass.getUnspecializedElement() != null)
+		if ((partialClass.eContainer() instanceof Orphanage) || (partialClass.getGeneric() != null)
 				|| (partialClass instanceof LambdaType) || (partialClass instanceof TupleType)) {
 			assert this instanceof OrphanCompletePackageImpl;
 		}

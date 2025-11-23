@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
  * TupleTypeManager encapsulates the knowledge about known tuple type creation and access.
@@ -29,13 +29,13 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  */
 public interface TupleTypeManager
 {
-	boolean conformsToTupleType(@NonNull TupleType actualType, @Nullable TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull TupleType requiredType, @Nullable TemplateParameterSubstitutions requiredSubstitutions, boolean enforceNullity);
+	boolean conformsToTupleType(@NonNull TupleType actualType, @Nullable TemplateArguments actualTemplateArguments,
+			@NonNull TupleType requiredType, @Nullable TemplateArguments requiredTemplateArguments, boolean enforceNullity);
 
 	void dispose();
 
-	@Nullable TupleType getCommonTupleType(@NonNull TupleType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull TupleType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions);
+	@Nullable TupleType getCommonTupleType(@NonNull TupleType leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull TupleType rightType, @Nullable TemplateArguments rightTemplateArguments);
 
 	/**
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
@@ -44,8 +44,8 @@ public interface TupleTypeManager
 
 	@NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull TupleTypeId tupleTypeId);
 
-	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateParameterSubstitutions usageBindings);
-	@NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateParameterSubstitutions usageBindings);	// FIXME Remove duplication, unify type/multiplicity
+	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull? extends TypedElement> parts, @Nullable TemplateArguments usageBindings);
+	@NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateArguments usageBindings);	// FIXME Remove duplication, unify type/multiplicity
 
 	boolean isEqualToTupleType(@NonNull TupleType leftTupleType, @NonNull TupleType rightTupleType);
 }

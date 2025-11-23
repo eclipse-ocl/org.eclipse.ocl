@@ -71,7 +71,7 @@ public class SetTypeImpl
 
 	@Override
 	public @NonNull TypeId computeId() {
-		if (getUnspecializedElement() == null) {
+		if (getGeneric() == null) {
 			return TypeId.SET;
 		}
 		else {

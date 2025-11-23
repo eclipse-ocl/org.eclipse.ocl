@@ -48,7 +48,7 @@ import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
@@ -264,7 +264,7 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * this alternative creation mechanism is available via an EnvironmentFactory override.
 	 * @since 7.0
 	 */
-	@NonNull TemplateParameterSubstitutionVisitor createTemplateParameterSubstitutionVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
+	@NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
 
 	/**
 	 * @since 7.0

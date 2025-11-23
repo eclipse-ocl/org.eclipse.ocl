@@ -113,10 +113,8 @@ import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.TransitionKind;
 import org.eclipse.ocl.pivot.Trigger;
@@ -276,22 +274,20 @@ implements PivotFactory {
 			case 109: return createStereotype();
 			case 110: return createStereotypeExtender();
 			case 111: return createStringLiteralExp();
-			case 112: return createTemplateBinding();
+			case 112: return createTemplateArgument();
 			case 113: return createTemplateParameter();
-			case 114: return createTemplateParameterSubstitution();
-			case 115: return createTemplateSignature();
-			case 117: return createTransition();
-			case 118: return createTrigger();
-			case 119: return createTupleLiteralExp();
-			case 120: return createTupleLiteralPart();
-			case 121: return createTupleType();
-			case 123: return createTypeExp();
-			case 125: return createUnlimitedNaturalLiteralExp();
-			case 126: return createUnspecifiedValueExp();
-			case 128: return createVariable();
-			case 130: return createVariableExp();
-			case 133: return createVoidType();
-			case 134: return createWildcardType();
+			case 115: return createTransition();
+			case 116: return createTrigger();
+			case 117: return createTupleLiteralExp();
+			case 118: return createTupleLiteralPart();
+			case 119: return createTupleType();
+			case 121: return createTypeExp();
+			case 123: return createUnlimitedNaturalLiteralExp();
+			case 124: return createUnspecifiedValueExp();
+			case 126: return createVariable();
+			case 128: return createVariableExp();
+			case 131: return createVoidType();
+			case 132: return createWildcardType();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -306,31 +302,31 @@ implements PivotFactory {
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 135:
+			case 133:
 				return createAssociativityKindFromString(eDataType, initialValue);
-			case 136:
+			case 134:
 				return createCollectionKindFromString(eDataType, initialValue);
-			case 137:
+			case 135:
 				return createPseudostateKindFromString(eDataType, initialValue);
-			case 138:
+			case 136:
 				return createTransitionKindFromString(eDataType, initialValue);
-			case 139:
+			case 137:
 				return createBooleanFromString(eDataType, initialValue);
-			case 140:
+			case 138:
 				return createEcoreObjectFromString(eDataType, initialValue);
-			case 141:
+			case 139:
 				return createIntegerFromString(eDataType, initialValue);
-			case 142:
+			case 140:
 				return createLibraryFeatureFromString(eDataType, initialValue);
-			case 143:
+			case 141:
 				return createObjectFromString(eDataType, initialValue);
-			case 144:
+			case 142:
 				return createRealFromString(eDataType, initialValue);
-			case 145:
+			case 143:
 				return createStringFromString(eDataType, initialValue);
-			case 146:
+			case 144:
 				return createThrowableFromString(eDataType, initialValue);
-			case 147:
+			case 145:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -346,31 +342,31 @@ implements PivotFactory {
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID())
 		{
-			case 135:
+			case 133:
 				return convertAssociativityKindToString(eDataType, instanceValue);
-			case 136:
+			case 134:
 				return convertCollectionKindToString(eDataType, instanceValue);
-			case 137:
+			case 135:
 				return convertPseudostateKindToString(eDataType, instanceValue);
-			case 138:
+			case 136:
 				return convertTransitionKindToString(eDataType, instanceValue);
-			case 139:
+			case 137:
 				return convertBooleanToString(eDataType, instanceValue);
-			case 140:
+			case 138:
 				return convertEcoreObjectToString(eDataType, instanceValue);
-			case 141:
+			case 139:
 				return convertIntegerToString(eDataType, instanceValue);
-			case 142:
+			case 140:
 				return convertLibraryFeatureToString(eDataType, instanceValue);
-			case 143:
+			case 141:
 				return convertObjectToString(eDataType, instanceValue);
-			case 144:
+			case 142:
 				return convertRealToString(eDataType, instanceValue);
-			case 145:
+			case 143:
 				return convertStringToString(eDataType, instanceValue);
-			case 146:
+			case 144:
 				return convertThrowableToString(eDataType, instanceValue);
-			case 147:
+			case 145:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -397,28 +393,6 @@ implements PivotFactory {
 	public org.eclipse.ocl.pivot.@NonNull Class createClass() {
 		ClassImpl class_ = new ClassImpl();
 		return class_;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public @NonNull TemplateBinding createTemplateBinding() {
-		TemplateBindingImpl templateBinding = new TemplateBindingImpl();
-		return templateBinding;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public @NonNull TemplateSignature createTemplateSignature() {
-		TemplateSignatureImpl templateSignature = new TemplateSignatureImpl();
-		return templateSignature;
 	}
 
 	/**
@@ -454,17 +428,6 @@ implements PivotFactory {
 	public @NonNull TemplateParameter createTemplateParameter() {
 		TemplateParameterImpl templateParameter = new TemplateParameterImpl();
 		return templateParameter;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public @NonNull TemplateParameterSubstitution createTemplateParameterSubstitution() {
-		TemplateParameterSubstitutionImpl templateParameterSubstitution = new TemplateParameterSubstitutionImpl();
-		return templateParameterSubstitution;
 	}
 
 	/**
@@ -1502,6 +1465,18 @@ implements PivotFactory {
 	public @NonNull StringLiteralExp createStringLiteralExp() {
 		StringLiteralExpImpl stringLiteralExp = new StringLiteralExpImpl();
 		return stringLiteralExp;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public @NonNull TemplateArgument createTemplateArgument()
+	{
+		TemplateArgumentImpl templateArgument = new TemplateArgumentImpl();
+		return templateArgument;
 	}
 
 	/**

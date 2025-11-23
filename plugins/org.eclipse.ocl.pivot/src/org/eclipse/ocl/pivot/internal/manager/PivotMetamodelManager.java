@@ -401,7 +401,10 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		return type == PivotMetamodelManager.class;
 	}
 
-	protected boolean isUnspecialized(@NonNull List<TemplateParameter> templateParameters, @NonNull List<? extends Type> templateArguments) {
+	/**
+	 * @since 7.0
+	 */
+	protected boolean isGeneric(@NonNull List<TemplateParameter> templateParameters, @NonNull List<? extends Type> templateArguments) {
 		int iMax = templateParameters.size();
 		assert templateArguments.size() == iMax;
 		for (int i = 0; i < iMax; i++) {

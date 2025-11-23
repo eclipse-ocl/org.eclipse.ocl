@@ -22,7 +22,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
  * MapTypeManagerInternal encapsulates the knowledge about known map types.
@@ -76,19 +76,19 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 	 * @since 7.0
 	 */
 	@Override
-	public boolean conformsToMapType(@NonNull MapType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull MapType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity) {
+	public boolean conformsToMapType(@NonNull MapType leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull MapType rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity) {
 		Type leftKeyType = PivotUtil.getKeyType(leftType);
 		Type rightKeyType = PivotUtil.getKeyType(rightType);
 		if (enforceNullity) {
 			boolean leftKeysAreNullFree =  leftType.isKeysAreNullFree();
 			boolean rightKeysAreNullFree = rightType.isKeysAreNullFree();
-			if (!standardLibrary.conformsTo(leftKeyType, leftKeysAreNullFree, leftSubstitutions, rightKeyType, rightKeysAreNullFree, rightSubstitutions)) {
+			if (!standardLibrary.conformsTo(leftKeyType, leftKeysAreNullFree, leftTemplateArguments, rightKeyType, rightKeysAreNullFree, rightTemplateArguments)) {
 				return false;
 			}
 		}
 		else {
-			if (!standardLibrary.conformsTo(leftKeyType, leftSubstitutions, rightKeyType, rightSubstitutions, false)) {
+			if (!standardLibrary.conformsTo(leftKeyType, leftTemplateArguments, rightKeyType, rightTemplateArguments, false)) {
 				return false;
 			}
 		}
@@ -97,10 +97,10 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 		if (enforceNullity) {
 			boolean leftValuesAreNullFree = leftType.isValuesAreNullFree();
 			boolean rightValuesAreNullFree = rightType.isValuesAreNullFree();
-			return standardLibrary.conformsTo(leftValueType, leftValuesAreNullFree, leftSubstitutions, rightValueType, rightValuesAreNullFree, rightSubstitutions);
+			return standardLibrary.conformsTo(leftValueType, leftValuesAreNullFree, leftTemplateArguments, rightValueType, rightValuesAreNullFree, rightTemplateArguments);
 		}
 		else {
-			return standardLibrary.conformsTo(leftValueType, leftSubstitutions, rightValueType, rightSubstitutions, false);
+			return standardLibrary.conformsTo(leftValueType, leftTemplateArguments, rightValueType, rightTemplateArguments, false);
 		}
 	}
 
@@ -130,14 +130,14 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull MapType getCommonMapType(@NonNull MapType leftMapType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-				@NonNull MapType rightMapType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+	public @NonNull MapType getCommonMapType(@NonNull MapType leftMapType, @Nullable TemplateArguments leftTemplateArguments,
+				@NonNull MapType rightMapType, @Nullable TemplateArguments rightTemplateArguments) {
 		Type leftKeyType = PivotUtil.getKeyType(leftMapType);
 		Type rightKeyType = PivotUtil.getKeyType(rightMapType);
-		Type commonKeyType = standardLibrary.getCommonType(leftKeyType, leftSubstitutions, rightKeyType, rightSubstitutions);
+		Type commonKeyType = standardLibrary.getCommonType(leftKeyType, leftTemplateArguments, rightKeyType, rightTemplateArguments);
 		Type leftValueType = PivotUtil.getValueType(leftMapType);
 		Type rightValueType = PivotUtil.getValueType(rightMapType);
-		Type commonValueType = standardLibrary.getCommonType(leftValueType, leftSubstitutions, rightValueType, rightSubstitutions);
+		Type commonValueType = standardLibrary.getCommonType(leftValueType, leftTemplateArguments, rightValueType, rightTemplateArguments);
 		boolean leftKeysAreNullFree = leftMapType.isKeysAreNullFree();
 		boolean rightKeysAreNullFree = rightMapType.isKeysAreNullFree();
 		boolean commonKeysAreNullFree = standardLibrary.getCommonIsRequired(leftKeysAreNullFree, rightKeysAreNullFree);

@@ -177,10 +177,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_StateMachine = PivotTables.PACKid_$metamodel$.getClassId("StateMachine", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Stereotype = PivotTables.PACKid_$metamodel$.getClassId("Stereotype", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_StereotypeExtender = PivotTables.PACKid_$metamodel$.getClassId("StereotypeExtender", 0);
-	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_TemplateBinding = PivotTables.PACKid_$metamodel$.getClassId("TemplateBinding", 0);
+	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_TemplateArgument = PivotTables.PACKid_$metamodel$.getClassId("TemplateArgument", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_TemplateParameter = PivotTables.PACKid_$metamodel$.getClassId("TemplateParameter", 0);
-	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_TemplateParameterSubstitution = PivotTables.PACKid_$metamodel$.getClassId("TemplateParameterSubstitution", 0);
-	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_TemplateSignature = PivotTables.PACKid_$metamodel$.getClassId("TemplateSignature", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_TemplateableElement = PivotTables.PACKid_$metamodel$.getClassId("TemplateableElement", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Transition = PivotTables.PACKid_$metamodel$.getClassId("Transition", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Trigger = PivotTables.PACKid_$metamodel$.getClassId("Trigger", 0);
@@ -253,9 +251,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_State = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_State, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_StateExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_StateExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_StateMachine = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_StateMachine, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_TemplateBinding = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_TemplateBinding, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_TemplateArgument = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_TemplateArgument, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_TemplateParameter = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_TemplateParameter, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_TemplateParameterSubstitution = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_TemplateParameterSubstitution, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_TemplateableElement = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_TemplateableElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_TypeExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_TypeExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_TypedElement = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_TypedElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -285,7 +282,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Precedence = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Precedence, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Property = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_ShadowPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_ShadowPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_TemplateParameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_TemplateParameter, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_TemplateParameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_TemplateParameter, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_TupleLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_TupleLiteralPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_ValueSpecification = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_ValueSpecification, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Variable = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Variable, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -320,8 +317,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_State = TypeId.SET.getSpecializedId(PivotTables.CLSSid_State, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_StateMachine = TypeId.SET.getSpecializedId(PivotTables.CLSSid_StateMachine, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_StereotypeExtender = TypeId.SET.getSpecializedId(PivotTables.CLSSid_StereotypeExtender, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_TemplateBinding = TypeId.SET.getSpecializedId(PivotTables.CLSSid_TemplateBinding, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_TemplateParameterSubstitution = TypeId.SET.getSpecializedId(PivotTables.CLSSid_TemplateParameterSubstitution, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_TemplateArgument = TypeId.SET.getSpecializedId(PivotTables.CLSSid_TemplateArgument, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Transition = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Transition, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Trigger = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Trigger, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Type = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Type, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -474,10 +470,8 @@ public class PivotTables extends AbstractTables
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Stereotype = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.STEREOTYPE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _StereotypeExtender = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.STEREOTYPE_EXTENDER, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _StringLiteralExp = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.STRING_LITERAL_EXP, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _TemplateBinding = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.TEMPLATE_BINDING, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _TemplateArgument = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.TEMPLATE_ARGUMENT, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _TemplateParameter = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.TEMPLATE_PARAMETER, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _TemplateParameterSubstitution = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _TemplateSignature = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.TEMPLATE_SIGNATURE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _TemplateableElement = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.TEMPLATEABLE_ELEMENT, null, 0 | FlatClass.ABSTRACT);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Throwable = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.THROWABLE, null, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Transition = LIBRARY.createClass(PivotPackage.Literals.CLASS, PivotPackage.Literals.TRANSITION, null, 0);
@@ -619,10 +613,8 @@ public class PivotTables extends AbstractTables
 			_Stereotype,
 			_StereotypeExtender,
 			_StringLiteralExp,
-			_TemplateBinding,
+			_TemplateArgument,
 			_TemplateParameter,
-			_TemplateParameterSubstitution,
-			_TemplateSignature,
 			_TemplateableElement,
 			_Throwable,
 			_Transition,
@@ -1665,10 +1657,10 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull FlatFragment _StringLiteralExp__StringLiteralExp = LIBRARY.createFragment(Types._StringLiteralExp, Types._StringLiteralExp);
 		private static final @NonNull FlatFragment _StringLiteralExp__TypedElement = LIBRARY.createFragment(Types._StringLiteralExp, Types._TypedElement);
 
-		private static final @NonNull FlatFragment _TemplateBinding__Element = LIBRARY.createFragment(Types._TemplateBinding, Types._Element);
-		private static final @NonNull FlatFragment _TemplateBinding__OclAny = LIBRARY.createFragment(Types._TemplateBinding, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull FlatFragment _TemplateBinding__OclElement = LIBRARY.createFragment(Types._TemplateBinding, OCLstdlibTables.Types._OclElement);
-		private static final @NonNull FlatFragment _TemplateBinding__TemplateBinding = LIBRARY.createFragment(Types._TemplateBinding, Types._TemplateBinding);
+		private static final @NonNull FlatFragment _TemplateArgument__Element = LIBRARY.createFragment(Types._TemplateArgument, Types._Element);
+		private static final @NonNull FlatFragment _TemplateArgument__OclAny = LIBRARY.createFragment(Types._TemplateArgument, OCLstdlibTables.Types._OclAny);
+		private static final @NonNull FlatFragment _TemplateArgument__OclElement = LIBRARY.createFragment(Types._TemplateArgument, OCLstdlibTables.Types._OclElement);
+		private static final @NonNull FlatFragment _TemplateArgument__TemplateArgument = LIBRARY.createFragment(Types._TemplateArgument, Types._TemplateArgument);
 
 		private static final @NonNull FlatFragment _TemplateParameter__Element = LIBRARY.createFragment(Types._TemplateParameter, Types._Element);
 		private static final @NonNull FlatFragment _TemplateParameter__NamedElement = LIBRARY.createFragment(Types._TemplateParameter, Types._NamedElement);
@@ -1677,16 +1669,6 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull FlatFragment _TemplateParameter__OclType = LIBRARY.createFragment(Types._TemplateParameter, OCLstdlibTables.Types._OclType);
 		private static final @NonNull FlatFragment _TemplateParameter__TemplateParameter = LIBRARY.createFragment(Types._TemplateParameter, Types._TemplateParameter);
 		private static final @NonNull FlatFragment _TemplateParameter__Type = LIBRARY.createFragment(Types._TemplateParameter, Types._Type);
-
-		private static final @NonNull FlatFragment _TemplateParameterSubstitution__Element = LIBRARY.createFragment(Types._TemplateParameterSubstitution, Types._Element);
-		private static final @NonNull FlatFragment _TemplateParameterSubstitution__OclAny = LIBRARY.createFragment(Types._TemplateParameterSubstitution, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull FlatFragment _TemplateParameterSubstitution__OclElement = LIBRARY.createFragment(Types._TemplateParameterSubstitution, OCLstdlibTables.Types._OclElement);
-		private static final @NonNull FlatFragment _TemplateParameterSubstitution__TemplateParameterSubstitution = LIBRARY.createFragment(Types._TemplateParameterSubstitution, Types._TemplateParameterSubstitution);
-
-		private static final @NonNull FlatFragment _TemplateSignature__Element = LIBRARY.createFragment(Types._TemplateSignature, Types._Element);
-		private static final @NonNull FlatFragment _TemplateSignature__OclAny = LIBRARY.createFragment(Types._TemplateSignature, OCLstdlibTables.Types._OclAny);
-		private static final @NonNull FlatFragment _TemplateSignature__OclElement = LIBRARY.createFragment(Types._TemplateSignature, OCLstdlibTables.Types._OclElement);
-		private static final @NonNull FlatFragment _TemplateSignature__TemplateSignature = LIBRARY.createFragment(Types._TemplateSignature, Types._TemplateSignature);
 
 		private static final @NonNull FlatFragment _TemplateableElement__Element = LIBRARY.createFragment(Types._TemplateableElement, Types._Element);
 		private static final @NonNull FlatFragment _TemplateableElement__OclAny = LIBRARY.createFragment(Types._TemplateableElement, OCLstdlibTables.Types._OclAny);
@@ -2414,28 +2396,19 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _StringLiteralExp__stringSymbol = LIBRARY.createProperty(Types._StringLiteralExp, PivotPackage.Literals.STRING_LITERAL_EXP__STRING_SYMBOL, OCLstdlibTables.Types._String, 0 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _TemplateBinding__ownedSubstitutions = LIBRARY.createProperty(Types._TemplateBinding, PivotPackage.Literals.TEMPLATE_BINDING__OWNED_SUBSTITUTIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._TemplateParameterSubstitution), 0 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateBinding__owningElement = LIBRARY.createProperty(Types._TemplateBinding, PivotPackage.Literals.TEMPLATE_BINDING__OWNING_ELEMENT, Types._TemplateableElement, 1 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateBinding__templateSignature = LIBRARY.createProperty(Types._TemplateBinding, PivotPackage.Literals.TEMPLATE_BINDING__TEMPLATE_SIGNATURE, Types._TemplateSignature, 2 | IsDerived | IsReadOnly | IsRequired | IsTransient | IsVolatile);
+		public static final @NonNull Property _TemplateArgument__actual = LIBRARY.createProperty(Types._TemplateArgument, PivotPackage.Literals.TEMPLATE_ARGUMENT__ACTUAL, Types._Type, 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateArgument__actualIsRequired = LIBRARY.createProperty(Types._TemplateArgument, PivotPackage.Literals.TEMPLATE_ARGUMENT__ACTUAL_IS_REQUIRED, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateArgument__formal = LIBRARY.createProperty(Types._TemplateArgument, PivotPackage.Literals.TEMPLATE_ARGUMENT__FORMAL, Types._TemplateParameter, 2 | IsDerived | IsReadOnly | IsRequired | IsTransient | IsVolatile);
+		public static final @NonNull Property _TemplateArgument__owningTemplateableElement = LIBRARY.createProperty(Types._TemplateArgument, PivotPackage.Literals.TEMPLATE_ARGUMENT__OWNING_TEMPLATEABLE_ELEMENT, Types._TemplateableElement, 3 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _TemplateParameter__constrainingClasses = LIBRARY.createProperty(Types._TemplateParameter, PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class), 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateParameter__owningSignature = LIBRARY.createProperty(Types._TemplateParameter, PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_SIGNATURE, Types._TemplateSignature, 1 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateParameter__TemplateParameterSubstitution__formal = LIBRARY.createOppositeProperty(Types._TemplateParameter, "TemplateParameterSubstitution", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateParameterSubstitution), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL);
+		public static final @NonNull Property _TemplateParameter__owningTemplateableElement = LIBRARY.createProperty(Types._TemplateParameter, PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_TEMPLATEABLE_ELEMENT, Types._TemplateableElement, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateParameter__TemplateArgument__formal = LIBRARY.createOppositeProperty(Types._TemplateParameter, "TemplateArgument", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateArgument), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_ARGUMENT__FORMAL);
 
-		public static final @NonNull Property _TemplateParameterSubstitution__actual = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL, Types._Type, 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateParameterSubstitution__actualIsRequired = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateParameterSubstitution__formal = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL, Types._TemplateParameter, 2 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateParameterSubstitution__ownedWildcard = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD, Types._WildcardType, 3 | IsComposite | IsResolveProxies);
-		public static final @NonNull Property _TemplateParameterSubstitution__owningBinding = LIBRARY.createProperty(Types._TemplateParameterSubstitution, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_BINDING, Types._TemplateBinding, 4 | IsRequired | IsResolveProxies);
-
-		public static final @NonNull Property _TemplateSignature__ownedParameters = LIBRARY.createProperty(Types._TemplateSignature, PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNED_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._TemplateParameter), 0 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateSignature__owningElement = LIBRARY.createProperty(Types._TemplateSignature, PivotPackage.Literals.TEMPLATE_SIGNATURE__OWNING_ELEMENT, Types._TemplateableElement, 1 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateSignature__TemplateBinding__templateSignature = LIBRARY.createOppositeProperty(Types._TemplateSignature, "TemplateBinding", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateBinding), 2 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_BINDING__TEMPLATE_SIGNATURE);
-
-		public static final @NonNull Property _TemplateableElement__ownedBindings = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_BINDINGS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._TemplateBinding), 0 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateableElement__ownedSignature = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, Types._TemplateSignature, 1 | IsComposite | IsResolveProxies);
-		public static final @NonNull Property _TemplateableElement__unspecializedElement = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT, Types._TemplateableElement, 2 | IsTransient);
-		public static final @NonNull Property _TemplateableElement__TemplateableElement__unspecializedElement = LIBRARY.createOppositeProperty(Types._TemplateableElement, "TemplateableElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateableElement), 3 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT);
+		public static final @NonNull Property _TemplateableElement__generic = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__GENERIC, Types._TemplateableElement, 0 | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__ownedTemplateArguments = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._TemplateArgument), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__ownedTemplateParameters = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._TemplateParameter), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__TemplateableElement__generic = LIBRARY.createOppositeProperty(Types._TemplateableElement, "TemplateableElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateableElement), 3 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__GENERIC);
 
 		public static final @NonNull Property _Transition__kind = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__KIND, Types._TransitionKind, 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Transition__ownedEffect = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_EFFECT, Types._Behavior, 1 | IsComposite | IsResolveProxies);
@@ -2459,7 +2432,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Type__MapType__valueType = LIBRARY.createOppositeProperty(Types._Type, "MapType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._MapType), 3 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.MAP_TYPE__VALUE_TYPE);
 		public static final @NonNull Property _Type__OCLExpression__typeValue = LIBRARY.createOppositeProperty(Types._Type, "OCLExpression", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._OCLExpression), 4 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.OCL_EXPRESSION__TYPE_VALUE);
 		public static final @NonNull Property _Type__Operation__raisedExceptions = LIBRARY.createOppositeProperty(Types._Type, "Operation", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Operation), 5 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS);
-		public static final @NonNull Property _Type__TemplateParameterSubstitution__actual = LIBRARY.createOppositeProperty(Types._Type, "TemplateParameterSubstitution", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateParameterSubstitution), 6 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL);
+		public static final @NonNull Property _Type__TemplateArgument__actual = LIBRARY.createOppositeProperty(Types._Type, "TemplateArgument", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateArgument), 6 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TEMPLATE_ARGUMENT__ACTUAL);
 		public static final @NonNull Property _Type__TypeExp__referredType = LIBRARY.createOppositeProperty(Types._Type, "TypeExp", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TypeExp), 7 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE);
 		public static final @NonNull Property _Type__TypedElement__type = LIBRARY.createOppositeProperty(Types._Type, "TypedElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TypedElement), 8 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.TYPED_ELEMENT__TYPE);
 		public static final @NonNull Property _Type__VariableDeclaration__typeValue = LIBRARY.createOppositeProperty(Types._Type, "VariableDeclaration", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._VariableDeclaration), 9 | IsImplicit | IsRequired | IsResolveProxies, PivotPackage.Literals.VARIABLE_DECLARATION__TYPE_VALUE);
@@ -2498,7 +2471,6 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _WildcardType__lowerBound = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, Types._Type, 0 | IsResolveProxies);
 		public static final @NonNull Property _WildcardType__upperBound = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, Types._Type, 1 | IsResolveProxies);
-		public static final @NonNull Property _WildcardType__TemplateParameterSubstitution__ownedWildcard = LIBRARY.createOppositeProperty(Types._WildcardType, "TemplateParameterSubstitution", Types._TemplateParameterSubstitution, 2 | IsImplicit | IsResolveProxies, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD);
 
 		static {
 			_Annotation__ownedContents.setOpposite(_Element__Annotation__ownedContents);
@@ -2888,28 +2860,19 @@ public class PivotTables extends AbstractTables
 			_StereotypeExtender__owningStereotype.setOpposite(_Stereotype__ownedExtenders);
 
 
-			_TemplateBinding__ownedSubstitutions.setOpposite(_TemplateParameterSubstitution__owningBinding);
-			_TemplateBinding__owningElement.setOpposite(_TemplateableElement__ownedBindings);
-			_TemplateBinding__templateSignature.setOpposite(_TemplateSignature__TemplateBinding__templateSignature);
+			_TemplateArgument__actual.setOpposite(_Type__TemplateArgument__actual);
+			_TemplateArgument__actualIsRequired.setDefaultValueString("true");
+			_TemplateArgument__formal.setOpposite(_TemplateParameter__TemplateArgument__formal);
+			_TemplateArgument__owningTemplateableElement.setOpposite(_TemplateableElement__ownedTemplateArguments);
 
 			_TemplateParameter__constrainingClasses.setOpposite(_Class__TemplateParameter__constrainingClasses);
-			_TemplateParameter__owningSignature.setOpposite(_TemplateSignature__ownedParameters);
-			_TemplateParameter__TemplateParameterSubstitution__formal.setOpposite(_TemplateParameterSubstitution__formal);
+			_TemplateParameter__owningTemplateableElement.setOpposite(_TemplateableElement__ownedTemplateParameters);
+			_TemplateParameter__TemplateArgument__formal.setOpposite(_TemplateArgument__formal);
 
-			_TemplateParameterSubstitution__actual.setOpposite(_Type__TemplateParameterSubstitution__actual);
-			_TemplateParameterSubstitution__actualIsRequired.setDefaultValueString("true");
-			_TemplateParameterSubstitution__formal.setOpposite(_TemplateParameter__TemplateParameterSubstitution__formal);
-			_TemplateParameterSubstitution__ownedWildcard.setOpposite(_WildcardType__TemplateParameterSubstitution__ownedWildcard);
-			_TemplateParameterSubstitution__owningBinding.setOpposite(_TemplateBinding__ownedSubstitutions);
-
-			_TemplateSignature__ownedParameters.setOpposite(_TemplateParameter__owningSignature);
-			_TemplateSignature__owningElement.setOpposite(_TemplateableElement__ownedSignature);
-			_TemplateSignature__TemplateBinding__templateSignature.setOpposite(_TemplateBinding__templateSignature);
-
-			_TemplateableElement__ownedBindings.setOpposite(_TemplateBinding__owningElement);
-			_TemplateableElement__ownedSignature.setOpposite(_TemplateSignature__owningElement);
-			_TemplateableElement__unspecializedElement.setOpposite(_TemplateableElement__TemplateableElement__unspecializedElement);
-			_TemplateableElement__TemplateableElement__unspecializedElement.setOpposite(_TemplateableElement__unspecializedElement);
+			_TemplateableElement__generic.setOpposite(_TemplateableElement__TemplateableElement__generic);
+			_TemplateableElement__ownedTemplateArguments.setOpposite(_TemplateArgument__owningTemplateableElement);
+			_TemplateableElement__ownedTemplateParameters.setOpposite(_TemplateParameter__owningTemplateableElement);
+			_TemplateableElement__TemplateableElement__generic.setOpposite(_TemplateableElement__generic);
 
 			_Transition__kind.setDefaultValueString("external");
 			_Transition__ownedEffect.setOpposite(_Behavior__owningTransition);
@@ -2933,7 +2896,7 @@ public class PivotTables extends AbstractTables
 			_Type__MapType__valueType.setOpposite(_MapType__valueType);
 			_Type__OCLExpression__typeValue.setOpposite(_OCLExpression__typeValue);
 			_Type__Operation__raisedExceptions.setOpposite(_Operation__raisedExceptions);
-			_Type__TemplateParameterSubstitution__actual.setOpposite(_TemplateParameterSubstitution__actual);
+			_Type__TemplateArgument__actual.setOpposite(_TemplateArgument__actual);
 			_Type__TypeExp__referredType.setOpposite(_TypeExp__referredType);
 			_Type__TypedElement__type.setOpposite(_TypedElement__type);
 			_Type__VariableDeclaration__typeValue.setOpposite(_VariableDeclaration__typeValue);
@@ -2970,7 +2933,6 @@ public class PivotTables extends AbstractTables
 
 			_WildcardType__lowerBound.setOpposite(_Type__WildcardType__lowerBound);
 			_WildcardType__upperBound.setOpposite(_Type__WildcardType__upperBound);
-			_WildcardType__TemplateParameterSubstitution__ownedWildcard.setOpposite(_TemplateParameterSubstitution__ownedWildcard);
 
 			Init.initEnd();
 		}
@@ -4457,14 +4419,14 @@ public class PivotTables extends AbstractTables
 			};
 		private static final int @NonNull [] __StringLiteralExp = { 1,1,1,1,1,1,1,1,1 };
 
-		private static final @NonNull FlatFragment @NonNull [] _TemplateBinding =
+		private static final @NonNull FlatFragment @NonNull [] _TemplateArgument =
 			{
-				Fragments._TemplateBinding__OclAny /* 0 */,
-				Fragments._TemplateBinding__OclElement /* 1 */,
-				Fragments._TemplateBinding__Element /* 2 */,
-				Fragments._TemplateBinding__TemplateBinding /* 3 */
+				Fragments._TemplateArgument__OclAny /* 0 */,
+				Fragments._TemplateArgument__OclElement /* 1 */,
+				Fragments._TemplateArgument__Element /* 2 */,
+				Fragments._TemplateArgument__TemplateArgument /* 3 */
 			};
-		private static final int @NonNull [] __TemplateBinding = { 1,1,1,1 };
+		private static final int @NonNull [] __TemplateArgument = { 1,1,1,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TemplateParameter =
 			{
@@ -4477,24 +4439,6 @@ public class PivotTables extends AbstractTables
 				Fragments._TemplateParameter__TemplateParameter /* 5 */
 			};
 		private static final int @NonNull [] __TemplateParameter = { 1,1,2,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TemplateParameterSubstitution =
-			{
-				Fragments._TemplateParameterSubstitution__OclAny /* 0 */,
-				Fragments._TemplateParameterSubstitution__OclElement /* 1 */,
-				Fragments._TemplateParameterSubstitution__Element /* 2 */,
-				Fragments._TemplateParameterSubstitution__TemplateParameterSubstitution /* 3 */
-			};
-		private static final int @NonNull [] __TemplateParameterSubstitution = { 1,1,1,1 };
-
-		private static final @NonNull FlatFragment @NonNull [] _TemplateSignature =
-			{
-				Fragments._TemplateSignature__OclAny /* 0 */,
-				Fragments._TemplateSignature__OclElement /* 1 */,
-				Fragments._TemplateSignature__Element /* 2 */,
-				Fragments._TemplateSignature__TemplateSignature /* 3 */
-			};
-		private static final int @NonNull [] __TemplateSignature = { 1,1,1,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TemplateableElement =
 			{
@@ -4862,10 +4806,8 @@ public class PivotTables extends AbstractTables
 			Types._Stereotype.initFragments(_Stereotype, __Stereotype);
 			Types._StereotypeExtender.initFragments(_StereotypeExtender, __StereotypeExtender);
 			Types._StringLiteralExp.initFragments(_StringLiteralExp, __StringLiteralExp);
-			Types._TemplateBinding.initFragments(_TemplateBinding, __TemplateBinding);
+			Types._TemplateArgument.initFragments(_TemplateArgument, __TemplateArgument);
 			Types._TemplateParameter.initFragments(_TemplateParameter, __TemplateParameter);
-			Types._TemplateParameterSubstitution.initFragments(_TemplateParameterSubstitution, __TemplateParameterSubstitution);
-			Types._TemplateSignature.initFragments(_TemplateSignature, __TemplateSignature);
 			Types._TemplateableElement.initFragments(_TemplateableElement, __TemplateableElement);
 			Types._Throwable.initFragments(_Throwable, __Throwable);
 			Types._Transition.initFragments(_Transition, __Transition);
@@ -9992,12 +9934,12 @@ public class PivotTables extends AbstractTables
 			Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
 		};
 
-		private static final @NonNull Operation @NonNull [] _TemplateBinding__TemplateBinding = {};
-		private static final @NonNull Operation @NonNull [] _TemplateBinding__Element = {
+		private static final @NonNull Operation @NonNull [] _TemplateArgument__TemplateArgument = {};
+		private static final @NonNull Operation @NonNull [] _TemplateArgument__Element = {
 			Operations._Element__allOwnedElements /* allOwnedElements() */,
 			Operations._Element__getValue /* getValue(Type[1],String[1]) */
 		};
-		private static final @NonNull Operation @NonNull [] _TemplateBinding__OclAny = {
+		private static final @NonNull Operation @NonNull [] _TemplateArgument__OclAny = {
 			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -10014,7 +9956,7 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _TemplateBinding__OclElement = {
+		private static final @NonNull Operation @NonNull [] _TemplateArgument__OclElement = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -10073,78 +10015,6 @@ public class PivotTables extends AbstractTables
 			Operations._Type__isClass /* isClass() */,
 			Operations._Type__isTemplateParameter /* isTemplateParameter() */,
 			Operations._Type__specializeIn /* specializeIn(CallExp[1],Type[1]) */
-		};
-
-		private static final @NonNull Operation @NonNull [] _TemplateParameterSubstitution__TemplateParameterSubstitution = {};
-		private static final @NonNull Operation @NonNull [] _TemplateParameterSubstitution__Element = {
-			Operations._Element__allOwnedElements /* allOwnedElements() */,
-			Operations._Element__getValue /* getValue(Type[1],String[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _TemplateParameterSubstitution__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull Operation @NonNull [] _TemplateParameterSubstitution__OclElement = {
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
-			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
-			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
-		};
-
-		private static final @NonNull Operation @NonNull [] _TemplateSignature__TemplateSignature = {};
-		private static final @NonNull Operation @NonNull [] _TemplateSignature__Element = {
-			Operations._Element__allOwnedElements /* allOwnedElements() */,
-			Operations._Element__getValue /* getValue(Type[1],String[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _TemplateSignature__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull Operation @NonNull [] _TemplateSignature__OclElement = {
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
-			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
-			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
 		private static final @NonNull Operation @NonNull [] _TemplateableElement__TemplateableElement = {};
@@ -10542,6 +10412,92 @@ public class PivotTables extends AbstractTables
 			Operations._ReferringElement__getReferredElement /* getReferredElement() */
 		};
 		private static final @NonNull Operation @NonNull [] _TypeExp__TypedElement = {
+			Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+		};
+
+		private static final @NonNull Operation @NonNull [] _TypedElement__TypedElement = {
+			Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _TypedElement__Element = {
+			Operations._Element__allOwnedElements /* allOwnedElements() */,
+			Operations._Element__getValue /* getValue(Type[1],String[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _TypedElement__NamedElement = {};
+		private static final @NonNull Operation @NonNull [] _TypedElement__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+		private static final @NonNull Operation @NonNull [] _TypedElement__OclElement = {
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
+
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp = {};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__Element = {
+			Operations._Element__allOwnedElements /* allOwnedElements() */,
+			Operations._Element__getValue /* getValue(Type[1],String[1]) */
+		};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__LiteralExp = {};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__NamedElement = {};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__NumericLiteralExp = {};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__OCLExpression = {
+			Operations._OCLExpression__isNonNull /* isNonNull() */,
+			Operations._OCLExpression__isNull /* isNull() */
+		};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__OclAny = {
+			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
+			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
+			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
+			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
+			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
+			OCLstdlibTables.Operations._OclAny__toString /* toString() */
+		};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__OclElement = {
+			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
+			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
+			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
+			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
+			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
+			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
+		};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__PrimitiveLiteralExp = {};
+		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__TypedElement = {
 			Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
 		};
 
@@ -11544,10 +11500,10 @@ public class PivotTables extends AbstractTables
 			Fragments._StringLiteralExp__StringLiteralExp.initOperations(_StringLiteralExp__StringLiteralExp);
 			Fragments._StringLiteralExp__TypedElement.initOperations(_StringLiteralExp__TypedElement);
 
-			Fragments._TemplateBinding__Element.initOperations(_TemplateBinding__Element);
-			Fragments._TemplateBinding__OclAny.initOperations(_TemplateBinding__OclAny);
-			Fragments._TemplateBinding__OclElement.initOperations(_TemplateBinding__OclElement);
-			Fragments._TemplateBinding__TemplateBinding.initOperations(_TemplateBinding__TemplateBinding);
+			Fragments._TemplateArgument__Element.initOperations(_TemplateArgument__Element);
+			Fragments._TemplateArgument__OclAny.initOperations(_TemplateArgument__OclAny);
+			Fragments._TemplateArgument__OclElement.initOperations(_TemplateArgument__OclElement);
+			Fragments._TemplateArgument__TemplateArgument.initOperations(_TemplateArgument__TemplateArgument);
 
 			Fragments._TemplateParameter__Element.initOperations(_TemplateParameter__Element);
 			Fragments._TemplateParameter__NamedElement.initOperations(_TemplateParameter__NamedElement);
@@ -11556,16 +11512,6 @@ public class PivotTables extends AbstractTables
 			Fragments._TemplateParameter__OclType.initOperations(_TemplateParameter__OclType);
 			Fragments._TemplateParameter__TemplateParameter.initOperations(_TemplateParameter__TemplateParameter);
 			Fragments._TemplateParameter__Type.initOperations(_TemplateParameter__Type);
-
-			Fragments._TemplateParameterSubstitution__Element.initOperations(_TemplateParameterSubstitution__Element);
-			Fragments._TemplateParameterSubstitution__OclAny.initOperations(_TemplateParameterSubstitution__OclAny);
-			Fragments._TemplateParameterSubstitution__OclElement.initOperations(_TemplateParameterSubstitution__OclElement);
-			Fragments._TemplateParameterSubstitution__TemplateParameterSubstitution.initOperations(_TemplateParameterSubstitution__TemplateParameterSubstitution);
-
-			Fragments._TemplateSignature__Element.initOperations(_TemplateSignature__Element);
-			Fragments._TemplateSignature__OclAny.initOperations(_TemplateSignature__OclAny);
-			Fragments._TemplateSignature__OclElement.initOperations(_TemplateSignature__OclElement);
-			Fragments._TemplateSignature__TemplateSignature.initOperations(_TemplateSignature__TemplateSignature);
 
 			Fragments._TemplateableElement__Element.initOperations(_TemplateableElement__Element);
 			Fragments._TemplateableElement__OclAny.initOperations(_TemplateableElement__OclAny);
@@ -11639,6 +11585,23 @@ public class PivotTables extends AbstractTables
 			Fragments._TypeExp__TypeExp.initOperations(_TypeExp__TypeExp);
 			Fragments._TypeExp__TypedElement.initOperations(_TypeExp__TypedElement);
 
+			Fragments._TypedElement__Element.initOperations(_TypedElement__Element);
+			Fragments._TypedElement__NamedElement.initOperations(_TypedElement__NamedElement);
+			Fragments._TypedElement__OclAny.initOperations(_TypedElement__OclAny);
+			Fragments._TypedElement__OclElement.initOperations(_TypedElement__OclElement);
+			Fragments._TypedElement__TypedElement.initOperations(_TypedElement__TypedElement);
+
+			Fragments._UnlimitedNaturalLiteralExp__Element.initOperations(_UnlimitedNaturalLiteralExp__Element);
+			Fragments._UnlimitedNaturalLiteralExp__LiteralExp.initOperations(_UnlimitedNaturalLiteralExp__LiteralExp);
+			Fragments._UnlimitedNaturalLiteralExp__NamedElement.initOperations(_UnlimitedNaturalLiteralExp__NamedElement);
+			Fragments._UnlimitedNaturalLiteralExp__NumericLiteralExp.initOperations(_UnlimitedNaturalLiteralExp__NumericLiteralExp);
+			Fragments._UnlimitedNaturalLiteralExp__OCLExpression.initOperations(_UnlimitedNaturalLiteralExp__OCLExpression);
+			Fragments._UnlimitedNaturalLiteralExp__OclAny.initOperations(_UnlimitedNaturalLiteralExp__OclAny);
+			Fragments._UnlimitedNaturalLiteralExp__OclElement.initOperations(_UnlimitedNaturalLiteralExp__OclElement);
+			Fragments._UnlimitedNaturalLiteralExp__PrimitiveLiteralExp.initOperations(_UnlimitedNaturalLiteralExp__PrimitiveLiteralExp);
+			Fragments._UnlimitedNaturalLiteralExp__TypedElement.initOperations(_UnlimitedNaturalLiteralExp__TypedElement);
+			Fragments._UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp.initOperations(_UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp);
+
 			Init.initEnd();
 		}
 
@@ -11653,92 +11616,6 @@ public class PivotTables extends AbstractTables
 			Init.initStart();
 			FragmentOperations1.init();
 		}
-
-		private static final @NonNull Operation @NonNull [] _TypedElement__TypedElement = {
-			Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _TypedElement__Element = {
-			Operations._Element__allOwnedElements /* allOwnedElements() */,
-			Operations._Element__getValue /* getValue(Type[1],String[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _TypedElement__NamedElement = {};
-		private static final @NonNull Operation @NonNull [] _TypedElement__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull Operation @NonNull [] _TypedElement__OclElement = {
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
-			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
-			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
-		};
-
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp = {};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__Element = {
-			Operations._Element__allOwnedElements /* allOwnedElements() */,
-			Operations._Element__getValue /* getValue(Type[1],String[1]) */
-		};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__LiteralExp = {};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__NamedElement = {};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__NumericLiteralExp = {};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__OCLExpression = {
-			Operations._OCLExpression__isNonNull /* isNonNull() */,
-			Operations._OCLExpression__isNull /* isNull() */
-		};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
-			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
-			OCLstdlibTables.Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsNew /* oclIsNew() */,
-			OCLstdlibTables.Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
-			OCLstdlibTables.Operations._OclAny__0_oclLog /* oclLog() */,
-			OCLstdlibTables.Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
-			OCLstdlibTables.Operations._OclAny__oclType /* oclType() */,
-			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
-			OCLstdlibTables.Operations._OclAny__toString /* toString() */
-		};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__OclElement = {
-			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
-			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclContainer /* oclContainer() */,
-			OCLstdlibTables.Operations._OclElement__oclContents /* oclContents() */,
-			OCLstdlibTables.Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__0_oclExtensions /* oclExtensions() */,
-			OCLstdlibTables.Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
-			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
-			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
-		};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__PrimitiveLiteralExp = {};
-		private static final @NonNull Operation @NonNull [] _UnlimitedNaturalLiteralExp__TypedElement = {
-			Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
-		};
 
 		private static final @NonNull Operation @NonNull [] _UnspecifiedValueExp__UnspecifiedValueExp = {};
 		private static final @NonNull Operation @NonNull [] _UnspecifiedValueExp__Element = {
@@ -12138,23 +12015,6 @@ public class PivotTables extends AbstractTables
 		 *	Install the operation descriptors in the fragment descriptors.
 		 */
 		static {
-			Fragments._TypedElement__Element.initOperations(_TypedElement__Element);
-			Fragments._TypedElement__NamedElement.initOperations(_TypedElement__NamedElement);
-			Fragments._TypedElement__OclAny.initOperations(_TypedElement__OclAny);
-			Fragments._TypedElement__OclElement.initOperations(_TypedElement__OclElement);
-			Fragments._TypedElement__TypedElement.initOperations(_TypedElement__TypedElement);
-
-			Fragments._UnlimitedNaturalLiteralExp__Element.initOperations(_UnlimitedNaturalLiteralExp__Element);
-			Fragments._UnlimitedNaturalLiteralExp__LiteralExp.initOperations(_UnlimitedNaturalLiteralExp__LiteralExp);
-			Fragments._UnlimitedNaturalLiteralExp__NamedElement.initOperations(_UnlimitedNaturalLiteralExp__NamedElement);
-			Fragments._UnlimitedNaturalLiteralExp__NumericLiteralExp.initOperations(_UnlimitedNaturalLiteralExp__NumericLiteralExp);
-			Fragments._UnlimitedNaturalLiteralExp__OCLExpression.initOperations(_UnlimitedNaturalLiteralExp__OCLExpression);
-			Fragments._UnlimitedNaturalLiteralExp__OclAny.initOperations(_UnlimitedNaturalLiteralExp__OclAny);
-			Fragments._UnlimitedNaturalLiteralExp__OclElement.initOperations(_UnlimitedNaturalLiteralExp__OclElement);
-			Fragments._UnlimitedNaturalLiteralExp__PrimitiveLiteralExp.initOperations(_UnlimitedNaturalLiteralExp__PrimitiveLiteralExp);
-			Fragments._UnlimitedNaturalLiteralExp__TypedElement.initOperations(_UnlimitedNaturalLiteralExp__TypedElement);
-			Fragments._UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp.initOperations(_UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp);
-
 			Fragments._UnspecifiedValueExp__Element.initOperations(_UnspecifiedValueExp__Element);
 			Fragments._UnspecifiedValueExp__NamedElement.initOperations(_UnspecifiedValueExp__NamedElement);
 			Fragments._UnspecifiedValueExp__OCLExpression.initOperations(_UnspecifiedValueExp__OCLExpression);
@@ -12260,6 +12120,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _AnyType = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12269,22 +12130,22 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _AssociationClass = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12294,18 +12155,17 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._AssociationClass__unownedAttributes,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._AssociationClass__unownedAttributes
 		};
 
 		private static final @NonNull Property @NonNull [] _AssociationClassCallExp = {
@@ -12339,6 +12199,7 @@ public class PivotTables extends AbstractTables
 			Properties._DataType__behavioralClass,
 			Properties._CollectionType__elementType,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12351,17 +12212,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._CollectionType__upper,
 			Properties._DataType__value
 		};
@@ -12369,6 +12229,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Behavior = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12378,18 +12239,17 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Behavior__owningTransition,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _BooleanLiteralExp = {
@@ -12412,6 +12272,7 @@ public class PivotTables extends AbstractTables
 			Properties._DataType__behavioralClass,
 			Properties._PrimitiveType__coercions,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12422,17 +12283,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._DataType__value
 		};
 
@@ -12467,6 +12327,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Class = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12476,17 +12337,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _CollectionItem = {
@@ -12557,6 +12417,7 @@ public class PivotTables extends AbstractTables
 			Properties._DataType__behavioralClass,
 			Properties._CollectionType__elementType,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12569,17 +12430,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._CollectionType__upper,
 			Properties._DataType__value
 		};
@@ -12694,6 +12554,7 @@ public class PivotTables extends AbstractTables
 			Properties._Element__annotatingComments,
 			Properties._DataType__behavioralClass,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12704,17 +12565,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._DataType__value
 		};
 
@@ -12732,6 +12592,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _DynamicBehavior = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12742,7 +12603,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._DynamicType__ownedDynamicProperties,
@@ -12750,11 +12610,11 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Behavior__owningTransition,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _DynamicElement = {
@@ -12781,6 +12641,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _DynamicType = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12791,7 +12652,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._DynamicType__ownedDynamicProperties,
@@ -12799,10 +12659,10 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _DynamicValueSpecification = {
@@ -12833,6 +12693,7 @@ public class PivotTables extends AbstractTables
 			Properties._Element__annotatingComments,
 			Properties._ElementExtension__base,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12844,18 +12705,17 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._ElementExtension__stereotype,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _ElementLiteralExp = {
@@ -12892,6 +12752,7 @@ public class PivotTables extends AbstractTables
 			Properties._Element__annotatingComments,
 			Properties._DataType__behavioralClass,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -12902,7 +12763,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
@@ -12910,10 +12770,10 @@ public class PivotTables extends AbstractTables
 			Properties._Enumeration__ownedLiterals,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._DataType__value
 		};
 
@@ -13092,6 +12952,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _InvalidType = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -13101,23 +12962,23 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _IterableType = {
 			Properties._Element__annotatingComments,
 			Properties._DataType__behavioralClass,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -13128,17 +12989,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._DataType__value
 		};
 
@@ -13168,6 +13028,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Iteration = {
 			Properties._Element__annotatingComments,
 			Properties._Operation__bodyExpression,
+			Properties._TemplateableElement__generic,
 			Properties._Feature__implementation,
 			Properties._Feature__implementationClass,
 			Properties._Operation__isInvalidating,
@@ -13182,7 +13043,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Iteration__ownedAccumulator,
 			Properties._Element__ownedAnnotations,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
@@ -13190,13 +13050,13 @@ public class PivotTables extends AbstractTables
 			Properties._Operation__ownedParameters,
 			Properties._Operation__ownedPostconditions,
 			Properties._Operation__ownedPreconditions,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Operation__owningClass,
 			Properties._Operation__precedence,
 			Properties._Operation__raisedExceptions,
 			Properties._Operation__redefinedOperations,
-			Properties._TypedElement__type,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._TypedElement__type
 		};
 
 		private static final @NonNull Property @NonNull [] _IteratorExp = {
@@ -13258,6 +13118,7 @@ public class PivotTables extends AbstractTables
 			Properties._Element__annotatingComments,
 			Properties._DataType__behavioralClass,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -13268,7 +13129,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._LambdaType__ownedContext,
@@ -13278,10 +13138,10 @@ public class PivotTables extends AbstractTables
 			Properties._LambdaType__ownedParameters,
 			Properties._Class__ownedProperties,
 			Properties._LambdaType__ownedResult,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._DataType__value
 		};
 
@@ -13422,6 +13282,7 @@ public class PivotTables extends AbstractTables
 			Properties._DataType__behavioralClass,
 			Properties._MapType__entryClass,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -13434,17 +13295,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._DataType__value,
 			Properties._MapType__valueType,
 			Properties._MapType__valuesAreNullFree
@@ -13471,6 +13331,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _MessageType = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -13480,19 +13341,18 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._MessageType__referredOperation,
 			Properties._MessageType__referredSignal,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _Model = {
@@ -13571,7 +13431,7 @@ public class PivotTables extends AbstractTables
 			Properties._Element__ownedAnnotations,
 			Properties._Element__ownedComments,
 			Properties._Element__ownedExtensions,
-			Properties._TemplateParameter__owningSignature
+			Properties._TemplateParameter__owningTemplateableElement
 		};
 
 		private static final @NonNull Property @NonNull [] _NullLiteralExp = {
@@ -13621,6 +13481,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Operation = {
 			Properties._Element__annotatingComments,
 			Properties._Operation__bodyExpression,
+			Properties._TemplateableElement__generic,
 			Properties._Feature__implementation,
 			Properties._Feature__implementationClass,
 			Properties._Operation__isInvalidating,
@@ -13634,20 +13495,19 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Operation__ownedParameters,
 			Properties._Operation__ownedPostconditions,
 			Properties._Operation__ownedPreconditions,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Operation__owningClass,
 			Properties._Operation__precedence,
 			Properties._Operation__raisedExceptions,
 			Properties._Operation__redefinedOperations,
-			Properties._TypedElement__type,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._TypedElement__type
 		};
 
 		private static final @NonNull Property @NonNull [] _OperationCallExp = {
@@ -13697,6 +13557,7 @@ public class PivotTables extends AbstractTables
 			Properties._DataType__behavioralClass,
 			Properties._CollectionType__elementType,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -13709,17 +13570,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._CollectionType__upper,
 			Properties._DataType__value
 		};
@@ -13841,6 +13701,7 @@ public class PivotTables extends AbstractTables
 			Properties._DataType__behavioralClass,
 			Properties._PrimitiveType__coercions,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -13851,17 +13712,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._DataType__value
 		};
 
@@ -14030,6 +13890,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _SelfType = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14039,17 +13900,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _SendSignalAction = {
@@ -14068,6 +13928,7 @@ public class PivotTables extends AbstractTables
 			Properties._DataType__behavioralClass,
 			Properties._CollectionType__elementType,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14080,17 +13941,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._CollectionType__upper,
 			Properties._DataType__value
 		};
@@ -14100,6 +13960,7 @@ public class PivotTables extends AbstractTables
 			Properties._DataType__behavioralClass,
 			Properties._CollectionType__elementType,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14112,17 +13973,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._CollectionType__upper,
 			Properties._DataType__value
 		};
@@ -14161,6 +14021,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _Signal = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14170,17 +14031,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _Slot = {
@@ -14251,6 +14111,7 @@ public class PivotTables extends AbstractTables
 			Properties._Element__annotatingComments,
 			Properties._StateMachine__extendedStateMachines,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14260,7 +14121,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._StateMachine__ownedConnectionPoints,
 			Properties._Namespace__ownedConstraints,
@@ -14269,17 +14129,18 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
 			Properties._StateMachine__ownedRegions,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Behavior__owningTransition,
 			Properties._StateMachine__submachineStates,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _Stereotype = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14289,7 +14150,6 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Stereotype__ownedExtenders,
@@ -14297,10 +14157,10 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _StereotypeExtender = {
@@ -14330,16 +14190,17 @@ public class PivotTables extends AbstractTables
 			Properties._OCLExpression__typeValue
 		};
 
-		private static final @NonNull Property @NonNull [] _TemplateBinding = {
+		private static final @NonNull Property @NonNull [] _TemplateArgument = {
+			Properties._TemplateArgument__actual,
+			Properties._TemplateArgument__actualIsRequired,
 			Properties._Element__annotatingComments,
+			Properties._TemplateArgument__formal,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Element__ownedComments,
 			Properties._Element__ownedExtensions,
-			Properties._TemplateBinding__ownedSubstitutions,
-			Properties._TemplateBinding__owningElement,
-			Properties._TemplateBinding__templateSignature
+			Properties._TemplateArgument__owningTemplateableElement
 		};
 
 		private static final @NonNull Property @NonNull [] _TemplateParameter = {
@@ -14351,44 +14212,19 @@ public class PivotTables extends AbstractTables
 			Properties._Element__ownedAnnotations,
 			Properties._Element__ownedComments,
 			Properties._Element__ownedExtensions,
-			Properties._TemplateParameter__owningSignature
-		};
-
-		private static final @NonNull Property @NonNull [] _TemplateParameterSubstitution = {
-			Properties._TemplateParameterSubstitution__actual,
-			Properties._TemplateParameterSubstitution__actualIsRequired,
-			Properties._Element__annotatingComments,
-			Properties._TemplateParameterSubstitution__formal,
-			OCLstdlibTables.Properties._OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__oclContents,
-			Properties._Element__ownedAnnotations,
-			Properties._Element__ownedComments,
-			Properties._Element__ownedExtensions,
-			Properties._TemplateParameterSubstitution__ownedWildcard,
-			Properties._TemplateParameterSubstitution__owningBinding
-		};
-
-		private static final @NonNull Property @NonNull [] _TemplateSignature = {
-			Properties._Element__annotatingComments,
-			OCLstdlibTables.Properties._OclElement__oclContainer,
-			OCLstdlibTables.Properties._OclElement__oclContents,
-			Properties._Element__ownedAnnotations,
-			Properties._Element__ownedComments,
-			Properties._Element__ownedExtensions,
-			Properties._TemplateSignature__ownedParameters,
-			Properties._TemplateSignature__owningElement
+			Properties._TemplateParameter__owningTemplateableElement
 		};
 
 		private static final @NonNull Property @NonNull [] _TemplateableElement = {
 			Properties._Element__annotatingComments,
+			Properties._TemplateableElement__generic,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Element__ownedExtensions,
-			Properties._TemplateableElement__ownedSignature,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters
 		};
 
 		private static final @NonNull Property @NonNull [] _Throwable = {};
@@ -14462,6 +14298,7 @@ public class PivotTables extends AbstractTables
 			Properties._Element__annotatingComments,
 			Properties._DataType__behavioralClass,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14472,17 +14309,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._DataType__value
 		};
 
@@ -14634,6 +14470,7 @@ public class PivotTables extends AbstractTables
 		private static final @NonNull Property @NonNull [] _VoidType = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14643,22 +14480,22 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
-			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement
+			Properties._Class__superClasses
 		};
 
 		private static final @NonNull Property @NonNull [] _WildcardType = {
 			Properties._Element__annotatingComments,
 			Properties._Class__extenders,
+			Properties._TemplateableElement__generic,
 			Properties._Class__instanceClassName,
 			Properties._Class__isAbstract,
 			Properties._Class__isActive,
@@ -14669,17 +14506,16 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Properties._OclElement__oclContents,
 			Properties._Element__ownedAnnotations,
 			Properties._Class__ownedBehaviors,
-			Properties._TemplateableElement__ownedBindings,
 			Properties._Element__ownedComments,
 			Properties._Namespace__ownedConstraints,
 			Properties._Element__ownedExtensions,
 			Properties._Class__ownedInvariants,
 			Properties._Class__ownedOperations,
 			Properties._Class__ownedProperties,
-			Properties._TemplateableElement__ownedSignature,
+			Properties._TemplateableElement__ownedTemplateArguments,
+			Properties._TemplateableElement__ownedTemplateParameters,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._TemplateableElement__unspecializedElement,
 			Properties._WildcardType__upperBound
 		};
 
@@ -14805,10 +14641,8 @@ public class PivotTables extends AbstractTables
 			Fragments._Stereotype__Stereotype.initProperties(_Stereotype);
 			Fragments._StereotypeExtender__StereotypeExtender.initProperties(_StereotypeExtender);
 			Fragments._StringLiteralExp__StringLiteralExp.initProperties(_StringLiteralExp);
-			Fragments._TemplateBinding__TemplateBinding.initProperties(_TemplateBinding);
+			Fragments._TemplateArgument__TemplateArgument.initProperties(_TemplateArgument);
 			Fragments._TemplateParameter__TemplateParameter.initProperties(_TemplateParameter);
-			Fragments._TemplateParameterSubstitution__TemplateParameterSubstitution.initProperties(_TemplateParameterSubstitution);
-			Fragments._TemplateSignature__TemplateSignature.initProperties(_TemplateSignature);
 			Fragments._TemplateableElement__TemplateableElement.initProperties(_TemplateableElement);
 			Fragments._Throwable__Throwable.initProperties(_Throwable);
 			Fragments._Transition__Transition.initProperties(_Transition);

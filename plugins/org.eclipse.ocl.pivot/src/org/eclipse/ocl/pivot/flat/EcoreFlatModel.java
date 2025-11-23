@@ -103,7 +103,7 @@ public class EcoreFlatModel extends PartialFlatModel
 
 	@Override
 	public @NonNull PartialFlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		EObject esObject = PivotUtil.getUnspecializedTemplateableElement(asClass).getESObject();
+		EObject esObject = PivotUtil.getGenericElement(asClass).getESObject();
 		if (esObject instanceof EClassifier) {
 			return getEcoreFlatClass((EClassifier)esObject, asClass);
 		}

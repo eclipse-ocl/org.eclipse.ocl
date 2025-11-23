@@ -123,10 +123,8 @@ import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Trigger;
@@ -771,24 +769,14 @@ extends AdapterFactoryImpl {
 				return createStringLiteralExpAdapter();
 			}
 			@Override
-			public Adapter caseTemplateBinding(TemplateBinding object)
+			public Adapter caseTemplateArgument(TemplateArgument object)
 			{
-				return createTemplateBindingAdapter();
+				return createTemplateArgumentAdapter();
 			}
 			@Override
 			public Adapter caseTemplateParameter(TemplateParameter object)
 			{
 				return createTemplateParameterAdapter();
-			}
-			@Override
-			public Adapter caseTemplateParameterSubstitution(TemplateParameterSubstitution object)
-			{
-				return createTemplateParameterSubstitutionAdapter();
-			}
-			@Override
-			public Adapter caseTemplateSignature(TemplateSignature object)
-			{
-				return createTemplateSignatureAdapter();
 			}
 			@Override
 			public Adapter caseTemplateableElement(TemplateableElement object)
@@ -2053,6 +2041,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.TemplateArgument <em>Template Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.TemplateArgument
+	 * @generated
+	 */
+	public Adapter createTemplateArgumentAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.TupleLiteralExp <em>Tuple Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2296,34 +2299,6 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.TemplateBinding <em>Template Binding</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.TemplateBinding
-	 * @generated
-	 */
-	public Adapter createTemplateBindingAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.TemplateSignature <em>Template Signature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.TemplateSignature
-	 * @generated
-	 */
-	public Adapter createTemplateSignatureAdapter() {
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.TemplateParameter <em>Template Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2334,20 +2309,6 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTemplateParameterAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution <em>Template Parameter Substitution</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.TemplateParameterSubstitution
-	 * @generated
-	 */
-	public Adapter createTemplateParameterSubstitutionAdapter() {
 		return null;
 	}
 

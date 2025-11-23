@@ -19,9 +19,8 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -50,7 +49,7 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 		org.eclipse.ocl.pivot.Class scopeClass = context.getScope();
 		org.eclipse.ocl.pivot.Package scopePackage = scopeClass != null ? PivotUtil.basicGetPackage(scopeClass) : null;
 		TypedTypeRefCS csRef = BaseCSFactory.eINSTANCE.createTypedTypeRefCS();
-		Type type = PivotUtil.getUnspecializedTemplateableElement(object);
+		Type type = PivotUtil.getGenericElement(object);
 		PathNameCS csPathName = csRef.getOwnedPathName();
 		if (csPathName == null) {
 			PathNameCS csPathName2 = BaseCSFactory.eINSTANCE.createPathNameCS();
@@ -65,33 +64,31 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 				context.importNamespace(objectPackage, null);
 			}
 		}
-		List<TemplateBinding> templateBindings = object.getOwnedBindings();
-		if (!templateBindings.isEmpty()) {
+		List<@NonNull TemplateArgument> templateArguments = object.basicGetOwnedTemplateArguments();
+		if (templateArguments != null) {
 			TemplateBindingCS csTemplateBinding = csRef.getOwnedBinding();
 			if (csTemplateBinding == null) {
 				csTemplateBinding = BaseCSFactory.eINSTANCE.createTemplateBindingCS();
 				csRef.setOwnedBinding(csTemplateBinding);
 			}
 			List<@NonNull TemplateParameterSubstitutionCS> csParameterSubstitutions = new ArrayList<>();
-			for (TemplateBinding templateBinding : templateBindings) {
-				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-					Type actual = templateParameterSubstitution.getActual();
-					if (actual != null) {
-						TemplateParameterSubstitutionCS csTemplateParameterSubstitution = BaseCSFactory.eINSTANCE.createTemplateParameterSubstitutionCS();
-						TypeRefCS csParameterable = context.visitReference(TypeRefCS.class, actual);			// XXX actualIsRequired
-						csTemplateParameterSubstitution.setOwnedActualParameter(csParameterable);
-						csParameterSubstitutions.add(csTemplateParameterSubstitution);
-						csTemplateParameterSubstitution.setPivot(templateParameterSubstitution);			// XXX upper/lower
-					/*	if (actual instanceof CollectionType) {
-							assert csParameterable instanceof TypedRefCS;
-							CollectionType collectionType = (CollectionType)actual;
-							boolean isNullFree = collectionType.isIsNullFree();
-							IntegerValue lower = collectionType.getLowerValue();
-							UnlimitedNaturalValue upper = collectionType.getUpperValue();
-							MultiplicityCS csMultiplicity = context.createMultiplicityCS(lower.intValue(), upper.intValue(), isNullFree);
-							((TypedRefCS)csParameterable).setOwnedMultiplicity(csMultiplicity);
-						} */
-					}
+			for (TemplateArgument templateArgument : templateArguments) {
+				Type actual = templateArgument.getActual();
+				if (actual != null) {
+					TemplateParameterSubstitutionCS csTemplateParameterSubstitution = BaseCSFactory.eINSTANCE.createTemplateParameterSubstitutionCS();
+					TypeRefCS csParameterable = context.visitReference(TypeRefCS.class, actual);			// XXX actualIsRequired
+					csTemplateParameterSubstitution.setOwnedActualParameter(csParameterable);
+					csParameterSubstitutions.add(csTemplateParameterSubstitution);
+					csTemplateParameterSubstitution.setPivot(templateArgument);			// XXX upper/lower
+				/*	if (actual instanceof CollectionType) {
+						assert csParameterable instanceof TypedRefCS;
+						CollectionType collectionType = (CollectionType)actual;
+						boolean isNullFree = collectionType.isIsNullFree();
+						IntegerValue lower = collectionType.getLowerValue();
+						UnlimitedNaturalValue upper = collectionType.getUpperValue();
+						MultiplicityCS csMultiplicity = context.createMultiplicityCS(lower.intValue(), upper.intValue(), isNullFree);
+						((TypedRefCS)csParameterable).setOwnedMultiplicity(csMultiplicity);
+					} */
 				}
 			}
 			PivotUtil.refreshList(csTemplateBinding.getOwnedSubstitutions(), true, csParameterSubstitutions);

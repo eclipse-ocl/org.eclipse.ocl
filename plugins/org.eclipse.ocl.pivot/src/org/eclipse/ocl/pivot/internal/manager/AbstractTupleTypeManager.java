@@ -34,7 +34,7 @@ import org.eclipse.ocl.pivot.internal.TupleTypeImpl;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
  * TupleypeManagerInternal encapsulates the knowledge about known tuple types.
@@ -55,8 +55,8 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 	}
 
 	@Override
-	public boolean conformsToTupleType(@NonNull TupleType actualType, @Nullable TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull TupleType requiredType, @Nullable TemplateParameterSubstitutions requiredSubstitutions, boolean enforceNullity) {
+	public boolean conformsToTupleType(@NonNull TupleType actualType, @Nullable TemplateArguments actualTemplateArguments,
+			@NonNull TupleType requiredType, @Nullable TemplateArguments requiredTemplateArguments, boolean enforceNullity) {
 		List<Property> actualProperties = actualType.getOwnedProperties();
 		List<Property> requiredProperties = requiredType.getOwnedProperties();
 		if (actualProperties.size() != requiredProperties.size()) {
@@ -72,12 +72,12 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 			if (enforceNullity) {
 				boolean actualIsRequired = actualProperty.isIsRequired();
 				boolean requiredIsRequired = requiredProperty.isIsRequired();
-				if (!standardLibrary.conformsTo(actualPropertyType, actualIsRequired, actualSubstitutions, requiredPropertyType, requiredIsRequired, requiredSubstitutions)) {
+				if (!standardLibrary.conformsTo(actualPropertyType, actualIsRequired, actualTemplateArguments, requiredPropertyType, requiredIsRequired, requiredTemplateArguments)) {
 					return false;
 				}
 			}
 			else {
-				if (!standardLibrary.conformsTo(actualPropertyType, actualSubstitutions, requiredPropertyType, requiredSubstitutions, false)) {
+				if (!standardLibrary.conformsTo(actualPropertyType, actualTemplateArguments, requiredPropertyType, requiredTemplateArguments, false)) {
 					return false;
 				}
 			}
@@ -112,8 +112,8 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 	}
 
 	@Override
-	public @Nullable TupleType getCommonTupleType(@NonNull TupleType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull TupleType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+	public @Nullable TupleType getCommonTupleType(@NonNull TupleType leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull TupleType rightType, @Nullable TemplateArguments rightTemplateArguments) {
 		List<Property> leftProperties = leftType.getOwnedProperties();
 		List<Property> rightProperties = rightType.getOwnedProperties();
 		int iSize = leftProperties.size();
@@ -142,7 +142,7 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 			if (rightPropertyType == null) {
 				return null;				// Never happens
 			}
-			Type commonType = standardLibrary.getCommonType(leftPropertyType, leftSubstitutions, rightPropertyType, rightSubstitutions);
+			Type commonType = standardLibrary.getCommonType(leftPropertyType, leftTemplateArguments, rightPropertyType, rightTemplateArguments);
 			boolean commonIsRequired = standardLibrary.getCommonIsRequired(leftProperty.isIsRequired(), rightProperty.isIsRequired());
 			PartId commonPartId = IdManager.getPartId(i, name, commonType.getTypeId(), commonIsRequired);
 			commonPartIds.add(commonPartId);
@@ -187,7 +187,7 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> parts, @Nullable TemplateParameterSubstitutions usageBindings) {
+	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull? extends TypedElement> parts, @Nullable TemplateArguments usageBindings) {
 		List<@NonNull TypedElement> sortedParts = new ArrayList<>(parts);
 		Collections.sort(sortedParts, NameUtil.NAMEABLE_COMPARATOR);
 		@NonNull PartId @NonNull [] orderedPartIds = new @NonNull PartId [sortedParts.size()];
@@ -212,7 +212,7 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateParameterSubstitutions usageBindings) {	// FIXME Remove duplication, unify type/multiplicity
+	public @NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateArguments usageBindings) {	// FIXME Remove duplication, unify type/multiplicity
 		//		return getTupleType(type.getName(), type.getOwnedAttribute(), usageBindings);
 		TupleType specializedTupleType = type;
 		Map<@NonNull String, @NonNull Type> resolutions =  null;

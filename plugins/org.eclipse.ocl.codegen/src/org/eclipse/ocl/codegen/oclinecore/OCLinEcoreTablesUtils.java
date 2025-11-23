@@ -57,7 +57,6 @@ import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -360,8 +359,8 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitCollectionType(@NonNull CollectionType type) {
-			CollectionType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(type);
-			appendClassReference(AbstractGenModelHelper.TYPES_PACKAGE_NAME, unspecializedType);
+			CollectionType genericType = PivotUtil.getGenericElement(type);
+			appendClassReference(AbstractGenModelHelper.TYPES_PACKAGE_NAME, genericType);
 			return null;
 		}
 
@@ -385,8 +384,8 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitMapType(@NonNull MapType asMapType) {
-			MapType unspecializedType = PivotUtil.getUnspecializedTemplateableElement(asMapType);
-			appendClassReference(AbstractGenModelHelper.TYPES_PACKAGE_NAME, unspecializedType);
+			MapType genericType = PivotUtil.getGenericElement(asMapType);
+			appendClassReference(AbstractGenModelHelper.TYPES_PACKAGE_NAME, genericType);
 			return null;
 		}
 
@@ -577,7 +576,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class type) {
-			type = PivotUtil.getUnspecializedTemplateableElement(type);
+			type = PivotUtil.getGenericElement(type);
 			GenClassifier genClassifier = genModelHelper.getGenClassifier(type);
 			if (genClassifier == null) {
 				return null;
@@ -825,7 +824,7 @@ public class OCLinEcoreTablesUtils
 		for (@NonNull CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(theClass)) {
 			org.eclipse.ocl.pivot.Class superClass = superCompleteClass.getPrimaryClass();
 			if (superClass != theClass) {
-				superClass = PivotUtil.getUnspecializedTemplateableElement(superClass);
+				superClass = PivotUtil.getGenericElement(superClass);
 				int superDepth = getAllSuperClasses(results, superClass);
 				if (superDepth >= myDepth) {
 					myDepth = superDepth+1;
@@ -991,7 +990,7 @@ public class OCLinEcoreTablesUtils
 	private void getLegacyTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element) {
 		TemplateParameter templateParameter = element.isTemplateParameter();
 		if (templateParameter != null) {
-			TemplateableElement template = templateParameter.getOwningSignature().getOwningElement();
+			TemplateableElement template = templateParameter.getOwningTemplateableElement();
 			if (template instanceof Operation) {
 				s.append(AbstractGenModelHelper.encodeName(ClassUtil.requireNonNull(((Operation) template).getOwningClass())));
 				s.append("_");
@@ -1229,8 +1228,7 @@ public class OCLinEcoreTablesUtils
 
 	protected @NonNull String getTemplateParameterNameCandidate(@NonNull TemplateParameter asTemplateParameter) {
 		TemplateParameterId asTemplateParameterId = asTemplateParameter.getTemplateParameterId();
-		TemplateSignature asTemplateSignature = asTemplateParameter.getOwningSignature();
-		TemplateableElement asTemplateableElement = asTemplateSignature.getOwningElement();
+		TemplateableElement asTemplateableElement = asTemplateParameter.getOwningTemplateableElement();
 		if (asTemplateableElement instanceof org.eclipse.ocl.pivot.Class) {
 			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asTemplateableElement;
 			return "_" + asTemplateParameterId.getIndex() + "_" + asClass.getName() + "_" + asTemplateParameter.getName();

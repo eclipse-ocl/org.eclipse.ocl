@@ -163,7 +163,7 @@ implements Type {
 	}
 
 	@Override
-	public boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
+	public boolean isEqualToGenericType(@NonNull StandardLibrary standardLibrary, @NonNull Type type) {
 		if (this == type) {
 			return true;
 		}

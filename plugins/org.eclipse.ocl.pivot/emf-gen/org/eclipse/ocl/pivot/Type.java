@@ -66,5 +66,8 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	 */
 	@NonNull TypeId getTypeId();
 
-	boolean isEqualToUnspecializedType(@NonNull StandardLibrary standardLibrary, @NonNull Type type);
+	/**
+	 * @since 7.0
+	 */
+	boolean isEqualToGenericType(@NonNull StandardLibrary standardLibrary, @NonNull Type type);
 } // Type

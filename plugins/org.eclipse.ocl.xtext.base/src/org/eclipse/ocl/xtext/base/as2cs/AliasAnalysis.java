@@ -235,7 +235,7 @@ public class AliasAnalysis extends AdapterImpl
 							break;
 						}
 						if (eContainer instanceof org.eclipse.ocl.pivot.Class) {
-							eContainer = PivotUtil.getUnspecializedTemplateableElement((org.eclipse.ocl.pivot.Class)eContainer);
+							eContainer = PivotUtil.getGenericElement((org.eclipse.ocl.pivot.Class)eContainer);
 						}
 					}
 				}

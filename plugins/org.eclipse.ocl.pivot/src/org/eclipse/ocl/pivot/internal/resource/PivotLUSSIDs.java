@@ -36,10 +36,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ShadowPart;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
@@ -106,9 +104,10 @@ public class PivotLUSSIDs extends LUSSIDs
 		localId += name.hashCode();
 		if (element instanceof TemplateableElement) {
 			int templateIndexMultiplier = TEMPLATE_BINDING_MULTIPLIER;
-			for (@NonNull TemplateBinding templateBinding :  PivotUtil.getOwnedBindings((TemplateableElement)element)) {
-				for (@NonNull TemplateParameterSubstitution templateParameterSubstitution :  PivotUtil.getOwnedSubstitutions(templateBinding)) {
-					Element actual = templateParameterSubstitution.getActual();
+			List<@NonNull TemplateArgument> asTemplateArguments = ((TemplateableElement)element).basicGetOwnedTemplateArguments();
+			if (asTemplateArguments != null) {
+				for (@NonNull TemplateArgument templateArgument :  asTemplateArguments) {
+					Element actual = templateArgument.getActual();
 					if (actual instanceof WildcardType) {
 						localId += templateIndexMultiplier;
 					}
@@ -206,11 +205,9 @@ public class PivotLUSSIDs extends LUSSIDs
 			Type parameterType = parameter.getType();
 			assert (parameterType == null) || (parameterType instanceof NormalizedTemplateParameter) || (parameterType.eResource() != null);
 			if (parameterType instanceof TemplateParameter) {
-				TemplateSignature templateSignature = ((TemplateParameter)parameterType).getOwningSignature();
-				if (templateSignature != null) {
-					List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-					index = templateParameters.indexOf(parameterType);
-				}
+				TemplateableElement templateableElement = ((TemplateParameter)parameterType).getOwningTemplateableElement();
+				List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedTemplateParametersList(templateableElement);
+				index = templateParameters.indexOf(parameterType);
 			}
 			if (parameter instanceof LambdaParameter) {
 				parametersLUSSID += parameterIndex * LAMBDA_PARAMETER_NAME_MULTIPLIER * parameter.getName().hashCode();
@@ -235,16 +232,15 @@ public class PivotLUSSIDs extends LUSSIDs
 			int index = 0;
 			for (EObject eContainer = type.eContainer(); eContainer != null; eContainer = eContainer.eContainer()) {
 				if (eContainer instanceof TemplateableElement) {
-					TemplateSignature templateSignature = ((TemplateableElement)eContainer).getOwnedSignature();
-					if (templateSignature != null) {
-						List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-						int localIndex = templateParameters.indexOf(type);
+					List<@NonNull TemplateParameter> asTemplateParameters = ((TemplateableElement)eContainer).basicGetOwnedTemplateParameters();
+					if (asTemplateParameters != null) {
+						int localIndex = asTemplateParameters.indexOf(type);
 						if (localIndex >= 0) {
 							index += localIndex;
 							gotIt = true;
 						}
 						else {
-							index += templateParameters.size();
+							index += asTemplateParameters.size();
 						}
 					}
 				}

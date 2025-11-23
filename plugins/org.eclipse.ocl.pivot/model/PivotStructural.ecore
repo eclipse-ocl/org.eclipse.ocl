@@ -1274,31 +1274,33 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="stringSymbol" lowerBound="1"
         eType="#//String"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TemplateBinding" eSuperTypes="#//Element">
+  <eClassifiers xsi:type="ecore:EClass" name="TemplateArgument" eSuperTypes="#//Element">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A TemplateBinding is a DirectedRelationship between a TemplateableElement and a template. A TemplateBinding specifies the TemplateParameterSubstitutions of actual parameters for the formal parameters of the template."/>
+      <details key="documentation" value="A TemplateArgument relates the actual optional type to a formal TemplateParameter by positional equivalence of a TemplateableElement's  hierarchy of TemplateParameters and ownedTemplateArguments."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSubstitutions" ordered="false"
-        lowerBound="1" upperBound="-1" eType="#//TemplateParameterSubstitution" containment="true"
-        eOpposite="#//TemplateParameterSubstitution/owningBinding">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="actual" lowerBound="1"
+        eType="#//Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateParameterSubstitutions owned by this TemplateBinding."/>
+        <details key="documentation" value="The ParameterableElement that is the actual parameter for this TemplateArgument."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owningElement" lowerBound="1"
-        eType="#//TemplateableElement" eOpposite="#//TemplateableElement/ownedBindings">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="actualIsRequired" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateableElement that is bound by this TemplateBinding."/>
+        <details key="documentation" value="Whether the actual type must be non-null rather than nullable."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="templateSignature" lowerBound="1"
-        eType="#//TemplateSignature" changeable="false" volatile="true" transient="true"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="formal" lowerBound="1"
+        eType="#//TemplateParameter" changeable="false" volatile="true" transient="true"
         derived="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateSignature for the template that is the target of this TemplateBinding."/>
+        <details key="documentation" value="The formal TemplateParameter that is associated with this TemplateArgument."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owningTemplateableElement"
+        lowerBound="1" eType="#//TemplateableElement" eOpposite="#//TemplateableElement/ownedTemplateArguments">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TemplateBinding that owns this TemplateArgument."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -1312,80 +1314,32 @@
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owningSignature" lowerBound="1"
-        eType="#//TemplateSignature" eOpposite="#//TemplateSignature/ownedParameters">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owningTemplateableElement"
+        lowerBound="1" eType="#//TemplateableElement" eOpposite="#//TemplateableElement/ownedTemplateParameters">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateSignature that owns this TemplateParameter."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TemplateParameterSubstitution" eSuperTypes="#//Element">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="actual" lowerBound="1"
-        eType="#//Type">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="formal" lowerBound="1"
-        eType="#//TemplateParameter">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The formal TemplateParameter that is associated with this TemplateParameterSubstitution."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedWildcard" eType="#//WildcardType"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owningBinding" lowerBound="1"
-        eType="#//TemplateBinding" eOpposite="#//TemplateBinding/ownedSubstitutions">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateBinding that owns this TemplateParameterSubstitution."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="actualIsRequired" lowerBound="1"
-        eType="#//Boolean" defaultValueLiteral="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Whether the actual type must be non-null rather than nullable."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TemplateSignature" eSuperTypes="#//Element">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A Template Signature bundles the set of formal TemplateParameters for a template."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedParameters" lowerBound="1"
-        upperBound="-1" eType="#//TemplateParameter" containment="true" eOpposite="#//TemplateParameter/owningSignature">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The formal parameters that are owned by this TemplateSignature."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owningElement" lowerBound="1"
-        eType="#//TemplateableElement" eOpposite="#//TemplateableElement/ownedSignature">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateableElement that owns this TemplateSignature."/>
+        <details key="documentation" value="The TemplateSignature that owns this TemplateableElement."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TemplateableElement" abstract="true"
       eSuperTypes="#//Element">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A TemplateableElement is an Element that can optionally be defined as a template and bound to other templates."/>
+      <details key="documentation" value="A TemplateableElement is an Element that can optionally be defined as a specialization of a generic TemplateableElement."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedBindings" ordered="false"
-        upperBound="-1" eType="#//TemplateBinding" containment="true" eOpposite="#//TemplateBinding/owningElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="generic" eType="#//TemplateableElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedTemplateArguments"
+        ordered="false" upperBound="-1" eType="#//TemplateArgument" containment="true"
+        eOpposite="#//TemplateArgument/owningTemplateableElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The optional TemplateBindings from this TemplateableElement to one or more templates."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSignature" eType="#//TemplateSignature"
-        containment="true" eOpposite="#//TemplateSignature/owningElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedTemplateParameters"
+        upperBound="-1" eType="#//TemplateParameter" containment="true" eOpposite="#//TemplateParameter/owningTemplateableElement">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The optional TemplateSignature specifying the formal TemplateParameters for this TemplateableElement. If a TemplateableElement has a TemplateSignature, then it is a template."/>
+        <details key="documentation" value="The formal parameters that are owned by this TemplateableElement."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="unspecializedElement" eType="#//TemplateableElement"
-        transient="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Namespace">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

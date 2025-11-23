@@ -1378,10 +1378,10 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	}
 
 	@Override
-	public R visitTemplateBinding(org.eclipse.ocl.pivot.@NonNull TemplateBinding object) {
+	public R visitTemplateArgument(org.eclipse.ocl.pivot.@NonNull TemplateArgument object) {
 		@Nullable P prologue = preVisit(object);
 		try {
-			R result = delegate.visitTemplateBinding(object);
+			R result = delegate.visitTemplateArgument(object);
 			return postVisit(object, prologue, result);
 		}
 		catch (Throwable e) {
@@ -1394,30 +1394,6 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 		@Nullable P prologue = preVisit(object);
 		try {
 			R result = delegate.visitTemplateParameter(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	@Override
-	public R visitTemplateParameterSubstitution(org.eclipse.ocl.pivot.@NonNull TemplateParameterSubstitution object) {
-		@Nullable P prologue = preVisit(object);
-		try {
-			R result = delegate.visitTemplateParameterSubstitution(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	@Override
-	public R visitTemplateSignature(org.eclipse.ocl.pivot.@NonNull TemplateSignature object) {
-		@Nullable P prologue = preVisit(object);
-		try {
-			R result = delegate.visitTemplateSignature(object);
 			return postVisit(object, prologue, result);
 		}
 		catch (Throwable e) {

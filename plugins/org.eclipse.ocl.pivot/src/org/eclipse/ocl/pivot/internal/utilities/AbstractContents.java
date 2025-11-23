@@ -43,10 +43,8 @@ import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
@@ -101,24 +99,11 @@ public abstract class AbstractContents extends PivotUtil
 	 * @since 1.4
 	 */
 	protected static void addBinding(@NonNull TemplateableElement specializedType, @NonNull Type actualType) {
-		TemplateableElement unspecializedType = specializedType.getUnspecializedElement();
-		List<TemplateBinding> templateBindings = specializedType.getOwnedBindings();
-		TemplateBinding templateBinding ;
-		if (templateBindings.size() > 0) {
-			templateBinding = templateBindings.get(0);
-		}
-		else {
-			templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
-			templateBindings.add(templateBinding);
-		}
-		List<TemplateParameterSubstitution> parameterSubstitutions = templateBinding.getOwnedSubstitutions();
-		TemplateSignature templateSignature = unspecializedType.getOwnedSignature();
-		assert templateSignature != null;
-		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedParametersList(templateSignature);
-		TemplateParameter templateParameter = templateParameters.get(parameterSubstitutions.size());
-		assert templateParameter != null;
-		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(templateParameter, actualType);
-		parameterSubstitutions.add(templateParameterSubstitution);
+		TemplateableElement genericType = specializedType.getGeneric();
+		assert genericType != null;
+		List<@NonNull TemplateArgument> templateArguments = PivotUtil.getOwnedTemplateArgumentsList(specializedType, true);
+		TemplateArgument templateArgument = createTemplateArgument(actualType);
+		templateArguments.add(templateArgument);
 	}
 
 	/**
@@ -135,8 +120,8 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	protected @NonNull BagType createBagType(@NonNull BagType unspecializedType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), unspecializedType);
+	protected @NonNull BagType createBagType(@NonNull BagType genericType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), genericType);
 	}
 
 	/**
@@ -177,18 +162,18 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	protected @NonNull CollectionType createCollectionType(@NonNull CollectionType unspecializedType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), unspecializedType);
+	protected @NonNull CollectionType createCollectionType(@NonNull CollectionType genericType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), genericType);
 	}
 
 	/**
 	 * @since 1.4
 	 */
-	protected @NonNull <@NonNull T extends CollectionType> T createCollectionType(/*@NonNull*/ T specializedType, @NonNull T unspecializedType) {
-		specializedType.setName(unspecializedType.getName());
-		specializedType.setLower(unspecializedType.getLower());
-		specializedType.setUpper(unspecializedType.getUpper());
-		specializedType.setUnspecializedElement(unspecializedType);
+	protected @NonNull <@NonNull T extends CollectionType> T createCollectionType(/*@NonNull*/ T specializedType, @NonNull T genericType) {
+		specializedType.setName(genericType.getName());
+		specializedType.setLower(genericType.getLower());
+		specializedType.setUpper(genericType.getUpper());
+		specializedType.setGeneric(genericType);
 		return specializedType;
 	}
 
@@ -240,10 +225,10 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	protected @NonNull MapType createMapType(@NonNull MapType unspecializedType) {
+	protected @NonNull MapType createMapType(@NonNull MapType genericType) {
 		MapType specializedType = PivotFactory.eINSTANCE.createMapType();
-		specializedType.setName(unspecializedType.getName());
-		specializedType.setUnspecializedElement(unspecializedType);
+		specializedType.setName(genericType.getName());
+		specializedType.setGeneric(genericType);
 		return specializedType;
 	}
 
@@ -276,8 +261,8 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	protected @NonNull OrderedSetType createOrderedSetType(@NonNull OrderedSetType unspecializedType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), unspecializedType);
+	protected @NonNull OrderedSetType createOrderedSetType(@NonNull OrderedSetType genericType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), genericType);
 	}
 
 	/**
@@ -311,8 +296,8 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	protected @NonNull SequenceType createSequenceType(@NonNull SequenceType unspecializedType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), unspecializedType);
+	protected @NonNull SequenceType createSequenceType(@NonNull SequenceType genericType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), genericType);
 	}
 
 	/**
@@ -329,8 +314,8 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
-	protected @NonNull SetType createSetType(@NonNull SetType unspecializedType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), unspecializedType);
+	protected @NonNull SetType createSetType(@NonNull SetType genericType) {
+		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), genericType);
 	}
 
 	protected @NonNull AnyType getAnyType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
@@ -409,7 +394,7 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected @NonNull TemplateParameter getTemplateParameter(@NonNull TemplateableElement templateableElement, int index) {
-		return ClassUtil.requireNonNull(templateableElement.getOwnedSignature().getOwnedParameters().get(index));
+		return ClassUtil.requireNonNull(PivotUtil.getOwnedTemplateParametersList(templateableElement).get(index));
 	}
 
 	protected @NonNull VoidType getVoidType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
@@ -417,18 +402,14 @@ public abstract class AbstractContents extends PivotUtil
 	}
 
 	protected void initTemplateParameter(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter templateParameter) {
-		TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
-		templateSignature.getOwnedParameters().add(templateParameter);
-		pivotType.setOwnedSignature(templateSignature);
+		pivotType.getOwnedTemplateParameters().add(templateParameter);
 	}
 
-	protected void initTemplateParameters(@NonNull TemplateableElement pivotType, TemplateParameter... templateParameters) {
+	protected void initTemplateParameters(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter... templateParameters) {
 		if ((templateParameters != null) && (templateParameters.length > 0)) {
-			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
 			for (TemplateParameter templateParameter : templateParameters) {
-				templateSignature.getOwnedParameters().add(templateParameter);
+				pivotType.getOwnedTemplateParameters().add(templateParameter);
 			}
-			pivotType.setOwnedSignature(templateSignature);
 		}
 	}
 

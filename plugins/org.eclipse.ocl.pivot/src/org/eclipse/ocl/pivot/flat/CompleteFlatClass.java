@@ -61,8 +61,8 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	protected @NonNull Operation @NonNull [] computeDirectOperations() {
 		List<@NonNull Operation> asOperations = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
-			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partialClass);
-			asOperations = gatherDirectOperations(unspecializedType, asOperations);
+			org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement(partialClass);
+			asOperations = gatherDirectOperations(genericType, asOperations);
 		}
 		return asOperations != null ? asOperations.toArray(new @NonNull Operation[asOperations.size()]) : NO_OPERATIONS;
 	}
@@ -71,8 +71,8 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
 		List<@NonNull Property> asProperties = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
-			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partialClass);
-			asProperties = gatherDirectProperties(unspecializedType, asProperties);
+			org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement(partialClass);
+			asProperties = gatherDirectProperties(genericType, asProperties);
 		}
 		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 	}
@@ -84,11 +84,11 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		CompleteModel completeModel = completeClass.getCompleteModel();
 		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
-			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : PivotUtil.getSuperClasses(partialClass)) {			// XXX getUnspecializedElement
+			for (org.eclipse.ocl.pivot.@NonNull Class partialSuperClass : PivotUtil.getSuperClasses(partialClass)) {			// XXX getGeneric
 				if (superFlatClasses == null) {
 					superFlatClasses = new ArrayList<>();
 				}
-				CompleteClass superCompleteClass = completeModel.getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(partialSuperClass));
+				CompleteClass superCompleteClass = completeModel.getCompleteClass(PivotUtil.getGenericElement(partialSuperClass));
 				FlatClass superFlatClass = superCompleteClass.getFlatClass();
 				if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
 					superFlatClasses.add(superFlatClass);
@@ -115,7 +115,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	}
 
 	protected @Nullable Set<@NonNull Stereotype> gatherExtendingStereotypes(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable Set<@NonNull Stereotype> extendingStereotypes) {
-		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;		// FIXME This is much than PartialClasses.initMemberProperties
+		assert PivotUtil.getGenericElement(asClass) == asClass;		// FIXME This is much than PartialClasses.initMemberProperties
 		List<StereotypeExtender> extendedBys = asClass.getExtenders();
 		if (extendedBys.size() > 0) {
 			if (extendingStereotypes == null) {

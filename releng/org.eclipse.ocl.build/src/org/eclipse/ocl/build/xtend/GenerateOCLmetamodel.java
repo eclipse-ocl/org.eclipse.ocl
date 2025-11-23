@@ -60,8 +60,8 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 	{
 		@Override
 		public int compare(@NonNull CollectionType o1, @NonNull CollectionType o2) {
-			TypeId m1 = PivotUtil.getUnspecializedTemplateableElement(o1).getTypeId();
-			TypeId m2 = PivotUtil.getUnspecializedTemplateableElement(o2).getTypeId();
+			TypeId m1 = PivotUtil.getGenericElement(o1).getTypeId();
+			TypeId m2 = PivotUtil.getGenericElement(o2).getTypeId();
 			int i = m1.toString().compareTo(m2.toString());
 			if (i != 0) {
 				return i;
@@ -88,7 +88,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 		CollectionType collType = null;
 		for (org.eclipse.ocl.pivot.Class type : types) {
 			if (type instanceof CollectionType) {
-				TemplateableElement unspecializedElement = type.getUnspecializedElement();
+				TemplateableElement unspecializedElement = type.getGeneric();
 				if (unspecializedElement instanceof CollectionType) {
 					collType = (CollectionType) unspecializedElement;
 					if (collType.getName().equals(name)) {

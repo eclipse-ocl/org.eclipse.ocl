@@ -37,10 +37,8 @@ import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -120,9 +118,9 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		else {
 			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 			eGenericType.setEClassifier((EClassifier) eType);
-			TemplateSignature templateSignature = type.getOwnedSignature();
-			if (templateSignature != null) {
-				for (@NonNull TemplateParameter templateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
+			Iterable<@NonNull TemplateParameter> asTemplateParameters = type.basicGetOwnedTemplateParameters();
+			if (asTemplateParameters != null) {
+				for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
 					EObject eTypeParameter = safeVisit(templateParameter);
 					if (eTypeParameter instanceof EGenericType) {
 						eGenericType.getETypeArguments().add((EGenericType) eTypeParameter);
@@ -201,7 +199,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 
 	@Override
 	public EObject visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
-		if (pivotType.getOwnedBindings().size() == 0) {
+		if (pivotType.basicGetOwnedTemplateArguments() == null) {
 			EClassifier eClassifier = context.getCreated(EClassifier.class, pivotType);
 			if (eClassifier != null) {
 				return eClassifier;
@@ -224,15 +222,15 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		}
 		TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(pivotType);
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-		EObject rawType = safeVisit(PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)pivotType));
+		EObject rawType = safeVisit(PivotUtil.getGenericElement((TemplateableElement)pivotType));
 		eGenericType.setEClassifier((EClassifier) rawType);
-		safeVisitAll(eGenericType.getETypeArguments(), templateSpecialization.getOwnedSubstitutions());
+		safeVisitAll(eGenericType.getETypeArguments(), templateSpecialization.getOwnedTemplateArguments());
 		return eGenericType;
 	}
 
 	@Override
 	public EObject visitCollectionType(@NonNull CollectionType pivotType) {
-		if (pivotType.getOwnedBindings().size() == 0) {
+		if (pivotType.basicGetOwnedTemplateArguments() == null) {
 			EClassifier eClassifier1 = context.getCreated(EClassifier.class, pivotType);
 			if (eClassifier1 != null) {
 				return eClassifier1;
@@ -249,12 +247,12 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			return OCLstdlibPackage.eINSTANCE.getEClassifier(pivotType.getName());
 		}
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-		EObject eClassifier2 = safeVisit(PivotUtil.getUnspecializedTemplateableElement((TemplateableElement)pivotType));
+		EObject eClassifier2 = safeVisit(PivotUtil.getGenericElement((TemplateableElement)pivotType));
 		eGenericType.setEClassifier((EClassifier) eClassifier2);
 		TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(pivotType);
-	//	safeVisitAll(eGenericType.getETypeArguments(), templateSpecialization.getOwnedSubstitutions());
+	//	safeVisitAll(eGenericType.getETypeArguments(), templateSpecialization.getOwnedTemplateArguments());
 		List<@NonNull EAnnotation> nestedEAnnotations = null;
-		for (Element pivotObject : templateSpecialization.getOwnedSubstitutions()) {
+		for (Element pivotObject : templateSpecialization.getOwnedTemplateArguments()) {
 			EObject eObject = safeVisit(pivotObject);
 			if (eObject instanceof EGenericType) {
 				EGenericType nestedEGenericType = (EGenericType)eObject;
@@ -313,7 +311,7 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
 		EClassifier eClassifier = OCLstdlibPackage.Literals.MAP;
 		eGenericType.setEClassifier(eClassifier);
-		safeVisitAll(eGenericType.getETypeArguments(), mapType.getOwnedBindings());
+		safeVisitAll(eGenericType.getETypeArguments(), mapType.getOwnedTemplateArguments());
 		// FIXME bounds, supers
 		return eGenericType;
 	}
@@ -381,23 +379,12 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		throw new IllegalArgumentException("Unsupported primitive type '" + pivotType + "' in AS2Ecore TypeRef pass");
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public EObject visitTemplateBinding(@NonNull TemplateBinding object) {
-		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-		return eGenericType;
-	}
-
-	@Override
-	public EObject visitTemplateParameter(@NonNull TemplateParameter pivotType) {
-		ETypeParameter eTypeParameter = context.getCreated(ETypeParameter.class, pivotType);
-		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
-		eGenericType.setETypeParameter(eTypeParameter);
-		return eGenericType;
-	}
-
-	@Override
-	public EObject visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution pivotTemplateParameterSubstitution) {
-		Type actual = pivotTemplateParameterSubstitution.getActual();
+	public EObject visitTemplateArgument(@NonNull TemplateArgument asTemplateArgument) {
+		Type actual = asTemplateArgument.getActual();
 		EObject actualType = safeVisit(actual);
 		if ((actualType instanceof EGenericType) || (actualType instanceof EAnnotation)) {
 			return actualType;
@@ -415,6 +402,14 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		else {
 			assert false;
 		}
+		return eGenericType;
+	}
+
+	@Override
+	public EObject visitTemplateParameter(@NonNull TemplateParameter pivotType) {
+		ETypeParameter eTypeParameter = context.getCreated(ETypeParameter.class, pivotType);
+		EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+		eGenericType.setETypeParameter(eTypeParameter);
 		return eGenericType;
 	}
 

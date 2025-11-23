@@ -11,13 +11,11 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
@@ -29,17 +27,14 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -146,7 +141,7 @@ implements CollectionType {
 	 */
 	protected CollectionTypeImpl() {
 		super();
-// XXX		System.out.println("ctor " + NameUtil.debugSimpleName(this));
+//		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**
@@ -256,11 +251,12 @@ implements CollectionType {
 			case 5:
 				return getOwnedConstraints();
 			case 6:
-				return getOwnedBindings();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 7:
-				return getOwnedSignature();
+				return getOwnedTemplateArguments();
 			case 8:
-				return getUnspecializedElement();
+				return getOwnedTemplateParameters();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -336,14 +332,15 @@ implements CollectionType {
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 6:
-				getOwnedBindings().clear();
-				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)newValue);
+				getOwnedTemplateArguments().clear();
+				getOwnedTemplateArguments().addAll((Collection<? extends TemplateArgument>)newValue);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)newValue);
+				getOwnedTemplateParameters().clear();
+				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -434,13 +431,13 @@ implements CollectionType {
 				getOwnedConstraints().clear();
 				return;
 			case 6:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedTemplateArguments().clear();
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)null);
+				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
 				getExtenders().clear();
@@ -519,11 +516,11 @@ implements CollectionType {
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 6:
-				return ownedBindings != null && !ownedBindings.isEmpty();
+				return generic != null;
 			case 7:
-				return ownedSignature != null;
+				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 8:
-				return unspecializedElement != null;
+				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:
@@ -581,8 +578,8 @@ implements CollectionType {
 
 	@Override
 	public @NonNull TypeId computeId() {
-		TemplateableElement unspecializedElement2 = getUnspecializedElement();
-		if (unspecializedElement2 == null) {
+		TemplateableElement generic2 = getGeneric();
+		if (generic2 == null) {
 			if (TypeId.COLLECTION_NAME.equals(name)) {
 				return TypeId.COLLECTION;
 			}
@@ -596,7 +593,7 @@ implements CollectionType {
 			}
 		}
 		else {
-			CollectionTypeId collectionTypeId = ((CollectionType)unspecializedElement2).getTypeId();
+			CollectionTypeId collectionTypeId = ((CollectionType)generic2).getTypeId();
 			TypeId elementTypeId = getElementType().getTypeId();
 			CollectionTypeId specializedId = collectionTypeId.getSpecializedId(elementTypeId, isIsNullFree(), getLowerValue(), getUpperValue());
 			if ("Collection<$0:qvttemplate::CollectionTemplateExp,$1:false,$2:0,$3:*>".equals(specializedId.toString())) {
@@ -613,8 +610,7 @@ implements CollectionType {
 
 	@Override
 	public @NonNull CollectionType getContainerType() {
-		TemplateableElement unspecializedElement2 = unspecializedElement;
-		return unspecializedElement2 != null ? (CollectionType)unspecializedElement2 : this;
+		return generic != null ? (CollectionType)generic : this;
 	}
 
 	@Override
@@ -624,15 +620,11 @@ implements CollectionType {
 
 	@Override
 	public Type getElementType() {
-		TemplateSignature templateSignature = getOwnedSignature();
-		if (templateSignature != null) {
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			return templateParameters.get(0);
+		if (ownedTemplateParameters != null) {
+			return ownedTemplateParameters.get(0);
 		}
 		else {
-			List<TemplateBinding> templateBindings = getOwnedBindings();
-			List<TemplateParameterSubstitution> templateParameterSubstitutions = templateBindings.get(0).getOwnedSubstitutions();
-			return templateParameterSubstitutions.get(0).getActual();
+			return ownedTemplateArguments.get(0).getActual();
 		}
 	}
 
@@ -677,28 +669,5 @@ implements CollectionType {
 	@Override
 	public void setUpperValue(@NonNull UnlimitedNaturalValue upper) {
 		setUpper(upper.isUnlimited() ? Unlimited.INSTANCE : upper.intValue());
-	}
-
-	@Override
-	public void setName(String newName) {
-		if ("Collection".equals(newName)) {
-//			System.out.println("setName " + NameUtil.debugSimpleName(this));
-			getClass();
-		}
-		super.setName(newName);
-	}
-
-	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement) {
-	//	if ("Collection".equals(name)) {
-//			System.out.println("setUnspecializedElement " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(newUnspecializedElement) + " " + newUnspecializedElement);
-			assert (newUnspecializedElement == null) || (newUnspecializedElement.getUnspecializedElement() == null);
-			assert (newUnspecializedElement == null) || (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature() != null);
-			assert (newUnspecializedElement == null) || (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().size() == 1);
-			assert (newUnspecializedElement == null) || (newUnspecializedElement instanceof AnyType) || (newUnspecializedElement.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER);
-			assert (newUnspecializedElement == null) || (PivotUtil.getUnspecializedTemplateableElement(newUnspecializedElement) == newUnspecializedElement);
-	//		getClass();
-	//	}
-		super.setUnspecializedElement(newUnspecializedElement);
 	}
 } //CollectionTypeImpl

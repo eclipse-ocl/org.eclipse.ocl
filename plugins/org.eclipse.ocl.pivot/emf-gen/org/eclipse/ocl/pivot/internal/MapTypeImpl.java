@@ -11,7 +11,6 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
@@ -28,10 +27,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -215,11 +212,12 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			case 5:
 				return getOwnedConstraints();
 			case 6:
-				return getOwnedBindings();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 7:
-				return getOwnedSignature();
+				return getOwnedTemplateArguments();
 			case 8:
-				return getUnspecializedElement();
+				return getOwnedTemplateParameters();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -299,14 +297,15 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 6:
-				getOwnedBindings().clear();
-				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)newValue);
+				getOwnedTemplateArguments().clear();
+				getOwnedTemplateArguments().addAll((Collection<? extends TemplateArgument>)newValue);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)newValue);
+				getOwnedTemplateParameters().clear();
+				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -401,13 +400,13 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 				getOwnedConstraints().clear();
 				return;
 			case 6:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedTemplateArguments().clear();
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)null);
+				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
 				getExtenders().clear();
@@ -490,11 +489,11 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 6:
-				return ownedBindings != null && !ownedBindings.isEmpty();
+				return generic != null;
 			case 7:
-				return ownedSignature != null;
+				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 8:
-				return unspecializedElement != null;
+				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:
@@ -558,7 +557,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 
 	@Override
 	public @NonNull TypeId computeId() {
-		if (getUnspecializedElement() == null) {
+		if (getGeneric() == null) {
 			return TypeId.MAP;
 		}
 		else {
@@ -576,29 +575,21 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 
 	@Override
 	public Type getKeyType() {
-		TemplateSignature templateSignature = getOwnedSignature();
-		if (templateSignature != null) {
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			return templateParameters.get(0);
+		if (ownedTemplateParameters != null) {
+			return ownedTemplateParameters.get(0);
 		}
 		else {
-			List<TemplateBinding> templateBindings = getOwnedBindings();
-			List<TemplateParameterSubstitution> templateParameterSubstitutions = templateBindings.get(0).getOwnedSubstitutions();
-			return templateParameterSubstitutions.get(0).getActual();
+			return ownedTemplateArguments.get(0).getActual();
 		}
 	}
 
 	@Override
 	public Type getValueType() {
-		TemplateSignature templateSignature = getOwnedSignature();
-		if (templateSignature != null) {
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			return templateParameters.get(1);
+		if (ownedTemplateParameters != null) {
+			return ownedTemplateParameters.get(1);
 		}
 		else {
-			List<TemplateBinding> templateBindings = getOwnedBindings();
-			List<TemplateParameterSubstitution> templateParameterSubstitutions = templateBindings.get(0).getOwnedSubstitutions();
-			return templateParameterSubstitutions.get(1).getActual();
+			return ownedTemplateArguments.get(1).getActual();
 		}
 	}
 
@@ -664,7 +655,6 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 
 	@Override
 	public @NonNull MapType getContainerType() {
-		TemplateableElement unspecializedElement2 = unspecializedElement;
-		return unspecializedElement2 != null ? (MapType)unspecializedElement2 : this;
+		return generic != null ? (MapType)generic : this;
 	}
 } //MapTypeImpl

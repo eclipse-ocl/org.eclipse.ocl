@@ -59,8 +59,8 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
@@ -86,7 +86,6 @@ import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -866,7 +865,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		if (ecorePackage.getEClassifier(PivotPackage.Literals.OPERATION_CALL_EXP.getName()) == null) {
 			return false;
 		}
-		if (ecorePackage.getEClassifier(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION.getName()) == null) {
+		if (ecorePackage.getEClassifier(PivotPackage.Literals.TEMPLATE_ARGUMENT.getName()) == null) {
 			return false;
 		}
 		return true;
@@ -1107,20 +1106,20 @@ public class Ecore2AS extends AbstractExternal2AS
 		assert unspecializedPivotClass != null;			// FIXME
 		if (unspecializedPivotClass instanceof CollectionType) {
 			CollectionType genericType = (CollectionType)unspecializedPivotClass;
-			assert genericType == PivotUtil.getUnspecializedTemplateableElement(genericType);
-			TemplateSignature templateSignature = genericType.getOwnedSignature();
-			if (templateSignature == null) {
+			assert genericType == PivotUtil.getGenericElement(genericType);
+			@Nullable List<@NonNull TemplateParameter> asTemplateParameters = genericType.basicGetOwnedTemplateParameters();
+			if (asTemplateParameters == null) {
 				throw new IllegalArgumentException("Missing template signature for template type " + genericType.getName());
 			}
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			if (templateParameters.size() != 1) {
+			int templateParametersSize = asTemplateParameters.size();
+			if (templateParametersSize != 1) {
 				throw new IllegalArgumentException("Incorrect template binding count for template type " + genericType.getName());
 			}
-			if (templateArguments.size() != templateParameters.size()) {
+			if (templateArguments.size() != templateParametersSize) {
 				throw new IllegalArgumentException("Incorrect template binding for template type " + genericType.getName());
 			}
 			Type elementType = templateArguments.get(0);
-			if (elementType == templateParameters.get(0)) {
+			if (elementType == asTemplateParameters.get(0)) {
 				return genericType;
 			}
 		//	CompleteClassInternal libraryCompleteClass = metamodelManager.getCompleteClass(elementType);
@@ -1338,7 +1337,8 @@ public class Ecore2AS extends AbstractExternal2AS
 //			csTypeRef.setExtends(doSwitchAll(eGenericType.getExtends()));
 //			csTypeRef.setSuper(doSwitchAll(eGenericType.getSuper()));
 			return csTypeRef; */
-		return new PivotHelper(environmentFactory).createWildcardType(null, null);		// FIXME bounds
+		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
+		return wildcardType;		// FIXME bounds
 		/*		org.eclipse.ocl.pivot.Class pivotElement = PivotFactory.eINSTANCE.createClass();
 		String name = PivotConstants.WILDCARD_NAME;
 		EStructuralFeature eFeature = eGenericType.eContainmentFeature();

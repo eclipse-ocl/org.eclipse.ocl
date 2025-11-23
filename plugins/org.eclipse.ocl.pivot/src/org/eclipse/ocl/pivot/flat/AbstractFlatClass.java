@@ -377,7 +377,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	protected @Nullable List<@NonNull Operation> gatherDirectOperations(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Operation> asOperations) {
-		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
+		assert PivotUtil.getGenericElement(asClass) == asClass;
 		for (@NonNull Operation partialOperation : PivotUtil.getOwnedOperations(asClass)) {
 			if (asOperations == null) {
 				asOperations = new ArrayList<>();
@@ -388,7 +388,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	protected @Nullable List<@NonNull Property> gatherDirectProperties(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Property> asProperties) {
-		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;		// FIXME This is much less than PartialClasses.initMemberProperties
+		assert PivotUtil.getGenericElement(asClass) == asClass;		// FIXME This is much less than PartialClasses.initMemberProperties
 		for (@NonNull Property partialProperty : PivotUtil.getOwnedProperties(asClass)) {
 			if (asProperties == null) {
 				asProperties = new ArrayList<>();
@@ -696,12 +696,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				if (name2partialOperations2 == null) {
 					name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
 					/*	for (org.eclipse.ocl.pivot.@NonNull Class superType : PivotUtil.getSuperClasses(asClass)) {
-						org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
+						org.eclipse.ocl.pivot.Class genericType = PivotUtil.getUnspecializedTemplateableElement(superType);
 						//	initMemberOperationsFrom(unspecializedPartialType);
 						//	if (INIT_MEMBER_OPERATIONS.isActive()) {
 						//		INIT_MEMBER_OPERATIONS.println(this + " from " + unspecializedPartialType);
 						//	}
-						for (@SuppressWarnings("null")@NonNull Operation pivotOperation : unspecializedType.getOwnedOperations()) {
+						for (@SuppressWarnings("null")@NonNull Operation pivotOperation : genericType.getOwnedOperations()) {
 							if (pivotOperation.getName() != null) {		// name may be null for partially initialized Complete OCL document.
 								addOperation(pivotOperation);
 							}

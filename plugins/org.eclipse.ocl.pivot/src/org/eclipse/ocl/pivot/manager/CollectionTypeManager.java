@@ -15,7 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
  * CollectionTypeManager encapsulates the knowledge about known collection types.
@@ -29,8 +29,8 @@ public interface CollectionTypeManager
 	 */
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
-	boolean conformsToCollectionType(@NonNull CollectionType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull CollectionType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity);
+	boolean conformsToCollectionType(@NonNull CollectionType leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull CollectionType rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity);
 
 	void dispose();
 
@@ -41,8 +41,8 @@ public interface CollectionTypeManager
 
 	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId);
 
-	@NonNull CollectionType getCommonCollectionType(@NonNull CollectionType leftCollectionType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-				@NonNull CollectionType rightCollectionType, @Nullable TemplateParameterSubstitutions rightSubstitutions);
+	@NonNull CollectionType getCommonCollectionType(@NonNull CollectionType leftCollectionType, @Nullable TemplateArguments leftTemplateArguments,
+				@NonNull CollectionType rightCollectionType, @Nullable TemplateArguments rightTemplateArguments);
 
 	boolean isEqualToCollectionType(@NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType);
 }

@@ -570,22 +570,12 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
-	public R visitTemplateBinding(org.eclipse.ocl.pivot.@NonNull TemplateBinding object) {
+	public R visitTemplateArgument(org.eclipse.ocl.pivot.@NonNull TemplateArgument object) {
 		return visiting(object);
 	}
 
 	@Override
 	public R visitTemplateParameter(org.eclipse.ocl.pivot.@NonNull TemplateParameter object) {
-		return visiting(object);
-	}
-
-	@Override
-	public R visitTemplateParameterSubstitution(org.eclipse.ocl.pivot.@NonNull TemplateParameterSubstitution object) {
-		return visiting(object);
-	}
-
-	@Override
-	public R visitTemplateSignature(org.eclipse.ocl.pivot.@NonNull TemplateSignature object) {
 		return visiting(object);
 	}
 

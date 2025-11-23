@@ -37,7 +37,7 @@ import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -467,11 +467,11 @@ implements PropertyCallExp {
 	{
 		Property referredProperty = PivotUtil.getReferredProperty(this);
 		org.eclipse.ocl.pivot.Class owningType = PivotUtil.getOwningClass(referredProperty);
-		if (!TemplateParameterSubstitutionVisitor.needsSpecialization(owningType)) {
+		if (!TemplateArgumentVisitor.needsSpecialization(owningType)) {
 			return owningType;
 		}
 		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(this);
-		TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.create(environmentFactory, this, owningType);
+		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.create(environmentFactory, this, owningType);
 		return visitor.specializeType(owningType);
 	}
 
@@ -486,13 +486,17 @@ implements PropertyCallExp {
 	@Override
 	public /*@NonNull*/ Type getSpecializedReferredPropertyType()
 	{
+		String string = toString();
+		if ("self.ownedInvariants".equals(string) || "self.superClasses".equals(string)) {
+			getClass();		// XXX
+		}
 		Property referredProperty = PivotUtil.getReferredProperty(this);
 		Type referencedType = PivotUtil.getType(referredProperty);
-		if (!TemplateParameterSubstitutionVisitor.needsSpecialization(referencedType)) {
+		if (!TemplateArgumentVisitor.needsSpecialization(referencedType)) {
 			return referencedType;
 		}
 		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(this);
-		TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.create(environmentFactory, this, referencedType);
+		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.create(environmentFactory, this, referencedType);
 		return visitor.specializeType(referencedType);
 	}
 

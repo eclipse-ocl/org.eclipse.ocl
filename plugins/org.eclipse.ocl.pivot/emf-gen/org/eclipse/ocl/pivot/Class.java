@@ -345,7 +345,7 @@ extends Type, Namespace, TemplateableElement {
 	 * @since 7.0
 	 */
 	@Override
-	org.eclipse.ocl.pivot.Class getUnspecializedElement();
+	org.eclipse.ocl.pivot.Class getGeneric();
 
 	/**
 	 * @since 7.0

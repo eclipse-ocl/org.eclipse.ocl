@@ -15,8 +15,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.ecore.EClass
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.ocl.pivot.Type
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor
 
 abstract class GenerateVisitorsXtend extends GenerateVisitors
 {
@@ -365,9 +365,9 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 	}
 	
 	/*
-	 * Abstract«projectPrefix»«generic»TemplateParameterSubstitutionVisitor
+	 * Abstract«projectPrefix»«generic»TemplateArgumentVisitor
 	 */
-	protected def void generateAbstractTemplateParameterSubstitutionVisitor(/*@NonNull*/ EPackage ePackage, /*@NonNull*/ String generic, /*@NonNull*/ Class<?> returnClass, /*@NonNull*/ Class<?> contextClass) {
+	protected def void generateAbstractTemplateArgumentVisitor(/*@NonNull*/ EPackage ePackage, /*@NonNull*/ String generic, /*@NonNull*/ Class<?> returnClass, /*@NonNull*/ Class<?> contextClass) {
 		var boolean isDerived = isDerived();
 		var boolean needsOverride = needsOverride();
 		var MergeWriter writer = new MergeWriter(outputFolder + "Abstract" + projectPrefix + generic + "Visitor.java");
@@ -380,7 +380,7 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			import «Type.getName()»;
 			import «contextClass.getName()»;
 			«IF isDerived && !superProjectPrefix.equals("")»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
-			«IF isDerived && superProjectPrefix.equals("")»import «TemplateParameterSubstitutionVisitor.getName()»;«ENDIF»
+			«IF isDerived && superProjectPrefix.equals("")»import «TemplateArgumentVisitor.getName()»;«ENDIF»
 
 			/**
 			 * An Abstract«projectPrefix»«generic»Visitor provides a default implementation for each

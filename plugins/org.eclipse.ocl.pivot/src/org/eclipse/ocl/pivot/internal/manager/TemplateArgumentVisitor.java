@@ -42,9 +42,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -60,13 +59,13 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
- * A TemplateParameterSubstitutionVisitor supports synthesis of TemplateParameterSubstitutions by visting AS elemenmts that
+ * A TemplateArgumentVisitor supports synthesis of TemplateArghuments by visiting AS elements that
  * have a partial parameterization and a partial specialization to establish the total specialization.
  *
- * Construction using create() analyzses the passed Callxp.
+ * Construction using create() analyzes the passed Callxp.
  *
  * Construction using createVisitor() defers analysis via calls to analyzeType() to the caller.
  *
@@ -74,16 +73,18 @@ import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
  * <p>
  * The visitor should be constructed with an EnvironmentFactory in case any synthetic types need constructing, and the identity
  * of the self type in case one of the substitutions uses OclSelf.
+ *
+ * @since 7.0
  */
-public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractExtendingVisitor<Object, Object> implements TemplateParameterSubstitutions
+public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisitor<Object, Object> implements TemplateArguments
 {
 	/**
-	 * Create a TemplateParameterSubstitutionVisitor suitable for specializing types with respect to the parameter
+	 * Create a TemplateArgumentVisitor suitable for specializing types with respect to the parameter
 	 * substitutions present in the actualExp, with selfType as the optional kn own type of OclSelf.
 	 *
 	 * @since 7.0
 	 */
-	public static @NonNull TemplateParameterSubstitutionVisitor create(@NonNull EnvironmentFactory environmentFactory,
+	public static @NonNull TemplateArgumentVisitor create(@NonNull EnvironmentFactory environmentFactory,
 				@NonNull CallExp actualExp, @Nullable Type selfType) {
 		Element referredElement;
 		 if (actualExp instanceof NavigationCallExp) {
@@ -92,9 +93,9 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		else {
 			referredElement = PivotUtil.getReferredOperation(actualExp);
 		}
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(referredElement, environmentFactory, selfType, null);
+		TemplateArgumentVisitor visitor = createVisitor(referredElement, environmentFactory, selfType, null);
 		if (visitor == null) {
-			visitor = environmentFactory.createTemplateParameterSubstitutionVisitor(selfType, null);
+			visitor = environmentFactory.createTemplateArgumentVisitor(selfType, null);
 		}
 		else {
 			visitor.exclude(actualExp);
@@ -106,12 +107,12 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	/**
 	 * @since 7.0
 	 */
-	public static @Nullable TemplateParameterSubstitutionVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public static @Nullable TemplateArgumentVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		BasicTemplateSpecialization templateSpecialization = BasicTemplateSpecialization.basicGetTemplateSpecialization((Element)eObject);
 		if (templateSpecialization == null) {
 			return null;
 		}
-		TemplateParameterSubstitutionVisitor visitor = environmentFactory.createTemplateParameterSubstitutionVisitor(selfType, null);
+		TemplateArgumentVisitor visitor = environmentFactory.createTemplateArgumentVisitor(selfType, null);
 		visitor.setTemplateSpecialization(templateSpecialization);
 		return visitor;
 	}
@@ -125,14 +126,10 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		boolean hasTemplateParameters = false;
 		for (EObject eObject = asElement; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof TemplateableElement) {
-				TemplateSignature templateSignature = ((TemplateableElement)eObject).getOwnedSignature();
-				if (templateSignature != null) {
-					List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-					int iSize = templateParameters.size();
-					if (iSize > 0) {
-						hasTemplateParameters = true;
-						break;
-					}
+				Iterable<@NonNull TemplateParameter> asTemplateParameters = ((TemplateableElement)eObject).basicGetOwnedTemplateParameters();
+				if (asTemplateParameters != null) {
+					hasTemplateParameters = true;
+					break;
 				}
 			}
 		}
@@ -153,7 +150,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		if (templateParameter != null) {
 			return true;
 		}
-		if (referencedType instanceof CollectionType) {
+		if (referencedType instanceof CollectionType) {			// XXX generalize to templateArguments
 			Type elementType = ((CollectionType)referencedType).getElementType();
 			return needsSpecialization(elementType);
 		}
@@ -193,8 +190,8 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			return false;
 		}
 		if (referencedType instanceof org.eclipse.ocl.pivot.Class) {
-			TemplateSignature templateSignature = ((org.eclipse.ocl.pivot.Class)referencedType).getOwnedSignature();
-			if (templateSignature != null) {
+			@Nullable Iterable<@NonNull TemplateParameter> templateParameters = ((org.eclipse.ocl.pivot.Class)referencedType).basicGetOwnedTemplateParameters();
+			if (templateParameters != null) {
 				return true;
 			}
 		}
@@ -209,7 +206,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	 */
 	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
-		TemplateParameterSubstitutionVisitor visitor = create(environmentFactory, actualExp, selfType);
+		TemplateArgumentVisitor visitor = create(environmentFactory, actualExp, selfType);
 		return visitor.specializeType(type);
 	}
 
@@ -217,7 +214,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	 * @since 7.0
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class specializeTypeToLowerBound(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull EnvironmentFactory environmentFactory) {
-		TemplateParameterSubstitutionVisitor visitor = createVisitor(type, environmentFactory, null, null);
+		TemplateArgumentVisitor visitor = createVisitor(type, environmentFactory, null, null);
 		if (visitor == null) {
 			return type;
 		}
@@ -246,7 +243,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	/**
 	 * @since 7.0
 	 */
-	public /*protected*/ TemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public TemplateArgumentVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		super(null);
 		this.environmentFactory = environmentFactory;
 		this.selfType = selfType;
@@ -338,7 +335,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	public @NonNull Type getNormalizedType(@NonNull Type asType) {
 		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
 			TemplateParameter asTemplateParameter = (TemplateParameter)asType;
-			if (asTemplateParameter.basicGetConstrainingClasses() == null) {
+			if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
 			//	assert false;
 				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), asTemplateParameter);
 			}
@@ -448,7 +445,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		if (type instanceof NormalizedTemplateParameter) {
 			Type actualType = getTemplateSpecialization().get(((NormalizedTemplateParameter)type).getIndex());
-			if (!(actualType instanceof NormalizedTemplateParameter) && (actualType instanceof TemplateParameter) && (((TemplateParameter)actualType).basicGetConstrainingClasses() == null)) {
+			if (!(actualType instanceof NormalizedTemplateParameter) && (actualType instanceof TemplateParameter) && ((TemplateParameter)actualType).getConstrainingClasses().isEmpty()) {
 				return type;
 			}
 			return actualType;
@@ -461,7 +458,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			assert !(actualType instanceof NormalizedTemplateParameter);
 			if (actualType instanceof TemplateParameter) {
 				TemplateParameter asTemplateParameter = (TemplateParameter)actualType;
-				if (asTemplateParameter.basicGetConstrainingClasses() == null) {
+				if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
 					return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), asTemplateParameter);
 				}
 			}
@@ -474,7 +471,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			CollectionType collectionType = (CollectionType)type;
 			Type elementType = PivotUtil.getElementType(collectionType);
 			Type specializedElementType = specializeType(elementType);
-			CollectionType unspecializedCollectionType = PivotUtil.getUnspecializedTemplateableElement(collectionType);
+			CollectionType unspecializedCollectionType = PivotUtil.getGenericElement(collectionType);
 			return standardLibrary.getCollectionType(unspecializedCollectionType, specializedElementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
 		}
 		else if (type instanceof MapType) {
@@ -485,7 +482,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			boolean valuesAreNullFree = mapType.isValuesAreNullFree();
 			Type specializedKeyType = specializeType(keyType);
 			Type specializedValueType = specializeType(valueType);
-			MapType unspecializedMapType = PivotUtil.getUnspecializedTemplateableElement(mapType);
+			MapType unspecializedMapType = PivotUtil.getGenericElement(mapType);
 			assert unspecializedMapType == standardLibrary.getMapType();
 			// Ignore the entryClass.
 			return standardLibrary.getMapType(specializedKeyType, keysAreNullFree, specializedValueType, valuesAreNullFree);
@@ -516,12 +513,12 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			BasicTemplateSpecialization templateSpecialization2 = templateSpecialization;
 			assert templateSpecialization2 != null;
 			org.eclipse.ocl.pivot.Class partiallySpecializedType = (org.eclipse.ocl.pivot.Class)type;
-			org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(partiallySpecializedType);
+			org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement(partiallySpecializedType);
 			if (partiallySpecializedType != templateSpecialization2.getSpecializedElement()) {
 				templateSpecialization2 = TemplateSpecialization.basicGetTemplateSpecialization(partiallySpecializedType);
 			}
 			if (templateSpecialization2 == null) {
-				return unspecializedType;
+				return genericType;
 			}
 			List<@NonNull Type> templateArguments = new ArrayList<>();
 			for (int i = 0; i < templateSpecialization2.size(); i++) {
@@ -530,7 +527,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				templateArguments.add(actualType);
 
 			}
-			return standardLibrary.getSpecializedType(unspecializedType, templateArguments);
+			return standardLibrary.getSpecializedType(genericType, templateArguments);
 		}
 	}
 
@@ -546,15 +543,13 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 
 	@Override
 	public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
-		TemplateSignature formalTemplateSignature = object.getOwnedSignature();
-		if (formalTemplateSignature != null) {
-			assert object.getOwnedBindings().isEmpty();
-			List<@NonNull TemplateParameter> formalParameters = PivotUtil.getOwnedParametersList(formalTemplateSignature);
+		List<@NonNull TemplateParameter> formalParameters = object.basicGetOwnedTemplateParameters();
+		if (formalParameters != null) {
+			assert object.basicGetOwnedTemplateArguments() == null;
 			if (actual instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class actualClass = (org.eclipse.ocl.pivot.Class)actual;
-				TemplateSignature actualTemplateSignature = actualClass.getOwnedSignature();
-				if (actualTemplateSignature != null) {
-					List<@NonNull TemplateParameter> actualParameters = PivotUtil.getOwnedParametersList(actualTemplateSignature);
+				List<@NonNull TemplateParameter> actualParameters = actualClass.basicGetOwnedTemplateParameters();
+				if (actualParameters != null) {
 					int iMax = actualParameters.size();
 					assert iMax == formalParameters.size();
 					for (int i = 0; i < iMax; i++) {
@@ -564,13 +559,13 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 					}
 				}
 				else {
-					List<@NonNull TemplateParameterSubstitution> actualSubstitutions = PivotUtil.getOwnedSubstitutionsList(actualClass);
-					int iMax = actualSubstitutions.size();
+					List<@NonNull TemplateArgument> actualArguments = PivotUtil.getOwnedTemplateArgumentsList(actualClass);
+					int iMax = actualArguments.size();
 					assert iMax == formalParameters.size();
 					for (int i = 0; i < iMax; i++) {
 						@NonNull TemplateParameter formalParameter = formalParameters.get(i);
-						@NonNull TemplateParameterSubstitution actualSubstitution = actualSubstitutions.get(i);
-						Type actualActual = actualSubstitution.getActual();
+						@NonNull TemplateArgument actualArgument = actualArguments.get(i);
+						Type actualActual = actualArgument.getActual();
 						analyzeType(formalParameter, actualActual);
 					}
 				}
@@ -691,7 +686,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		//
 		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation)referredOperation.getImplementation();
 		if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
-			implementation.resolveUnmodeledTemplateParameterSubstitutions(this, object);
+			implementation.resolveUnmodeledTemplateArguments(this, object);
 		}
 		return null;
 	}

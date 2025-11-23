@@ -34,7 +34,7 @@ public class PivotHasSuperClassesDependency extends AbstractDependency<@NonNull 
 		if (pivot == null) {
 			return false;
 		}
-		Type type = pivot instanceof org.eclipse.ocl.pivot.Class ? PivotUtil.getUnspecializedTemplateableElement((org.eclipse.ocl.pivot.Class)pivot) : pivot;
+		Type type = pivot instanceof org.eclipse.ocl.pivot.Class ? PivotUtil.getGenericElement((org.eclipse.ocl.pivot.Class)pivot) : pivot;
 		assert type == pivot;		// WIP
 		if (type instanceof AnyType) {
 			return true;

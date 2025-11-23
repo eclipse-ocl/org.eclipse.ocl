@@ -319,7 +319,7 @@ public class OCLstdlib extends ASResourceImpl
 			installIterations();
 			installCoercions();
 			installProperties();
-			installTemplateBindings();
+			installTemplateArguments();
 			installPrecedences();
 			installComments();
 		}
@@ -3167,7 +3167,7 @@ public class OCLstdlib extends ASResourceImpl
 			property.setOpposite(pr_MapType_valueType);
 		}
 
-		private void installTemplateBindings() {
+		private void installTemplateArguments() {
 			addBinding(_Bag_$$0_F, $$0);
 			addBinding(_Bag_$$1_F, $$1);
 			addBinding(_Bag_$$1_T, $$1);

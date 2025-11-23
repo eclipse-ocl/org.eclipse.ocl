@@ -3280,32 +3280,35 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-StringLiteralExp-stringSymbol"
         name="stringSymbol" lowerBound="1" eType="#T-pivot-String"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TemplateBinding" name="TemplateBinding"
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TemplateArgument" name="TemplateArgument"
       eSuperTypes="#T-pivot-Element">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A TemplateBinding is a DirectedRelationship between a TemplateableElement and a template. A TemplateBinding specifies the TemplateParameterSubstitutions of actual parameters for the formal parameters of the template."/>
+      <details key="documentation" value="A TemplateArgument relates the actual optional type to a formal TemplateParameter by positional equivalence of a TemplateableElement's  hierarchy of TemplateParameters and ownedTemplateArguments."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateBinding-ownedSubstitutions"
-        name="ownedSubstitutions" ordered="false" lowerBound="1" upperBound="-1" eType="#T-pivot-TemplateParameterSubstitution"
-        containment="true" eOpposite="#F-pivot-TemplateParameterSubstitution-owningBinding">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateArgument-actual"
+        name="actual" lowerBound="1" eType="#T-pivot-Type">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateParameterSubstitutions owned by this TemplateBinding."/>
+        <details key="documentation" value="The ParameterableElement that is the actual parameter for this TemplateArgument."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateBinding-owningElement"
-        name="owningElement" lowerBound="1" eType="#T-pivot-TemplateableElement" eOpposite="#F-pivot-TemplateableElement-ownedBindings">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TemplateArgument-actualIsRequired"
+        name="actualIsRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateableElement that is bound by this TemplateBinding."/>
+        <details key="documentation" value="Whether the actual type must be non-null rather than nullable."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateBinding-templateSignature"
-        name="templateSignature" lowerBound="1" eType="#T-pivot-TemplateSignature"
-        changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateArgument-formal"
+        name="formal" lowerBound="1" eType="#T-pivot-TemplateParameter" changeable="false"
+        volatile="true" transient="true" derived="true" resolveProxies="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateSignature for the template that is the target of this TemplateBinding."/>
+        <details key="documentation" value="The formal TemplateParameter that is associated with this TemplateArgument."/>
+      </eAnnotations>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateArgument-owningTemplateableElement"
+        name="owningTemplateableElement" lowerBound="1" eType="#T-pivot-TemplateableElement"
+        eOpposite="#F-pivot-TemplateableElement-ownedTemplateArguments">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The TemplateBinding that owns this TemplateArgument."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
@@ -3320,75 +3323,24 @@
         <details key="nullFree" value="true"/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameter-owningSignature"
-        name="owningSignature" lowerBound="1" eType="#T-pivot-TemplateSignature" eOpposite="#F-pivot-TemplateSignature-ownedParameters">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameter-owningTemplateableElement"
+        name="owningTemplateableElement" lowerBound="1" eType="#T-pivot-TemplateableElement"
+        eOpposite="#F-pivot-TemplateableElement-ownedTemplateParameters">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateSignature that owns this TemplateParameter."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TemplateParameterSubstitution"
-      name="TemplateParameterSubstitution" eSuperTypes="#T-pivot-Element">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A TemplateParameterSubstitution relates the actual parameter to a formal TemplateParameter as part of a template binding."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameterSubstitution-actual"
-        name="actual" lowerBound="1" eType="#T-pivot-Type">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The ParameterableElement that is the actual parameter for this TemplateParameterSubstitution."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-TemplateParameterSubstitution-actualIsRequired"
-        name="actualIsRequired" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Whether the actual type must be non-null rather than nullable."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameterSubstitution-formal"
-        name="formal" lowerBound="1" eType="#T-pivot-TemplateParameter">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The formal TemplateParameter that is associated with this TemplateParameterSubstitution."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameterSubstitution-ownedWildcard"
-        name="ownedWildcard" eType="#T-pivot-WildcardType" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateParameterSubstitution-owningBinding"
-        name="owningBinding" lowerBound="1" eType="#T-pivot-TemplateBinding" eOpposite="#F-pivot-TemplateBinding-ownedSubstitutions">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateBinding that owns this TemplateParameterSubstitution."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TemplateSignature" name="TemplateSignature"
-      eSuperTypes="#T-pivot-Element">
-    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A Template Signature bundles the set of formal TemplateParameters for a template."/>
-    </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateSignature-ownedParameters"
-        name="ownedParameters" lowerBound="1" upperBound="-1" eType="#T-pivot-TemplateParameter"
-        containment="true" eOpposite="#F-pivot-TemplateParameter-owningSignature">
-      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
-        <details key="nullFree" value="true"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The formal parameters that are owned by this TemplateSignature."/>
-      </eAnnotations>
-    </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateSignature-owningElement"
-        name="owningElement" lowerBound="1" eType="#T-pivot-TemplateableElement" eOpposite="#F-pivot-TemplateableElement-ownedSignature">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The TemplateableElement that owns this TemplateSignature."/>
+        <details key="documentation" value="The TemplateSignature that owns this TemplateableElement."/>
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-TemplateableElement" name="TemplateableElement"
       abstract="true" eSuperTypes="#T-pivot-Element">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="A TemplateableElement is an Element that can optionally be defined as a template and bound to other templates."/>
+      <details key="documentation" value="A TemplateableElement is an Element that can optionally be defined as a specialization of a generic TemplateableElement."/>
     </eAnnotations>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateableElement-ownedBindings"
-        name="ownedBindings" ordered="false" upperBound="-1" eType="#T-pivot-TemplateBinding"
-        containment="true" eOpposite="#F-pivot-TemplateBinding-owningElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateableElement-generic"
+        name="generic" eType="#T-pivot-TemplateableElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateableElement-ownedTemplateArguments"
+        name="ownedTemplateArguments" ordered="false" upperBound="-1" eType="#T-pivot-TemplateArgument"
+        containment="true" eOpposite="#F-pivot-TemplateArgument-owningTemplateableElement">
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
         <details key="nullFree" value="true"/>
       </eAnnotations>
@@ -3396,16 +3348,16 @@
         <details key="documentation" value="The optional TemplateBindings from this TemplateableElement to one or more templates."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateableElement-ownedSignature"
-        name="ownedSignature" eType="#T-pivot-TemplateSignature" containment="true"
-        eOpposite="#F-pivot-TemplateSignature-owningElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateableElement-ownedTemplateParameters"
+        name="ownedTemplateParameters" upperBound="-1" eType="#T-pivot-TemplateParameter"
+        containment="true" eOpposite="#F-pivot-TemplateParameter-owningTemplateableElement">
+      <eAnnotations source="http://www.eclipse.org/OCL/Collection">
+        <details key="nullFree" value="true"/>
+      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="The optional TemplateSignature specifying the formal TemplateParameters for this TemplateableElement. If a TemplateableElement has a TemplateSignature, then it is a template."/>
+        <details key="documentation" value="The formal parameters that are owned by this TemplateableElement."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-TemplateableElement-unspecializedElement"
-        name="unspecializedElement" eType="#T-pivot-TemplateableElement" transient="true"
-        resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Transition" name="Transition"
       eSuperTypes="#T-pivot-Namespace">

@@ -141,27 +141,6 @@ public class OrphanCompletePackageImpl extends CompletePackageImpl implements Or
 		class2orphanCompleteClass.clear();
 	}
 
-/*	public @NonNull <T extends CollectionType> T getCollectionType(@NonNull T containerType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		assert containerType == PivotUtil.getUnspecializedTemplateableElement(containerType);
-		TemplateSignature templateSignature = containerType.getOwnedSignature();
-		if (templateSignature == null) {
-			throw new IllegalArgumentException("Collection type must have a template signature");
-		}
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		if (templateParameters.size() != 1) {
-			throw new IllegalArgumentException("Collection type must have exactly one template parameter");
-		}
-		boolean isUnspecialized = elementType == templateParameters.get(0);
-		if (isUnspecialized) {
-			return containerType;
-		}
-		org.eclipse.ocl.pivot.internal.complete.CompleteClassInternal completeClass = getCompleteModel().getCompleteClass(containerType);
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(containerType.getTypeId(), elementType, isNullFree, lower, upper);
-		@SuppressWarnings("unchecked")
-		T specializedType = (T)completeClass.getCollectionType(typeArguments);
-		return specializedType;
-	} */
-
 	@Override
 	public @NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		WeakReference<@NonNull CompleteClass> ref = class2orphanCompleteClass.get(asClass);

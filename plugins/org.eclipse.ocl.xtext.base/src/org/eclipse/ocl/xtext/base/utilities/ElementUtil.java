@@ -38,9 +38,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -442,9 +440,12 @@ public class ElementUtil
 		if (index < 0) {
 			return null;
 		}
-		TemplateBinding templateBinding = (TemplateBinding) csTemplateBinding.getPivot();
-		TemplateSignature templateSignature = templateBinding.getTemplateSignature();
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+		TypedTypeRefCS csTypedTypeRef = csTemplateBinding.getOwningElement();
+		TemplateableElement asTemplateableElement = (TemplateableElement) csTypedTypeRef.getPivot();
+		List<@NonNull TemplateParameter> templateParameters = asTemplateableElement.basicGetOwnedTemplateParameters();
+		if (templateParameters == null)  {
+			return null;
+		}
 		if (templateParameters.size() <= index) {
 			return null;
 		}
@@ -648,8 +649,7 @@ public class ElementUtil
 			if (templateParameter == null) {
 				return true;
 			}
-			TemplateSignature signature = templateParameter.getOwningSignature();
-			TemplateableElement template = signature.getOwningElement();
+			TemplateableElement template = templateParameter.getOwningTemplateableElement();
 			if (template != type) {
 				return true;
 			}

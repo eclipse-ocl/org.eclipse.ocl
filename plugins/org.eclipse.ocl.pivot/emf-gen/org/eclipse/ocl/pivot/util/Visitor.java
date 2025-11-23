@@ -146,10 +146,8 @@ public interface Visitor<R>
 	R visitStereotype(org.eclipse.ocl.pivot.@NonNull Stereotype object);
 	R visitStereotypeExtender(org.eclipse.ocl.pivot.@NonNull StereotypeExtender object);
 	R visitStringLiteralExp(org.eclipse.ocl.pivot.@NonNull StringLiteralExp object);
-	R visitTemplateBinding(org.eclipse.ocl.pivot.@NonNull TemplateBinding object);
+	R visitTemplateArgument(org.eclipse.ocl.pivot.@NonNull TemplateArgument object);
 	R visitTemplateParameter(org.eclipse.ocl.pivot.@NonNull TemplateParameter object);
-	R visitTemplateParameterSubstitution(org.eclipse.ocl.pivot.@NonNull TemplateParameterSubstitution object);
-	R visitTemplateSignature(org.eclipse.ocl.pivot.@NonNull TemplateSignature object);
 	R visitTemplateableElement(org.eclipse.ocl.pivot.@NonNull TemplateableElement object);
 	R visitTransition(org.eclipse.ocl.pivot.@NonNull Transition object);
 	R visitTrigger(org.eclipse.ocl.pivot.@NonNull Trigger object);

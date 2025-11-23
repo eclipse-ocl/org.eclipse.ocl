@@ -35,7 +35,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -67,8 +66,6 @@ import org.eclipse.ocl.xtext.basecs.RootPackageCS;
 import org.eclipse.ocl.xtext.basecs.SpecificationCS;
 import org.eclipse.ocl.xtext.basecs.StructuralFeatureCS;
 import org.eclipse.ocl.xtext.basecs.StructuredClassCS;
-import org.eclipse.ocl.xtext.basecs.TemplateParameterCS;
-import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TypeParameterCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 
@@ -221,8 +218,7 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 	@Override // FIXME BUG 496148 this is biased to use of e.g. {ordered} for OCLinEcore
 	public ElementCS visitOperation(@NonNull Operation object) {
 		OperationCS csElement = context.refreshTypedElement(OperationCS.class, BaseCSPackage.Literals.OPERATION_CS, object);
-		TemplateSignature ownedTemplateSignature = object.getOwnedSignature();
-		csElement.setOwnedSignature(context.visitDeclaration(TemplateSignatureCS.class, ownedTemplateSignature));
+		context.refreshTemplateSignature(csElement, object);
 		PivotUtil.refreshList(csElement.getOwnedParameters(), true, context.visitDeclarations(ParameterCS.class, object.getOwnedParameters(), null));
 		PivotUtil.refreshList(csElement.getOwnedExceptions(), true, context.visitReferences(TypedRefCS.class, object.getRaisedExceptions(), null));
 		//
@@ -305,13 +301,6 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 		}
 		List<LanguageExpression> defaultExpressions = object.getOwnedExpression() != null ? Collections.singletonList(object.getOwnedExpression()) : Collections.<LanguageExpression>emptyList();
 		PivotUtil.refreshList(csElement.getOwnedDefaultExpressions(), true, context.visitDeclarations(SpecificationCS.class, defaultExpressions, null));
-		return csElement;
-	}
-
-	@Override
-	public ElementCS visitTemplateSignature(@NonNull TemplateSignature object) {
-		TemplateSignatureCS csElement = context.refreshElement(TemplateSignatureCS.class, BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS, object);
-		PivotUtil.refreshList(csElement.getOwnedParameters(), true, context.visitDeclarations(TemplateParameterCS.class, object.getOwnedParameters(), null));
 		return csElement;
 	}
 

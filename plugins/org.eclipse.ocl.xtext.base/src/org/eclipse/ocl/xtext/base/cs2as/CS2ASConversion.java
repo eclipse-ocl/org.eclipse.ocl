@@ -53,10 +53,8 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -98,6 +96,7 @@ import org.eclipse.ocl.xtext.basecs.ParameterCS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.PivotableElementCS;
 import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
+import org.eclipse.ocl.xtext.basecs.TemplateParameterCS;
 import org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS;
 import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
@@ -697,35 +696,32 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		return csTemplateParameterSubstututions;
 	}
 
-	protected @NonNull List<@NonNull TemplateParameter> getTemplateParameters(@NonNull TemplateableElement pivotElement) {
-		List<@NonNull TemplateParameter> pivotTemplateParameters = new ArrayList<>();
-		for (TemplateSignature pivotTemplateSignature : getTemplateSignatures(pivotElement)) {
-			for (TemplateParameter pivotTemplateParameter : pivotTemplateSignature.getOwnedParameters()) {
-				if (pivotTemplateParameter != null) {
-					pivotTemplateParameters.add(pivotTemplateParameter);
+	protected @NonNull List<@NonNull TemplateParameter> getTemplateParameters(@NonNull TemplateableElement asRootTemplateableElement) {
+		List<@NonNull TemplateParameter> asAllTemplateParameters = new ArrayList<>();
+		for (TemplateableElement asTemplateableElement : getTemplateableElements(asRootTemplateableElement)) {
+			Iterable<@NonNull TemplateParameter> asTemplateParameters = asTemplateableElement.basicGetOwnedTemplateParameters();
+			if (asTemplateParameters != null) {
+				for (TemplateParameter asTemplateParameter : asTemplateParameters) {
+					asAllTemplateParameters.add(asTemplateParameter);
 				}
 			}
 		}
-		return pivotTemplateParameters;
+		return asAllTemplateParameters;
 	}
 
-	protected @NonNull List<@NonNull TemplateSignature> getTemplateSignatures(@NonNull Element pivotElement) {
-		List<@NonNull TemplateSignature> pivotTemplateSignatures;
+	protected @NonNull List<@NonNull TemplateableElement> getTemplateableElements(@NonNull Element pivotElement) {
+		List<@NonNull TemplateableElement> pivotTemplateableElements;
 		EObject container = pivotElement.eContainer();
 		if (container instanceof Element) {
-			pivotTemplateSignatures = getTemplateSignatures((Element) container);
+			pivotTemplateableElements = getTemplateableElements((Element) container);
 		}
 		else {
-			pivotTemplateSignatures = new ArrayList<>();
+			pivotTemplateableElements = new ArrayList<>();
 		}
 		if (pivotElement instanceof TemplateableElement) {
-			TemplateableElement templateableElement = (TemplateableElement)pivotElement;
-			TemplateSignature templateSignature = templateableElement.getOwnedSignature();
-			if (templateSignature != null) {
-				pivotTemplateSignatures.add(templateSignature);
-			}
+			pivotTemplateableElements.add((TemplateableElement)pivotElement);
 		}
-		return pivotTemplateSignatures;
+		return pivotTemplateableElements;
 	}
 
 	public @NonNull InterDependency<@NonNull TemplateSignatureContinuation> getTypesHaveSignaturesInterDependency() {
@@ -1133,15 +1129,23 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public void refreshTemplateSignature(@NonNull TemplateableElementCS csTemplateableElement, @NonNull TemplateableElement pivotTemplateableElement) {
 		TemplateSignatureCS csTemplateSignature = csTemplateableElement.getOwnedSignature();
 		if (csTemplateSignature == null) {
-			if (pivotTemplateableElement.getOwnedSignature() != null) {
-				pivotTemplateableElement.setOwnedSignature(null);
-			}
+		//	if (pivotTemplateableElement.getOwnedSignature() != null) {
+		//		pivotTemplateableElement.setOwnedSignature(null);
+		//	}
 			return;
 		}
-		TemplateSignature pivotTemplateSignature = PivotUtil.basicGetPivot(TemplateSignature.class, csTemplateSignature);
-		if (pivotTemplateableElement.getOwnedSignature() != pivotTemplateSignature) {
-			pivotTemplateableElement.setOwnedSignature(pivotTemplateSignature);
+	//	TemplateSignature templateSignature = refreshModelElement(TemplateSignature.class, PivotPackage.Literals.TEMPLATE_SIGNATURE, csTemplateSignature);
+	//	pivotTemplateableElement.setOwnedSignature(templateSignature);
+		installPivotUsage(csTemplateSignature, pivotTemplateableElement);
+		List<@NonNull TemplateParameter> newPivotTemplateParameters = new ArrayList<>();
+		List<TemplateParameterCS> csTemplateParameters = csTemplateSignature.getOwnedParameters();
+		for (TemplateParameterCS csTemplateParameter : csTemplateParameters) {
+			TemplateParameter pivotTemplateParameter = PivotUtil.basicGetPivot(TemplateParameter.class, csTemplateParameter);
+			if (pivotTemplateParameter != null) {
+				newPivotTemplateParameters.add(pivotTemplateParameter);
+			}
 		}
+		PivotUtil.refreshList(PivotUtil.getOwnedTemplateParametersList(pivotTemplateableElement, true), newPivotTemplateParameters);
 	}
 
 	protected void resetPivotMappings(@NonNull CSResource csResource) {
@@ -1166,121 +1170,63 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	/**
-	 * Update a list of TemplateBinding to match a list of TemplateSignature
-	 * by moving/adding/removing existing entries. Once matched each TemplateBinding.signature
-	 * references the corresponding TemplateSignature, and each TemplateBinding.parameterSubstitution.formal
-	 * references the corresponding TemplateSignature.ownedParameter.
-	 */
-	protected void specializeTemplateBindings(@NonNull List<@NonNull TemplateBinding> templateBindings, @NonNull List<@NonNull TemplateSignature> templateSignatures,
-			@NonNull List<@NonNull TemplateBindingCS> csTemplateBindings) {
-		int csIMax = csTemplateBindings.size();
-		int pivotIMax = templateSignatures.size();
-		int newMax = Math.min(csIMax, pivotIMax);
-		int oldMax = templateBindings.size();
-		if (csIMax != pivotIMax) {
-			TypedTypeRefCS owningTemplateBindableElement = csTemplateBindings.get(0).getOwningElement();
-			String string = owningTemplateBindableElement != null ? owningTemplateBindableElement.toString() : "<null>";
-			logger.warn("Inconsistent template bindings size for " + string); //$NON-NLS-1$
-		}
-		for (int i = 0; i < newMax; i++) {					// Invariant: lists are equal up to index i
-			@NonNull TemplateBindingCS csTemplateBinding = csTemplateBindings.get(i);
-			TemplateSignature templateSignature = templateSignatures.get(i);
-			TemplateBinding templateBinding = null;
-			for (int j = i; j < oldMax; j++) {
-				TemplateBinding oldTemplateBinding = templateBindings.get(j);
-				if (oldTemplateBinding.getTemplateSignature() == templateSignature) {
-					if (j != i) {
-						TemplateBinding jTemplateBinding = templateBindings.remove(j);
-						templateBindings.add(i, jTemplateBinding);
-					}
-					templateBinding = oldTemplateBinding;
-					//					registerPivotElement(csTemplateBinding, templateBinding);
-					//					installPivotElement(csTemplateBinding, templateBinding);
-					break;
-				}
-			}
-			if (templateBinding == null) {
-				//				templateBinding = refreshElement(TemplateBinding.class, PivotPackage.Literals.TEMPLATE_BINDING, csTemplateBinding);
-				templateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
-				assert templateBinding != null;
-				if (i < oldMax) {
-					templateBindings.add(i, templateBinding);
-				}
-				else {
-					templateBindings.add(templateBinding);
-				}
-			}
-			installPivotReference(csTemplateBinding, templateBinding, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
-			@SuppressWarnings("null") @NonNull List<TemplateParameterSubstitution> parameterSubstitutions = templateBinding.getOwnedSubstitutions();
-			@NonNull List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			@SuppressWarnings("null") @NonNull List<TemplateParameterSubstitutionCS> csParameterSubstitutions = csTemplateBinding.getOwnedSubstitutions();
-			specializeTemplateParameterSubstitutions(parameterSubstitutions, templateParameters, csParameterSubstitutions);
-			assert templateSignatures.get(i) == templateBindings.get(i).getTemplateSignature();
-		}
-		for (int k = templateBindings.size(); k > newMax; ) {
-			templateBindings.remove(--k);
-		}
-		assert templateSignatures.size() == templateBindings.size();
-	}
-
-	/**
-	 * Update a list of TemplateParameterSubstitution to match a list of TemplateParameter
-	 * by moving/adding/removing existing entries. Once matched each TemplateParameterSubstitution.formal
+	 * Update a list of TemplateArgument to match a list of TemplateParameter
+	 * by moving/adding/removing existing entries. Once matched each TemplateArgument.formal
 	 * references the corresponding TemplateParameter.
 	 */
-	protected void specializeTemplateParameterSubstitutions(@NonNull List<@NonNull TemplateParameterSubstitution> templateParameterSubstitutions,
-			@NonNull List<@NonNull TemplateParameter> templateParameters, @NonNull List<@NonNull TemplateParameterSubstitutionCS> csTemplateParameterSubstitutions) {
-		int csIMax = csTemplateParameterSubstitutions.size();
+	protected void specializeTemplateArguments(@NonNull List<@NonNull TemplateArgument> templateArguments,
+			@NonNull List<@NonNull TemplateParameter> templateParameters, @NonNull List<@NonNull TemplateParameterSubstitutionCS> csTemplateArguments) {
+		int csIMax = csTemplateArguments.size();
 		int pivotIMax = templateParameters.size();
 		if (csIMax != pivotIMax) {
 			logger.warn("Inconsistent template parameter substitutions size"); // FIXME //$NON-NLS-1$
 		}
 		int newMax = Math.min(csIMax, pivotIMax);
 		for (int i = 0; i < newMax; i++) {					// Invariant: lists are equal up to index i
-			@NonNull TemplateParameterSubstitutionCS csTemplateParameterSubstitution = csTemplateParameterSubstitutions.get(i);
+			@NonNull TemplateParameterSubstitutionCS csTemplateParameterSubstitution = csTemplateArguments.get(i);
 			TemplateParameter templateParameter = templateParameters.get(i);
-			int oldMax = templateParameterSubstitutions.size();
-			TemplateParameterSubstitution templateParameterSubstitution = null;
-			for (int j = i; j < oldMax; j++) {
-				TemplateParameterSubstitution oldTemplateParameterSubstitution = templateParameterSubstitutions.get(j);
-				if (oldTemplateParameterSubstitution.getFormal() == templateParameter) {
+			int oldMax = templateArguments.size();
+			TemplateArgument templateArgument = null;
+			for (int j = i; j < oldMax; j++) {				// XXX simplify ??
+				TemplateArgument oldTemplateArgument = templateArguments.get(j);
+				if (oldTemplateArgument.getFormal() == templateParameter) {
 					if (j != i) {
-						templateParameterSubstitutions.add(i, templateParameterSubstitutions.remove(j));
+						templateArguments.add(i, templateArguments.remove(j));
 					}
-					templateParameterSubstitution = oldTemplateParameterSubstitution;
-					converter.installPivotDefinition(csTemplateParameterSubstitution, templateParameterSubstitution);
+					templateArgument = oldTemplateArgument;
+					converter.installPivotDefinition(csTemplateParameterSubstitution, templateArgument);
 					break;
 				}
 			}
-			if (templateParameterSubstitution == null) {
-				//				templateParameterSubstitution = refreshElement(TemplateParameterSubstitution.class, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION, csTemplateParameterSubstitution);
-				templateParameterSubstitution = PivotFactory.eINSTANCE.createTemplateParameterSubstitution();
-				templateParameterSubstitution.setFormal(templateParameter);
+			if (templateArgument == null) {
+				//				templateArgument = refreshElement(TemplateArgument.class, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION, csTemplateParameterSubstitution);
+				templateArgument = PivotFactory.eINSTANCE.createTemplateArgument();
+			//	templateArgument.setFormal(templateParameter);
 				if (i < oldMax) {
-					templateParameterSubstitutions.add(i, templateParameterSubstitution);
+					templateArguments.add(i, templateArgument);
 				}
 				else {
-					templateParameterSubstitutions.add(templateParameterSubstitution);
+					templateArguments.add(templateArgument);
 				}
 			}
 			CompleteModel completeModel = environmentFactory.getCompleteModel();
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 			if (csActualParameter instanceof WildcardTypeRefCS) {
 				Orphanage orphanage = completeModel.getOrphanage();
-				templateParameterSubstitution.setActual(Orphanage.getOrphanWildcardType(orphanage));
+				templateArgument.setActual(Orphanage.getOrphanWildcardType(orphanage));
 			}
 			else {
 				Type pivotActualParameter = PivotUtil.basicGetPivot(Type.class, csActualParameter);
 				pivotActualParameter = getNormalizedType(pivotActualParameter);
-				templateParameterSubstitution.setActual(pivotActualParameter);
+				templateArgument.setActual(pivotActualParameter);
 			}
-			converter.installPivotDefinition(csTemplateParameterSubstitution, templateParameterSubstitution);
-			assert templateParameters.get(i) == templateParameterSubstitutions.get(i).getFormal();
+			converter.installPivotDefinition(csTemplateParameterSubstitution, templateArgument);
+			assert templateParameters.get(i) == templateArguments.get(i).getFormal();
 		}
-		for (int k = templateParameterSubstitutions.size(); k > newMax; ) {
-			templateParameterSubstitutions.remove(--k);
+		for (int k = templateArguments.size(); k > newMax; ) {
+			templateArguments.remove(--k);
 		}
-		assert templateParameters.size() == templateParameterSubstitutions.size();
+		assert templateParameters.size() == templateArguments.size();
 	}
 
 	/**
@@ -1304,7 +1250,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			TemplateParameter templateParameter = templateParameters.get(i);
 			if (i == 0) {
 				@NonNull TemplateBindingCS csTemplateBinding = csTemplateBindings.get(i);
-				installPivotUsage(csTemplateBinding, PivotUtil.getOwningSignature(templateParameter));
+				installPivotUsage(csTemplateBinding, PivotUtil.getOwningTemplateableElement(templateParameter));
 			}
 			installPivotUsage(csTemplateParameterSubstutution, templateParameter);
 		}
@@ -1366,14 +1312,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		//	Refresh the pivot specialization bindings and parameter substitutions
 		//
 		List<@NonNull TemplateBindingCS> csTemplateBindings = getTemplateBindings(csElement);
+		List<@NonNull TemplateParameter> templateParameters = getTemplateParameters(unspecializedPivotElement);
+		List<@NonNull TemplateParameterSubstitutionCS> csTemplateParameterSubstututions = getTemplateParameterSubstututions(csElement);
 		if (specializedPivotElement != unspecializedPivotElement) {
-			@SuppressWarnings("null") @NonNull List<@NonNull TemplateBinding> templateBindings = specializedPivotElement.getOwnedBindings();
-			List<@NonNull TemplateSignature> templateSignatures = getTemplateSignatures(unspecializedPivotElement);
-			specializeTemplateBindings(templateBindings, templateSignatures, csTemplateBindings);
+			@NonNull List<@NonNull TemplateArgument> templateArguments = PivotUtil.getOwnedTemplateArgumentsList(specializedPivotElement, true);
+			specializeTemplateArguments(templateArguments, templateParameters, csTemplateParameterSubstututions);
 		}
 		else {
-			List<@NonNull TemplateParameter> templateParameters = getTemplateParameters(unspecializedPivotElement);
-			List<@NonNull TemplateParameterSubstitutionCS> csTemplateParameterSubstututions = getTemplateParameterSubstututions(csElement);
 			specializeTemplateParameters(templateParameters, csTemplateBindings, csTemplateParameterSubstututions);
 		}
 		return specializedPivotElement;

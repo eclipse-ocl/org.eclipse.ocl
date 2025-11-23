@@ -11,6 +11,8 @@
 package org.eclipse.ocl.pivot.utilities;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Operation;
@@ -71,13 +73,22 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AS
 
 	protected static final class TypeComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
 	{
-		public static final @NonNull Comparator<org.eclipse.ocl.pivot.@NonNull Class> INSTANCE = new TypeComparator();
+		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull String> class2string = new HashMap<>();
 
 		@Override
 		public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
-			String n1 = PrettyPrinter.printType(o1);
-			String n2 = PrettyPrinter.printType(o2);
+			String n1 = getName(o1);
+			String n2 = getName(o2);
 			return n1.compareTo(n2);
+		}
+
+		private @NonNull String getName(org.eclipse.ocl.pivot.@NonNull Class o) {
+			String name = class2string.get(o);
+			if (name == null) {
+				name = PrettyPrinter.printType(o);
+				class2string.put(o, name);
+			}
+			return name;
 		}
 	}
 
@@ -90,15 +101,15 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AS
 
 	@Override
 	public Object visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
-		ClassUtil.sort(ClassUtil.nullFree(object.getOwnedOperations()), OperationComparator.INSTANCE);
-		ClassUtil.sort(ClassUtil.nullFree(object.getOwnedProperties()), PropertyComparator.INSTANCE);
+		ClassUtil.sort(PivotUtil.getOwnedOperationsList(object), OperationComparator.INSTANCE);
+		ClassUtil.sort(PivotUtil.getOwnedPropertiesList(object), PropertyComparator.INSTANCE);
 		return null;
 	}
 
 	@Override
 	public Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
 		if (!(object instanceof Orphanage)) {			// The Orphanage is not assignable/sortable
-			ClassUtil.sort(ClassUtil.nullFree(object.getOwnedClasses()), TypeComparator.INSTANCE);
+			ClassUtil.sort(PivotUtil.getOwnedClassesList(object), new TypeComparator());
 		}
 		return null;
 	}

@@ -31,8 +31,8 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.util.Visitor;
@@ -296,12 +296,10 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 6:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
 			case 7:
-				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
-				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateArguments()).basicAdd(otherEnd, msgs);
+			case 8:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateParameters()).basicAdd(otherEnd, msgs);
 			case 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtenders()).basicAdd(otherEnd, msgs);
 			case 16:
@@ -340,10 +338,10 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case 6:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 7:
-				return basicSetOwnedSignature(null, msgs);
+				return ((InternalEList<?>)getOwnedTemplateArguments()).basicRemove(otherEnd, msgs);
+			case 8:
+				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
 			case 9:
 				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
 			case 14:
@@ -403,11 +401,12 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 			case 5:
 				return getOwnedConstraints();
 			case 6:
-				return getOwnedBindings();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 7:
-				return getOwnedSignature();
+				return getOwnedTemplateArguments();
 			case 8:
-				return getUnspecializedElement();
+				return getOwnedTemplateParameters();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -478,14 +477,15 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 6:
-				getOwnedBindings().clear();
-				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)newValue);
+				getOwnedTemplateArguments().clear();
+				getOwnedTemplateArguments().addAll((Collection<? extends TemplateArgument>)newValue);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)newValue);
+				getOwnedTemplateParameters().clear();
+				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -571,13 +571,13 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 				getOwnedConstraints().clear();
 				return;
 			case 6:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedTemplateArguments().clear();
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)null);
+				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
 				getExtenders().clear();
@@ -651,11 +651,11 @@ public class ElementExtensionImpl extends ClassImpl implements ElementExtension
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 6:
-				return ownedBindings != null && !ownedBindings.isEmpty();
+				return generic != null;
 			case 7:
-				return ownedSignature != null;
+				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 8:
-				return unspecializedElement != null;
+				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:

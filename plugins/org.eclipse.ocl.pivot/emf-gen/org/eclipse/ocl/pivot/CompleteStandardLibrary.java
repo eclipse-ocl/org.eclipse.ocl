@@ -18,7 +18,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
  * <!-- begin-user-doc -->
@@ -48,8 +48,8 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 *
 	 * @since 7.0
 	 */
-	int compareOperationMatches(@NonNull Operation referenceOperation, @Nullable TemplateParameterSubstitutions referenceBindings,
-			@NonNull Operation candidateOperation, @Nullable TemplateParameterSubstitutions candidateBindings);
+	int compareOperationMatches(@NonNull Operation referenceOperation, @Nullable TemplateArguments referenceBindings,
+			@NonNull Operation candidateOperation, @Nullable TemplateArguments candidateBindings);
 
 	/**
 	 * @since 1.17
@@ -72,7 +72,7 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 * @since 7.0
 	 */
 	@NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
-			@Nullable TemplateParameterSubstitutions bindings);
+			@Nullable TemplateArguments bindings);
 	@Nullable Resource getLibraryResource();
 
 	/**

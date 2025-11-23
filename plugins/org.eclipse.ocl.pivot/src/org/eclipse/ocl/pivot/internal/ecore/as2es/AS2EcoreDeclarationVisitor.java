@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -202,7 +201,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	protected void copyClassifier(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class pivotType) {
 		copyNamedElement(eClassifier, pivotType);
 		@SuppressWarnings("null")@NonNull List<ETypeParameter> eTypeParameters = eClassifier.getETypeParameters();
-		copyTemplateSignature(eTypeParameters, pivotType);
+		copyTemplateParameters(eTypeParameters, pivotType);
 		if (pivotType.eIsSet(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME)) {
 			eClassifier.setInstanceClassName(pivotType.getInstanceClassName());
 		}
@@ -283,11 +282,13 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		eNamedElement.setName(name);
 	}
 
-	protected void copyTemplateSignature(@NonNull List<ETypeParameter> eTypeParameters, TemplateableElement pivotElement) {
-		TemplateSignature templateSignature = pivotElement.getOwnedSignature();
-		if (templateSignature != null) {
-			List<TemplateParameter> parameters = templateSignature.getOwnedParameters();
-			safeVisitAll(eTypeParameters, parameters);
+	/**
+	 * @since 7.0
+	 */
+	protected void copyTemplateParameters(@NonNull List<ETypeParameter> eTypeParameters, @NonNull TemplateableElement pivotElement) {
+		Iterable<@NonNull TemplateParameter> asTemplateParameters = pivotElement.basicGetOwnedTemplateParameters();
+		if (asTemplateParameters != null) {
+			safeVisitAll(eTypeParameters, asTemplateParameters);
 		}
 	}
 
@@ -341,7 +342,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitAnyType(@NonNull AnyType pivotAnyType) {
-		if (pivotAnyType.getOwnedBindings().size() > 0) {
+		if (pivotAnyType.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")
@@ -360,7 +361,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
-		if (pivotClass.getOwnedBindings().size() > 0) {
+		if (pivotClass.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")
@@ -443,7 +444,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitCollectionType(@NonNull CollectionType pivotCollectionType) {
-		if (pivotCollectionType.getOwnedBindings().size() > 0) {
+		if (pivotCollectionType.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")
@@ -497,7 +498,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
-		if (pivotDataType.getOwnedBindings().size() > 0) {
+		if (pivotDataType.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")
@@ -508,7 +509,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitEnumeration(@NonNull Enumeration pivotEnumeration) {
-		if (pivotEnumeration.getOwnedBindings().size() > 0) {
+		if (pivotEnumeration.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")
@@ -544,7 +545,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	 */
 	@Override
 	public EObject visitMapType(@NonNull MapType pivotMapType) {
-		if (pivotMapType.getOwnedBindings().size() > 0) {
+		if (pivotMapType.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")
@@ -615,14 +616,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitOperation(@NonNull Operation pivotOperation) {
-		if (pivotOperation.getOwnedBindings().size() > 0) {
+		if (pivotOperation.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")
 		@NonNull EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
 		copyTypedElement(eOperation, pivotOperation);
 		@SuppressWarnings("null")@NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
-		copyTemplateSignature(eTypeParameters, pivotOperation);
+		copyTemplateParameters(eTypeParameters, pivotOperation);
 		@SuppressWarnings("null")@NonNull List<EParameter> eParameters = eOperation.getEParameters();
 		safeVisitAll(eParameters, pivotOperation.getOwnedParameters());
 		//		safeVisitAll(eOperation.getEGenericExceptions(), pivotOperation.getRaisedException());
@@ -672,7 +673,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	@Override
 	public EObject visitPrimitiveType(@NonNull PrimitiveType pivotPrimitiveType) {
-		if (pivotPrimitiveType.getOwnedBindings().size() > 0) {
+		if (pivotPrimitiveType.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")

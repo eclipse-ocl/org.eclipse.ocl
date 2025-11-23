@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -117,10 +116,8 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
@@ -201,23 +198,23 @@ public class PivotUtil implements PivotConstants
 
 
 	/**
-	 * In TemplateSignature order.
-	 */
-	public static class TemplateParameterSubstitutionComparator
-	implements Comparator<TemplateParameterSubstitution>
+	 * In TemplateParameter order.
+	 *
+	 * @since 7.0
+	 *
+	public static class TemplateArgumentComparator implements Comparator<@NonNull TemplateArgument>
 	{
-		public static Comparator<? super TemplateParameterSubstitution> INSTANCE =
-				new TemplateParameterSubstitutionComparator();
+		public static Comparator<@NonNull TemplateArgument> INSTANCE = new TemplateArgumentComparator();
 
 		@Override
-		public int compare(TemplateParameterSubstitution o1, TemplateParameterSubstitution o2) {
+		public int compare(@NonNull TemplateArgument o1, @NonNull TemplateArgument o2) {	// XXX simplify ? obsolete
 			TemplateParameter f1 = o1.getFormal();
 			TemplateParameter f2 = o2.getFormal();
-			int i1 = f1.getOwningSignature().getOwnedParameters().indexOf(f1);
-			int i2 = f2.getOwningSignature().getOwnedParameters().indexOf(f2);
+			int i1 = f1.getOwningTemplateableElement().getOwnedTemplateParameters().indexOf(f1);
+			int i2 = f2.getOwningTemplateableElement().getOwnedTemplateParameters().indexOf(f2);
 			return i1 - i2;
 		}
-	}
+	} */
 
 	/**
 	 * @since 7.0
@@ -698,23 +695,19 @@ public class PivotUtil implements PivotConstants
 	public static @NonNull CollectionType createCollectionType(@NonNull CollectionType genericCollectionType, @NonNull Type elementType,
 			boolean isNullFree, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
 		//
-		assert genericCollectionType.getUnspecializedElement() == null;
-		assert genericCollectionType.getOwnedSignature() != null;
-		assert genericCollectionType.getOwnedSignature().getOwnedParameters().size() == 1;
-		assert genericCollectionType.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
-		assert getUnspecializedTemplateableElement(genericCollectionType) == genericCollectionType;
-		List<TemplateParameter> templateParameters = genericCollectionType.getOwnedSignature().getOwnedParameters();
-		TemplateParameter elementParameter = templateParameters.get(0);
-		assert elementParameter != null;
+		assert genericCollectionType.getGeneric() == null;
+//		assert genericCollectionType.getOwnedSignature() != null;
+		assert genericCollectionType.getOwnedTemplateParameters().size() == 1;
+		assert genericCollectionType.getOwnedTemplateParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
+		assert getGenericElement(genericCollectionType) == genericCollectionType;
 		//
 		EClass eClass = genericCollectionType.eClass();
 		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
 		CollectionType specializedCollectionType = (CollectionType) eFactoryInstance.create(eClass);
 		specializedCollectionType.setName(genericCollectionType.getName());
-		specializedCollectionType.setUnspecializedElement(genericCollectionType);
-		TemplateParameterSubstitution templateParameterSubstitution = createTemplateParameterSubstitution(elementParameter, elementType);
-		TemplateBinding templateBinding = createTemplateBinding(templateParameterSubstitution);
-		specializedCollectionType.getOwnedBindings().add(templateBinding);
+		specializedCollectionType.setGeneric(genericCollectionType);
+		TemplateArgument templateArgument = createTemplateArgument(elementType);
+		specializedCollectionType.getOwnedTemplateArguments().add(templateArgument);
 		assert specializedCollectionType.getElementType() == elementType;
 		specializedCollectionType.setIsNullFree(isNullFree);
 		specializedCollectionType.setLowerValue(lower);
@@ -939,7 +932,7 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull MapType createMapEntryType(@NonNull MapType specializedMapType, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		assert specializedMapType.getEntryClass() == null;
-		MapType genericMapType = getUnspecializedTemplateableElement(specializedMapType);
+		MapType genericMapType = getGenericElement(specializedMapType);
 		assert specializedMapType != genericMapType;
 		Type keyType = getKeyType(specializedMapType);
 		boolean keysAreNullFree = specializedMapType.isKeysAreNullFree();
@@ -957,21 +950,15 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull MapType createMapType(@NonNull MapType genericMapType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		assert genericMapType.getEntryClass() == null;
-		//
-		assert getUnspecializedTemplateableElement(genericMapType) == genericMapType;
-		List<TemplateParameter> templateParameters = genericMapType.getOwnedSignature().getOwnedParameters();
-		TemplateParameter keyParameter = templateParameters.get(0);
-		TemplateParameter valueParameter = templateParameters.get(1);
-		assert keyParameter != null;
-		assert valueParameter != null;
+		assert getGenericElement(genericMapType) == genericMapType;
 		//
 		MapType specializedMapType = PivotFactory.eINSTANCE.createMapType();
 		specializedMapType.setName(TypeId.MAP_NAME);
-		specializedMapType.setUnspecializedElement(genericMapType);
-		TemplateParameterSubstitution templateParameterSubstitution1 = createTemplateParameterSubstitution(keyParameter, keyType);
-		TemplateParameterSubstitution templateParameterSubstitution2 = createTemplateParameterSubstitution(valueParameter, valueType);
-		TemplateBinding templateBinding = createTemplateBinding(templateParameterSubstitution1, templateParameterSubstitution2);
-		specializedMapType.getOwnedBindings().add(templateBinding);
+		specializedMapType.setGeneric(genericMapType);
+		TemplateArgument templateArgument1 = createTemplateArgument(keyType);
+		TemplateArgument templateArgument2 = createTemplateArgument(valueType);
+		specializedMapType.getOwnedTemplateArguments().add(templateArgument1);
+		specializedMapType.getOwnedTemplateArguments().add(templateArgument2);
 		assert specializedMapType.getKeyType() == keyType;
 		assert specializedMapType.getValueType() == valueType;
 		specializedMapType.setKeysAreNullFree(keysAreNullFree);
@@ -1268,13 +1255,13 @@ public class PivotUtil implements PivotConstants
 		return shadowPart;
 	}
 
-	public static @NonNull TemplateBinding createTemplateBinding(TemplateParameterSubstitution... templateParameterSubstitutions) {
-		TemplateBinding pivotTemplateBinding = PivotFactory.eINSTANCE.createTemplateBinding();
-		List<TemplateParameterSubstitution> parameterSubstitutions = pivotTemplateBinding.getOwnedSubstitutions();
-		for (TemplateParameterSubstitution templateParameterSubstitution : templateParameterSubstitutions) {
-			parameterSubstitutions.add(templateParameterSubstitution);
-		}
-		return pivotTemplateBinding;
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TemplateArgument createTemplateArgument(@NonNull Type actual) {
+		TemplateArgument asTemplateArgument = PivotFactory.eINSTANCE.createTemplateArgument();
+		asTemplateArgument.setActual(actual);
+		return asTemplateArgument;
 	}
 
 	public static @NonNull TemplateParameter createTemplateParameter(@NonNull String name, org.eclipse.ocl.pivot.Class... lowerBounds) {
@@ -1288,29 +1275,6 @@ public class PivotUtil implements PivotConstants
 			}
 		}
 		return pivotTemplateParameter;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull TemplateParameterSubstitution createTemplateParameterSubstitution(@NonNull TemplateParameter formal, @NonNull Type actual) {
-		TemplateParameterSubstitution pivotTemplateParameterSubstitution = PivotFactory.eINSTANCE.createTemplateParameterSubstitution();
-		pivotTemplateParameterSubstitution.setFormal(formal);
-		pivotTemplateParameterSubstitution.setActual(actual);
-		return pivotTemplateParameterSubstitution;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull TemplateSignature createTemplateSignature(@NonNull TemplateableElement templateableElement, TemplateParameter... templateParameters) {
-		TemplateSignature pivotTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
-		List<TemplateParameter> parameters = pivotTemplateSignature.getOwnedParameters();
-		for (TemplateParameter templateParameter : templateParameters) {
-			parameters.add(templateParameter);
-		}
-		pivotTemplateSignature.setOwningElement(templateableElement);
-		return pivotTemplateSignature;
 	}
 
 	/**
@@ -1599,8 +1563,8 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull Type getActual(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
-		return ClassUtil.requireNonNull(templateParameterSubstitution.getActual());
+	public static @NonNull Type getActual(@NonNull TemplateArgument templateArgument) {
+		return ClassUtil.requireNonNull(templateArgument.getActual());
 	}
 
 	/**
@@ -1617,12 +1581,12 @@ public class PivotUtil implements PivotConstants
 				if (behavioralElementType != asElementType) {
 					EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 					if (environmentFactory != null) {
-						CollectionType unspecializedElement = (CollectionType)collectionType.getUnspecializedElement();
-						assert unspecializedElement != null;
+						CollectionType generic = (CollectionType)collectionType.getGeneric();
+						assert generic != null;
 						boolean isNullFree = collectionType.isIsNullFree();
 						IntegerValue lowerValue = collectionType.getLowerValue();
 						UnlimitedNaturalValue upperValue = collectionType.getUpperValue();
-						return environmentFactory.getStandardLibrary().getCollectionType(unspecializedElement, behavioralElementType, isNullFree, lowerValue, upperValue);
+						return environmentFactory.getStandardLibrary().getCollectionType(generic, behavioralElementType, isNullFree, lowerValue, upperValue);
 					}
 				}
 			}
@@ -1854,8 +1818,24 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull TemplateParameter getFormal(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
-		return ClassUtil.requireNonNull(templateParameterSubstitution.getFormal());
+	public static @NonNull TemplateParameter getFormal(@NonNull TemplateArgument templateArgument) {
+		return ClassUtil.requireNonNull(templateArgument.getFormal());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull <T extends TemplateableElement> T getGenericElement(@NonNull T templateableElement) {
+		//		if (templateableElement == null) {
+		//			return null;
+		//		}
+		TemplateableElement generic = templateableElement.getGeneric();
+		if (generic == null) {
+			return templateableElement;
+		}
+		@SuppressWarnings("unchecked")
+		T castGeneric = (T) generic;
+		return castGeneric;
 	}
 
 	/**
@@ -2073,20 +2053,6 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull List<@NonNull OCLExpression> getOwnedArgumentsList(@NonNull OperationCallExp operationCallExp) {
 		return ClassUtil.nullFree(operationCallExp.getOwnedArguments());
-	}
-
-	/**
-	 * @since 1.4
-	 */
-	public static @NonNull Iterable<@NonNull TemplateBinding> getOwnedBindings(@NonNull TemplateableElement asElement) {
-		return ClassUtil.nullFree(asElement.getOwnedBindings());
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull List<@NonNull TemplateBinding> getOwnedBindingsList(@NonNull TemplateableElement templateableElement) {
-		return ClassUtil.nullFree(templateableElement.getOwnedBindings());
 	}
 
 	/**
@@ -2370,13 +2336,6 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.3
-	 */
-	public static @NonNull Iterable<@NonNull TemplateParameter> getOwnedParameters(@NonNull TemplateSignature templateSignature) {
-		return ClassUtil.nullFree(templateSignature.getOwnedParameters());
-	}
-
-	/**
 	 * @since 7.0
 	 */
 	public static @NonNull List<@NonNull Variable> getOwnedParametersList(@NonNull ExpressionInOCL expressionInOCL) {
@@ -2395,13 +2354,6 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull List<@NonNull Parameter> getOwnedParametersList(@NonNull Operation operation) {
 		return ClassUtil.nullFree(operation.getOwnedParameters());
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull List<@NonNull TemplateParameter> getOwnedParametersList(@NonNull TemplateSignature templateSignature) {
-		return ClassUtil.nullFree(templateSignature.getOwnedParameters());
 	}
 
 	/**
@@ -2503,35 +2455,64 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.4
+	 * Return an iterable of TemplateArgument after asserting that creation is unnecessary since the list is non-empty.
+	 *
+	 * @since 7.0
 	 */
-	public static @NonNull Iterable<@NonNull TemplateParameterSubstitution> getOwnedSubstitutions(@NonNull TemplateBinding asTemplateBinding) {
-		return ClassUtil.nullFree(asTemplateBinding.getOwnedSubstitutions());
+	public static @NonNull Iterable<@NonNull TemplateArgument> getOwnedTemplateArguments(@NonNull TemplateableElement asTemplateableElement) {
+		return getOwnedTemplateArgumentsList(asTemplateableElement, false);
 	}
 
 	/**
+	 * Return the list of TemplateArgument after asserting that creation is unnecessary since the list is non-empty.
+	 *
 	 * @since 7.0
 	 */
-	public static @NonNull Iterable<@NonNull TemplateParameterSubstitution> getOwnedSubstitutions(@NonNull TemplateableElement asTemplateableElement) {
-		return getOwnedSubstitutions(asTemplateableElement);
+	public static @NonNull List<@NonNull TemplateArgument> getOwnedTemplateArgumentsList(@NonNull TemplateableElement asTemplateableElement) {
+		return getOwnedTemplateArgumentsList(asTemplateableElement, false);
 	}
 
 	/**
+	 * Return the list of TemplateArgument optionally forcing creation rather than asserting that creation is unnecessary since the list is non-empty.
+	 *
 	 * @since 7.0
 	 */
-	public static @NonNull  List<@NonNull TemplateParameterSubstitution> getOwnedSubstitutionsList(@NonNull TemplateBinding asTemplateBinding) {
-		return ClassUtil.nullFree(asTemplateBinding.getOwnedSubstitutions());
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull List<@NonNull TemplateParameterSubstitution> getOwnedSubstitutionsList(@NonNull TemplateableElement asTemplateableElement) {
-		List<@NonNull TemplateParameterSubstitution> asTemplateParameterSubstitutions = new ArrayList<>();
-		for (@NonNull TemplateBinding asTemplateBinding : getOwnedBindings(asTemplateableElement)) {
-			Iterables.addAll(asTemplateParameterSubstitutions, getOwnedSubstitutions(asTemplateBinding));
+	public static @NonNull List<@NonNull TemplateArgument> getOwnedTemplateArgumentsList(@NonNull TemplateableElement asTemplateableElement, boolean force) {
+		if (!force) {
+			Iterable<@NonNull TemplateArgument> asTemplateArguments = asTemplateableElement.basicGetOwnedTemplateArguments();
+			assert asTemplateArguments != null : "Non-empty template arguments expected - use basicGetOwnedTemplateArguments";
 		}
-		return asTemplateParameterSubstitutions;
+		return ClassUtil.nullFree(asTemplateableElement.getOwnedTemplateArguments());
+	}
+
+	/**
+	 * Return an iterable of TemplateParameter after asserting that creation is unnecessary since the list is non-empty.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull Iterable<@NonNull TemplateParameter> getOwnedTemplateParameters(@NonNull TemplateableElement asTemplateableElement) {
+		return getOwnedTemplateParametersList(asTemplateableElement, false);
+	}
+
+	/**
+	 * Return the list of TemplateParameter after asserting that creation is unnecessary since the list is non-empty.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull List<@NonNull TemplateParameter> getOwnedTemplateParametersList(@NonNull TemplateableElement asTemplateableElement) {
+		return getOwnedTemplateParametersList(asTemplateableElement, false);
+	}
+	/**
+	 * Return the list of TemplateParameter optionally forcing creation rather than asserting that creation is unnecessary since the list is non-empty.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull List<@NonNull TemplateParameter> getOwnedTemplateParametersList(@NonNull TemplateableElement asTemplateableElement, boolean force) {
+		if (!force) {
+			Iterable<@NonNull TemplateParameter> asTemplateParameters = asTemplateableElement.basicGetOwnedTemplateParameters();
+			assert asTemplateParameters != null : "Non-empty template parameters expected - use basicGetOwnedTemplateParameters";
+		}
+		return ClassUtil.nullFree(asTemplateableElement.getOwnedTemplateParameters());
 	}
 
 	/**
@@ -2563,13 +2544,6 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.9
-	 */
-	public static @NonNull TemplateableElement getOwningElement(@NonNull TemplateSignature templateSignature) {
-		return ClassUtil.requireNonNull(templateSignature.getOwningElement());
-	}
-
-	/**
 	 * @since 1.4
 	 */
 	public static @NonNull Enumeration getOwningEnumeration(@NonNull EnumerationLiteral enumerationLiteral) {
@@ -2585,17 +2559,17 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 1.9
+	 * @since 7.0
 	 */
-	public static @NonNull TemplateSignature getOwningSignature(@NonNull TemplateParameter asTemplateParameter) {
-		return ClassUtil.requireNonNull(asTemplateParameter.getOwningSignature());
+	public static @NonNull Stereotype getOwningStereotype(@NonNull StereotypeExtender asStereotypeExtender) {
+		return ClassUtil.requireNonNull(asStereotypeExtender.getOwningStereotype());
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull Stereotype getOwningStereotype(@NonNull StereotypeExtender asStereotypeExtender) {
-		return ClassUtil.requireNonNull(asStereotypeExtender.getOwningStereotype());
+	public static @NonNull TemplateableElement getOwningTemplateableElement(@NonNull TemplateParameter asTemplateParameter) {
+		return ClassUtil.requireNonNull(asTemplateParameter.getOwningTemplateableElement());
 	}
 
 	/**
@@ -2815,19 +2789,6 @@ public class PivotUtil implements PivotConstants
 		return completePackage.getURI();
 	}
 
-	public static @NonNull <T extends TemplateableElement> T getUnspecializedTemplateableElement(@NonNull T templateableElement) {
-		//		if (templateableElement == null) {
-		//			return null;
-		//		}
-		TemplateableElement unspecializedElement = templateableElement.getUnspecializedElement();
-		if (unspecializedElement == null) {
-			return templateableElement;
-		}
-		@SuppressWarnings("unchecked")
-		T castUnspecializedElement = (T) unspecializedElement;
-		return castUnspecializedElement;
-	}
-
 	/**
 	 * @since 1.7
 	 */
@@ -2946,7 +2907,7 @@ public class PivotUtil implements PivotConstants
 			if (!asClass.getOwnedBehaviors().isEmpty()) {
 				return false;
 			}
-			if (!asClass.getOwnedBindings().isEmpty()) {
+			if (asClass.basicGetOwnedTemplateArguments() != null) {
 				return false;
 			}
 			if (!asClass.getOwnedComments().isEmpty()) {
@@ -3012,7 +2973,7 @@ public class PivotUtil implements PivotConstants
 			return true;
 		}
 		else if (type instanceof TemplateableElement){
-			return ((TemplateableElement)type).getOwnedBindings().size() > 0;
+			return ((TemplateableElement)type).basicGetOwnedTemplateArguments() != null;
 		}
 		else {
 			return false;

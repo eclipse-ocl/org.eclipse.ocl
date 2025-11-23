@@ -89,7 +89,7 @@ import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -105,7 +105,7 @@ import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.SingletonIterator;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.xtext.base.cs2as.AmbiguitiesAdapter;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2ASConversion;
@@ -339,10 +339,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				if (iteratorsSize == requiredIterators) {
 					org.eclipse.ocl.pivot.Class specializedType = iteration.getOwningClass();
 					if (specializedType != null) {
-						org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(specializedType);
-						if ((bestType == null) || !completeModel.isSuperClassOf(unspecializedType, bestType)) {
+						org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement(specializedType);
+						if ((bestType == null) || !completeModel.isSuperClassOf(genericType, bestType)) {
 							bestIteration = iteration;
-							bestType = unspecializedType;
+							bestType = genericType;
 						}
 					}
 				}
@@ -782,6 +782,18 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		return expression;
 	}
 
+	/**
+	 * If element is a name with missing template bindings, bind it to lower bounds.
+	 */
+	protected <T extends Element> @NonNull T resolveGenericName(@NonNull T element) {
+		if (element instanceof org.eclipse.ocl.pivot.Class) {
+			@SuppressWarnings("unchecked")
+			T castType = (T) TemplateArgumentVisitor.specializeTypeToLowerBound((org.eclipse.ocl.pivot.Class)element, environmentFactory);
+			element = castType;
+		}
+		return element;
+	}
+
 	protected @NonNull OCLExpression resolveImplicitAsSet(@NonNull OCLExpression sourceExp, @NonNull Type sourceType, @NonNull InfixExpCS csOperator) {
 		OperationCallExp expression = context.refreshModelElement(OperationCallExp.class, PivotPackage.Literals.OPERATION_CALL_EXP, null);
 		expression.setIsImplicit(true);
@@ -982,14 +994,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		List<@NonNull OCLExpression> asArguments = new ArrayList<>();
 		Iteration asIteration = PivotUtil.getReferredIteration(asLoopExp);
-		assert TemplateParameterSubstitutionVisitor.hasTemplateParameters(asIteration);
+		assert TemplateArgumentVisitor.hasTemplateParameters(asIteration);
 		List<@NonNull Parameter> asIterators = PivotUtil.getOwnedIteratorsList(asIteration);
 		List<@NonNull Parameter> asParameters = PivotUtil.getOwnedParametersList(asIteration);
 		List<@NonNull Variable> asIteratorVariables = PivotUtil.getOwnedIteratorsList(asLoopExp);
 		OCLExpression asError = null;
 		boolean hasIteratorOrAccumulator = false;
 		Type sourceType = PivotUtil.getType(PivotUtil.getOwnedSource(asLoopExp));
-		TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.createVisitor(asIteration, environmentFactory, sourceType, null);
+		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.createVisitor(asIteration, environmentFactory, sourceType, null);
 		assert visitor != null;
 		{
 			visitor.analyzeType(asIteration.getOwningClass(), sourceType);
@@ -1044,8 +1056,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 					Type formalType = asParameterType;
 					Type actualType = PivotUtil.getType(asArgument);
 					visitor.analyzeType(formalType, actualType);
-				//	TemplateParameterSubstitutions templateParameterSubstitutions = visitor != null ? visitor : null;
-				//	LambdaType specializedLambdaType = (LambdaType)environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateParameterSubstitutions);
+				//	TemplateArguments templateArguments = visitor != null ? visitor : null;
+				//	LambdaType specializedLambdaType = (LambdaType)environmentFactory.getCompleteEnvironment().getSpecializedType(asParameterType, templateArguments);
 				//	asParameterType = PivotUtil.getResultType(specializedLambdaType);
 				}
 			//	Type expType = asArgument.getType();
@@ -1262,7 +1274,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				if (csType != null) {
 					iteratorIsRequired = context.isRequired(csType);
 					varType = PivotUtil.basicGetPivot(Type.class, csType);
-					varType = varType != null ? resolveUnspecializedName(varType) : null;
+					varType = varType != null ? resolveGenericName(varType) : null;
 				}
 				if (varType == null) {
 					varType = sourceElementType;
@@ -1519,7 +1531,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		OCLExpression source = callExp.getOwnedSource();
 		Type sourceType = source != null ? source.getType() : null;
-		TemplateParameterSubstitutions templateSubstitutions = TemplateParameterSubstitutionVisitor.create(environmentFactory, callExp, sourceType);
+		TemplateArguments templateSubstitutions = TemplateArgumentVisitor.create(environmentFactory, callExp, sourceType);
 		@SuppressWarnings("unused")		// Should never happen; just for debugging
 		boolean isConformant = true;
 		if (callExp instanceof OperationCallExp) {
@@ -1607,7 +1619,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type actualType;
 		Type sourceType = source != null ? source.getType() : null;
 		if ((source != null) && (sourceType != null)) {				// XXX just one
-			actualType = TemplateParameterSubstitutionVisitor.specializeType(formalType, callExp, environmentFactory, sourceType, null);
+			actualType = TemplateArgumentVisitor.specializeType(formalType, callExp, environmentFactory, sourceType, null);
 		}
 		else {
 			actualType = formalType;
@@ -1698,18 +1710,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		expression.setReferredType(type);
 		expression.setName(type.getName());
 		return expression;
-	}
-
-	/**
-	 * If element is a name with missing template bindings, bind it to lower bounds.
-	 */
-	protected <T extends Element> @NonNull T resolveUnspecializedName(@NonNull T element) {
-		if (element instanceof org.eclipse.ocl.pivot.Class) {
-			@SuppressWarnings("unchecked")
-			T castType = (T) TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound((org.eclipse.ocl.pivot.Class)element, environmentFactory);
-			element = castType;
-		}
-		return element;
 	}
 
 	protected @NonNull VariableExp resolveVariableExp(@NonNull NameExpCS csNameExp, @NonNull VariableDeclaration variableDeclaration) {
@@ -2351,7 +2351,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			context.installPivotUsage(csNameExp, invalidLiteralExp);
 			return invalidLiteralExp;
 		}
-		element = resolveUnspecializedName(element);
+		element = resolveGenericName(element);
 		return resolveSimpleNameExp(csNameExp, element);
 	}
 

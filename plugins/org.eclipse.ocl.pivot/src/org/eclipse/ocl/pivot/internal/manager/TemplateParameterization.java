@@ -19,15 +19,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * TemplateParameterization facilitates the use of template parameters by aggregating a containment hierarchy of
- * TemplateableElement-TemplateSignature-TemplateParameter as a simple array.
+ * TemplateableElement-TemplateParameter as a simple array.
  *
  * @since 7.0
  */
@@ -69,9 +67,9 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 			templateParameters = basicGetTemplateParameters(templateParameters, eContainer);
 		}
 		if (element instanceof TemplateableElement) {
-			TemplateSignature templateSignature = ((TemplateableElement)element).getOwnedSignature();
-			if (templateSignature != null) {
-				for (@NonNull TemplateParameter templateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
+			Iterable<@NonNull TemplateParameter> asTemplateParameters = ((TemplateableElement)element).basicGetOwnedTemplateParameters();
+			if (asTemplateParameters != null) {
+				for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
 					if (templateParameters == null) {
 						templateParameters = new ArrayList<>();
 					}

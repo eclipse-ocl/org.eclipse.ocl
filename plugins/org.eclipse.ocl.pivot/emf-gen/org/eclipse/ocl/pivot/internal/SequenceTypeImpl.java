@@ -71,7 +71,7 @@ public class SequenceTypeImpl
 
 	@Override
 	public @NonNull TypeId computeId() {
-		if (getUnspecializedElement() == null) {
+		if (getGeneric() == null) {
 			return TypeId.SEQUENCE;
 		}
 		else {

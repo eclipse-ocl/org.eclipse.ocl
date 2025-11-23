@@ -28,8 +28,8 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.util.Visitor;
 
@@ -214,11 +214,12 @@ public class MessageTypeImpl
 			case 5:
 				return getOwnedConstraints();
 			case 6:
-				return getOwnedBindings();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 7:
-				return getOwnedSignature();
+				return getOwnedTemplateArguments();
 			case 8:
-				return getUnspecializedElement();
+				return getOwnedTemplateParameters();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -285,14 +286,15 @@ public class MessageTypeImpl
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 6:
-				getOwnedBindings().clear();
-				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)newValue);
+				getOwnedTemplateArguments().clear();
+				getOwnedTemplateArguments().addAll((Collection<? extends TemplateArgument>)newValue);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)newValue);
+				getOwnedTemplateParameters().clear();
+				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -371,13 +373,13 @@ public class MessageTypeImpl
 				getOwnedConstraints().clear();
 				return;
 			case 6:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedTemplateArguments().clear();
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)null);
+				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
 				getExtenders().clear();
@@ -444,11 +446,11 @@ public class MessageTypeImpl
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 6:
-				return ownedBindings != null && !ownedBindings.isEmpty();
+				return generic != null;
 			case 7:
-				return ownedSignature != null;
+				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 8:
-				return unspecializedElement != null;
+				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:

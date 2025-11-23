@@ -434,7 +434,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«thisModel.installIterations()»
 						«thisModel.installCoercions()»
 						«thisModel.installProperties()»
-						«thisModel.installTemplateBindings()»
+						«thisModel.installTemplateArguments()»
 						«thisModel.installPrecedences()»
 						«thisModel.installComments()»
 					}

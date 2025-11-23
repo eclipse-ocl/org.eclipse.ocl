@@ -55,10 +55,8 @@ import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -231,7 +229,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		private final @NonNull List<@NonNull Operation> sortedOperationsWithPrecedence = new ArrayList<>();
 		private final @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> sortedParameterTypes = new ArrayList<>();
 		private final @NonNull List<@NonNull TemplateParameter> sortedTemplateParameters = new ArrayList<>();
-		private final @NonNull List<@NonNull TemplateSignature> sortedTemplateSignatures = new ArrayList<>();
 		private final @NonNull List<@NonNull TemplateableElement> sortedTemplateableElements = new ArrayList<>();
 		private final @NonNull List<@NonNull TupleType> sortedTupleTypes = new ArrayList<>();
 		private final @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> internalClasses = new HashSet<>();
@@ -296,7 +293,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			Collections.sort(sortedParameterTypes, monikerComparator);
 			Collections.sort(sortedTupleTypes, monikerComparator);
 			Collections.sort(sortedTemplateParameters, monikerComparator);
-			Collections.sort(sortedTemplateSignatures, monikerComparator);
 			Collections.sort(sortedTemplateableElements, monikerComparator);
 
 			for (org.eclipse.ocl.pivot.@NonNull Package asPackage : sortedAllPackages) {
@@ -346,18 +342,19 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 
 		protected void doTemplateableElement(@NonNull TemplateableElement asTemplateableElement) {
-			if (asTemplateableElement.getOwnedBindings().size() > 0) {
+			List<@NonNull TemplateArgument> asTemplateArguments = asTemplateableElement.basicGetOwnedTemplateArguments();
+			if (asTemplateArguments != null) {
 				sortedTemplateableElements.add(asTemplateableElement);
 			}
-			TemplateSignature asTemplateSignature = asTemplateableElement.getOwnedSignature();
-			if (asTemplateSignature != null) {
-				for (TemplateParameter asTemplateParameter : asTemplateSignature.getOwnedParameters()) {
+			Iterable<@NonNull TemplateParameter> asTemplateParameters = asTemplateableElement.basicGetOwnedTemplateParameters();
+			if (asTemplateParameters != null) {
+				for (TemplateParameter asTemplateParameter : asTemplateParameters) {
 					if (!(asTemplateParameter instanceof NormalizedTemplateParameter)) {
 						sortedTemplateParameters.add(asTemplateParameter);
 					}
 				}
 			}
-			TemplateableElement unspecializedElement = asTemplateableElement.getUnspecializedElement();
+			TemplateableElement unspecializedElement = asTemplateableElement.getGeneric();
 			if (unspecializedElement instanceof NamedElement) {
 				allReferences.add((NamedElement)unspecializedElement);
 			}
@@ -593,25 +590,14 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 
 		@Override
-		public @Nullable Object visitTemplateBinding(@NonNull TemplateBinding asTemplateBinding) {
+		public @Nullable Object visitTemplateArgument(@NonNull TemplateArgument asTemplateArgument) {
+			allReferences.add(asTemplateArgument.getActual());
+			allReferences.add(asTemplateArgument.getFormal());
 			return null;
 		}
 
 		@Override
 		public @Nullable Object visitTemplateParameter(@NonNull TemplateParameter asTemplateParameter) {
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution asTemplateParameterSubstitution) {
-			allReferences.add(asTemplateParameterSubstitution.getActual());
-			allReferences.add(asTemplateParameterSubstitution.getFormal());
-			return null;
-		}
-
-		@Override
-		public @Nullable Object visitTemplateSignature(@NonNull TemplateSignature asTemplateSignature) {
-			sortedTemplateSignatures.add(asTemplateSignature);
 			return null;
 		}
 
@@ -733,8 +719,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		String name;
 		if (reference instanceof TemplateParameter) {
 			TemplateParameter templateParameter = (TemplateParameter)reference;
-			TemplateSignature owningSignature = templateParameter.getOwningSignature();
-			TemplateableElement owningElement = owningSignature != null ? owningSignature.getOwningElement() : null;
+			TemplateableElement owningElement = templateParameter.getOwningTemplateableElement();
 			if (owningElement instanceof NamedElement) {
 				name = "_" + ((NamedElement)owningElement).getName() + "_" + templateParameter.getName();
 			}
@@ -861,11 +846,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			if (generatedClassName != null) {
 				return "getPackage(" + generatedClassName + ".getDefaultModel(), \"" + ((NamedElement)element).getName() + "\")";
 			}
-			if ((element instanceof TemplateParameter) && (eContainer instanceof TemplateSignature)) {
-				TemplateSignature templateSignature = (TemplateSignature)eContainer;
-				TemplateableElement templateableElement = templateSignature.getOwningElement();
+			if ((element instanceof TemplateParameter) && (eContainer instanceof TemplateableElement)) {
+				TemplateableElement templateableElement = (TemplateableElement)eContainer;
 				if (templateableElement != null) {
-					return "get" + element.eClass().getName() + "(" + getSymbolName(eContainer.eContainer()) + ", " + templateSignature.getOwnedParameters().indexOf(element) + ")";
+					return "get" + element.eClass().getName() + "(" + getSymbolName(eContainer) + ", " + templateableElement.getOwnedTemplateParameters().indexOf(element) + ")";
 				}
 			}
 			if (eContainer instanceof NamedElement) {
@@ -1190,10 +1174,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return contentAnalysis.sortedTemplateParameters;
 	}
 
-	protected @NonNull List<@NonNull TemplateSignature> getSortedTemplateSignatures(@NonNull Model root) {
-		return contentAnalysis.sortedTemplateSignatures;
-	}
-
 	protected @NonNull List<@NonNull TemplateableElement> getSortedTemplateableElements(@NonNull Model root) {
 		return contentAnalysis.sortedTemplateableElements;
 	}
@@ -1220,14 +1200,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		//	if (getRootPackage(superclass.getOwningPackage()) == getRootPackage(type.getOwningPackage())) {
 				allElements.add(superclass);
 		//	}
-		}
-		return allElements;
-	}
-
-	protected @NonNull List<@NonNull TemplateParameterSubstitution> getTemplateParameterSubstitutions(@NonNull TemplateableElement element) {
-		List<@NonNull TemplateParameterSubstitution> allElements = new ArrayList<>();
-		for (TemplateBinding templateBinding : element.getOwnedBindings()) {
-			allElements.addAll(templateBinding.getOwnedSubstitutions());
 		}
 		return allElements;
 	}
@@ -1383,17 +1355,13 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			else if (localOrphan instanceof TupleType) {
 				s.append("_" + partialName(localOrphan));
 			}
-			else if (localOrphan instanceof TemplateBinding) {
-			}
-			else if (localOrphan instanceof TemplateParameterSubstitution) {
+			else if (localOrphan instanceof TemplateArgument) {
 			}
 			else if (localOrphan instanceof NormalizedTemplateParameter) {
 				s.append(partialName(localOrphan));
 			}
 			else if (localOrphan instanceof LambdaParameter) {
 				s.append(partialName(localOrphan));
-			}
-			else if (localOrphan instanceof TemplateSignature) {
 			}
 			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
 				//	s.append("orphanClass_"+partialName(localOrphan));

@@ -33,7 +33,7 @@ class GenerateASVisitors extends GenerateVisitorsXtend
 		if (isDerived()) {
 			ePackage.generateAbstractGenericVisitor("AS2Moniker", typeof(Object), typeof(AS2Moniker));
 			ePackage.generateAbstractGenericVisitor("ASSaverNormalize", typeof(Object), typeof(ASSaver));
-			ePackage.generateAbstractTemplateParameterSubstitutionVisitor("TemplateParameterSubstitution", typeof(Object), typeof(EnvironmentFactory));
+			ePackage.generateAbstractTemplateArgumentVisitor("TemplateArgument", typeof(Object), typeof(EnvironmentFactory));
 			ePackage.generateAbstractFlowAnalysisDeducerVisitor("FlowAnalysisDeducerFromFalse", typeof(Boolean), typeof(FlowAnalysis), false);
 			ePackage.generateAbstractFlowAnalysisDeducerVisitor("FlowAnalysisDeducerFromNull", typeof(Boolean), typeof(FlowAnalysis), true);
 			ePackage.generateAbstractFlowAnalysisDeducerVisitor("FlowAnalysisDeducerFromTrue", typeof(Boolean), typeof(FlowAnalysis), false);

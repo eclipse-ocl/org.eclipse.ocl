@@ -17,15 +17,14 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * TemplateSpecialization facilitates the use of template parameters by aggregating a containment hierarchy of
- * TemplateableElement-TemplateBinding-TemplateParameterSubstitution as a simple array
+ * TemplateableElement-TemplateBinding-TemplateArgument as a simple array
  * aligned with a TemplateParameterization.
  *
  * @since 7.0
@@ -35,10 +34,10 @@ public class TemplateSpecialization extends BasicTemplateSpecialization
 	public static @Nullable BasicTemplateSpecialization basicGetTemplateSpecialization(@NonNull Element element) {
 		for (EObject eContainer = element; eContainer != null; eContainer = eContainer.eContainer()) {
 			if (eContainer instanceof TemplateableElement) {
-				List<@NonNull TemplateParameterSubstitution> templateParameterSubstitutions = basicGetTemplateParameterSubstitutions(null, eContainer);
+				List<@NonNull TemplateArgument> templateArguments = basicGetTemplateArguments(null, eContainer);
 				TemplateableElement templateableElement = (TemplateableElement)eContainer;
-				if (templateParameterSubstitutions != null) {
-					return new TemplateSpecialization(templateableElement, templateParameterSubstitutions);
+				if (templateArguments != null) {
+					return new TemplateSpecialization(templateableElement, templateArguments);
 				}
 				else {
 					TemplateParameterization templateParameterization = TemplateParameterization.basicGetTemplateParameterization(templateableElement);
@@ -51,43 +50,43 @@ public class TemplateSpecialization extends BasicTemplateSpecialization
 		return null;
 	}
 
-	private static @Nullable List<@NonNull TemplateParameterSubstitution> basicGetTemplateParameterSubstitutions(@Nullable List<@NonNull TemplateParameterSubstitution> templateParameterSubstitutions, @NonNull EObject element) {
+	private static @Nullable List<@NonNull TemplateArgument> basicGetTemplateArguments(@Nullable List<@NonNull TemplateArgument> templateArguments, @NonNull EObject element) {
 		EObject eContainer = element.eContainer();
 		if (eContainer != null) {
-			templateParameterSubstitutions = basicGetTemplateParameterSubstitutions(templateParameterSubstitutions, eContainer);
+			templateArguments = basicGetTemplateArguments(templateArguments, eContainer);
 		}
 		if (element instanceof TemplateableElement) {
-			TemplateableElement templateableElement = (TemplateableElement)element;
-			for (@NonNull TemplateBinding templateBinding : PivotUtil.getOwnedBindings(templateableElement)) {
-				for (@NonNull TemplateParameterSubstitution templateParameterSubstitution : PivotUtil.getOwnedSubstitutions(templateBinding)) {
-					if (templateParameterSubstitutions == null) {
-						templateParameterSubstitutions = new ArrayList<>();
+			List<@NonNull TemplateArgument> asTemplateArguments = ((TemplateableElement)element).basicGetOwnedTemplateArguments();
+			if (asTemplateArguments != null) {
+				for (@NonNull TemplateArgument asTemplateArgument : asTemplateArguments) {
+					if (templateArguments == null) {
+						templateArguments = new ArrayList<>();
 					}
-					templateParameterSubstitutions.add(templateParameterSubstitution);
+					templateArguments.add(asTemplateArgument);
 				}
 			}
 		}
-		return templateParameterSubstitutions;
+		return templateArguments;
 	}
 
 	public static @NonNull TemplateSpecialization getTemplateSpecialization(@NonNull Element element) {
 		return (TemplateSpecialization)ClassUtil.requireNonNull(basicGetTemplateSpecialization(element));
 	}
 
-	protected final @NonNull List<@NonNull TemplateParameterSubstitution> templateParameterSubstitutions;
+	protected final @NonNull List<@NonNull TemplateArgument> templateArguments;
 
 	private TemplateSpecialization(@NonNull TemplateableElement specializedElement,
-			@NonNull List<@NonNull TemplateParameterSubstitution> templateParameterSubstitutions) {
-		super(specializedElement, TemplateParameterization.getTemplateParameterization(PivotUtil.getFormal(templateParameterSubstitutions.get(templateParameterSubstitutions.size()-1))));
-		int size = templateParameterSubstitutions.size();
+			@NonNull List<@NonNull TemplateArgument> templateArguments) {
+		super(specializedElement, TemplateParameterization.getTemplateParameterization(PivotUtil.getFormal(templateArguments.get(templateArguments.size()-1))));
+		int size = templateArguments.size();
 		assert size == templateParameterization.size();
-		this.templateParameterSubstitutions = templateParameterSubstitutions;
+		this.templateArguments = templateArguments;
 		for (int i = 0; i < size; i++) {
-			templateActuals[i] = PivotUtil.getActual(templateParameterSubstitutions.get(i));
+			templateActuals[i] = PivotUtil.getActual(templateArguments.get(i));
 		}
 	}
 
-	public List<@NonNull TemplateParameterSubstitution> getOwnedSubstitutions() {
-		return templateParameterSubstitutions;
+	public List<@NonNull TemplateArgument> getOwnedTemplateArguments() {
+		return templateArguments;
 	}
 }

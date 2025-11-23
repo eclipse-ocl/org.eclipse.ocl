@@ -33,10 +33,10 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.OperationArguments;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.xtext.base.cs2as.BaseCSLeft2RightVisitor.CS2ASContext;
 import org.eclipse.ocl.xtext.essentialocl.cs2as.EssentialOCLCSLeft2RightVisitor.Invocations;
 
@@ -88,9 +88,9 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		}
 	};
 
-	private static final @NonNull TemplateParameterSubstitutions NO_MATCH = new NoMatch();
+	private static final @NonNull TemplateArguments NO_MATCH = new NoMatch();
 
-	private static class NoMatch implements TemplateParameterSubstitutions
+	private static class NoMatch implements TemplateArguments
 	{
 		@Override
 		public @Nullable Type get(@Nullable TemplateParameter templateParameter) {
@@ -129,8 +129,8 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		// assert sourceTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
-	protected int compareMatches(@NonNull Object match1, @Nullable TemplateParameterSubstitutions referenceBindings,
-			@NonNull Object match2, @Nullable TemplateParameterSubstitutions candidateBindings, boolean useCoercions) {
+	protected int compareMatches(@NonNull Object match1, @Nullable TemplateArguments referenceBindings,
+			@NonNull Object match2, @Nullable TemplateArguments candidateBindings, boolean useCoercions) {
 		CompleteModel completeModel = environmentFactory.getCompleteModel();
 		@NonNull Operation reference = (Operation) match1;
 		@NonNull Operation candidate = (Operation) match2;
@@ -231,12 +231,12 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	public @Nullable Operation getBestOperation(@NonNull Invocations invocations, boolean useCoercions) {
 		ambiguities = null;
 		Operation bestOperation = null;
-		TemplateParameterSubstitutions bestBindings = null;
+		TemplateArguments bestBindings = null;
 		List<@NonNull Operation> ambiguities2 = ambiguities;
 		for (NamedElement namedElement : invocations) {
 			if (namedElement instanceof Operation) {
 				Operation candidateOperation = (Operation)namedElement;
-				TemplateParameterSubstitutions candidateBindings = matches(candidateOperation, useCoercions);
+				TemplateArguments candidateBindings = matches(candidateOperation, useCoercions);
 				if (candidateBindings != NO_MATCH) {
 					if (bestOperation == null) {
 						bestOperation = candidateOperation;
@@ -284,15 +284,15 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	 * The return may be null if no template parameter substitutions are required.
 	 * Returns NO_MATCH if no match is possible.
 	 */
-	protected @Nullable TemplateParameterSubstitutions matches(@NonNull Operation candidateOperation, boolean useCoercions) {
+	protected @Nullable TemplateArguments matches(@NonNull Operation candidateOperation, boolean useCoercions) {
 		List<@NonNull Parameter> candidateParameters = PivotUtil.getOwnedParametersList(candidateOperation);
 		int iSize = getArgumentCount();
 		if (iSize != candidateParameters.size()) {
 			return NO_MATCH;
 		}
-		TemplateParameterSubstitutions bindings = null;
-		if (TemplateParameterSubstitutionVisitor.hasTemplateParameters(candidateOperation)) {
-			TemplateParameterSubstitutionVisitor visitor = TemplateParameterSubstitutionVisitor.createVisitor(candidateOperation, environmentFactory, sourceType, null);
+		TemplateArguments bindings = null;
+		if (TemplateArgumentVisitor.hasTemplateParameters(candidateOperation)) {
+			TemplateArgumentVisitor visitor = TemplateArgumentVisitor.createVisitor(candidateOperation, environmentFactory, sourceType, null);
 			if (visitor != null) {
 				bindings = visitor;
 				visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);

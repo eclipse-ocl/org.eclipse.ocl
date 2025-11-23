@@ -114,7 +114,7 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 				completeClass.dispose();
 			}
 		}
-		if (partialClass.getUnspecializedElement() == null) {
+		if (partialClass.getGeneric() == null) {
 			((CompleteModelImpl)getCompleteModel()).didRemoveClass(partialClass);
 		}
 	}

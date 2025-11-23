@@ -32,8 +32,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -200,10 +200,10 @@ public class IterationImpl extends OperationImpl implements Iteration
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case 12:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 13:
-				return basicSetOwnedSignature(null, msgs);
+				return ((InternalEList<?>)getOwnedTemplateArguments()).basicRemove(otherEnd, msgs);
+			case 14:
+				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
 			case 15:
 				return basicSetBodyExpression(null, msgs);
 			case 20:
@@ -258,11 +258,12 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 11:
 				return getOwnedConstraints();
 			case 12:
-				return getOwnedBindings();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 13:
-				return getOwnedSignature();
+				return getOwnedTemplateArguments();
 			case 14:
-				return getUnspecializedElement();
+				return getOwnedTemplateParameters();
 			case 15:
 				return getBodyExpression();
 			case 16:
@@ -346,14 +347,15 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 12:
-				getOwnedBindings().clear();
-				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 13:
-				setOwnedSignature((TemplateSignature)newValue);
+				getOwnedTemplateArguments().clear();
+				getOwnedTemplateArguments().addAll((Collection<? extends TemplateArgument>)newValue);
 				return;
 			case 14:
-				setUnspecializedElement((TemplateableElement)newValue);
+				getOwnedTemplateParameters().clear();
+				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)newValue);
@@ -451,13 +453,13 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getOwnedConstraints().clear();
 				return;
 			case 12:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 13:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedTemplateArguments().clear();
 				return;
 			case 14:
-				setUnspecializedElement((TemplateableElement)null);
+				getOwnedTemplateParameters().clear();
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)null);
@@ -540,11 +542,11 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 11:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 12:
-				return ownedBindings != null && !ownedBindings.isEmpty();
+				return generic != null;
 			case 13:
-				return ownedSignature != null;
+				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 14:
-				return unspecializedElement != null;
+				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 15:
 				return bodyExpression != null;
 			case 16:

@@ -28,7 +28,7 @@ import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
  * LambdaTypeManager encapsulates the knowledge about known lambda types.
@@ -50,8 +50,8 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	}
 
 	@Override
-	public boolean conformsToLambdaType(@NonNull LambdaType actualType, @Nullable TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull LambdaType requiredType, @Nullable TemplateParameterSubstitutions requiredSubstitutions, boolean enforceNullity) {
+	public boolean conformsToLambdaType(@NonNull LambdaType actualType, @Nullable TemplateArguments actualTemplateArguments,
+			@NonNull LambdaType requiredType, @Nullable TemplateArguments requiredTemplateArguments, boolean enforceNullity) {
 		LambdaParameter actualContext = PivotUtil.getOwnedContext(actualType);
 		LambdaParameter requiredContext = PivotUtil.getOwnedContext(requiredType);
 		Type actualContextType = PivotUtil.getType(actualContext);
@@ -59,12 +59,12 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		if (enforceNullity) {
 			boolean actualIsRequired = actualContext.isIsRequired();
 			boolean requiredIsRequired = requiredContext.isIsRequired();
-			if (!standardLibrary.conformsTo(actualContextType, actualIsRequired, actualSubstitutions, requiredContextType, requiredIsRequired, requiredSubstitutions)) {
+			if (!standardLibrary.conformsTo(actualContextType, actualIsRequired, actualTemplateArguments, requiredContextType, requiredIsRequired, requiredTemplateArguments)) {
 				return false;
 			}
 		}
 		else {
-			if (!standardLibrary.conformsTo(actualContextType, actualSubstitutions, requiredContextType, requiredSubstitutions, false)) {
+			if (!standardLibrary.conformsTo(actualContextType, actualTemplateArguments, requiredContextType, requiredTemplateArguments, false)) {
 				return false;
 			}
 		}
@@ -75,12 +75,12 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		if (enforceNullity) {
 			boolean actualIsRequired = actualResult.isIsRequired();
 			boolean requiredIsRequired = requiredResult.isIsRequired();
-			if (!standardLibrary.conformsTo(requiredResultType, requiredIsRequired, requiredSubstitutions, actualResultType, actualIsRequired, actualSubstitutions)) {	// contravariant
+			if (!standardLibrary.conformsTo(requiredResultType, requiredIsRequired, requiredTemplateArguments, actualResultType, actualIsRequired, actualTemplateArguments)) {	// contravariant
 				return false;
 			}
 		}
 		else {
-			if (!standardLibrary.conformsTo(actualResultType, actualSubstitutions, requiredResultType, requiredSubstitutions, false)) {
+			if (!standardLibrary.conformsTo(actualResultType, actualTemplateArguments, requiredResultType, requiredTemplateArguments, false)) {
 				return false;
 			}
 		}
@@ -98,12 +98,12 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 			if (enforceNullity) {
 				boolean actualIsRequired = actualParameter.isIsRequired();
 				boolean requiredIsRequired = requiredParameter.isIsRequired();
-				if (!standardLibrary.conformsTo(actualParameterType, actualIsRequired, actualSubstitutions, requiredParameterType, requiredIsRequired, requiredSubstitutions)) {
+				if (!standardLibrary.conformsTo(actualParameterType, actualIsRequired, actualTemplateArguments, requiredParameterType, requiredIsRequired, requiredTemplateArguments)) {
 					return false;
 				}
 			}
 			else {
-				if (!standardLibrary.conformsTo(actualParameterType, actualSubstitutions, requiredParameterType, requiredSubstitutions, false)) {
+				if (!standardLibrary.conformsTo(actualParameterType, actualTemplateArguments, requiredParameterType, requiredTemplateArguments, false)) {
 					return false;
 				}
 			}
@@ -138,7 +138,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 
 	@Override
 	public @NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result,
-			@Nullable TemplateParameterSubstitutions bindings) {
+			@Nullable TemplateArguments bindings) {
 		if (bindings == null) {
 			return getLambdaType(context, parameters, result);
 		}
@@ -196,7 +196,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		return IdManager.getPartId(0, PivotUtil.getName(typedElement), contextTypeId, typedElement.isIsRequired());
 	}
 
-	private @NonNull TypedElement specialize(@NonNull TypedElement context, @Nullable TemplateParameterSubstitutions bindings) {
+	private @NonNull TypedElement specialize(@NonNull TypedElement context, @Nullable TemplateArguments bindings) {
 		String name = PivotUtil.getName(context);
 		Type specializedType = standardLibrary.getSpecializedType(PivotUtil.getType(context), bindings);
 		boolean isRequired = context.isIsRequired();

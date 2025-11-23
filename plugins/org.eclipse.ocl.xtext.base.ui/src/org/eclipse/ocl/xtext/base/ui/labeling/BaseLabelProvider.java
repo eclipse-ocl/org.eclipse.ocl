@@ -11,7 +11,6 @@
 package org.eclipse.ocl.xtext.base.ui.labeling;
 
 import java.net.URL;
-import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -78,10 +77,8 @@ import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
@@ -233,14 +230,15 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 		}
 	}
 
-	protected void appendTemplateBindings(@NonNull StringBuilder s, TemplateableElement templateableElement) {
+	protected void appendTemplateArguments(@NonNull StringBuilder s, TemplateableElement templateableElement) {
 		if (templateableElement != null) {
-			for (TemplateBinding templateBinding : templateableElement.getOwnedBindings()) {
+			List<@NonNull TemplateArgument> asTemplateArguments = templateableElement.basicGetOwnedTemplateArguments();
+			if (asTemplateArguments != null) {
 				s.append("(");
 				String prefix = "";
-				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
+				for (TemplateArgument asTemplateArgument : asTemplateArguments) {
 					s.append(prefix);
-					Type actual = templateParameterSubstitution.getActual();
+					Type actual = asTemplateArgument.getActual();
 					appendType(s, actual);
 					prefix = ", ";
 				}
@@ -249,29 +247,26 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 		}
 	}
 
-	protected void appendTemplateSignature(@NonNull StringBuilder s, TemplateableElement templateableElement) {
+	protected void appendTemplateParameters(@NonNull StringBuilder s, TemplateableElement templateableElement) {
 		if (templateableElement != null) {
-			TemplateSignature templateSignature = templateableElement.getOwnedSignature();
-			if (templateSignature != null) {
-				s.append("(");
-				Collection<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-				if (!templateParameters.isEmpty()) {
-					String prefix = "";
-					for (TemplateParameter templateParameter : templateParameters) {
-						s.append(prefix);
-						appendName(s, templateParameter);
-						prefix = ", ";
-					}
+			s.append("(");
+			List<@NonNull TemplateParameter> templateParameters = templateableElement.basicGetOwnedTemplateParameters();
+			if (templateParameters != null) {
+				String prefix = "";
+				for (TemplateParameter templateParameter : templateParameters) {
+					s.append(prefix);
+					appendName(s, templateParameter);
+					prefix = ", ";
 				}
-				s.append(")");
 			}
+			s.append(")");
 		}
 	}
 
 	protected void appendType(@NonNull StringBuilder s, Type type) {
 		appendName(s, type);
 		if (type instanceof TemplateableElement) {
-			appendTemplateBindings(s, (TemplateableElement)type);
+			appendTemplateArguments(s, (TemplateableElement)type);
 		}
 	}
 
@@ -368,7 +363,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	protected String text(org.eclipse.ocl.pivot.Class ele) {
 		StringBuilder s = new StringBuilder();
 		appendName(s, ele);
-		appendTemplateSignature(s, ele);
+		appendTemplateParameters(s, ele);
 		appendSuperTypes(s, ele.getSuperClasses());
 		return s.toString();
 	}
@@ -400,7 +395,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	protected String text(CollectionType ele) {
 		StringBuilder s = new StringBuilder();
 		appendType(s, ele);
-		appendTemplateSignature(s, ele);
+		appendTemplateParameters(s, ele);
 		appendSuperTypes(s, ele.getSuperClasses());
 		return s.toString();
 	}
@@ -458,7 +453,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	protected String text(DataType ele) {
 		StringBuilder s = new StringBuilder();
 		appendName(s, ele);
-		appendTemplateSignature(s, ele);
+		appendTemplateParameters(s, ele);
 		appendSuperTypes(s, ele.getSuperClasses());
 		String instance = ele.getInstanceClassName();
 		if (instance != null) {
@@ -476,7 +471,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	protected String text(org.eclipse.ocl.pivot.Enumeration ele) {
 		StringBuilder s = new StringBuilder();
 		appendName(s, ele);
-		appendTemplateSignature(s, ele);
+		appendTemplateParameters(s, ele);
 		appendSuperTypes(s, ele.getSuperClasses());
 		String instance = ele.getInstanceClassName();
 		if (instance != null) {
@@ -561,7 +556,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	protected String text(Iteration ele) {
 		StringBuilder s = new StringBuilder();
 		appendName(s, ele);
-		appendTemplateSignature(s, ele);
+		appendTemplateParameters(s, ele);
 		appendParameters(s, ele.getOwnedIterators());
 		s.append(" : ");
 		appendType(s, ele.getType());
@@ -651,7 +646,7 @@ public class BaseLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObject
 	protected String text(Operation ele) {
 		StringBuilder s = new StringBuilder();
 		appendName(s, ele);
-		appendTemplateSignature(s, ele);
+		appendTemplateParameters(s, ele);
 		appendParameters(s, ele.getOwnedParameters());
 		s.append(" : ");
 		appendType(s, ele.getType());

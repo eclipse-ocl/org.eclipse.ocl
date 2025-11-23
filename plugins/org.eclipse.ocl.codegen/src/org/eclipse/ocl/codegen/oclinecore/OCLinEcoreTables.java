@@ -57,10 +57,8 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -715,7 +713,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				Operation op = sortedOperations.get(i);
 				Iteration it = op instanceof Iteration ? (Iteration)op : null;
 				boolean hasAccumulator = (it != null) && (it.getOwnedAccumulator() != null);
-				TemplateSignature ownedTemplateSignature = op.getOwnedSignature();
 				StringBuilder sFlags = new StringBuilder();
 				sFlags.append(i);
 				if (op.isIsInvalidating()) {
@@ -776,7 +773,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					resultType.accept(emitTypeExpression);
 				}
 				s.append(",\n			" + sFlags.toString() + ", ");
-				if (ownedTemplateSignature == null) {
+				Iterable<@NonNull TemplateParameter> asTemplateParameters = op.basicGetOwnedTemplateParameters();
+				if (asTemplateParameters == null) {
 					s.appendClassReference(null, TemplateParameters.class);
 					s.append(".EMPTY_LIST");
 				}
@@ -785,14 +783,12 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.appendClassReference(null, TemplateParameters.class);
 					s.append("(");
 					boolean first = true;
-					for (TemplateParameter parameter : ownedTemplateSignature.getOwnedParameters()) {
-						if (parameter != null) {
-							if (!first) {
-								s.append(", ");
-							}
-							parameter.accept(emitReferencedElement);
-							first = false;
+					for (TemplateParameter parameter : asTemplateParameters) {
+						if (!first) {
+							s.append(", ");
 						}
+						parameter.accept(emitReferencedElement);
+						first = false;
 					}
 					s.append(")");
 				}
@@ -1162,15 +1158,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append("null, ");
 			}
 			appendTypeFlags(asClass);
-			if (asClass.getOwnedSignature() != null) {
-				for (TemplateParameter asTemplateParameter : asClass.getOwnedSignature().getOwnedParameters()) {
-					if (asTemplateParameter != null) {
-						s.append(", ");
-						asTemplateParameter.accept(emitReferencedElement);
+			Iterable<@NonNull TemplateParameter> asTemplateParameters = asClass.basicGetOwnedTemplateParameters();
+			if (asTemplateParameters != null) {
+				for (@NonNull TemplateParameter asTemplateParameter : asTemplateParameters) {
+					s.append(", ");
+					asTemplateParameter.accept(emitReferencedElement);
 					//	s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
 					//	s.append(".");
 					//	s.append(getTemplateParameterName(asTemplateParameter));
-					}
 				}
 			}
 		}
@@ -1308,14 +1303,14 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	protected void declareTypeParameters() {
 		Map<@NonNull String, @NonNull TemplateParameter> name2templateParameter = new HashMap<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
-			TemplateSignature asTemplateSignature = asClass.getOwnedSignature();
-			if (asTemplateSignature != null) {
-				declareTypeParameters(name2templateParameter, asTemplateSignature);
+			@Nullable Iterable<@NonNull TemplateParameter> templateParameters1 = asClass.basicGetOwnedTemplateParameters();
+			if (templateParameters1 != null) {
+				declareTypeParameters(name2templateParameter, asClass);
 			}
-			for (@NonNull Operation operation : getMemberOperationsSortedBySignature(asClass)) {
-				asTemplateSignature = operation.getOwnedSignature();
-				if (asTemplateSignature != null) {
-					declareTypeParameters(name2templateParameter, asTemplateSignature);
+			for (@NonNull Operation asOperation : getMemberOperationsSortedBySignature(asClass)) {
+				@Nullable Iterable<@NonNull TemplateParameter> templateParameters2 = asOperation.basicGetOwnedTemplateParameters();
+				if (templateParameters2 != null) {
+					declareTypeParameters(name2templateParameter, asOperation);
 				}
 			}
 		}
@@ -1368,18 +1363,21 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
-	protected void declareTypeParameters(@NonNull Map<@NonNull String, @NonNull TemplateParameter> name2templateParameter, @NonNull TemplateSignature templateSignature) {
-		Orphanage orphanage = environmentFactory.getOrphanage();
-		for (@NonNull TemplateParameter asTemplateParameter : PivotUtil.getOwnedParameters(templateSignature)) {
-			Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter.getTemplateParameterId().getIndex());
-			String baseName = getTemplateParameterNameCandidate(asTemplateParameter);
-			String name = baseName;
-			int disambiguator = 0;
-			while (name2templateParameter.containsKey(name)) {
-				name = baseName + "_" + disambiguator++;
+	protected void declareTypeParameters(@NonNull Map<@NonNull String, @NonNull TemplateParameter> name2templateParameter, @NonNull TemplateableElement templateableElement) {
+		Iterable<@NonNull TemplateParameter> asTemplateParameters = templateableElement.basicGetOwnedTemplateParameters();
+		if (asTemplateParameters != null) {
+			Orphanage orphanage = environmentFactory.getOrphanage();
+			for (@NonNull TemplateParameter asTemplateParameter : asTemplateParameters) {
+				Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter.getTemplateParameterId().getIndex());
+				String baseName = getTemplateParameterNameCandidate(asTemplateParameter);
+				String name = baseName;
+				int disambiguator = 0;
+				while (name2templateParameter.containsKey(name)) {
+					name = baseName + "_" + disambiguator++;
+				}
+				name2templateParameter.put(name, asTemplateParameter);
+				templateParameter2name.put(asTemplateParameter, name);
 			}
-			name2templateParameter.put(name, asTemplateParameter);
-			templateParameter2name.put(asTemplateParameter, name);
 		}
 	}
 
@@ -1580,8 +1578,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	private boolean isNestedSpecialization(@NonNull TemplateableElement asType) {
-		for (TemplateBinding asBinding : asType.getOwnedBindings()) {
-			for (TemplateParameterSubstitution asSubstitution : asBinding.getOwnedSubstitutions()) {
+		List<@NonNull TemplateArgument> asTemplateArguments = asType.basicGetOwnedTemplateArguments();
+		if (asTemplateArguments != null) {
+			for (TemplateArgument asSubstitution : asTemplateArguments) {
 				Type asActual = asSubstitution.getActual();
 				if (asActual instanceof TupleType) {
 					for (Property asProperty : ((TupleType)asActual).getOwnedProperties()) {
@@ -1603,9 +1602,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	private boolean isNestedSpecialization2(@NonNull TemplateableElement asType) {
-		for (TemplateBinding asBinding : asType.getOwnedBindings()) {
-			for (TemplateParameterSubstitution asSubstitution : asBinding.getOwnedSubstitutions()) {
-				Type asActual = asSubstitution.getActual();
+		List<@NonNull TemplateArgument> asTemplateArguments = asType.basicGetOwnedTemplateArguments();
+		if (asTemplateArguments != null) {
+			for (TemplateArgument asTemplateArgument : asTemplateArguments) {
+				Type asActual = asTemplateArgument.getActual();
 				if (asActual instanceof TemplateParameter) {
 					return true;
 				}
@@ -1714,9 +1714,10 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 
 	private boolean usesOperationTemplateParameter(@NonNull Type type) {
 		if (type instanceof TemplateableElement) {
-			for (@NonNull TemplateBinding templateBinding : PivotUtil.getOwnedBindings((TemplateableElement)type)) {
-				for (@NonNull TemplateParameterSubstitution templateParameterSubstitution : PivotUtil.getOwnedSubstitutions(templateBinding)) {
-					Type actual = PivotUtil.getActual(templateParameterSubstitution);
+			List<@NonNull TemplateArgument> asTemplateArguments = ((TemplateableElement)type).basicGetOwnedTemplateArguments();
+			if (asTemplateArguments != null) {
+				for (@NonNull TemplateArgument asTemplateArgument : asTemplateArguments) {
+					Type actual = PivotUtil.getActual(asTemplateArgument);
 					if (actual instanceof TemplateParameter) {
 						if (PivotUtil.basicGetContainingOperation(actual) != null) {
 							return true;

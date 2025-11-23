@@ -13,7 +13,6 @@
 
 package org.eclipse.ocl.pivot.utilities;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,10 +83,8 @@ import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
@@ -383,22 +380,24 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			appendName(object);
 			if (object instanceof TemplateableElement) {
 				TemplateableElement templateableElement = (TemplateableElement) object;
-				appendTemplateBindings(PivotUtil.getOwnedBindingsList(templateableElement), null);
-				appendTemplateSignature(templateableElement.getOwnedSignature());
+				appendTemplateArguments(templateableElement, null);
+				appendTemplateParameters(templateableElement);
 			}
 		}
 	}
 
-	protected void appendTemplateBindings(List<@NonNull TemplateBinding> templateBindings, @Nullable CollectionType collectionType) {
-		if (templateBindings.size() > 0) {
+	/**
+	 * @since 7.0
+	 */
+	protected void appendTemplateArguments(@NonNull TemplateableElement asTemplateableElement, @Nullable CollectionType collectionType) {
+		List<@NonNull TemplateArgument> templateArguments = asTemplateableElement.basicGetOwnedTemplateArguments();
+		if (templateArguments != null) {
 			append("(");
 			String prefix = ""; //$NON-NLS-1$
-			for (@NonNull TemplateBinding templateBinding : templateBindings) {
-				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-					append(prefix);
-					appendTypedElement(templateBinding, templateParameterSubstitution.getActual());
-					prefix = ",";
-				}
+			for (TemplateArgument templateArgument : templateArguments) {
+				append(prefix);
+				appendTypedElement(asTemplateableElement, templateArgument.getActual());
+				prefix = ",";
 			}
 			if (collectionType != null) {
 				Number lower = collectionType.getLower();
@@ -413,19 +412,20 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		}
 	}
 
-	protected void appendTemplateSignature(TemplateSignature templateSignature) {
-		if (templateSignature != null) {
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			if (!templateParameters.isEmpty()) {
-				append("(");
-				String prefix = ""; //$NON-NLS-1$
-				for (TemplateParameter templateParameter : templateParameters) {
-					append(prefix);
-					appendName(templateParameter);
-					prefix = ",";
-				}
-				append(")");
+	/**
+	 * @since 7.0
+	 */
+	protected void appendTemplateParameters(@NonNull TemplateableElement asTemplateableElement) {
+		Iterable<@NonNull TemplateParameter> asTemplateParameters = asTemplateableElement.basicGetOwnedTemplateParameters();
+		if (asTemplateParameters != null) {
+			append("(");
+			String prefix = ""; //$NON-NLS-1$
+			for (TemplateParameter templateParameter : asTemplateParameters) {
+				append(prefix);
+				appendName(templateParameter);
+				prefix = ",";
 			}
+			append(")");
 		}
 	}
 
@@ -438,12 +438,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			}
 			type.accept(this);
 		}
-//		appendName(type);
-//		if (type instanceof TemplateableElement) {
-//			TemplateableElement templateableType = (TemplateableElement)type;
-//			appendTemplateBindings(templateableType.getOwnedBindings(), templateableType);
-//			appendTemplateSignature(templateableType.getOwnedSignature());
-//		}
 	}
 
 	/**
@@ -575,8 +569,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		else {
 			appendQualifiedName(asPackage, "::", asClass);
 		}
-		appendTemplateBindings(PivotUtil.getOwnedBindingsList(asClass), null);
-		appendTemplateSignature(asClass.getOwnedSignature());
+		appendTemplateArguments(asClass, null);
+		appendTemplateParameters(asClass);
 		return null;
 	}
 
@@ -639,8 +633,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitCollectionType(@NonNull CollectionType object) {
 		appendName(object);
-		appendTemplateBindings(PivotUtil.getOwnedBindingsList(object), object);
-		appendTemplateSignature(object.getOwnedSignature());
+		appendTemplateArguments(object, object);
+		appendTemplateParameters(object);
 		//		Number lower = object.getLower();
 		//		Number upper = object.getUpper();
 		//		long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
@@ -878,8 +872,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitIteration(@NonNull Iteration iteration) {
 		appendQualifiedName(iteration.getOwningClass(), ".", iteration);
-		appendTemplateBindings(PivotUtil.getOwnedBindingsList(iteration), null);
-		appendTemplateSignature(iteration.getOwnedSignature());
+		appendTemplateArguments(iteration, null);
+		appendTemplateParameters(iteration);
 		append("(");
 		boolean isFirst = true;
 		for (Parameter parameter : iteration.getOwnedIterators()) {
@@ -977,7 +971,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			LambdaParameter context = lambda.getOwnedContext();
 		//	safeVisit(context);
 			appendElementType(context);
-		//	appendTemplateSignature(lambda.getOwnedSignature());
 			append("(");
 			boolean isFirst = true;
 			for (LambdaParameter parameter : lambda.getOwnedParameters()) {
@@ -1043,29 +1036,27 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitMapType(@NonNull MapType object) {
 		appendName(object);
-		List<TemplateBinding> templateBindings = object.getOwnedBindings();
+		List<@NonNull TemplateArgument> templateArguments = object.basicGetOwnedTemplateArguments();
 		//	appendTemplateBindings(ownedBindings, null);		// FIXME show Map key/value-multiplicities
-		if (templateBindings.size() > 0) {
+		if (templateArguments != null) {
 			append("(");
 			String prefix = ""; //$NON-NLS-1$
 			int index = 0;
-			for (TemplateBinding templateBinding : templateBindings) {
-				for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-					append(prefix);
-					safeVisit(templateParameterSubstitution.getActual());
-					if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
-					//	append("[?]");
-					}
-					else {//if (SHOW_ALL_MULTIPLICITIES) {
-						append("[1]");
-					}
-					prefix = ",";
-					index++;
+			for (TemplateArgument templateArgument : templateArguments) {
+				append(prefix);
+				safeVisit(templateArgument.getActual());
+				if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
+				//	append("[?]");
 				}
+				else {//if (SHOW_ALL_MULTIPLICITIES) {
+					append("[1]");
+				}
+				prefix = ",";
+				index++;
 			}
 			append(")");
 		}
-		appendTemplateSignature(object.getOwnedSignature());
+		appendTemplateParameters(object);
 		return null;
 	}
 
@@ -1116,8 +1107,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitOperation(@NonNull Operation operation) {
 		appendQualifiedName(operation.getOwningClass(), "::", operation);
-		appendTemplateBindings(PivotUtil.getOwnedBindingsList(operation), null);
-		appendTemplateSignature(operation.getOwnedSignature());
+		appendTemplateArguments(operation, null);
+		appendTemplateParameters(operation);
 		append("(");
 		boolean isFirst = true;
 		for (Parameter parameter : operation.getOwnedParameters()) {
@@ -1329,25 +1320,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return null;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public String visitTemplateBinding(@NonNull TemplateBinding object) {
-		// s.append(getQualifiedName(object.getFormal(), "/", (NamedElement)
-		// object.getActual()));
-		appendTemplateBindings(Collections.singletonList(object), null);
-		return null;
-	}
-
-	@Override
-	public String visitTemplateParameter(@NonNull TemplateParameter object) {
-		TemplateSignature signature = object.getOwningSignature();
-		appendName(signature != null ? (NamedElement) signature.getOwningElement() : null);
-		append(".");
-		appendName(object);
-		return null;
-	}
-
-	@Override
-	public String visitTemplateParameterSubstitution(@NonNull TemplateParameterSubstitution object) {
+	public String visitTemplateArgument(@NonNull TemplateArgument object) {
 		TemplateParameter formal = object.getFormal();
 		appendName(formal != null ? formal : null);
 		append("/");
@@ -1359,8 +1336,11 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	}
 
 	@Override
-	public String visitTemplateSignature(@NonNull TemplateSignature object) {
-		appendTemplateSignature(object);
+	public String visitTemplateParameter(@NonNull TemplateParameter object) {
+		TemplateableElement templateableElement = object.getOwningTemplateableElement();
+		appendName(templateableElement != null ? (NamedElement)templateableElement : null);
+		append(".");
+		appendName(object);
 		return null;
 	}
 

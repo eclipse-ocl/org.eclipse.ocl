@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Profile;
@@ -66,7 +65,6 @@ import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Type;
@@ -864,9 +862,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 		if (umlTemplateSignature != null) {
 			List<org.eclipse.uml2.uml.TemplateParameter> umlTemplateParameters = umlTemplateSignature.getOwnedParameters();
 			if (!umlTemplateParameters.isEmpty()) {
-				TemplateSignature pivotTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
-				pivotElement.setOwnedSignature(pivotTemplateSignature);
-				doSwitchAll(pivotTemplateSignature.getOwnedParameters(), umlTemplateParameters, null);
+				doSwitchAll(PivotUtil.getOwnedTemplateParametersList(pivotElement, true), umlTemplateParameters, null);
 			}
 		}
 	}

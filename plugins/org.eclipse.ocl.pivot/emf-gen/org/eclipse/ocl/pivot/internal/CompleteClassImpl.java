@@ -94,7 +94,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 			if (owner.classListeners != null) {
 				owner.classListeners.didAddPartialClass(index, partialClass);
 			}
-			if (partialClass.getUnspecializedElement() == null) {
+			if (partialClass.getGeneric() == null) {
 				((CompleteModelImpl)owner.getCompleteModel()).didAddClass(partialClass, owner);
 			}
 		}

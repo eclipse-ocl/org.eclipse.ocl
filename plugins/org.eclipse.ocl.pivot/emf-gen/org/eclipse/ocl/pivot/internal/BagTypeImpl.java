@@ -71,7 +71,7 @@ public class BagTypeImpl
 
 	@Override
 	public @NonNull TypeId computeId() {
-		if (getUnspecializedElement() == null) {
+		if (getGeneric() == null) {
 			return TypeId.BAG;
 		}
 		else {

@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 /**
@@ -63,9 +63,10 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	}
 
 	/**
-	 * Add any templateParameter substitutions to templateParameterSubstitutions that the regular library modeling omits.
+	 * Add any templateParameter substitutions to templateArguments that the regular library modeling omits.
 	 *
 	 * The default implementation adds nothing. The intended usage for flatten where the input/output types are irregular.
+	 * @since 7.0
 	 */
-	default void resolveUnmodeledTemplateParameterSubstitutions(@NonNull TemplateParameterSubstitutionVisitor templateParameterSubstitutions, @NonNull CallExp callExp) {}
+	default void resolveUnmodeledTemplateArguments(@NonNull TemplateArgumentVisitor templateArguments, @NonNull CallExp callExp) {}
 }

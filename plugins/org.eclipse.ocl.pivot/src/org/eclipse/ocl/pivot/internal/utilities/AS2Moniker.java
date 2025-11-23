@@ -30,16 +30,13 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class AS2Moniker implements PivotConstantsInternal
 {
@@ -174,9 +171,9 @@ public class AS2Moniker implements PivotConstantsInternal
 
 	public void appendName(Element monikeredElement) {
 		if (monikeredElement instanceof TemplateableElement) {		// FIXME migrate to more specific location
-			TemplateableElement unspecializedElement = ((TemplateableElement)monikeredElement).getUnspecializedElement();
-			if (unspecializedElement != null) {
-				appendName(unspecializedElement);
+			TemplateableElement generic = ((TemplateableElement)monikeredElement).getGeneric();
+			if (generic != null) {
+				appendName(generic);
 				return;
 			}
 		}
@@ -235,11 +232,11 @@ public class AS2Moniker implements PivotConstantsInternal
 			if (parent instanceof Element) {
 				appendElement((Element) parent);
 				if (parent instanceof TemplateableElement) {
-					TemplateSignature ownedTemplateSignature = ((TemplateableElement)parent).getOwnedSignature();
-					if (ownedTemplateSignature != null) {
-						for (TemplateParameter templateParameter : ownedTemplateSignature.getOwnedParameters()) {
+					Iterable<@NonNull TemplateParameter> asTemplateParameters = ((TemplateableElement)parent).basicGetOwnedTemplateParameters();
+					if (asTemplateParameters != null) {
+						for (TemplateParameter templateParameter : asTemplateParameters) {
 							emittedTemplateParameter(templateParameter);
-					}
+						}
 					}
 				}
 			}
@@ -283,62 +280,56 @@ public class AS2Moniker implements PivotConstantsInternal
 		}
 	}
 
-	public void appendTemplateBindings(TemplateableElement templateableElement, Map<TemplateParameter, Type> bindings) {
-		List<TemplateBinding> templateBindings = templateableElement.getOwnedBindings();
-		if (!templateBindings.isEmpty()) {
-			boolean isSpecialized = isSpecialized(templateBindings, bindings);
+	/**
+	 * @since 7.0
+	 */
+	public void appendTemplateArguments(@NonNull TemplateableElement templateableElement, Map<@NonNull TemplateParameter, Type> bindings) {
+		List<@NonNull TemplateArgument> templateArguments = templateableElement.basicGetOwnedTemplateArguments();
+		if (templateArguments != null) {
+			boolean isSpecialized = isSpecialized(templateArguments, bindings);
 			if (!isSpecialized) {
 				s.append(TEMPLATE_SIGNATURE_PREFIX);
 				String prefix = ""; //$NON-NLS-1$
-				for (TemplateBinding templateBinding : templateBindings) {
-					List<TemplateParameterSubstitution> parameterSubstitutions = templateBinding.getOwnedSubstitutions();
-					if (parameterSubstitutions.size() > 1) {
-						parameterSubstitutions = new ArrayList<TemplateParameterSubstitution>(parameterSubstitutions);
-						Collections.sort(parameterSubstitutions, PivotUtil.TemplateParameterSubstitutionComparator.INSTANCE);
-					}
-					for (TemplateParameterSubstitution templateParameterSubstitution : parameterSubstitutions) {
-						s.append(prefix);
-						appendName(templateParameterSubstitution.getFormal());
-						prefix = TEMPLATE_SIGNATURE_SEPARATOR;
-					}
+			//	if (templateArguments.size() > 1) {
+			//		templateArguments = new ArrayList<>(templateArguments);
+			//		Collections.sort(templateArguments, PivotUtil.TemplateArgumentComparator.INSTANCE);
+			//	}
+				for (@NonNull TemplateArgument templateArgument : templateArguments) {
+					s.append(prefix);
+					appendName(templateArgument.getFormal());
+					prefix = TEMPLATE_SIGNATURE_SEPARATOR;
 				}
 				s.append(TEMPLATE_SIGNATURE_SUFFIX);
 			}
 			else {
 				s.append(TEMPLATE_BINDING_PREFIX);
 				String prefix = ""; //$NON-NLS-1$
-				for (TemplateBinding templateBinding : templateBindings) {
-					List<TemplateParameterSubstitution> parameterSubstitutions = templateBinding.getOwnedSubstitutions();
-					if (parameterSubstitutions.size() > 1) {
-						parameterSubstitutions = new ArrayList<TemplateParameterSubstitution>(parameterSubstitutions);
-						Collections.sort(parameterSubstitutions, PivotUtil.TemplateParameterSubstitutionComparator.INSTANCE);
-					}
-					for (TemplateParameterSubstitution templateParameterSubstitution : parameterSubstitutions) {
-						s.append(prefix);
-						appendElement(templateParameterSubstitution.getActual(), bindings);
-						prefix = TEMPLATE_BINDING_SEPARATOR;
-					}
+			//	if (templateArguments.size() > 1) {
+			//		templateArguments = new ArrayList<>(templateArguments);
+			//		Collections.sort(templateArguments, PivotUtil.TemplateArgumentComparator.INSTANCE);
+			//	}
+				for (@NonNull TemplateArgument templateArgument : templateArguments) {
+					s.append(prefix);
+					appendElement(templateArgument.getActual(), bindings);
+					prefix = TEMPLATE_BINDING_SEPARATOR;
 				}
 				s.append(TEMPLATE_BINDING_SUFFIX);
 			}
 		}
 	}
 
-	public void appendTemplateParameters(TemplateableElement templateableElement) {
-		TemplateSignature templateSignature = templateableElement.getOwnedSignature();
-		if (templateSignature != null) {
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			if (!templateParameters.isEmpty()) {
-				s.append(TEMPLATE_SIGNATURE_PREFIX);
-				String prefix = ""; //$NON-NLS-1$
-				for (TemplateParameter templateParameter : templateParameters) {
-					s.append(prefix);
-					emittedTemplateParameter(templateParameter);
-					appendName(templateParameter);
-					prefix = TEMPLATE_SIGNATURE_SEPARATOR;
-				}
-				s.append(TEMPLATE_SIGNATURE_SUFFIX);
+	public void appendTemplateParameters(TemplateableElement asTemplateableElement) {
+		Iterable<@NonNull TemplateParameter> asTemplateParameters = asTemplateableElement.basicGetOwnedTemplateParameters();
+		if (asTemplateParameters != null) {
+			s.append(TEMPLATE_SIGNATURE_PREFIX);
+			String prefix = ""; //$NON-NLS-1$
+			for (TemplateParameter templateParameter : asTemplateParameters) {
+				s.append(prefix);
+				emittedTemplateParameter(templateParameter);
+				appendName(templateParameter);
+				prefix = TEMPLATE_SIGNATURE_SEPARATOR;
 			}
+			s.append(TEMPLATE_SIGNATURE_SUFFIX);
 		}
 	}
 
@@ -389,20 +380,18 @@ public class AS2Moniker implements PivotConstantsInternal
 		return (emittedParameters != null) && emittedParameters.contains(templateParameter);
 	}
 
-	protected boolean isSpecialized(List<TemplateBinding> templateBindings, Map<TemplateParameter, Type> bindings) {
+	protected boolean isSpecialized(@NonNull List<@NonNull TemplateArgument> templateArguments, Map<@NonNull TemplateParameter, Type> bindings) {
 		if (bindings == null) {
 			return true;
 		}
-		for (TemplateBinding templateBinding : templateBindings) {
-			for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-				Type actual = templateParameterSubstitution.getActual();
-				if (actual == null) {
-					return true;
-				}
-				Type parameterableElement = bindings.get(actual);
-				if ((parameterableElement == null) || (parameterableElement != templateParameterSubstitution.getFormal())) {
-					return true;
-				}
+		for (TemplateArgument templateArgument : templateArguments) {
+			Type actual = templateArgument.getActual();
+			if (actual == null) {
+				return true;
+			}
+			Type parameterableElement = bindings.get(actual);
+			if ((parameterableElement == null) || (parameterableElement != templateArgument.getFormal())) {
+				return true;
 			}
 		}
 		return false;

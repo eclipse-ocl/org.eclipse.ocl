@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -81,7 +81,7 @@ public class CollectionFlattenOperation extends AbstractSimpleUnaryOperation
 						elementType = PivotUtil.getElementType(nestedCollectionType);
 					}
 					StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
-					CollectionTypeId genericCollectionTypeId = ((CollectionType)returnCollectionType.getUnspecializedElement()).getTypeId();// IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
+					CollectionTypeId genericCollectionTypeId = ((CollectionType)returnCollectionType.getGeneric()).getTypeId();// IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
 					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree, lowerValue, upperValue);
 					returnType = standardLibrary.getCollectionType(typeArguments);
 				}
@@ -93,18 +93,18 @@ public class CollectionFlattenOperation extends AbstractSimpleUnaryOperation
 	/**
 	 *	Special case processing for flatten() that flattens nested types.
 	 *
-	 * @since 1.18
+	 * @since 7.0
 	 */
 	@Override
-	public void resolveUnmodeledTemplateParameterSubstitutions(@NonNull TemplateParameterSubstitutionVisitor templateParameterSubstitutions, @NonNull CallExp callExp) {
+	public void resolveUnmodeledTemplateArguments(@NonNull TemplateArgumentVisitor templateArguments, @NonNull CallExp callExp) {
 		Type elementType = PivotUtil.getType(PivotUtil.getOwnedSource(callExp));
 		while (elementType instanceof CollectionType) {
 			elementType = PivotUtil.getElementType((CollectionType)elementType);
 		}
 		Operation flattenOperation = PivotUtil.getReferredOperation(callExp);
 		assert flattenOperation.getImplementation() == INSTANCE;
-		TemplateParameter templateParameter = flattenOperation.getOwnedSignature().getOwnedParameters().get(0);
-		assert templateParameterSubstitutions.getTemplateParameterization().get(1) == templateParameter;
-		templateParameterSubstitutions.put(templateParameter, elementType);
+		TemplateParameter templateParameter = flattenOperation.getOwnedTemplateParameters().get(0);
+		assert templateArguments.getTemplateParameterization().get(1) == templateParameter;
+		templateArguments.put(templateParameter, elementType);
 	}
 }

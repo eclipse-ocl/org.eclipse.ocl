@@ -130,7 +130,7 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 			case 5:
 				return getConstrainingClasses();
 			case 6:
-				return getOwningSignature();
+				return getOwningTemplateableElement();
 			case 7:
 				return getIndex();
 		}
@@ -160,7 +160,7 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 			case 5:
 				return constrainingClasses != null && !constrainingClasses.isEmpty();
 			case 6:
-				return getOwningSignature() != null;
+				return getOwningTemplateableElement() != null;
 			case 7:
 				return INDEX_EDEFAULT == null ? index != null : !INDEX_EDEFAULT.equals(index);
 		}

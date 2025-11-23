@@ -141,7 +141,6 @@ import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleLiteralExp;
 import org.eclipse.ocl.pivot.TupleLiteralPart;
@@ -1722,8 +1721,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			return cgTypeExp;
 		}
 		TemplateParameter referredTemplateParameter = (TemplateParameter)referredType;
-		TemplateSignature templateSignature = PivotUtil.getOwningSignature(referredTemplateParameter);
-		TemplateableElement asTemplateableElement = PivotUtil.getOwningElement(templateSignature);
+		TemplateableElement asTemplateableElement = PivotUtil.getOwningTemplateableElement(referredTemplateParameter);
 		CGValuedElement cgTemplateableElement;
 		if (asTemplateableElement instanceof Type) {
 			cgTemplateableElement = context.createExecutorType((Type)asTemplateableElement);
@@ -1735,7 +1733,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			codeGenerator.addProblem(new UnsupportedOperationException("visitTypeExp for non-Type Templateparameter"));
 			return null;
 		}
-		int index = templateSignature.getOwnedParameters().indexOf(referredTemplateParameter);
+		int index = asTemplateableElement.getOwnedTemplateParameters().indexOf(referredTemplateParameter);
 		CGTemplateParameterExp cgTemplateParameterExp = CGModelFactory.eINSTANCE.createCGTemplateParameterExp();
 		cgTemplateParameterExp.setIndex(index);
 		//		setPivot(cgTypeExp, pTypeExp);

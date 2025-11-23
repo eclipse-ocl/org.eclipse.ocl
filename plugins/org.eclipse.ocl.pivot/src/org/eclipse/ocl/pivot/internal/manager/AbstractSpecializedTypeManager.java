@@ -19,10 +19,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
-import org.eclipse.ocl.pivot.types.TemplateArguments;
+import org.eclipse.ocl.pivot.types.TemplateArgumentValues;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * AbstractSpecializedTypeManager encapsulates the knowledge about known class specializations.
@@ -41,50 +41,13 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 	// FIXME tests fail if keys are weak since GC is too aggressive across tests
 	// The actual types are weak keys so that parameterizations using stale types are garbage collected.
 	//
-	private @Nullable /*WeakHash*/Map<@NonNull TemplateArguments, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations = null;
+	private @Nullable /*WeakHash*/Map<@NonNull TemplateArgumentValues, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations = null;
 
 	protected AbstractSpecializedTypeManager(@NonNull StandardLibrary standardLibrary) {
 		this.standardLibrary = standardLibrary;
 	}
 
-	protected abstract org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments);
-
-/*	public synchronized @Nullable Type findSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments) {
-		TemplateSignature templateSignature = primaryClass.getOwnedSignature();
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-		int iMax = templateParameters.size();
-		if (templateArguments.parametersSize() != iMax) {
-			return null;
-		}
-		Map<@NonNull TemplateArguments, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
-		if (specializations2 == null) {
-			return null;
-		}
-		WeakReference<org.eclipse.ocl.pivot.@NonNull Class> weakReference = specializations2.get(templateArguments);
-		if (weakReference == null) {
-			return null;
-		}
-		org.eclipse.ocl.pivot.Class specializedType = weakReference.get();
-		if (specializedType != null) {
-			int templateArgumentSize = templateArguments.parametersSize();
-			for (int i = 0; i < templateArgumentSize; i++) {
-				Type templateArgument = templateArguments.get(i);
-				if (templateArgument.eResource() == null) {		// If GC pending
-					specializedType = null;
-					break;
-				}
-			}
-		}
-		if (specializedType == null) {
-			synchronized (specializations2) {
-				specializedType = weakReference.get();
-				if (specializedType == null) {
-					specializations2.remove(templateArguments);
-				}
-			}
-		}
-		return specializedType;
-	} */
+	protected abstract org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments);
 
 	@Override
 	public void dispose() {
@@ -93,17 +56,16 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull List<@NonNull ? extends Type> templateArguments) {
-		TemplateSignature templateSignature = primaryClass.getOwnedSignature();
-		List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
+		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedTemplateParametersList(primaryClass, true);
 		int iMax = templateParameters.size();
 		if (templateArguments.size() != iMax) {
 			throw new IllegalArgumentException("Incompatible template argument count");
 		}
-		return getSpecializedType(primaryClass, new TemplateArguments(primaryClass.getTypeId(), templateArguments));
+		return getSpecializedType(primaryClass, new TemplateArgumentValues(primaryClass.getTypeId(), templateArguments));
 	}
 
-	private synchronized org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArguments templateArguments) {
-		Map<@NonNull TemplateArguments, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
+	private synchronized org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
+		Map<@NonNull TemplateArgumentValues, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
 		if (specializations2 == null) {
 			synchronized(this) {
 				specializations2 = specializations;

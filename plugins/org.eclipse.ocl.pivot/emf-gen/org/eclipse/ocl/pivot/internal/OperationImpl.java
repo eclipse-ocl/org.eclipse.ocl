@@ -46,8 +46,8 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateArgument;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
@@ -82,9 +83,9 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedConstraints <em>Owned Constraints</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedBindings <em>Owned Bindings</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedSignature <em>Owned Signature</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getUnspecializedElement <em>Unspecialized Element</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getGeneric <em>Generic</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedTemplateArguments <em>Owned Template Arguments</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedTemplateParameters <em>Owned Template Parameters</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getBodyExpression <em>Body Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsInvalidating <em>Is Invalidating</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsTransient <em>Is Transient</em>}</li>
@@ -134,34 +135,34 @@ implements Operation {
 	protected EList<Constraint> ownedConstraints;
 
 	/**
-	 * The cached value of the '{@link #getOwnedBindings() <em>Owned Bindings</em>}' containment reference list.
+	 * The cached value of the '{@link #getGeneric() <em>Generic</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedBindings()
+	 * @see #getGeneric()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<TemplateBinding> ownedBindings;
+	protected TemplateableElement generic;
 
 	/**
-	 * The cached value of the '{@link #getOwnedSignature() <em>Owned Signature</em>}' containment reference.
+	 * The cached value of the '{@link #getOwnedTemplateArguments() <em>Owned Template Arguments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedSignature()
+	 * @see #getOwnedTemplateArguments()
 	 * @generated
 	 * @ordered
 	 */
-	protected TemplateSignature ownedSignature;
+	protected EList<TemplateArgument> ownedTemplateArguments;
 
 	/**
-	 * The cached value of the '{@link #getUnspecializedElement() <em>Unspecialized Element</em>}' reference.
+	 * The cached value of the '{@link #getOwnedTemplateParameters() <em>Owned Template Parameters</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUnspecializedElement()
+	 * @see #getOwnedTemplateParameters()
 	 * @generated
 	 * @ordered
 	 */
-	protected TemplateableElement unspecializedElement;
+	protected EList<TemplateParameter> ownedTemplateParameters;
 
 	/**
 	 * The cached value of the '{@link #getBodyExpression() <em>Body Expression</em>}' containment reference.
@@ -356,13 +357,13 @@ implements Operation {
 	 * @generated
 	 */
 	@Override
-	public List<TemplateBinding> getOwnedBindings()
+	public List<TemplateArgument> getOwnedTemplateArguments()
 	{
-		if (ownedBindings == null)
+		if (ownedTemplateArguments == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 12, 5);
+			ownedTemplateArguments = new EObjectContainmentWithInverseEList<TemplateArgument>(TemplateArgument.class, this, 13, 7);
 		}
-		return ownedBindings;
+		return ownedTemplateArguments;
 	}
 
 	/**
@@ -451,8 +452,13 @@ implements Operation {
 	 * @generated
 	 */
 	@Override
-	public TemplateSignature getOwnedSignature() {
-		return ownedSignature;
+	public List<TemplateParameter> getOwnedTemplateParameters()
+	{
+		if (ownedTemplateParameters == null)
+		{
+			ownedTemplateParameters = new EObjectContainmentWithInverseEList<TemplateParameter>(TemplateParameter.class, this, 14, 6);
+		}
+		return ownedTemplateParameters;
 	}
 
 	/**
@@ -460,61 +466,48 @@ implements Operation {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetOwnedSignature(TemplateSignature newOwnedSignature, NotificationChain msgs)
+	private TemplateableElement getGenericGen()
 	{
-		TemplateSignature oldOwnedSignature = ownedSignature;
-		ownedSignature = newOwnedSignature;
+		if (generic != null && generic.eIsProxy())
+		{
+			InternalEObject oldGeneric = (InternalEObject)generic;
+			generic = (TemplateableElement)eResolveProxy(oldGeneric);
+			if (generic != oldGeneric)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 12, oldGeneric, generic));
+			}
+		}
+		return generic;
+	}
+	@Override
+	public Operation getGeneric()
+	{
+		return (Operation)getGenericGen();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TemplateableElement basicGetGeneric()
+	{
+		return generic;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setGeneric(TemplateableElement newGeneric)
+	{
+		TemplateableElement oldGeneric = generic;
+		generic = newGeneric;
 		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 13, oldOwnedSignature, newOwnedSignature);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwnedSignature(
-			TemplateSignature newOwnedSignature) {
-		if (newOwnedSignature != ownedSignature)
-		{
-			NotificationChain msgs = null;
-			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 5, TemplateSignature.class, msgs);
-			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 5, TemplateSignature.class, msgs);
-			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, newOwnedSignature, newOwnedSignature));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public Operation getUnspecializedElement()
-	{
-		//		throw new UnsupportedOperationException();	// FIXME Eliminate this feature once Acceleo bug 349278 fixed
-		return null;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
-	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
-	{
-		throw new UnsupportedOperationException();	// FIXME Eliminate this feature once Acceleo bug 349278 fixed
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldGeneric, generic));
 	}
 
 	/**
@@ -1055,12 +1048,10 @@ implements Operation {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 12:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
 			case 13:
-				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (13), null, msgs);
-				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateArguments()).basicAdd(otherEnd, msgs);
+			case 14:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateParameters()).basicAdd(otherEnd, msgs);
 			case 20:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
 			case 21:
@@ -1095,10 +1086,10 @@ implements Operation {
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 11:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case 12:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 13:
-				return basicSetOwnedSignature(null, msgs);
+				return ((InternalEList<?>)getOwnedTemplateArguments()).basicRemove(otherEnd, msgs);
+			case 14:
+				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
 			case 15:
 				return basicSetBodyExpression(null, msgs);
 			case 20:
@@ -1164,11 +1155,12 @@ implements Operation {
 			case 11:
 				return getOwnedConstraints();
 			case 12:
-				return getOwnedBindings();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 13:
-				return getOwnedSignature();
+				return getOwnedTemplateArguments();
 			case 14:
-				return getUnspecializedElement();
+				return getOwnedTemplateParameters();
 			case 15:
 				return getBodyExpression();
 			case 16:
@@ -1247,14 +1239,15 @@ implements Operation {
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 12:
-				getOwnedBindings().clear();
-				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 13:
-				setOwnedSignature((TemplateSignature)newValue);
+				getOwnedTemplateArguments().clear();
+				getOwnedTemplateArguments().addAll((Collection<? extends TemplateArgument>)newValue);
 				return;
 			case 14:
-				setUnspecializedElement((TemplateableElement)newValue);
+				getOwnedTemplateParameters().clear();
+				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)newValue);
@@ -1344,13 +1337,13 @@ implements Operation {
 				getOwnedConstraints().clear();
 				return;
 			case 12:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 13:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedTemplateArguments().clear();
 				return;
 			case 14:
-				setUnspecializedElement((TemplateableElement)null);
+				getOwnedTemplateParameters().clear();
 				return;
 			case 15:
 				setBodyExpression((LanguageExpression)null);
@@ -1426,11 +1419,11 @@ implements Operation {
 			case 11:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 12:
-				return ownedBindings != null && !ownedBindings.isEmpty();
+				return generic != null;
 			case 13:
-				return ownedSignature != null;
+				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 14:
-				return unspecializedElement != null;
+				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 15:
 				return bodyExpression != null;
 			case 16:
@@ -1569,6 +1562,34 @@ implements Operation {
 	 * @since 7.0
 	 */
 	@Override
+	public @Nullable List<@NonNull TemplateArgument> basicGetOwnedTemplateArguments() {
+		if (ownedTemplateArguments == null) {
+			return null;
+		}
+		if (ownedTemplateArguments.isEmpty()) {
+			return null;
+		}
+		return ClassUtil.nullFree(ownedTemplateArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable List<@NonNull TemplateParameter> basicGetOwnedTemplateParameters() {
+		if (ownedTemplateParameters == null) {
+			return null;
+		}
+		if (ownedTemplateParameters.isEmpty()) {
+			return null;
+		}
+		return ClassUtil.nullFree(ownedTemplateParameters);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
 	public void eraseContents() {}
 
 	@Override
@@ -1597,7 +1618,7 @@ implements Operation {
 	 */
 	@Override
 	public @NonNull TemplateParameters getTemplateParameters() {
-		return TemplateSignatureImpl.getTemplateParameters(getOwnedSignature());
+		return TemplateParameters.getTemplateParameters(this);
 	}
 
 	private OperationId operationId = null;

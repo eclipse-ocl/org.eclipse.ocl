@@ -13,18 +13,18 @@ package org.eclipse.ocl.pivot.utilities;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 
 /**
- * @since 1.1
+ * @since 7.0
  * @noextend This class is not intended to be subclassed by clients. It is part of the hierarchy for auto-generated visitors.
  */
-public class PivotTemplateParameterSubstitutionVisitor extends TemplateParameterSubstitutionVisitor {
+public class PivotTemplateArgumentVisitor extends TemplateArgumentVisitor {
 
 	/**
 	 * @since 7.0
 	 */
-	public PivotTemplateParameterSubstitutionVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public PivotTemplateArgumentVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		super(environmentFactory, selfType, null);
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}

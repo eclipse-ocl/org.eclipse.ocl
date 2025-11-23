@@ -33,13 +33,12 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.ids.AbstractGeneralizedIdImpl;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -56,7 +55,7 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterImpl#getConstrainingClasses <em>Constraining Classes</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterImpl#getOwningSignature <em>Owning Signature</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterImpl#getOwningTemplateableElement <em>Owning Templateable Element</em>}</li>
  * </ul>
  *
  * @generated
@@ -132,9 +131,10 @@ public class TemplateParameterImpl
 	 * @generated
 	 */
 	@Override
-	public TemplateSignature getOwningSignature() {
+	public TemplateableElement getOwningTemplateableElement()
+	{
 		if (eContainerFeatureID() != (6)) return null;
-		return (TemplateSignature)eInternalContainer();
+		return (TemplateableElement)eInternalContainer();
 	}
 
 	/**
@@ -142,9 +142,9 @@ public class TemplateParameterImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetOwningSignature(TemplateSignature newOwningSignature, NotificationChain msgs)
+	public NotificationChain basicSetOwningTemplateableElement(TemplateableElement newOwningTemplateableElement, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningSignature, 6, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningTemplateableElement, 6, msgs);
 		return msgs;
 	}
 
@@ -154,22 +154,22 @@ public class TemplateParameterImpl
 	 * @generated
 	 */
 	@Override
-	public void setOwningSignature(TemplateSignature newOwningSignature)
+	public void setOwningTemplateableElement(TemplateableElement newOwningTemplateableElement)
 	{
-		if (newOwningSignature != eInternalContainer() || (eContainerFeatureID() != (6) && newOwningSignature != null))
+		if (newOwningTemplateableElement != eInternalContainer() || (eContainerFeatureID() != (6) && newOwningTemplateableElement != null))
 		{
-			if (EcoreUtil.isAncestor(this, newOwningSignature))
+			if (EcoreUtil.isAncestor(this, newOwningTemplateableElement))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
-			if (newOwningSignature != null)
-				msgs = ((InternalEObject)newOwningSignature).eInverseAdd(this, 4, TemplateSignature.class, msgs);
-			msgs = basicSetOwningSignature(newOwningSignature, msgs);
+			if (newOwningTemplateableElement != null)
+				msgs = ((InternalEObject)newOwningTemplateableElement).eInverseAdd(this, 6, TemplateableElement.class, msgs);
+			msgs = basicSetOwningTemplateableElement(newOwningTemplateableElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwningSignature, newOwningSignature));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, newOwningTemplateableElement, newOwningTemplateableElement));
 	}
 
 	/**
@@ -192,7 +192,7 @@ public class TemplateParameterImpl
 			case 6:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetOwningSignature((TemplateSignature)otherEnd, msgs);
+				return basicSetOwningTemplateableElement((TemplateableElement)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -216,7 +216,7 @@ public class TemplateParameterImpl
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 6:
-				return basicSetOwningSignature(null, msgs);
+				return basicSetOwningTemplateableElement(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -232,7 +232,7 @@ public class TemplateParameterImpl
 		switch (eContainerFeatureID())
 		{
 			case 6:
-				return eInternalContainer().eInverseRemove(this, 4, TemplateSignature.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 6, TemplateableElement.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -259,7 +259,7 @@ public class TemplateParameterImpl
 			case 5:
 				return getConstrainingClasses();
 			case 6:
-				return getOwningSignature();
+				return getOwningTemplateableElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -298,7 +298,7 @@ public class TemplateParameterImpl
 				getConstrainingClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
 			case 6:
-				setOwningSignature((TemplateSignature)newValue);
+				setOwningTemplateableElement((TemplateableElement)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -332,7 +332,7 @@ public class TemplateParameterImpl
 				getConstrainingClasses().clear();
 				return;
 			case 6:
-				setOwningSignature((TemplateSignature)null);
+				setOwningTemplateableElement((TemplateableElement)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -360,7 +360,7 @@ public class TemplateParameterImpl
 			case 5:
 				return constrainingClasses != null && !constrainingClasses.isEmpty();
 			case 6:
-				return getOwningSignature() != null;
+				return getOwningTemplateableElement() != null;
 		}
 		return eDynamicIsSet(featureID);
 	}
@@ -394,9 +394,7 @@ public class TemplateParameterImpl
 	 */
 	protected @NonNull TemplateParameterId computeTemplateParameterId() {
 		assert (eContainer() != null);
-		TemplateSignature templateSignature1 = getOwningSignature();
-		assert templateSignature1 != null;
-		TemplateableElement templateableElement = templateSignature1.getOwningElement();
+		TemplateableElement templateableElement = getOwningTemplateableElement();
 		AbstractGeneralizedIdImpl<?> generalizedTypeId;
 		if (templateableElement instanceof Operation) {
 			generalizedTypeId = (AbstractGeneralizedIdImpl<?>)((Operation)templateableElement).getOperationId();
@@ -457,7 +455,7 @@ public class TemplateParameterImpl
 		assert expr != null;
 		if (selfType != null) {
 			EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
-			return TemplateParameterSubstitutionVisitor.specializeType(this, expr, environmentFactory, selfType, null);
+			return TemplateArgumentVisitor.specializeType(this, expr, environmentFactory, selfType, null);
 		}
 		return this;
 	}

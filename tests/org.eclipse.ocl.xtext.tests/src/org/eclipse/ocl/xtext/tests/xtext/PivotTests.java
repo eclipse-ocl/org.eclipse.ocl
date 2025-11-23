@@ -100,7 +100,7 @@ public class PivotTests extends XtextTestCase
 			for (Resource asResource : pivotResources) {
 				for (TreeIterator<EObject> tit = asResource.getAllContents(); tit.hasNext(); ) {
 					Element pivotElement = (Element) tit.next();
-					if (pivotElement instanceof MonikeredElement) { //&& !(pivotElement instanceof TemplateSignature) && !(pivotElement instanceof TemplateParameterSubstitution) && !(pivotElement instanceof TemplateParameter)) {
+					if (pivotElement instanceof MonikeredElement) { //&& !(pivotElement instanceof TemplateSignature) && !(pivotElement instanceof TemplateArgument) && !(pivotElement instanceof TemplateParameter)) {
 						MonikeredElement pivotNameableElement = (MonikeredElement)pivotElement;
 						if (hasCorrespondingCS(pivotNameableElement)) {
 							String pivotMoniker = pivotNameableElement.getMoniker();

@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -24,51 +25,50 @@ import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Template Parameter Substitution</b></em>'.
+ * An implementation of the model object '<em><b>Template Argument</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#getActual <em>Actual</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#isActualIsRequired <em>Actual Is Required</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#getFormal <em>Formal</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#getOwnedWildcard <em>Owned Wildcard</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl#getOwningBinding <em>Owning Binding</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateArgumentImpl#getActual <em>Actual</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateArgumentImpl#isActualIsRequired <em>Actual Is Required</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateArgumentImpl#getFormal <em>Formal</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateArgumentImpl#getOwningTemplateableElement <em>Owning Templateable Element</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class TemplateParameterSubstitutionImpl
+public class TemplateArgumentImpl
 		extends ElementImpl
-		implements TemplateParameterSubstitution {
+		implements TemplateArgument {
 
 	/**
-	 * The number of structural features of the '<em>Template Parameter Substitution</em>' class.
+	 * The number of structural features of the '<em>Template Argument</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEMPLATE_PARAMETER_SUBSTITUTION_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 5;
+	public static final int TEMPLATE_ARGUMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 4;
 
-	/**
-	 * The number of operations of the '<em>Template Parameter Substitution</em>' class.
+	    /**
+	 * The number of operations of the '<em>Template Argument</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEMPLATE_PARAMETER_SUBSTITUTION_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
+	public static final int TEMPLATE_ARGUMENT_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
 
 	/**
 	 * The cached value of the '{@link #getActual() <em>Actual</em>}' reference.
@@ -101,31 +101,11 @@ public class TemplateParameterSubstitutionImpl
 	protected static final int ACTUAL_IS_REQUIRED_EFLAG = 1 << 8;
 
 	/**
-	 * The cached value of the '{@link #getFormal() <em>Formal</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getFormal()
-	 * @generated
-	 * @ordered
-	 */
-	protected TemplateParameter formal;
-
-	/**
-	 * The cached value of the '{@link #getOwnedWildcard() <em>Owned Wildcard</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #getOwnedWildcard()
-	 * @generated
-	 * @ordered
-	 */
-	protected WildcardType ownedWildcard;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected TemplateParameterSubstitutionImpl() {
+	protected TemplateArgumentImpl() {
 		super();
 		eFlags |= ACTUAL_IS_REQUIRED_EFLAG;
 	}
@@ -137,7 +117,7 @@ public class TemplateParameterSubstitutionImpl
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION;
+		return PivotPackage.Literals.TEMPLATE_ARGUMENT;
 	}
 
 	/**
@@ -211,30 +191,36 @@ public class TemplateParameterSubstitutionImpl
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public TemplateParameter getFormal() {
-		if (formal != null && formal.eIsProxy())
-		{
-			InternalEObject oldFormal = (InternalEObject)formal;
-			formal = (TemplateParameter)eResolveProxy(oldFormal);
-			if (formal != oldFormal)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 6, oldFormal, formal));
-			}
+		TemplateableElement templateableElement = getOwningTemplateableElement();
+		if (templateableElement == null) {
+			assert false;
+			return null;
 		}
-		return formal;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public TemplateParameter basicGetFormal() {
-		return formal;
+		List<@NonNull TemplateArgument> ownedTemplateArguments = templateableElement.basicGetOwnedTemplateArguments();
+		if (ownedTemplateArguments == null) {
+			assert false;
+			return null;
+		}
+		int index = ownedTemplateArguments.indexOf(this);
+		if (index < 0) {
+			assert false;
+			return null;
+		}
+		TemplateableElement generic = templateableElement.getGeneric();
+		if (generic == null) {
+			assert false;
+			return null;
+		}
+		List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(generic);
+		if (templateParameters.size() <= index) {
+			assert false;
+			return null;
+		}
+		return templateParameters.get(index);
 	}
 
 	/**
@@ -243,11 +229,10 @@ public class TemplateParameterSubstitutionImpl
 	 * @generated
 	 */
 	@Override
-	public void setFormal(TemplateParameter newFormal) {
-		TemplateParameter oldFormal = formal;
-		formal = newFormal;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldFormal, formal));
+	public TemplateableElement getOwningTemplateableElement()
+	{
+		if (eContainerFeatureID() != (7)) return null;
+		return (TemplateableElement)eInternalContainer();
 	}
 
 	/**
@@ -255,26 +240,9 @@ public class TemplateParameterSubstitutionImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	@Override
-	public WildcardType getOwnedWildcard()
+	public NotificationChain basicSetOwningTemplateableElement(TemplateableElement newOwningTemplateableElement, NotificationChain msgs)
 	{
-		return ownedWildcard;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetOwnedWildcard(WildcardType newOwnedWildcard, NotificationChain msgs)
-	{
-		WildcardType oldOwnedWildcard = ownedWildcard;
-		ownedWildcard = newOwnedWildcard;
-		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedWildcard, newOwnedWildcard);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
+		msgs = eBasicSetContainer((InternalEObject)newOwningTemplateableElement, 7, msgs);
 		return msgs;
 	}
 
@@ -284,66 +252,22 @@ public class TemplateParameterSubstitutionImpl
 	 * @generated
 	 */
 	@Override
-	public void setOwnedWildcard(WildcardType newOwnedWildcard)
+	public void setOwningTemplateableElement(TemplateableElement newOwningTemplateableElement)
 	{
-		if (newOwnedWildcard != ownedWildcard)
+		if (newOwningTemplateableElement != eInternalContainer() || (eContainerFeatureID() != (7) && newOwningTemplateableElement != null))
 		{
-			NotificationChain msgs = null;
-			if (ownedWildcard != null)
-				msgs = ((InternalEObject)ownedWildcard).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
-			if (newOwnedWildcard != null)
-				msgs = ((InternalEObject)newOwnedWildcard).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
-			msgs = basicSetOwnedWildcard(newOwnedWildcard, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedWildcard, newOwnedWildcard));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public TemplateBinding getOwningBinding() {
-		if (eContainerFeatureID() != (8)) return null;
-		return (TemplateBinding)eInternalContainer();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetOwningBinding(TemplateBinding newOwningBinding, NotificationChain msgs)
-	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningBinding, 8, msgs);
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwningBinding(TemplateBinding newOwningBinding)
-	{
-		if (newOwningBinding != eInternalContainer() || (eContainerFeatureID() != (8) && newOwningBinding != null))
-		{
-			if (EcoreUtil.isAncestor(this, newOwningBinding))
+			if (EcoreUtil.isAncestor(this, newOwningTemplateableElement))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
 			NotificationChain msgs = null;
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
-			if (newOwningBinding != null)
-				msgs = ((InternalEObject)newOwningBinding).eInverseAdd(this, 4, TemplateBinding.class, msgs);
-			msgs = basicSetOwningBinding(newOwningBinding, msgs);
+			if (newOwningTemplateableElement != null)
+				msgs = ((InternalEObject)newOwningTemplateableElement).eInverseAdd(this, 5, TemplateableElement.class, msgs);
+			msgs = basicSetOwningTemplateableElement(newOwningTemplateableElement, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, newOwningBinding, newOwningBinding));
+			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwningTemplateableElement, newOwningTemplateableElement));
 	}
 
 	/**
@@ -363,10 +287,10 @@ public class TemplateParameterSubstitutionImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 8:
+			case 7:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
-				return basicSetOwningBinding((TemplateBinding)otherEnd, msgs);
+				return basicSetOwningTemplateableElement((TemplateableElement)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -390,9 +314,7 @@ public class TemplateParameterSubstitutionImpl
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 7:
-				return basicSetOwnedWildcard(null, msgs);
-			case 8:
-				return basicSetOwningBinding(null, msgs);
+				return basicSetOwningTemplateableElement(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -407,8 +329,8 @@ public class TemplateParameterSubstitutionImpl
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case 8:
-				return eInternalContainer().eInverseRemove(this, 4, TemplateBinding.class, msgs);
+			case 7:
+				return eInternalContainer().eInverseRemove(this, 5, TemplateableElement.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -436,12 +358,9 @@ public class TemplateParameterSubstitutionImpl
 			case 5:
 				return isActualIsRequired();
 			case 6:
-				if (resolve) return getFormal();
-				return basicGetFormal();
+				return getFormal();
 			case 7:
-				return getOwnedWildcard();
-			case 8:
-				return getOwningBinding();
+				return getOwningTemplateableElement();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -478,14 +397,8 @@ public class TemplateParameterSubstitutionImpl
 			case 5:
 				setActualIsRequired((Boolean)newValue);
 				return;
-			case 6:
-				setFormal((TemplateParameter)newValue);
-				return;
 			case 7:
-				setOwnedWildcard((WildcardType)newValue);
-				return;
-			case 8:
-				setOwningBinding((TemplateBinding)newValue);
+				setOwningTemplateableElement((TemplateableElement)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -518,14 +431,8 @@ public class TemplateParameterSubstitutionImpl
 			case 5:
 				setActualIsRequired(ACTUAL_IS_REQUIRED_EDEFAULT);
 				return;
-			case 6:
-				setFormal((TemplateParameter)null);
-				return;
 			case 7:
-				setOwnedWildcard((WildcardType)null);
-				return;
-			case 8:
-				setOwningBinding((TemplateBinding)null);
+				setOwningTemplateableElement((TemplateableElement)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -553,11 +460,9 @@ public class TemplateParameterSubstitutionImpl
 			case 5:
 				return ((eFlags & ACTUAL_IS_REQUIRED_EFLAG) != 0) != ACTUAL_IS_REQUIRED_EDEFAULT;
 			case 6:
-				return formal != null;
+				return getFormal() != null;
 			case 7:
-				return ownedWildcard != null;
-			case 8:
-				return getOwningBinding() != null;
+				return getOwningTemplateableElement() != null;
 		}
 		return eDynamicIsSet(featureID);
 	}
@@ -574,6 +479,17 @@ public class TemplateParameterSubstitutionImpl
 
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
-		return visitor.visitTemplateParameterSubstitution(this);
+		return visitor.visitTemplateArgument(this);
 	}
-} //TemplateParameterSubstitutionImpl
+
+	@Override
+	public int getIndex() {
+		TemplateableElement templateableElement = getOwningTemplateableElement();
+		return templateableElement.getOwnedTemplateArguments().indexOf(this);
+	}
+
+	@Override
+	public TemplateableElement getTemplatedElement() {
+		return getFormal().getOwningTemplateableElement();
+	}
+} //TemplateArgumentImpl

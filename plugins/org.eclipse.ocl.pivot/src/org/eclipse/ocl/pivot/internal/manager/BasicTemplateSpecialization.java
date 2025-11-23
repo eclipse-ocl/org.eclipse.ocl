@@ -20,16 +20,16 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
  * TemplateSpecialization facilitates the use of template parameters by aggregating a containment hierarchy of
- * TemplateableElement-TemplateBinding-TemplateParameterSubstitution as a simple array
+ * TemplateableElement-TemplateBinding-TemplateArgument as a simple array
  * aligned with a TemplateParameterization.
  *
  * @since 7.0
  */
-public class BasicTemplateSpecialization implements TemplateParameterSubstitutions, IndexableIterable<@NonNull Type>
+public class BasicTemplateSpecialization implements TemplateArguments, IndexableIterable<@NonNull Type>
 {
 	protected class Iterator implements java.util.Iterator<@NonNull Type>
 	{

@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -28,7 +27,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -57,7 +55,7 @@ import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -182,26 +180,26 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull Type leftType, boolean leftIsRequired, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, boolean rightIsRequired, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+	public boolean conformsTo(@NonNull Type leftType, boolean leftIsRequired, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull Type rightType, boolean rightIsRequired, @Nullable TemplateArguments rightTemplateArguments) {
 		if (!leftIsRequired && rightIsRequired) {
 			return false;
 		}
-		return conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions, true);
+		return conformsTo(leftType, leftTemplateArguments, rightType, rightTemplateArguments, true);
 	}
 
 	@Override
-	public boolean conformsTo(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
-		return conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions, false);
+	public boolean conformsTo(@NonNull Type leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull Type rightType, @Nullable TemplateArguments rightTemplateArguments) {
+		return conformsTo(leftType, leftTemplateArguments, rightType, rightTemplateArguments, false);
 	}
 
 	/**
 	 * @since 7.0
 	 */
 	@Override
-	public boolean conformsTo(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity) {
+	public boolean conformsTo(@NonNull Type leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull Type rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity) {
 		if (leftType == rightType) {
 			return true;
 		}
@@ -217,21 +215,21 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 		}
 		//
-		//	Resolve left template parameters to its substitution
+		//	Resolve left template parameters to its TemplateArgument
 		//
-		if ((leftType instanceof TemplateParameter) && (leftSubstitutions != null)) {
+		if ((leftType instanceof TemplateParameter) && (leftTemplateArguments != null)) {
 			TemplateParameter leftTemplateParameter = (TemplateParameter)leftType;
-			Type leftSubstitution = leftSubstitutions.get(leftTemplateParameter);
-			if (leftSubstitution != null) {
-				leftType = leftSubstitution;
+			Type leftTemplateArgument = leftTemplateArguments.get(leftTemplateParameter);
+			if (leftTemplateArgument != null) {
+				leftType = leftTemplateArgument;
 			}
 		}
 		//
 		//	Accrue solution to the right template parameter
 		//
-		if ((rightType instanceof TemplateParameter) && (rightSubstitutions != null)) {
+		if ((rightType instanceof TemplateParameter) && (rightTemplateArguments != null)) {
 			TemplateParameter rightTemplateParameter = (TemplateParameter)rightType;
-			rightSubstitutions.put(rightTemplateParameter, leftType);
+			rightTemplateArguments.put(rightTemplateParameter, leftType);
 			return true;
 		}
 		if (leftType == rightType) {
@@ -270,28 +268,28 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			if (leftType instanceof CollectionType) {
 				if (rightType instanceof CollectionType) {
 					assert collectionTypeManager != null;
-					return collectionTypeManager.conformsToCollectionType((CollectionType)leftType, leftSubstitutions, (CollectionType)rightType, rightSubstitutions, enforceNullity);
+					return collectionTypeManager.conformsToCollectionType((CollectionType)leftType, leftTemplateArguments, (CollectionType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
 			else if (leftType instanceof MapType) {
 				if (rightType instanceof MapType) {
 					assert mapTypeManager != null;
-					return mapTypeManager.conformsToMapType((MapType)leftType, leftSubstitutions, (MapType)rightType, rightSubstitutions, enforceNullity);
+					return mapTypeManager.conformsToMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
 			else if (leftType instanceof LambdaType) {
 				if (rightType instanceof LambdaType) {
 					assert lambdaTypeManager != null;
-					return lambdaTypeManager.conformsToLambdaType((LambdaType)leftType, leftSubstitutions, (LambdaType)rightType, rightSubstitutions, enforceNullity);
+					return lambdaTypeManager.conformsToLambdaType((LambdaType)leftType, leftTemplateArguments, (LambdaType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
 			else if (leftType instanceof TupleType) {
 				if (rightType instanceof TupleType) {
 					assert tupleTypeManager != null;
-					return tupleTypeManager.conformsToTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions, enforceNullity);
+					return tupleTypeManager.conformsToTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
@@ -389,11 +387,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionType genericType, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		assert genericType.getUnspecializedElement() == null;
-		assert genericType.getOwnedSignature() != null;
-		assert genericType.getOwnedSignature().getOwnedParameters().size() == 1;
-		assert genericType.getOwnedSignature().getOwnedParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
-		assert PivotUtil.getUnspecializedTemplateableElement(genericType) == genericType;
+		assert genericType.getGeneric() == null;
+//		assert genericType.getOwnedSignature() != null;
+		assert genericType.getOwnedTemplateParameters().size() == 1;
+		assert genericType.getOwnedTemplateParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
+		assert PivotUtil.getGenericElement(genericType) == genericType;
 		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lower, upper);
 		assert collectionTypeManager != null;
 		return collectionTypeManager.getCollectionType(typeArguments);
@@ -416,12 +414,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public @NonNull Type getCommonType(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
+	public @NonNull Type getCommonType(@NonNull Type leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull Type rightType, @Nullable TemplateArguments rightTemplateArguments) {
 		if (leftType instanceof CollectionType) {
 			if (rightType instanceof CollectionType) {
 				assert collectionTypeManager != null;
-				return collectionTypeManager.getCommonCollectionType((CollectionType)leftType, leftSubstitutions, (CollectionType)rightType, rightSubstitutions);
+				return collectionTypeManager.getCommonCollectionType((CollectionType)leftType, leftTemplateArguments, (CollectionType)rightType, rightTemplateArguments);
 			}
 			return getOclAnyType();
 		}
@@ -434,14 +432,14 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		else if (leftType instanceof MapType) {
 			if (rightType instanceof MapType) {
 				assert mapTypeManager != null;
-				return mapTypeManager.getCommonMapType((MapType)leftType, leftSubstitutions, (MapType)rightType, rightSubstitutions);
+				return mapTypeManager.getCommonMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments);
 			}
 			return getOclAnyType();
 		}
 		else if (leftType instanceof TupleType) {
 			if (rightType instanceof TupleType) {
 				assert tupleTypeManager != null;
-				TupleType commonTupleType = tupleTypeManager.getCommonTupleType((TupleType)leftType, leftSubstitutions, (TupleType)rightType, rightSubstitutions);
+				TupleType commonTupleType = tupleTypeManager.getCommonTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments);
 				if (commonTupleType != null) {
 					return commonTupleType;
 				}
@@ -457,10 +455,10 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		//	}
 		//	return getOclAnyType();
 		}
-	/*	if (conformsTo(leftType, leftSubstitutions, rightType, rightSubstitutions, false)) {		// malfunctions in testOperationDependencyAnalysis_Companies for a TemplateParameter as right
+	/*	if (conformsTo(leftType, leftTemplateArguments, rightType, rightTemplateArguments, false)) {		// malfunctions in testOperationDependencyAnalysis_Companies for a TemplateParameter as right
 			return rightType;
 		}
-		if (conformsTo(rightType, rightSubstitutions, leftType, leftSubstitutions, false)) {
+		if (conformsTo(rightType, rightTemplateArguments, leftType, leftTemplateArguments, false)) {
 			return leftType;
 		} */
 		FlatClass leftFlatClass = leftType.getFlatClass(this);
@@ -493,11 +491,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		org.eclipse.ocl.pivot.Class asClass = thatClass; //completeClass.getPrimaryClass();
 		thisClass = PivotUtil.createNamedElement(asClass);			// XXX what about template parameter??
-		TemplateSignature thatSignature = asClass.getOwnedSignature();
-		if (thatSignature != null) {
-			TemplateSignature thisSignature = EcoreUtil.copy(thatSignature);
-			thisClass.setOwnedSignature(thisSignature);
-		}
 		theseClasses.add(thisClass);
 		//	System.out.println("getEquivalentClass " + NameUtil.debugSimpleName(thatClass) +  " => " + NameUtil.debugSimpleName(thisClass) +  " " + thisClass.getName());
 		return thisClass;
@@ -680,7 +673,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateParameterSubstitutions bindings) {
+	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateArguments bindings) {
 		assert tupleTypeManager != null;
 		return tupleTypeManager.getTupleType(asParts, bindings);
 	}
@@ -741,7 +734,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return;
 		}
 		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
-		assert thisClass == PivotUtil.getUnspecializedTemplateableElement(thisClass); //	thisClass = TemplateParameterSubstitutionVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
+		assert thisClass == PivotUtil.getGenericElement(thisClass); //	thisClass = TemplateArgumentVisitor.specializeTypeToLowerBound(thisClass, environmentFactory);
 		Model thisModel = PivotUtil.getContainingModel(thisClass);
 		org.eclipse.ocl.pivot.Class mutableThatClass = getEquivalentClass(thisModel, thatClass);
 		Property newOpposite = PivotFactory.eINSTANCE.createProperty();

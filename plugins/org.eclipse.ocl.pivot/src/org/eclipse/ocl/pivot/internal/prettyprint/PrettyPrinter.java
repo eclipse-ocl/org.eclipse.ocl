@@ -34,10 +34,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -438,8 +436,8 @@ public class PrettyPrinter
 			}
 			else {
 				//			EObject parent = element.eContainer();
-				EObject unspecializedElement = element instanceof TemplateableElement ? ((TemplateableElement)element).getUnspecializedElement() : element;
-				EObject parent = unspecializedElement != null ? unspecializedElement : element;
+				EObject generic = element instanceof TemplateableElement ? ((TemplateableElement)element).getGeneric() : element;
+				EObject parent = generic != null ? generic : element;
 				if (parent.eContainer() != null) {
 					parent = parent.eContainer();
 				}
@@ -600,22 +598,20 @@ public class PrettyPrinter
 	public void appendTemplateBindings(@NonNull TemplateableElement typeRef) {
 		Mode savedMode = pushMode(Mode.NAME);
 		try {
-			List<TemplateBinding> templateBindings = typeRef.getOwnedBindings();
-			if (!templateBindings.isEmpty()) {
+			List<@NonNull TemplateArgument> templateArguments = typeRef.basicGetOwnedTemplateArguments();
+			if (templateArguments != null) {
 				append("(");
 				String prefix = ""; //$NON-NLS-1$
-				for (TemplateBinding templateBinding : templateBindings) {
-					for (TemplateParameterSubstitution templateParameterSubstitution : templateBinding.getOwnedSubstitutions()) {
-						append(prefix);
-						Namespace savedScope = pushScope((Namespace) typeRef);
-						try {
-							appendTypedElement(templateParameterSubstitution, templateParameterSubstitution.getActual());
-						}
-						finally {
-							popScope(savedScope);
-						}
-						prefix = ", ";
+				for (TemplateArgument templateArgument : templateArguments) {
+					append(prefix);
+					Namespace savedScope = pushScope((Namespace) typeRef);
+					try {
+						appendTypedElement(typeRef, templateArgument.getActual());
 					}
+					finally {
+						popScope(savedScope);
+					}
+					prefix = ", ";
 				}
 				if (typeRef instanceof CollectionType) {
 					CollectionType collectionType = (CollectionType)typeRef;
@@ -635,27 +631,24 @@ public class PrettyPrinter
 	}
 
 	public void appendTemplateParameters(TemplateableElement templateableElement) {
-		TemplateSignature templateSignature = templateableElement.getOwnedSignature();
-		if (templateSignature != null) {
-			List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
-			if (!templateParameters.isEmpty()) {
-				append("(");
-				String prefix = ""; //$NON-NLS-1$
-				for (TemplateParameter templateParameter : templateParameters) {
-					append(prefix);
-					//					emittedTemplateParameter(templateParameter);
-					//					appendName((NamedElement) templateParameter.getParameteredElement(), restrictedNames);
-					Namespace savedScope = pushScope((Namespace) templateableElement);
-					try {
-						appendTypedElement(templateableElement, templateParameter);
-					}
-					finally {
-						popScope(savedScope);
-					}
-					prefix = ", ";
+		Iterable<@NonNull TemplateParameter> templateParameters = templateableElement.basicGetOwnedTemplateParameters();
+		if (templateParameters != null) {
+			append("(");
+			String prefix = ""; //$NON-NLS-1$
+			for (TemplateParameter templateParameter : templateParameters) {
+				append(prefix);
+				//					emittedTemplateParameter(templateParameter);
+				//					appendName((NamedElement) templateParameter.getParameteredElement(), restrictedNames);
+				Namespace savedScope = pushScope((Namespace) templateableElement);
+				try {
+					appendTypedElement(templateableElement, templateParameter);
 				}
-				append(")");
+				finally {
+					popScope(savedScope);
+				}
+				prefix = ", ";
 			}
+			append(")");
 		}
 	}
 

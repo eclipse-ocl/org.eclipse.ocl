@@ -3357,6 +3357,60 @@ extends EPackage
 	EAttribute getStringLiteralExp_StringSymbol();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TemplateArgument <em>Template Argument</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Template Argument</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateArgument
+	 * @generated
+	 */
+	EClass getTemplateArgument();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateArgument#getActual <em>Actual</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Actual</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateArgument#getActual()
+	 * @see #getTemplateArgument()
+	 * @generated
+	 */
+	EReference getTemplateArgument_Actual();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TemplateArgument#isActualIsRequired <em>Actual Is Required</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Actual Is Required</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateArgument#isActualIsRequired()
+	 * @see #getTemplateArgument()
+	 * @generated
+	 */
+	EAttribute getTemplateArgument_ActualIsRequired();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateArgument#getFormal <em>Formal</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Formal</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateArgument#getFormal()
+	 * @see #getTemplateArgument()
+	 * @generated
+	 */
+	EReference getTemplateArgument_Formal();
+
+	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.TemplateArgument#getOwningTemplateableElement <em>Owning Templateable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Owning Templateable Element</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateArgument#getOwningTemplateableElement()
+	 * @see #getTemplateArgument()
+	 * @generated
+	 */
+	EReference getTemplateArgument_OwningTemplateableElement();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TupleLiteralExp <em>Tuple Literal Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3839,37 +3893,37 @@ extends EPackage
 	EClass getTemplateableElement();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedBindings <em>Owned Bindings</em>}'.
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateableElement#getGeneric <em>Generic</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Owned Bindings</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateableElement#getOwnedBindings()
+	 * @return the meta object for the reference '<em>Generic</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateableElement#getGeneric()
 	 * @see #getTemplateableElement()
 	 * @generated
 	 */
-	EReference getTemplateableElement_OwnedBindings();
+	EReference getTemplateableElement_Generic();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedSignature <em>Owned Signature</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedTemplateArguments <em>Owned Template Arguments</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Owned Signature</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateableElement#getOwnedSignature()
+	 * @return the meta object for the containment reference list '<em>Owned Template Arguments</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateableElement#getOwnedTemplateArguments()
 	 * @see #getTemplateableElement()
 	 * @generated
 	 */
-	EReference getTemplateableElement_OwnedSignature();
+	EReference getTemplateableElement_OwnedTemplateArguments();
 
 	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement <em>Unspecialized Element</em>}'.
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedTemplateParameters <em>Owned Template Parameters</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Unspecialized Element</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement()
+	 * @return the meta object for the containment reference list '<em>Owned Template Parameters</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateableElement#getOwnedTemplateParameters()
 	 * @see #getTemplateableElement()
 	 * @generated
 	 */
-	EReference getTemplateableElement_UnspecializedElement();
+	EReference getTemplateableElement_OwnedTemplateParameters();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Transition <em>Transition</em>}'.
@@ -3991,81 +4045,6 @@ extends EPackage
 	EReference getTrigger_OwningTransition();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TemplateBinding <em>Template Binding</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Template Binding</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateBinding
-	 * @generated
-	 */
-	EClass getTemplateBinding();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.TemplateBinding#getOwnedSubstitutions <em>Owned Substitutions</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Owned Substitutions</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateBinding#getOwnedSubstitutions()
-	 * @see #getTemplateBinding()
-	 * @generated
-	 */
-	EReference getTemplateBinding_OwnedSubstitutions();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.TemplateBinding#getOwningElement <em>Owning Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Owning Element</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateBinding#getOwningElement()
-	 * @see #getTemplateBinding()
-	 * @generated
-	 */
-	EReference getTemplateBinding_OwningElement();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateBinding#getTemplateSignature <em>Template Signature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Template Signature</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateBinding#getTemplateSignature()
-	 * @see #getTemplateBinding()
-	 * @generated
-	 */
-	EReference getTemplateBinding_TemplateSignature();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TemplateSignature <em>Template Signature</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Template Signature</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateSignature
-	 * @generated
-	 */
-	EClass getTemplateSignature();
-
-	/**
-	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.TemplateSignature#getOwnedParameters <em>Owned Parameters</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Owned Parameters</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateSignature#getOwnedParameters()
-	 * @see #getTemplateSignature()
-	 * @generated
-	 */
-	EReference getTemplateSignature_OwnedParameters();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.TemplateSignature#getOwningElement <em>Owning Element</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Owning Element</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateSignature#getOwningElement()
-	 * @see #getTemplateSignature()
-	 * @generated
-	 */
-	EReference getTemplateSignature_OwningElement();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TemplateParameter <em>Template Parameter</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4087,80 +4066,15 @@ extends EPackage
 	EReference getTemplateParameter_ConstrainingClasses();
 
 	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.TemplateParameter#getOwningSignature <em>Owning Signature</em>}'.
+	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.TemplateParameter#getOwningTemplateableElement <em>Owning Templateable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Owning Signature</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateParameter#getOwningSignature()
+	 * @return the meta object for the container reference '<em>Owning Templateable Element</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateParameter#getOwningTemplateableElement()
 	 * @see #getTemplateParameter()
 	 * @generated
 	 */
-	EReference getTemplateParameter_OwningSignature();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution <em>Template Parameter Substitution</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Template Parameter Substitution</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateParameterSubstitution
-	 * @generated
-	 */
-	EClass getTemplateParameterSubstitution();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#getFormal <em>Formal</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Formal</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateParameterSubstitution#getFormal()
-	 * @see #getTemplateParameterSubstitution()
-	 * @generated
-	 */
-	EReference getTemplateParameterSubstitution_Formal();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#getOwnedWildcard <em>Owned Wildcard</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Owned Wildcard</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateParameterSubstitution#getOwnedWildcard()
-	 * @see #getTemplateParameterSubstitution()
-	 * @generated
-	 */
-	EReference getTemplateParameterSubstitution_OwnedWildcard();
-
-	/**
-	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#getOwningBinding <em>Owning Binding</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the container reference '<em>Owning Binding</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateParameterSubstitution#getOwningBinding()
-	 * @see #getTemplateParameterSubstitution()
-	 * @generated
-	 */
-	EReference getTemplateParameterSubstitution_OwningBinding();
-
-	/**
-	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#getActual <em>Actual</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Actual</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateParameterSubstitution#getActual()
-	 * @see #getTemplateParameterSubstitution()
-	 * @generated
-	 */
-	EReference getTemplateParameterSubstitution_Actual();
-
-	/**
-	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.TemplateParameterSubstitution#isActualIsRequired <em>Actual Is Required</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Actual Is Required</em>'.
-	 * @see org.eclipse.ocl.pivot.TemplateParameterSubstitution#isActualIsRequired()
-	 * @see #getTemplateParameterSubstitution()
-	 * @generated
-	 */
-	EAttribute getTemplateParameterSubstitution_ActualIsRequired();
+	EReference getTemplateParameter_OwningTemplateableElement();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Package <em>Package</em>}'.
@@ -8563,6 +8477,48 @@ extends EPackage
 		EAttribute STRING_LITERAL_EXP__STRING_SYMBOL = eINSTANCE.getStringLiteralExp_StringSymbol();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TemplateArgumentImpl <em>Template Argument</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.TemplateArgumentImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateArgument()
+		 * @generated
+		 */
+		EClass TEMPLATE_ARGUMENT = eINSTANCE.getTemplateArgument();
+
+		/**
+		 * The meta object literal for the '<em><b>Actual</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEMPLATE_ARGUMENT__ACTUAL = eINSTANCE.getTemplateArgument_Actual();
+
+		/**
+		 * The meta object literal for the '<em><b>Actual Is Required</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute TEMPLATE_ARGUMENT__ACTUAL_IS_REQUIRED = eINSTANCE.getTemplateArgument_ActualIsRequired();
+
+		/**
+		 * The meta object literal for the '<em><b>Formal</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEMPLATE_ARGUMENT__FORMAL = eINSTANCE.getTemplateArgument_Formal();
+
+		/**
+		 * The meta object literal for the '<em><b>Owning Templateable Element</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEMPLATE_ARGUMENT__OWNING_TEMPLATEABLE_ELEMENT = eINSTANCE.getTemplateArgument_OwningTemplateableElement();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TupleLiteralExpImpl <em>Tuple Literal Exp</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8961,28 +8917,28 @@ extends EPackage
 		EClass TEMPLATEABLE_ELEMENT = eINSTANCE.getTemplateableElement();
 
 		/**
-		 * The meta object literal for the '<em><b>Owned Bindings</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Generic</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TEMPLATEABLE_ELEMENT__OWNED_BINDINGS = eINSTANCE.getTemplateableElement_OwnedBindings();
+		EReference TEMPLATEABLE_ELEMENT__GENERIC = eINSTANCE.getTemplateableElement_Generic();
 
 		/**
-		 * The meta object literal for the '<em><b>Owned Signature</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Owned Template Arguments</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE = eINSTANCE.getTemplateableElement_OwnedSignature();
+		EReference TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_ARGUMENTS = eINSTANCE.getTemplateableElement_OwnedTemplateArguments();
 
 		/**
-		 * The meta object literal for the '<em><b>Unspecialized Element</b></em>' reference feature.
+		 * The meta object literal for the '<em><b>Owned Template Parameters</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TEMPLATEABLE_ELEMENT__UNSPECIALIZED_ELEMENT = eINSTANCE.getTemplateableElement_UnspecializedElement();
+		EReference TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS = eINSTANCE.getTemplateableElement_OwnedTemplateParameters();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TransitionImpl <em>Transition</em>}' class.
@@ -9077,66 +9033,6 @@ extends EPackage
 		EReference TRIGGER__OWNING_TRANSITION = eINSTANCE.getTrigger_OwningTransition();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TemplateBindingImpl <em>Template Binding</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.TemplateBindingImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateBinding()
-		 * @generated
-		 */
-		EClass TEMPLATE_BINDING = eINSTANCE.getTemplateBinding();
-
-		/**
-		 * The meta object literal for the '<em><b>Owned Substitutions</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_BINDING__OWNED_SUBSTITUTIONS = eINSTANCE.getTemplateBinding_OwnedSubstitutions();
-
-		/**
-		 * The meta object literal for the '<em><b>Owning Element</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_BINDING__OWNING_ELEMENT = eINSTANCE.getTemplateBinding_OwningElement();
-
-		/**
-		 * The meta object literal for the '<em><b>Template Signature</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_BINDING__TEMPLATE_SIGNATURE = eINSTANCE.getTemplateBinding_TemplateSignature();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TemplateSignatureImpl <em>Template Signature</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.TemplateSignatureImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateSignature()
-		 * @generated
-		 */
-		EClass TEMPLATE_SIGNATURE = eINSTANCE.getTemplateSignature();
-
-		/**
-		 * The meta object literal for the '<em><b>Owned Parameters</b></em>' containment reference list feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_SIGNATURE__OWNED_PARAMETERS = eINSTANCE.getTemplateSignature_OwnedParameters();
-
-		/**
-		 * The meta object literal for the '<em><b>Owning Element</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_SIGNATURE__OWNING_ELEMENT = eINSTANCE.getTemplateSignature_OwningElement();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TemplateParameterImpl <em>Template Parameter</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9155,62 +9051,12 @@ extends EPackage
 		EReference TEMPLATE_PARAMETER__CONSTRAINING_CLASSES = eINSTANCE.getTemplateParameter_ConstrainingClasses();
 
 		/**
-		 * The meta object literal for the '<em><b>Owning Signature</b></em>' container reference feature.
+		 * The meta object literal for the '<em><b>Owning Templateable Element</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference TEMPLATE_PARAMETER__OWNING_SIGNATURE = eINSTANCE.getTemplateParameter_OwningSignature();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl <em>Template Parameter Substitution</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.TemplateParameterSubstitutionImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getTemplateParameterSubstitution()
-		 * @generated
-		 */
-		EClass TEMPLATE_PARAMETER_SUBSTITUTION = eINSTANCE.getTemplateParameterSubstitution();
-
-		/**
-		 * The meta object literal for the '<em><b>Formal</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_PARAMETER_SUBSTITUTION__FORMAL = eINSTANCE.getTemplateParameterSubstitution_Formal();
-
-		/**
-		 * The meta object literal for the '<em><b>Owned Wildcard</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_PARAMETER_SUBSTITUTION__OWNED_WILDCARD = eINSTANCE.getTemplateParameterSubstitution_OwnedWildcard();
-
-		/**
-		 * The meta object literal for the '<em><b>Owning Binding</b></em>' container reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_BINDING = eINSTANCE.getTemplateParameterSubstitution_OwningBinding();
-
-		/**
-		 * The meta object literal for the '<em><b>Actual</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL = eINSTANCE.getTemplateParameterSubstitution_Actual();
-
-		/**
-		 * The meta object literal for the '<em><b>Actual Is Required</b></em>' attribute feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EAttribute TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED = eINSTANCE.getTemplateParameterSubstitution_ActualIsRequired();
+		EReference TEMPLATE_PARAMETER__OWNING_TEMPLATEABLE_ELEMENT = eINSTANCE.getTemplateParameter_OwningTemplateableElement();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.PackageImpl <em>Package</em>}' class.

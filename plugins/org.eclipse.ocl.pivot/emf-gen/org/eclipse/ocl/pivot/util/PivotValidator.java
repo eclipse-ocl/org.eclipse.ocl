@@ -133,10 +133,8 @@ import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateBinding;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.TransitionKind;
@@ -1297,76 +1295,72 @@ extends EObjectValidator {
 			case 111:
 				return validateStringLiteralExp((StringLiteralExp)value, diagnostics, context);
 			case 112:
-				return validateTemplateBinding((TemplateBinding)value, diagnostics, context);
+				return validateTemplateArgument((TemplateArgument)value, diagnostics, context);
 			case 113:
 				return validateTemplateParameter((TemplateParameter)value, diagnostics, context);
 			case 114:
-				return validateTemplateParameterSubstitution((TemplateParameterSubstitution)value, diagnostics, context);
-			case 115:
-				return validateTemplateSignature((TemplateSignature)value, diagnostics, context);
-			case 116:
 				return validateTemplateableElement((TemplateableElement)value, diagnostics, context);
-			case 117:
+			case 115:
 				return validateTransition((Transition)value, diagnostics, context);
-			case 118:
+			case 116:
 				return validateTrigger((Trigger)value, diagnostics, context);
-			case 119:
+			case 117:
 				return validateTupleLiteralExp((TupleLiteralExp)value, diagnostics, context);
-			case 120:
+			case 118:
 				return validateTupleLiteralPart((TupleLiteralPart)value, diagnostics, context);
-			case 121:
+			case 119:
 				return validateTupleType((TupleType)value, diagnostics, context);
-			case 122:
+			case 120:
 				return validateType((Type)value, diagnostics, context);
-			case 123:
+			case 121:
 				return validateTypeExp((TypeExp)value, diagnostics, context);
-			case 124:
+			case 122:
 				return validateTypedElement((TypedElement)value, diagnostics, context);
-			case 125:
+			case 123:
 				return validateUnlimitedNaturalLiteralExp((UnlimitedNaturalLiteralExp)value, diagnostics, context);
-			case 126:
+			case 124:
 				return validateUnspecifiedValueExp((UnspecifiedValueExp)value, diagnostics, context);
-			case 127:
+			case 125:
 				return validateValueSpecification((ValueSpecification)value, diagnostics, context);
-			case 128:
+			case 126:
 				return validateVariable((Variable)value, diagnostics, context);
-			case 129:
+			case 127:
 				return validateVariableDeclaration((VariableDeclaration)value, diagnostics, context);
-			case 130:
+			case 128:
 				return validateVariableExp((VariableExp)value, diagnostics, context);
-			case 131:
+			case 129:
 				return validateVertex((Vertex)value, diagnostics, context);
-			case 132:
+			case 130:
 				return validateVisitable((Visitable)value, diagnostics, context);
-			case 133:
+			case 131:
 				return validateVoidType((VoidType)value, diagnostics, context);
-			case 134:
+			case 132:
 				return validateWildcardType((WildcardType)value, diagnostics, context);
-			case 135:
+			case 133:
 				return validateAssociativityKind((AssociativityKind)value, diagnostics, context);
-			case 136:
+			case 134:
 				return validateCollectionKind((CollectionKind)value, diagnostics, context);
-			case 137:
+			case 135:
 				return validatePseudostateKind((PseudostateKind)value, diagnostics, context);
-			case 138:
+			case 136:
 				return validateTransitionKind((TransitionKind)value, diagnostics, context);
-			case 139:
+			case 137:
 				return validateBoolean((Boolean)value, diagnostics, context);
-			case 140:
+			case 138:
 				return validateEcoreObject((EObject)value, diagnostics, context);
-			case 141:
+			case 139:
 				return validateInteger((Number)value, diagnostics, context);
-			case 142:
+			case 140:
 				return validateLibraryFeature((LibraryFeature)value, diagnostics, context);
-			case 143:
+			case 141:
 				return validateObject(value, diagnostics, context);
-			case 144:
+			case 142:
 				return validateReal((Number)value, diagnostics, context);
-			case 145:
+			case 143:
 				return validateString((String)value, diagnostics, context);
-			case 146:
+			case 144:
 				return validateThrowable((Throwable)value, diagnostics, context);
-			case 147:
+			case 145:
 				return validateUnlimitedNatural((Number)value, diagnostics, context);
 			default:
 				return true;
@@ -1629,17 +1623,6 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateTemplateSignature(
-			TemplateSignature templateSignature, DiagnosticChain diagnostics,
-			Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(templateSignature, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public boolean validateTemplateableElement(
 			TemplateableElement templateableElement,
 			DiagnosticChain diagnostics, Map<Object, Object> context) {
@@ -1664,27 +1647,6 @@ extends EObjectValidator {
 	public boolean validateTrigger(Trigger trigger, DiagnosticChain diagnostics, Map<Object, Object> context)
 	{
 		return validate_EveryDefaultConstraint(trigger, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateTemplateBinding(TemplateBinding templateBinding,
-			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(templateBinding, diagnostics, context);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public boolean validateTemplateParameterSubstitution(
-			TemplateParameterSubstitution templateParameterSubstitution,
-			DiagnosticChain diagnostics, Map<Object, Object> context) {
-		return validate_EveryDefaultConstraint(templateParameterSubstitution, diagnostics, context);
 	}
 
 	/**
@@ -4712,6 +4674,16 @@ extends EObjectValidator {
 		if (result || diagnostics != null) result &= validate_EveryMapEntryUnique(stringLiteralExp, diagnostics, context);
 		if (result || diagnostics != null) result &= validateOCLExpression_validateTypeIsNotNull(stringLiteralExp, diagnostics, context);
 		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public boolean validateTemplateArgument(TemplateArgument templateArgument, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
+		return validate_EveryDefaultConstraint(templateArgument, diagnostics, context);
 	}
 
 	/**

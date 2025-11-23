@@ -12,22 +12,25 @@ package org.eclipse.ocl.pivot;
 
 import java.util.List;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Templateable Element</b></em>'.
  * <!-- end-user-doc -->
  *
  * <!-- begin-model-doc -->
- * A TemplateableElement is an Element that can optionally be defined as a template and bound to other templates.
+ * A TemplateableElement is an Element that can optionally be defined as a specialization of a generic TemplateableElement.
  * <!-- end-model-doc -->
  *
  * <p>
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedBindings <em>Owned Bindings</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedSignature <em>Owned Signature</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement <em>Unspecialized Element</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getGeneric <em>Generic</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedTemplateArguments <em>Owned Template Arguments</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedTemplateParameters <em>Owned Template Parameters</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement()
@@ -37,70 +40,69 @@ public interface TemplateableElement
 		extends Element {
 
 	/**
-	 * Returns the value of the '<em><b>Owned Bindings</b></em>' containment reference list.
-	 * The list contents are of type {@link org.eclipse.ocl.pivot.TemplateBinding}.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.TemplateBinding#getOwningElement <em>Owning Element</em>}'.
+	 * Returns the value of the '<em><b>Owned Template Arguments</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.pivot.TemplateArgument}.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.TemplateArgument#getOwningTemplateableElement <em>Owning Templateable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
 	 * The optional TemplateBindings from this TemplateableElement to one or more templates.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Owned Bindings</em>' containment reference list.
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_OwnedBindings()
-	 * @see org.eclipse.ocl.pivot.TemplateBinding#getOwningElement
+	 * @return the value of the '<em>Owned Template Arguments</em>' containment reference list.
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_OwnedTemplateArguments()
+	 * @see org.eclipse.ocl.pivot.TemplateArgument#getOwningTemplateableElement
 	 * @generated
 	 */
-	List<TemplateBinding> getOwnedBindings();
+	List<TemplateArgument> getOwnedTemplateArguments();
 
 	/**
-	 * Returns the value of the '<em><b>Owned Signature</b></em>' containment reference.
-	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.TemplateSignature#getOwningElement <em>Owning Element</em>}'.
+	 * Returns the value of the '<em><b>Owned Template Parameters</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.pivot.TemplateParameter}.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.TemplateParameter#getOwningTemplateableElement <em>Owning Templateable Element</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->
-	 * The optional TemplateSignature specifying the formal TemplateParameters for this TemplateableElement. If a TemplateableElement has a TemplateSignature, then it is a template.
+	 * The formal parameters that are owned by this TemplateableElement.
 	 * <!-- end-model-doc -->
-	 * @return the value of the '<em>Owned Signature</em>' containment reference.
-	 * @see #setOwnedSignature(TemplateSignature)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_OwnedSignature()
-	 * @see org.eclipse.ocl.pivot.TemplateSignature#getOwningElement
+	 * @return the value of the '<em>Owned Template Parameters</em>' containment reference list.
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_OwnedTemplateParameters()
+	 * @see org.eclipse.ocl.pivot.TemplateParameter#getOwningTemplateableElement
 	 * @generated
 	 */
-	TemplateSignature getOwnedSignature();
+	List<TemplateParameter> getOwnedTemplateParameters();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedSignature <em>Owned Signature</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Owned Signature</em>' containment reference.
-	 * @see #getOwnedSignature()
-	 * @generated
-	 */
-	void setOwnedSignature(TemplateSignature value);
-
-	/**
-	 * Returns the value of the '<em><b>Unspecialized Element</b></em>' reference.
+	 * Returns the value of the '<em><b>Generic</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Unspecialized Element</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Unspecialized Element</em>' reference.
-	 * @see #setUnspecializedElement(TemplateableElement)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_UnspecializedElement()
+	 * @return the value of the '<em>Generic</em>' reference.
+	 * @see #setGeneric(TemplateableElement)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_Generic()
 	 * @generated
 	 */
-	TemplateableElement getUnspecializedElement();
+	TemplateableElement getGeneric();
 
 	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TemplateableElement#getUnspecializedElement <em>Unspecialized Element</em>}' reference.
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.TemplateableElement#getGeneric <em>Generic</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Unspecialized Element</em>' reference.
-	 * @see #getUnspecializedElement()
+	 * @param value the new value of the '<em>Generic</em>' reference.
+	 * @see #getGeneric()
 	 * @generated
 	 */
-	void setUnspecializedElement(TemplateableElement value);
+	void setGeneric(TemplateableElement value);
 
+	/**
+	 * @since 7.0
+	 */
+	@Nullable List<@NonNull TemplateArgument> basicGetOwnedTemplateArguments();
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable List<@NonNull TemplateParameter> basicGetOwnedTemplateParameters();
 } // TemplateableElement

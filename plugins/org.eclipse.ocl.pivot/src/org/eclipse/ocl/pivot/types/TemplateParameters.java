@@ -10,8 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.types;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateableElement;
 
 /**
  * TemplateParameters provides a list of template parameters. The hashable functionality is not used.
@@ -21,6 +24,22 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 public class TemplateParameters
 {
 	public static final @NonNull TemplateParameters EMPTY_LIST = new TemplateParameters();
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TemplateParameters getTemplateParameters(@NonNull TemplateableElement templateableElement) {
+		List<@NonNull TemplateParameter> templateParameters = templateableElement.basicGetOwnedTemplateParameters();
+		if (templateParameters == null) {
+			return TemplateParameters.EMPTY_LIST;
+		}
+		int iMax = templateParameters.size();
+		@NonNull TemplateParameter[] typeParameters = new @NonNull TemplateParameter[iMax];
+		for (int i = 0; i < iMax; i++) {
+			typeParameters[i] = templateParameters.get(i);
+		}
+		return new TemplateParameters(typeParameters);
+	}
 
 	private final @NonNull TemplateParameter @NonNull [] templateParameters;
 	private final int hashCode;

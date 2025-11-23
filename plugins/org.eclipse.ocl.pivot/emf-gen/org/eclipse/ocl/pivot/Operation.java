@@ -391,5 +391,5 @@ public interface Operation extends Feature, Namespace, TemplateableElement {
 	 * @since 7.0
 	 */
 	@Override
-	Operation getUnspecializedElement();
+	Operation getGeneric();
 } // Operation

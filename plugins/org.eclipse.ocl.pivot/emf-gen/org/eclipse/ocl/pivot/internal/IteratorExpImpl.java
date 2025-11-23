@@ -49,7 +49,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
@@ -224,7 +224,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				OCLExpression body2 = this.getOwnedBody();
 				Type sourceType = source2.getType();
 				Type bodyType = body2.getType();
-				Type specializedBodyType = bodyType != null ? TemplateParameterSubstitutionVisitor.specializeType(bodyType, this, environmentFactory, sourceType, null) : null;
+				Type specializedBodyType = bodyType != null ? TemplateArgumentVisitor.specializeType(bodyType, this, environmentFactory, sourceType, null) : null;
 				boolean isOk = false;
 				if (bodyType != null) {
 					specializedBodyType = specializedBodyType != null ? specializedBodyType/*.behavioralType()*/ : null;

@@ -61,7 +61,7 @@ import org.eclipse.ocl.pivot.PrimitiveCompletePackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
@@ -605,7 +605,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		if (asClass.eContainer() instanceof Orphanage) {			// XXX
 			return getOrphanCompletePackage();
 		}
-		else if (asClass.getUnspecializedElement() != null) {		// Iterable and other specializations
+		else if (asClass.getGeneric() != null) {		// Iterable and other specializations
 			return getOrphanCompletePackage();
 		}
 		else if ((asClass instanceof LambdaType) || (asClass instanceof TupleType)) {
@@ -634,7 +634,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 7.0
 	 */
 	public void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClass completeClass) {
-		//		assert partialClass.getUnspecializedElement() == null;
+		//		assert partialClass.getGeneric() == null;
 		CompleteClass oldCompleteClass = class2completeClass.put(partialClass, completeClass);
 	//	if ((oldCompleteClass != null) && (oldCompleteClass != completeClass)) {
 	//		System.out.println("didAddClass " + NameUtil.debugSimpleName(partialClass) + " " + partialClass);
@@ -1148,8 +1148,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 		org.eclipse.ocl.pivot.Class type1 = getPrimaryClass(type);
-		org.eclipse.ocl.pivot.Class unspecializedType = type1.getUnspecializedElement();
-		org.eclipse.ocl.pivot.Class theType = unspecializedType != null ? unspecializedType : type1;
+		org.eclipse.ocl.pivot.Class genericType = type1.getGeneric();
+		org.eclipse.ocl.pivot.Class theType = genericType != null ? genericType : type1;
 		return getCompleteClass(theType).getFlatClass();
 	}
 
@@ -1165,14 +1165,14 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull Iterable<@NonNull Constraint> getMemberInvariants(org.eclipse.ocl.pivot.@NonNull Class type) {
-		CompleteClass completeClass = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
+		CompleteClass completeClass = getCompleteClass(PivotUtil.getGenericElement(type));
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
 		return new CompleteElementInvariantsIterable(partialClasses);
 	}
 
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getMemberOperations(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {
-		CompleteClass completeClass = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
+		CompleteClass completeClass = getCompleteClass(PivotUtil.getGenericElement(type));
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
 		return new CompleteTypeOperationsIterable(partialClasses, selectStatic);
 	}
@@ -1192,7 +1192,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull Iterable<@NonNull Property> getMemberProperties(org.eclipse.ocl.pivot.@NonNull Class type, boolean selectStatic) {
-		CompleteClass completeClass = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(type));
+		CompleteClass completeClass = getCompleteClass(PivotUtil.getGenericElement(type));
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> partialClasses = PivotUtil.getPartialClasses(completeClass);
 		return new CompleteClassPropertiesIterable(partialClasses, selectStatic);
 	}
@@ -1639,14 +1639,13 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	public boolean isSuperCompleteClassOf(@NonNull CompleteClass unspecializedFirstType, @NonNull CompleteClass secondType) {
-		CompleteClass unspecializedSecondType = getCompleteClass(PivotUtil.getUnspecializedTemplateableElement(secondType.getPrimaryClass()));	// FIXME cast
-		//		org.eclipse.ocl.pivot.Class unspecializedSecondType = PivotUtil.getUnspecializedTemplateableElement(secondType);	// FIXME cast
-		if (unspecializedFirstType == unspecializedSecondType) {
+	public boolean isSuperCompleteClassOf(@NonNull CompleteClass genericFirstType, @NonNull CompleteClass secondType) {
+		CompleteClass genericSecondType = getCompleteClass(PivotUtil.getGenericElement(secondType.getPrimaryClass()));	// FIXME cast
+		if (genericFirstType == genericSecondType) {
 			return true;
 		}
-		for (CompleteClass superCompleteClass : getSuperCompleteClasses(unspecializedSecondType)) {
-			if (isSuperCompleteClassOf(unspecializedFirstType, superCompleteClass)) {
+		for (CompleteClass superCompleteClass : getSuperCompleteClasses(genericSecondType)) {
+			if (isSuperCompleteClassOf(genericFirstType, superCompleteClass)) {
 				return true;
 			}
 		}
@@ -1655,7 +1654,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public boolean isTypeServeable(@NonNull Type type) {
-		//		if (pivotType .getUnspecializedElement() != null) {
+		//		if (pivotType .getGeneric() != null) {
 		//			return false;
 		//		}
 		if (type.isTemplateParameter() != null) {
@@ -1670,7 +1669,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		//		if (pivotType instanceof TupleType) {
 		//			return false;
 		//		}
-		if (type.eContainer() instanceof TemplateParameterSubstitution) {
+		if (type.eContainer() instanceof TemplateArgument) {
 			return false;
 		}
 		return true;

@@ -51,24 +51,6 @@ extends EFactory {
 	@NonNull Class createClass();
 
 	/**
-	 * Returns a new object of class '<em>Template Binding</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Template Binding</em>'.
-	 * @generated
-	 */
-	@NonNull TemplateBinding createTemplateBinding();
-
-	/**
-	 * Returns a new object of class '<em>Template Signature</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Template Signature</em>'.
-	 * @generated
-	 */
-	@NonNull TemplateSignature createTemplateSignature();
-
-	/**
 	 * Returns a new object of class '<em>Transition</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -94,15 +76,6 @@ extends EFactory {
 	 * @generated
 	 */
 	@NonNull TemplateParameter createTemplateParameter();
-
-	/**
-	 * Returns a new object of class '<em>Template Parameter Substitution</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Template Parameter Substitution</em>'.
-	 * @generated
-	 */
-	@NonNull TemplateParameterSubstitution createTemplateParameterSubstitution();
 
 	/**
 	 * Returns a new object of class '<em>Package</em>'.
@@ -917,6 +890,15 @@ extends EFactory {
 	 * @generated
 	 */
 	@NonNull StringLiteralExp createStringLiteralExp();
+
+	/**
+	 * Returns a new object of class '<em>Template Argument</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Template Argument</em>'.
+	 * @generated
+	 */
+	@NonNull TemplateArgument createTemplateArgument();
 
 	/**
 	 * Returns a new object of class '<em>Tuple Literal Exp</em>'.

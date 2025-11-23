@@ -40,10 +40,8 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameterSubstitution;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -432,7 +430,7 @@ public class Orphanage extends PackageImpl
 				if (eObject.eContainer() instanceof TupleType) {
 					elementId = TypeId.OCL_INVALID;				// XXX Why no TuplePartId ?
 				}
-				else if ((eObject.eContainer() instanceof TemplateableElement) && (((TemplateableElement)eObject.eContainer()).getUnspecializedElement() != null))  {
+				else if ((eObject.eContainer() instanceof TemplateableElement) && (((TemplateableElement)eObject.eContainer()).getGeneric() != null))  {
 					elementId = TypeId.OCL_INVALID;				// XXX Why no TuplePartId ?
 				}
 				else {
@@ -445,13 +443,7 @@ public class Orphanage extends PackageImpl
 			else if (eObject instanceof LambdaParameter) {
 				elementId = TypeId.OCL_INVALID;
 			}
-			else if (eObject instanceof TemplateBinding) {
-				elementId = TypeId.OCL_INVALID;
-			}
-			else if (eObject instanceof TemplateParameterSubstitution) {
-				elementId = TypeId.OCL_INVALID;
-			}
-			else if (eObject instanceof TemplateSignature) {
+			else if (eObject instanceof TemplateArgument) {
 				elementId = TypeId.OCL_INVALID;
 			}
 			if (elementId == null) {
@@ -482,13 +474,14 @@ public class Orphanage extends PackageImpl
 	 */
 	public static @Nullable NormalizedTemplateParameter basicGetNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index) {
 		List<org.eclipse.ocl.pivot.Class> orphanClasses = orphanPackage.getOwnedClasses();
-		List<TemplateParameter> asTemplatedParameters;
 		org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(orphanClasses, PivotConstants.ORPHANAGE_NAME);
 		if (orphanClass == null) {
 			return null;
 		}
-		TemplateSignature asTemplateSignature = orphanClass.getOwnedSignature();
-		asTemplatedParameters = asTemplateSignature.getOwnedParameters();
+		List<@NonNull TemplateParameter> asTemplatedParameters = orphanClass.basicGetOwnedTemplateParameters();
+		if (asTemplatedParameters == null) {
+			return null;
+		}
 		if (asTemplatedParameters.size() <= index) {
 			return null;
 		}
@@ -550,18 +543,12 @@ public class Orphanage extends PackageImpl
 	 */
 	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index) {
 		List<org.eclipse.ocl.pivot.Class> orphanClasses = orphanPackage.getOwnedClasses();
-		List<TemplateParameter> asTemplatedParameterTypes;
 		org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(orphanClasses, PivotConstants.ORPHANAGE_NAME);
 		if (orphanClass == null) {
 			orphanClass = PivotUtil.createClass(PivotConstants.ORPHANAGE_NAME);
 			orphanClass.setOwningPackage(orphanPackage);
-			TemplateSignature asTemplateSignature = PivotUtil.createTemplateSignature(orphanClass);
-			asTemplatedParameterTypes = asTemplateSignature.getOwnedParameters();
 		}
-		else {
-			TemplateSignature asTemplateSignature = orphanClass.getOwnedSignature();
-			asTemplatedParameterTypes = asTemplateSignature.getOwnedParameters();
-		}
+		List<@NonNull TemplateParameter> asTemplatedParameterTypes = PivotUtil.getOwnedTemplateParametersList(orphanClass, true);
 		while (asTemplatedParameterTypes.size() <= index) {
 			NormalizedTemplateParameter normalizedTemplateParameter = PivotFactory.eINSTANCE.createNormalizedTemplateParameter();
 			normalizedTemplateParameter.setName(PivotConstants.ORPHANAGE_NAME + asTemplatedParameterTypes.size());

@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -571,8 +570,8 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 
 	@Override
 	public Continuation<?> visitTemplateSignatureCS(@NonNull TemplateSignatureCS csElement) {
-		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.TEMPLATE_SIGNATURE;
-		TemplateSignature pivotElement = context.refreshModelElement(TemplateSignature.class, eClass, csElement);
+	/*	@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.TEMPLATEABLE_ELEMENT;
+		TemplateableElement pivotElement = context.refreshModelElement(TemplateableElement.class, eClass, csElement);
 		List<TemplateParameter> newPivotTemplateParameters = new ArrayList<TemplateParameter>();
 		List<TemplateParameterCS> csTemplateParameters = csElement.getOwnedParameters();
 		for (TemplateParameterCS csTemplateParameter : csTemplateParameters) {
@@ -581,8 +580,8 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				newPivotTemplateParameters.add(pivotTemplateParameter);
 			}
 		}
-		PivotUtil.refreshList(pivotElement.getOwnedParameters(), true, newPivotTemplateParameters);
-		return null;
+		PivotUtil.refreshList(pivotElement.getOwnedTemplateParameters(), true, newPivotTemplateParameters); */
+		return null;		// Processed in parent
 	}
 
 	@Override

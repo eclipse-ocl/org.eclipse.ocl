@@ -21,13 +21,16 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentWithInverseEList;
 import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.TemplateBinding;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -37,9 +40,9 @@ import org.eclipse.ocl.pivot.TemplateableElement;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getOwnedBindings <em>Owned Bindings</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getOwnedSignature <em>Owned Signature</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getUnspecializedElement <em>Unspecialized Element</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getGeneric <em>Generic</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getOwnedTemplateArguments <em>Owned Template Arguments</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getOwnedTemplateParameters <em>Owned Template Parameters</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,34 +70,34 @@ public abstract class TemplateableElementImpl
 	public static final int TEMPLATEABLE_ELEMENT_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
 
 	/**
-	 * The cached value of the '{@link #getOwnedBindings() <em>Owned Bindings</em>}' containment reference list.
+	 * The cached value of the '{@link #getGeneric() <em>Generic</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedBindings()
+	 * @see #getGeneric()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<TemplateBinding> ownedBindings;
+	protected TemplateableElement generic;
 
 	/**
-	 * The cached value of the '{@link #getOwnedSignature() <em>Owned Signature</em>}' containment reference.
+	 * The cached value of the '{@link #getOwnedTemplateArguments() <em>Owned Template Arguments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedSignature()
+	 * @see #getOwnedTemplateArguments()
 	 * @generated
 	 * @ordered
 	 */
-	protected TemplateSignature ownedSignature;
+	protected EList<TemplateArgument> ownedTemplateArguments;
 
 	/**
-	 * The cached value of the '{@link #getUnspecializedElement() <em>Unspecialized Element</em>}' reference.
+	 * The cached value of the '{@link #getOwnedTemplateParameters() <em>Owned Template Parameters</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUnspecializedElement()
+	 * @see #getOwnedTemplateParameters()
 	 * @generated
 	 * @ordered
 	 */
-	protected TemplateableElement unspecializedElement;
+	protected EList<TemplateParameter> ownedTemplateParameters;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -121,13 +124,13 @@ public abstract class TemplateableElementImpl
 	 * @generated
 	 */
 	@Override
-	public List<TemplateBinding> getOwnedBindings()
+	public List<TemplateArgument> getOwnedTemplateArguments()
 	{
-		if (ownedBindings == null)
+		if (ownedTemplateArguments == null)
 		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 4, 5);
+			ownedTemplateArguments = new EObjectContainmentWithInverseEList<TemplateArgument>(TemplateArgument.class, this, 5, 7);
 		}
-		return ownedBindings;
+		return ownedTemplateArguments;
 	}
 
 	/**
@@ -136,8 +139,13 @@ public abstract class TemplateableElementImpl
 	 * @generated
 	 */
 	@Override
-	public TemplateSignature getOwnedSignature() {
-		return ownedSignature;
+	public List<TemplateParameter> getOwnedTemplateParameters()
+	{
+		if (ownedTemplateParameters == null)
+		{
+			ownedTemplateParameters = new EObjectContainmentWithInverseEList<TemplateParameter>(TemplateParameter.class, this, 6, 6);
+		}
+		return ownedTemplateParameters;
 	}
 
 	/**
@@ -145,63 +153,44 @@ public abstract class TemplateableElementImpl
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetOwnedSignature(TemplateSignature newOwnedSignature, NotificationChain msgs)
+	@Override
+	public TemplateableElement getGeneric()
 	{
-		TemplateSignature oldOwnedSignature = ownedSignature;
-		ownedSignature = newOwnedSignature;
+		if (generic != null && generic.eIsProxy())
+		{
+			InternalEObject oldGeneric = (InternalEObject)generic;
+			generic = (TemplateableElement)eResolveProxy(oldGeneric);
+			if (generic != oldGeneric)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 4, oldGeneric, generic));
+			}
+		}
+		return generic;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TemplateableElement basicGetGeneric()
+	{
+		return generic;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setGeneric(TemplateableElement newGeneric)
+	{
+		TemplateableElement oldGeneric = generic;
+		generic = newGeneric;
 		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 5, oldOwnedSignature, newOwnedSignature);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwnedSignature(
-			TemplateSignature newOwnedSignature) {
-		if (newOwnedSignature != ownedSignature)
-		{
-			NotificationChain msgs = null;
-			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 5, TemplateSignature.class, msgs);
-			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 5, TemplateSignature.class, msgs);
-			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedSignature, newOwnedSignature));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public TemplateableElement getUnspecializedElement()
-	{
-		return unspecializedElement;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
-	{
-		TemplateableElement oldUnspecializedElement = unspecializedElement;
-		unspecializedElement = newUnspecializedElement;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldUnspecializedElement, unspecializedElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldGeneric, generic));
 	}
 
 	/**
@@ -221,12 +210,10 @@ public abstract class TemplateableElementImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 4:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
 			case 5:
-				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (5), null, msgs);
-				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateArguments()).basicAdd(otherEnd, msgs);
+			case 6:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateParameters()).basicAdd(otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -249,10 +236,10 @@ public abstract class TemplateableElementImpl
 				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
-			case 4:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 5:
-				return basicSetOwnedSignature(null, msgs);
+				return ((InternalEList<?>)getOwnedTemplateArguments()).basicRemove(otherEnd, msgs);
+			case 6:
+				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -275,11 +262,12 @@ public abstract class TemplateableElementImpl
 			case 3:
 				return getOwnedExtensions();
 			case 4:
-				return getOwnedBindings();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 5:
-				return getOwnedSignature();
+				return getOwnedTemplateArguments();
 			case 6:
-				return getUnspecializedElement();
+				return getOwnedTemplateParameters();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -311,14 +299,15 @@ public abstract class TemplateableElementImpl
 				getOwnedExtensions().addAll((Collection<? extends ElementExtension>)newValue);
 				return;
 			case 4:
-				getOwnedBindings().clear();
-				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 5:
-				setOwnedSignature((TemplateSignature)newValue);
+				getOwnedTemplateArguments().clear();
+				getOwnedTemplateArguments().addAll((Collection<? extends TemplateArgument>)newValue);
 				return;
 			case 6:
-				setUnspecializedElement((TemplateableElement)newValue);
+				getOwnedTemplateParameters().clear();
+				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -346,13 +335,13 @@ public abstract class TemplateableElementImpl
 				getOwnedExtensions().clear();
 				return;
 			case 4:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 5:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedTemplateArguments().clear();
 				return;
 			case 6:
-				setUnspecializedElement((TemplateableElement)null);
+				getOwnedTemplateParameters().clear();
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -376,13 +365,41 @@ public abstract class TemplateableElementImpl
 			case 3:
 				return ownedExtensions != null && !ownedExtensions.isEmpty();
 			case 4:
-				return ownedBindings != null && !ownedBindings.isEmpty();
+				return generic != null;
 			case 5:
-				return ownedSignature != null;
+				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 6:
-				return unspecializedElement != null;
+				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable List<@NonNull TemplateArgument> basicGetOwnedTemplateArguments() {
+		if (ownedTemplateArguments == null) {
+			return null;
+		}
+		if (ownedTemplateArguments.isEmpty()) {
+			return null;
+		}
+		return ClassUtil.nullFree(ownedTemplateArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable List<@NonNull TemplateParameter> basicGetOwnedTemplateParameters() {
+		if (ownedTemplateParameters == null) {
+			return null;
+		}
+		if (ownedTemplateParameters.isEmpty()) {
+			return null;
+		}
+		return ClassUtil.nullFree(ownedTemplateParameters);
 	}
 
 } //TemplateableElementImpl

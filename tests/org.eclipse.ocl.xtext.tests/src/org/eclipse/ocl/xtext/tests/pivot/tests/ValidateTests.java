@@ -612,12 +612,14 @@ public class ValidateTests extends AbstractValidateTests
 	}
 
 	public void testValidate_Pivot_oclas() throws IOException, InterruptedException {
+		OCL ocl1 = createOCL();						// XXX added for development
 		ResourceSet csResourceSet = new ResourceSetImpl();
 		getProjectMap().initializeResourceSet(csResourceSet);
 		Resource.Factory.Registry resourceFactoryRegistry = csResourceSet.getResourceFactoryRegistry();
 		resourceFactoryRegistry.getContentTypeToFactoryMap().put(PivotPackage.eCONTENT_TYPE, OCLASResourceFactory.getInstance());
 		Resource resource = csResourceSet.getResource(URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", true), true);
 		assertNoValidationErrors("Validating", ClassUtil.requireNonNull(resource));
+		ocl1.dispose();
 	}
 
 	public void testValidate_Validate_completeocl() throws IOException, InterruptedException {

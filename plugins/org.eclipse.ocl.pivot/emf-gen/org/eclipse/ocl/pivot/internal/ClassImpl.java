@@ -47,9 +47,8 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.TemplateBinding;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -60,7 +59,7 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation;
 import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
@@ -86,9 +85,9 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedConstraints <em>Owned Constraints</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedBindings <em>Owned Bindings</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedSignature <em>Owned Signature</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getUnspecializedElement <em>Unspecialized Element</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getGeneric <em>Generic</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedTemplateArguments <em>Owned Template Arguments</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedTemplateParameters <em>Owned Template Parameters</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getExtenders <em>Extenders</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getInstanceClassName <em>Instance Class Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#isIsAbstract <em>Is Abstract</em>}</li>
@@ -137,34 +136,34 @@ implements org.eclipse.ocl.pivot.Class {
 	protected EList<Constraint> ownedConstraints;
 
 	/**
-	 * The cached value of the '{@link #getOwnedBindings() <em>Owned Bindings</em>}' containment reference list.
+	 * The cached value of the '{@link #getGeneric() <em>Generic</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedBindings()
+	 * @see #getGeneric()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<TemplateBinding> ownedBindings;
+	protected TemplateableElement generic;
 
 	/**
-	 * The cached value of the '{@link #getOwnedSignature() <em>Owned Signature</em>}' containment reference.
+	 * The cached value of the '{@link #getOwnedTemplateArguments() <em>Owned Template Arguments</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getOwnedSignature()
+	 * @see #getOwnedTemplateArguments()
 	 * @generated
 	 * @ordered
 	 */
-	protected TemplateSignature ownedSignature;
+	protected EList<TemplateArgument> ownedTemplateArguments;
 
 	/**
-	 * The cached value of the '{@link #getUnspecializedElement() <em>Unspecialized Element</em>}' reference.
+	 * The cached value of the '{@link #getOwnedTemplateParameters() <em>Owned Template Parameters</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getUnspecializedElement()
+	 * @see #getOwnedTemplateParameters()
 	 * @generated
 	 * @ordered
 	 */
-	protected TemplateableElement unspecializedElement;
+	protected EList<TemplateParameter> ownedTemplateParameters;
 
 	/**
 	 * The cached value of the '{@link #getExtenders() <em>Extenders</em>}' reference list.
@@ -347,9 +346,13 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @generated
 	 */
 	@Override
-	public TemplateSignature getOwnedSignature()
+	public List<TemplateArgument> getOwnedTemplateArguments()
 	{
-		return ownedSignature;
+		if (ownedTemplateArguments == null)
+		{
+			ownedTemplateArguments = new EObjectContainmentWithInverseEList<TemplateArgument>(TemplateArgument.class, this, 7, 7);
+		}
+		return ownedTemplateArguments;
 	}
 
 	/**
@@ -357,67 +360,64 @@ implements org.eclipse.ocl.pivot.Class {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetOwnedSignature(TemplateSignature newOwnedSignature, NotificationChain msgs)
+	@Override
+	public List<TemplateParameter> getOwnedTemplateParameters()
 	{
-		TemplateSignature oldOwnedSignature = ownedSignature;
-		ownedSignature = newOwnedSignature;
+		if (ownedTemplateParameters == null)
+		{
+			ownedTemplateParameters = new EObjectContainmentWithInverseEList<TemplateParameter>(TemplateParameter.class, this, 8, 6);
+		}
+		return ownedTemplateParameters;
+	}
+
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private TemplateableElement getGenericGen()
+	{
+		if (generic != null && generic.eIsProxy())
+		{
+			InternalEObject oldGeneric = (InternalEObject)generic;
+			generic = (TemplateableElement)eResolveProxy(oldGeneric);
+			if (generic != oldGeneric)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 6, oldGeneric, generic));
+			}
+		}
+		return generic;
+	}
+	@Override
+	public org.eclipse.ocl.pivot.Class getGeneric()
+	{
+		return (org.eclipse.ocl.pivot.Class)getGenericGen();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public TemplateableElement basicGetGeneric()
+	{
+		return generic;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setGeneric(TemplateableElement newGeneric)
+	{
+		TemplateableElement oldGeneric = generic;
+		generic = newGeneric;
 		if (eNotificationRequired())
-		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 7, oldOwnedSignature, newOwnedSignature);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setOwnedSignature(TemplateSignature newOwnedSignature)
-	{
-		if (newOwnedSignature != ownedSignature)
-		{
-			NotificationChain msgs = null;
-			if (ownedSignature != null)
-				msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, 5, TemplateSignature.class, msgs);
-			if (newOwnedSignature != null)
-				msgs = ((InternalEObject)newOwnedSignature).eInverseAdd(this, 5, TemplateSignature.class, msgs);
-			msgs = basicSetOwnedSignature(newOwnedSignature, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedSignature, newOwnedSignature));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public List<TemplateBinding> getOwnedBindings()
-	{
-		if (ownedBindings == null)
-		{
-			ownedBindings = new EObjectContainmentWithInverseEList<TemplateBinding>(TemplateBinding.class, this, 6, 5);
-		}
-		return ownedBindings;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setUnspecializedElement(TemplateableElement newUnspecializedElement)
-	{
-		TemplateableElement oldUnspecializedElement = unspecializedElement;
-		unspecializedElement = newUnspecializedElement;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 8, oldUnspecializedElement, unspecializedElement));
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldGeneric, generic));
 	}
 
 	/**
@@ -601,12 +601,10 @@ implements org.eclipse.ocl.pivot.Class {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
 			case 3:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
-			case 6:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedBindings()).basicAdd(otherEnd, msgs);
 			case 7:
-				if (ownedSignature != null)
-					msgs = ((InternalEObject)ownedSignature).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (7), null, msgs);
-				return basicSetOwnedSignature((TemplateSignature)otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateArguments()).basicAdd(otherEnd, msgs);
+			case 8:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateParameters()).basicAdd(otherEnd, msgs);
 			case 9:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtenders()).basicAdd(otherEnd, msgs);
 			case 16:
@@ -641,10 +639,10 @@ implements org.eclipse.ocl.pivot.Class {
 				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
 			case 5:
 				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
-			case 6:
-				return ((InternalEList<?>)getOwnedBindings()).basicRemove(otherEnd, msgs);
 			case 7:
-				return basicSetOwnedSignature(null, msgs);
+				return ((InternalEList<?>)getOwnedTemplateArguments()).basicRemove(otherEnd, msgs);
+			case 8:
+				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
 			case 9:
 				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
 			case 14:
@@ -803,11 +801,12 @@ implements org.eclipse.ocl.pivot.Class {
 			case 5:
 				return getOwnedConstraints();
 			case 6:
-				return getOwnedBindings();
+				if (resolve) return getGeneric();
+				return basicGetGeneric();
 			case 7:
-				return getOwnedSignature();
+				return getOwnedTemplateArguments();
 			case 8:
-				return getUnspecializedElement();
+				return getOwnedTemplateParameters();
 			case 9:
 				return getExtenders();
 			case 10:
@@ -868,14 +867,15 @@ implements org.eclipse.ocl.pivot.Class {
 				getOwnedConstraints().addAll((Collection<? extends Constraint>)newValue);
 				return;
 			case 6:
-				getOwnedBindings().clear();
-				getOwnedBindings().addAll((Collection<? extends TemplateBinding>)newValue);
+				setGeneric((TemplateableElement)newValue);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)newValue);
+				getOwnedTemplateArguments().clear();
+				getOwnedTemplateArguments().addAll((Collection<? extends TemplateArgument>)newValue);
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)newValue);
+				getOwnedTemplateParameters().clear();
+				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
 				getExtenders().clear();
@@ -948,13 +948,13 @@ implements org.eclipse.ocl.pivot.Class {
 				getOwnedConstraints().clear();
 				return;
 			case 6:
-				getOwnedBindings().clear();
+				setGeneric((TemplateableElement)null);
 				return;
 			case 7:
-				setOwnedSignature((TemplateSignature)null);
+				getOwnedTemplateArguments().clear();
 				return;
 			case 8:
-				setUnspecializedElement((TemplateableElement)null);
+				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
 				getExtenders().clear();
@@ -1015,11 +1015,11 @@ implements org.eclipse.ocl.pivot.Class {
 			case 5:
 				return ownedConstraints != null && !ownedConstraints.isEmpty();
 			case 6:
-				return ownedBindings != null && !ownedBindings.isEmpty();
+				return generic != null;
 			case 7:
-				return ownedSignature != null;
+				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 8:
-				return unspecializedElement != null;
+				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
 				return extenders != null && !extenders.isEmpty();
 			case 10:
@@ -1235,7 +1235,7 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.Class flattenableClass = this;
-		org.eclipse.ocl.pivot.Class unspecializedClass = getUnspecializedElement();
+		org.eclipse.ocl.pivot.Class unspecializedClass = getGeneric();
 		if (unspecializedClass != null) {
 			flattenableClass = unspecializedClass;
 		}
@@ -1253,34 +1253,28 @@ implements org.eclipse.ocl.pivot.Class {
 		EList<Operation> ownedOperations2 = ownedOperations;
 		if (ownedOperations2 == null)
 		{
-		//	if (unspecializedElement != null) {
-		//		InternalEList<Operation> unspecializedOperations = (InternalEList<Operation>) ((org.eclipse.ocl.pivot.Class)unspecializedElement).getOwnedOperations();
-		//		ownedOperations2 = new UnmodifiableEList<Operation>(this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS, unspecializedOperations.size(), unspecializedOperations.basicToArray());
-		//	}
-		//	else {
-				ownedOperations2 = new EObjectContainmentWithInverseEList<Operation>(Operation.class, this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS.getFeatureID(), PivotPackage.Literals.OPERATION__OWNING_CLASS.getFeatureID())
-				{
-					private static final long serialVersionUID = 1L;
+			ownedOperations2 = new EObjectContainmentWithInverseEList<Operation>(Operation.class, this, PivotPackage.Literals.CLASS__OWNED_OPERATIONS.getFeatureID(), PivotPackage.Literals.OPERATION__OWNING_CLASS.getFeatureID())
+			{
+				private static final long serialVersionUID = 1L;
 
-					@Override
-					protected void didRemove(int index, Operation partialOperation) {
-						assert partialOperation != null;
-						if (classListeners != null) {
-							classListeners.didRemoveOperation(partialOperation);
-						}
+				@Override
+				protected void didRemove(int index, Operation partialOperation) {
+					assert partialOperation != null;
+					if (classListeners != null) {
+						classListeners.didRemoveOperation(partialOperation);
 					}
+				}
 
-					@Override
-					public NotificationChain inverseAdd(Operation partialOperation, NotificationChain notifications) {
-						assert partialOperation != null;
-						NotificationChain inverseAdd = super.inverseAdd(partialOperation, notifications);
-						if (classListeners != null) {
-							classListeners.didAddOperation(partialOperation);		// inverseAdd rather than didAdd so that eContainer is defined
-						}
-						return inverseAdd;
+				@Override
+				public NotificationChain inverseAdd(Operation partialOperation, NotificationChain notifications) {
+					assert partialOperation != null;
+					NotificationChain inverseAdd = super.inverseAdd(partialOperation, notifications);
+					if (classListeners != null) {
+						classListeners.didAddOperation(partialOperation);		// inverseAdd rather than didAdd so that eContainer is defined
 					}
-				};
-		//	}
+					return inverseAdd;
+				}
+			};
 			ownedOperations = ownedOperations2;
 		}
 		return ownedOperations2;
@@ -1411,6 +1405,34 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @since 7.0
 	 */
 	@Override
+	public @Nullable List<@NonNull TemplateArgument> basicGetOwnedTemplateArguments() {
+		if (ownedTemplateArguments == null) {
+			return null;
+		}
+		if (ownedTemplateArguments.isEmpty()) {
+			return null;
+		}
+		return ClassUtil.nullFree(ownedTemplateArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable List<@NonNull TemplateParameter> basicGetOwnedTemplateParameters() {
+		if (ownedTemplateParameters == null) {
+			return null;
+		}
+		if (ownedTemplateParameters.isEmpty()) {
+			return null;
+		}
+		return ClassUtil.nullFree(ownedTemplateParameters);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
 	public void eraseContents() {
 		List<Operation> ownedOperations2 = ownedOperations;
 		if (ownedOperations2 != null) {
@@ -1454,27 +1476,7 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public @NonNull TemplateParameters getTemplateParameters() {
-		return TemplateSignatureImpl.getTemplateParameters(getOwnedSignature());
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.Class getUnspecializedElement()
-	{
-		if (unspecializedElement == null) {
-			for (TemplateBinding templateBinding : getOwnedBindings()) {
-				TemplateSignature signature = templateBinding.getTemplateSignature();
-				if (signature != null) {
-					unspecializedElement = signature.getOwningElement();
-					if (unspecializedElement != null) {
-						break;
-					}
-				}
-			}
-		}
-		return (org.eclipse.ocl.pivot.Class)unspecializedElement;
+		return TemplateParameters.getTemplateParameters(this);
 	}
 
 	@Override
@@ -1577,13 +1579,13 @@ implements org.eclipse.ocl.pivot.Class {
 		assert callExpr != null;
 		if (selfType != null) {
 			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(callExpr);
-			TemplateSignature templateSignature = getOwnedSignature();
-			if (templateSignature != null) {
-				return TemplateParameterSubstitutionVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
+			@Nullable Iterable<@NonNull TemplateParameter> templateParameters = basicGetOwnedTemplateParameters();
+			if (templateParameters != null) {
+				return TemplateArgumentVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
 			}
-			List<TemplateBinding> templateBindings = getOwnedBindings();
-			if ((templateBindings != null) && !templateBindings.isEmpty()) {
-				return TemplateParameterSubstitutionVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
+			List<@NonNull TemplateArgument> templateArguments = basicGetOwnedTemplateArguments();
+			if (templateArguments != null) {
+				return TemplateArgumentVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
 			}
 		}
 		return this;

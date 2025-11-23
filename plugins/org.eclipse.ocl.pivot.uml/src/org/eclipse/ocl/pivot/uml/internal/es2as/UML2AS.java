@@ -1399,7 +1399,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		if (umlPackage.getEClassifier(PivotPackage.Literals.OPERATION_CALL_EXP.getName()) == null) {
 			return false;
 		}
-		if (umlPackage.getEClassifier(PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION.getName()) == null) {
+		if (umlPackage.getEClassifier(PivotPackage.Literals.TEMPLATE_ARGUMENT.getName()) == null) {
 			return false;
 		}
 		return true;

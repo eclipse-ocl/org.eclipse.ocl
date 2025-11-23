@@ -17,19 +17,21 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
 
 /**
- * TemplateArguments provides a hashable list of type values suitable for use when indexing specializations.
+ * TemplateArgumentValues provides a hashable list of type values suitable for use when indexing specializations.
  *
  * @since 7.0
  */
-public class TemplateArguments
+public class TemplateArgumentValues
 {
 	private final @NonNull ElementId elementId;
 	private final @NonNull Type @NonNull [] templateArguments;
 	private final int hashCode;
 
-	public TemplateArguments(@NonNull ElementId elementId, @NonNull List<@NonNull ? extends Type> parameters) {
+	public TemplateArgumentValues(@NonNull ElementId elementId, @NonNull List<@NonNull ? extends Type> parameters) {
+		int size = parameters.size();
+		assert size > 0;
 		this.elementId = elementId;
-		this.templateArguments = new @NonNull Type[parameters.size()];
+		this.templateArguments = new @NonNull Type[size];
 		int hash = elementId.hashCode();
 		for (int i = 0; i < templateArguments.length; i++) {
 			Type parameter = parameters.get(i);
@@ -41,10 +43,10 @@ public class TemplateArguments
 
 	@Override
 	public boolean equals(Object o) {
-		if (!(o instanceof TemplateArguments)) {
+		if (!(o instanceof TemplateArgumentValues)) {
 			return false;
 		}
-		TemplateArguments that = (TemplateArguments)o;
+		TemplateArgumentValues that = (TemplateArgumentValues)o;
 		if (this.hashCode != that.hashCode){
 			return false;
 		}

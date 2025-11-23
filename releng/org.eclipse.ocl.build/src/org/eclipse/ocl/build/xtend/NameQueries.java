@@ -68,9 +68,9 @@ public class NameQueries
 		//		if (elem == null) {
 		//			logger.error("getPrefixedSymbolName for '" + prefix + "'and null");
 		//		}
-				if ((elem instanceof CollectionType) && (((CollectionType)elem).getUnspecializedElement() != null)) {
+				if ((elem instanceof CollectionType) && (((CollectionType)elem).getGeneric() != null)) {
 		}
-		else if ((elem instanceof MapType) && (((MapType)elem).getUnspecializedElement() != null)) {
+		else if ((elem instanceof MapType) && (((MapType)elem).getGeneric() != null)) {
 		}
 		else if (elem instanceof PrimitiveType)  {
 		}
@@ -250,9 +250,9 @@ public class NameQueries
 		//		if (elem == null) {
 		//			logger.error("getPrefixedSymbolName for '" + prefix + "'and null");
 		//		}
-		if ((elem instanceof CollectionType) && (((CollectionType)elem).getUnspecializedElement() != null)) {
+		if ((elem instanceof CollectionType) && (((CollectionType)elem).getGeneric() != null)) {
 		}
-		else if ((elem instanceof MapType) && (((MapType)elem).getUnspecializedElement() != null)) {
+		else if ((elem instanceof MapType) && (((MapType)elem).getGeneric() != null)) {
 		}
 		else if (elem instanceof org.eclipse.ocl.pivot.Class) {
 			elem = environmentFactory.getCompleteModel().getCompleteClass((Type)elem);

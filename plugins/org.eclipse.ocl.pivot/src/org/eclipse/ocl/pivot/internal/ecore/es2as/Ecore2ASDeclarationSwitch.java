@@ -79,7 +79,6 @@ import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
@@ -558,7 +557,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		copyTypedElement(pivotElement, eOperation);
 		doSwitchAll(pivotElement.getOwnedParameters(), eOperation.getEParameters());
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
-		copyTemplateSignature(pivotElement,eTypeParameters);
+		copyTemplateParameters(pivotElement, eTypeParameters);
 		doSwitchAll(eOperation.getEGenericExceptions());
 		converter.queueReference(eOperation);				// For superclasses
 		return pivotElement;
@@ -579,7 +578,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			pivotElement.eUnset(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME);
 		}
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eClassifier.getETypeParameters();
-		copyTemplateSignature(pivotElement, eTypeParameters);
+		copyTemplateParameters(pivotElement, eTypeParameters);
 	}
 
 	protected void copyDataTypeOrEnum(@NonNull DataType pivotElement, @NonNull EDataType eDataType) {
@@ -587,11 +586,12 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		pivotElement.setIsSerializable(eDataType.isSerializable());
 	}
 
-	protected void copyTemplateSignature(@NonNull TemplateableElement pivotElement, @NonNull List<ETypeParameter> eTypeParameters) {
+	/**
+	 * @since 7.0
+	 */
+	protected void copyTemplateParameters(@NonNull TemplateableElement pivotElement, @NonNull List<ETypeParameter> eTypeParameters) {
 		if (!eTypeParameters.isEmpty()) {
-			TemplateSignature pivotTemplateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
-			pivotElement.setOwnedSignature(pivotTemplateSignature);
-			doSwitchAll(pivotTemplateSignature.getOwnedParameters(), eTypeParameters);
+			doSwitchAll(PivotUtil.getOwnedTemplateParametersList(pivotElement, true), eTypeParameters);
 		}
 	}
 

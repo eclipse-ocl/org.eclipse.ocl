@@ -55,10 +55,8 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
-import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 
 import com.google.common.collect.Lists;
@@ -299,17 +297,6 @@ public class PivotHelper extends PivotUtil
 		return asUnlimitedNatural;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull WildcardType createWildcardType(org.eclipse.ocl.pivot.@Nullable Class lowerBound, org.eclipse.ocl.pivot.@Nullable Class upperBound) {		// FIXME move to PivotHelper
-		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
-	//	wildcardType.setName("?");			// Name is not significant
-	//	wildcardType.setLowerBound(lowerBound != null ? lowerBound : standardLibrary.getOclAnyType());
-	//	wildcardType.setUpperBound(upperBound != null ? upperBound : standardLibrary.getOclVoidType());
-		return wildcardType;
-	}
-
 	public org.eclipse.ocl.pivot.@NonNull Class getDataTypeClass() {
 		return ClassUtil.requireNonNull(completeModel.getASClass(TypeId.DATA_TYPE_NAME));
 	}
@@ -449,8 +436,8 @@ public class PivotHelper extends PivotUtil
 
 	/**
 	 * Set the operation/iteration return type and nullity in the asCallExp. This may involve creating a specialization
-	 * of the operation/iteration return type and may require the use of a TemplateParameterSubstitutionHelper to
-	 * compute inadequately modelled unique/ordered/size/nullity.
+	 * of the operation/iteration return type and may require the use of a helper to
+	 * compute inadequately modeled unique/ordered/size/nullity.
 	 *
 	 * @since 1.4
 	 */
@@ -468,7 +455,7 @@ public class PivotHelper extends PivotUtil
 		boolean returnIsRequired = asOperation.isIsRequired();
 		Object returnValue = null;			// Currently always a Type - see Bug 577902
 		if ((formalType != null) && (sourceType != null)) {
-			returnType = TemplateParameterSubstitutionVisitor.specializeType(formalType, asCallExp, environmentFactory, sourceType, null);
+			returnType = TemplateArgumentVisitor.specializeType(formalType, asCallExp, environmentFactory, sourceType, null);
 		}
 		//
 		//	The flattening of collect() and consequently implicit-collect is not modelled accurately.

@@ -16,15 +16,17 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 
 /**
- * TemplateParameterSubstitutions defines the interaction with the matching of formal TemplateParameters and actual types.
+ * TemplateArguments defines the interaction with the matching of formal TemplateParameters and actual types.
  * Formal template parameters are identified by their integer intexes in a flattened list starting at the outer-most TemplateableElement.
  * The template parameter indexes in Map(K,V)::excludesMap(K2,V2)(...)... are therefore 0 for K, 1 for V, 2 for K2, and 3 for V2.
  * <p>
- * A derived TemplateParameterSubstitutionVisitor determines the bindings by recursive analysis of a pair of formal and actual expression/type trees.
+ * A derived TemplateArgumentVisitor determines the bindings by recursive analysis of a pair of formal and actual expression/type trees.
  *
- * A null rather than empty TemplateParameterSubstitutions is used for the common case of no substitutions.
+ * A null rather than empty TemplateArguments is used for the common case of no substitutions.
+ *
+ * @since 7.0
  */
-public interface TemplateParameterSubstitutions
+public interface TemplateArguments
 {
 	/**
 	 * Return the highest common actual type of the formal templateParameter, returning null if unknown.

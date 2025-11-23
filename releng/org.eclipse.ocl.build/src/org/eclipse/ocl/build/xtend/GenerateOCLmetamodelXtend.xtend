@@ -347,7 +347,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 						«root.installCoercions()»
 						«root.installProperties()»
 						«root.installInvariants()»
-						«root.installTemplateBindings()»
+						«root.installTemplateArguments()»
 						«root.installPrecedences()»
 						«root.installComments()»
 					}

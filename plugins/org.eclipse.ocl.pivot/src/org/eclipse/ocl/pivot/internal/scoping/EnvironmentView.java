@@ -47,7 +47,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateSignature;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
@@ -397,14 +396,14 @@ public class EnvironmentView
 	public void addAllElements(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull ScopeView scopeView) {
 		Attribution attribution = Attribution.REGISTRY.getAttribution(asClass);
 		attribution.computeLookup(asClass, this, scopeView);
-		org.eclipse.ocl.pivot.Class asUnspecializedClass = PivotUtil.getUnspecializedTemplateableElement(asClass);
-		org.eclipse.ocl.pivot.Package asPackage = asUnspecializedClass.getOwningPackage();
+		org.eclipse.ocl.pivot.Class asGenericClass = PivotUtil.getGenericElement(asClass);
+		org.eclipse.ocl.pivot.Package asPackage = asGenericClass.getOwningPackage();
 		if (asPackage != null) {
 			attribution = Attribution.REGISTRY.getAttribution(asPackage);
 			attribution.computeLookup(asPackage, this, scopeView);
 		}
 		{	// FIXME redundant
-			asPackage = asUnspecializedClass.getOwningPackage();
+			asPackage = asGenericClass.getOwningPackage();
 			if (asPackage != null) {
 				attribution = Attribution.REGISTRY.getAttribution(asPackage);
 				attribution.computeLookup(asPackage, this, scopeView);
@@ -457,7 +456,7 @@ public class EnvironmentView
 		if (accepts(PivotPackage.Literals.ITERATION)		// If ITERATION is acceptable then so too is OPERATION
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want operations when looking for NAMESPACE
 			assert completeModel.isTypeServeable(type);
-			type = PivotUtil.getUnspecializedTemplateableElement(type);
+			type = PivotUtil.getGenericElement(type);
 			CompleteClass completeClass = completeModel.getCompleteClass(type);
 			String name2 = name;
 			if (name2 != null) {
@@ -613,22 +612,19 @@ public class EnvironmentView
 
 	public void addAllTemplateParameters(@NonNull TemplateableElement pivot) {
 		if (accepts(PivotPackage.Literals.TYPE)) {
-			TemplateSignature templateSignature = pivot.getOwnedSignature();
-			if (templateSignature != null) {
+			List<@NonNull TemplateParameter> templateParameters = pivot.basicGetOwnedTemplateParameters();
+			if (templateParameters != null) {
 				String name2 = name;
-				List<TemplateParameter> templateParameters = templateSignature.getOwnedParameters();
 				if (name2 != null) {
-					for (TemplateParameter templateParameter : templateParameters) {
-						if ((templateParameter != null) && name2.equals(templateParameter.getName())) {
+					for (@NonNull TemplateParameter templateParameter : templateParameters) {
+						if (name2.equals(templateParameter.getName())) {
 							addElement(name2, templateParameter);
 						}
 					}
 				}
 				else {
-					for (TemplateParameter templateParameter : templateParameters) {
-						if (templateParameter != null) {
-							addNamedElement(templateParameter);
-						}
+					for (@NonNull TemplateParameter templateParameter : templateParameters) {
+						addNamedElement(templateParameter);
 					}
 				}
 			}

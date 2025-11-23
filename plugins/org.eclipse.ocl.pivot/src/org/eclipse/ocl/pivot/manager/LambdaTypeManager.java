@@ -18,7 +18,7 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
  * LambdaTypeManager encapsulates the knowledge about known lambda types.
@@ -37,10 +37,10 @@ public interface LambdaTypeManager
 		return typedElement;
 	}
 
-	boolean conformsToLambdaType(@NonNull LambdaType actualType, @Nullable TemplateParameterSubstitutions actualSubstitutions,
-			@NonNull LambdaType requiredType, @Nullable TemplateParameterSubstitutions requiredSubstitutions, boolean enforceNullity);
+	boolean conformsToLambdaType(@NonNull LambdaType actualType, @Nullable TemplateArguments actualTemplateArguments,
+			@NonNull LambdaType requiredType, @Nullable TemplateArguments requiredTemplateArguments, boolean enforceNullity);
 
 	void dispose();
 
-	@NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result, @Nullable TemplateParameterSubstitutions bindings);
+	@NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result, @Nullable TemplateArguments bindings);
 }

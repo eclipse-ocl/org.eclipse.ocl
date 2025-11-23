@@ -26,7 +26,7 @@ import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -76,8 +76,8 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	}
 
 	@Override
-	public boolean conformsToCollectionType(@NonNull CollectionType leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull CollectionType rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity) {
+	public boolean conformsToCollectionType(@NonNull CollectionType leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull CollectionType rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity) {
 		org.eclipse.ocl.pivot.Class leftContainerType = leftType.getContainerType();
 		org.eclipse.ocl.pivot.Class rightContainerType = rightType.getContainerType();
 		if (!standardLibrary.conformsToSimpleType(leftContainerType, rightContainerType)) {
@@ -103,10 +103,10 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		if (enforceNullity) {
 			boolean leftIsNullFree = leftType.isIsNullFree();
 			boolean rightIsNullFree = rightType.isIsNullFree();
-			return standardLibrary.conformsTo(leftElementType, leftIsNullFree, leftSubstitutions, rightElementType, rightIsNullFree, rightSubstitutions);
+			return standardLibrary.conformsTo(leftElementType, leftIsNullFree, leftTemplateArguments, rightElementType, rightIsNullFree, rightTemplateArguments);
 		}
 		else {
-			return standardLibrary.conformsTo(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions, false);
+			return standardLibrary.conformsTo(leftElementType, leftTemplateArguments, rightElementType, rightTemplateArguments, false);
 		}
 	}
 
@@ -187,17 +187,17 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	}
 
 	@Override
-	public @NonNull CollectionType getCommonCollectionType(@NonNull CollectionType leftCollectionType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull CollectionType rightCollectionType, @Nullable TemplateParameterSubstitutions rightSubstitutions) {
-		CollectionType leftGenericType = PivotUtil.getUnspecializedTemplateableElement(leftCollectionType);
-		CollectionType rightGenericType = PivotUtil.getUnspecializedTemplateableElement(rightCollectionType);
+	public @NonNull CollectionType getCommonCollectionType(@NonNull CollectionType leftCollectionType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull CollectionType rightCollectionType, @Nullable TemplateArguments rightTemplateArguments) {
+		CollectionType leftGenericType = PivotUtil.getGenericElement(leftCollectionType);
+		CollectionType rightGenericType = PivotUtil.getGenericElement(rightCollectionType);
 		Type leftElementType = PivotUtil.getElementType(leftCollectionType);
 		Type rightElementType = PivotUtil.getElementType(rightCollectionType);
 		FlatClass leftFlatClass = leftGenericType.getFlatClass(standardLibrary);				// XXX promote
 		FlatClass rightFlatClass = rightGenericType.getFlatClass(standardLibrary);
 		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
 		CollectionType commonGenericType = (CollectionType) commonFlatClass.getPivotClass();
-		Type commonElementType = standardLibrary.getCommonType(leftElementType, leftSubstitutions, rightElementType, rightSubstitutions);
+		Type commonElementType = standardLibrary.getCommonType(leftElementType, leftTemplateArguments, rightElementType, rightTemplateArguments);
 		boolean commonIsNullFree = standardLibrary.getCommonIsRequired(leftCollectionType.isIsNullFree(), rightCollectionType.isIsNullFree());
 		IntegerValue commonLower = getCommonLowerValue(leftCollectionType.getLowerValue(), rightCollectionType.getLowerValue());
 		UnlimitedNaturalValue commonUpper = getCommonUpperValue(leftCollectionType.getUpperValue(), rightCollectionType.getUpperValue());
@@ -232,7 +232,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	public boolean isEqualToCollectionType(@NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType) {
 		Type leftContainerType = leftCollectionType.getContainerType();
 		Type rightContainerType = rightCollectionType.getContainerType();
-		if ((leftContainerType != rightContainerType) && !leftContainerType.isEqualToUnspecializedType(standardLibrary, rightContainerType)) {
+		if ((leftContainerType != rightContainerType) && !leftContainerType.isEqualToGenericType(standardLibrary, rightContainerType)) {
 			return false;
 		}
 		Type leftElementType = leftCollectionType.getElementType();

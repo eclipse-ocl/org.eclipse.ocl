@@ -44,7 +44,7 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	protected PartialFlatClass(@NonNull FlatModel flatModel, org.eclipse.ocl.pivot.@NonNull Class asClass, int flags) {
 		super(flatModel, getName(asClass), flags);
 		this.asClass = asClass;
-		assert PivotUtil.getUnspecializedTemplateableElement(asClass) == asClass;
+		assert PivotUtil.getGenericElement(asClass) == asClass;
 	}
 
 	@Override
@@ -128,8 +128,8 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 //			}
 			for (@NonNull CompleteClass superCompleteClass : getSuperCompleteClasses()) {
 				for (org.eclipse.ocl.pivot.@NonNull Class superType : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
-					org.eclipse.ocl.pivot.Class unspecializedType = PivotUtil.getUnspecializedTemplateableElement(superType);
-					CompleteClass unspecializedCompleteClass = getCompleteModel().getCompleteClass(unspecializedType);
+					org.eclipse.ocl.pivot.Class genericType = PivotUtil.getUnspecializedTemplateableElement(superType);
+					CompleteClass unspecializedCompleteClass = getCompleteModel().getCompleteClass(genericType);
 					for (org.eclipse.ocl.pivot.@NonNull Class unspecializedPartialType : ClassUtil.nullFree(unspecializedCompleteClass.getPartialClasses())) {
 						assert unspecializedPartialType != null;
 						initMemberOperationsFrom(unspecializedPartialType);

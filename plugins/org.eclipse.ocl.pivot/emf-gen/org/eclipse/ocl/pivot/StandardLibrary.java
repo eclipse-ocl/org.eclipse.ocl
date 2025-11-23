@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
-import org.eclipse.ocl.pivot.values.TemplateParameterSubstitutions;
+import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -68,32 +68,32 @@ public interface StandardLibrary extends Element
 	boolean conformsTo(@NonNull Type leftType, @NonNull Type rightType);
 
 	/**
-	 * Return true if firstType + firstIsRequired augmented by firstSubstitutions conforms to
-	 * secondType + secondIsRequired augmented by secondSubstitutions.
+	 * Return true if firstType + firstIsRequired augmented by firstTemplateArguments conforms to
+	 * secondType + secondIsRequired augmented by secondTemplateArguments.
 	 *
 	 * This method should be used during validation once nullity is determined and neds checking.
 	 *
 	 * @since 7.0
 	 */
-	boolean conformsTo(@NonNull Type leftType, boolean leftIsRequired, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, boolean rightIsRequired, @Nullable TemplateParameterSubstitutions rightSubstitutions);
+	boolean conformsTo(@NonNull Type leftType, boolean leftIsRequired, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull Type rightType, boolean rightIsRequired, @Nullable TemplateArguments rightTemplateArguments);
 
 	/**
 	 * @since 7.0
 	 */
-	boolean conformsTo(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions, boolean enforceNullity);
+	boolean conformsTo(@NonNull Type leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull Type rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity);
 
 	/**
-	 * Return true if firstType augmented by firstSubstitutions conforms to
-	 * secondType augmented by secondSubstitutions.
+	 * Return true if firstType augmented by firstTemplateArguments conforms to
+	 * secondType augmented by secondTemplateArguments.
 	 *
 	 * This method should be used during parsing before nullity is determined.
 	 *
 	 * @since 7.0
 	 */
-	boolean conformsTo(@NonNull Type firstType, @Nullable TemplateParameterSubstitutions firstSubstitutions,
-			@NonNull Type secondType, @Nullable TemplateParameterSubstitutions secondSubstitutions);
+	boolean conformsTo(@NonNull Type firstType, @Nullable TemplateArguments firstTemplateArguments,
+			@NonNull Type secondType, @Nullable TemplateArguments secondTemplateArguments);
 
 	/**
 	 * @since 7.0
@@ -171,8 +171,8 @@ public interface StandardLibrary extends Element
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Type getCommonType(@NonNull Type leftType, @Nullable TemplateParameterSubstitutions leftSubstitutions,
-			@NonNull Type rightType, @Nullable TemplateParameterSubstitutions rightSubstitutions);
+	@NonNull Type getCommonType(@NonNull Type leftType, @Nullable TemplateArguments leftTemplateArguments,
+			@NonNull Type rightType, @Nullable TemplateArguments rightTemplateArguments);
 
 	/**
 	 * Return the most derived type common to this type and thatType within this standardLibrary.
@@ -489,7 +489,7 @@ public interface StandardLibrary extends Element
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateParameterSubstitutions substitutions);
+	@NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateArguments TemplateArguments);
 
 	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
@@ -514,7 +514,7 @@ public interface StandardLibrary extends Element
 	/**
 	 * @since 7.0
 	 */
-	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateParameterSubstitutions bindings);
+	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> parts, @Nullable TemplateArguments bindings);
 
 	/**
 	 * @since 7.0

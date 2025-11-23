@@ -41,7 +41,8 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.TemplateSignature;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
@@ -80,7 +81,9 @@ import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.RootCS;
 import org.eclipse.ocl.xtext.basecs.StructuralFeatureCS;
 import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
+import org.eclipse.ocl.xtext.basecs.TemplateParameterCS;
 import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
+import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
@@ -334,9 +337,9 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			if ((eContainer instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphanage((org.eclipse.ocl.pivot.Package)eContainer)) {
 				break;				// Skip orphan package
 			}
-			if (eContainer instanceof TemplateSignature) {
-				continue;			// Skip signature
-			}
+		//	if (eContainer instanceof TemplateSignature) {
+		//		continue;			// Skip signature
+		//	}
 			if (eContainer instanceof NamedElement) {
 				NamedElement namedElement = (NamedElement)eContainer;
 				path.add(0, namedElement);
@@ -412,10 +415,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			csInvariant.setStereotype(PivotConstants.INVARIANT_NAME);
 		}
 		PivotUtil.refreshList(csElement.getOwnedConstraints(), true, csInvariants);
-		TemplateSignature ownedTemplateSignature = object.getOwnedSignature();
-		if (ownedTemplateSignature != null) {
-			csElement.setOwnedSignature(visitDeclaration(TemplateSignatureCS.class, ownedTemplateSignature));
-		}
+		refreshTemplateSignature(csElement, object);
 		if (object.eIsSet(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME)) {
 			csElement.setInstanceClassName(object.getInstanceClassName());
 		}
@@ -618,6 +618,16 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		return csElement;
 	}
 
+	public void refreshTemplateSignature(@NonNull TemplateableElementCS csClass, @NonNull TemplateableElement asTemplateableElement) {
+		Iterable<@NonNull TemplateParameter> asTemplateParameters = asTemplateableElement.basicGetOwnedTemplateParameters();
+		TemplateSignatureCS csTemplateSignature = null;
+		if (asTemplateParameters != null) {
+			csTemplateSignature = refreshElement(TemplateSignatureCS.class, BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS, asTemplateableElement);
+			refreshList(csTemplateSignature.getOwnedParameters(), visitDeclarations(TemplateParameterCS.class, asTemplateParameters, null));
+		}
+		csClass.setOwnedSignature(csTemplateSignature);
+	}
+
 	// FIXME BUG 496148 this is biased to use of e.g. {ordered} for OCLinEcore
 	public <@NonNull T extends TypedElementCS> T refreshTypedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull TypedElement object) {
 		T csElement = refreshNamedElement(csClass, csEClass, object);
@@ -627,7 +637,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		if (isEMap) {
 			elementType = ((MapType)type).getEntryClass();
 		}
-		else if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
+		else if ((type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardLibrary.getCollectionType())) {
 			PivotUtil.debugWellContainedness(type);
 			elementType = ((CollectionType)type).getElementType();
 		}
@@ -659,7 +669,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 				//	refreshQualifiers(qualifiers, "ordered", "!ordered", Boolean.TRUE);		// sic; Ecore idiom
 				//	refreshQualifiers(qualifiers, "unique", "!unique", Boolean.TRUE);
 			}
-			else if ((type instanceof CollectionType) && (((CollectionType)type).getUnspecializedElement() != standardLibrary.getCollectionType())) {
+			else if ((type instanceof CollectionType) && (((CollectionType)type).getGeneric() != standardLibrary.getCollectionType())) {
 				CollectionType collectionType = (CollectionType)type;
 				isNullFree = collectionType.isIsNullFree();
 				lower = collectionType.getLower().intValue();

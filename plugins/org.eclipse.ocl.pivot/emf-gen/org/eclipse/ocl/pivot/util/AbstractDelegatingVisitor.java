@@ -595,23 +595,13 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
-	public R visitTemplateBinding(org.eclipse.ocl.pivot.@NonNull TemplateBinding object) {
-		return delegate.visitTemplateBinding(object);
+	public R visitTemplateArgument(org.eclipse.ocl.pivot.@NonNull TemplateArgument object) {
+		return delegate.visitTemplateArgument(object);
 	}
 
 	@Override
 	public R visitTemplateParameter(org.eclipse.ocl.pivot.@NonNull TemplateParameter object) {
 		return delegate.visitTemplateParameter(object);
-	}
-
-	@Override
-	public R visitTemplateParameterSubstitution(org.eclipse.ocl.pivot.@NonNull TemplateParameterSubstitution object) {
-		return delegate.visitTemplateParameterSubstitution(object);
-	}
-
-	@Override
-	public R visitTemplateSignature(org.eclipse.ocl.pivot.@NonNull TemplateSignature object) {
-		return delegate.visitTemplateSignature(object);
 	}
 
 	@Override

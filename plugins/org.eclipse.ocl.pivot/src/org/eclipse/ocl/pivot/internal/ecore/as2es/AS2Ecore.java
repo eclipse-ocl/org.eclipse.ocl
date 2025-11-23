@@ -498,7 +498,7 @@ public class AS2Ecore extends AbstractConversion
 		if (!(asType instanceof CollectionType)) {
 			return null;
 		}
-		if (((CollectionType)asType).getUnspecializedElement() == standardLibrary.getCollectionType()) {
+		if (((CollectionType)asType).getGeneric() == standardLibrary.getCollectionType()) {
 			return null;		// Collection(T) cannot be distinguished from concrete Ecore collections
 		}
 		return (CollectionType)asType;
@@ -518,7 +518,7 @@ public class AS2Ecore extends AbstractConversion
 		if (NameUtil.getNameable(asTypes, PivotPackage.Literals.OPERATION_CALL_EXP.getName()) == null) {
 			return false;
 		}
-		if (NameUtil.getNameable(asTypes, PivotPackage.Literals.TEMPLATE_PARAMETER_SUBSTITUTION.getName()) == null) {
+		if (NameUtil.getNameable(asTypes, PivotPackage.Literals.TEMPLATE_ARGUMENT.getName()) == null) {
 			return false;
 		}
 		return true;
