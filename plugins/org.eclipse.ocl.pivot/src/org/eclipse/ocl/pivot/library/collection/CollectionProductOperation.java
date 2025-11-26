@@ -77,7 +77,7 @@ public class CollectionProductOperation extends AbstractBinaryOperation
 		List<PartId> partIds = new ArrayList<>();
 		partIds.add(IdManager.getPartId(0, "first", firstElementType.getTypeId(), firstIsNullFree));
 		partIds.add(IdManager.getPartId(1, "second", secondElementType.getTypeId(), secondIsNullFree));
-		TupleType tupleType = standardLibrary.getTupleType(partIds);
+		TupleType tupleType = standardLibrary.getTupleType(null, partIds);
 		return standardLibrary.getSetType(tupleType, true, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 }

@@ -310,8 +310,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 
 		@Override
-		protected @NonNull TupleType createTupleType(@NonNull TupleTypeId tupleTypeId) {
-			TupleType tupleType = super.createTupleType(tupleTypeId);
+		protected @NonNull TupleType createTupleType(@Nullable List<@NonNull Property> asProperties, @NonNull TupleTypeId tupleTypeId) {
+			TupleType tupleType = super.createTupleType(asProperties, tupleTypeId);
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
 			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			environmentFactory.addOrphanClass(tupleType);

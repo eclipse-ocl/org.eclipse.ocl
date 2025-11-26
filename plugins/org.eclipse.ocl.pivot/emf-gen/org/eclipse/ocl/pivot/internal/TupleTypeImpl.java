@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
@@ -78,9 +79,15 @@ public class TupleTypeImpl
 
 	private /*final @NonNull*/ TupleTypeId tupleTypeId;		// FIXME Redundant, but PivotSaver has to 'clone' these using EcoreUtil.Copier
 
-	public TupleTypeImpl(@NonNull TupleTypeId tupleTypeId) {
+	/**
+	 * @since 7.0
+	 */
+	public TupleTypeImpl(@NonNull TupleTypeId tupleTypeId, @Nullable List<@NonNull Property> asParts) {
 		this.tupleTypeId = tupleTypeId;
 		setName(tupleTypeId.getName());
+		if (asParts != null) {
+			getOwnedProperties().addAll(asParts);
+		}
 	}
 
 	@Override

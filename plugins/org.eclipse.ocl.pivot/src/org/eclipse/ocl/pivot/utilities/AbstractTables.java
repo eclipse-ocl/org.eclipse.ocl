@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -32,7 +33,6 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
-import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 
 import com.google.common.collect.Lists;
@@ -172,12 +172,14 @@ public abstract class AbstractTables
 			return Orphanage.getNormalizedTemplateParameter(Orphanage.getLocalOrphanPackage(this), i);
 		}
 
-		public @NonNull Type getTupleType(@NonNull TuplePart @NonNull... tupleParts) {
+		public @NonNull Type getTupleType(@NonNull Property @NonNull... asParts) {
+			List<@NonNull Property> asPartList = new ArrayList<>();
 			List<@NonNull PartId> partIds = new ArrayList<>();
-			for (@NonNull TuplePart tuplePart : tupleParts) {
-				partIds.add(IdManager.getPartId(partIds.size(), PivotUtil.getName(tuplePart), tuplePart.getTypeId(), tuplePart.isIsRequired()));
+			for (@NonNull Property asPart : asParts) {
+				asPartList.add(asPart);
+				partIds.add(IdManager.getPartId(partIds.size(), PivotUtil.getName(asPart), asPart.getTypeId(), asPart.isIsRequired()));
 			}
-			TupleType tupleType = library.getTupleType(partIds);
+			TupleType tupleType = library.getTupleType(asPartList, partIds);
 			addOrphanClass(tupleType);
 			return tupleType;
 		}

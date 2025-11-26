@@ -841,6 +841,7 @@ public class AbstractPivotTestCase extends TestCase
 		SETUP_TEST_NAME = getTestName();
 		PivotUtil.debugReset();
 		assert ThreadLocalExecutor.basicGetEnvironmentFactory() == null : "previous test failed to detach EnvironmentFactory.";
+		assert ThreadLocalExecutor.basicGetExecutor() == null : "previous test failed to detach Executor.";
 		ThreadLocalExecutor.reset();
 		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
 			TestUIUtil.closeIntro();			// Ensure that the default part is a stable PackageExplorerPart

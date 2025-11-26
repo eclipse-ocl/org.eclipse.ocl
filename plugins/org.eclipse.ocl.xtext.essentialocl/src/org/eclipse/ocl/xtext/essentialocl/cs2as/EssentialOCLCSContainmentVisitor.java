@@ -228,7 +228,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 			List<@NonNull PartId> tupleParts = new ArrayList<>();
 			tupleParts.add(IdManager.getPartId(0, PivotConstants.MESSAGE_PART_NAME, TypeId.STRING, true));
 			tupleParts.add(IdManager.getPartId(1, PivotConstants.STATUS_PART_NAME, TypeId.BOOLEAN, false));
-			TupleType tupleType = standardLibrary.getTupleType(tupleParts);
+			TupleType tupleType = standardLibrary.getTupleType(null, tupleParts);
 			Property statusProperty = NameUtil.getNameable(tupleType.getOwnedProperties(), PivotConstants.STATUS_PART_NAME);
 			LanguageExpression asSpecification = asConstraint.getOwnedSpecification();
 			//

@@ -812,19 +812,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			for (Operation op : deferredSetReturnTypes) {
 				Type resultType = op.getType();
 				s.append("\n");
-				emitReferencedElement.setNamespace(op);
 				s.append("\t\t\t");
 				op.accept(emitDeclaredName);
 				s.append(".setType(");
 				resultType.accept(emitTypeExpression);
 				s.append(");\n");
-				emitReferencedElement.setNamespace(null);
 			}
 			for (Operation op : deferredSetParameters) {
-			//	Type resultType = op.getType();
-			//	if (isFirstOperation) {
-			//		isFirstOperation = false;
-			//	}
 				s.append("\n");
 				emitReferencedElement.setNamespace(op);
 				s.append("\t\t\tLIBRARY.setParameters(");

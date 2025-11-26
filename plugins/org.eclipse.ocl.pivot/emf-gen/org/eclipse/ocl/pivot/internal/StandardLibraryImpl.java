@@ -680,21 +680,21 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> parts, @Nullable TemplateParameterSubstitutions bindings) {
+	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateParameterSubstitutions bindings) {
 		assert tupleTypeManager != null;
-		return tupleTypeManager.getTupleType(parts, bindings);
+		return tupleTypeManager.getTupleType(asParts, bindings);
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull List<@NonNull PartId> partIds) {
+	public @NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partIds) {
 		assert tupleTypeManager != null;
-		return tupleTypeManager.getTupleType(partIds);
+		return tupleTypeManager.getTupleType(asParts, partIds);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
 		assert tupleTypeManager != null;
-		return tupleTypeManager.getTupleType(typeId);
+		return tupleTypeManager.getTupleType(null, typeId);
 	}
 
 	/**

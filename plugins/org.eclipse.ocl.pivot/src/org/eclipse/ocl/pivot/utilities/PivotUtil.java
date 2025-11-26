@@ -137,6 +137,7 @@ import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
+import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl.ReadOnly;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
@@ -1859,7 +1860,8 @@ public class PivotUtil implements PivotConstants
 			}
 		}
 		if (executor == null) {
-			executor = new EcoreExecutorManager(eObject, PivotTables.LIBRARY);
+			ReadOnly library = PivotTables.LIBRARY;
+			executor = new EcoreExecutorManager(eObject, library);
 			// This leaks unless caller dispose()s
 		}
 		ThreadLocalExecutor.setExecutor(executor);

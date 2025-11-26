@@ -374,7 +374,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 				PartId partId = IdManager.getPartId(i, partName, partTypeId, part.isIsRequired());			// XXX
 				partIds.add(partId);
 			}
-			specializedTupleType = standardLibrary.getTupleType(partIds);
+			specializedTupleType = standardLibrary.getTupleType(null, partIds);
 			return specializedTupleType;
 		}
 		else {
@@ -387,7 +387,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 					partList.add(IdManager.getPartId(-1, PivotUtil.getName(part), type3.getTypeId(), part.isIsRequired()));
 				}
 			}
-			return standardLibrary.getTupleType(partList);
+			return standardLibrary.getTupleType(null, partList);
 		}
 	}
 

@@ -29,7 +29,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
@@ -485,7 +484,9 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						Type partType = PivotUtil.basicGetPivot(Type.class, csPartType);
 						if (partType != null) {
 							boolean isRequired = context.getConverter().isRequiredWithDefault(csPartType);
-							parts.add(new TuplePart(partName, partType, isRequired));
+							Property asPart = PivotUtil.createProperty(partName, partType);
+							asPart.setIsRequired(isRequired);
+							parts.add(asPart);
 						}
 					}
 				}
@@ -689,6 +690,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	public Continuation<?> visitPackageCS(@NonNull PackageCS csPackage) {
 		org.eclipse.ocl.pivot.Package asPackage = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Package.class, csPackage);
 		if (asPackage != null) {
+			@SuppressWarnings("unused")
 			CompleteModel completeModel = context.getStandardLibrary().getCompleteModel();
 		//	completeModel.getCompleteClasses(asPackage);
 		}

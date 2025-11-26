@@ -85,7 +85,6 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager.TuplePart;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -419,7 +418,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		if (environmentFactory != null) {
 			return environmentFactory.getIdResolver();
 		}
-		assert executor != null;			// XXX
+		assert executor != null;			// XXX ok ThreadLocalExecutor.getEnvironmentFactory() should have come first
 		return executor.getIdResolver();
 	}
 
@@ -934,8 +933,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return templateParameterization.get(asTemplateParameter.getTemplateParameterId().getIndex());
 	}
 
-	public @NonNull TuplePart getTuplePart(@NonNull String name, @NonNull Type type, boolean isRequired) {
-		return new TuplePart(name, type, isRequired);
+	public @NonNull Property getTuplePart(@NonNull String name, @NonNull Type type, boolean isRequired) {
+		Property asPart = PivotUtil.createProperty(name, type);
+		asPart.setIsRequired(isRequired);
+		return asPart;
 	}
 
 	@Override
@@ -990,10 +991,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			TemplateSignature templateSignature = PivotFactory.eINSTANCE.createTemplateSignature();
 			List<TemplateParameter> asTemplateParameters = templateSignature.getOwnedParameters();
 			for (@NonNull TemplateParameter templateParameter : templateParameters) {
-				TemplateParameterImpl asTemplateParameter = (TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
-				asTemplateParameter.setName(templateParameter.getName());
-// XXX				asTemplateParameter.setTemplateParameterId(templateParameter.getTemplateParameterId());
-				asTemplateParameters.add(asTemplateParameter);
+				asTemplateParameters.add(templateParameter);
 			}
 			pivotType.setOwnedSignature(templateSignature);
 		}

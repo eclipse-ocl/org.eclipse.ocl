@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -39,11 +40,11 @@ public interface TupleTypeManager
 	/**
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 */
-	@NonNull TupleType getTupleType(@NonNull List<@NonNull PartId> partIds);
+	@NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partIds);
 
-	@NonNull TupleType getTupleType(@NonNull TupleTypeId tupleTypeId);
+	@NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull TupleTypeId tupleTypeId);
 
-	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull? extends TypedElement> parts, @Nullable TemplateParameterSubstitutions usageBindings);
+	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateParameterSubstitutions usageBindings);
 	@NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateParameterSubstitutions usageBindings);	// FIXME Remove duplication, unify type/multiplicity
 
 	boolean isEqualToTupleType(@NonNull TupleType leftTupleType, @NonNull TupleType rightTupleType);

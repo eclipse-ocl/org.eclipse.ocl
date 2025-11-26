@@ -504,7 +504,7 @@ public interface StandardLibrary extends Element
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 * @since 7.0
 	 */
-	@NonNull TupleType getTupleType(@NonNull List<@NonNull PartId> partList);
+	@NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partList);
 
 	/**
 	 * @since 7.0
@@ -514,7 +514,7 @@ public interface StandardLibrary extends Element
 	/**
 	 * @since 7.0
 	 */
-	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> parts, @Nullable TemplateParameterSubstitutions bindings);
+	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateParameterSubstitutions bindings);
 
 	/**
 	 * @since 7.0

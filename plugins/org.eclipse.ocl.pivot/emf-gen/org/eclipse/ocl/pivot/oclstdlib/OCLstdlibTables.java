@@ -1148,7 +1148,7 @@ public class OCLstdlibTables extends AbstractTables
 		 * or a parameter whose type references an Operation TemplateParameter.
 		 */
 		public static void postInit() {
-			_Collection__product.setType(MODEL.getCollectionType(Types._Set, MODEL.getTupleType(LIBRARY.getTuplePart("first", LIBRARY.getTemplateParameter(_Collection__product, TypeParameters.$$0), false), LIBRARY.getTuplePart("second", LIBRARY.getTemplateParameter(_Collection__product, TypeParameters.$$1), false))));
+			_Collection__product.setType(MODEL.getCollectionType(Types._Set, MODEL.getTupleType(LIBRARY.getTuplePart("first", TypeParameters._0_Collection_T, false), LIBRARY.getTuplePart("second", TypeParameters._1_Collection_product_T2, false))));
 		}
 
 		static {
