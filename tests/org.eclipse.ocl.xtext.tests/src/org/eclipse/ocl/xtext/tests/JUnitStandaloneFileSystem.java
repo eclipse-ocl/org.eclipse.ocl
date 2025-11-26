@@ -249,9 +249,9 @@ public class JUnitStandaloneFileSystem extends TestFileSystem
 			if (cleanProject) {
 				if (projectFolder.exists()) {
 					TestUtil.deleteDirectory(projectFolder);
-					try {
-						Thread.sleep(1000);		// Delay before recreating folders
-					} catch (InterruptedException e) {}
+				//	try {
+				//		Thread.sleep(1000);		// Delay before recreating folders
+				//	} catch (InterruptedException e) {}
 				}
 				projectFolder.mkdirs();
 				File settingsFolder = new File(projectFolder, ".settings");
