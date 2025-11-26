@@ -347,7 +347,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 	}
 
 	public static void generatePackage(@NonNull GenPackage genPackage,
-			@NonNull Map<String, String> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
+			@NonNull Map<@NonNull String, @NonNull String> uri2body, @NonNull Map<@NonNull GenPackage, @NonNull String> constantsTexts) {
 		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(genPackage);
 		OCLinEcoreCodeGenerator generator = new OCLinEcoreCodeGenerator(environmentFactory, genPackage);
 		generator.generate(uri2body, constantsTexts);
@@ -397,7 +397,7 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 		return new OCLinEcoreImportNameManager();
 	}
 
-	protected void generate(@NonNull Map<String, String> uri2body, @NonNull Map<GenPackage, String> constantsTexts) {
+	protected void generate(@NonNull Map<@NonNull String, @NonNull String> uri2body, @NonNull Map<@NonNull GenPackage, @NonNull String> constantsTexts) {
 		Map<@NonNull ExpressionInOCL, @NonNull ExpressionInOCL> newQuery2oldQuery2 = newQuery2oldQuery = new HashMap<>();
 		try {
 			EPackage ecorePackage = genPackage.getEcorePackage();
@@ -407,8 +407,8 @@ public class OCLinEcoreCodeGenerator extends JavaCodeGenerator
 			CGPackage cgPackage = (CGPackage) ClassUtil.requireNonNull(asPackage.accept(as2cgVisitor));
 			optimize(cgPackage);
 			OCLinEcoreCG2JavaVisitor cg2java = new OCLinEcoreCG2JavaVisitor(this, genPackage, cgPackage);
-			Map<String, String> results = cg2java.generateBodies();
-			for (Map.Entry<String, String> entry : results.entrySet()) {
+			Map<@NonNull String, @NonNull String> results = cg2java.generateBodies();
+			for (Map.Entry<@NonNull String, @NonNull String> entry : results.entrySet()) {
 				uri2body.put(entry.getKey(), entry.getValue());
 			}
 			Iterable<@NonNull CGValuedElement> sortedGlobals = prepareGlobals();

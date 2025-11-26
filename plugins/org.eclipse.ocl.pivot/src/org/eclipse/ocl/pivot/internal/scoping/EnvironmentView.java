@@ -172,8 +172,8 @@ public class EnvironmentView
 				return MATCHES_INDEPENDENT;
 			}
 			CompleteModel completeModel = standardLibrary.getFlatModel().getCompleteModel();
-			CompletePackage completePackage1 = completeModel.getCompletePackage3(p1);
-			CompletePackage completePackage2 = completeModel.getCompletePackage3(p2);
+			CompletePackage completePackage1 = completeModel.getCompletePackage(p1);
+			CompletePackage completePackage2 = completeModel.getCompletePackage(p2);
 			if (completePackage1 != completePackage2) {
 				return MATCHES_INDEPENDENT;
 			}

@@ -460,9 +460,6 @@ public class OCLinEcoreTablesUtils
 			GenPackage genPackage = genModelHelper.getGenPackage(asClass);
 			String tablesClassPath = getQualifiedTablesClassName(genPackage);
 			if (!tablesClassPath.equals(this.tablesClassPath)) {
-				if (tablesClassPath.contains("UMLTables")) {
-					getClass();		// XXX
-				}
 				s.appendClassReference(null, tablesClassPath);
 				s.append(".");
 				s.append(nestedClassName);

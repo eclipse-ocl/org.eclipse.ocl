@@ -114,8 +114,8 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 		return null;
 	}
 
-	public @NonNull Map<String, String> generateBodies() {
-		Map<String, String> bodies = new HashMap<String, String>();
+	public @NonNull Map<@NonNull String, @NonNull String> generateBodies() {
+		Map<@NonNull String, @NonNull String> bodies = new HashMap<>();
 		for (CGClass cgClass : cgPackage.getClasses()) {
 			for (CGConstraint cgConstraint : cgClass.getInvariants()) {
 				CGValuedElement cgBody = cgConstraint.getBody();

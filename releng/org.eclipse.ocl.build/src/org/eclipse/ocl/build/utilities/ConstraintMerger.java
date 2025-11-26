@@ -22,7 +22,6 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -124,17 +123,20 @@ public class ConstraintMerger extends AbstractProjectComponent
 				URI uri = projectDescriptor.getPlatformResourceURI(ecoreURI);
 				log.info("Loading " + uri);
 				Resource ecoreResource = resourceSet.getResource(uri, true);
+				assert ecoreResource != null;
 				EcoreUtil.resolveAll(ecoreResource);
 				ResourceUtils.checkResource(ecoreResource);
-				for (EObject eObject : ecoreResource.getContents()) {
-					if (eObject instanceof EPackage) {
-						EPackage ePackage = (EPackage) eObject;
-					//	ClassUtil.getMetamodelAnnotation(ePackage); // Install EAnnotation
-					}
-				}
+			//	for (EObject eObject : ecoreResource.getContents()) {
+			//		if (eObject instanceof EPackage) {
+			//			EPackage ePackage = (EPackage) eObject;
+			//		//	ClassUtil.getMetamodelAnnotation(ePackage); // Install EAnnotation
+			//		}
+			//	}
 				Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
+				environmentFactory.getCompleteModel().setSuppressMetamodelAutoloading(true);	// Prevent autoload conflict with merge
 				Model pivotModel = ecore2as.getASModel();
 				ASResource asResource = ClassUtil.requireNonNull((ASResource)pivotModel.eResource());
+			//	((CompleteModelImpl)environmentFactory.getCompleteModel()).suppressAutoloading(false);
 				ResourceUtils.checkResource(asResource);
 			}
 			EcoreUtil.resolveAll(resourceSet);

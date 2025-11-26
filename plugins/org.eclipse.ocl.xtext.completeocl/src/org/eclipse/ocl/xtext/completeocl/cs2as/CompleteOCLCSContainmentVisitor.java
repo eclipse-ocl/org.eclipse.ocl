@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
@@ -170,7 +171,13 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		}
 		Collections.sort(contextProperties, NameUtil.NAMEABLE_COMPARATOR);
 		ClassifierContextDeclCS csClassifierContext0 = csClassifierContexts.size() > 0 ? csClassifierContexts.get(0) : null;
-		org.eclipse.ocl.pivot.Class contextClass = context.refreshModelElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, csClassifierContext0);
+		org.eclipse.ocl.pivot.Class contextClass;
+		if (modelClass instanceof PrimitiveType) {
+			contextClass = context.refreshModelElement(PrimitiveType.class, PivotPackage.Literals.PRIMITIVE_TYPE, csClassifierContext0);
+		}
+		else {		// XXX more alternatives - share code wrt basicGetSharedCompletePackage
+			contextClass = context.refreshModelElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, csClassifierContext0);
+		}
 		contextClass.setName(modelClass.getName());
 		context.refreshPivotList(Constraint.class, contextClass.getOwnedInvariants(), csInvariants);
 		PivotUtil.refreshList(contextClass.getOwnedOperations(), true, contextOperations);

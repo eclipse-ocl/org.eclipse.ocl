@@ -508,6 +508,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CompleteClass> class2completeClass = new WeakHashMap<>();
 
 	private boolean autoLoadASmetamodel = true;
+	private boolean suppressMetamodelAutoloading = false;
 
 	private org.eclipse.ocl.pivot.Package asMetamodel = null;
 	private boolean asMetamodelLoadInProgress = false;
@@ -667,13 +668,27 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 7.0
 	 */
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	//	System.out.println("didAddPackage " + NameUtil.debugSimpleName(asPackage) + " " + asPackage + " in " + NameUtil.debugSimpleName(asPackage.eResource()) + " for " + NameUtil.debugSimpleName(this));	// XXX
+		CompletePackage completePackage = null;
 		if (asPackage instanceof Library) {
 			standardLibrary.installLibrary((Library)asPackage);
 		}
-	//	CompletePackage completePackage = getCompletePackage(PivotUtil.getName(asPackage), asPackage.getNsPrefix(), packageURI);
-		CompletePackage completePackage = getCompletePackage3(asPackage);
+		else {
+			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(asPackage.getURI());
+			if (completePackageId == PivotConstants.METAMODEL_ID) {
+				if (asMetamodel == null) {
+					asMetamodel = asPackage;
+				}
+				completePackage = completePackageId2completePackage.get(completePackageId);
+			}
+		}
+		if (completePackage == null) {
+			completePackage = getCompletePackage(asPackage);
+		}
 		assert completePackage != null;
-		assert (completePackage instanceof PrimitiveCompletePackage) || completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
+	//	assert (completePackage instanceof PrimitiveCompletePackage) || completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
+	//	CompletePackage completePackage = getCompletePackage(PivotUtil.getName(asPackage), asPackage.getNsPrefix(), packageURI);
+//		assert (completePackage instanceof PrimitiveCompletePackage) || completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
 	//	CompletePackage completePackage = ownedCompletePackages.didAddPackage(asPackage);
 		CompletePackage old1 = package2completePackage.put(asPackage, completePackage);
 		assert (old1 == null) || (old1 == completePackage);
@@ -691,7 +706,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		assert completePackageId2completePackage.get(completePackage.getCompletePackageId()) == completePackage;
 		if (!(completePackage instanceof PrimitiveCompletePackage)) {
-			assert completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
+		//	assert completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
 			assert package2completePackage.get(asPackage) == completePackage;
 			if (packageURI != null) {
 				assert packageURI2completePackage.get(packageURI) == completePackage;
@@ -701,9 +716,11 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	public void didAddPartialModel(@NonNull Model partialModel) {
+	//	System.out.println("didAddPartialModel " + NameUtil.debugSimpleName(partialModel) + " " + partialModel + " in " + NameUtil.debugSimpleName(partialModel.eResource()) + " for " + NameUtil.debugSimpleName(this));	// XXX
+		getClass();			// XXX
 		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(partialModel)) {
 			didAddPackage(asPackage);
-		//	CompletePackage completePackage = getCompletePackage3(asPackage);
+		//	CompletePackage completePackage = getCompletePackage(asPackage);
 		//	assert completePackage != null;
 		//	completePackage.getPartialPackages().add(asPackage);
 		}
@@ -814,15 +831,16 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getASmetamodel() {
 		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
-		//	System.out.println("getASmetamodel ");	// XXX
+		//	System.out.println("getASmetamodel for " + NameUtil.debugSimpleName(environmentFactory));
 			try {
 				asMetamodelLoadInProgress = true;
-				if ((asMetamodel == null) && autoLoadASmetamodel && !environmentFactory.isDisposing() && !standardLibrary.isLibraryLoadInProgress()) {
+				if ((asMetamodel == null) && autoLoadASmetamodel && !environmentFactory.isDisposing() && !suppressMetamodelAutoloading && !standardLibrary.isLibraryLoadInProgress()) {
 					AnyType oclAnyType = standardLibrary.getOclAnyType();				// Load a default library if necessary.
 					org.eclipse.ocl.pivot.Package stdlibPackage = oclAnyType.getOwningPackage();
 					if (stdlibPackage != null) {
 						loadASmetamodel(stdlibPackage);
 					}
+					assert asMetamodel != null;			// XXX
 				}
 			}
 			finally {
@@ -979,6 +997,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull CompleteClass getCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		if ("Integer".equals(asClass.getName())) {
+			getClass();		// XXX
+		}
 		if (asClass instanceof ElementExtension) {
 			Stereotype stereotype = ((ElementExtension)asClass).getStereotype();
 			if (stereotype != null) {
@@ -992,28 +1013,39 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		CompletePackage completePackage = basicGetSharedCompletePackage(asClass);
 		if (completePackage == null) {
 			org.eclipse.ocl.pivot.Package pivotPackage = PivotUtil.getContainingPackage(asClass);
-			completePackage = getCompletePackage3(pivotPackage);
+			completePackage = getCompletePackage(pivotPackage);
 		}
 		return completePackage.getCompleteClass(asClass);
 	}
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
-			getASmetamodel();
-		}
 	//	System.out.println("getCompletePackage " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
-	//	CompletePackage aT = package2completePackage.get(asPackage);
-	//	return ClassUtil.requireNonNull(aT);
-		return getCompletePackage3(asPackage);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @NonNull CompletePackage getCompletePackage3(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-//		System.out.println("getCompletePackage3 " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
+		if ((asMetamodel == null) && !asMetamodelLoadInProgress && !suppressMetamodelAutoloading) {		// This may be the first use of OCL after EMF loaded an AS model.
+			boolean needed1 = false;
+			boolean needed2 = false;
+			boolean needed3 = false;
+			boolean libraryLoadInProgress = standardLibrary.isLibraryLoadInProgress();
+			if (libraryLoadInProgress) {
+				needed1 = true;
+			}
+			CompletePackage completePackage = completePackageId2completePackage.get(PivotConstants.METAMODEL_ID);
+			if ((completePackage == null) || (completePackage.getPartialPackages().isEmpty())) {
+				needed2 = true;
+			}
+			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(asPackage.getURI());
+			if (completePackageId != PivotConstants.METAMODEL_ID) {
+				needed3 = true;
+			}
+			if (needed1 || needed2 || needed3) {
+				getASmetamodel();
+			}
+			else {
+			//	getClass();		// XXX
+				getASmetamodel();
+			}
+//>>>>>>> b071b94 wip ETypeParameter 1
+		}
 		assert !asPackage.eIsProxy(); // && (asPackage.eResource() != null); -- happens before inverse added
 		boolean packageAdded = false;
 		CompletePackage completePackage = package2completePackage.get(asPackage);
@@ -1035,7 +1067,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 						String packageName = PivotUtil.getName(asPackage);
 						org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 						if (parentPackage != null) {
-							CompletePackage parentCompletePackage = getCompletePackage3(parentPackage);
+							CompletePackage parentCompletePackage = getCompletePackage(parentPackage);
 							completePackageId = IdManager.getCompletePackageId(parentCompletePackage, packageName);
 						}
 						else {
@@ -1048,7 +1080,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 					AbstractCompletePackages parentCompletePackages = ownedCompletePackages;
 					org.eclipse.ocl.pivot.Package parentPackage = asPackage.getOwningPackage();
 					if (parentPackage != null) {
-						CompletePackage parentCompletePackage = getCompletePackage3(parentPackage);
+						CompletePackage parentCompletePackage = getCompletePackage(parentPackage);
 						parentCompletePackages = ((CompletePackageImpl)parentCompletePackage).getOwnedCompletePackages();
 					}
 					if (Orphanage.isOrphanage(asPackage)) {
@@ -1222,12 +1254,13 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 == null) {
 			orphanage2 = orphanage = environmentFactory.getMetamodelManager().createOrphanage();
-			@SuppressWarnings("unused") CompletePackage completePackage = getCompletePackage3(orphanage2);
+			@SuppressWarnings("unused") CompletePackage completePackage = getCompletePackage(orphanage2);
 		//	OrphanCompletePackageImpl orphanCompletePackage2 = getOrphanCompletePackage();
 		//	package2completePackage.put(orphanage2, orphanCompletePackage2);
 		//	packageURI2completePackage.put(PivotConstants.ORPHANAGE_URI, orphanCompletePackage2);
 			Model orphanModel = PivotUtil.getContainingModel(orphanage2);
-			didAddPartialModel(orphanModel);
+			//	didAddPartialModel(orphanModel);
+			assert partialModels.contains(orphanModel);
 		//	PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
 		//	orphanage2.addPackageListener(partialPackages);
 		//	for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {
@@ -1721,7 +1754,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
 			if (completePackageId == PivotConstants.METAMODEL_ID) {		// XXX ??? redundant
 				@SuppressWarnings("unused")
-				CompletePackage completePackage = getCompletePackage3(asPackage);
+				CompletePackage completePackage = getCompletePackage(asPackage);
 			//	completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());
 			//	completeModel.registerCompletePackageContribution(completePackage, packageURI);			// XXX completePackage.add
 			}
@@ -1751,5 +1784,13 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	public void setAutoLoadASmetamodel(boolean autoLoadASmetamodel) {
 		this.autoLoadASmetamodel  = autoLoadASmetamodel;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public void setSuppressMetamodelAutoloading(boolean suppressMetamodelAutoloading) {
+		this.suppressMetamodelAutoloading  = suppressMetamodelAutoloading;
 	}
 } //CompleteModelImpl

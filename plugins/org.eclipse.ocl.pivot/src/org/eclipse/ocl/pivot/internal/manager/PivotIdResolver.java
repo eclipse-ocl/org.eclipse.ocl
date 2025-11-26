@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
@@ -163,8 +164,13 @@ public class PivotIdResolver extends AbstractIdResolver
 		String typeName = eClassifier.getName();
 		if (typeName != null) {
 			String nsURI = ePackage.getNsURI();
-			PackageId packageId = IdManager.getPackageId(ePackage);
-			CompletePackageId completePackageId = IdManager.getCompletePackageId(nsURI); //packageId.toString());		// XXX Ugh! fold
+			if (nsURI == null) {
+				nsURI = "";
+			}
+			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(nsURI);
+			if (completePackageId == null) {
+				completePackageId = IdManager.getCompletePackageId(nsURI); //packageId.toString());		// XXX Ugh! fold
+			}
 			CompletePackage completePackage = completeModel.initCompletePackage(completePackageId, ePackage.getNsPrefix(), nsURI);
 			org.eclipse.ocl.pivot.Class pivotType = completePackage.getMemberType(typeName);
 			if (pivotType != null) {

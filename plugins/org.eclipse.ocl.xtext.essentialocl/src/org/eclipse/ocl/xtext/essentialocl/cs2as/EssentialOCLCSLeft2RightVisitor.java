@@ -575,6 +575,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		callExp.setOwnedSource(sourceExp);
 		callExp.setReferredProperty(property);
 		callExp.setName(property.getName());
+	//	assert !"oclBadProperty".equals(property.getName());
 		return callExp;
 	}
 

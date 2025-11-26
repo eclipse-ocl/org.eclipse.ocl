@@ -53,7 +53,7 @@ public class BaseLinkingService extends DefaultLinkingService
 		try {
 			depth++;
 			String text = getText(node);
-			if ("ocl".equals(text)) {
+			if ("Link".equals(text)) {
 				getClass();		// XXX
 			}
 			boolean traceLookup = BaseScopeProvider.LOOKUP.isActive();

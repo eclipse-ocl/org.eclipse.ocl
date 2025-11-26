@@ -218,13 +218,6 @@ public interface CompleteModel extends NamedElement
 	@NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage);
 
 	/**
-	 * Return the CompletePackage for the Package containing asClass, creating it if necessary.
-	 *
-	 * @since 7.0
-	 */
-	@NonNull CompletePackage getCompletePackage3(org.eclipse.ocl.pivot.@NonNull Package asPackage);
-
-	/**
 	 * @since 7.0
 	 */
 	@Nullable ExpressionInOCL getDefaultExpression(@NonNull Property property);
@@ -364,4 +357,12 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	void removePartialModel(@NonNull Model model);
+
+	/**
+	 * Inhibit auto-loading of the Pivot metamodel, either because it is unnecessary or more likely because
+	 * some calling activity such as metamodel synthesis / code generation loads it or a variant explicitly.
+	 *
+	 * @since 7.0
+	 */
+	void setSuppressMetamodelAutoloading(boolean suppressMetamodelAutoloading);
 } // CompleteModel

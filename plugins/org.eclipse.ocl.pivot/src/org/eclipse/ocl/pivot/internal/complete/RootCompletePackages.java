@@ -34,7 +34,7 @@ public class RootCompletePackages extends AbstractCompletePackages
 	 */
 	@Override
 	public @NonNull CompletePackage getOwnedCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		return getCompleteModel().getCompletePackage3(asPackage);
+		return getCompleteModel().getCompletePackage(asPackage);
 	}
 
 	@Override

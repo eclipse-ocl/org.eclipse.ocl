@@ -242,7 +242,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 * @since 1.10
 	 */
 	protected AbstractEnvironmentFactory(final @NonNull ProjectManager projectManager, final @Nullable ResourceSet userResourceSet) {
-//		System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " ctor " + NameUtil.debugSimpleName(this));
+	//	System.out.println(ThreadLocalExecutor.getBracketedThreadName() + " ctor " + NameUtil.debugSimpleName(this));
 		CONSTRUCTION_COUNT++;
 		if (liveEnvironmentFactories != null) {
 			liveEnvironmentFactories.put(this, null);
