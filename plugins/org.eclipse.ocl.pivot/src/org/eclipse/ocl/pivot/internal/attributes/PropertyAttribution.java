@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class PropertyAttribution extends AbstractAttribution
 {
@@ -39,8 +38,11 @@ public class PropertyAttribution extends AbstractAttribution
 				environmentView.addAllProperties((org.eclipse.ocl.pivot.Class)type, FeatureFilter.SELECT_NON_STATIC);
 			}
 			else if (type instanceof TemplateParameter) {
-				for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : PivotUtil.getConstrainingClasses((TemplateParameter)type)) {
-					environmentView.addAllProperties(constrainingClass, FeatureFilter.SELECT_NON_STATIC);
+				Iterable<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = ((TemplateParameter)type).basicGetConstrainingClasses();
+				if (asConstrainingClasses != null) {
+					for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : asConstrainingClasses) {
+						environmentView.addAllProperties(constrainingClass, FeatureFilter.SELECT_NON_STATIC);
+					}
 				}
 			}
 		}

@@ -766,7 +766,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			return new TypeParameterContinuation(context, csTypeParameter);
 		}
 		else {
-			pivotElement.getConstrainingClasses().clear();
+			pivotElement.resetConstrainingClasses();
 			return null;
 		}
 	}

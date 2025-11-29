@@ -606,7 +606,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	 */
 	public boolean canBeNormalized(@NonNull TemplateParameter asTemplateParameter) {
 		boolean canBeNormalized = false;
-		if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
+		if (asTemplateParameter.basicGetConstrainingClasses() == null) {
 			// Cannot wait till TemplateParameter.constrainingClasses defined because might be cyclic: e.g. T extends Generic(T).
 			ModelElementCS csDefinition = converter.getCSElement(asTemplateParameter);
 			assert csDefinition != null;

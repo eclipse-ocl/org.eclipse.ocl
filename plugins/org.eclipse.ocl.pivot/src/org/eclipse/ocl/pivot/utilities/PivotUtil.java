@@ -465,18 +465,8 @@ public class PivotUtil implements PivotConstants
 	 * @since 1.7
 	 */
 	public static org.eclipse.ocl.pivot.@Nullable Class basicGetLowerBound(@NonNull TemplateParameter templateParameter) {
-		for (int recursions = 0; recursions < 100; recursions++) {
-			List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = getConstrainingClassesList(templateParameter);
-			if (asConstrainingClasses.size() <= 0) {
-				return null;
-			}
-			org.eclipse.ocl.pivot.Class pivotType = asConstrainingClasses.get(0);
-			if (!(pivotType instanceof TemplateParameter)) {
-				return pivotType;
-			}
-			templateParameter = (TemplateParameter) pivotType;
-		}
-		return null;
+		List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = templateParameter.basicGetConstrainingClasses();
+		return asConstrainingClasses != null ? asConstrainingClasses.get(0): null;
 	}
 
 	/**
@@ -1733,13 +1723,6 @@ public class PivotUtil implements PivotConstants
 			return DERIVATION_NAME;
 		}
 		return "";
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClasses(@NonNull TemplateParameter asTemplateParameter) {
-		return ClassUtil.nullFree(asTemplateParameter.getConstrainingClasses());
 	}
 
 	/**

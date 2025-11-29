@@ -520,7 +520,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		List<EGenericType> eBounds = eObject2.getEBounds();
 		if (!eBounds.isEmpty()) {
 			doSwitchAll(eBounds);
-			converter.queueReference(eObject2);
+			converter.queueETypeParameter(eObject2);
 		}
 		return pivotElement;
 	}

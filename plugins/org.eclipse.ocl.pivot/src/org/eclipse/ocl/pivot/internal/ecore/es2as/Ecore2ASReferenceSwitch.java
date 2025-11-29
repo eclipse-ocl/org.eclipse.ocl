@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreSwitch;
@@ -49,7 +48,6 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -146,7 +144,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			EAnnotation redefinesAnnotation = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 			if (redefinesAnnotation != null) {
 				for (EObject eReference : redefinesAnnotation.getReferences()) {
-					if ((eReference != null) && checkProxy(eReference)) {
+					if ((eReference != null) && converter.checkProxy(eReference)) {
 						NamedElement redefinedConstraint = converter.getCreated(NamedElement.class, eReference);
 						if (redefinedConstraint instanceof Constraint) {
 							asConstraint.getRedefinedConstraints().add((Constraint)redefinedConstraint);
@@ -166,7 +164,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			EAnnotation redefinesAnnotation = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 			if (redefinesAnnotation != null) {
 				for (EObject eReference : redefinesAnnotation.getReferences()) {
-					if ((eReference != null) && checkProxy(eReference)) {
+					if ((eReference != null) && converter.checkProxy(eReference)) {
 						NamedElement redefinedOperation = converter.getCreated(NamedElement.class, eReference);
 						if (redefinedOperation instanceof Operation) {
 							asOperation.getRedefinedOperations().add((Operation)redefinedOperation);
@@ -219,7 +217,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		EAnnotation redefinesAnnotation = eStructuralFeature.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 		if (redefinesAnnotation != null) {
 			for (EObject eReference : redefinesAnnotation.getReferences()) {
-				if ((eReference != null) && checkProxy(eReference)) {
+				if ((eReference != null) && converter.checkProxy(eReference)) {
 					Property redefinedProperty = converter.getCreated(Property.class, eReference);
 					asProperty.getRedefinedProperties().add(redefinedProperty);
 				}
@@ -474,25 +472,6 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		return pivotElement;
 	}
 
-	@Override
-	public Object caseETypeParameter(ETypeParameter eTypeParameter) {
-		assert eTypeParameter != null;
-		TemplateParameter pivotElement = converter.getCreated(TemplateParameter.class, eTypeParameter);
-		if (pivotElement == null) {
-			return this;
-		}
-		doSwitchAll(org.eclipse.ocl.pivot.Class.class, PivotUtil.getConstrainingClassesList(pivotElement), eTypeParameter.getEBounds());
-		return pivotElement;
-	}
-
-	protected boolean checkProxy(@NonNull EObject eReference) {		// BUG 457206 MARTE has unresolveable proxies
-		if (!eReference.eIsProxy()) {
-			return true;
-		}
-		converter.error("Unresolved proxy: " + EcoreUtil.getURI(eReference));
-		return false;
-	}
-
 	/**
 	 * @since 1.17
 	 */
@@ -526,7 +505,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	public <T extends Element> void doSwitchAll(Class<T> pivotClass, Collection<T> pivotElements, List<? extends EObject> eObjects) {
 		@SuppressWarnings("null") @NonNull Class<T> pivotClass2 = pivotClass;
 		for (EObject eObject : eObjects) {
-			if ((eObject != null) && checkProxy(eObject)) {
+			if ((eObject != null) && converter.checkProxy(eObject)) {
 				T pivotElement = converter.getASElement(pivotClass2, eObject);
 				if (pivotElement != null) {
 					pivotElements.add(pivotElement);

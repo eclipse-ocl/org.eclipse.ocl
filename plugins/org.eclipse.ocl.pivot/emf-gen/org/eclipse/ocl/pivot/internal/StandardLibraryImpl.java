@@ -764,7 +764,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		mutableThatClass.getOwnedProperties().add(newOpposite);
 		newOpposite.setOpposite(thisProperty);
 		thisProperty.setOpposite(newOpposite);
-	//	System.out.println("installOppositeProperty: " + thisProperty + " # " + newOpposite);
 	}
 
 	@Override

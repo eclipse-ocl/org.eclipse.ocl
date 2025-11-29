@@ -658,14 +658,17 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		if (eTypeParameter == null) {
 			return null;
 		}
-		for (org.eclipse.ocl.pivot.@NonNull Class constrainingType : PivotUtil.getConstrainingClasses(pivotTemplateParameter)) {
-			Element savedASScope = typeRefVisitor.pushScope(pivotTemplateParameter);
-			try {
-				EGenericType eGenericType = typeRefVisitor.resolveEGenericType(constrainingType);
-				eTypeParameter.getEBounds().add(eGenericType);
-			}
-			finally {
-				typeRefVisitor.popScope(savedASScope);
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = pivotTemplateParameter.basicGetConstrainingClasses();
+		if (asConstrainingClasses != null) {
+			for (org.eclipse.ocl.pivot.@NonNull Class constrainingType : asConstrainingClasses) {
+				Element savedASScope = typeRefVisitor.pushScope(pivotTemplateParameter);
+				try {
+					EGenericType eGenericType = typeRefVisitor.resolveEGenericType(constrainingType);
+					eTypeParameter.getEBounds().add(eGenericType);
+				}
+				finally {
+					typeRefVisitor.popScope(savedASScope);
+				}
 			}
 		}
 		return null;

@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 
 /**
@@ -74,6 +75,16 @@ public interface TemplateParameter extends Type {
 	 */
 	void setOwningSignature(TemplateSignature value);
 
+	/**
+	 * @since 7.0
+	 */
+	@Nullable List<org.eclipse.ocl.pivot.@NonNull Class> basicGetConstrainingClasses();
+
 	@NonNull TemplateParameterId getTemplateParameterId();
+
+	/**
+	 * @since 7.0
+	 */
+	void resetConstrainingClasses();
 
 } // TemplateParameter

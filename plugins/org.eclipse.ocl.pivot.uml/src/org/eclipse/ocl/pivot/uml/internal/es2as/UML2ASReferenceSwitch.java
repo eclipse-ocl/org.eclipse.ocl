@@ -143,11 +143,12 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 		assert umlTemplateParameter != null;
 		TemplateParameter asTemplateParameter = converter.getCreated(TemplateParameter.class, umlTemplateParameter);
 		if (asTemplateParameter != null) {
+			List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtil.getConstrainingClassesList(asTemplateParameter);
 			for (org.eclipse.uml2.uml.Classifier umlClassifier : umlTemplateParameter.getConstrainingClassifiers()) {
 				assert umlClassifier != null;
 				org.eclipse.ocl.pivot.Class asConstrainingClass = converter.getCreated(org.eclipse.ocl.pivot.Class.class, umlClassifier);
 				if (asConstrainingClass != null) {
-					asTemplateParameter.getConstrainingClasses().add(asConstrainingClass);
+					asConstrainingClasses.add(asConstrainingClass);
 				}
 			}
 		}

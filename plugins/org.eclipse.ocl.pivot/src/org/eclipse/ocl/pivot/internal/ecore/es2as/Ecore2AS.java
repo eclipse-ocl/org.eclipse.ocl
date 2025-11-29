@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -343,6 +344,11 @@ public class Ecore2AS extends AbstractExternal2AS
 	private Map<@NonNull EObject, @NonNull Element> newCreateMap = null;
 
 	/**
+	 * Set of all Ecore objects requiring resolution prior to the reference pass.
+	 */
+	private Set<@NonNull ETypeParameter> eTypeParameters = null;
+
+	/**
 	 * Set of all Ecore objects requiring further work during the reference pass.
 	 */
 	private Set<@NonNull EObject> referencers = null;
@@ -428,6 +434,17 @@ public class Ecore2AS extends AbstractExternal2AS
 	@Override
 	protected Model basicGetPivotModel() {
 		return pivotModel;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public boolean checkProxy(@NonNull EObject eReference) {		// BUG 457206 MARTE has unresolveable proxies
+		if (!eReference.eIsProxy()) {
+			return true;
+		}
+		error("Unresolved proxy: " + EcoreUtil.getURI(eReference));
+		return false;
 	}
 
 	protected @NonNull URI createPivotURI() {
@@ -959,6 +976,11 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	@Override
+	public void queueETypeParameter(@NonNull ETypeParameter eTypeParameter) {
+		eTypeParameters.add(eTypeParameter);
+	}
+
+	@Override
 	public void queueReference(@NonNull EObject eObject) {
 		referencers.add(eObject);
 	}
@@ -1149,6 +1171,27 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	protected void resolveETypeParameters() {
+		if (eTypeParameters != null) {
+			for (@NonNull ETypeParameter eTypeParameter : eTypeParameters) {
+				TemplateParameter asTemplateParameter = getCreated(TemplateParameter.class, eTypeParameter);
+				if (asTemplateParameter != null) {
+					List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtil.getConstrainingClassesList(asTemplateParameter);
+					for (EObject eBound : eTypeParameter.getEBounds()) {
+						if ((eBound != null) && checkProxy(eBound)) {
+							org.eclipse.ocl.pivot.Class asConstrainingClass = getASElement(org.eclipse.ocl.pivot.Class.class, eBound);
+							asConstrainingClasses.add(asConstrainingClass);
+						}
+					}
+				}
+			}
+			eTypeParameters = null;
+		}
+	}
+
+	/**
 	 * @since 1.17
 	 */
 	protected void resolveReferences() {
@@ -1330,6 +1373,7 @@ public class Ecore2AS extends AbstractExternal2AS
 		asResource.resetLUSSIDs();			// Hopefully reset already, not wanted till save. See Bug 579052.
 		allConverters.clear();
 		newCreateMap = new HashMap<>();
+		eTypeParameters = new HashSet<>();
 		referencers = new HashSet<>();
 		genericTypes = new ArrayList<>();
 		eDataTypes = new ArrayList<>();
@@ -1360,6 +1404,10 @@ public class Ecore2AS extends AbstractExternal2AS
 		 * Declare the specializations.
 		 */
 		resolveSpecializations();
+		/*
+		 * Resolve ETypeParameters once (specialized) types known.
+		 */
+		resolveETypeParameters();
 		/*
 		 * Resolve references.
 		 */

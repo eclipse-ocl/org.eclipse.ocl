@@ -369,7 +369,7 @@ public class AS2UMLDeclarationVisitor
 		umlClass.setName(pivotTemplateParameter.getName());
 		umlTypeParameter.setOwnedParameteredElement(umlClass);
 		context.putCreated(pivotTemplateParameter, umlTypeParameter);
-		if (!pivotTemplateParameter.getConstrainingClasses().isEmpty()) {
+		if (pivotTemplateParameter.basicGetConstrainingClasses() != null) {
 			context.defer(pivotTemplateParameter);
 		}
 		return umlTypeParameter;

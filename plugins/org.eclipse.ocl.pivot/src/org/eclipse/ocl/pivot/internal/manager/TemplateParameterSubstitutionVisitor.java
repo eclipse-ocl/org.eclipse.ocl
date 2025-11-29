@@ -338,7 +338,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 	public @NonNull Type getNormalizedType(@NonNull Type asType) {
 		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
 			TemplateParameter asTemplateParameter = (TemplateParameter)asType;
-			if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
+			if (asTemplateParameter.basicGetConstrainingClasses() == null) {
 			//	assert false;
 				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), asTemplateParameter);
 			}
@@ -448,7 +448,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		if (type instanceof NormalizedTemplateParameter) {
 			Type actualType = getTemplateSpecialization().get(((NormalizedTemplateParameter)type).getIndex());
-			if (!(actualType instanceof NormalizedTemplateParameter) && (actualType instanceof TemplateParameter) && ((TemplateParameter)actualType).getConstrainingClasses().isEmpty()) {
+			if (!(actualType instanceof NormalizedTemplateParameter) && (actualType instanceof TemplateParameter) && (((TemplateParameter)actualType).basicGetConstrainingClasses() == null)) {
 				return type;
 			}
 			return actualType;
@@ -461,7 +461,7 @@ public /*abstract*/ class TemplateParameterSubstitutionVisitor extends AbstractE
 			assert !(actualType instanceof NormalizedTemplateParameter);
 			if (actualType instanceof TemplateParameter) {
 				TemplateParameter asTemplateParameter = (TemplateParameter)actualType;
-				if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
+				if (asTemplateParameter.basicGetConstrainingClasses() == null) {
 					return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), asTemplateParameter);
 				}
 			}

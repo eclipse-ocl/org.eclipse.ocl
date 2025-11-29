@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.ids.AbstractGeneralizedIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterSubstitutionVisitor;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -383,6 +384,11 @@ public class TemplateParameterImpl
 	 */
 	protected /*@LazyNonNull*/ TemplateParameterId templateParameterId = null;
 
+	@Override
+	public @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> basicGetConstrainingClasses() {
+		return (constrainingClasses == null) || constrainingClasses.isEmpty() ? null : ClassUtil.nullFree(constrainingClasses);
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -436,6 +442,14 @@ public class TemplateParameterImpl
 	@Override
 	public @NonNull TemplateParameter isTemplateParameter() {
 		return this;
+	}
+
+	@Override
+	public void resetConstrainingClasses() {
+		if (constrainingClasses != null) {
+			constrainingClasses.clear();
+		}
+		constrainingClasses = null;
 	}
 
 	@Override

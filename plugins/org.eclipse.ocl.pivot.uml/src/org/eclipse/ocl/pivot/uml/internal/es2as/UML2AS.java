@@ -438,6 +438,11 @@ public abstract class UML2AS extends AbstractExternal2AS
 		}
 
 		@Override
+		public void queueETypeParameter(@NonNull ETypeParameter eTypeParameter) {
+			root.queueETypeParameter(eTypeParameter);
+		}
+
+		@Override
 		public void queueReference(@NonNull EObject umlElement) {
 			root.queueReference(umlElement);
 		}
@@ -906,6 +911,12 @@ public abstract class UML2AS extends AbstractExternal2AS
 			for (EObject eObject : users) {
 				usePass.doSwitch(eObject);
 			}
+		}
+
+		@Override
+		public void queueETypeParameter(@NonNull ETypeParameter eTypeParameter) {
+		//	eTypeParameters.add(eTypeParameter);
+			throw new IllegalStateException();
 		}
 
 		@Override

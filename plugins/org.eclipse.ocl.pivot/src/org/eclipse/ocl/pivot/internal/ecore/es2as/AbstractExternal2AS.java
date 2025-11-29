@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -140,6 +141,11 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 		EAnnotation asLibraryAnnotation = ePackage.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
 		return asLibraryAnnotation != null;
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	public abstract void queueETypeParameter(@NonNull ETypeParameter eTypeParameter);
 
 	public abstract void queueReference(@NonNull EObject eObject);
 

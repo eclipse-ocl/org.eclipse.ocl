@@ -805,7 +805,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
 		eTypeParameter.setName(pivotTemplateParameter.getName());
 		context.putCreated(pivotTemplateParameter, eTypeParameter);
-		if (!pivotTemplateParameter.getConstrainingClasses().isEmpty()) {
+		if (pivotTemplateParameter.basicGetConstrainingClasses() != null) {
 			context.defer(pivotTemplateParameter);
 		}
 		return eTypeParameter;

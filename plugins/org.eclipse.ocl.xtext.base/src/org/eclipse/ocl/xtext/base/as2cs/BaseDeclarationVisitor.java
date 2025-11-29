@@ -319,8 +319,8 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 	public ElementCS visitTemplateParameter(@NonNull TemplateParameter object) {
 		TypeParameterCS csElement = context.refreshElement(TypeParameterCS.class, BaseCSPackage.Literals.TYPE_PARAMETER_CS, object);
 		csElement.setName(object.getName());
-		List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtil.getConstrainingClassesList(object);
-		if (asConstrainingClasses.size() > 0) {
+		Iterable<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = object.basicGetConstrainingClasses();
+		if (asConstrainingClasses != null) {
 			List<TypedRefCS> csExtends = new ArrayList<TypedRefCS>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asConstrainingClass : asConstrainingClasses) {
 				TypedRefCS typeRef = context.visitReference(TypedRefCS.class, asConstrainingClass);
