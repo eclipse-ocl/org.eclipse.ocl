@@ -241,5 +241,5 @@ public enum CompanySizeKind implements Enumerator {
 	public String toString() {
 		return literal;
 	}
-	
+
 } //CompanySizeKind

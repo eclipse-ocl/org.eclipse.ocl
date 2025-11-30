@@ -32,7 +32,7 @@ Workflow {
 		genModel = "/org.eclipse.ocl.pivot/model/Values.genmodel"
 		clearResourceSet = false
 	}
-		component = ConvertToUnixLineEndings {
+	component = ConvertToUnixLineEndings {
 		directory = "../../plugins/org.eclipse.ocl.pivot/emf-gen"
 	}
 }
