@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.plugin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,27 +34,36 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public class CompletePackageIdRegistryReader extends RegistryReader
 {
 	private static final @NonNull String TAG_MAPPING = "mapping";
+	private static final @NonNull String ATTRIBUTE_ASPECT = "aspect";
 	private static final @NonNull String ATTRIBUTE_PACKAGE_URI = "packageURI";
 	private static final @NonNull String ATTRIBUTE_COMPLETE_PACKAGE_ID = "completePackageId";
 	private static final @NonNull String ATTRIBUTE_REGEX = "regex";
 
-	private static Map<@NonNull Pattern, @NonNull CompletePackageId> regexMappings = null;
-	private static final @NonNull Map<@NonNull String, @NonNull CompletePackageId> stringMappings = new HashMap<>();	// Defining plugin has two string mappings
+	private static Map<@NonNull Pattern, @NonNull CompletePackageIdWithAspects> regexMappings = null;
+	private static final @NonNull Map<@NonNull String, @NonNull CompletePackageIdWithAspects> stringMappings = new HashMap<>();	// Defining plugin has two string mappings
 
-	public static void addRegexMapping(@NonNull String packageRegex, @NonNull CompletePackageId completePackageID) {
-		Map<@NonNull Pattern, @NonNull CompletePackageId> regexMappings2 = regexMappings;
+	public static void addRegexMapping(@NonNull String packageRegex, @NonNull CompletePackageId completePackageID, @NonNull String aspect) {
+		Map<@NonNull Pattern, @NonNull CompletePackageIdWithAspects> regexMappings2 = regexMappings;
 		if (regexMappings2 == null) {
 			regexMappings = regexMappings2 = new HashMap<>();
 		}
 		Pattern pattern = Pattern.compile(packageRegex);
 		assert pattern != null;
-		CompletePackageId old = regexMappings2.put(pattern, completePackageID);
-		assert (old == null) || (old == completePackageID);
+		CompletePackageIdWithAspects completePackageIdWithAspects = regexMappings2.get(pattern);
+		if (completePackageIdWithAspects == null) {
+			completePackageIdWithAspects = new CompletePackageIdWithAspects(completePackageID);
+			regexMappings2.put(pattern, completePackageIdWithAspects);
+		}
+		completePackageIdWithAspects.addAspect(aspect);
 	}
 
-	public static void addStringMapping(@NonNull String packageURI, @NonNull CompletePackageId completePackageID) {
-		CompletePackageId old = stringMappings.put(packageURI, completePackageID);
-		assert (old == null) || (old == completePackageID);
+	public static void addStringMapping(@NonNull String packageURI, @NonNull CompletePackageId completePackageID, @NonNull String aspect) {
+		CompletePackageIdWithAspects completePackageIdWithAspects = stringMappings.get(packageURI);
+		if (completePackageIdWithAspects == null) {
+			completePackageIdWithAspects = new CompletePackageIdWithAspects(completePackageID);
+			stringMappings.put(packageURI, completePackageIdWithAspects);
+		}
+		completePackageIdWithAspects.addAspect(aspect);
 	}
 
 	/**
@@ -61,12 +71,25 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 	 */
 	public static @Nullable CompletePackageId basicGetCompletePackageId(@Nullable String packageURI) {
 		if (packageURI != null) {
+			CompletePackageIdWithAspects completePackageIdWithAspects = basicGetCompletePackageIdWithAspects(packageURI);
+			if (completePackageIdWithAspects != null) {
+				return completePackageIdWithAspects.getCompletePackageId();
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Return the CompletePackageId and aspects registered to match the packageURI, or null if nothing registered.
+	 */
+	public static @Nullable CompletePackageIdWithAspects basicGetCompletePackageIdWithAspects(@Nullable String packageURI) {
+		if (packageURI != null) {
 			if (stringMappings.isEmpty()) {			// Defining plugin has two string mappings
 				new CompletePackageIdRegistryReader().readRegistry();
 			}
-			CompletePackageId completePackageId = stringMappings.get(packageURI);
-			if (completePackageId != null) {
-				return completePackageId;
+			CompletePackageIdWithAspects completePackageIdWithAspects = stringMappings.get(packageURI);
+			if (completePackageIdWithAspects != null) {
+				return completePackageIdWithAspects;
 			}
 			if (regexMappings != null) {
 				for (Pattern pattern : regexMappings.keySet()) {
@@ -80,21 +103,67 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		return null;
 	}
 
-	public static boolean removeRegexMapping(@NonNull String packageRegex) {
-		boolean gotOne = false;
+	public static void removeRegexMapping(@NonNull String packageRegex, @NonNull String aspect) {
 		if (regexMappings != null) {
 			for (Pattern pattern : new ArrayList<>(regexMappings.keySet())) {
 				if (packageRegex.equals(pattern.toString())) {
-					regexMappings.remove(pattern);
-					gotOne = true;
+					CompletePackageIdWithAspects completePackageIdWithAspects = regexMappings.get(pattern);
+					assert completePackageIdWithAspects != null;
+					if (completePackageIdWithAspects.removeAspect(aspect)) {
+						regexMappings.remove(pattern);
+					}
 				}
 			}
 		}
-		return gotOne;
 	}
 
-	public static boolean removeStringMapping(@NonNull String packageURI) {
-		return stringMappings.remove(packageURI) != null;
+	public static void removeStringMapping(@NonNull String packageURI, @NonNull String aspect) {
+		CompletePackageIdWithAspects completePackageIdWithAspects = stringMappings.get(packageURI);
+		if (completePackageIdWithAspects != null) {
+			if (completePackageIdWithAspects.removeAspect(aspect)) {
+				stringMappings.remove(packageURI);
+			}
+		}
+	}
+
+	public static class CompletePackageIdWithAspects
+	{
+		protected final @NonNull CompletePackageId completePackageId;
+		private @Nullable List<@NonNull String> aspects = null;
+
+		public CompletePackageIdWithAspects(@NonNull CompletePackageId completePackageId) {
+			this.completePackageId = completePackageId;
+		}
+
+		public void addAspect(@NonNull String aspect) {
+			List<@NonNull String> aspects2 = aspects;
+			if (aspects2 == null) {
+				aspects2 = aspects = new ArrayList<>();
+			}
+			if (!aspects2.contains(aspect)) {
+				aspects2.add(aspect);
+			}
+		}
+
+		public @NonNull CompletePackageId getCompletePackageId() {
+			return completePackageId;
+		}
+
+		public boolean hasAspect(@NonNull String aspect) {
+			return (aspects != null) && aspects.contains(aspect);
+		}
+
+		public boolean removeAspect(@NonNull String aspect) {
+			List<@NonNull String> aspects2 = aspects;
+			if (aspects2 != null) {
+				aspects2.remove(aspect);
+				if (aspects2.isEmpty()) {
+					aspects2 = aspects = null;
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
 	public CompletePackageIdRegistryReader() {
@@ -108,6 +177,7 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 			return false;
 		}
 		final String packageURI = element.getAttribute(ATTRIBUTE_PACKAGE_URI);
+		String aspect = element.getAttribute(ATTRIBUTE_ASPECT);
 		final String completePackageID = element.getAttribute(ATTRIBUTE_COMPLETE_PACKAGE_ID);
 		final boolean regex = Boolean.parseBoolean(element.getAttribute(ATTRIBUTE_REGEX));
 		if (packageURI == null) {
@@ -118,20 +188,23 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 			logMissingAttribute(element, ATTRIBUTE_COMPLETE_PACKAGE_ID);
 			return false;
 		}
+		if (aspect == null) {
+			aspect = "";
+		}
 		if (add) {
 			CompletePackageId completePackageId2 = IdManager.getCompletePackageId(completePackageID);
 			if (regex) {
-				addRegexMapping(packageURI, completePackageId2);
+				addRegexMapping(packageURI, completePackageId2, aspect);
 			}
 			else {
-				addStringMapping(packageURI, completePackageId2);
+				addStringMapping(packageURI, completePackageId2, aspect);
 			}
 		} else {
 			if (regex) {
-				removeRegexMapping(packageURI);
+				removeRegexMapping(packageURI, aspect);
 			}
 			else {
-				removeStringMapping(packageURI);
+				removeStringMapping(packageURI, aspect);
 			}
 		}
 		return true;

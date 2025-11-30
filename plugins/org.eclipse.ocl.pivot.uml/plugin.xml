@@ -63,18 +63,18 @@
   </extension>
 
   <extension point="org.eclipse.ocl.pivot.complete_package_id">
-     <mapping completePackageId="$standard$" packageURI="http://www\.omg\.org/spec/UML/\d*/StandardProfile" regex="true"/>
-     <mapping completePackageId="$standard$" packageURI="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard"/>
+     <mapping completePackageId="$standard$" aspect="omg" packageURI="http://www\.omg\.org/spec/UML/\d*/StandardProfile" regex="true"/>
+     <mapping completePackageId="$standard$" aspect="eclipse" packageURI="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard"/>
   </extension>
   
   <extension point="org.eclipse.ocl.pivot.complete_package_id">
-     <mapping completePackageId="$types$" packageURI="http://www\.omg\.org/spec/PrimitiveTypes/\d*" regex="true"/>
-     <mapping completePackageId="$types$" packageURI="http://www.eclipse.org/uml2/5.0.0/Types"/>
+     <mapping completePackageId="$types$" aspect="omg" packageURI="http://www\.omg\.org/spec/PrimitiveTypes/\d*" regex="true"/>
+     <mapping completePackageId="$types$" aspect="eclipse" packageURI="http://www.eclipse.org/uml2/5.0.0/Types"/>
   </extension>
 
   <extension point="org.eclipse.ocl.pivot.complete_package_id">
-     <mapping completePackageId="$uml$" packageURI="http://www\.omg\.org/spec/UML/\d*" regex="true"/>
-     <mapping completePackageId="$uml$" packageURI="http://www.eclipse.org/uml2/5.0.0/UML"/>
+     <mapping completePackageId="$uml$" aspect="omg" packageURI="http://www\.omg\.org/spec/UML/\d*" regex="true"/>
+     <mapping completePackageId="$uml$" aspect="eclipse" packageURI="http://www.eclipse.org/uml2/5.0.0/UML"/>
   </extension>
 
    <extension point="org.eclipse.ocl.pivot.label_generator">

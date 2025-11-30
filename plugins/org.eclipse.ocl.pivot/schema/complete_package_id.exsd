@@ -6,7 +6,7 @@
          <meta.schema plugin="org.eclipse.ocl.pivot" id="complete_package_id" name="Complete Package ID"/>
       </appInfo>
       <documentation>
-         A Complete Package ID registration maps one or more Package (Ecore/OCL/UML/...) URI to its unique Complete Package ID. The Package mapping uses a regex so that the diverse spellings of OMG&apos;s UML models can be accommodated generically. All Packages that map to the same Complete Package ID are treated as overlays of the one logical complete package.
+         A Complete Package ID registration maps one or more Package (Ecore/OCL/UML/...) URI to one or more aspects of a unique Complete Package ID. The Package mapping uses a regex so that the diverse spellings of OMG&apos;s UML models can be accommodated generically. All Packages that map to the same Complete Package ID are treated as overlays of the one logical complete package.
       </documentation>
    </annotation>
 
@@ -72,6 +72,13 @@
             <annotation>
                <documentation>
                   TRue if the packageURI is a regular expression rather than a direct string.
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="aspect" type="string">
+            <annotation>
+               <documentation>
+                  
                </documentation>
             </annotation>
          </attribute>

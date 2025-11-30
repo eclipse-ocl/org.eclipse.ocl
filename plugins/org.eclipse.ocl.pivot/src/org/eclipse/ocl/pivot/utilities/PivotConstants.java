@@ -38,9 +38,25 @@ public interface PivotConstants
 	static final @NonNull String METAMODEL_NAME = "$metamodel$";
 
 	/**
+	 * The CompletePackageId for the merged library and metamodel aspects of the Pivot.
+	 *
 	 * @since 7.0
 	 */
 	public static final @NonNull CompletePackageId METAMODEL_ID = IdManager.getCompletePackageId(METAMODEL_NAME);
+
+	/**
+	 * The library aspect of the merged library and metamodel.
+	 *
+	 * @since 7.0
+	 */
+	public static final @NonNull String LIBRARY_ASPECT = "library";
+
+	/**
+	 * The metamodel aspect of the merged library and metamodel.
+	 *
+	 * @since 7.0
+	 */
+	public static final @NonNull String METAMODEL_ASPECT = "metamodel";
 
 	/**
 	 * The Package name of the orphanage.
