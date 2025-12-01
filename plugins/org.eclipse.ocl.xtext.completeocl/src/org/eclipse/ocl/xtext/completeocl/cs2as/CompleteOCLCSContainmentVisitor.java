@@ -328,6 +328,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 
 	@Override
 	public Continuation<?> visitCompleteOCLDocumentCS(@NonNull CompleteOCLDocumentCS csDocument) {
+		standardLibrary.getCompleteModel().getASmetamodel();			// Load AS metamodel after imports but before context references.
 		//
 		//	Locate the model packages (NB there may be multiple PackageDeclarationCS per AS package)
 		//

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -21,6 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Type;
@@ -37,6 +39,7 @@ import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public class PivotIdResolver extends AbstractIdResolver
 {
@@ -55,6 +58,9 @@ public class PivotIdResolver extends AbstractIdResolver
 		super(environmentFactory.getStandardLibrary());
 		this.environmentFactory = environmentFactory;
 		this.completeModel = (CompleteModelImpl)environmentFactory.getCompleteModel();
+		if (!completeModel.getStandardLibrary().isLibraryLoadInProgress()) {
+			completeModel.getASmetamodel();			// XXX getCompletePackageWithAutoLoad
+		}
 	}
 
 	@Override
@@ -77,6 +83,21 @@ public class PivotIdResolver extends AbstractIdResolver
 			}
 		}
 		return asPackage;
+	}
+
+	@Override
+	protected @NonNull Iterable<@NonNull EnumerationLiteral> getAllEnumerationLiterals() {
+		List<@NonNull EnumerationLiteral> allEnumerationLiterals = new ArrayList<>();
+		for (@NonNull CompletePackage asPackage : completeModel.getAllCompletePackages()) {
+			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asPackage.getAllClasses()) {
+				if (asClass instanceof Enumeration) {
+					for (@NonNull EnumerationLiteral asEnumerationLiteral : PivotUtil.getOwnedLiterals((Enumeration)asClass)) {
+						allEnumerationLiterals.add(asEnumerationLiteral);
+					}
+				}
+			}
+		}
+		return allEnumerationLiterals;
 	}
 
 	/**
@@ -231,9 +252,8 @@ public class PivotIdResolver extends AbstractIdResolver
 		if (nsURIPackage != null) {
 			return nsURIPackage;
 		}
-		completeModel.setAutoLoadASmetamodel(true);
 		org.eclipse.ocl.pivot.Package asMetamodel = completeModel.getASmetamodel();
-		if ((asMetamodel != null) && PivotPackage.eNS_URI.equals(nsURI)) {
+		if ((asMetamodel != null) && PivotPackage.eNS_URI.equals(nsURI)) {		// XXX something redundant ??
 			return asMetamodel;
 		}
 		nsURIPackage = standardLibrary.getNsURIPackage(nsURI);

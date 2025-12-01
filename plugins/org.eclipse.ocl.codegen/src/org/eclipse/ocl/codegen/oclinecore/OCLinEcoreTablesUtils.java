@@ -747,7 +747,7 @@ public class OCLinEcoreTablesUtils
 
 	protected @NonNull Set<? extends org.eclipse.ocl.pivot.@NonNull Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
-		org.eclipse.ocl.pivot.Package pivotMetamodel = completeModel.getASmetamodel();
+		org.eclipse.ocl.pivot.Package pivotMetamodel = completeModel.basicGetASmetamodel();
 		Type elementType = completeModel.getASClass("Element");
 		if (oclstdlibPackage == asPackage) {
 			VoidType oclVoidType = standardLibrary.getOclVoidType();
@@ -837,7 +837,7 @@ public class OCLinEcoreTablesUtils
 
 	protected org.eclipse.ocl.pivot.@Nullable Package getExtendedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
-		org.eclipse.ocl.pivot.Package pivotMetamodel = completeModel.getASmetamodel();
+		org.eclipse.ocl.pivot.Package pivotMetamodel = completeModel.basicGetASmetamodel();
 		if (oclstdlibPackage == asPackage) {
 			return null;
 		}

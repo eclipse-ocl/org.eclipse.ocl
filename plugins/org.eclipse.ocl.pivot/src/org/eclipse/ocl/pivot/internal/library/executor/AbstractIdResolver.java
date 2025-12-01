@@ -41,7 +41,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.ExternalCrossReferencer;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -499,16 +498,10 @@ public abstract class AbstractIdResolver implements IdResolver
 				enumerator2enumerationLiteralId2 = enumerator2enumerationLiteralId;
 				if (enumerator2enumerationLiteralId2 == null) {
 					enumerator2enumerationLiteralId = enumerator2enumerationLiteralId2 = new HashMap<>();
-					for (@NonNull CompletePackage dPackage : standardLibrary.getAllCompletePackages()) {
-						for (org.eclipse.ocl.pivot.Class dType : dPackage.getAllClasses()) {
-							if (dType instanceof Enumeration) {
-								for (EnumerationLiteral dEnumerationLiteral : ((Enumeration) dType).getOwnedLiterals()) {
-									Enumerator enumerator = dEnumerationLiteral.getEnumerator();
-									EnumerationLiteralId enumerationLiteralId = dEnumerationLiteral.getEnumerationLiteralId();
-									enumerator2enumerationLiteralId.put(enumerator, enumerationLiteralId);
-								}
-							}
-						}
+					for (@NonNull EnumerationLiteral asEnumerationLiteral : getAllEnumerationLiterals()) {
+						Enumerator enumerator = asEnumerationLiteral.getEnumerator();
+						EnumerationLiteralId enumerationLiteralId = asEnumerationLiteral.getEnumerationLiteralId();
+						enumerator2enumerationLiteralId.put(enumerator, enumerationLiteralId);
 					}
 				}
 			}
@@ -773,6 +766,11 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 		return new EcoreEList.UnmodifiableEList<>(null, null, ecoreValues.length, ecoreValues);
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull Iterable<@NonNull EnumerationLiteral> getAllEnumerationLiterals();
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getClass(@NonNull TypeId typeId, @Nullable Object context) {

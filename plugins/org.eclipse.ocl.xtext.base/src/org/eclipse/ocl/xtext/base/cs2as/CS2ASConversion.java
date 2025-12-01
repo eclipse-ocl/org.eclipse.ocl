@@ -1380,6 +1380,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			}
 			continuations = moreContinuations;
 		}
+		if (!standardLibrary.isLibraryLoadInProgress()) {
+			completeModel.getASmetamodel();					// Ensure meta model is defined after imports but before meta-properties (e.g. extension_YYY) can be used.
+		}
 		//
 		//	Perform the pre-order traversal to resolve specializations and references.
 		//
@@ -1421,7 +1424,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		if (!hasNoErrors) {
 			return false;
 		}
-		completeModel.getASmetamodel();					// Ensure meta model is defined after imports but before meta-properties (e.g. extension_YYY) can be used.
+//		if (!standardLibrary.isLibraryLoadInProgress()) {
+//			completeModel.getASmetamodel();					// Ensure meta model is defined after imports but before meta-properties (e.g. extension_YYY) can be used.
+//		}
 		//
 		//	Perform post-order continuations to establish complex dependencies.
 		//

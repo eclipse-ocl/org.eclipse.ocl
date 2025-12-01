@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -443,7 +444,7 @@ public class OCLstdlibTests extends XtextTestCase
 		OCLInternal ocl1 = OCLInternal.newInstance(projectMap, null);
 		CompleteStandardLibrary standardLibrary = ocl1.getStandardLibrary();
 		Library asLibrary = (Library) standardLibrary.getPackage();
-		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
+		org.eclipse.ocl.pivot.Package oclMetamodel = OCLmetamodel.create(standardLibrary, asLibrary.getName(), asLibrary.getNsPrefix(), PivotPackage.eNS_URI);
 		@SuppressWarnings("unused")
 		ASResource javaASResource = doLoadJavaAS(ocl1.getEnvironmentFactory(), (ASResource)oclMetamodel.eResource());
 		ocl1.deactivate();

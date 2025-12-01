@@ -494,7 +494,7 @@ public class EnvironmentView
 
 	public void addAllPackages(org.eclipse.ocl.pivot.@NonNull Package pkge) {
 		if (accepts(PivotPackage.Literals.PACKAGE)) {
-			CompletePackage parentCompletePackage = environmentFactory.getCompleteModel().getCompletePackage(pkge);
+			CompletePackage parentCompletePackage = completeModel.getCompletePackage(pkge);
 			addAllPackages(parentCompletePackage);
 		/*	String name2 = name;
 			if (name2 != null) {
@@ -664,7 +664,7 @@ public class EnvironmentView
 
 	public void addAllTypes(org.eclipse.ocl.pivot.@NonNull Package pkge) {
 		if (accepts(PivotPackage.Literals.CLASS)) {
-			CompletePackage completePackage = environmentFactory.getCompleteModel().getCompletePackage(pkge);
+			CompletePackage completePackage = completeModel.getCompletePackage(pkge);
 			String name2 = name;
 			if (name2 != null) {
 				org.eclipse.ocl.pivot.Class type = completePackage.getMemberType(name2);

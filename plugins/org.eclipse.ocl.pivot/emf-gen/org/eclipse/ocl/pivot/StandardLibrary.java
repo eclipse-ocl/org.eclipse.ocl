@@ -100,8 +100,6 @@ public interface StandardLibrary extends Element
 	 */
 	boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType);
 
-	@NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages();
-
 	/**
 	 * Obtains the generic instance of the BagType metatype, named
 	 * <tt>Bag(T)</tt>.

@@ -17,6 +17,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.SetType;
@@ -142,9 +143,10 @@ public class InheritanceTests extends PivotTestSuite
 	public void test_Inheritance_IfExp() {
 		TestOCL ocl = createOCL();
 		CompleteStandardLibrary standardLibrary = ocl.getStandardLibrary();
+		CompleteModel completeModel = standardLibrary.getCompleteModel();
 		try {
 			FlatClass oclAnyFlatClass = standardLibrary.getFlatClass(standardLibrary.getOclAnyType());
-			FlatClass ifFlatClass = standardLibrary.getFlatClass(ClassUtil.requireNonNull(standardLibrary.getASClass("IfExp")));
+			FlatClass ifFlatClass = standardLibrary.getFlatClass(ClassUtil.requireNonNull(completeModel.getASClass("IfExp")));
 			Iterator<@NonNull FlatFragment> allSuperInheritances = ifFlatClass.getAllSuperFragments().iterator();
 			assert allSuperInheritances.next().getBaseFlatClass() == oclAnyFlatClass;
 			FlatClass next = allSuperInheritances.next().getBaseFlatClass();
@@ -161,10 +163,10 @@ public class InheritanceTests extends PivotTestSuite
 			assert !depthNInheritances.hasNext();
 			assert oclAnyFlatClass.isSuperFlatClassOf(ifFlatClass);
 			assert !ifFlatClass.isSuperFlatClassOf(oclAnyFlatClass);
-			FlatClass oclExpressionFlatClass = standardLibrary.getFlatClass(ClassUtil.requireNonNull(standardLibrary.getASClass("OCLExpression")));
+			FlatClass oclExpressionFlatClass = standardLibrary.getFlatClass(ClassUtil.requireNonNull(completeModel.getASClass("OCLExpression")));
 			assert oclExpressionFlatClass.isSuperFlatClassOf(ifFlatClass);
 			assert !ifFlatClass.isSuperFlatClassOf(oclExpressionFlatClass);
-			FlatClass loopExpFlatClass = standardLibrary.getFlatClass(ClassUtil.requireNonNull(standardLibrary.getASClass("LoopExp")));
+			FlatClass loopExpFlatClass = standardLibrary.getFlatClass(ClassUtil.requireNonNull(completeModel.getASClass("LoopExp")));
 			assert !ifFlatClass.isSuperFlatClassOf(loopExpFlatClass);
 			assert !loopExpFlatClass.isSuperFlatClassOf(ifFlatClass);
 		} finally {

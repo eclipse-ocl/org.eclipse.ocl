@@ -56,7 +56,6 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	 */
 	void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes);
 	void dispose();
-	org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className);
 	@NonNull CompleteModel getCompleteModel();
 	@NonNull String getDefaultStandardLibraryURI();
 

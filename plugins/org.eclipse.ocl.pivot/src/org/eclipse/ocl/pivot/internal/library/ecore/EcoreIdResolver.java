@@ -160,6 +160,11 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		return asPackage;
 	}
 
+	@Override
+	protected @NonNull Iterable<@NonNull EnumerationLiteral> getAllEnumerationLiterals() {
+		throw new UnsupportedOperationException();				// XXX
+	}
+
 	/**
 	 * @since 7.0
 	 */

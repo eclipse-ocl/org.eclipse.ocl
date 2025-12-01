@@ -33,7 +33,6 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -665,11 +664,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	public void freeze(@NonNull Resource resource) {
 		((ASResource)resource).setSaveable(false);
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override

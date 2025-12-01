@@ -123,6 +123,11 @@ public interface CompleteModel extends NamedElement
 	boolean addPartialModel(@NonNull Model model);
 
 	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Package basicGetASmetamodel();
+
+	/**
 	 * Return the already created CompleteClass for asClass within this CompleteModel, or null if not yet created.
 	 * <br>
 	 * This is for test purposes only since a CompleteClass is normally created lazily on demand.
@@ -280,7 +285,7 @@ public interface CompleteModel extends NamedElement
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg, boolean loadASmetamodelFirst);
+	@NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg);
 
 	/**
 	 * @since 7.0
@@ -357,12 +362,4 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	void removePartialModel(@NonNull Model model);
-
-	/**
-	 * Inhibit auto-loading of the Pivot metamodel, either because it is unnecessary or more likely because
-	 * some calling activity such as metamodel synthesis / code generation loads it or a variant explicitly.
-	 *
-	 * @since 7.0
-	 */
-	void setSuppressMetamodelAutoloading(boolean suppressMetamodelAutoloading);
 } // CompleteModel

@@ -613,6 +613,7 @@ implements org.eclipse.ocl.pivot.Package {
 	}
 
 	public synchronized void addPackageListener(PackageListeners.@NonNull IPackageListener packageListener) {
+	//	System.out.println("addPackageListener " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(packageListener) + " " + packageListener);	// XXX
 		PackageListeners<PackageListeners.@NonNull IPackageListener> packageListeners2 = packageListeners;
 		if (packageListeners2 == null) {
 			packageListeners2 = packageListeners = new PackageListeners<>();

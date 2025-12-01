@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
@@ -170,6 +169,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		protected @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments) {
 			CollectionType collectionType = super.createCollectionType(typeArguments);
 			CollectionType genericCollectionType = (CollectionType)collectionType.getGeneric();
+			assert genericCollectionType != null;
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
 			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			completeStandardLibrary.resolveSuperClasses(collectionType, genericCollectionType);
@@ -233,6 +233,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
 			MapType mapType = super.createMapType(typeArguments, entryClass);
 			MapType genericMapType = (MapType)mapType.getGeneric();
+			assert genericMapType != null;
 			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
 			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
 			completeStandardLibrary.resolveSuperClasses(mapType, genericMapType);
@@ -307,7 +308,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 	}
 
-	private static final Logger logger = Logger.getLogger(CompleteStandardLibrary.class);
+//	private static final Logger logger = Logger.getLogger(CompleteStandardLibrary.class);
 
 	/**
 	 * The URI used by default for the OCL Standard Library. NB. This
@@ -587,6 +588,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				//
 				// Multiple libraries may exploit CompleteClasses, so nameToLibraryTypeMap caches just the first.
 				if (!nameToLibraryTypeMap2.containsKey(name)) {
+					@SuppressWarnings("unused")
 					org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
 				/*	if ((oldType != null) && (oldType != pivotType)) {
 						if (!(oldType instanceof PrimitiveType) || !(pivotType instanceof PrimitiveType)) {		// User primitives may only be DataType e.g. testQVTrLoad_ATL2QVTr_qvtre
@@ -598,29 +600,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				}
 			}
 		}
-	//	if (collectionTypeManager == null) {
-	//		init();
-	//	}
 	}
 
 	@Override
 	public void dispose() {
 		resetLibrary();
-	}
-
-	/**
-	 * Return the pivot model class for className with the Pivot Model.
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className) {
-		assert completeModel != null;
-		return completeModel.getASClass(className);
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull ? extends CompletePackage> getAllCompletePackages() {
-		assert completeModel != null;
-		return completeModel.getAllCompletePackages();
 	}
 
 	@Override
@@ -666,10 +650,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		genericType = (CollectionType) completeModel.getPrimaryClass(genericType);
 		elementType = completeModel.getPrimaryType(elementType);
 		assert genericType == PivotUtil.getGenericElement(genericType);
-	//	CompleteClassInternal completeClass = completeModel.getCompleteClass(genericType);
-	//	if (isGenericType(completeClass, elementType)) {
-	//		return genericType;
-	//	}
 		return super.getCollectionType(genericType, elementType, isNullFree, lower, upper);
 	}
 
@@ -1355,7 +1335,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 					TemplateArgument superSpecializedTemplateArgument = null;
 					Type superActual = PivotUtil.getActual(superTemplateArgument);
 					if (specializedTemplateArguments != null) {
-						for (TemplateArgument specializedTemplateArgument : specializedTemplateArguments) {
+						for (@NonNull TemplateArgument specializedTemplateArgument : specializedTemplateArguments) {
 							TemplateParameter specializedFormal = PivotUtil.getFormal(specializedTemplateArgument);
 							TemplateParameterId specializedTemplateParameterId = specializedFormal.getTemplateParameterId();
 							int specializedIndex = specializedTemplateParameterId.getIndex();
@@ -1371,9 +1351,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 									superSpecializedTemplateArgument = PivotUtil.createTemplateArgument(specializedActual);
 									break;
 								}
-							}
-							if (superSpecializedTemplateArgument != null) {
-								break;
 							}
 						}
 					}

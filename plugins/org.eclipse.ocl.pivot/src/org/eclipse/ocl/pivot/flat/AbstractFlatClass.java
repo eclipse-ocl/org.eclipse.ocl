@@ -731,6 +731,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected @NonNull Map<@NonNull String, @NonNull Object> getName2PropertyOrProperties() {
 		Map<@NonNull String, @NonNull Object> name2propertyOrProperties2 = name2propertyOrProperties;		// XXX Use binary search.
 		if (name2propertyOrProperties2 == null) {
+			if ("EPackage".equals(name)) {
+				getClass();			// XXX
+			}
 			@NonNull FlatFragment @NonNull [] fragments = getFragments();
 			synchronized(this) {
 				name2propertyOrProperties2 = name2propertyOrProperties;

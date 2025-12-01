@@ -57,8 +57,8 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateArgument;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
@@ -1672,8 +1672,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s1.append(" *************************************************************************\n");
 		s1.append(" * This code is 100% auto-generated\n");
 		s1.append(" * from:\n");
-		for (org.eclipse.ocl.pivot.@NonNull Package dPackage : completeModel.getPartialPackages(asPackage, false)) {
-			EObject eRoot = dPackage.eContainer();
+		for (org.eclipse.ocl.pivot.@NonNull Package asPackage : completeModel.getPartialPackages(asPackage)) {
+			EObject eRoot = asPackage.eContainer();
 			if (eRoot instanceof Model) {
 				s1.append(" *   " + deresolveFileName(((Model)eRoot).getExternalURI()) + "\n");
 			}

@@ -191,7 +191,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 		@Override
 		public boolean isCompatibleWith(@NonNull String metamodelURI) {
-			return PIVOT_URI.equals(metamodelURI);
+			return PivotPackage.eNS_URI.equals(metamodelURI);
 		}
 
 		/**

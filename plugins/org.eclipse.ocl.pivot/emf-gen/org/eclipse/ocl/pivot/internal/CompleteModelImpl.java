@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.internal.complete.RootCompletePackages;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader.CompletePackageIdWithAspects;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.utilities.CompleteElementIterable;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
@@ -507,11 +508,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CompleteClass> class2completeClass = new WeakHashMap<>();
 
-	private boolean autoLoadASmetamodel = true;
-	private boolean suppressMetamodelAutoloading = false;
-
 	private org.eclipse.ocl.pivot.Package asMetamodel = null;
-	private boolean asMetamodelLoadInProgress = false;
+
+	private boolean asMetamodelLoadInProgress = false;		// Debug detection of cyclic getASMetaModel load
 
 	private final @NonNull Map<@NonNull String, @NonNull Namespace> globalNamespaces = new HashMap<>();
 	private final @NonNull Set<@NonNull Type> globalTypes = new HashSet<>();
@@ -564,6 +563,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	public boolean addPartialModel(@NonNull Model model) {
 		assert partialModels != null;
 		return partialModels.add(model);
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Package basicGetASmetamodel() {
+		assert !asMetamodelLoadInProgress;
+		return asMetamodel;
 	}
 
 	/**
@@ -669,21 +674,32 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	public void didAddPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 	//	System.out.println("didAddPackage " + NameUtil.debugSimpleName(asPackage) + " " + asPackage + " in " + NameUtil.debugSimpleName(asPackage.eResource()) + " for " + NameUtil.debugSimpleName(this));	// XXX
+		String packageURI = asPackage.getURI();
+		CompletePackageIdWithAspects completePackageIdWithAspects = CompletePackageIdRegistryReader.basicGetCompletePackageIdWithAspects(packageURI);
+		CompletePackageId completePackageId = completePackageIdWithAspects != null ? completePackageIdWithAspects.getCompletePackageId() : null;
 		CompletePackage completePackage = null;
 		if (asPackage instanceof Library) {
 			standardLibrary.installLibrary((Library)asPackage);
 		}
-		else {
-			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(asPackage.getURI());
-			if (completePackageId == PivotConstants.METAMODEL_ID) {
+		else if (completePackageId == PivotConstants.METAMODEL_ID) {
+			assert completePackageIdWithAspects != null;
+			if (completePackageIdWithAspects.hasAspect(PivotConstants.METAMODEL_ASPECT)) {
 				if (asMetamodel == null) {
 					asMetamodel = asPackage;
 				}
 				completePackage = completePackageId2completePackage.get(completePackageId);
 			}
+		//	else if (completePackageIdWithAspects.hasAspect(PivotConstants.LIBRARY_ASPECT)) {
+		//		standardLibrary.installLibrary((Library)asPackage);
+		//		completePackage = completePackageId2completePackage.get(completePackageId);
+		//	}
 		}
 		if (completePackage == null) {
 			completePackage = getCompletePackage(asPackage);
+		}
+		List<org.eclipse.ocl.pivot.Package> partialPackages = completePackage.getPartialPackages();
+		if (!partialPackages.contains(asPackage)) {
+			partialPackages.add(asPackage);
 		}
 		assert completePackage != null;
 	//	assert (completePackage instanceof PrimitiveCompletePackage) || completePackage.getPartialPackages().contains(asPackage);			// XXX Lose PrimitiveCompletePackage irregularity
@@ -694,7 +710,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		assert (old1 == null) || (old1 == completePackage);
 	//	System.out.println("didAddPackage2 " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
 		assert !"oclstdlib".equals(asPackage.getName());
-		String packageURI = asPackage.getURI();
 		if (packageURI != null) {
 			completePackage.didAddPackageURI(packageURI);
 			assert Iterables.contains(completePackage.getPackageURIs(), packageURI);
@@ -819,9 +834,10 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class getASClass(@NonNull String className) {
-		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
+		assert !asMetamodelLoadInProgress;
+		if (asMetamodel == null) {
 			getASmetamodel();
-			if (asMetamodel == null) {
+			if (asMetamodel == null) {			// only when environmentFactory disposing
 				return null;
 			}
 		}
@@ -830,18 +846,18 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getASmetamodel() {
-		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
+		assert !asMetamodelLoadInProgress;
+		assert !standardLibrary.isLibraryLoadInProgress();
+		if ((asMetamodel == null) && !environmentFactory.isDisposing()) {
 		//	System.out.println("getASmetamodel for " + NameUtil.debugSimpleName(environmentFactory));
 			try {
 				asMetamodelLoadInProgress = true;
-				if ((asMetamodel == null) && autoLoadASmetamodel && !environmentFactory.isDisposing() && !suppressMetamodelAutoloading && !standardLibrary.isLibraryLoadInProgress()) {
-					AnyType oclAnyType = standardLibrary.getOclAnyType();				// Load a default library if necessary.
-					org.eclipse.ocl.pivot.Package stdlibPackage = oclAnyType.getOwningPackage();
-					if (stdlibPackage != null) {
-						loadASmetamodel(stdlibPackage);
-					}
-					assert asMetamodel != null;			// XXX
+				AnyType oclAnyType = standardLibrary.getOclAnyType();				// Load a default library if necessary.
+				org.eclipse.ocl.pivot.Package stdlibPackage = oclAnyType.getOwningPackage();
+				if (stdlibPackage != null) {
+					loadASmetamodel(stdlibPackage);
 				}
+				assert asMetamodel != null;			// XXX
 			}
 			finally {
 				asMetamodelLoadInProgress = false;
@@ -910,16 +926,12 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull Iterable<@NonNull CompletePackage> getAllCompletePackages() {
-		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
+		assert !asMetamodelLoadInProgress;
+		if (asMetamodel == null) {
 			getASmetamodel();
 		}
 		return completePackageId2completePackage.values();
 	}
-
-//	@Override
-//	public @NonNull Iterable<@NonNull CompletePackage> getAllCompletePackagesWithUris() {
-//		return packageURI2completePackage.values();
-//	}
 
 	/**
 	 * Return all constraints applicable to a type and its superclasses.
@@ -1020,32 +1032,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 
 	@Override
 	public @NonNull CompletePackage getCompletePackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-	//	System.out.println("getCompletePackage " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
-		if ((asMetamodel == null) && !asMetamodelLoadInProgress && !suppressMetamodelAutoloading) {		// This may be the first use of OCL after EMF loaded an AS model.
-			boolean needed1 = false;
-			boolean needed2 = false;
-			boolean needed3 = false;
-			boolean libraryLoadInProgress = standardLibrary.isLibraryLoadInProgress();
-			if (libraryLoadInProgress) {
-				needed1 = true;
-			}
-			CompletePackage completePackage = completePackageId2completePackage.get(PivotConstants.METAMODEL_ID);
-			if ((completePackage == null) || (completePackage.getPartialPackages().isEmpty())) {
-				needed2 = true;
-			}
-			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(asPackage.getURI());
-			if (completePackageId != PivotConstants.METAMODEL_ID) {
-				needed3 = true;
-			}
-			if (needed1 || needed2 || needed3) {
-				getASmetamodel();
-			}
-			else {
-			//	getClass();		// XXX
-				getASmetamodel();
-			}
-//>>>>>>> b071b94 wip ETypeParameter 1
-		}
 		assert !asPackage.eIsProxy(); // && (asPackage.eResource() != null); -- happens before inverse added
 		boolean packageAdded = false;
 		CompletePackage completePackage = package2completePackage.get(asPackage);
@@ -1315,10 +1301,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public @NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg, boolean loadASmetamodelFirst) {
-		if (loadASmetamodelFirst && (asMetamodel == null)) {
-			getASmetamodel();
-		}
+	public @NonNull Iterable<? extends org.eclipse.ocl.pivot.@NonNull Package> getPartialPackages(org.eclipse.ocl.pivot.@NonNull Package pkg) {
 		CompletePackage completePackage = getCompletePackage(pkg);
 		return ClassUtil.nullFree(completePackage.getPartialPackages());
 	}
@@ -1686,7 +1669,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 * @since 7.0
 	 */
 	protected void loadASmetamodel(org.eclipse.ocl.pivot.@NonNull Package asLibrary) {
-		for (org.eclipse.ocl.pivot.@NonNull Package libPackage : getPartialPackages(asLibrary, false)) {
+		for (org.eclipse.ocl.pivot.@NonNull Package libPackage : getPartialPackages(asLibrary)) {
 			if (NameUtil.getNameable(libPackage.getOwnedClasses(), PivotPackage.Literals.ELEMENT.getName()) != null) {
 				setASmetamodel(libPackage);	// Custom meta-model
 				return;
@@ -1697,7 +1680,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		CompleteStandardLibrary standardLibrary2 = standardLibrary;
 		assert standardLibrary2 != null;
 		Resource libraryResource = standardLibrary2.getLibraryResource();
-		if ((libraryResource instanceof ASResourceImpl.ImmutableResource) && ((ASResourceImpl.ImmutableResource)libraryResource).isCompatibleWith(OCLmetamodel.PIVOT_URI)) {
+		if ((libraryResource instanceof ASResourceImpl.ImmutableResource) && ((ASResourceImpl.ImmutableResource)libraryResource).isCompatibleWith(PivotPackage.eNS_URI)) {
 			asModel = OCLmetamodel.getDefaultModel();
 			for (org.eclipse.ocl.pivot.Package asPartialPackage : PivotUtil.getOwnedPackages(asModel))	// Workaround the spurious implicit ecore package (fixed on a wip branch)
 			{
@@ -1713,7 +1696,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		}
 		else {
 			String name = ClassUtil.requireNonNull(asLibrary.getName());
-			asPackage = OCLmetamodel.create(standardLibrary2, name, asLibrary.getNsPrefix(), OCLmetamodel.PIVOT_URI);
+			asPackage = OCLmetamodel.create(standardLibrary2, name, asLibrary.getNsPrefix(), PivotPackage.eNS_URI);
 			asModel = (Model)asPackage.eContainer();
 		}
 		Resource asResource = asModel.eResource();
@@ -1743,12 +1726,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		partialModels.remove(model);
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	public void setASmetamodel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	private void setASmetamodel(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		asMetamodel = asPackage;
-		String packageURI = asMetamodel.getURI();
+	/*	String packageURI = asMetamodel.getURI();
 		if (packageURI != null) {
 			CompletePackageId completePackageId = CompletePackageIdRegistryReader.basicGetCompletePackageId(packageURI);
 			if (completePackageId == PivotConstants.METAMODEL_ID) {		// XXX ??? redundant
@@ -1757,39 +1737,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			//	completeModel.addPackageURI2completeURI(uri, semantics.trimFragment().toString());
 			//	completeModel.registerCompletePackageContribution(completePackage, packageURI);			// XXX completePackage.add
 			}
-		}
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public void setMetamodelNsURI(@NonNull String metaNsURI) {
-		if ((asMetamodel == null) && !asMetamodelLoadInProgress) {
-			//			if (StandardLibraryContribution.REGISTRY.get(metaNsURI) == null) {
-			//				StandardLibraryContribution.REGISTRY.put(metaNsURI, new OCLstdlib.Loader());
-			//			}
-			//			setDefaultStandardLibraryURI(metaNsURI);
-			getASmetamodel();
-		}
-		else if (!metaNsURI.equals(asMetamodel.getURI())) {
-		//	completeModel.addPackageURI2completeURI(metaNsURI, PivotConstants.METAMODEL_NAME);
-			initCompletePackage(PivotConstants.METAMODEL_ID, asMetamodel.getNsPrefix(), metaNsURI);
-			//			throw new IllegalMetamodelException(asMetamodel.getNsURI(), metaNsURI);
-		}
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public void setAutoLoadASmetamodel(boolean autoLoadASmetamodel) {
-		this.autoLoadASmetamodel  = autoLoadASmetamodel;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public void setSuppressMetamodelAutoloading(boolean suppressMetamodelAutoloading) {
-		this.suppressMetamodelAutoloading  = suppressMetamodelAutoloading;
+		} */
 	}
 } //CompleteModelImpl

@@ -72,8 +72,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
-import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader.CompletePackageIdWithAspects;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -704,17 +702,6 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					throw new NullPointerException("No ResourceSet for genmodel");
 				}
 				EnvironmentFactory environmentFactory = stateAdapter.getEnvironmentFactory();
-				for (GenPackage genPackage : genModel.getAllUsedGenPackagesWithClassifiers()) {
-					String nsURI = genPackage.getNSURI();
-					CompletePackageIdWithAspects completePackageIdWithAspects = CompletePackageIdRegistryReader.basicGetCompletePackageIdWithAspects(nsURI);
-					if (completePackageIdWithAspects != null) {
-						if ((completePackageIdWithAspects.getCompletePackageId() == PivotConstants.METAMODEL_ID) &&
-							completePackageIdWithAspects.hasAspect(PivotConstants.METAMODEL_ASPECT)) {
-							environmentFactory.getCompleteModel().setSuppressMetamodelAutoloading(true);	// Prevent autoload duplication of the metamodel
-							break;
-						}
-					}
-				}
 				MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
 				environmentFactory.getStandardLibrary().getOclAnyType();
 				for (GenPackage genPackage : genModel.getGenPackages()) {

@@ -2273,6 +2273,13 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Iterable<@NonNull EnumerationLiteral> getOwnedLiterals(@NonNull Enumeration asEnumeration) {
+		return ClassUtil.nullFree(asEnumeration.getOwnedLiterals());
+	}
+
+	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Iterable<@NonNull Operation> getOwnedOperations(org.eclipse.ocl.pivot.@NonNull Class asClass) {

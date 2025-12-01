@@ -35,6 +35,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
@@ -896,7 +897,7 @@ public class LoadTests extends AbstractLoadTests
 		//
 		List<org.eclipse.ocl.pivot.Package> allPackages = new ArrayList<org.eclipse.ocl.pivot.Package>();
 		//		for (org.eclipse.ocl.pivot.Package aPackage : metamodelManager2.getAllPackages()) {
-		for (CompletePackage completePackage : ocl2.getStandardLibrary().getAllCompletePackages()) {
+		for (CompletePackage completePackage : ((CompleteStandardLibrary)ocl2.getStandardLibrary()).getCompleteModel().getAllCompletePackages()) {
 			org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
 			if (aPackage instanceof Model) {}
 			else if (aPackage instanceof Library) {}
@@ -983,7 +984,7 @@ public class LoadTests extends AbstractLoadTests
 		//
 		List<org.eclipse.ocl.pivot.Package> allPackages = new ArrayList<org.eclipse.ocl.pivot.Package>();
 		//		for (org.eclipse.ocl.pivot.Package aPackage : metamodelManager2.getAllPackages()) {
-		for (CompletePackage completePackage : ocl2.getStandardLibrary().getAllCompletePackages()) {
+		for (CompletePackage completePackage : ((CompleteStandardLibrary)ocl2.getStandardLibrary()).getCompleteModel().getAllCompletePackages()) {
 			org.eclipse.ocl.pivot.Package aPackage = completePackage.getPrimaryPackage();
 			if (aPackage instanceof Model) {}
 			else if (aPackage instanceof Library) {}

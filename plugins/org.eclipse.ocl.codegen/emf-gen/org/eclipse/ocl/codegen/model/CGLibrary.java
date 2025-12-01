@@ -32,12 +32,12 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -206,7 +206,7 @@ public class CGLibrary extends ASResourceImpl
 
 		@Override
 		public boolean isCompatibleWith(@NonNull String metamodelURI) {
-			return OCLmetamodel.PIVOT_URI.equals(metamodelURI);
+			return PivotPackage.eNS_URI.equals(metamodelURI);
 		}
 
 		/**
