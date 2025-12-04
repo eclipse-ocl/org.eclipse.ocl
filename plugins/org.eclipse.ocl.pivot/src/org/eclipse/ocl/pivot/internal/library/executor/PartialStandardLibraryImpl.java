@@ -82,6 +82,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
+import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -225,6 +226,14 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 
 		@Override
+		public @NonNull Resource createResource(URI uri) {
+			assert uri != null;
+			ASResource result = new BuiltInASResourceImpl(uri);
+			configureResource(result);
+			return result;
+		}
+
+		@Override
 		public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
 			throw new IllegalStateException();
 		}
@@ -233,6 +242,21 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		public @NonNull ASResourceFactory getASResourceFactory() {
 			return INSTANCE;
 		}
+	}
+
+	public static class BuiltInASResourceImpl extends ASResourceImpl
+	{
+		public static @NonNull BuiltInASResourceFactory INSTANCE = new BuiltInASResourceFactory();
+
+		public BuiltInASResourceImpl(@NonNull URI uri) {
+			super(uri, BuiltInASResourceFactory.INSTANCE);
+		}
+
+		/**
+		 * Overridden to inhibit unloading of the shared instance.
+		 */
+		@Override
+		protected void doUnload() {}
 	}
 
 	public static class PartialCollectionTypeManager extends AbstractCollectionTypeManager

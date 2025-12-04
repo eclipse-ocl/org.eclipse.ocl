@@ -476,9 +476,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	public org.eclipse.ocl.pivot.@NonNull Class getEquivalentClass(@NonNull Model thisModel, org.eclipse.ocl.pivot.@NonNull Class thatClass) {
 		// NB This may be called for an isolated xxxTables and so there are no CompleteClasses.
 	//	CompleteClass completeClass = getCompleteClass(thatClass);					// Ensure thatPackage has a complete representation -- BUG 477342 once gave intermittent dispose() ISEs
-		if ("OclElement".equals(thatClass.getName())) {
-			getClass();			// XXX
-		}
 		Model thatModel = PivotUtil.getContainingModel(thatClass);
 		if ((thisModel == thatModel) || Orphanage.isOrphanage(thatModel)) {
 			return thatClass;
