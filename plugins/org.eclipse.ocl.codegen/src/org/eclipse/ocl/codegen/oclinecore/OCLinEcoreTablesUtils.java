@@ -603,6 +603,8 @@ public class OCLinEcoreTablesUtils
 			type.accept(emitReferencedElement);
 			s.append(", ");
 			type.getElementType().accept(this);
+			s.append(", ");
+			s.append(Boolean.toString(type.isIsNullFree()));
 			s.append(")");
 			return null;
 		}
@@ -646,7 +648,11 @@ public class OCLinEcoreTablesUtils
 			s.append(", ");
 			type.getKeyType().accept(this);
 			s.append(", ");
+			s.append(Boolean.toString(type.isKeysAreNullFree()));
+			s.append(", ");
 			type.getValueType().accept(this);
+			s.append(", ");
+			s.append(Boolean.toString(type.isValuesAreNullFree()));
 			s.append(")");
 			return null;
 		}

@@ -224,7 +224,7 @@ public class LookupTables extends AbstractTables
 		 * or a parameter whose type references an Operation TemplateParameter.
 		 */
 		public static void postInit() {
-			LIBRARY.setParameters(_LookupEnvironment__addElements, MODEL.getCollectionType(OCLstdlibTables.Types._Collection, LIBRARY.getTemplateParameter(_LookupEnvironment__addElements, TypeParameters.$$0)));
+			LIBRARY.setParameters(_LookupEnvironment__addElements, MODEL.getCollectionType(OCLstdlibTables.Types._Collection, LIBRARY.getTemplateParameter(_LookupEnvironment__addElements, TypeParameters.$$0), false));
 		}
 
 		static {
@@ -250,9 +250,9 @@ public class LookupTables extends AbstractTables
 			Operations.init();
 		}
 
-		public static final @NonNull Property _LookupEnvironment__namedElements = LIBRARY.createProperty(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT__NAMED_ELEMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._NamedElement), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _LookupEnvironment__namedElements = LIBRARY.createProperty(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT__NAMED_ELEMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, PivotTables.Types._NamedElement, false), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _LookupEnvironment__parentEnv = LIBRARY.createProperty(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT__PARENT_ENV, Types._LookupEnvironment, 1 | IsResolveProxies);
-		public static final @NonNull Property _LookupEnvironment__LookupEnvironment__parentEnv = LIBRARY.createOppositeProperty(Types._LookupEnvironment, "LookupEnvironment", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._LookupEnvironment), 2 | IsImplicit | IsRequired | IsResolveProxies, LookupPackage.Literals.LOOKUP_ENVIRONMENT__PARENT_ENV);
+		public static final @NonNull Property _LookupEnvironment__LookupEnvironment__parentEnv = LIBRARY.createOppositeProperty(Types._LookupEnvironment, "LookupEnvironment", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._LookupEnvironment, false), 2 | IsImplicit | IsRequired | IsResolveProxies, LookupPackage.Literals.LOOKUP_ENVIRONMENT__PARENT_ENV);
 
 		static {
 			LIBRARY.createOpposite("LookupEnvironment", _LookupEnvironment__namedElements);

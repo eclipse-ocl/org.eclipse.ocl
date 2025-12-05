@@ -148,8 +148,8 @@ public abstract class AbstractTables
 			}
 		}
 
-		public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType) {
-			CollectionType collectionType = library.getCollectionType((CollectionType)genericType, elementType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+		public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType, boolean isNullFree) {
+			CollectionType collectionType = library.getCollectionType((CollectionType)genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 			addOrphanClass(collectionType);
 			return collectionType;
 		}
@@ -162,8 +162,8 @@ public abstract class AbstractTables
 			return lambdaType;
 		}
 
-		public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, @NonNull Type valueType) {
-			MapType mapType = library.getMapType(keyType, PivotConstants.DEFAULT_IS_NULL_FREE, valueType, PivotConstants.DEFAULT_IS_NULL_FREE);
+		public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+			MapType mapType = library.getMapType(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 			addOrphanClass(mapType);
 			return mapType;
 		}
