@@ -1642,16 +1642,18 @@ implements Operation {
 	 */
 	@Override
 	protected @Nullable EObject getReloadableEObjectFromCompleteAS(@NonNull EnvironmentFactory environmentFactory) {
-		CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass(PivotUtil.getOwningClass(this));
-		Iterable<@NonNull Operation> operationOverloads = completeClass.getOperationOverloads(this);
-		if (operationOverloads != null) {
-			for (Operation asOperation : operationOverloads) {
-				EObject esObject = asOperation.getESObject();
-				if (esObject != null) {
-					return esObject;
+		CompleteClass completeClass = environmentFactory.getCompleteModel().basicGetCompleteClass(PivotUtil.getOwningClass(this));
+		if (completeClass != null) {
+			Iterable<@NonNull Operation> operationOverloads = completeClass.getOperationOverloads(this);
+			if (operationOverloads != null) {
+				for (Operation asOperation : operationOverloads) {
+					EObject esObject = asOperation.getESObject();
+					if (esObject != null) {
+						return esObject;
+					}
 				}
 			}
 		}
-		return null;
+		return getESObject();
 	}
 } //OperationImpl
