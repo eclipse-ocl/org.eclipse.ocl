@@ -79,6 +79,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
@@ -985,15 +986,40 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses) {
+	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses, @NonNull NormalizedTemplateParameter... typeParameters) {
 		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
-	//	EcoreFlatModel flatModel = (EcoreFlatModel)asModel.initFlatModel(this);
+		if ((typeParameters != null) && (typeParameters.length > 0)) {
+			org.eclipse.ocl.pivot.Package asOrphanPackage = Orphanage.getLocalOrphanPackage(PivotUtil.getContainingModel(asPackage));
+			ClassImpl asOrphanClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();
+			asOrphanClass.setName(PivotConstants.ORPHANAGE_NAME);
+			asOrphanClass.setIsAbstract(true);
+			initTemplateParameters(asOrphanClass, typeParameters);
+			PivotUtil.getOwnedClassesList(asOrphanPackage).add(asOrphanClass);
+		}
+		EObject ePackage = asPackage.getESObject();
 		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtil.getOwnedClassesList(asPackage);
 		for (org.eclipse.ocl.pivot.Class asClass : asClasses) {
 			assert asClass != null;
 			ownedClasses.add(asClass);
 		}
 		addPackage(asPackage, null);
+	}
+
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(@NonNull NormalizedTemplateParameter... typeParameters) {
+		ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();
+//		initClass(asClass, eClassifier, typeId, flags, typeParameters);
+//		asClass.setESObject(eClassifier);
+		asClass.setName(PivotConstants.ORPHANAGE_NAME);
+	//	if (typeId != null) {
+	//		asClass.setTypeId(typeId);
+	//	}
+		asClass.setIsAbstract(true);
+		initTemplateParameters(asClass, typeParameters);
+	//	/*Ecore*/FlatModel flatModel = getFlatModel();					// XXX Migrate to initFragments
+	//	FlatClass flatClass = flatModel./*Ecore*/getFlatClass(asClass);
+	//	asClass.setFlatClass(flatClass);
+	//	PACKAGE.get
+		return asClass;
 	}
 
 	private <T extends CollectionType> void initTemplateParameters(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter @Nullable... templateParameters) {

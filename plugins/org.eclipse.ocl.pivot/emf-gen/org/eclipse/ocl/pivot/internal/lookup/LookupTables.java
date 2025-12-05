@@ -135,7 +135,7 @@ public class LookupTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, types);
+			LIBRARY.initPackage(PACKAGE, types, TypeParameters.$$0);
 			Init.initEnd();
 		}
 

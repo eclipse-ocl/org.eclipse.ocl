@@ -1203,7 +1203,17 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 *	Install the type descriptors in the package descriptor.\n");
 		s.append("		 */\n");
 		s.append("		static {\n");
-		s.append("			LIBRARY.initPackage(PACKAGE, types);\n");
+		s.append("			LIBRARY.initPackage(PACKAGE, types");
+		Orphanage orphanage = environmentFactory.getOrphanage();
+		for (int i = 0; true; i++) {
+			NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, i) ;
+			if (normalizedTemplateParameter == null) {
+				break;
+			}
+			s.append(", ");
+			normalizedTemplateParameter.accept(emitTypeExpression);
+		}
+		s.append(");\n");
 		org.eclipse.ocl.pivot.Package extendedPackage = getExtendedPackage(asPackage);
 		if (extendedPackage != null) {
 			GenPackage genPackage = genModelHelper.getGenPackage(extendedPackage);
