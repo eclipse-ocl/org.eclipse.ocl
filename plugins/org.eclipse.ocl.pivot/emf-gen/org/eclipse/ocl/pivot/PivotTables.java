@@ -2968,7 +2968,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Annotation__NamedElement /* 3 */,
 				Fragments._Annotation__Annotation /* 4 */
 			};
-		private static final int @NonNull [] __Annotation = { 1,1,1,1,1 };
+		private static final int @NonNull [] __Annotation = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _AnyType =
 			{
@@ -2983,7 +2983,7 @@ public class PivotTables extends AbstractTables
 				Fragments._AnyType__Class /* 5 */,
 				Fragments._AnyType__AnyType /* 6 */
 			};
-		private static final int @NonNull [] __AnyType = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __AnyType = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _AssociationClass =
 			{
@@ -2998,7 +2998,7 @@ public class PivotTables extends AbstractTables
 				Fragments._AssociationClass__Class /* 5 */,
 				Fragments._AssociationClass__AssociationClass /* 6 */
 			};
-		private static final int @NonNull [] __AssociationClass = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __AssociationClass = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _AssociationClassCallExp =
 			{
@@ -3013,7 +3013,7 @@ public class PivotTables extends AbstractTables
 				Fragments._AssociationClassCallExp__NavigationCallExp /* 8 */,
 				Fragments._AssociationClassCallExp__AssociationClassCallExp /* 9 */
 			};
-		private static final int @NonNull [] __AssociationClassCallExp = { 1,1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __AssociationClassCallExp = { 0,1,2,3,4,5,6,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _AssociativityKind =
 			{
@@ -3023,7 +3023,7 @@ public class PivotTables extends AbstractTables
 				Fragments._AssociativityKind__OclEnumeration /* 3 */,
 				Fragments._AssociativityKind__AssociativityKind /* 4 */
 			};
-		private static final int @NonNull [] __AssociativityKind = { 1,1,1,1,1 };
+		private static final int @NonNull [] __AssociativityKind = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _BagType =
 			{
@@ -3041,7 +3041,7 @@ public class PivotTables extends AbstractTables
 				Fragments._BagType__CollectionType /* 8 */,
 				Fragments._BagType__BagType /* 9 */
 			};
-		private static final int @NonNull [] __BagType = { 1,1,2,2,2,1,1,1,1,1 };
+		private static final int @NonNull [] __BagType = { 0,1,2,4,6,8,9,10,11,12 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Behavior =
 			{
@@ -3056,7 +3056,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Behavior__Class /* 5 */,
 				Fragments._Behavior__Behavior /* 6 */
 			};
-		private static final int @NonNull [] __Behavior = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __Behavior = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _BooleanLiteralExp =
 			{
@@ -3070,7 +3070,7 @@ public class PivotTables extends AbstractTables
 				Fragments._BooleanLiteralExp__PrimitiveLiteralExp /* 7 */,
 				Fragments._BooleanLiteralExp__BooleanLiteralExp /* 8 */
 			};
-		private static final int @NonNull [] __BooleanLiteralExp = { 1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __BooleanLiteralExp = { 0,1,2,3,4,5,6,7,8 };
 
 		private static final @NonNull FlatFragment @NonNull [] _BooleanType =
 			{
@@ -3087,7 +3087,7 @@ public class PivotTables extends AbstractTables
 				Fragments._BooleanType__PrimitiveType /* 7 */,
 				Fragments._BooleanType__BooleanType /* 8 */
 			};
-		private static final int @NonNull [] __BooleanType = { 1,1,2,2,2,1,1,1,1 };
+		private static final int @NonNull [] __BooleanType = { 0,1,2,4,6,8,9,10,11 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CallExp =
 			{
@@ -3099,7 +3099,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CallExp__OCLExpression /* 5 */,
 				Fragments._CallExp__CallExp /* 6 */
 			};
-		private static final int @NonNull [] __CallExp = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __CallExp = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CallOperationAction =
 			{
@@ -3109,7 +3109,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CallOperationAction__NamedElement /* 3 */,
 				Fragments._CallOperationAction__CallOperationAction /* 4 */
 			};
-		private static final int @NonNull [] __CallOperationAction = { 1,1,1,1,1 };
+		private static final int @NonNull [] __CallOperationAction = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Class =
 			{
@@ -3123,7 +3123,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Class__Type /* 4 */,
 				Fragments._Class__Class /* 5 */
 			};
-		private static final int @NonNull [] __Class = { 1,1,2,2,2,1 };
+		private static final int @NonNull [] __Class = { 0,1,2,4,6,8 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CollectionItem =
 			{
@@ -3135,7 +3135,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CollectionItem__CollectionLiteralPart /* 5 */,
 				Fragments._CollectionItem__CollectionItem /* 6 */
 			};
-		private static final int @NonNull [] __CollectionItem = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __CollectionItem = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CollectionKind =
 			{
@@ -3145,7 +3145,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CollectionKind__OclEnumeration /* 3 */,
 				Fragments._CollectionKind__CollectionKind /* 4 */
 			};
-		private static final int @NonNull [] __CollectionKind = { 1,1,1,1,1 };
+		private static final int @NonNull [] __CollectionKind = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CollectionLiteralExp =
 			{
@@ -3158,7 +3158,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CollectionLiteralExp__LiteralExp /* 6 */,
 				Fragments._CollectionLiteralExp__CollectionLiteralExp /* 7 */
 			};
-		private static final int @NonNull [] __CollectionLiteralExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __CollectionLiteralExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CollectionLiteralPart =
 			{
@@ -3169,7 +3169,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CollectionLiteralPart__TypedElement /* 4 */,
 				Fragments._CollectionLiteralPart__CollectionLiteralPart /* 5 */
 			};
-		private static final int @NonNull [] __CollectionLiteralPart = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __CollectionLiteralPart = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CollectionRange =
 			{
@@ -3181,7 +3181,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CollectionRange__CollectionLiteralPart /* 5 */,
 				Fragments._CollectionRange__CollectionRange /* 6 */
 			};
-		private static final int @NonNull [] __CollectionRange = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __CollectionRange = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CollectionType =
 			{
@@ -3198,7 +3198,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CollectionType__IterableType /* 7 */,
 				Fragments._CollectionType__CollectionType /* 8 */
 			};
-		private static final int @NonNull [] __CollectionType = { 1,1,2,2,2,1,1,1,1 };
+		private static final int @NonNull [] __CollectionType = { 0,1,2,4,6,8,9,10,11 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Comment =
 			{
@@ -3207,7 +3207,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Comment__Element /* 2 */,
 				Fragments._Comment__Comment /* 3 */
 			};
-		private static final int @NonNull [] __Comment = { 1,1,1,1 };
+		private static final int @NonNull [] __Comment = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CompleteClass =
 			{
@@ -3217,7 +3217,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CompleteClass__NamedElement /* 3 */,
 				Fragments._CompleteClass__CompleteClass /* 4 */
 			};
-		private static final int @NonNull [] __CompleteClass = { 1,1,1,1,1 };
+		private static final int @NonNull [] __CompleteClass = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CompleteEnvironment =
 			{
@@ -3226,7 +3226,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CompleteEnvironment__Element /* 2 */,
 				Fragments._CompleteEnvironment__CompleteEnvironment /* 3 */
 			};
-		private static final int @NonNull [] __CompleteEnvironment = { 1,1,1,1 };
+		private static final int @NonNull [] __CompleteEnvironment = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CompleteModel =
 			{
@@ -3236,7 +3236,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CompleteModel__NamedElement /* 3 */,
 				Fragments._CompleteModel__CompleteModel /* 4 */
 			};
-		private static final int @NonNull [] __CompleteModel = { 1,1,1,1,1 };
+		private static final int @NonNull [] __CompleteModel = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CompletePackage =
 			{
@@ -3246,7 +3246,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CompletePackage__NamedElement /* 3 */,
 				Fragments._CompletePackage__CompletePackage /* 4 */
 			};
-		private static final int @NonNull [] __CompletePackage = { 1,1,1,1,1 };
+		private static final int @NonNull [] __CompletePackage = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CompleteStandardLibrary =
 			{
@@ -3256,7 +3256,7 @@ public class PivotTables extends AbstractTables
 				Fragments._CompleteStandardLibrary__StandardLibrary /* 3 */,
 				Fragments._CompleteStandardLibrary__CompleteStandardLibrary /* 4 */
 			};
-		private static final int @NonNull [] __CompleteStandardLibrary = { 1,1,1,1,1 };
+		private static final int @NonNull [] __CompleteStandardLibrary = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ConnectionPointReference =
 			{
@@ -3267,7 +3267,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ConnectionPointReference__Vertex /* 4 */,
 				Fragments._ConnectionPointReference__ConnectionPointReference /* 5 */
 			};
-		private static final int @NonNull [] __ConnectionPointReference = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __ConnectionPointReference = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Constraint =
 			{
@@ -3277,7 +3277,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Constraint__NamedElement /* 3 */,
 				Fragments._Constraint__Constraint /* 4 */
 			};
-		private static final int @NonNull [] __Constraint = { 1,1,1,1,1 };
+		private static final int @NonNull [] __Constraint = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _DataType =
 			{
@@ -3292,7 +3292,7 @@ public class PivotTables extends AbstractTables
 				Fragments._DataType__Class /* 5 */,
 				Fragments._DataType__DataType /* 6 */
 			};
-		private static final int @NonNull [] __DataType = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __DataType = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Detail =
 			{
@@ -3302,7 +3302,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Detail__NamedElement /* 3 */,
 				Fragments._Detail__Detail /* 4 */
 			};
-		private static final int @NonNull [] __Detail = { 1,1,1,1,1 };
+		private static final int @NonNull [] __Detail = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _DynamicBehavior =
 			{
@@ -3320,7 +3320,7 @@ public class PivotTables extends AbstractTables
 				Fragments._DynamicBehavior__DynamicType /* 6 */,
 				Fragments._DynamicBehavior__DynamicBehavior /* 7 */
 			};
-		private static final int @NonNull [] __DynamicBehavior = { 1,1,2,3,2,1,2,1 };
+		private static final int @NonNull [] __DynamicBehavior = { 0,1,2,4,7,9,10,12 };
 
 		private static final @NonNull FlatFragment @NonNull [] _DynamicElement =
 			{
@@ -3329,7 +3329,7 @@ public class PivotTables extends AbstractTables
 				Fragments._DynamicElement__Element /* 2 */,
 				Fragments._DynamicElement__DynamicElement /* 3 */
 			};
-		private static final int @NonNull [] __DynamicElement = { 1,1,1,1 };
+		private static final int @NonNull [] __DynamicElement = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _DynamicProperty =
 			{
@@ -3338,7 +3338,7 @@ public class PivotTables extends AbstractTables
 				Fragments._DynamicProperty__Element /* 2 */,
 				Fragments._DynamicProperty__DynamicProperty /* 3 */
 			};
-		private static final int @NonNull [] __DynamicProperty = { 1,1,1,1 };
+		private static final int @NonNull [] __DynamicProperty = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _DynamicType =
 			{
@@ -3354,7 +3354,7 @@ public class PivotTables extends AbstractTables
 				Fragments._DynamicType__Class /* 5 */,
 				Fragments._DynamicType__DynamicType /* 6 */
 			};
-		private static final int @NonNull [] __DynamicType = { 1,1,2,3,2,1,1 };
+		private static final int @NonNull [] __DynamicType = { 0,1,2,4,7,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _DynamicValueSpecification =
 			{
@@ -3366,14 +3366,14 @@ public class PivotTables extends AbstractTables
 				Fragments._DynamicValueSpecification__ValueSpecification /* 5 */,
 				Fragments._DynamicValueSpecification__DynamicValueSpecification /* 6 */
 			};
-		private static final int @NonNull [] __DynamicValueSpecification = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __DynamicValueSpecification = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _EcoreObject =
 			{
 				Fragments._EcoreObject__OclAny /* 0 */,
 				Fragments._EcoreObject__EcoreObject /* 1 */
 			};
-		private static final int @NonNull [] __EcoreObject = { 1,1 };
+		private static final int @NonNull [] __EcoreObject = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Element =
 			{
@@ -3381,7 +3381,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Element__OclElement /* 1 */,
 				Fragments._Element__Element /* 2 */
 			};
-		private static final int @NonNull [] __Element = { 1,1,1 };
+		private static final int @NonNull [] __Element = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ElementExtension =
 			{
@@ -3396,7 +3396,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ElementExtension__Class /* 5 */,
 				Fragments._ElementExtension__ElementExtension /* 6 */
 			};
-		private static final int @NonNull [] __ElementExtension = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __ElementExtension = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ElementLiteralExp =
 			{
@@ -3409,7 +3409,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ElementLiteralExp__LiteralExp /* 6 */,
 				Fragments._ElementLiteralExp__ElementLiteralExp /* 7 */
 			};
-		private static final int @NonNull [] __ElementLiteralExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __ElementLiteralExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _EnumLiteralExp =
 			{
@@ -3422,7 +3422,7 @@ public class PivotTables extends AbstractTables
 				Fragments._EnumLiteralExp__LiteralExp /* 6 */,
 				Fragments._EnumLiteralExp__EnumLiteralExp /* 7 */
 			};
-		private static final int @NonNull [] __EnumLiteralExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __EnumLiteralExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Enumeration =
 			{
@@ -3438,7 +3438,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Enumeration__DataType /* 6 */,
 				Fragments._Enumeration__Enumeration /* 7 */
 			};
-		private static final int @NonNull [] __Enumeration = { 1,1,2,2,2,1,1,1 };
+		private static final int @NonNull [] __Enumeration = { 0,1,2,4,6,8,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _EnumerationLiteral =
 			{
@@ -3449,7 +3449,7 @@ public class PivotTables extends AbstractTables
 				Fragments._EnumerationLiteral__InstanceSpecification /* 4 */,
 				Fragments._EnumerationLiteral__EnumerationLiteral /* 5 */
 			};
-		private static final int @NonNull [] __EnumerationLiteral = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __EnumerationLiteral = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ExpressionInOCL =
 			{
@@ -3462,7 +3462,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ExpressionInOCL__LanguageExpression /* 6 */,
 				Fragments._ExpressionInOCL__ExpressionInOCL /* 7 */
 			};
-		private static final int @NonNull [] __ExpressionInOCL = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __ExpressionInOCL = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Feature =
 			{
@@ -3473,7 +3473,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Feature__TypedElement /* 4 */,
 				Fragments._Feature__Feature /* 5 */
 			};
-		private static final int @NonNull [] __Feature = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __Feature = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _FeatureCallExp =
 			{
@@ -3486,7 +3486,7 @@ public class PivotTables extends AbstractTables
 				Fragments._FeatureCallExp__CallExp /* 6 */,
 				Fragments._FeatureCallExp__FeatureCallExp /* 7 */
 			};
-		private static final int @NonNull [] __FeatureCallExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __FeatureCallExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _FinalState =
 			{
@@ -3500,7 +3500,7 @@ public class PivotTables extends AbstractTables
 				Fragments._FinalState__State /* 5 */,
 				Fragments._FinalState__FinalState /* 6 */
 			};
-		private static final int @NonNull [] __FinalState = { 1,2,1,1,2,1,1 };
+		private static final int @NonNull [] __FinalState = { 0,1,3,4,5,7,8 };
 
 		private static final @NonNull FlatFragment @NonNull [] _IfExp =
 			{
@@ -3512,7 +3512,7 @@ public class PivotTables extends AbstractTables
 				Fragments._IfExp__OCLExpression /* 5 */,
 				Fragments._IfExp__IfExp /* 6 */
 			};
-		private static final int @NonNull [] __IfExp = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __IfExp = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Import =
 			{
@@ -3522,7 +3522,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Import__NamedElement /* 3 */,
 				Fragments._Import__Import /* 4 */
 			};
-		private static final int @NonNull [] __Import = { 1,1,1,1,1 };
+		private static final int @NonNull [] __Import = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _InstanceSpecification =
 			{
@@ -3532,7 +3532,7 @@ public class PivotTables extends AbstractTables
 				Fragments._InstanceSpecification__NamedElement /* 3 */,
 				Fragments._InstanceSpecification__InstanceSpecification /* 4 */
 			};
-		private static final int @NonNull [] __InstanceSpecification = { 1,1,1,1,1 };
+		private static final int @NonNull [] __InstanceSpecification = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _IntegerLiteralExp =
 			{
@@ -3547,7 +3547,7 @@ public class PivotTables extends AbstractTables
 				Fragments._IntegerLiteralExp__NumericLiteralExp /* 8 */,
 				Fragments._IntegerLiteralExp__IntegerLiteralExp /* 9 */
 			};
-		private static final int @NonNull [] __IntegerLiteralExp = { 1,1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __IntegerLiteralExp = { 0,1,2,3,4,5,6,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _InvalidLiteralExp =
 			{
@@ -3560,7 +3560,7 @@ public class PivotTables extends AbstractTables
 				Fragments._InvalidLiteralExp__LiteralExp /* 6 */,
 				Fragments._InvalidLiteralExp__InvalidLiteralExp /* 7 */
 			};
-		private static final int @NonNull [] __InvalidLiteralExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __InvalidLiteralExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _InvalidType =
 			{
@@ -3575,7 +3575,7 @@ public class PivotTables extends AbstractTables
 				Fragments._InvalidType__Class /* 5 */,
 				Fragments._InvalidType__InvalidType /* 6 */
 			};
-		private static final int @NonNull [] __InvalidType = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __InvalidType = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _IterableType =
 			{
@@ -3591,7 +3591,7 @@ public class PivotTables extends AbstractTables
 				Fragments._IterableType__DataType /* 6 */,
 				Fragments._IterableType__IterableType /* 7 */
 			};
-		private static final int @NonNull [] __IterableType = { 1,1,2,2,2,1,1,1 };
+		private static final int @NonNull [] __IterableType = { 0,1,2,4,6,8,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _IterateExp =
 			{
@@ -3606,7 +3606,7 @@ public class PivotTables extends AbstractTables
 				Fragments._IterateExp__LoopExp /* 7 */,
 				Fragments._IterateExp__IterateExp /* 8 */
 			};
-		private static final int @NonNull [] __IterateExp = { 1,1,2,1,1,1,1,1,1 };
+		private static final int @NonNull [] __IterateExp = { 0,1,2,4,5,6,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Iteration =
 			{
@@ -3621,7 +3621,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Iteration__Operation /* 6 */,
 				Fragments._Iteration__Iteration /* 7 */
 			};
-		private static final int @NonNull [] __Iteration = { 1,1,1,2,2,1,1,1 };
+		private static final int @NonNull [] __Iteration = { 0,1,2,3,5,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _IteratorExp =
 			{
@@ -3636,7 +3636,7 @@ public class PivotTables extends AbstractTables
 				Fragments._IteratorExp__LoopExp /* 7 */,
 				Fragments._IteratorExp__IteratorExp /* 8 */
 			};
-		private static final int @NonNull [] __IteratorExp = { 1,1,2,1,1,1,1,1,1 };
+		private static final int @NonNull [] __IteratorExp = { 0,1,2,4,5,6,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _IteratorVariable =
 			{
@@ -3649,7 +3649,7 @@ public class PivotTables extends AbstractTables
 				Fragments._IteratorVariable__Variable /* 6 */,
 				Fragments._IteratorVariable__IteratorVariable /* 7 */
 			};
-		private static final int @NonNull [] __IteratorVariable = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __IteratorVariable = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LambdaParameter =
 			{
@@ -3662,7 +3662,7 @@ public class PivotTables extends AbstractTables
 				Fragments._LambdaParameter__Parameter /* 6 */,
 				Fragments._LambdaParameter__LambdaParameter /* 7 */
 			};
-		private static final int @NonNull [] __LambdaParameter = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __LambdaParameter = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LambdaType =
 			{
@@ -3678,7 +3678,7 @@ public class PivotTables extends AbstractTables
 				Fragments._LambdaType__DataType /* 6 */,
 				Fragments._LambdaType__LambdaType /* 7 */
 			};
-		private static final int @NonNull [] __LambdaType = { 1,1,2,2,2,1,1,1 };
+		private static final int @NonNull [] __LambdaType = { 0,1,2,4,6,8,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LanguageExpression =
 			{
@@ -3690,7 +3690,7 @@ public class PivotTables extends AbstractTables
 				Fragments._LanguageExpression__ValueSpecification /* 5 */,
 				Fragments._LanguageExpression__LanguageExpression /* 6 */
 			};
-		private static final int @NonNull [] __LanguageExpression = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __LanguageExpression = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LetExp =
 			{
@@ -3702,7 +3702,7 @@ public class PivotTables extends AbstractTables
 				Fragments._LetExp__OCLExpression /* 5 */,
 				Fragments._LetExp__LetExp /* 6 */
 			};
-		private static final int @NonNull [] __LetExp = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __LetExp = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LetVariable =
 			{
@@ -3715,7 +3715,7 @@ public class PivotTables extends AbstractTables
 				Fragments._LetVariable__Variable /* 6 */,
 				Fragments._LetVariable__LetVariable /* 7 */
 			};
-		private static final int @NonNull [] __LetVariable = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __LetVariable = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Library =
 			{
@@ -3727,14 +3727,14 @@ public class PivotTables extends AbstractTables
 				Fragments._Library__Package /* 5 */,
 				Fragments._Library__Library /* 6 */
 			};
-		private static final int @NonNull [] __Library = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __Library = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LibraryFeature =
 			{
 				Fragments._LibraryFeature__OclAny /* 0 */,
 				Fragments._LibraryFeature__LibraryFeature /* 1 */
 			};
-		private static final int @NonNull [] __LibraryFeature = { 1,1 };
+		private static final int @NonNull [] __LibraryFeature = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LiteralExp =
 			{
@@ -3746,7 +3746,7 @@ public class PivotTables extends AbstractTables
 				Fragments._LiteralExp__OCLExpression /* 5 */,
 				Fragments._LiteralExp__LiteralExp /* 6 */
 			};
-		private static final int @NonNull [] __LiteralExp = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __LiteralExp = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LoopExp =
 			{
@@ -3759,7 +3759,7 @@ public class PivotTables extends AbstractTables
 				Fragments._LoopExp__CallExp /* 6 */,
 				Fragments._LoopExp__LoopExp /* 7 */
 			};
-		private static final int @NonNull [] __LoopExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __LoopExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _MapLiteralExp =
 			{
@@ -3772,7 +3772,7 @@ public class PivotTables extends AbstractTables
 				Fragments._MapLiteralExp__LiteralExp /* 6 */,
 				Fragments._MapLiteralExp__MapLiteralExp /* 7 */
 			};
-		private static final int @NonNull [] __MapLiteralExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __MapLiteralExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _MapLiteralPart =
 			{
@@ -3781,7 +3781,7 @@ public class PivotTables extends AbstractTables
 				Fragments._MapLiteralPart__Element /* 2 */,
 				Fragments._MapLiteralPart__MapLiteralPart /* 3 */
 			};
-		private static final int @NonNull [] __MapLiteralPart = { 1,1,1,1 };
+		private static final int @NonNull [] __MapLiteralPart = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _MapType =
 			{
@@ -3798,7 +3798,7 @@ public class PivotTables extends AbstractTables
 				Fragments._MapType__IterableType /* 7 */,
 				Fragments._MapType__MapType /* 8 */
 			};
-		private static final int @NonNull [] __MapType = { 1,1,2,2,2,1,1,1,1 };
+		private static final int @NonNull [] __MapType = { 0,1,2,4,6,8,9,10,11 };
 
 		private static final @NonNull FlatFragment @NonNull [] _MessageExp =
 			{
@@ -3810,7 +3810,7 @@ public class PivotTables extends AbstractTables
 				Fragments._MessageExp__OCLExpression /* 5 */,
 				Fragments._MessageExp__MessageExp /* 6 */
 			};
-		private static final int @NonNull [] __MessageExp = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __MessageExp = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _MessageType =
 			{
@@ -3825,7 +3825,7 @@ public class PivotTables extends AbstractTables
 				Fragments._MessageType__Class /* 5 */,
 				Fragments._MessageType__MessageType /* 6 */
 			};
-		private static final int @NonNull [] __MessageType = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __MessageType = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Model =
 			{
@@ -3836,7 +3836,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Model__Namespace /* 4 */,
 				Fragments._Model__Model /* 5 */
 			};
-		private static final int @NonNull [] __Model = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __Model = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _MorePivotable =
 			{
@@ -3844,7 +3844,7 @@ public class PivotTables extends AbstractTables
 				Fragments._MorePivotable__OclElement /* 1 */,
 				Fragments._MorePivotable__MorePivotable /* 2 */
 			};
-		private static final int @NonNull [] __MorePivotable = { 1,1,1 };
+		private static final int @NonNull [] __MorePivotable = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Nameable =
 			{
@@ -3852,7 +3852,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Nameable__OclElement /* 1 */,
 				Fragments._Nameable__Nameable /* 2 */
 			};
-		private static final int @NonNull [] __Nameable = { 1,1,1 };
+		private static final int @NonNull [] __Nameable = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _NamedElement =
 			{
@@ -3861,7 +3861,7 @@ public class PivotTables extends AbstractTables
 				Fragments._NamedElement__Element /* 2 */,
 				Fragments._NamedElement__NamedElement /* 3 */
 			};
-		private static final int @NonNull [] __NamedElement = { 1,1,1,1 };
+		private static final int @NonNull [] __NamedElement = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Namespace =
 			{
@@ -3871,7 +3871,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Namespace__NamedElement /* 3 */,
 				Fragments._Namespace__Namespace /* 4 */
 			};
-		private static final int @NonNull [] __Namespace = { 1,1,1,1,1 };
+		private static final int @NonNull [] __Namespace = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _NavigationCallExp =
 			{
@@ -3885,7 +3885,7 @@ public class PivotTables extends AbstractTables
 				Fragments._NavigationCallExp__FeatureCallExp /* 7 */,
 				Fragments._NavigationCallExp__NavigationCallExp /* 8 */
 			};
-		private static final int @NonNull [] __NavigationCallExp = { 1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __NavigationCallExp = { 0,1,2,3,4,5,6,7,8 };
 
 		private static final @NonNull FlatFragment @NonNull [] _NormalizedTemplateParameter =
 			{
@@ -3898,7 +3898,7 @@ public class PivotTables extends AbstractTables
 				Fragments._NormalizedTemplateParameter__TemplateParameter /* 5 */,
 				Fragments._NormalizedTemplateParameter__NormalizedTemplateParameter /* 6 */
 			};
-		private static final int @NonNull [] __NormalizedTemplateParameter = { 1,1,2,1,1,1,1 };
+		private static final int @NonNull [] __NormalizedTemplateParameter = { 0,1,2,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _NullLiteralExp =
 			{
@@ -3912,7 +3912,7 @@ public class PivotTables extends AbstractTables
 				Fragments._NullLiteralExp__PrimitiveLiteralExp /* 7 */,
 				Fragments._NullLiteralExp__NullLiteralExp /* 8 */
 			};
-		private static final int @NonNull [] __NullLiteralExp = { 1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __NullLiteralExp = { 0,1,2,3,4,5,6,7,8 };
 
 		private static final @NonNull FlatFragment @NonNull [] _NumericLiteralExp =
 			{
@@ -3926,7 +3926,7 @@ public class PivotTables extends AbstractTables
 				Fragments._NumericLiteralExp__PrimitiveLiteralExp /* 7 */,
 				Fragments._NumericLiteralExp__NumericLiteralExp /* 8 */
 			};
-		private static final int @NonNull [] __NumericLiteralExp = { 1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __NumericLiteralExp = { 0,1,2,3,4,5,6,7,8 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OCLExpression =
 			{
@@ -3937,14 +3937,14 @@ public class PivotTables extends AbstractTables
 				Fragments._OCLExpression__TypedElement /* 4 */,
 				Fragments._OCLExpression__OCLExpression /* 5 */
 			};
-		private static final int @NonNull [] __OCLExpression = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __OCLExpression = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Object =
 			{
 				Fragments._Object__OclAny /* 0 */,
 				Fragments._Object__Object /* 1 */
 			};
-		private static final int @NonNull [] __Object = { 1,1 };
+		private static final int @NonNull [] __Object = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Operation =
 			{
@@ -3958,7 +3958,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Operation__Feature /* 5 */,
 				Fragments._Operation__Operation /* 6 */
 			};
-		private static final int @NonNull [] __Operation = { 1,1,1,2,2,1,1 };
+		private static final int @NonNull [] __Operation = { 0,1,2,3,5,7,8 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OperationCallExp =
 			{
@@ -3973,7 +3973,7 @@ public class PivotTables extends AbstractTables
 				Fragments._OperationCallExp__FeatureCallExp /* 7 */,
 				Fragments._OperationCallExp__OperationCallExp /* 8 */
 			};
-		private static final int @NonNull [] __OperationCallExp = { 1,1,2,1,1,1,1,1,1 };
+		private static final int @NonNull [] __OperationCallExp = { 0,1,2,4,5,6,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OppositePropertyCallExp =
 			{
@@ -3988,7 +3988,7 @@ public class PivotTables extends AbstractTables
 				Fragments._OppositePropertyCallExp__NavigationCallExp /* 8 */,
 				Fragments._OppositePropertyCallExp__OppositePropertyCallExp /* 9 */
 			};
-		private static final int @NonNull [] __OppositePropertyCallExp = { 1,1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __OppositePropertyCallExp = { 0,1,2,3,4,5,6,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OrderedSetType =
 			{
@@ -4006,7 +4006,7 @@ public class PivotTables extends AbstractTables
 				Fragments._OrderedSetType__CollectionType /* 8 */,
 				Fragments._OrderedSetType__OrderedSetType /* 9 */
 			};
-		private static final int @NonNull [] __OrderedSetType = { 1,1,2,2,2,1,1,1,1,1 };
+		private static final int @NonNull [] __OrderedSetType = { 0,1,2,4,6,8,9,10,11,12 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OrphanCompletePackage =
 			{
@@ -4017,7 +4017,7 @@ public class PivotTables extends AbstractTables
 				Fragments._OrphanCompletePackage__CompletePackage /* 4 */,
 				Fragments._OrphanCompletePackage__OrphanCompletePackage /* 5 */
 			};
-		private static final int @NonNull [] __OrphanCompletePackage = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __OrphanCompletePackage = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Package =
 			{
@@ -4028,7 +4028,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Package__Namespace /* 4 */,
 				Fragments._Package__Package /* 5 */
 			};
-		private static final int @NonNull [] __Package = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __Package = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Parameter =
 			{
@@ -4040,7 +4040,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Parameter__VariableDeclaration /* 5 */,
 				Fragments._Parameter__Parameter /* 6 */
 			};
-		private static final int @NonNull [] __Parameter = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __Parameter = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ParameterVariable =
 			{
@@ -4053,7 +4053,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ParameterVariable__Variable /* 6 */,
 				Fragments._ParameterVariable__ParameterVariable /* 7 */
 			};
-		private static final int @NonNull [] __ParameterVariable = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __ParameterVariable = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Pivotable =
 			{
@@ -4061,7 +4061,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Pivotable__OclElement /* 1 */,
 				Fragments._Pivotable__Pivotable /* 2 */
 			};
-		private static final int @NonNull [] __Pivotable = { 1,1,1 };
+		private static final int @NonNull [] __Pivotable = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Precedence =
 			{
@@ -4071,7 +4071,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Precedence__NamedElement /* 3 */,
 				Fragments._Precedence__Precedence /* 4 */
 			};
-		private static final int @NonNull [] __Precedence = { 1,1,1,1,1 };
+		private static final int @NonNull [] __Precedence = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _PrimitiveCompletePackage =
 			{
@@ -4082,7 +4082,7 @@ public class PivotTables extends AbstractTables
 				Fragments._PrimitiveCompletePackage__CompletePackage /* 4 */,
 				Fragments._PrimitiveCompletePackage__PrimitiveCompletePackage /* 5 */
 			};
-		private static final int @NonNull [] __PrimitiveCompletePackage = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __PrimitiveCompletePackage = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _PrimitiveLiteralExp =
 			{
@@ -4095,7 +4095,7 @@ public class PivotTables extends AbstractTables
 				Fragments._PrimitiveLiteralExp__LiteralExp /* 6 */,
 				Fragments._PrimitiveLiteralExp__PrimitiveLiteralExp /* 7 */
 			};
-		private static final int @NonNull [] __PrimitiveLiteralExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __PrimitiveLiteralExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _PrimitiveType =
 			{
@@ -4111,7 +4111,7 @@ public class PivotTables extends AbstractTables
 				Fragments._PrimitiveType__DataType /* 6 */,
 				Fragments._PrimitiveType__PrimitiveType /* 7 */
 			};
-		private static final int @NonNull [] __PrimitiveType = { 1,1,2,2,2,1,1,1 };
+		private static final int @NonNull [] __PrimitiveType = { 0,1,2,4,6,8,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Profile =
 			{
@@ -4123,7 +4123,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Profile__Package /* 5 */,
 				Fragments._Profile__Profile /* 6 */
 			};
-		private static final int @NonNull [] __Profile = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __Profile = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ProfileApplication =
 			{
@@ -4132,7 +4132,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ProfileApplication__Element /* 2 */,
 				Fragments._ProfileApplication__ProfileApplication /* 3 */
 			};
-		private static final int @NonNull [] __ProfileApplication = { 1,1,1,1 };
+		private static final int @NonNull [] __ProfileApplication = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Property =
 			{
@@ -4144,7 +4144,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Property__Feature /* 5 */,
 				Fragments._Property__Property /* 6 */
 			};
-		private static final int @NonNull [] __Property = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __Property = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _PropertyCallExp =
 			{
@@ -4160,7 +4160,7 @@ public class PivotTables extends AbstractTables
 				Fragments._PropertyCallExp__NavigationCallExp /* 8 */,
 				Fragments._PropertyCallExp__PropertyCallExp /* 9 */
 			};
-		private static final int @NonNull [] __PropertyCallExp = { 1,1,2,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __PropertyCallExp = { 0,1,2,4,5,6,7,8,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Pseudostate =
 			{
@@ -4171,7 +4171,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Pseudostate__Vertex /* 4 */,
 				Fragments._Pseudostate__Pseudostate /* 5 */
 			};
-		private static final int @NonNull [] __Pseudostate = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __Pseudostate = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _PseudostateKind =
 			{
@@ -4181,7 +4181,7 @@ public class PivotTables extends AbstractTables
 				Fragments._PseudostateKind__OclEnumeration /* 3 */,
 				Fragments._PseudostateKind__PseudostateKind /* 4 */
 			};
-		private static final int @NonNull [] __PseudostateKind = { 1,1,1,1,1 };
+		private static final int @NonNull [] __PseudostateKind = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _RealLiteralExp =
 			{
@@ -4196,7 +4196,7 @@ public class PivotTables extends AbstractTables
 				Fragments._RealLiteralExp__NumericLiteralExp /* 8 */,
 				Fragments._RealLiteralExp__RealLiteralExp /* 9 */
 			};
-		private static final int @NonNull [] __RealLiteralExp = { 1,1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __RealLiteralExp = { 0,1,2,3,4,5,6,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ReferringElement =
 			{
@@ -4204,7 +4204,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ReferringElement__OclElement /* 1 */,
 				Fragments._ReferringElement__ReferringElement /* 2 */
 			};
-		private static final int @NonNull [] __ReferringElement = { 1,1,1 };
+		private static final int @NonNull [] __ReferringElement = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Region =
 			{
@@ -4215,7 +4215,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Region__Namespace /* 4 */,
 				Fragments._Region__Region /* 5 */
 			};
-		private static final int @NonNull [] __Region = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __Region = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ResultVariable =
 			{
@@ -4228,7 +4228,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ResultVariable__Variable /* 6 */,
 				Fragments._ResultVariable__ResultVariable /* 7 */
 			};
-		private static final int @NonNull [] __ResultVariable = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __ResultVariable = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _SelfType =
 			{
@@ -4243,7 +4243,7 @@ public class PivotTables extends AbstractTables
 				Fragments._SelfType__Class /* 5 */,
 				Fragments._SelfType__SelfType /* 6 */
 			};
-		private static final int @NonNull [] __SelfType = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __SelfType = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _SendSignalAction =
 			{
@@ -4253,7 +4253,7 @@ public class PivotTables extends AbstractTables
 				Fragments._SendSignalAction__NamedElement /* 3 */,
 				Fragments._SendSignalAction__SendSignalAction /* 4 */
 			};
-		private static final int @NonNull [] __SendSignalAction = { 1,1,1,1,1 };
+		private static final int @NonNull [] __SendSignalAction = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _SequenceType =
 			{
@@ -4271,7 +4271,7 @@ public class PivotTables extends AbstractTables
 				Fragments._SequenceType__CollectionType /* 8 */,
 				Fragments._SequenceType__SequenceType /* 9 */
 			};
-		private static final int @NonNull [] __SequenceType = { 1,1,2,2,2,1,1,1,1,1 };
+		private static final int @NonNull [] __SequenceType = { 0,1,2,4,6,8,9,10,11,12 };
 
 		private static final @NonNull FlatFragment @NonNull [] _SetType =
 			{
@@ -4289,7 +4289,7 @@ public class PivotTables extends AbstractTables
 				Fragments._SetType__CollectionType /* 8 */,
 				Fragments._SetType__SetType /* 9 */
 			};
-		private static final int @NonNull [] __SetType = { 1,1,2,2,2,1,1,1,1,1 };
+		private static final int @NonNull [] __SetType = { 0,1,2,4,6,8,9,10,11,12 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ShadowExp =
 			{
@@ -4301,7 +4301,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ShadowExp__OCLExpression /* 5 */,
 				Fragments._ShadowExp__ShadowExp /* 6 */
 			};
-		private static final int @NonNull [] __ShadowExp = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __ShadowExp = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ShadowPart =
 			{
@@ -4312,7 +4312,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ShadowPart__TypedElement /* 4 */,
 				Fragments._ShadowPart__ShadowPart /* 5 */
 			};
-		private static final int @NonNull [] __ShadowPart = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __ShadowPart = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Signal =
 			{
@@ -4327,7 +4327,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Signal__Class /* 5 */,
 				Fragments._Signal__Signal /* 6 */
 			};
-		private static final int @NonNull [] __Signal = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __Signal = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Slot =
 			{
@@ -4336,7 +4336,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Slot__Element /* 2 */,
 				Fragments._Slot__Slot /* 3 */
 			};
-		private static final int @NonNull [] __Slot = { 1,1,1,1 };
+		private static final int @NonNull [] __Slot = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _StandardLibrary =
 			{
@@ -4345,7 +4345,7 @@ public class PivotTables extends AbstractTables
 				Fragments._StandardLibrary__Element /* 2 */,
 				Fragments._StandardLibrary__StandardLibrary /* 3 */
 			};
-		private static final int @NonNull [] __StandardLibrary = { 1,1,1,1 };
+		private static final int @NonNull [] __StandardLibrary = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _State =
 			{
@@ -4358,7 +4358,7 @@ public class PivotTables extends AbstractTables
 				Fragments._State__Vertex /* 4 */,
 				Fragments._State__State /* 5 */
 			};
-		private static final int @NonNull [] __State = { 1,2,1,1,2,1 };
+		private static final int @NonNull [] __State = { 0,1,3,4,5,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _StateExp =
 			{
@@ -4370,7 +4370,7 @@ public class PivotTables extends AbstractTables
 				Fragments._StateExp__OCLExpression /* 5 */,
 				Fragments._StateExp__StateExp /* 6 */
 			};
-		private static final int @NonNull [] __StateExp = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __StateExp = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _StateMachine =
 			{
@@ -4386,7 +4386,7 @@ public class PivotTables extends AbstractTables
 				Fragments._StateMachine__Behavior /* 6 */,
 				Fragments._StateMachine__StateMachine /* 7 */
 			};
-		private static final int @NonNull [] __StateMachine = { 1,1,2,2,2,1,1,1 };
+		private static final int @NonNull [] __StateMachine = { 0,1,2,4,6,8,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Stereotype =
 			{
@@ -4402,7 +4402,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Stereotype__Class /* 5 */,
 				Fragments._Stereotype__Stereotype /* 6 */
 			};
-		private static final int @NonNull [] __Stereotype = { 1,1,2,3,2,1,1 };
+		private static final int @NonNull [] __Stereotype = { 0,1,2,4,7,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _StereotypeExtender =
 			{
@@ -4411,7 +4411,7 @@ public class PivotTables extends AbstractTables
 				Fragments._StereotypeExtender__Element /* 2 */,
 				Fragments._StereotypeExtender__StereotypeExtender /* 3 */
 			};
-		private static final int @NonNull [] __StereotypeExtender = { 1,1,1,1 };
+		private static final int @NonNull [] __StereotypeExtender = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _StringLiteralExp =
 			{
@@ -4425,7 +4425,7 @@ public class PivotTables extends AbstractTables
 				Fragments._StringLiteralExp__PrimitiveLiteralExp /* 7 */,
 				Fragments._StringLiteralExp__StringLiteralExp /* 8 */
 			};
-		private static final int @NonNull [] __StringLiteralExp = { 1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __StringLiteralExp = { 0,1,2,3,4,5,6,7,8 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TemplateArgument =
 			{
@@ -4434,7 +4434,7 @@ public class PivotTables extends AbstractTables
 				Fragments._TemplateArgument__Element /* 2 */,
 				Fragments._TemplateArgument__TemplateArgument /* 3 */
 			};
-		private static final int @NonNull [] __TemplateArgument = { 1,1,1,1 };
+		private static final int @NonNull [] __TemplateArgument = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TemplateParameter =
 			{
@@ -4446,7 +4446,7 @@ public class PivotTables extends AbstractTables
 				Fragments._TemplateParameter__Type /* 4 */,
 				Fragments._TemplateParameter__TemplateParameter /* 5 */
 			};
-		private static final int @NonNull [] __TemplateParameter = { 1,1,2,1,1,1 };
+		private static final int @NonNull [] __TemplateParameter = { 0,1,2,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TemplateableElement =
 			{
@@ -4455,14 +4455,14 @@ public class PivotTables extends AbstractTables
 				Fragments._TemplateableElement__Element /* 2 */,
 				Fragments._TemplateableElement__TemplateableElement /* 3 */
 			};
-		private static final int @NonNull [] __TemplateableElement = { 1,1,1,1 };
+		private static final int @NonNull [] __TemplateableElement = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Throwable =
 			{
 				Fragments._Throwable__OclAny /* 0 */,
 				Fragments._Throwable__Throwable /* 1 */
 			};
-		private static final int @NonNull [] __Throwable = { 1,1 };
+		private static final int @NonNull [] __Throwable = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Transition =
 			{
@@ -4473,7 +4473,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Transition__Namespace /* 4 */,
 				Fragments._Transition__Transition /* 5 */
 			};
-		private static final int @NonNull [] __Transition = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __Transition = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TransitionKind =
 			{
@@ -4483,7 +4483,7 @@ public class PivotTables extends AbstractTables
 				Fragments._TransitionKind__OclEnumeration /* 3 */,
 				Fragments._TransitionKind__TransitionKind /* 4 */
 			};
-		private static final int @NonNull [] __TransitionKind = { 1,1,1,1,1 };
+		private static final int @NonNull [] __TransitionKind = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Trigger =
 			{
@@ -4493,7 +4493,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Trigger__NamedElement /* 3 */,
 				Fragments._Trigger__Trigger /* 4 */
 			};
-		private static final int @NonNull [] __Trigger = { 1,1,1,1,1 };
+		private static final int @NonNull [] __Trigger = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TupleLiteralExp =
 			{
@@ -4506,7 +4506,7 @@ public class PivotTables extends AbstractTables
 				Fragments._TupleLiteralExp__LiteralExp /* 6 */,
 				Fragments._TupleLiteralExp__TupleLiteralExp /* 7 */
 			};
-		private static final int @NonNull [] __TupleLiteralExp = { 1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __TupleLiteralExp = { 0,1,2,3,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TupleLiteralPart =
 			{
@@ -4518,7 +4518,7 @@ public class PivotTables extends AbstractTables
 				Fragments._TupleLiteralPart__VariableDeclaration /* 5 */,
 				Fragments._TupleLiteralPart__TupleLiteralPart /* 6 */
 			};
-		private static final int @NonNull [] __TupleLiteralPart = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __TupleLiteralPart = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TupleType =
 			{
@@ -4534,7 +4534,7 @@ public class PivotTables extends AbstractTables
 				Fragments._TupleType__DataType /* 6 */,
 				Fragments._TupleType__TupleType /* 7 */
 			};
-		private static final int @NonNull [] __TupleType = { 1,1,2,2,2,1,1,1 };
+		private static final int @NonNull [] __TupleType = { 0,1,2,4,6,8,9,10 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Type =
 			{
@@ -4545,7 +4545,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Type__NamedElement /* 3 */,
 				Fragments._Type__Type /* 4 */
 			};
-		private static final int @NonNull [] __Type = { 1,1,2,1,1 };
+		private static final int @NonNull [] __Type = { 0,1,2,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TypeExp =
 			{
@@ -4558,7 +4558,7 @@ public class PivotTables extends AbstractTables
 				Fragments._TypeExp__OCLExpression /* 5 */,
 				Fragments._TypeExp__TypeExp /* 6 */
 			};
-		private static final int @NonNull [] __TypeExp = { 1,1,2,1,1,1,1 };
+		private static final int @NonNull [] __TypeExp = { 0,1,2,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _TypedElement =
 			{
@@ -4568,7 +4568,7 @@ public class PivotTables extends AbstractTables
 				Fragments._TypedElement__NamedElement /* 3 */,
 				Fragments._TypedElement__TypedElement /* 4 */
 			};
-		private static final int @NonNull [] __TypedElement = { 1,1,1,1,1 };
+		private static final int @NonNull [] __TypedElement = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _UnlimitedNaturalLiteralExp =
 			{
@@ -4583,7 +4583,7 @@ public class PivotTables extends AbstractTables
 				Fragments._UnlimitedNaturalLiteralExp__NumericLiteralExp /* 8 */,
 				Fragments._UnlimitedNaturalLiteralExp__UnlimitedNaturalLiteralExp /* 9 */
 			};
-		private static final int @NonNull [] __UnlimitedNaturalLiteralExp = { 1,1,1,1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __UnlimitedNaturalLiteralExp = { 0,1,2,3,4,5,6,7,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _UnspecifiedValueExp =
 			{
@@ -4595,7 +4595,7 @@ public class PivotTables extends AbstractTables
 				Fragments._UnspecifiedValueExp__OCLExpression /* 5 */,
 				Fragments._UnspecifiedValueExp__UnspecifiedValueExp /* 6 */
 			};
-		private static final int @NonNull [] __UnspecifiedValueExp = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __UnspecifiedValueExp = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _ValueSpecification =
 			{
@@ -4606,7 +4606,7 @@ public class PivotTables extends AbstractTables
 				Fragments._ValueSpecification__TypedElement /* 4 */,
 				Fragments._ValueSpecification__ValueSpecification /* 5 */
 			};
-		private static final int @NonNull [] __ValueSpecification = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __ValueSpecification = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Variable =
 			{
@@ -4618,7 +4618,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Variable__VariableDeclaration /* 5 */,
 				Fragments._Variable__Variable /* 6 */
 			};
-		private static final int @NonNull [] __Variable = { 1,1,1,1,1,1,1 };
+		private static final int @NonNull [] __Variable = { 0,1,2,3,4,5,6 };
 
 		private static final @NonNull FlatFragment @NonNull [] _VariableDeclaration =
 			{
@@ -4629,7 +4629,7 @@ public class PivotTables extends AbstractTables
 				Fragments._VariableDeclaration__TypedElement /* 4 */,
 				Fragments._VariableDeclaration__VariableDeclaration /* 5 */
 			};
-		private static final int @NonNull [] __VariableDeclaration = { 1,1,1,1,1,1 };
+		private static final int @NonNull [] __VariableDeclaration = { 0,1,2,3,4,5 };
 
 		private static final @NonNull FlatFragment @NonNull [] _VariableExp =
 			{
@@ -4642,7 +4642,7 @@ public class PivotTables extends AbstractTables
 				Fragments._VariableExp__OCLExpression /* 5 */,
 				Fragments._VariableExp__VariableExp /* 6 */
 			};
-		private static final int @NonNull [] __VariableExp = { 1,1,2,1,1,1,1 };
+		private static final int @NonNull [] __VariableExp = { 0,1,2,4,5,6,7 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Vertex =
 			{
@@ -4652,7 +4652,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Vertex__NamedElement /* 3 */,
 				Fragments._Vertex__Vertex /* 4 */
 			};
-		private static final int @NonNull [] __Vertex = { 1,1,1,1,1 };
+		private static final int @NonNull [] __Vertex = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Visitable =
 			{
@@ -4660,7 +4660,7 @@ public class PivotTables extends AbstractTables
 				Fragments._Visitable__OclElement /* 1 */,
 				Fragments._Visitable__Visitable /* 2 */
 			};
-		private static final int @NonNull [] __Visitable = { 1,1,1 };
+		private static final int @NonNull [] __Visitable = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _VoidType =
 			{
@@ -4675,7 +4675,7 @@ public class PivotTables extends AbstractTables
 				Fragments._VoidType__Class /* 5 */,
 				Fragments._VoidType__VoidType /* 6 */
 			};
-		private static final int @NonNull [] __VoidType = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __VoidType = { 0,1,2,4,6,8,9 };
 
 		private static final @NonNull FlatFragment @NonNull [] _WildcardType =
 			{
@@ -4690,7 +4690,7 @@ public class PivotTables extends AbstractTables
 				Fragments._WildcardType__Class /* 5 */,
 				Fragments._WildcardType__WildcardType /* 6 */
 			};
-		private static final int @NonNull [] __WildcardType = { 1,1,2,2,2,1,1 };
+		private static final int @NonNull [] __WildcardType = { 0,1,2,4,6,8,9 };
 
 		/**
 		 *	Install the fragment descriptors in the class descriptors.
@@ -4707,7 +4707,7 @@ public class PivotTables extends AbstractTables
 			Types._BooleanType.initFragments(_BooleanType, __BooleanType);
 			Types._CallExp.initFragments(_CallExp, __CallExp);
 			Types._CallOperationAction.initFragments(_CallOperationAction, __CallOperationAction);
-			Types._Class.initFragments(_Class, __Class);
+			Types._Class.initFragments(_Class, __Class, Types._TemplateableElement);
 			Types._CollectionItem.initFragments(_CollectionItem, __CollectionItem);
 			Types._CollectionKind.initFragments(_CollectionKind, __CollectionKind);
 			Types._CollectionLiteralExp.initFragments(_CollectionLiteralExp, __CollectionLiteralExp);
@@ -4727,7 +4727,7 @@ public class PivotTables extends AbstractTables
 			Types._DynamicBehavior.initFragments(_DynamicBehavior, __DynamicBehavior);
 			Types._DynamicElement.initFragments(_DynamicElement, __DynamicElement);
 			Types._DynamicProperty.initFragments(_DynamicProperty, __DynamicProperty);
-			Types._DynamicType.initFragments(_DynamicType, __DynamicType);
+			Types._DynamicType.initFragments(_DynamicType, __DynamicType, Types._DynamicElement);
 			Types._DynamicValueSpecification.initFragments(_DynamicValueSpecification, __DynamicValueSpecification);
 			Types._EcoreObject.initFragments(_EcoreObject, __EcoreObject);
 			Types._Element.initFragments(_Element, __Element);
@@ -4747,9 +4747,9 @@ public class PivotTables extends AbstractTables
 			Types._InvalidLiteralExp.initFragments(_InvalidLiteralExp, __InvalidLiteralExp);
 			Types._InvalidType.initFragments(_InvalidType, __InvalidType);
 			Types._IterableType.initFragments(_IterableType, __IterableType);
-			Types._IterateExp.initFragments(_IterateExp, __IterateExp);
+			Types._IterateExp.initFragments(_IterateExp, __IterateExp, Types._ReferringElement);
 			Types._Iteration.initFragments(_Iteration, __Iteration);
-			Types._IteratorExp.initFragments(_IteratorExp, __IteratorExp);
+			Types._IteratorExp.initFragments(_IteratorExp, __IteratorExp, Types._ReferringElement);
 			Types._IteratorVariable.initFragments(_IteratorVariable, __IteratorVariable);
 			Types._LambdaParameter.initFragments(_LambdaParameter, __LambdaParameter);
 			Types._LambdaType.initFragments(_LambdaType, __LambdaType);
@@ -4776,8 +4776,8 @@ public class PivotTables extends AbstractTables
 			Types._NumericLiteralExp.initFragments(_NumericLiteralExp, __NumericLiteralExp);
 			Types._OCLExpression.initFragments(_OCLExpression, __OCLExpression);
 			Types._Object.initFragments(_Object, __Object);
-			Types._Operation.initFragments(_Operation, __Operation);
-			Types._OperationCallExp.initFragments(_OperationCallExp, __OperationCallExp);
+			Types._Operation.initFragments(_Operation, __Operation, Types._Namespace, Types._TemplateableElement);
+			Types._OperationCallExp.initFragments(_OperationCallExp, __OperationCallExp, Types._ReferringElement);
 			Types._OppositePropertyCallExp.initFragments(_OppositePropertyCallExp, __OppositePropertyCallExp);
 			Types._OrderedSetType.initFragments(_OrderedSetType, __OrderedSetType);
 			Types._OrphanCompletePackage.initFragments(_OrphanCompletePackage, __OrphanCompletePackage);
@@ -4792,7 +4792,7 @@ public class PivotTables extends AbstractTables
 			Types._Profile.initFragments(_Profile, __Profile);
 			Types._ProfileApplication.initFragments(_ProfileApplication, __ProfileApplication);
 			Types._Property.initFragments(_Property, __Property);
-			Types._PropertyCallExp.initFragments(_PropertyCallExp, __PropertyCallExp);
+			Types._PropertyCallExp.initFragments(_PropertyCallExp, __PropertyCallExp, Types._ReferringElement);
 			Types._Pseudostate.initFragments(_Pseudostate, __Pseudostate);
 			Types._PseudostateKind.initFragments(_PseudostateKind, __PseudostateKind);
 			Types._RealLiteralExp.initFragments(_RealLiteralExp, __RealLiteralExp);
@@ -4808,10 +4808,10 @@ public class PivotTables extends AbstractTables
 			Types._Signal.initFragments(_Signal, __Signal);
 			Types._Slot.initFragments(_Slot, __Slot);
 			Types._StandardLibrary.initFragments(_StandardLibrary, __StandardLibrary);
-			Types._State.initFragments(_State, __State);
+			Types._State.initFragments(_State, __State, OCLstdlibTables.Types._OclState);
 			Types._StateExp.initFragments(_StateExp, __StateExp);
 			Types._StateMachine.initFragments(_StateMachine, __StateMachine);
-			Types._Stereotype.initFragments(_Stereotype, __Stereotype);
+			Types._Stereotype.initFragments(_Stereotype, __Stereotype, OCLstdlibTables.Types._OclStereotype);
 			Types._StereotypeExtender.initFragments(_StereotypeExtender, __StereotypeExtender);
 			Types._StringLiteralExp.initFragments(_StringLiteralExp, __StringLiteralExp);
 			Types._TemplateArgument.initFragments(_TemplateArgument, __TemplateArgument);
@@ -4824,15 +4824,15 @@ public class PivotTables extends AbstractTables
 			Types._TupleLiteralExp.initFragments(_TupleLiteralExp, __TupleLiteralExp);
 			Types._TupleLiteralPart.initFragments(_TupleLiteralPart, __TupleLiteralPart);
 			Types._TupleType.initFragments(_TupleType, __TupleType);
-			Types._Type.initFragments(_Type, __Type);
-			Types._TypeExp.initFragments(_TypeExp, __TypeExp);
+			Types._Type.initFragments(_Type, __Type, OCLstdlibTables.Types._OclType);
+			Types._TypeExp.initFragments(_TypeExp, __TypeExp, Types._ReferringElement);
 			Types._TypedElement.initFragments(_TypedElement, __TypedElement);
 			Types._UnlimitedNaturalLiteralExp.initFragments(_UnlimitedNaturalLiteralExp, __UnlimitedNaturalLiteralExp);
 			Types._UnspecifiedValueExp.initFragments(_UnspecifiedValueExp, __UnspecifiedValueExp);
 			Types._ValueSpecification.initFragments(_ValueSpecification, __ValueSpecification);
 			Types._Variable.initFragments(_Variable, __Variable);
 			Types._VariableDeclaration.initFragments(_VariableDeclaration, __VariableDeclaration);
-			Types._VariableExp.initFragments(_VariableExp, __VariableExp);
+			Types._VariableExp.initFragments(_VariableExp, __VariableExp, Types._ReferringElement);
 			Types._Vertex.initFragments(_Vertex, __Vertex);
 			Types._Visitable.initFragments(_Visitable, __Visitable);
 			Types._VoidType.initFragments(_VoidType, __VoidType);

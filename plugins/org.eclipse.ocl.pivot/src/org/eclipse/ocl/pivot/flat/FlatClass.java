@@ -191,7 +191,7 @@ public interface FlatClass extends Nameable
 	/**
 	 * Initialize the super-fragment hierarchy by direct assignment from the YYYTables pre-analysis.
 	 */
-	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts);
+	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] startIndexes, org.eclipse.ocl.pivot.@NonNull Class... distantSuperClass);
 
 	boolean isAbstract();
 	boolean isInvalid();

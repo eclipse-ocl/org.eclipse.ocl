@@ -647,11 +647,6 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="basicGetUnspecializedElement()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="generic"/>
             </message_arguments>
         </filter>

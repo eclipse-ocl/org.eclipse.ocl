@@ -326,7 +326,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			List<@NonNull Operation> sortedOperations = new ArrayList<>(getOperations(pClass));
 			Collections.sort(sortedOperations, signatureComparator);
 			classOperations.put(pClass, sortedOperations);
-			for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllProperSupertypesSortedByName(pClass)) {
+			for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllProperSuperClassesSortedByName(pClass)) {
 				List<@NonNull Operation> sortedSuperOperations = new ArrayList<>(getOperations(pSuperClass));
 				Collections.sort(sortedSuperOperations, signatureComparator);
 				classOperations.put(pSuperClass, sortedSuperOperations);
@@ -339,7 +339,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		LinkedHashMap<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> fragmentProperties = new LinkedHashMap<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			Set<@NonNull Property> allProperties = new HashSet<>();
-			for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllSupertypesSortedByName(pClass)) {
+			for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllSuperClassesSortedByName(pClass)) {
 				for (/*@NonNull*/ Property prop : getMemberPropertiesSortedByName(pSuperClass)) {
 					assert prop != null;
 					if (isProperty(prop) && !prop.isIsImplicit()) {			// FIXME maybe implicits too
@@ -464,8 +464,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		appendInitializationStart(AbstractGenModelHelper.FRAGMENTS_PACKAGE_NAME);
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
 			s.append("\n");
-			List<org.eclipse.ocl.pivot.@NonNull Class> allSupertypesSortedByName = getAllSupertypesSortedByName(asClass);
-			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : allSupertypesSortedByName) {
+			List<org.eclipse.ocl.pivot.@NonNull Class> allSuperClassesSortedByName = getAllSuperClassesSortedByName(asClass);
+			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : allSuperClassesSortedByName) {
 				s.append("		private static final ");
 				s.appendClassReference(true, FlatFragment.class);
 				s.append(" ");
@@ -534,7 +534,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append("		 */\n");
 			s.append("		static {\n");
 			for (org.eclipse.ocl.pivot.@NonNull Class pClass : fragmentOperations.keySet()) {
-				for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllSupertypesSortedByName(pClass)) {
+				for (org.eclipse.ocl.pivot.@NonNull Class pSuperClass : getAllSuperClassesSortedByName(pClass)) {
 					s.append("			" + AbstractGenModelHelper.FRAGMENTS_PACKAGE_NAME + ".");
 					appendClassSuperClassName(pClass, pSuperClass);
 					s.append(".initOperations(");
@@ -1288,22 +1288,34 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	public static class " + AbstractGenModelHelper.TYPE_FRAGMENTS_PACKAGE_NAME + " {\n");
 		appendInitializationStart(AbstractGenModelHelper.TYPE_FRAGMENTS_PACKAGE_NAME);
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
-			final Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> allSuperTypes = new HashMap<>();
-			int myDepth = getAllSuperClasses(allSuperTypes, asClass);
-			int[] typesPerDepth = new int[myDepth+1];
+			if ("Class".equals(asClass.getName())) {
+				getClass();			// XXX
+			}
+			final Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> class2depth = new HashMap<>();
+			int myDepth = getSuperClassDepth(class2depth, asClass);
+			int[] classesPerDepth = new int[myDepth+1];
 			for (int i = 0; i <= myDepth; i++) {
-				typesPerDepth[i] = 0;
+				classesPerDepth[i] = 0;
 			}
-			for (Integer aDepth : allSuperTypes.values()) {
-				typesPerDepth[aDepth]++;
+			for (Integer aDepth : class2depth.values()) {
+				classesPerDepth[aDepth]++;
 			}
-			List<org.eclipse.ocl.pivot.@NonNull Class> superTypes = new ArrayList<>(allSuperTypes.keySet());
-			Collections.sort(superTypes, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
+			int startIndex = 0;
+			int[] startIndexesPerDepth = new int[myDepth+2];
+			for (int i = 0; i <= myDepth; i++) {
+				startIndexesPerDepth[i] = startIndex;
+				startIndex += classesPerDepth[i];
+			}
+			startIndexesPerDepth[myDepth+1] = startIndex;
+
+
+			List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = new ArrayList<>(class2depth.keySet());
+			Collections.sort(superClasses, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
 			{
 				@Override
 				public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
-					Integer d1 = allSuperTypes.get(o1);
-					Integer d2 = allSuperTypes.get(o2);
+					Integer d1 = class2depth.get(o1);
+					Integer d2 = class2depth.get(o2);
 					assert (d1 != null) && (d2 != null);
 					if (d1 != d2) {
 						return d1.compareTo(d2);
@@ -1321,7 +1333,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append(" =\n");
 			s.append("			{");
 			boolean isFirst = true;
-			for (/*@NonNull*/ Type asSuperClass : superTypes) {
+			for (/*@NonNull*/ Type asSuperClass : superClasses) {
 				assert asSuperClass != null;
 				if (!isFirst) {
 					s.append(",");
@@ -1331,7 +1343,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				asClass.accept(emitDeclaredName);
 				s.append("__");
 				s.appendUnscopedTypeName(asSuperClass);
-				s.append(" /* " + allSuperTypes.get(asSuperClass) + " */");
+				s.append(" /* " + class2depth.get(asSuperClass) + " */");
 				isFirst = false;
 			}
 			s.append("\n");
@@ -1343,7 +1355,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				if (i > 0) {
 					s.append(",");
 				}
-				s.append(Integer.toString(typesPerDepth[i]));
+				s.append(Integer.toString(startIndexesPerDepth[i]));
 			}
 			s.append(" };\n");
 		}
@@ -1353,12 +1365,44 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 */\n");
 		s.append("		static {\n");
 		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
+			if ("Class".equals(asClass.getName())) {
+				getClass();			// XXX
+			}
+			Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> superClasses2depth = new HashMap<>();
+			int classDepth = getSuperClassDepth(superClasses2depth, asClass);
+			Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> transitiveSuperClasses2depth = new HashMap<>();
+			for (Map.Entry<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> entry : superClasses2depth.entrySet()) {
+				int superDepth = entry.getValue();
+				if (superDepth == classDepth-1) {
+					org.eclipse.ocl.pivot.@NonNull Class superClass = entry.getKey();
+					getSuperClassDepth(transitiveSuperClasses2depth, superClass);
+				//	transitiveSuperClasses2depth.remove(superClass);
+				}
+			}
+			Set<org.eclipse.ocl.pivot.@NonNull Class> distantSuperClasses = new HashSet<>(superClasses2depth.keySet());
+			distantSuperClasses.remove(asClass);
+			distantSuperClasses.removeAll(transitiveSuperClasses2depth.keySet());
+
+
+
 			s.append("			");
 			asClass.accept(emitReferencedElement);
 			s.append(".initFragments(");
 			asClass.accept(emitDeclaredName);
 			s.append(", _");
 			asClass.accept(emitDeclaredName);
+			if (distantSuperClasses.size() > 0) {
+				Iterable<org.eclipse.ocl.pivot.@NonNull Class> sortedDistantSuperClasses = distantSuperClasses;
+				if (distantSuperClasses.size() > 1) {
+					List<org.eclipse.ocl.pivot.@NonNull Class> sortedDistantSuperClasses2 = new ArrayList<>(distantSuperClasses);
+					Collections.sort(sortedDistantSuperClasses2, NameUtil.NAMEABLE_COMPARATOR);
+					sortedDistantSuperClasses = sortedDistantSuperClasses2;
+				}
+				for (org.eclipse.ocl.pivot.@NonNull Class distantSuperClass : sortedDistantSuperClasses) {
+					s.append(", ");
+					distantSuperClass.accept(emitReferencedElement);
+				}
+			}
 			s.append(");\n");
 		}
 		s.append("\n");

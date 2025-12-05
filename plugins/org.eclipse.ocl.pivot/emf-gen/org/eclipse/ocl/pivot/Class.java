@@ -348,9 +348,10 @@ extends Type, Namespace, TemplateableElement {
 	org.eclipse.ocl.pivot.Class getGeneric();
 
 	/**
+	 * @param distantSuperClass
 	 * @since 7.0
 	 */
-	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull[] depthCounts);
+	void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull[] startIndexes, org.eclipse.ocl.pivot.@NonNull Class... distantSuperClass);
 
 	/**
 	 * Return true if this type is a Collection type and has ordered elements.

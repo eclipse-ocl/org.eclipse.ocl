@@ -286,7 +286,7 @@ public class LookupTables extends AbstractTables
 				Fragments._Executor__OclElement /* 1 */,
 				Fragments._Executor__Executor /* 2 */
 			};
-		private static final int @NonNull [] __Executor = { 1,1,1 };
+		private static final int @NonNull [] __Executor = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _LookupEnvironment =
 			{
@@ -294,7 +294,7 @@ public class LookupTables extends AbstractTables
 				Fragments._LookupEnvironment__OclElement /* 1 */,
 				Fragments._LookupEnvironment__LookupEnvironment /* 2 */
 			};
-		private static final int @NonNull [] __LookupEnvironment = { 1,1,1 };
+		private static final int @NonNull [] __LookupEnvironment = { 0,1,2 };
 
 		/**
 		 *	Install the fragment descriptors in the class descriptors.

@@ -358,7 +358,7 @@ public class CodegencompanyTables extends AbstractTables
 				Fragments._Bug418716__OclElement /* 1 */,
 				Fragments._Bug418716__Bug418716 /* 2 */
 			};
-		private static final int @NonNull [] __Bug418716 = { 1,1,1 };
+		private static final int @NonNull [] __Bug418716 = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Company =
 			{
@@ -366,7 +366,7 @@ public class CodegencompanyTables extends AbstractTables
 				Fragments._Company__OclElement /* 1 */,
 				Fragments._Company__Company /* 2 */
 			};
-		private static final int @NonNull [] __Company = { 1,1,1 };
+		private static final int @NonNull [] __Company = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _CompanySizeKind =
 			{
@@ -376,7 +376,7 @@ public class CodegencompanyTables extends AbstractTables
 				Fragments._CompanySizeKind__OclEnumeration /* 3 */,
 				Fragments._CompanySizeKind__CompanySizeKind /* 4 */
 			};
-		private static final int @NonNull [] __CompanySizeKind = { 1,1,1,1,1 };
+		private static final int @NonNull [] __CompanySizeKind = { 0,1,2,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Employee =
 			{
@@ -384,7 +384,7 @@ public class CodegencompanyTables extends AbstractTables
 				Fragments._Employee__OclElement /* 1 */,
 				Fragments._Employee__Employee /* 2 */
 			};
-		private static final int @NonNull [] __Employee = { 1,1,1 };
+		private static final int @NonNull [] __Employee = { 0,1,2 };
 
 		/**
 		 *	Install the fragment descriptors in the class descriptors.

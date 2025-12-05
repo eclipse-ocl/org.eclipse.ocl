@@ -1220,21 +1220,21 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._Bag__Collection /* 1 */,
 				Fragments._Bag__Bag /* 2 */
 			};
-		private static final int @NonNull [] __Bag = { 1,1,1 };
+		private static final int @NonNull [] __Bag = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Boolean =
 			{
 				Fragments._Boolean__OclAny /* 0 */,
 				Fragments._Boolean__Boolean /* 1 */
 			};
-		private static final int @NonNull [] __Boolean = { 1,1 };
+		private static final int @NonNull [] __Boolean = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Collection =
 			{
 				Fragments._Collection__OclAny /* 0 */,
 				Fragments._Collection__Collection /* 1 */
 			};
-		private static final int @NonNull [] __Collection = { 1,1 };
+		private static final int @NonNull [] __Collection = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Integer =
 			{
@@ -1244,34 +1244,34 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._Integer__Real /* 2 */,
 				Fragments._Integer__Integer /* 3 */
 			};
-		private static final int @NonNull [] __Integer = { 1,2,1,1 };
+		private static final int @NonNull [] __Integer = { 0,1,3,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Map =
 			{
 				Fragments._Map__OclAny /* 0 */,
 				Fragments._Map__Map /* 1 */
 			};
-		private static final int @NonNull [] __Map = { 1,1 };
+		private static final int @NonNull [] __Map = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclAny =
 			{
 				Fragments._OclAny__OclAny /* 0 */
 			};
-		private static final int @NonNull [] __OclAny = { 1 };
+		private static final int @NonNull [] __OclAny = { 0 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclComparable =
 			{
 				Fragments._OclComparable__OclAny /* 0 */,
 				Fragments._OclComparable__OclComparable /* 1 */
 			};
-		private static final int @NonNull [] __OclComparable = { 1,1 };
+		private static final int @NonNull [] __OclComparable = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclElement =
 			{
 				Fragments._OclElement__OclAny /* 0 */,
 				Fragments._OclElement__OclElement /* 1 */
 			};
-		private static final int @NonNull [] __OclElement = { 1,1 };
+		private static final int @NonNull [] __OclElement = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclEnumeration =
 			{
@@ -1280,7 +1280,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._OclEnumeration__OclType /* 2 */,
 				Fragments._OclEnumeration__OclEnumeration /* 3 */
 			};
-		private static final int @NonNull [] __OclEnumeration = { 1,1,1,1 };
+		private static final int @NonNull [] __OclEnumeration = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclInvalid =
 			{
@@ -1288,35 +1288,35 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._OclInvalid__OclVoid /* 1 */,
 				Fragments._OclInvalid__OclInvalid /* 2 */
 			};
-		private static final int @NonNull [] __OclInvalid = { 1,1,1 };
+		private static final int @NonNull [] __OclInvalid = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclLambda =
 			{
 				Fragments._OclLambda__OclAny /* 0 */,
 				Fragments._OclLambda__OclLambda /* 1 */
 			};
-		private static final int @NonNull [] __OclLambda = { 1,1 };
+		private static final int @NonNull [] __OclLambda = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclMessage =
 			{
 				Fragments._OclMessage__OclAny /* 0 */,
 				Fragments._OclMessage__OclMessage /* 1 */
 			};
-		private static final int @NonNull [] __OclMessage = { 1,1 };
+		private static final int @NonNull [] __OclMessage = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclSelf =
 			{
 				Fragments._OclSelf__OclAny /* 0 */,
 				Fragments._OclSelf__OclSelf /* 1 */
 			};
-		private static final int @NonNull [] __OclSelf = { 1,1 };
+		private static final int @NonNull [] __OclSelf = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclState =
 			{
 				Fragments._OclState__OclAny /* 0 */,
 				Fragments._OclState__OclState /* 1 */
 			};
-		private static final int @NonNull [] __OclState = { 1,1 };
+		private static final int @NonNull [] __OclState = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclStereotype =
 			{
@@ -1325,21 +1325,21 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._OclStereotype__OclType /* 2 */,
 				Fragments._OclStereotype__OclStereotype /* 3 */
 			};
-		private static final int @NonNull [] __OclStereotype = { 1,1,1,1 };
+		private static final int @NonNull [] __OclStereotype = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclSummable =
 			{
 				Fragments._OclSummable__OclAny /* 0 */,
 				Fragments._OclSummable__OclSummable /* 1 */
 			};
-		private static final int @NonNull [] __OclSummable = { 1,1 };
+		private static final int @NonNull [] __OclSummable = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclTuple =
 			{
 				Fragments._OclTuple__OclAny /* 0 */,
 				Fragments._OclTuple__OclTuple /* 1 */
 			};
-		private static final int @NonNull [] __OclTuple = { 1,1 };
+		private static final int @NonNull [] __OclTuple = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclType =
 			{
@@ -1347,14 +1347,14 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._OclType__OclElement /* 1 */,
 				Fragments._OclType__OclType /* 2 */
 			};
-		private static final int @NonNull [] __OclType = { 1,1,1 };
+		private static final int @NonNull [] __OclType = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OclVoid =
 			{
 				Fragments._OclVoid__OclAny /* 0 */,
 				Fragments._OclVoid__OclVoid /* 1 */
 			};
-		private static final int @NonNull [] __OclVoid = { 1,1 };
+		private static final int @NonNull [] __OclVoid = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OrderedCollection =
 			{
@@ -1362,7 +1362,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._OrderedCollection__Collection /* 1 */,
 				Fragments._OrderedCollection__OrderedCollection /* 2 */
 			};
-		private static final int @NonNull [] __OrderedCollection = { 1,1,1 };
+		private static final int @NonNull [] __OrderedCollection = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _OrderedSet =
 			{
@@ -1372,7 +1372,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._OrderedSet__UniqueCollection /* 2 */,
 				Fragments._OrderedSet__OrderedSet /* 3 */
 			};
-		private static final int @NonNull [] __OrderedSet = { 1,1,2,1 };
+		private static final int @NonNull [] __OrderedSet = { 0,1,2,4 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Real =
 			{
@@ -1381,7 +1381,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._Real__OclSummable /* 1 */,
 				Fragments._Real__Real /* 2 */
 			};
-		private static final int @NonNull [] __Real = { 1,2,1 };
+		private static final int @NonNull [] __Real = { 0,1,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Sequence =
 			{
@@ -1390,7 +1390,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._Sequence__OrderedCollection /* 2 */,
 				Fragments._Sequence__Sequence /* 3 */
 			};
-		private static final int @NonNull [] __Sequence = { 1,1,1,1 };
+		private static final int @NonNull [] __Sequence = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Set =
 			{
@@ -1399,7 +1399,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._Set__UniqueCollection /* 2 */,
 				Fragments._Set__Set /* 3 */
 			};
-		private static final int @NonNull [] __Set = { 1,1,1,1 };
+		private static final int @NonNull [] __Set = { 0,1,2,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _String =
 			{
@@ -1408,7 +1408,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._String__OclSummable /* 1 */,
 				Fragments._String__String /* 2 */
 			};
-		private static final int @NonNull [] __String = { 1,2,1 };
+		private static final int @NonNull [] __String = { 0,1,3 };
 
 		private static final @NonNull FlatFragment @NonNull [] _UniqueCollection =
 			{
@@ -1416,7 +1416,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._UniqueCollection__Collection /* 1 */,
 				Fragments._UniqueCollection__UniqueCollection /* 2 */
 			};
-		private static final int @NonNull [] __UniqueCollection = { 1,1,1 };
+		private static final int @NonNull [] __UniqueCollection = { 0,1,2 };
 
 		private static final @NonNull FlatFragment @NonNull [] _UnlimitedNatural =
 			{
@@ -1424,7 +1424,7 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._UnlimitedNatural__OclComparable /* 1 */,
 				Fragments._UnlimitedNatural__UnlimitedNatural /* 2 */
 			};
-		private static final int @NonNull [] __UnlimitedNatural = { 1,1,1 };
+		private static final int @NonNull [] __UnlimitedNatural = { 0,1,2 };
 
 		/**
 		 *	Install the fragment descriptors in the class descriptors.

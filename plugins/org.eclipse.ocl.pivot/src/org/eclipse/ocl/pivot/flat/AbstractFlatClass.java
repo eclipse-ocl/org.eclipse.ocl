@@ -1002,17 +1002,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] startIndexes, org.eclipse.ocl.pivot.@NonNull Class... distantSuperClass) {
 		assert this.mutable == null;
 		assert this.fragments == null;
 		assert this.indexes == null;
-		int[] indexes = new int[depthCounts.length+1];
-		indexes[0] = 0;
-		for (int i = 0; i <  depthCounts.length; i++) {
-			indexes[i+1] = indexes[i] + depthCounts[i];
-		}
 		this.fragments = fragments;
-		this.indexes = indexes;
+		this.indexes = startIndexes;
 		this.mutable = Boolean.FALSE;
 		if (STATIC_FRAGMENTS.isActive()) {
 			StringBuilder s = new StringBuilder();

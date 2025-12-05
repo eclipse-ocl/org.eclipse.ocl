@@ -1482,20 +1482,21 @@ implements org.eclipse.ocl.pivot.Class {
 	}
 
 	@Override
-	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] depthCounts) {
-		getFlatClass().initFragments(fragments, depthCounts);
-		if (depthCounts.length >= 2) {
+	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] startIndexes, org.eclipse.ocl.pivot.@NonNull Class... distantSuperClass) {
+		getFlatClass().initFragments(fragments, startIndexes, distantSuperClass);
+		if (startIndexes.length >= 2) {
 			List<org.eclipse.ocl.pivot.Class> superClasses2 = getSuperClasses();
 			assert superClasses2.isEmpty();
-			int allFragments = fragments.length;
-			int selfFragments = depthCounts[depthCounts.length-1];
-			int directSuperFragments = depthCounts[depthCounts.length-2];
-			int iMax = allFragments - selfFragments;
-			for (int i = iMax - directSuperFragments; i < iMax; i++) {
+			int selfFragmentIndex = startIndexes[startIndexes.length-1];
+			int directSuperFragmentsIndex = startIndexes[startIndexes.length-2];
+			for (int i = directSuperFragmentsIndex; i < selfFragmentIndex; i++) {
 				FlatFragment directSuperFragment = fragments[i];
 				FlatClass directSuperFlatClass = directSuperFragment.getBaseFlatClass();
 				org.eclipse.ocl.pivot.Class directSuperPivotClass = directSuperFlatClass.getPivotClass();
 				superClasses2.add(directSuperPivotClass);
+			}
+			for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : distantSuperClass) {
+				superClasses2.add(asSuperClass);
 			}
 		}
 	}

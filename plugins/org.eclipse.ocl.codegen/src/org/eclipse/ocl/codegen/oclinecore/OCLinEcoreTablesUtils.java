@@ -822,43 +822,22 @@ public class OCLinEcoreTablesUtils
 		return classes;
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllProperSupertypesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllProperSuperClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
 		org.eclipse.ocl.pivot.Class theClass = completeModel.getPrimaryClass(pClass);
 		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> results = new HashMap<>();
-		getAllSuperClasses(results, theClass);
+		getSuperClassDepth(results, theClass);
 		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(results.keySet());
 		sortedClasses.remove(theClass);
 		Collections.sort(sortedClasses, nameComparator);
 		return sortedClasses;
 	}
 
-	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getAllSupertypesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getAllSuperClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
 		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> results = new HashMap<>();
-		getAllSuperClasses(results, pClass);
+		getSuperClassDepth(results, pClass);
 		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(results.keySet());
 		Collections.sort(sortedClasses, nameComparator);
 		return sortedClasses;
-	}
-
-	protected int getAllSuperClasses(@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> results, org.eclipse.ocl.pivot.@NonNull Class aClass) {
-		org.eclipse.ocl.pivot.Class theClass = completeModel.getPrimaryClass(aClass);
-		Integer depth = results.get(theClass);
-		if (depth != null) {
-			return depth;
-		}
-		int myDepth = 0;
-		for (@NonNull CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(theClass)) {
-			org.eclipse.ocl.pivot.Class superClass = superCompleteClass.getPrimaryClass();
-			if (superClass != theClass) {
-				superClass = PivotUtil.getGenericElement(superClass);
-				int superDepth = getAllSuperClasses(results, superClass);
-				if (superDepth >= myDepth) {
-					myDepth = superDepth+1;
-				}
-			}
-		}
-		results.put(theClass, myDepth);
-		return myDepth;
 	}
 
 	protected org.eclipse.ocl.pivot.@Nullable Package getExtendedPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
@@ -1111,7 +1090,7 @@ public class OCLinEcoreTablesUtils
 	protected @NonNull Operation getOverloadOp(org.eclipse.ocl.pivot.@NonNull Class pClass, @NonNull Operation baseOp) {
 		String baseSignature = getSignature(baseOp);
 		Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> results = new HashMap<>();
-		getAllSuperClasses(results, pClass);
+		getSuperClassDepth(results, pClass);
 		int bestDepth = -1;
 		Operation best = null;
 		for (org.eclipse.ocl.pivot.Class aClass : results.keySet()) {
@@ -1187,6 +1166,27 @@ public class OCLinEcoreTablesUtils
 		else {
 			return qualifiedSignature;	// FIXME with PrettyPrintOptions
 		}
+	}
+
+	protected int getSuperClassDepth(@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull Integer> results, org.eclipse.ocl.pivot.@NonNull Class aClass) {
+		org.eclipse.ocl.pivot.Class theClass = completeModel.getPrimaryClass(aClass);
+		Integer depth = results.get(theClass);
+		if (depth != null) {
+			return depth;
+		}
+		int myDepth = 0;
+		for (@NonNull CompleteClass superCompleteClass : completeModel.getAllSuperCompleteClasses(theClass)) {
+			org.eclipse.ocl.pivot.Class superClass = superCompleteClass.getPrimaryClass();
+			if (superClass != theClass) {
+				superClass = PivotUtil.getGenericElement(superClass);
+				int superDepth = getSuperClassDepth(results, superClass);
+				if (superDepth >= myDepth) {
+					myDepth = superDepth+1;
+				}
+			}
+		}
+		results.put(theClass, myDepth);
+		return myDepth;
 	}
 
 	protected @NonNull String getTablesClassName(@NonNull GenPackage genPackage) {
