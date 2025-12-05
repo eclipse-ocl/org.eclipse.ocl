@@ -578,9 +578,16 @@ public class EnvironmentView
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
 			assert completeModel.isTypeServeable(type);
 			CompleteClass completeClass = completeModel.getCompleteClass(type);
+			final boolean debugRequired = "extension_MyLifeline2".equals(name);
+			if (debugRequired) {
+				System.out.println("addAllProperties " + completeClass);
+			}
 			String name2 = name;
 			if (name2 != null) {
 				for (@NonNull Property property : completeClass.getProperties(featureFilter, name2)) {
+					if (debugRequired) {
+						System.out.println("\t" + property);
+					}
 					addNamedElement(property);
 				}
 			}
@@ -744,6 +751,9 @@ public class EnvironmentView
 		}
 		if (element == null) {
 			return;
+		}
+		if ("extension_MyLifeline2".equals(name)) {
+			getClass();			// XXX
 		}
 		if ((name != null) && (matchers != null)) {
 			for (@NonNull ScopeFilter filter : matchers) {
