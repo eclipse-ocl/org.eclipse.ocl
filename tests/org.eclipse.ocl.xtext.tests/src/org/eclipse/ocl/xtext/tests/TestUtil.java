@@ -54,6 +54,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -71,6 +72,7 @@ import org.eclipse.ocl.xtext.tests.XtextTestCase.EAnnotationsNormalizer;
 import org.eclipse.ocl.xtext.tests.XtextTestCase.EDetailsNormalizer;
 import org.eclipse.ocl.xtext.tests.XtextTestCase.EOperationsNormalizer;
 import org.eclipse.ocl.xtext.tests.XtextTestCase.ETypedElementNormalizer;
+import org.eclipse.ocl.xtext.tests.XtextTestCase.ModelNormalizer;
 import org.eclipse.ocl.xtext.tests.XtextTestCase.Normalizer;
 import org.eclipse.ocl.xtext.tests.pivot.tests.AbstractPivotTestCase;
 import org.eclipse.uml2.uml.util.UMLUtil;
@@ -84,7 +86,7 @@ import junit.framework.TestCase;
 public class TestUtil
 {
 	public static void assertNoResourceErrors(@NonNull String prefix, @NonNull Resource resource) {
-		@NonNull EList<Diagnostic> errors = resource.getErrors();
+		@NonNull EList<@NonNull Diagnostic> errors = resource.getErrors();
 		String message = PivotUtil.formatResourceDiagnostics(errors, prefix, "\n\t");
 		if (message != null)
 			TestCase.fail(message);
@@ -312,6 +314,9 @@ public class TestUtil
 						normalizers.add(new EAnnotationConstraintsNormalizer(eAnnotation));
 					}
 				}
+			}
+			if (eObject instanceof Model) {
+				normalizers.add(new ModelNormalizer((Model)eObject));
 			}
 		}
 		for (Normalizer normalizer : normalizers) {

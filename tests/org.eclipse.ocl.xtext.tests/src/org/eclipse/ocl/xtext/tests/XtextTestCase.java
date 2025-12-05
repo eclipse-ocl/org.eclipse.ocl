@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LoopExp;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.OperationCallExp;
 import org.eclipse.ocl.pivot.Property;
@@ -320,6 +321,30 @@ public class XtextTestCase extends PivotTestCaseWithAutoTearDown
 			}
 			eTypedElement.setOrdered(true);
 			eTypedElement.setUnique(true);
+		}
+	}
+
+	/**
+	 * ModelNormalizer assigns a fixed Model.externalURI value to avoid OS-specific spelling differences between reference and actual.
+	 */
+	public static class ModelNormalizer implements Normalizer
+	{
+		protected final @NonNull Model asModel;
+		protected final String externalURI;
+
+		public ModelNormalizer(@NonNull Model asModel) {
+			this.asModel = asModel;
+			this.externalURI = asModel.getExternalURI();
+		}
+
+		@Override
+		public void denormalize() {
+			asModel.setExternalURI(externalURI);
+		}
+
+		@Override
+		public void normalize() {
+			asModel.setExternalURI("«externalURI»");
 		}
 	}
 

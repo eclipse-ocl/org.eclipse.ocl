@@ -482,7 +482,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	@Override
 	public void setExternalURI(String newExternalURI)
 	{
-		assert (newExternalURI == null) || !newExternalURI.toString().contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad externalURI " + newExternalURI;			// XXX
+		assert (newExternalURI == null) || !newExternalURI.contains(PivotConstants.DOT_OCL_AS_FILE_EXTENSION) : "Bad externalURI " + newExternalURI;			// XXX
 		setExternalURIGen(newExternalURI);
 		String newName;
 		if (externalURI != null) {
