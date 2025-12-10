@@ -3,7 +3,7 @@ The Tycho build minimises the need for shell activity by auto-registering in P2 
 
 The ocl.aggrcon file is in the ssh://'committer-name'@git.eclipse.org:29418/simrel/org.eclipse.simrel.build.git repo.
 
-The updates can be checked by looking for the new entry on http://www.eclipse.org/modeling/mdt/downloads/?project=ocl
+The updates can be checked by looking for the new entry on https://download.eclipse.org/modeling/mdt/ocl/builds/
 or installing new software from e.g. http://download.eclipse.org/modeling/mdt/ocl/updates/milestones/6.10.0/S201408191307
 or installing new software from e.g. http://download.eclipse.org/modeling/mdt/ocl/updates/releases/6.10.0/
 
