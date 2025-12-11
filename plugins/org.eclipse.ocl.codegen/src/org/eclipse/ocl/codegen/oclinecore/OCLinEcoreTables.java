@@ -805,6 +805,21 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(getImplementationName(op));
 				s.append(");\n");
 			}
+		/*	s.append("\n");
+			s.append("\t\tprivate static final @NonNull Operation ");
+			pClass.accept(emitDeclaredName);
+			s.append("_eOperationID2asOperation[] = {");
+			for (int i = 0; i < sortedOperations.size(); i++) {
+				if (i != 0) {
+					s.append(",");
+				}
+				Operation op = sortedOperations.get(i);
+				EObject esObject = op.getESObject();
+				s.append("\n\t\t\t");
+				s.append("/ * " + (esObject != null ? ((EOperation)esObject).getOperationID() : "-1") + " * / ");
+				op.accept(emitDeclaredName);
+			}
+			s.append("\n\t\t};\n"); */
 		}
 		boolean hasPostInit = deferredSetReturnTypes.size() + deferredSetParameters.size() > 0;
 		if (hasPostInit) {
@@ -1058,6 +1073,21 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(";");
 				}
 			}
+		/*	s.append("\n\n");
+			s.append("\t\tprivate static final @NonNull Property ");
+			pClass.accept(emitDeclaredName);
+			s.append("_eFeatureID2asProperty[] = {");
+			for (int i = 0; i < sortedProperties.size(); i++) {
+				if (i != 0) {
+					s.append(",");
+				}
+				Property prop = sortedProperties.get(i);
+				EObject esObject = prop.getESObject();
+				s.append("\n\t\t\t");
+				s.append("/ * " + (esObject != null ? ((EStructuralFeatureImpl)esObject).getFeatureID() : "-1") + " * / ");
+				prop.accept(emitDeclaredName);
+			}
+			s.append("\n\t\t};"); */
 		}
 		isFirstClass = true;
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
@@ -1192,18 +1222,35 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			declareType(pClass);
 		}
 		s.append("\n");
+		List<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByClassifierID = getAllClassesSortedByClassifierID(asPackage);
+		Collections.sort(activeClassesSortedByClassifierID, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
+			{
+				@Override
+				public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
+					int i1 = ((EClassifier)o1.getESObject()).getClassifierID();
+					int i2 = ((EClassifier)o2.getESObject()).getClassifierID();
+					return i1 - i2;
+				}
+			});
+		s.append("		/*\n");
+		s.append("		 * AS Class indexed by EClassifier.getClassifierID().\n");
+		s.append("		 */\n");
 		s.append("		private static final ");
 		s.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
-		s.append(" " + atNonNull() + " [] types = {");
-		boolean isFirst = true;
-		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
-			if (!isFirst) {
+		s.append(" " + atNonNull() + " [] eClassifierID2asClass = {");
+		int index = 0;
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByClassifierID) {
+			EClassifier eClassifier = (EClassifier) asClass.getESObject();
+			int classifierID = eClassifier.getClassifierID();
+			assert index == classifierID;
+			if (index > 0) {
 				s.append(",");
 			}
-			isFirst = false;
 			s.append("\n");
 			s.append("			");
-			asClass.accept(emitDeclaredName);
+			s.append("/* " + eClassifier.getClassifierID() + " */ ");
+			asClass.accept(emitReferencedElement);
+			index++;
 		}
 		s.append("\n");
 		s.append("		};\n");
@@ -1212,7 +1259,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 *	Install the type descriptors in the package descriptor.\n");
 		s.append("		 */\n");
 		s.append("		static {\n");
-		s.append("			LIBRARY.initPackage(PACKAGE, types");
+		s.append("			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass");
 		Orphanage orphanage = environmentFactory.getOrphanage();
 		for (int i = 0; true; i++) {
 			NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, i) ;

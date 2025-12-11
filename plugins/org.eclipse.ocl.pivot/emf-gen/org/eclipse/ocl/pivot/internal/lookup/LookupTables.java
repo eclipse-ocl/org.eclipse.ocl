@@ -126,16 +126,19 @@ public class LookupTables extends AbstractTables
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Executor = LIBRARY.createClass(PivotPackage.Literals.CLASS, LookupPackage.Literals.EXECUTOR, null, 0 | FlatClass.ABSTRACT);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _LookupEnvironment = LIBRARY.createClass(PivotPackage.Literals.CLASS, LookupPackage.Literals.LOOKUP_ENVIRONMENT, null, 0);
 
-		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types = {
-			_Executor,
-			_LookupEnvironment
+		/*
+		 * AS Class indexed by EClassifier.getClassifierID().
+		 */
+		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] eClassifierID2asClass = {
+			/* 0 */ _LookupEnvironment,
+			/* 1 */ _Executor
 		};
 
 		/*
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, types, TypeParameters.$$0);
+			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass, TypeParameters.$$0);
 			Init.initEnd();
 		}
 

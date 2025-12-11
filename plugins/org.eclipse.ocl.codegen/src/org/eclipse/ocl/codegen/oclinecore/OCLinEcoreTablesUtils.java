@@ -745,30 +745,24 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
-	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getActiveClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(getActiveTypes(asPackage));
-		Collections.sort(sortedClasses, nameComparator);
-		return sortedClasses;
-	}
-
-	protected @NonNull Set<? extends org.eclipse.ocl.pivot.@NonNull Class> getActiveTypes(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+	protected @NonNull Set<org.eclipse.ocl.pivot.@NonNull Class> getActiveClasses(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
 		org.eclipse.ocl.pivot.Package pivotMetamodel = completeModel.basicGetASmetamodel();
 		Type elementType = completeModel.getASClass("Element");
 		if (oclstdlibPackage == asPackage) {
 			VoidType oclVoidType = standardLibrary.getOclVoidType();
-			Set<org.eclipse.ocl.pivot.@NonNull Class> types = new HashSet<>();
+			Set<org.eclipse.ocl.pivot.@NonNull Class> classes = new HashSet<>();
 			for (org.eclipse.ocl.pivot.Class type : oclstdlibPackage.getOwnedClasses()) {
 				assert type != null;
 				CompleteClass completeClass = completeModel.getCompleteClass(type);
 				if ((elementType == null) || !completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
-					types.add(type);
+					classes.add(type);
 				}
 			}
-			return types;
+			return classes;
 		}
 		else if (pivotMetamodel == asPackage) {
-			Set<org.eclipse.ocl.pivot.@NonNull Class> types = new HashSet<>();
+			Set<org.eclipse.ocl.pivot.@NonNull Class> classes = new HashSet<>();
 			for (org.eclipse.ocl.pivot.Class type : pivotMetamodel.getOwnedClasses()) {
 				assert type != null;
 				boolean pruned = false;
@@ -787,7 +781,7 @@ public class OCLinEcoreTablesUtils
 					}
 				}
 				if (!pruned && (myType instanceof org.eclipse.ocl.pivot.Class)) {
-					types.add((org.eclipse.ocl.pivot.Class)myType);
+					classes.add((org.eclipse.ocl.pivot.Class)myType);
 				}
 			}
 			//			if (oclstdlibPackage != null) {
@@ -795,11 +789,37 @@ public class OCLinEcoreTablesUtils
 			//					types.remove(type.getName());
 			//				}
 			//			}
-			return types;
+			return classes;
 		}
 		else {
 			return new HashSet<>(ClassUtil.nullFree(asPackage.getOwnedClasses()));
 		}
+	}
+
+	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getActiveClassesSortedByName(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> sortedClasses = new ArrayList<>(getActiveClasses(asPackage));
+		Collections.sort(sortedClasses, nameComparator);
+		return sortedClasses;
+	}
+
+	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getAllClassesSortedByClassifierID(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> classes = new ArrayList<>();
+		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
+			EClassifier eClassifier = (EClassifier)asClass.getESObject();
+			if (eClassifier.getClassifierID() >= 0) {
+				classes.add(asClass);
+			}
+		}
+		Collections.sort(classes, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
+		{
+			@Override
+			public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
+				int i1 = ((EClassifier)o1.getESObject()).getClassifierID();
+				int i2 = ((EClassifier)o2.getESObject()).getClassifierID();
+				return i1 - i2;
+			}
+		});
+		return classes;
 	}
 
 	protected @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getAllProperSupertypesSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {

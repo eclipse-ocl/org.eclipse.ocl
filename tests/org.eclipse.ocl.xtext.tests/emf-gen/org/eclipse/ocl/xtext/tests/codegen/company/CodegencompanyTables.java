@@ -174,18 +174,21 @@ public class CodegencompanyTables extends AbstractTables
 		public static final @NonNull Enumeration _CompanySizeKind = LIBRARY.createEnumeration(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Employee = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.EMPLOYEE, null, 0);
 
-		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types = {
-			_Bug418716,
-			_Company,
-			_CompanySizeKind,
-			_Employee
+		/*
+		 * AS Class indexed by EClassifier.getClassifierID().
+		 */
+		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] eClassifierID2asClass = {
+			/* 0 */ _Company,
+			/* 1 */ _Employee,
+			/* 2 */ _CompanySizeKind,
+			/* 3 */ _Bug418716
 		};
 
 		/*
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, types);
+			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass);
 			Init.initEnd();
 		}
 

@@ -208,41 +208,44 @@ public class OCLstdlibTables extends AbstractTables
 		public static final org.eclipse.ocl.pivot.@NonNull Class _UniqueCollection = LIBRARY.createClass(PivotPackage.Literals.COLLECTION_TYPE, OCLstdlibPackage.Literals.UNIQUE_COLLECTION, TypeId.UNIQUE_COLLECTION, 0 | FlatClass.ABSTRACT, TypeParameters._0_UniqueCollection_T);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _UnlimitedNatural = LIBRARY.createClass(PivotPackage.Literals.PRIMITIVE_TYPE, OCLstdlibPackage.Literals.UNLIMITED_NATURAL, TypeId.UNLIMITED_NATURAL, 0);
 
-		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] types = {
-			_Bag,
-			_Boolean,
-			_Collection,
-			_Integer,
-			_Map,
-			_OclAny,
-			_OclComparable,
-			_OclElement,
-			_OclEnumeration,
-			_OclInvalid,
-			_OclLambda,
-			_OclMessage,
-			_OclSelf,
-			_OclState,
-			_OclStereotype,
-			_OclSummable,
-			_OclTuple,
-			_OclType,
-			_OclVoid,
-			_OrderedCollection,
-			_OrderedSet,
-			_Real,
-			_Sequence,
-			_Set,
-			_String,
-			_UniqueCollection,
-			_UnlimitedNatural
+		/*
+		 * AS Class indexed by EClassifier.getClassifierID().
+		 */
+		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] eClassifierID2asClass = {
+			/* 0 */ _Bag,
+			/* 1 */ _Boolean,
+			/* 2 */ _Collection,
+			/* 3 */ _Integer,
+			/* 4 */ _Map,
+			/* 5 */ _OclAny,
+			/* 6 */ _OclComparable,
+			/* 7 */ _OclElement,
+			/* 8 */ _OclEnumeration,
+			/* 9 */ _OclInvalid,
+			/* 10 */ _OclLambda,
+			/* 11 */ _OclMessage,
+			/* 12 */ _OclSelf,
+			/* 13 */ _OclState,
+			/* 14 */ _OclStereotype,
+			/* 15 */ _OclSummable,
+			/* 16 */ _OclTuple,
+			/* 17 */ _OclType,
+			/* 18 */ _OclVoid,
+			/* 19 */ _OrderedCollection,
+			/* 20 */ _OrderedSet,
+			/* 21 */ _Real,
+			/* 22 */ _Sequence,
+			/* 23 */ _Set,
+			/* 24 */ _String,
+			/* 25 */ _UniqueCollection,
+			/* 26 */ _UnlimitedNatural
 		};
 
 		/*
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, types, TypeParameters.$$0, TypeParameters.$$1, TypeParameters.$$2, TypeParameters.$$3);
+			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass, TypeParameters.$$0, TypeParameters.$$1, TypeParameters.$$2, TypeParameters.$$3);
 			Init.initEnd();
 		}
 

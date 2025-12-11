@@ -1015,7 +1015,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtil.getOwnedClassesList(asPackage);
 		for (org.eclipse.ocl.pivot.Class asClass : asClasses) {
 			assert asClass != null;
-			ownedClasses.add(asClass);
+			EObject eClass = asClass.getESObject();
+			if (eClass.eContainer() == ePackage) {
+				ownedClasses.add(asClass);
+			}
 		}
 		addPackage(asPackage, null);
 	}
