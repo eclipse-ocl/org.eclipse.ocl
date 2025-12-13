@@ -160,7 +160,7 @@ public class BoxedValuesDescriptor extends AbstractValueDescriptor implements Bo
 				catch (Exception e) {
 					String instanceClassName = type.getInstanceClassName();
 					if (instanceClassName == null) {
-						instanceClassName = genModelHelper.getEcoreInterfaceClassifierName(eClassifier);
+						instanceClassName = genModelHelper.basicGetEcoreInterfaceClassifierName(eClassifier);
 					}
 					if (instanceClassName != null) {
 						unboxedDescriptor2 = new FutureEObjectsDescriptor(id, eClassifier, instanceClassName);

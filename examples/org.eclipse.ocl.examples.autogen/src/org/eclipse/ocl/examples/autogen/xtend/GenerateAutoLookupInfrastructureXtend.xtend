@@ -368,7 +368,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	
 	protected def void generateAutoLookupSolver(GenPackage genPackage, GenPackage basePackage) {
 		var EPackage ePackage = genPackage.getEcorePackage;
-		var String fqPackageItf = genModelHelper.getQualifiedPackageInterfaceName(ePackage)
+		var String fqPackageItf = genModelHelper.basicGetQualifiedPackageInterfaceName(ePackage)
 		var List<Operation> lookupOps = basePackage.lookupMethods;
 		var boolean isDerived = isDerived();
 		var String className = projectPrefix + "LookupSolver";
@@ -435,7 +435,7 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	}
 		
 	protected def void generateAutoCommonLookupVisitor(EPackage ePackage) {
-		var String fqPackageItf = genModelHelper.getQualifiedPackageInterfaceName(ePackage)
+		var String fqPackageItf = genModelHelper.basicGetQualifiedPackageInterfaceName(ePackage)
 
 		var boolean isDerived = isDerived();
 		var String visitorName = '''Abstract«projectPrefix»CommonLookupVisitor''';
@@ -571,13 +571,13 @@ class GenerateAutoLookupInfrastructureXtend extends GenerateVisitorsXtend
 	}
 	
 	private def String getTypeLiteral(Type type) {
-		var GenClassifier genClassifier = genModelHelper.getGenClassifier(type as Class);
+		var GenClassifier genClassifier = genModelHelper.basicGetGenClassifier(type as Class);
 		return ClassUtil.requireNonNull(genClassifier).classifierID; 
 	}
 	
 	private def String getTypeFQName(Type type) {
 		return if (type instanceof CollectionType) '''java.util.List<«getTypeFQName(type.elementType)»>''' 
-			else genModelHelper.getEcoreInterfaceName(type as Class)	
+			else genModelHelper.basicGetEcoreInterfaceName(type as Class)	
 	}
 	
 	private def String getLookupVisitorName(Operation op, String typeName) {

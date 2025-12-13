@@ -23,6 +23,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenParameter;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
@@ -175,6 +176,179 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
+	public @Nullable String basicGetEcoreClassName(org.eclipse.ocl.pivot.@NonNull Class type) {
+		try {
+			GenClassifier genClassifier = basicGetGenClassifier(type);
+			return genClassifier instanceof GenDataType
+					? ((GenDataType) genClassifier).getQualifiedInstanceClassName()
+						: ((GenClass) genClassifier).getQualifiedClassName();
+		} catch (GenModelException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public @Nullable Class<?> basicGetEcoreFactoryClass(@NonNull EPackage ePackage) {
+		GenPackage genPackage = basicGetGenPackage(ePackage);
+		if (genPackage == null) {
+			return null;
+		}
+		String qualifiedFactoryName = genPackage.getQualifiedFactoryInterfaceName();
+		try {
+			Thread currentThread = Thread.currentThread();
+			@SuppressWarnings("null") @NonNull ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+			@SuppressWarnings("null") @NonNull Class<?> loadedClass = contextClassLoader.loadClass(qualifiedFactoryName);
+			return loadedClass;
+		} catch (Exception e) {
+			return null;
+		}
+	}
+
+	@Override
+	public @Nullable String basicGetEcoreInterfaceClassName(@NonNull EClass eClass) throws GenModelException {
+		try {
+			GenClassifier genClassifier = getGenClass(eClass);
+			String qualifiedInterfaceName;
+			if (genClassifier instanceof GenDataType) {
+				qualifiedInterfaceName = ((GenDataType)genClassifier).getQualifiedInstanceClassName();
+				//				Class<?> primitiveClass = JavaCodeGenerator.javaPrimitiveNames.get(qualifiedInterfaceName);
+				//				if (primitiveClass != null) {
+				//					return primitiveClass;
+				//				}
+			}
+			else {
+				qualifiedInterfaceName = ((GenClass)genClassifier).getQualifiedInterfaceName();
+			}
+			return qualifiedInterfaceName;
+		}
+		catch (GenModelException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public @Nullable String basicGetEcoreInterfaceClassifierName(@NonNull EClassifier eClassifier) throws GenModelException {
+		try {
+			GenClassifier genClassifier = getGenClassifier(eClassifier);
+			String qualifiedInterfaceName;
+			if (genClassifier instanceof GenDataType) {
+				qualifiedInterfaceName = ((GenDataType)genClassifier).getQualifiedInstanceClassName();
+				//				Class<?> primitiveClass = JavaCodeGenerator.javaPrimitiveNames.get(qualifiedInterfaceName);
+				//				if (primitiveClass != null) {
+				//					return primitiveClass;
+				//				}
+			}
+			else {
+				qualifiedInterfaceName = ((GenClass)genClassifier).getQualifiedInterfaceName();
+			}
+			return qualifiedInterfaceName;
+		}
+		catch (GenModelException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public @Nullable String basicGetEcoreInterfaceName(org.eclipse.ocl.pivot.@NonNull Class type) {
+		try {
+			GenClassifier genClassifier = basicGetGenClassifier(type);
+			return genClassifier instanceof GenDataType
+					? ((GenDataType) genClassifier).getQualifiedInstanceClassName()
+						: ((GenClass) genClassifier).getQualifiedInterfaceName();
+		} catch (GenModelException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public @Nullable String basicGetEcoreLiteralName(@NonNull EClassifier eClassifier) {
+		try {
+			GenClassifier genClassifier = getGenClassifier(eClassifier);
+			return genClassifier.getClassifierID();
+		} catch (GenModelException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public @Nullable String basicGetEcoreLiteralName(@NonNull EOperation eOperation) {
+		GenOperation genOperation = basicGetGenOperation(eOperation);
+		if (genOperation != null) {
+			return genOperation.getGenClass().getOperationID(genOperation);
+		}
+		return null;
+	}
+
+	@Override
+	public @Nullable String basicGetEcoreLiteralName(@NonNull EStructuralFeature eFeature) {
+		try {
+			GenFeature genFeature = getGenFeature(eFeature);
+			return genFeature.getGenClass().getFeatureID(genFeature);
+		} catch (GenModelException e) {
+			return null;
+		}
+	}
+
+	/*	public @Nullable GenClass getGenClass(@NonNull GenPackage genPackage, @NonNull Type type) {
+		String name = type.getName();
+		for (GenClass genClass : genPackage.getGenClasses()) {
+			String clsName = genClass.getEcoreClass().getName();
+			if (name.equals(clsName)) {
+				return genClass;
+			}
+		}
+		return null;
+	} */
+
+	@Override
+	public @NonNull GenClassifier basicGetGenClassifier(org.eclipse.ocl.pivot.@NonNull Class type) throws GenModelException {
+		GenPackage genPackage = basicGetGenPackage(type);
+		if (genPackage != null) {
+			String name = type.getName();
+			for (GenClassifier genClassifier : genPackage.getGenClassifiers()) {
+				String clsName = getName(genClassifier.getEcoreClassifier());
+				if (name.equals(clsName)) {
+					return genClassifier;
+				}
+			}
+		}
+		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Class partialType : completeModel.getPartialClasses(type)) {
+			genPackage = basicGetGenPackage(partialType);
+			if (genPackage != null) {
+				String name = partialType.getName();
+				for (GenClassifier genClassifier : genPackage.getGenClassifiers()) {
+					String clsName = getName(genClassifier.getEcoreClassifier());
+					if (name.equals(clsName)) {
+						return genClassifier;
+					}
+				}
+			}
+		}
+		throw new GenModelException("No GenClassifier for " + type);
+	}
+
+	/*	public @Nullable GenFeature getGenFeature(@NonNull GenPackage genPackage, @NonNull GenClass genClass, @NonNull Property property) {
+		String name = property.getName();
+		for (GenFeature genFeature : genClass.getGenFeatures()) {
+			String featureName = genFeature.getEcoreFeature().getName();
+			if (name.equals(featureName)) {
+				return genFeature;
+			}
+		}
+		return null;
+	} */
+
+	/*	public @Nullable GenOperation getGenOperation(@NonNull GenPackage genPackage, @NonNull GenClass genClass, @NonNull Operation operation) {
+		String name = operation.getName();
+		for (GenOperation genOperation : genClass.getGenOperations()) {
+			if (name.equals(genOperation.getName())) {
+				return genOperation;		// FIXME signatures
+			}
+		}
+		return null;
+	} */
+
+	@Override
 	public @Nullable GenFeature basicGetGenFeature(@NonNull Property property) {
 		org.eclipse.ocl.pivot.Class owningType = property.getOwningClass();
 		if (owningType != null) {
@@ -191,6 +365,240 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
+	public @NonNull GenOperation basicGetGenOperation(@NonNull Constraint constraint) throws GenModelException {
+		org.eclipse.ocl.pivot.Class owningType = (org.eclipse.ocl.pivot.Class)PivotUtil.basicGetContainingType(constraint);
+		if (owningType != null) {
+			GenClass genClass = getGenClass(owningType);
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				if (genOperation.getEcoreOperation() == constraint.getESObject()) {
+					return genOperation;
+				}
+			}
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				if (genOperation.getEcoreOperation() == constraint.getESObject()) {
+					return genOperation;
+				}
+			}
+		}
+	/*	Operation baseOperation = operation;
+		for ( ; baseOperation.getRedefinedOperations().size() > 0; baseOperation = baseOperation.getRedefinedOperations().get(0)) {
+			;
+		}
+		org.eclipse.ocl.pivot.Class owningType = baseOperation.getOwningClass();
+		if (owningType != null) {
+			GenClass genClass = getGenClass(owningType);
+			String name = operation.getName();
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				String operationName = getName(genOperation.getEcoreOperation());
+				if (name.equals(operationName)) {
+					// FIXME parameters
+					return genOperation;
+				}
+			}
+		}
+		Operation baseOperation2 = operation;
+		for ( ; baseOperation2.getRedefinedOperations().size() > 0; baseOperation2 = baseOperation2.getRedefinedOperations().get(0)) {
+			;
+		}
+		throw new GenModelException("No GenFeature for " + baseOperation); */
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable GenOperation basicGetGenOperation(@NonNull EOperation eOperation) {
+		EClass eClass = eOperation.getEContainingClass();
+		if (eClass != null) {
+			GenClass genClass = getGenClass(eClass);
+			for (GenOperation genOperation : genClass.getAllGenOperations(false)) {
+				EOperation genEcoreOperation = genOperation.getEcoreOperation();
+				if (eOperation == genEcoreOperation) {
+					return genOperation;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public @NonNull GenOperation basicGetGenOperation(@NonNull Operation operation) throws GenModelException {
+		Operation baseOperation = operation;
+		for ( ; baseOperation.getRedefinedOperations().size() > 0; baseOperation = baseOperation.getRedefinedOperations().get(0)) {
+			;
+		}
+		org.eclipse.ocl.pivot.Class owningType = baseOperation.getOwningClass();
+		if (owningType != null) {
+			GenClass genClass = getGenClass(owningType);
+			String name = operation.getName();
+			for (GenOperation genOperation : genClass.getGenOperations()) {
+				String operationName = getName(genOperation.getEcoreOperation());
+				if (name.equals(operationName)) {
+					// FIXME parameters
+					return genOperation;
+				}
+			}
+		}
+		Operation baseOperation2 = operation;
+		for ( ; baseOperation2.getRedefinedOperations().size() > 0; baseOperation2 = baseOperation2.getRedefinedOperations().get(0)) {
+			;
+		}
+		throw new GenModelException("No GenFeature for " + baseOperation);
+	}
+
+	@Override
+	public @Nullable GenPackage basicGetGenPackage(@NonNull EPackage ePackage) {
+		String nsURI = ePackage.getNsURI();
+		if (nsURI == null) {
+			return null;
+		}
+		return genPackageManager.getGenPackage(nsURI);
+	}
+
+	@Override
+	public @Nullable GenPackage basicGetGenPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		EObject eContainer = asPackage.eContainer();
+		if (eContainer instanceof Model) {
+			String nsURI = ((Model)eContainer).getExternalURI();
+			if (nsURI != null) {
+				GenPackage genPackage = genPackageManager.getGenPackage(nsURI);
+				if (genPackage != null) {
+					return genPackage;
+				}
+			}
+		}
+		String nsURI = asPackage.getURI();
+		if (nsURI == null) {
+			return null;
+		}
+		return genPackageManager.getGenPackage(nsURI);
+	}
+
+	@Override
+	public @Nullable GenPackage basicGetGenPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		asClass = PivotUtil.getGenericElement(asClass);
+		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
+		if (asPackage == null) {
+			return null;
+		}
+		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
+		org.eclipse.ocl.pivot.Class elementType = completeModel.getASClass("Element");
+		if ((elementType != null) && (oclstdlibPackage != null)) {
+			VoidType oclVoidType = standardLibrary.getOclVoidType();
+			org.eclipse.ocl.pivot.Package pivotMetamodel = elementType.getOwningPackage();
+			assert pivotMetamodel != null;
+			if (oclstdlibPackage == asPackage) {
+				CompleteClass completeClass = completeModel.getCompleteClass(asClass);
+				if (completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
+					return basicGetGenPackage(pivotMetamodel);
+				}
+				else {
+					return basicGetGenPackage(oclstdlibPackage);
+				}
+			}
+			else if (pivotMetamodel == asPackage) {
+				CompleteClass completeClass = completeModel.getCompleteClass(asClass);
+				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
+					if (partialPackage == oclstdlibPackage) {
+						if (!completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
+							return basicGetGenPackage(oclstdlibPackage);
+						}
+					}
+				}
+				return basicGetGenPackage(pivotMetamodel);
+			}
+		}
+		return basicGetGenPackage(asPackage);
+	}
+
+	@Override
+	public @Nullable GenParameter basicGetGenParameter(@NonNull Parameter parameter) throws GenModelException {
+		Operation operation = parameter.getOwningOperation();
+		if (operation != null) {
+			int index = operation.getOwnedParameters().indexOf(parameter);
+			GenOperation genOperation = basicGetGenOperation(operation);
+			List<GenParameter> genParameters = genOperation.getGenParameters();
+			if ((0 <= index) && (index < genParameters.size())) {
+				return genParameters.get(index);
+			}
+		}
+		throw new GenModelException("No GenParameter for " + parameter);
+	}
+
+	@Override
+	public @Nullable String basicGetImplementationClassName(@NonNull EClassifier eClassifier) throws GenModelException {
+		try {
+			GenClassifier genClassifier = getGenClassifier(eClassifier);
+			if (genClassifier instanceof GenClass) {
+				return ((GenClass)genClassifier).getClassName();
+			}
+			else {
+				return getName(genClassifier.getEcoreClassifier());
+			}
+		}
+		catch (GenModelException e) {
+			return null;
+		}
+	}
+
+	@Override
+	public @Nullable String basicGetQualifiedEcoreLiteralName(@Nullable EOperation eOperation) {
+		if (eOperation == null) {
+			return null;
+		}
+		GenOperation genOperation = basicGetGenOperation(eOperation);
+		if (genOperation == null) {
+			return null;
+		}
+		GenPackage genPackage = getGenPackage(genOperation);
+		return genPackage.getPrefix() + "Package.Literals." + genOperation.getGenClass().getOperationID(genOperation, false);
+	}
+
+	@Override
+	public @Nullable String basicGetQualifiedFactoryInterfaceName(@NonNull EPackage ePackage) {
+		GenPackage genPackage = basicGetGenPackage(ePackage);
+		if (genPackage == null) {
+			return null;
+		}
+		return genPackage.getQualifiedFactoryInterfaceName();
+	}
+
+	@Override
+	public @Nullable String basicGetQualifiedFactoryInterfaceName(org.eclipse.ocl.pivot.@NonNull Class type) {
+		GenPackage genPackage = basicGetGenPackage(type);
+		if (genPackage == null) {
+			return null;
+		}
+		return genPackage.getQualifiedFactoryInterfaceName();
+	}
+
+	@Override
+	public @Nullable String basicGetQualifiedFactoryInstanceAccessor(@NonNull EPackage ePackage) {
+		GenPackage genPackage = basicGetGenPackage(ePackage);
+		if (genPackage == null) {
+			return null;
+		}
+		return genPackage.getQualifiedFactoryInstanceAccessor();
+	}
+
+	@Override
+	public @Nullable String basicGetQualifiedFactoryInstanceAccessor(org.eclipse.ocl.pivot.@NonNull Class type) {
+		GenPackage genPackage = basicGetGenPackage(type);
+		if (genPackage == null) {
+			return null;
+		}
+		return genPackage.getQualifiedFactoryInstanceAccessor();
+	}
+
+	@Override
+	public @Nullable String basicGetQualifiedPackageInterfaceName(@NonNull EPackage ePackage) {
+		GenPackage genPackage = basicGetGenPackage(ePackage);
+		if (genPackage == null) {
+			return null;
+		}
+		return genPackage.getQualifiedPackageInterfaceName();
+	}
+
+	@Override
 	public @NonNull Class<?> getAbstractOperationClass(int parameterCount) {
 		switch (parameterCount) {
 			case 0: return AbstractUnaryOperation.class;
@@ -201,25 +609,8 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
-	public @Nullable Class<?> getEcoreFactoryClass(@NonNull EPackage ePackage) {
-		GenPackage genPackage = getGenPackage(ePackage);
-		if (genPackage == null) {
-			return null;
-		}
-		String qualifiedFactoryName = genPackage.getQualifiedFactoryInterfaceName();
-		try {
-			Thread currentThread = Thread.currentThread();
-			@SuppressWarnings("null") @NonNull ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-			@SuppressWarnings("null") @NonNull Class<?> loadedClass = contextClassLoader.loadClass(qualifiedFactoryName);
-			return loadedClass;
-		} catch (Exception e) {
-			return null;
-		}
-	}
-
-	@Override
 	public @NonNull Class<?> getEcoreInterfaceClass(org.eclipse.ocl.pivot.@NonNull Class type) throws GenModelException {
-		GenClassifier genClassifier = getGenClassifier(type);
+		GenClassifier genClassifier = basicGetGenClassifier(type);
 		String qualifiedInterfaceName;
 		if (genClassifier instanceof GenDataType) {
 			qualifiedInterfaceName = ((GenDataType)genClassifier).getQualifiedInstanceClassName();
@@ -238,28 +629,6 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			return loadedClass;
 		} catch (Exception e) {
 			throw new GenModelException("Failed to load class for " + type);
-		}
-	}
-
-	@Override
-	public @Nullable String getEcoreInterfaceClassName(@NonNull EClass eClass) throws GenModelException {
-		try {
-			GenClassifier genClassifier = getGenClass(eClass);
-			String qualifiedInterfaceName;
-			if (genClassifier instanceof GenDataType) {
-				qualifiedInterfaceName = ((GenDataType)genClassifier).getQualifiedInstanceClassName();
-				//				Class<?> primitiveClass = JavaCodeGenerator.javaPrimitiveNames.get(qualifiedInterfaceName);
-				//				if (primitiveClass != null) {
-				//					return primitiveClass;
-				//				}
-			}
-			else {
-				qualifiedInterfaceName = ((GenClass)genClassifier).getQualifiedInterfaceName();
-			}
-			return qualifiedInterfaceName;
-		}
-		catch (GenModelException e) {
-			return null;
 		}
 	}
 
@@ -288,72 +657,6 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
-	public @Nullable String getEcoreInterfaceClassifierName(@NonNull EClassifier eClassifier) throws GenModelException {
-		try {
-			GenClassifier genClassifier = getGenClassifier(eClassifier);
-			String qualifiedInterfaceName;
-			if (genClassifier instanceof GenDataType) {
-				qualifiedInterfaceName = ((GenDataType)genClassifier).getQualifiedInstanceClassName();
-				//				Class<?> primitiveClass = JavaCodeGenerator.javaPrimitiveNames.get(qualifiedInterfaceName);
-				//				if (primitiveClass != null) {
-				//					return primitiveClass;
-				//				}
-			}
-			else {
-				qualifiedInterfaceName = ((GenClass)genClassifier).getQualifiedInterfaceName();
-			}
-			return qualifiedInterfaceName;
-		}
-		catch (GenModelException e) {
-			return null;
-		}
-	}
-
-	@Override
-	public @Nullable String getEcoreInterfaceName(org.eclipse.ocl.pivot.@NonNull Class type) {
-		try {
-			GenClassifier genClassifier = getGenClassifier(type);
-			return genClassifier instanceof GenDataType
-					? ((GenDataType) genClassifier).getQualifiedInstanceClassName()
-						: ((GenClass) genClassifier).getQualifiedInterfaceName();
-		} catch (GenModelException e) {
-			return null;
-		}
-	}
-
-	@Override
-	public @Nullable String getEcoreLiteralName(@NonNull EClassifier eClassifier) {
-		try {
-			GenClassifier genClassifier = getGenClassifier(eClassifier);
-			return genClassifier.getClassifierID();
-		} catch (GenModelException e) {
-			return null;
-		}
-	}
-
-	@Override
-	public @Nullable String getEcoreLiteralName(@NonNull EStructuralFeature eFeature) {
-		try {
-			GenFeature genFeature = getGenFeature(eFeature);
-			return genFeature.getGenClass().getFeatureID(genFeature);
-		} catch (GenModelException e) {
-			return null;
-		}
-	}
-
-	@Override
-	public @Nullable String getEcoreClassName(org.eclipse.ocl.pivot.@NonNull Class type) {
-		try {
-			GenClassifier genClassifier = getGenClassifier(type);
-			return genClassifier instanceof GenDataType
-					? ((GenDataType) genClassifier).getQualifiedInstanceClassName()
-						: ((GenClass) genClassifier).getQualifiedClassName();
-		} catch (GenModelException e) {
-			return null;
-		}
-	}
-
-	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return genPackageManager.getEnvironmentFactory();
 	}
@@ -362,11 +665,11 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public @NonNull String getFullyQualifiedEcoreLiteralName(@NonNull EClassifier eClassifier) {
 		GenClassifier genClassifier = getGenClassifier(eClassifier);
 		GenPackage genPackage = getGenPackage(genClassifier);
-		return genPackage.getQualifiedPackageInterfaceName() + ".Literals." + getEcoreLiteralName(eClassifier);
+		return genPackage.getQualifiedPackageInterfaceName() + ".Literals." + basicGetEcoreLiteralName(eClassifier);
 	}
 
 	protected @NonNull GenClass getGenClass(org.eclipse.ocl.pivot.@NonNull Class type) throws GenModelException {
-		GenPackage genPackage = getGenPackage(type);
+		GenPackage genPackage = basicGetGenPackage(type);
 		if (genPackage != null) {
 			String name = type.getName();
 			for (GenClass genClass : genPackage.getGenClasses()) {
@@ -407,44 +710,6 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		throw new GenModelException("No GenClassifier for " + eClassifier);
 	}
 
-	/*	public @Nullable GenClass getGenClass(@NonNull GenPackage genPackage, @NonNull Type type) {
-		String name = type.getName();
-		for (GenClass genClass : genPackage.getGenClasses()) {
-			String clsName = genClass.getEcoreClass().getName();
-			if (name.equals(clsName)) {
-				return genClass;
-			}
-		}
-		return null;
-	} */
-
-	@Override
-	public @NonNull GenClassifier getGenClassifier(org.eclipse.ocl.pivot.@NonNull Class type) throws GenModelException {
-		GenPackage genPackage = getGenPackage(type);
-		if (genPackage != null) {
-			String name = type.getName();
-			for (GenClassifier genClassifier : genPackage.getGenClassifiers()) {
-				String clsName = getName(genClassifier.getEcoreClassifier());
-				if (name.equals(clsName)) {
-					return genClassifier;
-				}
-			}
-		}
-		for (@SuppressWarnings("null")org.eclipse.ocl.pivot.@NonNull Class partialType : completeModel.getPartialClasses(type)) {
-			genPackage = getGenPackage(partialType);
-			if (genPackage != null) {
-				String name = partialType.getName();
-				for (GenClassifier genClassifier : genPackage.getGenClassifiers()) {
-					String clsName = getName(genClassifier.getEcoreClassifier());
-					if (name.equals(clsName)) {
-						return genClassifier;
-					}
-				}
-			}
-		}
-		throw new GenModelException("No GenClassifier for " + type);
-	}
-
 	@Override
 	public @NonNull GenFeature getGenFeature(@NonNull Property property) throws GenModelException {
 		GenFeature genFeature = basicGetGenFeature(property);
@@ -476,90 +741,12 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		throw new GenModelException("No GenFeature for " + eStructuralFeature);
 	}
 
-	/*	public @Nullable GenFeature getGenFeature(@NonNull GenPackage genPackage, @NonNull GenClass genClass, @NonNull Property property) {
-		String name = property.getName();
-		for (GenFeature genFeature : genClass.getGenFeatures()) {
-			String featureName = genFeature.getEcoreFeature().getName();
-			if (name.equals(featureName)) {
-				return genFeature;
-			}
+	public @Nullable GenPackage getGenPackage(@NonNull EClassifier eClassifier) {
+		EPackage ePackage = eClassifier.getEPackage();
+		if (ePackage == null) {
+			return null;
 		}
-		return null;
-	} */
-
-	/*	public @Nullable GenOperation getGenOperation(@NonNull GenPackage genPackage, @NonNull GenClass genClass, @NonNull Operation operation) {
-		String name = operation.getName();
-		for (GenOperation genOperation : genClass.getGenOperations()) {
-			if (name.equals(genOperation.getName())) {
-				return genOperation;		// FIXME signatures
-			}
-		}
-		return null;
-	} */
-
-	@Override
-	public @NonNull GenOperation getGenOperation(@NonNull Constraint constraint) throws GenModelException {
-		org.eclipse.ocl.pivot.Class owningType = (org.eclipse.ocl.pivot.Class)PivotUtil.basicGetContainingType(constraint);
-		if (owningType != null) {
-			GenClass genClass = getGenClass(owningType);
-			for (GenOperation genOperation : genClass.getGenOperations()) {
-				if (genOperation.getEcoreOperation() == constraint.getESObject()) {
-					return genOperation;
-				}
-			}
-			for (GenOperation genOperation : genClass.getGenOperations()) {
-				if (genOperation.getEcoreOperation() == constraint.getESObject()) {
-					return genOperation;
-				}
-			}
-		}
-	/*	Operation baseOperation = operation;
-		for ( ; baseOperation.getRedefinedOperations().size() > 0; baseOperation = baseOperation.getRedefinedOperations().get(0)) {
-			;
-		}
-		org.eclipse.ocl.pivot.Class owningType = baseOperation.getOwningClass();
-		if (owningType != null) {
-			GenClass genClass = getGenClass(owningType);
-			String name = operation.getName();
-			for (GenOperation genOperation : genClass.getGenOperations()) {
-				String operationName = getName(genOperation.getEcoreOperation());
-				if (name.equals(operationName)) {
-					// FIXME parameters
-					return genOperation;
-				}
-			}
-		}
-		Operation baseOperation2 = operation;
-		for ( ; baseOperation2.getRedefinedOperations().size() > 0; baseOperation2 = baseOperation2.getRedefinedOperations().get(0)) {
-			;
-		}
-		throw new GenModelException("No GenFeature for " + baseOperation); */
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull GenOperation getGenOperation(@NonNull Operation operation) throws GenModelException {
-		Operation baseOperation = operation;
-		for ( ; baseOperation.getRedefinedOperations().size() > 0; baseOperation = baseOperation.getRedefinedOperations().get(0)) {
-			;
-		}
-		org.eclipse.ocl.pivot.Class owningType = baseOperation.getOwningClass();
-		if (owningType != null) {
-			GenClass genClass = getGenClass(owningType);
-			String name = operation.getName();
-			for (GenOperation genOperation : genClass.getGenOperations()) {
-				String operationName = getName(genOperation.getEcoreOperation());
-				if (name.equals(operationName)) {
-					// FIXME parameters
-					return genOperation;
-				}
-			}
-		}
-		Operation baseOperation2 = operation;
-		for ( ; baseOperation2.getRedefinedOperations().size() > 0; baseOperation2 = baseOperation2.getRedefinedOperations().get(0)) {
-			;
-		}
-		throw new GenModelException("No GenFeature for " + baseOperation);
+		return basicGetGenPackage(ePackage);
 	}
 
 	protected @NonNull GenPackage getGenPackage(GenClassifier genClassifier) {
@@ -570,92 +757,8 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		return ClassUtil.requireNonNull(genFeature.getGenPackage());
 	}
 
-	@Override
-	public @Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		EObject eContainer = asPackage.eContainer();
-		if (eContainer instanceof Model) {
-			String nsURI = ((Model)eContainer).getExternalURI();
-			if (nsURI != null) {
-				GenPackage genPackage = genPackageManager.getGenPackage(nsURI);
-				if (genPackage != null) {
-					return genPackage;
-				}
-			}
-		}
-		String nsURI = asPackage.getURI();
-		if (nsURI == null) {
-			return null;
-		}
-		return genPackageManager.getGenPackage(nsURI);
-	}
-
-	@Override
-	public @Nullable GenPackage getGenPackage(org.eclipse.ocl.pivot.@NonNull Class asClass) {
-		asClass = PivotUtil.getGenericElement(asClass);
-		org.eclipse.ocl.pivot.Package asPackage = asClass.getOwningPackage();
-		if (asPackage == null) {
-			return null;
-		}
-		org.eclipse.ocl.pivot.Package oclstdlibPackage = standardLibrary.getBooleanType().getOwningPackage();
-		org.eclipse.ocl.pivot.Class elementType = completeModel.getASClass("Element");
-		if ((elementType != null) && (oclstdlibPackage != null)) {
-			VoidType oclVoidType = standardLibrary.getOclVoidType();
-			org.eclipse.ocl.pivot.Package pivotMetamodel = elementType.getOwningPackage();
-			assert pivotMetamodel != null;
-			if (oclstdlibPackage == asPackage) {
-				CompleteClass completeClass = completeModel.getCompleteClass(asClass);
-				if (completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
-					return getGenPackage(pivotMetamodel);
-				}
-				else {
-					return getGenPackage(oclstdlibPackage);
-				}
-			}
-			else if (pivotMetamodel == asPackage) {
-				CompleteClass completeClass = completeModel.getCompleteClass(asClass);
-				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
-					org.eclipse.ocl.pivot.Package partialPackage = partialClass.getOwningPackage();
-					if (partialPackage == oclstdlibPackage) {
-						if (!completeClass.isElementType(standardLibrary, elementType, oclVoidType)) {
-							return getGenPackage(oclstdlibPackage);
-						}
-					}
-				}
-				return getGenPackage(pivotMetamodel);
-			}
-		}
-		return getGenPackage(asPackage);
-	}
-
-	public @Nullable GenPackage getGenPackage(@NonNull EClassifier eClassifier) {
-		EPackage ePackage = eClassifier.getEPackage();
-		if (ePackage == null) {
-			return null;
-		}
-		return getGenPackage(ePackage);
-	}
-
-	@Override
-	public @Nullable GenPackage getGenPackage(@NonNull EPackage ePackage) {
-		String nsURI = ePackage.getNsURI();
-		if (nsURI == null) {
-			return null;
-		}
-		return genPackageManager.getGenPackage(nsURI);
-	}
-
-	@Override
-	public @Nullable GenParameter getGenParameter(@NonNull Parameter parameter) throws GenModelException {
-		Operation operation = parameter.getOwningOperation();
-		if (operation != null) {
-			int index = operation.getOwnedParameters().indexOf(parameter);
-			GenOperation genOperation = getGenOperation(operation);
-			List<GenParameter> genParameters = genOperation.getGenParameters();
-			if ((0 <= index) && (index < genParameters.size())) {
-				return genParameters.get(index);
-			}
-		}
-		throw new GenModelException("No GenParameter for " + parameter);
+	protected @NonNull GenPackage getGenPackage(@NonNull GenOperation genOperation) {
+		return ClassUtil.requireNonNull(genOperation.getGenPackage());
 	}
 
 	@Override
@@ -679,29 +782,8 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	@Override
-	public @Nullable String getImplementationClassName(@NonNull EClassifier eClassifier) throws GenModelException {
-		try {
-			GenClassifier genClassifier = getGenClassifier(eClassifier);
-			if (genClassifier instanceof GenClass) {
-				return ((GenClass)genClassifier).getClassName();
-			}
-			else {
-				return getName(genClassifier.getEcoreClassifier());
-			}
-		}
-		catch (GenModelException e) {
-			return null;
-		}
-	}
-
-//	@Override
-//	public @NonNull MetamodelManager getMetamodelManager() {
-//		return metamodelManager;
-//	}
-
-	@Override
 	public @NonNull String getOperationAccessor(@NonNull Operation anOperation) throws GenModelException {
-		GenOperation genOperation = getGenOperation(anOperation);
+		GenOperation genOperation = basicGetGenOperation(anOperation);
 		String operationAccessor = genOperation.getName();
 		if (operationAccessor != null) {
 			return operationAccessor;
@@ -726,7 +808,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			throw new GenModelException("No owningType for " + operation);
 		}
 		GenClass genClass = getGenClass(owningType);
-		GenOperation genOperation = getGenOperation(operation);
+		GenOperation genOperation = basicGetGenOperation(operation);
 		String returnType = genOperation.getType(genClass);
 		if (returnType == null) {
 			throw new GenModelException("No returnType for " + operation);
@@ -753,14 +835,14 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public @NonNull String getQualifiedEcoreLiteralName(@NonNull EClassifier eClassifier) {
 		GenClassifier genClassifier = getGenClassifier(eClassifier);
 		GenPackage genPackage = getGenPackage(genClassifier);
-		return genPackage.getPrefix() + "Package.Literals." + getEcoreLiteralName(eClassifier);
+		return genPackage.getPrefix() + "Package.Literals." + basicGetEcoreLiteralName(eClassifier);
 	}
 
 	@Override
 	public @NonNull String getQualifiedEcoreLiteralName(@NonNull EStructuralFeature eStructuralFeature) {
 		GenFeature genFeature = getGenFeature(eStructuralFeature);
 		GenPackage genPackage = getGenPackage(genFeature);
-		return genPackage.getPrefix() + "Package.Literals." + getEcoreLiteralName(eStructuralFeature);
+		return genPackage.getPrefix() + "Package.Literals." + basicGetEcoreLiteralName(eStructuralFeature);
 	}
 
 	@Override
@@ -768,51 +850,6 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 		GenClassifier genClassifier = getGenClassifier(eClassifier);
 		GenPackage genPackage = getGenPackage(genClassifier);
 		return genPackage.getBasePackage() + "." + genPackage.getEcorePackage().getName() + "." + genPackage.getPrefix() + "Package";
-	}
-
-	@Override
-	public @Nullable String getQualifiedFactoryInterfaceName(@NonNull EPackage ePackage) {
-		GenPackage genPackage = getGenPackage(ePackage);
-		if (genPackage == null) {
-			return null;
-		}
-		return genPackage.getQualifiedFactoryInterfaceName();
-	}
-
-	@Override
-	public @Nullable String getQualifiedFactoryInterfaceName(org.eclipse.ocl.pivot.@NonNull Class type) {
-		GenPackage genPackage = getGenPackage(type);
-		if (genPackage == null) {
-			return null;
-		}
-		return genPackage.getQualifiedFactoryInterfaceName();
-	}
-
-	@Override
-	public @Nullable String getQualifiedFactoryInstanceAccessor(@NonNull EPackage ePackage) {
-		GenPackage genPackage = getGenPackage(ePackage);
-		if (genPackage == null) {
-			return null;
-		}
-		return genPackage.getQualifiedFactoryInstanceAccessor();
-	}
-
-	@Override
-	public @Nullable String getQualifiedFactoryInstanceAccessor(org.eclipse.ocl.pivot.@NonNull Class type) {
-		GenPackage genPackage = getGenPackage(type);
-		if (genPackage == null) {
-			return null;
-		}
-		return genPackage.getQualifiedFactoryInstanceAccessor();
-	}
-
-	@Override
-	public @Nullable String getQualifiedPackageInterfaceName(@NonNull EPackage ePackage) {
-		GenPackage genPackage = getGenPackage(ePackage);
-		if (genPackage == null) {
-			return null;
-		}
-		return genPackage.getQualifiedPackageInterfaceName();
 	}
 
 	@Override

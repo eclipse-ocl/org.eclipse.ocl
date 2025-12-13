@@ -1706,7 +1706,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 			CGValuedElement cgArgument = cgArguments.get(i);
 			CGValuedElement argument = getExpression(cgArgument);
 			Parameter pParameter = ClassUtil.requireNonNull(pParameters.get(i));
-			GenParameter genParameter = context.getGenModelHelper().getGenParameter(pParameter);
+			GenParameter genParameter = context.getGenModelHelper().basicGetGenParameter(pParameter);
 			if (genParameter != null) {
 				String rawBoundType = ClassUtil.requireNonNull(genParameter.getRawBoundType());
 				TypeDescriptor typeDescriptor = context.getTypeDescriptor(argument);

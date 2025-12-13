@@ -933,7 +933,7 @@ public class JavaStream
 		org.eclipse.ocl.pivot.Class type = anOperation.getOwningClass();
 		if (type != null) {
 			GenModelHelper genModelHelper = codeGenerator.getGenModelHelper();
-			GenPackage genPackage = genModelHelper.getGenPackage(type);
+			GenPackage genPackage = genModelHelper.basicGetGenPackage(type);
 			if (genPackage != null) {
 				String qualifiedPackageName = genPackage.getQualifiedPackageName() + AbstractGenModelHelper.TABLES_PACKAGE_NAME;
 				String tablesClassName = genPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;

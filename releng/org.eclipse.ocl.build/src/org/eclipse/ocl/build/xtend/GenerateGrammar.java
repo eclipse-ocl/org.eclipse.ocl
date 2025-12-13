@@ -95,7 +95,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 	}
 
 	protected @NonNull String emitEPackageLiteral(@NonNull EPackage ePackage) {
-		GenPackage genPackage = genModelHelper.getGenPackage(ePackage);
+		GenPackage genPackage = genModelHelper.basicGetGenPackage(ePackage);
 		if (genPackage == null) {
 			return "<<" + ePackage.getNsURI() + ">>";
 		}

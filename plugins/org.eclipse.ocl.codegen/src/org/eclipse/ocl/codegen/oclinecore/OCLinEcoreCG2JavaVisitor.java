@@ -90,7 +90,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			if (cgClass != null) {
 				org.eclipse.ocl.pivot.Class asClass = CGUtil.getAST(cgClass);
 				GenModelHelper genModelHelper = context.getGenModelHelper();
-				GenClassifier genClassifier = genModelHelper.getGenClassifier(asClass);
+				GenClassifier genClassifier = genModelHelper.basicGetGenClassifier(asClass);
 				if (genClassifier instanceof GenClass) {
 					GenClass genClass = (GenClass)genClassifier;
 					for (GenOperation genOperation : genClass.getGenOperations()) {
@@ -226,7 +226,7 @@ public class OCLinEcoreCG2JavaVisitor extends CG2JavaVisitor<@NonNull OCLinEcore
 			js.append("try {\n");  								// See Bug 543178 for design rationale
 			js.pushIndentation(null);
 		}
-		GenClassifier genClassifier = genModelHelper.getGenClassifier(asType);
+		GenClassifier genClassifier = genModelHelper.basicGetGenClassifier(asType);
 		String genClassifierName = genClassifier != null ? genClassifier.getName() : null;
 		if (genClassifierName == null) {
 			genClassifierName = "";

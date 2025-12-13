@@ -456,7 +456,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		protected void appendClassReference(@NonNull String nestedClassName, org.eclipse.ocl.pivot.@NonNull Class asClass) {
-			GenPackage genPackage = genModelHelper.getGenPackage(asClass);
+			GenPackage genPackage = genModelHelper.basicGetGenPackage(asClass);
 			String tablesClassPath = getQualifiedTablesClassName(genPackage);
 			if (!tablesClassPath.equals(this.tablesClassPath)) {
 				s.appendClassReference(null, tablesClassPath);
@@ -495,7 +495,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
-			GenClassifier genClassifier = genModelHelper.getGenClassifier(asClass);
+			GenClassifier genClassifier = genModelHelper.basicGetGenClassifier(asClass);
 			if (genClassifier == null) {
 				return null;
 			}
@@ -577,7 +577,7 @@ public class OCLinEcoreTablesUtils
 		@Override
 		public @Nullable Object visitClass(org.eclipse.ocl.pivot.@NonNull Class type) {
 			type = PivotUtil.getGenericElement(type);
-			GenClassifier genClassifier = genModelHelper.getGenClassifier(type);
+			GenClassifier genClassifier = genModelHelper.basicGetGenClassifier(type);
 			if (genClassifier == null) {
 				return null;
 			}
@@ -1133,7 +1133,7 @@ public class OCLinEcoreTablesUtils
 			PrimitiveType booleanType = standardLibrary.getBooleanType();
 			org.eclipse.ocl.pivot.Package libraryPackage = booleanType.getOwningPackage();
 			if (libraryPackage != null) {
-				GenPackage gPackage = genModelHelper.getGenPackage(libraryPackage);
+				GenPackage gPackage = genModelHelper.basicGetGenPackage(libraryPackage);
 				if (gPackage != null) {
 					return gPackage.getReflectionPackageName() + "." + gPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
 				}
@@ -1263,7 +1263,7 @@ public class OCLinEcoreTablesUtils
 	//		return false;
 	//	}
 	//	List<@NonNull GenClass> genClasses = ClassUtil.nullFree(genPackage.getGenClasses());
-		GenClassifier genClassifier = genModelHelper.getGenClassifier(owningType);
+		GenClassifier genClassifier = genModelHelper.basicGetGenClassifier(owningType);
 		if (genClassifier == null) {
 			return false;
 		}

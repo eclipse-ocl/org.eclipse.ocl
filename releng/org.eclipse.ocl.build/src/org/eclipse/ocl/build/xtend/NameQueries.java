@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -109,9 +108,9 @@ public class NameQueries
 		String nsURI = ClassUtil.requireNonNull(type.getOwningPackage().getURI());
 		GenPackage genPackage = genPackageManager.getGenPackage(nsURI);
 		if (genPackage != null) {
-			GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
+			GenClass genClass = (GenClass)genModelHelper.basicGetGenClassifier(type);
 			assert genClass != null;
-			GenOperation genOperation = genModelHelper.getGenOperation(constraint);
+			GenOperation genOperation = genModelHelper.basicGetGenOperation(constraint);
 			assert genOperation != null;
 			String operationID = genClass.getOperationID(genOperation, false);
 			StringBuilder s = new StringBuilder();
@@ -150,9 +149,9 @@ public class NameQueries
 		String nsURI = ClassUtil.requireNonNull(type.getOwningPackage().getURI());
 		GenPackage genPackage = genPackageManager.getGenPackage(nsURI);
 		if (genPackage != null) {
-			GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
+			GenClass genClass = (GenClass)genModelHelper.basicGetGenClassifier(type);
 			assert genClass != null;
-			GenOperation genOperation = genModelHelper.getGenOperation(operation);
+			GenOperation genOperation = genModelHelper.basicGetGenOperation(operation);
 			assert genOperation != null;
 			String operationID = genClass.getOperationID(genOperation, false);
 			StringBuilder s = new StringBuilder();
@@ -182,7 +181,7 @@ public class NameQueries
 				String nsURI = ClassUtil.requireNonNull(type.getOwningPackage().getURI());
 				GenPackage genPackage = genPackageManager.getGenPackage(nsURI);
 				if (genPackage != null) {
-					GenClass genClass = (GenClass)genModelHelper.getGenClassifier(type);
+					GenClass genClass = (GenClass)genModelHelper.basicGetGenClassifier(type);
 					assert genClass != null;
 					GenFeature genFeature = genModelHelper.getGenFeature(property);
 					assert genFeature != null;
@@ -255,7 +254,7 @@ public class NameQueries
 		else if ((elem instanceof MapType) && (((MapType)elem).getGeneric() != null)) {
 		}
 		else if (elem instanceof org.eclipse.ocl.pivot.Class) {
-			elem = environmentFactory.getCompleteModel().getCompleteClass((Type)elem);
+			elem = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)elem);
 			//			elem = metamodelManager.getPrimaryClass((org.eclipse.ocl.pivot.Class)elem);
 		}
 		return getPrefixedSymbolNameWithoutNormalization(prefix, elem);

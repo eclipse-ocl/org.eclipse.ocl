@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -71,6 +72,7 @@ import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl;
+import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
@@ -535,22 +537,35 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 */
 	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
-	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+		return createOperation(asClass, null, name, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
+	}
+
+	/**
+	 * Create an operation. asType may be null for a self-dependent templating that is set later.
+	 * @since 7.0
+	 */
+	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, /*@NonNull*/ EOperation eOperation, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
+			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+		String name = eOperation.getName();
+		assert name != null;
+		return createOperation(asClass, eOperation, name, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
+	}
+
+	private @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable EOperation eOperation, @NonNull String name, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
+			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(name);
 		asOperation.setType(asType);		// OclInvalid if set later for nested specialization
-	//	asOperation.setESObject(eOperation);
+		if (eOperation != null) {
+			((OperationImpl)asOperation).setESObject(eOperation);
+		}
 	//	asOperation.setIndex(index);
 		asOperation.setImplementation(implementation);
 		int n = 0;
 		if (typeParameters.parametersSize() > 0) {
 			List<@NonNull TemplateParameter> asTemplateParameters = PivotUtil.getOwnedTemplateParametersList(asOperation, true);
 			for (int i = 0; i < typeParameters.parametersSize(); i++) {
-			//	Type type = typeParameters.get(i);		// XXX
-				TemplateParameter asTemplateParameter = typeParameters.get(i); //(TemplateParameterImpl)PivotFactory.eINSTANCE.createTemplateParameter();
-		//		asTemplateParameter.setName("_" + n++);
-			//	asTemplateParameter.setType(type);
-			//	asTemplateParameter.setTemplateParameterId(templateParameter.getTemplateParameterId());
+				TemplateParameter asTemplateParameter = typeParameters.get(i);
 				asTemplateParameters.add(asTemplateParameter);
 			}
 		}

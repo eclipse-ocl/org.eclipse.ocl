@@ -210,13 +210,13 @@ public class LookupTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _LookupEnvironment__addElement = LIBRARY.createOperation(Types._LookupEnvironment, "addElement", Parameters._NamedElement, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__addElement = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___ADD_ELEMENT__NAMEDELEMENT, Parameters._NamedElement, Types._LookupEnvironment,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _LookupEnvironment__addElements = LIBRARY.createOperation(Types._LookupEnvironment, "addElements", null, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__addElements = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___ADD_ELEMENTS__COLLECTION, null, Types._LookupEnvironment,
 			1 | IsRequired, new TemplateParameters(TypeParameters._0_LookupEnvironment_addElements_NE), null);
-		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation(Types._LookupEnvironment, "getExecutor", ParameterTypes.EMPTY_LIST, Types._Executor,
+		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___GET_EXECUTOR, ParameterTypes.EMPTY_LIST, Types._Executor,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation(Types._LookupEnvironment, "hasFinalResult", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___HAS_FINAL_RESULT, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
 		/*

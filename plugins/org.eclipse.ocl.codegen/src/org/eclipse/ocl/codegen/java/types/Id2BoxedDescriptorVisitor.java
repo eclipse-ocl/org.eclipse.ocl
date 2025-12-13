@@ -134,7 +134,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 			catch (Exception e) {
 				String instanceClassName = type.getInstanceClassName();
 				if (instanceClassName == null) {
-					instanceClassName = genModelHelper.getEcoreInterfaceClassifierName(eClassifier);
+					instanceClassName = genModelHelper.basicGetEcoreInterfaceClassifierName(eClassifier);
 				}
 				if (instanceClassName != null) {
 					return new FutureEObjectDescriptor(id, eClassifier, instanceClassName);
@@ -301,7 +301,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 			catch (Exception e) {
 				String instanceClassName = type.getInstanceClassName();
 				if (instanceClassName == null) {
-					instanceClassName = genModelHelper.getEcoreInterfaceClassifierName(eClassifier);
+					instanceClassName = genModelHelper.basicGetEcoreInterfaceClassifierName(eClassifier);
 				}
 				if (instanceClassName != null) {
 					return new FutureEnumerationValueDescriptor(id, eClassifier, instanceClassName);

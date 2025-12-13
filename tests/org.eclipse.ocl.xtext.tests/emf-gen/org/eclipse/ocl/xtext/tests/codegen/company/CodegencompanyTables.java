@@ -270,9 +270,9 @@ public class CodegencompanyTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation(Types._Employee, "hasNameAsOperation", ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___HAS_NAME_AS_OPERATION, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation(Types._Employee, "reportsTo", Parameters._Employee, OCLstdlibTables.Types._Boolean,
+		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___REPORTS_TO__EMPLOYEE, Parameters._Employee, OCLstdlibTables.Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
 		static {
@@ -723,6 +723,7 @@ public class CodegencompanyTables extends AbstractTables
 	/*
 	 * The EClasses whose instances should be cached to support allInstances().
 	 */
+	@SuppressWarnings("null")
 	private static final @NonNull EClass allInstancesEClasses @NonNull [] = {
 		CodegencompanyPackage.Literals.EMPLOYEE
 	};

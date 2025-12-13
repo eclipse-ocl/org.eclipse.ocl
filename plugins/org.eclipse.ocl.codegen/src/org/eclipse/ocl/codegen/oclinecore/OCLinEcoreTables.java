@@ -27,6 +27,7 @@ import org.eclipse.emf.codegen.util.ImportManager;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -367,6 +368,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append("	/*\n");
 			s.append("	 * The EClasses whose instances should be cached to support allInstances().\n");
 			s.append("	 */\n");
+			s.append("	@SuppressWarnings(\"null\")\n");
 			s.append("	private static final ");
 			s.appendClassReference(true, EClass.class);
 			s.append(" allInstancesEClasses " + atNonNull() + " [] = {\n");
@@ -713,6 +715,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				Operation op = sortedOperations.get(i);
 				Iteration it = op instanceof Iteration ? (Iteration)op : null;
 				boolean hasAccumulator = (it != null) && (it.getOwnedAccumulator() != null);
+				EOperation eOperation = (EOperation)op.getESObject();
+				String literalName = genModelHelper.basicGetQualifiedEcoreLiteralName(eOperation);
 				StringBuilder sFlags = new StringBuilder();
 				sFlags.append(i);
 				if (op.isIsInvalidating()) {
@@ -744,8 +748,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(it != null ? "Iteration" : "Operation");
 				s.append("(");
 				op.getOwningClass().accept(emitReferencedElement);
-				s.append(", ");
-				s.appendString(PivotUtil.getName(op));
+				s.append(", " );
+				if (literalName != null) {
+					s.append(literalName);
+				}
+				else {
+					s.appendString(PivotUtil.getName(op));
+				}
 				s.append(", ");
 				if (it != null) {
 					ParameterTypes iteratorTypes = new ParameterTypes(getIteratorsAndAccumulator(it));
@@ -1151,7 +1160,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);
 				s.append(".");
-				s.append(genModelHelper.getEcoreLiteralName(eClassifier));
+				s.append(genModelHelper.basicGetEcoreLiteralName(eClassifier));
 				s.append(", ");
 			}
 			else {
@@ -1216,7 +1225,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append(");\n");
 		org.eclipse.ocl.pivot.Package extendedPackage = getExtendedPackage(asPackage);
 		if (extendedPackage != null) {
-			GenPackage genPackage = genModelHelper.getGenPackage(extendedPackage);
+			GenPackage genPackage = genModelHelper.basicGetGenPackage(extendedPackage);
 			s.append("			LIBRARY.addExtension(");
 			s.appendClassReference(null, getQualifiedTablesClassName(genPackage));
 			s.append(".PACKAGE, PACKAGE);\n");
