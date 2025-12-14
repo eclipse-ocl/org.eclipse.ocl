@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Enumeration;
@@ -118,9 +117,7 @@ public class PivotIdResolver extends AbstractIdResolver
 		org.eclipse.ocl.pivot.Class nestedType = completeModel.getNestedType(parentPackage, name);
 		if (nestedType == null) {
 			CompletePackage asParentCompletePackage = completeModel.getCompletePackage(parentPackage);
-			CompleteClass nestedCompleteType = (CompleteClass) asParentCompletePackage.getType(name);
-			nestedType = nestedCompleteType.getPrimaryClass();
-
+			nestedType = (org.eclipse.ocl.pivot.Class)asParentCompletePackage.getType(name);
 			nestedType = completeModel.getNestedType(parentPackage, name);		// XXX debugging
 			throw new UnsupportedOperationException();
 		}

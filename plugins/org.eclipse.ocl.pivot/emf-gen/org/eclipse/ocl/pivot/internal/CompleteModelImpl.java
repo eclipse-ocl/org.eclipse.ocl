@@ -1206,6 +1206,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	 */
 	public org.eclipse.ocl.pivot.Class getNestedType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		CompletePackage completePackage = getCompletePackage(asPackage);
+		if (completePackage.getCompletePackageId() == PivotConstants.METAMODEL_ID) {
+			getASmetamodel();
+		}
 		return completePackage.getMemberType(name);
 	}
 
