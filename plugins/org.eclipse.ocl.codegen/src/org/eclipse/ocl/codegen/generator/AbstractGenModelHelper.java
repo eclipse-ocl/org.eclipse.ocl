@@ -60,6 +60,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public static final @NonNull String FRAGMENT_OPERATIONS_PACKAGE_NAME = "FragmentOperations";
 	public static final @NonNull String FRAGMENTS_PACKAGE_NAME = "Fragments";
 	public static final @NonNull String FRAGMENT_PROPERTIES_PACKAGE_NAME = "FragmentProperties";
+	public static final @NonNull String INVARIANTS_PACKAGE_NAME = "Invariants";
 	public static final @NonNull String OPERATIONS_PACKAGE_NAME = "Operations";
 	public static final @NonNull String PARAMETERS_PACKAGE_NAME = "Parameters";
 	public static final @NonNull String PROPERTIES_PACKAGE_NAME = "Properties";

@@ -415,7 +415,7 @@ public class ExternalEcore2AS extends Ecore2AS
 			URI eObjectResourceURI = eObjectResource.getURI();
 			Resource nonDelegatedResource = ecoreResource instanceof DelegatedSinglePackageResource ? ((DelegatedSinglePackageResource)ecoreResource).getResource() : ecoreResource;
 			if ((eObjectResource != nonDelegatedResource) || (eObjectResourceURI != nonDelegatedResource.getURI())) {
-				throw new IllegalStateException(StringUtil.bind(PivotMessages.ConflictingResource, eObjectResourceURI));
+				throw new IllegalStateException(StringUtil.bind(PivotMessages.ConflictingResource, eObjectResourceURI));		// XXX why is this occurring for e.g. testValidationTutorial_EcoreTestFile
 			}
 			return null;
 		}

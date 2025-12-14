@@ -694,6 +694,20 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	}\n");
 	}
 
+	protected void declareInvariants() {
+		s.append("	/**\n");
+		s.append("	 *	The invariant descriptors for each invariant of each type.\n");
+		s.append("	 *\n");
+		s.append("	 * @noextend This class is not intended to be subclassed by clients.\n");
+		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
+		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
+		s.append("	 */\n");
+		s.append("	public static class " + AbstractGenModelHelper.INVARIANTS_PACKAGE_NAME + " {\n");
+		appendInitializationStart(AbstractGenModelHelper.INVARIANTS_PACKAGE_NAME);
+		appendInitializationEnd(false);
+		s.append("	}\n");
+	}
+
 	protected boolean declareOperations() {
 		s.append("	/**\n");
 		s.append("	 *	The operation descriptors for each operation of each type.\n");
@@ -1595,6 +1609,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		declareFragments();
 		s.append("\n");
 		declareParameterLists();
+		s.append("\n");
+		declareInvariants();
 		s.append("\n");
 		boolean hasPostInit = declareOperations();
 		s.append("\n");
