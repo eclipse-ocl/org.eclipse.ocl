@@ -552,14 +552,21 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull Property createOppositeProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asType, int propertyFlagsAndIndex, /*@NonNull*/ EStructuralFeature eFeature) {
-		assert eFeature != null;
+	@Deprecated
+	public @NonNull Property createOppositeProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asType, int propertyFlagsAndIndex, /*@NonNull*/ EStructuralFeature zzeFeature) {
+		assert zzeFeature != null;
+		return createOppositeProperty(asClass, name, asType, propertyFlagsAndIndex);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Property createOppositeProperty(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, org.eclipse.ocl.pivot.@NonNull Class asType, int propertyFlagsAndIndex) {
 	//	EcoreLibraryOppositeProperty oppositeProperty = new EcoreLibraryOppositeProperty(eFeature);
 	//	return new ExecutorPropertyWithImplementation(name, executorType, propertyIndex, oppositeProperty);
 		Property asProperty = PivotFactory.eINSTANCE.createProperty();
 		asProperty.setName(name);
 		asProperty.setType(asType);
-		((PropertyImpl)asProperty).setESObject(eFeature);
 	//	asProperty.setIndex(propertyIndex);
 	//	asProperty.setImplementation(implementation);
 		setPropertyFlagsAndIndex(asProperty, propertyFlagsAndIndex);

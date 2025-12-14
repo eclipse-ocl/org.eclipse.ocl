@@ -752,7 +752,7 @@ public class EnvironmentView
 		if (element == null) {
 			return;
 		}
-		if ("extension_MyLifeline2".equals(name)) {
+		if ("Boolean".equals(name)) {
 			getClass();			// XXX
 		}
 		if ((name != null) && (matchers != null)) {

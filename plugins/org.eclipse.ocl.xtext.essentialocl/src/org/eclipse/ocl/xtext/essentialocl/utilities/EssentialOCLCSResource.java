@@ -61,6 +61,7 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.XMIUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CS;
 import org.eclipse.ocl.xtext.base.cs2as.CS2AS;
 import org.eclipse.ocl.xtext.base.cs2as.ImportDiagnostic;
@@ -845,7 +846,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	@Override
 	public @NonNull CSResource saveAsXMI(@NonNull URI uri) throws IOException {
 		OCLCSResourceSave xmiResource = createCSResourceSave(uri);
-		xmiResource.save(null);
+		xmiResource.save(XMIUtil.createSaveOptions(xmiResource));
 		return xmiResource;
 	}
 

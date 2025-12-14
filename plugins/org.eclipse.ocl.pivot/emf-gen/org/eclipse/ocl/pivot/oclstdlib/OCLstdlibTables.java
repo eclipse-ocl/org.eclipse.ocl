@@ -1193,12 +1193,12 @@ public class OCLstdlibTables extends AbstractTables
 			Operations.init();
 		}
 
-		public static final @NonNull Property _OclAny__OclInvalid__oclBadProperty = LIBRARY.createOppositeProperty(Types._OclAny, "OclInvalid", MODEL.getCollectionType(Types._Bag, Types._OclInvalid, false), 0 | IsImplicit | IsRequired | IsResolveProxies, OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY);
+		public static final @NonNull Property _OclAny__OclInvalid__oclBadProperty = LIBRARY.createOppositeProperty(Types._OclAny, "OclInvalid", MODEL.getCollectionType(Types._Bag, Types._OclInvalid, false), 0 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _OclElement__oclContainer = LIBRARY.createProperty(Types._OclElement, "oclContainer", Types._OclElement, 0 | IsResolveProxies, org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 		public static final @NonNull Property _OclElement__oclContents = LIBRARY.createProperty(Types._OclElement, "oclContents", MODEL.getCollectionType(Types._Set, Types._OclElement, true), 1 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
-		public static final @NonNull Property _OclElement__OclElement__oclContainer = LIBRARY.createOppositeProperty(Types._OclElement, "OclElement", MODEL.getCollectionType(Types._Bag, Types._OclElement, false), 2 | IsImplicit | IsRequired | IsResolveProxies, OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER);
-		public static final @NonNull Property _OclElement__OclElement__oclContents = LIBRARY.createOppositeProperty(Types._OclElement, "OclElement", MODEL.getCollectionType(Types._Bag, Types._OclElement, false), 3 | IsImplicit | IsRequired | IsResolveProxies, OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS);
+		public static final @NonNull Property _OclElement__OclElement__oclContainer = LIBRARY.createOppositeProperty(Types._OclElement, "OclElement", MODEL.getCollectionType(Types._Bag, Types._OclElement, false), 2 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _OclElement__OclElement__oclContents = LIBRARY.createOppositeProperty(Types._OclElement, "OclElement", MODEL.getCollectionType(Types._Bag, Types._OclElement, false), 3 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _OclInvalid__oclBadProperty = LIBRARY.createProperty(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY, Types._OclAny, 0 | IsResolveProxies);
 

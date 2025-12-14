@@ -1057,8 +1057,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 							s.appendString(name);
 							s.append(", " );
 							prop.getType().accept(emitTypeExpression);
-							s.append(", " + sFlags.toString() + ", ");
-							s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
+							s.append(", " + sFlags.toString());
 							s.append(")");
 						}
 						else {
