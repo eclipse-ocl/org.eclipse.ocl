@@ -328,7 +328,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 
 	@Override
 	public void addExternal2AS(@NonNull External2AS external2as) {
-		Resource resource = external2as.getResource();
+		@NonNull Resource resource = external2as.getResource();
 		String assessmentConflict = projectManager.assessResource(resource);
 		if (assessmentConflict != null) {
 			logger.error(assessmentConflict);

@@ -1221,7 +1221,10 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				templateArgument.setActual(pivotActualParameter);
 			}
 			converter.installPivotDefinition(csTemplateParameterSubstitution, templateArgument);
-			assert templateParameters.get(i) == templateArguments.get(i).getFormal();
+			TemplateParameter actualTemplateParameter = templateParameters.get(i);
+			TemplateParameter formalTemplateParameter = templateArguments.get(i).getFormal();
+		//	assert actualTemplateParameter == formalTemplateParameter;		// XXX temporary till Tables/Metamodel unified
+			assert actualTemplateParameter.getTemplateParameterId().getIndex() == formalTemplateParameter.getTemplateParameterId().getIndex();
 		}
 		for (int k = templateArguments.size(); k > newMax; ) {
 			templateArguments.remove(--k);

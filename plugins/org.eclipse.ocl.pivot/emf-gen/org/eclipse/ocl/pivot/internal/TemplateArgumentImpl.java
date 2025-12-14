@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -31,6 +32,7 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -195,32 +197,7 @@ public class TemplateArgumentImpl
 	 */
 	@Override
 	public TemplateParameter getFormal() {
-		TemplateableElement templateableElement = getOwningTemplateableElement();
-		if (templateableElement == null) {
-			assert false;
-			return null;
-		}
-		List<@NonNull TemplateArgument> ownedTemplateArguments = templateableElement.basicGetOwnedTemplateArguments();
-		if (ownedTemplateArguments == null) {
-			assert false;
-			return null;
-		}
-		int index = ownedTemplateArguments.indexOf(this);
-		if (index < 0) {
-			assert false;
-			return null;
-		}
-		TemplateableElement generic = templateableElement.getGeneric();
-		if (generic == null) {
-			assert false;
-			return null;
-		}
-		List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(generic);
-		if (templateParameters.size() <= index) {
-			assert false;
-			return null;
-		}
-		return templateParameters.get(index);
+		return ClassUtil.requireNonNull(basicGetFormal());
 	}
 
 	/**
@@ -480,6 +457,36 @@ public class TemplateArgumentImpl
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitTemplateArgument(this);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated NOT
+	 */
+	@Override
+	public @Nullable TemplateParameter basicGetFormal() {
+		TemplateableElement templateableElement = getOwningTemplateableElement();
+		if (templateableElement == null) {
+			return null;
+		}
+		List<@NonNull TemplateArgument> ownedTemplateArguments = templateableElement.basicGetOwnedTemplateArguments();
+		if (ownedTemplateArguments == null) {
+			return null;
+		}
+		int index = ownedTemplateArguments.indexOf(this);
+		if (index < 0) {
+			return null;
+		}
+		TemplateableElement generic = templateableElement.getGeneric();
+		if (generic == null) {
+			return null;
+		}
+		List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(generic);
+		if (templateParameters.size() <= index) {
+			return null;
+		}
+		return templateParameters.get(index);
 	}
 
 	@Override

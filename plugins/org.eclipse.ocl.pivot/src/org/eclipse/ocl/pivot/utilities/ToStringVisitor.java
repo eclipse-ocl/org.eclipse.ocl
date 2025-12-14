@@ -1325,7 +1325,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 */
 	@Override
 	public String visitTemplateArgument(@NonNull TemplateArgument object) {
-		TemplateParameter formal = object.getFormal();
+		TemplateParameter formal = object.basicGetFormal();
 		appendName(formal != null ? formal : null);
 		append("/");
 		safeVisit(object.getActual());

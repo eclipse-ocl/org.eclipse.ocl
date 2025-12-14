@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Template Argument</b></em>'.
@@ -122,6 +124,8 @@ public interface TemplateArgument
 	 * @generated
 	 */
 	void setActualIsRequired(boolean value);
+
+	@Nullable TemplateParameter basicGetFormal();
 
 	/**
 	 * @since 7.0

@@ -43,6 +43,7 @@ public class BuiltInEcore2AS extends Ecore2AS
 	public BuiltInEcore2AS(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory, @NonNull Model asModel) {
 		super(resource, environmentFactory);
 		this.asModel = asModel;
+		environmentFactory.getCompleteModel().addPartialModel(asModel);
 		for (EObject asObject : new TreeIterable(asModel, false)) {		// XXX create eagerly in xxxTables
 			if (asObject instanceof Element) {
 				if (asObject instanceof Library) {
