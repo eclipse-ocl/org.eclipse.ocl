@@ -13,10 +13,12 @@ package org.eclipse.ocl.pivot.internal.resource;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.EcoreASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PivotEnvironmentFactory;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
@@ -159,6 +161,11 @@ public class ASResourceFactoryRegistry
 		}
 		if (resource instanceof CSResource) {
 			return ((CSResource)resource).getASResourceFactory();
+		}
+		URI uri = resource.getURI();
+		Model asModel = uri != null ? BuiltInASResourceFactory.basicGetModel(uri) : null;
+		if (asModel != null) {
+			return BuiltInASResourceFactory.INSTANCE;
 		}
 		//
 		//	This complexity is solely for the benefit of UML which may not be loaded so we cannot use UML classes.

@@ -246,7 +246,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> pivotClass, @Nullable EObject eObject) {
+	public @Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> pivotClass, @Nullable EObject eObject) {		// XXX migrate to ?? environmentFactory
 		if (eObject == null) {
 			return null;
 		}
@@ -254,7 +254,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 		if (metamodel == null) {
 			return null;
 		}
-		External2AS es2as = External2AS.findAdapter(metamodel, environmentFactory);
+		External2AS es2as = External2AS.findAdapter(metamodel, environmentFactory);			// XXX use ASResourceFactory first
 		if (es2as == null) {
 			es2as = External2AS.getAdapter(metamodel, environmentFactory);
 		}
@@ -509,7 +509,7 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 					List<@NonNull EObject> contents = resource.getContents();
 					if (contents.size() > 0) {
 						EObject firstContent = contents.get(0);
-						for (ASResourceFactory resourceFactory : ASResourceFactoryRegistry.INSTANCE.getLoadedResourceFactories()) {
+						for (ASResourceFactory resourceFactory : ASResourceFactoryRegistry.INSTANCE.getLoadedResourceFactories()) {		// ASResourceFactoryRegistry method
 							URI packageURI = resourceFactory.getPackageURI(firstContent);
 							if (packageURI != null) {
 								External2AS external2as2 = external2asMap.get(packageURI);

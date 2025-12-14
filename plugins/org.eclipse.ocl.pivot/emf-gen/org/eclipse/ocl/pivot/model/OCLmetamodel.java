@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -48,11 +49,9 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
+import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -94,16 +93,18 @@ public class OCLmetamodel extends ASResourceImpl
 	 * Return the default http://www.eclipse.org/ocl/2015/Pivot metamodel Resource using the default OCL Standard Library.
 	 *  This static definition auto-generated from /org.eclipse.ocl.pivot/model/Pivot.ecore
 	 *  is used as the default when no overriding copy is registered.
+	 * @since 7.0
 	 */
-	public static @NonNull OCLmetamodel getDefault() {
-		OCLmetamodel metamodel = INSTANCE;
+	public static @NonNull ASResource getDefault() {
+	/*	OCLmetamodel metamodel = INSTANCE;
 		if (metamodel == null) {
 			metamodel = INSTANCE = new ReadOnly(PIVOT_AS_URI);
 			Contents contents = new Contents(OCLstdlib.getDefaultPackage(), "pivot", "pivot", PIVOT_URI);
 			metamodel.getContents().add(contents.getModel());
 			metamodel.setSaveable(false);
 		}
-		return metamodel;
+		return metamodel; */
+		return (ASResource) PivotTables.RESOURCE;
 	}
 
 	/**
@@ -112,9 +113,10 @@ public class OCLmetamodel extends ASResourceImpl
 	 *  is used as the default when no overriding copy is registered.
 	 */
 	public static @NonNull Model getDefaultModel() {
-		Model model = (Model)(getDefault().getContents().get(0));
+		return PivotTables.MODEL;
+	/*	Model model = (Model)(getDefault().getContents().get(0));
 		assert model != null;
-		return model;
+		return model; */
 	}
 
 	/**
