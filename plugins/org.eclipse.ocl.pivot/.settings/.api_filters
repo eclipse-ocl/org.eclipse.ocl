@@ -387,6 +387,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Constraints">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="Constraints"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
         <filter id="1143996420">
             <message_arguments>
@@ -824,6 +831,13 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="RESOURCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables$Constraints">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="Constraints"/>
             </message_arguments>
         </filter>
     </resource>

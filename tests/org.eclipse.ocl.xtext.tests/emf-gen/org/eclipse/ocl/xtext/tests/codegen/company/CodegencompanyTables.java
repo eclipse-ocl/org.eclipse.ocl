@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Model;
@@ -277,6 +278,35 @@ public class CodegencompanyTables extends AbstractTables
 	}
 
 	/**
+	 *	The invariant descriptors for each invariant of each type.
+	 *
+	 * @noextend This class is not intended to be subclassed by clients.
+	 * @noinstantiate This class is not intended to be instantiated by clients.
+	 * @noreference This class is not intended to be referenced by clients.
+	 */
+	public static class Constraints {
+		static {
+			Init.initStart();
+			Parameters.init();
+		}
+
+		public static final @NonNull Constraint _Company__dummyInvariant = LIBRARY.createConstraint(Types._Company, CodegencompanyPackage.Literals.COMPANY___DUMMY_INVARIANT__DIAGNOSTICCHAIN_MAP, "dummyInvariant", "true");
+
+		public static final @NonNull Constraint _Employee__mustHaveName = LIBRARY.createConstraint(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___MUST_HAVE_NAME__DIAGNOSTICCHAIN_MAP, "mustHaveName", "Tuple {\n\tmessage : String = \'Employee must have a name\',\n\tstatus : Boolean = not name.oclIsUndefined() and hasNameAsAttribute and hasNameAsOperation()\n}.status");
+		public static final @NonNull Constraint _Employee__mustHaveNonEmptyName = LIBRARY.createConstraint(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___MUST_HAVE_NON_EMPTY_NAME__DIAGNOSTICCHAIN_MAP, "mustHaveNonEmptyName", "name->notEmpty() implies name.size() > 0");
+		public static final @NonNull Constraint _Employee__noManagerImpliesDirectReports = LIBRARY.createConstraint(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___NO_MANAGER_IMPLIES_DIRECT_REPORTS__DIAGNOSTICCHAIN_MAP, "noManagerImpliesDirectReports", "manager.oclIsUndefined() implies directReports->size() > 0");
+
+		static {
+			Init.initEnd();
+		}
+
+		/**
+		 * Force initialization of the fields of CodegencompanyTables::Constraints and all preceding sub-packages.
+		 */
+		public static void init() {}
+	}
+
+	/**
 	 *	The operation descriptors for each operation of each type.
 	 *
 	 * @noextend This class is not intended to be subclassed by clients.
@@ -286,7 +316,7 @@ public class CodegencompanyTables extends AbstractTables
 	public static class Operations {
 		static {
 			Init.initStart();
-			Parameters.init();
+			Constraints.init();
 		}
 
 		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___HAS_NAME_AS_OPERATION, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,

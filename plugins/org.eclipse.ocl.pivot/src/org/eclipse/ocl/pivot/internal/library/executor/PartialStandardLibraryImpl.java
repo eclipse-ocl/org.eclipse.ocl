@@ -34,9 +34,11 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.MapType;
@@ -53,6 +55,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
@@ -69,6 +72,7 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
+import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl;
@@ -346,6 +350,26 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
 		return new PartialCollectionTypeManager(this);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull Constraint createConstraint(org.eclipse.ocl.pivot.@NonNull Class asClass, /*@NonNull*/ EOperation eOperation, @NonNull String name, @NonNull String body) {
+		assert eOperation != null;
+		ConstraintImpl constraint = (ConstraintImpl)PivotFactory.eINSTANCE.createConstraint();
+		ExpressionInOCL expressionInOCL = PivotFactory.eINSTANCE.createExpressionInOCL();
+		StringLiteralExp stringLiteral = PivotFactory.eINSTANCE.createStringLiteralExp();
+		stringLiteral.setStringSymbol(body);
+		stringLiteral.setType(getStringType());
+		expressionInOCL.setOwnedBody(stringLiteral);
+		expressionInOCL.setType(getBooleanType());
+		constraint.setName(name);
+		constraint.setIsCallable(true);
+		constraint.setOwnedSpecification(expressionInOCL);
+		constraint.setESObject(eOperation);
+		asClass.getOwnedInvariants().add(constraint);
+		return constraint;
 	}
 
 	/**

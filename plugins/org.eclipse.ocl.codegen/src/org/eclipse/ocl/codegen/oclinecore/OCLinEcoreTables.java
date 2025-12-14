@@ -396,6 +396,58 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 	}
 
+	protected void declareConstraints() {
+		s.append("	/**\n");
+		s.append("	 *	The invariant descriptors for each invariant of each type.\n");
+		s.append("	 *\n");
+		s.append("	 * @noextend This class is not intended to be subclassed by clients.\n");
+		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
+		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
+		s.append("	 */\n");
+		s.append("	public static class " + AbstractGenModelHelper.CONSTRAINTS_PACKAGE_NAME + " {\n");
+		appendInitializationStart(AbstractGenModelHelper.CONSTRAINTS_PACKAGE_NAME);
+
+		boolean isFirstClass = true;
+		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
+			boolean isFirstConstraint = true;
+			Iterable<@NonNull Constraint> sortedConstraints = getMemberConstraintsSortedByName(pClass);
+			for (@NonNull Constraint constraint : sortedConstraints) {
+				if (constraint.eContainer() != pClass) {
+					continue;
+				}
+				EOperation eOperation = (EOperation)constraint.getESObject();
+				String literalName = genModelHelper.basicGetQualifiedEcoreLiteralName(eOperation);
+				s.append("\n");
+				if (isFirstClass) {
+					isFirstClass = false;
+					isFirstConstraint = false;
+				}
+				else if (isFirstConstraint) {
+					s.append("\n");
+					isFirstConstraint = false;
+				}
+				s.append("		public static final ");
+				s.appendClassReference(true, Constraint.class);
+				s.append(" ");
+				constraint.accept(emitDeclaredName);
+				s.append(" = LIBRARY.createConstraint(");
+				pClass.accept(emitReferencedElement);
+				s.append(", ");
+				s.append(literalName);
+				s.append(", ");
+				s.appendString(constraint.getName());
+				s.append(", " );
+				s.appendString(constraint.getOwnedSpecification().getBody());
+				s.append(");" );
+			}
+		}
+		if (!isFirstClass) {
+			s.append("\n");
+		}
+		appendInitializationEnd(false);
+		s.append("	}\n");
+	}
+
 	protected void declareEnumerationLiterals() {
 		s.append("	/**\n");
 		s.append("	 *	The lists of enumeration literals for each enumeration.\n");
@@ -692,151 +744,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("				}\n");
 		s.append("			}\n");
 		s.append("		}\n");
-		s.append("	}\n");
-	}
-
-	protected void declareInvariants() {
-		s.append("	/**\n");
-		s.append("	 *	The invariant descriptors for each invariant of each type.\n");
-		s.append("	 *\n");
-		s.append("	 * @noextend This class is not intended to be subclassed by clients.\n");
-		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
-		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
-		s.append("	 */\n");
-		s.append("	public static class " + AbstractGenModelHelper.CONSTRAINTS_PACKAGE_NAME + " {\n");
-		appendInitializationStart(AbstractGenModelHelper.CONSTRAINTS_PACKAGE_NAME);
-
-
-		boolean isFirstClass = true;
-		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
-			boolean isFirstConstraint = true;
-			List<@NonNull Constraint> sortedConstraints = getMemberConstraintsSortedByName(pClass);
-			for (int i = 0; i < sortedConstraints.size(); i++) {
-				Constraint constraint = ClassUtil.requireNonNull(sortedConstraints.get(i));
-			//	if (isProperty(constraint)) {
-					s.append("\n");
-					if (isFirstClass) {
-						isFirstClass = false;
-						isFirstConstraint = false;
-					}
-					else if (isFirstConstraint) {
-						s.append("\n");
-						isFirstConstraint = false;
-					}
-					s.append("		public static final ");
-					s.appendClassReference(true, Constraint.class);
-					s.append(" ");
-					constraint.accept(emitDeclaredName);
-					s.append(" = LIBRARY.createConstraint(");
-					pClass.accept(emitReferencedElement);
-					s.append(", " );
-			//		s.appendString(name);
-			//		s.append(", " );
-			//		prop.getType().accept(emitTypeExpression);
-			//		s.append(", " + sFlags.toString() + ", ");
-			//		s.append(prop.getImplementationClass());
-					s.append(".INSTANCE)");
-				/*	}
-					else if (hasEcore(prop)) {
-						EStructuralFeature eStructuralFeature = ClassUtil.requireNonNull((EStructuralFeature)prop.getESObject());
-						s.append("Property(");
-						pClass.accept(emitReferencedElement);
-						s.append(", " );
-						s.append(genModelHelper.getQualifiedEcoreLiteralName(eStructuralFeature));
-						s.append(", " );
-						prop.getType().accept(emitTypeExpression);
-						s.append(", " + sFlags.toString() + ")");
-						//						}
-					} else {
-						Property opposite = prop.getOpposite();
-						if ((opposite != null) && hasEcore(opposite)) {
-							EStructuralFeature eStructuralFeature = ClassUtil.requireNonNull((EStructuralFeature)opposite.getESObject());
-							s.append("OppositeProperty(");
-							pClass.accept(emitReferencedElement);
-							s.append(", " );
-							s.appendString(name);
-							s.append(", " );
-							prop.getType().accept(emitTypeExpression);
-							s.append(", " + sFlags.toString());
-							s.append(")");
-						}
-						else {
-							s.append("Property(");
-							pClass.accept(emitReferencedElement);
-							s.append(", " );
-							s.appendString(name);
-							s.append(", " );
-							prop.getType().accept(emitTypeExpression);
-							s.append(", " + sFlags.toString() + ", null)");
-						}
-					} */
-					s.append(";");
-			//	}
-			}
-		/*	s.append("\n\n");
-			s.append("\t\tprivate static final @NonNull Property ");
-			pClass.accept(emitDeclaredName);
-			s.append("_eFeatureID2asProperty[] = {");
-			for (int i = 0; i < sortedProperties.size(); i++) {
-				if (i != 0) {
-					s.append(",");
-				}
-				Property prop = sortedProperties.get(i);
-				EObject esObject = prop.getESObject();
-				s.append("\n\t\t\t");
-				s.append("/ * " + (esObject != null ? ((EStructuralFeatureImpl)esObject).getFeatureID() : "-1") + " * / ");
-				prop.accept(emitDeclaredName);
-			}
-			s.append("\n\t\t};"); */
-		}
-	/*	isFirstClass = true;
-		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
-			boolean isFirstProperty = true;
-			List<@NonNull Property> sortedProperties = getMemberPropertiesSortedByName(pClass);
-			for (int i = 0; i < sortedProperties.size(); i++) {
-				Property prop = ClassUtil.requireNonNull(sortedProperties.get(i));
-				if (isProperty(prop)) {
-					if (isFirstClass) {
-						s.append("\n\n");
-						s.append("		static {\n");
-						isFirstClass = false;
-						isFirstProperty = false;
-					}
-					else if (isFirstProperty) {
-						s.append("\n");
-						isFirstProperty = false;
-					}
-					String defaultValueString = prop.getDefaultValueString();
-					if (defaultValueString != null) {
-						s.append("			");
-						prop.accept(emitDeclaredName);
-						s.append(".setDefaultValueString(");
-						s.appendString(defaultValueString);
-						s.append(");\n");
-					}
-					Property opposite = prop.getOpposite();
-					if (opposite != null) {
-						s.append("			");
-						if (!Orphanage.isOrphan(opposite)) {
-							prop.accept(emitDeclaredName);
-							s.append(".setOpposite(");
-							opposite.accept(emitReferencedElement);
-							s.append(");\n");
-						}
-						else {
-							opposite.accept(emitReferencedElement);
-							s.append(";\n");
-						}
-					}
-				}
-			}
-		} */
-		if (!isFirstClass) {
-			s.append("\n");
-		}
-
-
-		appendInitializationEnd(false);
 		s.append("	}\n");
 	}
 
@@ -1742,7 +1649,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("\n");
 		declareParameterLists();
 		s.append("\n");
-		declareInvariants();
+		declareConstraints();
 		s.append("\n");
 		boolean hasPostInit = declareOperations();
 		s.append("\n");
