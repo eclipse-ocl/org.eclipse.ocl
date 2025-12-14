@@ -476,6 +476,29 @@ public class OCLstdlibTables extends AbstractTables
 	}
 
 	/**
+	 *	The invariant descriptors for each invariant of each type.
+	 *
+	 * @noextend This class is not intended to be subclassed by clients.
+	 * @noinstantiate This class is not intended to be instantiated by clients.
+	 * @noreference This class is not intended to be referenced by clients.
+	 */
+	public static class Constraints {
+		static {
+			Init.initStart();
+			Parameters.init();
+		}
+
+		static {
+			Init.initEnd();
+		}
+
+		/**
+		 * Force initialization of the fields of OCLstdlibTables::Constraints and all preceding sub-packages.
+		 */
+		public static void init() {}
+	}
+
+	/**
 	 *	The operation descriptors for each operation of each type.
 	 *
 	 * @noextend This class is not intended to be subclassed by clients.
@@ -485,7 +508,7 @@ public class OCLstdlibTables extends AbstractTables
 	public static class Operations {
 		static {
 			Init.initStart();
-			Parameters.init();
+			Constraints.init();
 		}
 
 		public static final @NonNull Operation _Bag___lt__gt_ = LIBRARY.createOperation(Types._Bag, "<>", Parameters._OclSelf, Types._Boolean,

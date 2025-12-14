@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.xtext.util.Strings;
@@ -709,6 +710,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull Map<@NonNull ParameterTypes, @NonNull String> templateBindingsNames = new HashMap<>();
 	protected final @NonNull Map<@NonNull TemplateParameter, @NonNull String> templateParameter2name = new HashMap<>();
 	protected final @NonNull GenModelHelper genModelHelper;
+	protected final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Constraint>> class2sortedMemberConstraints = new HashMap<>();
 	protected final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Property>> class2sortedMemberProperties = new HashMap<>();
 
 	protected OCLinEcoreTablesUtils(@NonNull GenPackage genPackage) {
@@ -1037,6 +1039,31 @@ public class OCLinEcoreTablesUtils
 		s.append("_");
 		s.append(lambdaParameter.isIsRequired() ? "T" : "F");
 		return s.toString();
+	}
+
+	protected @NonNull List<@NonNull Constraint> getMemberConstraintsSortedByName(org.eclipse.ocl.pivot.@NonNull Class pClass) {
+		List<@NonNull Constraint> sortedMemberConstraints = class2sortedMemberConstraints.get(pClass);
+		if (sortedMemberConstraints == null) {
+			sortedMemberConstraints = new ArrayList<>();
+			for (/*@NonNull*/ Constraint constraint : getConstraintsInternal(pClass)) {
+				assert constraint != null;
+			//	if (isProperty(constraint)) {
+					sortedMemberConstraints.add(constraint);
+			//	}
+			}
+			Collections.sort(sortedMemberConstraints, NameUtil.NAMEABLE_COMPARATOR);
+			class2sortedMemberConstraints.put(pClass, sortedMemberConstraints);
+		}
+		return sortedMemberConstraints;
+	}
+	private @NonNull LinkedHashSet<@NonNull Constraint> getConstraintsInternal(org.eclipse.ocl.pivot.@NonNull Class type) {
+		Set<@NonNull String> names = new HashSet<>();
+		LinkedHashSet<@NonNull Constraint> constraints = new LinkedHashSet<>();
+		for (@NonNull Constraint constraint : completeModel.getAllInvariants(type)) {
+			names.add(PivotUtil.getName(constraint));
+			constraints.add(constraint/*completeModel.getPrimaryProperty(constraint)*/);
+		}
+		return constraints;
 	}
 
 	protected @NonNull Iterable<@NonNull Operation> getMemberOperationsSortedBySignature(org.eclipse.ocl.pivot.@NonNull Class pClass) {
