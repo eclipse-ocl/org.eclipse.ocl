@@ -70,6 +70,7 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl.ReadOnly;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables.BuiltInModel;
@@ -1562,6 +1563,24 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	public static final ");
 		s.appendClassReference(true, Resource.class);
 		s.append(" RESOURCE = LIBRARY.createResource(MODEL);\n");
+		s.append("\n");
+		s.append("	/**\n");
+		s.append("	 * A <code>Descriptor</code> may be used by the {@link BuiltInASResourceFactory.Registry}\n");
+		s.append("	 * to defer loading of a built-in model until needed.\n");
+		s.append("	 *\n");
+		s.append("	 * @since 7.0\n");
+		s.append("	 */\n");
+		s.append("	public static class Descriptor implements ");
+		s.appendClassReference(null, CompletePackageIdRegistryReader.Descriptor.class);
+		s.append("\n");
+		s.append("	{\n");
+		s.append("		@Override\n");
+		s.append("		public @NonNull ");
+		s.appendClassReference(null, Model.class);
+		s.append(" getModel() {\n");
+		s.append("			return MODEL;\n");
+		s.append("		}\n");
+		s.append("	}\n");
 
 		if (constants != null) {
 			s.append("\n");

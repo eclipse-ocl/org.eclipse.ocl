@@ -17,12 +17,17 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
@@ -38,9 +43,10 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 	private static final @NonNull String ATTRIBUTE_PACKAGE_URI = "packageURI";
 	private static final @NonNull String ATTRIBUTE_COMPLETE_PACKAGE_ID = "completePackageId";
 	private static final @NonNull String ATTRIBUTE_REGEX = "regex";
+	private static final @NonNull String ATTRIBUTE_CLASS = "class";
 
 	private static Map<@NonNull Pattern, @NonNull CompletePackageIdWithAspects> regexMappings = null;
-	private static final @NonNull Map<@NonNull String, @NonNull CompletePackageIdWithAspects> stringMappings = new HashMap<>();	// Defining plugin has two string mappings
+	private static final @NonNull Map<@NonNull URI, @NonNull CompletePackageIdWithAspects> uriMappings = new HashMap<>();	// Defining plugin has two string mappings
 
 	public static void addRegexMapping(@NonNull String packageRegex, @NonNull CompletePackageId completePackageID, @NonNull String aspect) {
 		Map<@NonNull Pattern, @NonNull CompletePackageIdWithAspects> regexMappings2 = regexMappings;
@@ -57,11 +63,11 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		completePackageIdWithAspects.addAspect(aspect);
 	}
 
-	public static void addStringMapping(@NonNull String packageURI, @NonNull CompletePackageId completePackageID, @NonNull String aspect) {
-		CompletePackageIdWithAspects completePackageIdWithAspects = stringMappings.get(packageURI);
+	public static void addStringMapping(@NonNull URI packageURI, @NonNull CompletePackageId completePackageID, @NonNull String aspect) {
+		CompletePackageIdWithAspects completePackageIdWithAspects = uriMappings.get(packageURI);
 		if (completePackageIdWithAspects == null) {
 			completePackageIdWithAspects = new CompletePackageIdWithAspects(completePackageID);
-			stringMappings.put(packageURI, completePackageIdWithAspects);
+			uriMappings.put(packageURI, completePackageIdWithAspects);
 		}
 		completePackageIdWithAspects.addAspect(aspect);
 	}
@@ -84,10 +90,8 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 	 */
 	public static @Nullable CompletePackageIdWithAspects basicGetCompletePackageIdWithAspects(@Nullable String packageURI) {
 		if (packageURI != null) {
-			if (stringMappings.isEmpty()) {			// Defining plugin has two string mappings
-				new CompletePackageIdRegistryReader().readRegistry();
-			}
-			CompletePackageIdWithAspects completePackageIdWithAspects = stringMappings.get(packageURI);
+			initialize();
+			CompletePackageIdWithAspects completePackageIdWithAspects = uriMappings.get(URI.createURI(packageURI));
 			if (completePackageIdWithAspects != null) {
 				return completePackageIdWithAspects;
 			}
@@ -101,6 +105,17 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Process the complete_package_id extension point, returning true if this was necessary, false if a redundant repetition.
+	 */
+	public static boolean initialize() {
+		if (!uriMappings.isEmpty()) {			// Defining plugin has two URI mappings
+			return false;
+		}
+		new CompletePackageIdRegistryReader().readRegistry();
+		return true;
 	}
 
 	public static void removeRegexMapping(@NonNull String packageRegex, @NonNull String aspect) {
@@ -117,11 +132,11 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		}
 	}
 
-	public static void removeStringMapping(@NonNull String packageURI, @NonNull String aspect) {
-		CompletePackageIdWithAspects completePackageIdWithAspects = stringMappings.get(packageURI);
+	public static void removeStringMapping(@NonNull URI packageURI, @NonNull String aspect) {
+		CompletePackageIdWithAspects completePackageIdWithAspects = uriMappings.get(packageURI);
 		if (completePackageIdWithAspects != null) {
 			if (completePackageIdWithAspects.removeAspect(aspect)) {
-				stringMappings.remove(packageURI);
+				uriMappings.remove(packageURI);
 			}
 		}
 	}
@@ -164,7 +179,30 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 			}
 			return false;
 		}
+
+		@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append(completePackageId.toString());
+			List<@NonNull String> aspects2 = aspects;
+			if (aspects2 != null) {
+				for (@NonNull String aspect : aspects2) {
+					s.append(" ");
+					s.append(aspect);
+				}
+			}
+			return s.toString();
+		}
 	}
+
+    /**
+     * A <code>Descriptor</code> may be used by the {@link BuiltInASResourceFactory.Registry}
+     * to defer loading of a built-in model until needed.
+     */
+    public static interface Descriptor
+    {
+		@NonNull Model getModel();
+    }
 
 	public CompletePackageIdRegistryReader() {
 		super(ClassUtil.getExtensionRegistry(), PivotPlugin.PLUGIN_ID, PivotPlugin.COMPLETE_PACKAGE_ID_PID);
@@ -176,15 +214,17 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		if (!TAG_MAPPING.equals(tagName)) {
 			return false;
 		}
-		final String packageURI = element.getAttribute(ATTRIBUTE_PACKAGE_URI);
+		final String packageURIstring = element.getAttribute(ATTRIBUTE_PACKAGE_URI);
 		String aspect = element.getAttribute(ATTRIBUTE_ASPECT);
 		final String completePackageID = element.getAttribute(ATTRIBUTE_COMPLETE_PACKAGE_ID);
 		final boolean regex = Boolean.parseBoolean(element.getAttribute(ATTRIBUTE_REGEX));
-		if (packageURI == null) {
+		final String tablesClass = element.getAttribute(ATTRIBUTE_CLASS);
+		if (packageURIstring == null) {
 			logMissingAttribute(element, ATTRIBUTE_PACKAGE_URI);
 			return false;
 		}
-		else if (completePackageID == null) {
+		final URI packageURI = URI.createURI(packageURIstring);
+		if (completePackageID == null) {
 			logMissingAttribute(element, ATTRIBUTE_COMPLETE_PACKAGE_ID);
 			return false;
 		}
@@ -194,17 +234,29 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		if (add) {
 			CompletePackageId completePackageId2 = IdManager.getCompletePackageId(completePackageID);
 			if (regex) {
-				addRegexMapping(packageURI, completePackageId2, aspect);
+				addRegexMapping(packageURIstring, completePackageId2, aspect);
 			}
 			else {
 				addStringMapping(packageURI, completePackageId2, aspect);
+				if (tablesClass != null) {
+					try {
+						Descriptor descriptor = (Descriptor)element.createExecutableExtension(ATTRIBUTE_CLASS);
+						BuiltInASResourceFactory.addModelDescriptor(packageURI, descriptor);
+					} catch (CoreException e) {
+						EcorePlugin.INSTANCE.log(e);
+						return false;
+					}
+				}
 			}
 		} else {
 			if (regex) {
-				removeRegexMapping(packageURI, aspect);
+				removeRegexMapping(packageURIstring, aspect);
 			}
 			else {
 				removeStringMapping(packageURI, aspect);
+				if (tablesClass != null) {
+					BuiltInASResourceFactory.removeModelDescriptor(packageURI);
+				}
 			}
 		}
 		return true;

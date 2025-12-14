@@ -222,8 +222,10 @@
    </extension>
 
   <extension point="org.eclipse.ocl.pivot.complete_package_id">
-     <mapping completePackageId="$metamodel$" aspect="library" packageURI="http://www.eclipse.org/ocl/2015/Library"/>
-     <mapping completePackageId="$metamodel$" aspect="metamodel" packageURI="http://www.eclipse.org/ocl/2015/Pivot"/>
+     <mapping completePackageId="$metamodel$" aspect="library"
+     	packageURI="http://www.eclipse.org/ocl/2015/Library" class="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Descriptor"/>
+     <mapping completePackageId="$metamodel$" aspect="metamodel"
+     	packageURI="http://www.eclipse.org/ocl/2015/Pivot" class="org.eclipse.ocl.pivot.PivotTables$Descriptor"/>
   </extension>
 
 </plugin>

@@ -82,6 +82,16 @@
                </documentation>
             </annotation>
          </attribute>
+         <attribute name="class" type="string">
+            <annotation>
+               <documentation>
+                  The BuiltInResource that provides the packageURI.
+               </documentation>
+               <appInfo>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader.Descriptor"/>
+               </appInfo>
+            </annotation>
+         </attribute>
       </complexType>
    </element>
 

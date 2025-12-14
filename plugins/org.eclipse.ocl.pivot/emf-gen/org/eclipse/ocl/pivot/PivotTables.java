@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 // import org.eclipse.ocl.pivot.Enumeration;
 // import org.eclipse.ocl.pivot.EnumerationLiteral;
+// import org.eclipse.ocl.pivot.Model;
 // import org.eclipse.ocl.pivot.Operation;
 // import org.eclipse.ocl.pivot.ParameterTypes;
 // import org.eclipse.ocl.pivot.PivotPackage;
@@ -43,6 +44,7 @@ import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
@@ -80,6 +82,20 @@ public class PivotTables extends AbstractTables
 	 *	The EMF Resource containing the AS model, its AS package and its additional orphans.
 	 */
 	public static final @NonNull Resource RESOURCE = LIBRARY.createResource(MODEL);
+
+	/**
+	 * A <code>Descriptor</code> may be used by the {@link BuiltInASResourceFactory.Registry}
+	 * to defer loading of a built-in model until needed.
+	 *
+	 * @since 7.0
+	 */
+	public static class Descriptor implements CompletePackageIdRegistryReader.Descriptor
+	{
+		@Override
+		public @NonNull Model getModel() {
+			return MODEL;
+		}
+	}
 
 	/**
 	 *	Constants used by auto-generated code.

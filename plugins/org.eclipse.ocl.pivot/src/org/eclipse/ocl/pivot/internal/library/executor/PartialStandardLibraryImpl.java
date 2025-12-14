@@ -84,10 +84,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
-import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
-import org.eclipse.ocl.pivot.internal.resource.ICS2AS;
+import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -100,7 +97,6 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables.BuiltInModel;
@@ -218,48 +214,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			}
 			return null;
 		}
-	}
-
-	public static class BuiltInASResourceFactory extends AbstractASResourceFactory
-	{
-		public static @NonNull BuiltInASResourceFactory INSTANCE = new BuiltInASResourceFactory();
-
-		public BuiltInASResourceFactory() {
-			super("built-in", null);
-		}
-
-		@Override
-		public @NonNull Resource createResource(URI uri) {
-			assert uri != null;
-			ASResource result = new BuiltInASResourceImpl(uri);
-			configureResource(result);
-			return result;
-		}
-
-		@Override
-		public @NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactory environmentFactory, @NonNull CSResource csResource, @NonNull ASResource asResource) {
-			throw new IllegalStateException();
-		}
-
-		@Override
-		public @NonNull ASResourceFactory getASResourceFactory() {
-			return INSTANCE;
-		}
-	}
-
-	public static class BuiltInASResourceImpl extends ASResourceImpl
-	{
-		public static @NonNull BuiltInASResourceFactory INSTANCE = new BuiltInASResourceFactory();
-
-		public BuiltInASResourceImpl(@NonNull URI uri) {
-			super(uri, BuiltInASResourceFactory.INSTANCE);
-		}
-
-		/**
-		 * Overridden to inhibit unloading of the shared instance.
-		 */
-		@Override
-		protected void doUnload() {}
 	}
 
 	public static class PartialCollectionTypeManager extends AbstractCollectionTypeManager
