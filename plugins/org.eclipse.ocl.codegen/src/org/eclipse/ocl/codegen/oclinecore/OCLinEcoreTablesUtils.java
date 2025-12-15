@@ -406,6 +406,12 @@ public class OCLinEcoreTablesUtils
 		}
 
 		@Override
+		public @Nullable Object visitPrecedence(org.eclipse.ocl.pivot.@NonNull Precedence asPrecedence) {
+			appendDeclaredClassName(asPrecedence);
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 			appendClassReference(AbstractGenModelHelper.PROPERTIES_PACKAGE_NAME, asClass);

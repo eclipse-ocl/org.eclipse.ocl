@@ -44,8 +44,8 @@
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" xmi:id="T-pivot-AssociativityKind" name="AssociativityKind">
-    <eLiterals xmi:id="L-pivot-AssociativityKind-left" name="left"/>
-    <eLiterals xmi:id="L-pivot-AssociativityKind-right" name="right" value="1"/>
+    <eLiterals xmi:id="L-pivot-AssociativityKind-left" name="left" literal="LEFT"/>
+    <eLiterals xmi:id="L-pivot-AssociativityKind-right" name="right" value="1" literal="RIGHT"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" xmi:id="T-pivot-CollectionKind" name="CollectionKind">
     <eLiterals xmi:id="L-pivot-CollectionKind-Collection" name="Collection"/>

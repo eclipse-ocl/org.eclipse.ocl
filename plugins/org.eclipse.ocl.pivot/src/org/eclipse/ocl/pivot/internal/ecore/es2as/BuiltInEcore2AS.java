@@ -87,7 +87,7 @@ public class BuiltInEcore2AS extends Ecore2AS
 	}
 
 	@Override
-	public <T extends Element> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
+	public <T extends Element> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject) { // XXX ??? if this is library and no library install library
 		return requiredClass.cast(createMap.get(eObject));
 	}
 

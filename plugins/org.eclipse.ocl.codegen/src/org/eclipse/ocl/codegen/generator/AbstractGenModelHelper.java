@@ -63,6 +63,7 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	public static final @NonNull String FRAGMENT_PROPERTIES_PACKAGE_NAME = "FragmentProperties";
 	public static final @NonNull String OPERATIONS_PACKAGE_NAME = "Operations";
 	public static final @NonNull String PARAMETERS_PACKAGE_NAME = "Parameters";
+	public static final @NonNull String PRECEDENCES_PACKAGE_NAME = "Precedences";
 	public static final @NonNull String PROPERTIES_PACKAGE_NAME = "Properties";
 	public static final @NonNull String TABLES_CLASS_SUFFIX = "Tables";
 	public static final @NonNull String TABLES_PACKAGE_NAME = "";

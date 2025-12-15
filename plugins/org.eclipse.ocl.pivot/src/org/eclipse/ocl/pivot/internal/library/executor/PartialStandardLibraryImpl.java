@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -41,6 +42,7 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -50,6 +52,7 @@ import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotTables;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
@@ -335,6 +338,23 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return null;
 	}
 
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(@NonNull NormalizedTemplateParameter... typeParameters) {
+			ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();
+	//		initClass(asClass, eClassifier, typeId, flags, typeParameters);
+	//		asClass.setESObject(eClassifier);
+			asClass.setName(PivotConstants.ORPHANAGE_NAME);
+		//	if (typeId != null) {
+		//		asClass.setTypeId(typeId);
+		//	}
+			asClass.setIsAbstract(true);
+			initTemplateParameters(asClass, typeParameters);
+		//	/*Ecore*/FlatModel flatModel = getFlatModel();					// XXX Migrate to initFragments
+		//	FlatClass flatClass = flatModel./*Ecore*/getFlatClass(asClass);
+		//	asClass.setFlatClass(flatClass);
+		//	PACKAGE.get
+			return asClass;
+		}
+
 	/**
 	 * @since 7.0
 	 */
@@ -539,6 +559,12 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 	//	asOperation.setIndex(index);
 		asOperation.setImplementation(implementation);
+		if ((operationFlagsAndIndex & AbstractTables.LeftAssociative) != 0) {
+			asOperation.setPrecedence(getPrecedence(asClass, AssociativityKind.LEFT));
+		}
+		if ((operationFlagsAndIndex & AbstractTables.RightAssociative) != 0) {
+			asOperation.setPrecedence(getPrecedence(asClass, AssociativityKind.RIGHT));
+		}
 		int n = 0;
 		if (typeParameters.parametersSize() > 0) {
 			List<@NonNull TemplateParameter> asTemplateParameters = PivotUtil.getOwnedTemplateParametersList(asOperation, true);
@@ -626,6 +652,16 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		((PackageImpl)asPackage).setESObject(ePackage);
 		asPackage.getPackageId();			// XXX
 		return asPackage;
+	}
+
+	/**
+	 * @param asLibrary
+	 * @since 7.0
+	 */
+	public @NonNull Precedence createPrecedence(org.eclipse.ocl.pivot.@NonNull Package asLibrary, @NonNull String name, @NonNull AssociativityKind kind) {
+		Precedence asPrecedence = PivotUtil.createPrecedence(name, kind);
+		((Library)asLibrary).getOwnedPrecedences().add(asPrecedence);
+		return asPrecedence;
 	}
 
 	/**
@@ -907,6 +943,16 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
 	}
 
+	private Precedence getPrecedence(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull AssociativityKind kind) {
+		Library asLibrary = (Library)asClass.getOwningPackage();
+		for (Precedence precedence : asLibrary.getOwnedPrecedences()) {
+			if (precedence.getAssociativity() == kind) {
+				return precedence;
+			}
+		}
+		return null;
+	}
+
 	@Override
 	public @NonNull Type getPrimaryType(@NonNull Type asType) {
 		return asType;
@@ -1012,23 +1058,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			}
 		}
 		addPackage(asPackage, null);
-	}
-
-	public org.eclipse.ocl.pivot.@NonNull Class createClass(@NonNull NormalizedTemplateParameter... typeParameters) {
-		ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();
-//		initClass(asClass, eClassifier, typeId, flags, typeParameters);
-//		asClass.setESObject(eClassifier);
-		asClass.setName(PivotConstants.ORPHANAGE_NAME);
-	//	if (typeId != null) {
-	//		asClass.setTypeId(typeId);
-	//	}
-		asClass.setIsAbstract(true);
-		initTemplateParameters(asClass, typeParameters);
-	//	/*Ecore*/FlatModel flatModel = getFlatModel();					// XXX Migrate to initFragments
-	//	FlatClass flatClass = flatModel./*Ecore*/getFlatClass(asClass);
-	//	asClass.setFlatClass(flatClass);
-	//	PACKAGE.get
-		return asClass;
 	}
 
 	private <T extends CollectionType> void initTemplateParameters(@NonNull TemplateableElement pivotType, @NonNull TemplateParameter @Nullable... templateParameters) {

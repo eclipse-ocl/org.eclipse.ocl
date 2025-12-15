@@ -36,6 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -47,6 +48,7 @@ import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -55,8 +57,10 @@ import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateArgument;
@@ -397,6 +401,17 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void declareConstraints() {
+		boolean hasConstraints = false;
+		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
+			if (!getMemberConstraintsSortedByName(pClass).isEmpty()) {
+				hasConstraints = true;
+				break;
+			}
+		}
+		if (!hasConstraints) {
+			return;
+		}
+		s.append("\n");
 		s.append("	/**\n");
 		s.append("	 *	The invariant descriptors for each invariant of each type.\n");
 		s.append("	 *\n");
@@ -769,6 +784,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				Operation op = sortedOperations.get(i);
 				Iteration it = op instanceof Iteration ? (Iteration)op : null;
 				boolean hasAccumulator = (it != null) && (it.getOwnedAccumulator() != null);
+				Precedence precedence = op.getPrecedence();
+				AssociativityKind associativity = precedence != null ? precedence.getAssociativity() : null;
 				EOperation eOperation = (EOperation)op.getESObject();
 				String literalName = genModelHelper.basicGetQualifiedEcoreLiteralName(eOperation);
 				StringBuilder sFlags = new StringBuilder();
@@ -793,6 +810,12 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				}
 				if (hasAccumulator) {
 					sFlags.append(" | HasAccumulator");
+				}
+				if (associativity == AssociativityKind.LEFT) {
+					sFlags.append(" | LeftAssociative");
+				}
+				if (associativity == AssociativityKind.RIGHT) {
+					sFlags.append(" | RightAssociative");
 				}
 				s.append("		public static final ");
 				s.appendClassReference(true, it != null ? Iteration.class : Operation.class);
@@ -1010,6 +1033,48 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				name2lambdaParameter.put(getLambdaParameterName(resultParameter), resultParameter);		// Any one of a multiple is ok
 			}
 		}
+	}
+
+	protected void declarePrecedences() {
+		if (!(asPackage instanceof Library)) {
+			return;
+		}
+		List<Precedence> asPrecedences = ((Library)asPackage).getOwnedPrecedences();
+		if ((asPrecedences == null) || asPrecedences.isEmpty()) {
+			return;
+		}
+		s.append("\n");
+		s.append("	/**\n");
+		s.append("	 *	The precedences for the library operations.\n");
+		s.append("	 *\n");
+		s.append("	 * @noextend This class is not intended to be subclassed by clients.\n");
+		s.append("	 * @noinstantiate This class is not intended to be instantiated by clients.\n");
+		s.append("	 * @noreference This class is not intended to be referenced by clients.\n");
+		s.append("	 */\n");
+		s.append("	public static class " + AbstractGenModelHelper.PRECEDENCES_PACKAGE_NAME + " {\n");
+		appendInitializationStart(AbstractGenModelHelper.PRECEDENCES_PACKAGE_NAME);
+		boolean isFirstPrecedence = true;
+		for (Precedence asPrecedence : asPrecedences) {
+			assert asPrecedence != null;
+			String name = PivotUtil.getName(asPrecedence);
+			if (isFirstPrecedence) {
+				s.append("\n");
+				isFirstPrecedence = false;
+			}
+			s.append("		public static final ");
+			s.appendClassReference(true, Precedence.class);
+			s.append(" ");
+			asPrecedence.accept(emitDeclaredName);
+			s.append(" = LIBRARY.createPrecedence(PACKAGE, ");
+			s.appendString(name);
+			s.append(", ");
+			s.appendClassReference(null, AssociativityKind.class);
+			s.append(".");
+			s.append(asPrecedence.getAssociativity().getLiteral());
+			s.append(");\n");
+		}
+		appendInitializationEnd(false);
+		s.append("	}\n");
 	}
 
 	protected void declareProperties() {
@@ -1648,8 +1713,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		declareFragments();
 		s.append("\n");
 		declareParameterLists();
-		s.append("\n");
 		declareConstraints();
+		declarePrecedences();
 		s.append("\n");
 		boolean hasPostInit = declareOperations();
 		s.append("\n");
@@ -1732,6 +1797,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			else {
 				return PivotPackage.Literals.PRIMITIVE_TYPE;
 			}
+		}
+		else if (asClass instanceof SelfType) {
+			return PivotPackage.Literals.SELF_TYPE;
 		}
 		else if (asClass instanceof VoidType) {
 			return PivotPackage.Literals.VOID_TYPE;

@@ -21,8 +21,8 @@
       <ownedProperties xmi:id="12PvD" name="referredAssociationClass" opposite="#AgtLW" type="#oE9s0"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:Enumeration" xmi:id=",Swbo" name="AssociativityKind" superClasses="&_0;#+8+by">
-      <ownedLiterals xmi:id="XL8wB" name="left"/>
-      <ownedLiterals xmi:id="sTOCI" name="right" value="1"/>
+      <ownedLiterals xmi:id="XL8wB" literal="LEFT" name="left"/>
+      <ownedLiterals xmi:id="sTOCI" literal="RIGHT" name="right" value="1"/>
     </ownedClasses>
     <ownedClasses xmi:id="Tr9Pp" name="BagType" superClasses="#pawWx"/>
     <ownedClasses xmi:id="D4Bd4" isAbstract="true" name="Behavior" superClasses="#pDcbe">

@@ -100,11 +100,6 @@
                 <message_argument value="createTemplateArgument()"/>
             </message_arguments>
         </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="createTemplateParameterSubstitution()"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
         <filter id="1211105284">
@@ -185,16 +180,6 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getTemplateArgument_OwningTemplateableElement()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getTemplateParameterSubstitution_ActualIsRequired()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getTemplateParameterSubstitution_OwningTemplateableElement()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -312,16 +297,6 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="TEMPLATE_ARGUMENT__OWNING_TEMPLATEABLE_ELEMENT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="TEMPLATE_PARAMETER_SUBSTITUTION__ACTUAL_IS_REQUIRED"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="TEMPLATE_PARAMETER_SUBSTITUTION__OWNING_TEMPLATEABLE_ELEMENT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -646,28 +621,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ClassImpl.java" type="org.eclipse.ocl.pivot.internal.ClassImpl">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="basicGetGeneric()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="generic"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="ownedTemplateArguments"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="ownedTemplateParameters"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CompleteClassImpl.java" type="org.eclipse.ocl.pivot.internal.CompleteClassImpl">
         <filter id="1143996420">
             <message_arguments>
@@ -757,11 +710,6 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="basicGetUnspecializedElement()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="generic"/>
             </message_arguments>
         </filter>
@@ -798,11 +746,6 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="basicGetUnspecializedElement()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
                 <message_argument value="generic"/>
             </message_arguments>
         </filter>
@@ -814,37 +757,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ownedTemplateParameters"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="CLSSid_Class"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="MODEL"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="RESOURCE"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables$Constraints">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="Constraints"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables$TypeParameters">
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="$$0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -871,6 +783,13 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="RESOURCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Precedences">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="Precedences"/>
             </message_arguments>
         </filter>
     </resource>
@@ -939,11 +858,6 @@
                 <message_argument value="caseTemplateArgument(TemplateArgument)"/>
             </message_arguments>
         </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="caseTemplateParameterSubstitution(TemplateArgument)"/>
-            </message_arguments>
-        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
         <filter id="1143996420">
@@ -964,11 +878,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="validateTemplateArgument(TemplateArgument, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="validateTemplateParameterSubstitution(TemplateArgument, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
