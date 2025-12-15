@@ -1652,8 +1652,22 @@ implements Operation {
 						return esObject;
 					}
 				}
+				for (Operation asOperation : operationOverloads) {		// Fudge no-EOperation Pivot/OCLstdlib conflict
+					String implementationClass = asOperation.getImplementationClass();
+					if (implementationClass != null) {
+						return asOperation;
+					}
+				}
 			}
 		}
 		return getESObject();
+	}
+
+	@Override
+	public void setName(String newName) {
+		if ("conformsTo".equals(newName)) {
+			getClass();		// XXX
+		}
+		super.setName(newName);
 	}
 } //OperationImpl
