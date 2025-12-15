@@ -612,12 +612,18 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	public org.eclipse.ocl.pivot.@NonNull Package createPackage(/*@NonNull*/ EPackage ePackage) {
 		// XXX ?? if ePackage.eResource() is a LazyXMIidAssigningResource configure its Tables
 		assert ePackage != null;
-		PackageImpl asPackage = (PackageImpl)PivotFactory.eINSTANCE.createPackage();
+		org.eclipse.ocl.pivot.Package asPackage;
+		if (PivotUtil.isLibrary(ePackage)) {
+			asPackage = PivotFactory.eINSTANCE.createLibrary();
+		}
+		else {
+			asPackage = PivotFactory.eINSTANCE.createPackage();
+		}
 		asPackage.setName(ePackage.getName());
 		asPackage.setNsPrefix(ePackage.getNsPrefix());
 		asPackage.setURI(ePackage.getNsURI());
 	//	asPackage.setPackageId(packageId != null ? packageId : IdManager.getPackageId(ePackage));
-		asPackage.setESObject(ePackage);
+		((PackageImpl)asPackage).setESObject(ePackage);
 		asPackage.getPackageId();			// XXX
 		return asPackage;
 	}
