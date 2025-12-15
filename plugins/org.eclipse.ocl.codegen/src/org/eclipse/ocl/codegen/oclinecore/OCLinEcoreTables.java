@@ -1072,7 +1072,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			s.append(", ");
 			s.appendClassReference(null, AssociativityKind.class);
 			s.append(".");
-			s.append(asPrecedence.getAssociativity().getLiteral());
+			s.append(asPrecedence.getAssociativity().getLiteral().toUpperCase());		// Why is case wrong?
 			s.append(");\n");
 		}
 		appendInitializationEnd(false);
@@ -1170,7 +1170,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					} else {
 						Property opposite = prop.getOpposite();
 						if ((opposite != null) && hasEcore(opposite)) {
-							EStructuralFeature eStructuralFeature = ClassUtil.requireNonNull((EStructuralFeature)opposite.getESObject());
 							s.append("OppositeProperty(");
 							pClass.accept(emitReferencedElement);
 							s.append(", " );

@@ -34,7 +34,7 @@ public enum AssociativityKind
 	 * @generated
 	 * @ordered
 	 */
-	LEFT(0, "left", "LEFT"), //$NON-NLS-1$ //$NON-NLS-2$
+	LEFT(0, "left", "left"), //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Right</b></em>' literal object.
@@ -44,7 +44,7 @@ public enum AssociativityKind
 	 * @generated
 	 * @ordered
 	 */
-	RIGHT(1, "right", "RIGHT"); //$NON-NLS-1$ //$NON-NLS-2$
+	RIGHT(1, "right", "right"); //$NON-NLS-1$ //$NON-NLS-2$
 
 	/**
 	 * The '<em><b>Left</b></em>' literal value.

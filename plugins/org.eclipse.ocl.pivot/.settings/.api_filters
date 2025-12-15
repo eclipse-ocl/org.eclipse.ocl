@@ -760,6 +760,30 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_Class"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="MODEL"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="RESOURCE"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/lookup/LookupTables.java" type="org.eclipse.ocl.pivot.internal.lookup.LookupTables$TypeParameters">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/UndefinedValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl">
         <filter id="1143996420">
             <message_arguments>

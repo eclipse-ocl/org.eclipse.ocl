@@ -35,8 +35,8 @@
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AssociativityKind">
-    <eLiterals name="left" literal="LEFT"/>
-    <eLiterals name="right" value="1" literal="RIGHT"/>
+    <eLiterals name="left"/>
+    <eLiterals name="right" value="1"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CollectionKind">
     <eLiterals name="Collection"/>
