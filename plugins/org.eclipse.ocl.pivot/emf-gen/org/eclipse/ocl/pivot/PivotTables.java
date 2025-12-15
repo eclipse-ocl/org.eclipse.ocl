@@ -2069,10 +2069,10 @@ public class PivotTables extends AbstractTables
 			Constraints.init();
 		}
 
-		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation(Types._BooleanType, "allInstances", ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
+		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation(Types._BooleanType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation(Types._Class, "allInstances", ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
+		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation(Types._Class, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _CompleteModel__getOwnedCompletePackage = LIBRARY.createOperation(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL___GET_OWNED_COMPLETE_PACKAGE__STRING, Parameters._String, Types._CompletePackage,
@@ -2086,10 +2086,10 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _Element__getValue = LIBRARY.createOperation(Types._Element, PivotPackage.Literals.ELEMENT___GET_VALUE__TYPE_STRING, Parameters._Type___String, Types._Element,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation(Types._Enumeration, "allInstances", ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
+		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation(Types._Enumeration, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation(Types._InvalidType, "allInstances", ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
+		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation(Types._InvalidType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _OCLExpression__isNonNull = LIBRARY.createOperation(Types._OCLExpression, PivotPackage.Literals.OCL_EXPRESSION___IS_NON_NULL, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
@@ -2114,10 +2114,10 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _SelfType__specializeIn = LIBRARY.createOperation(Types._SelfType, PivotPackage.Literals.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE, Parameters._CallExp___Type, Types._Type,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation(Types._Stereotype, "allInstances", ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
+		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation(Types._Stereotype, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _Type__conformsTo = LIBRARY.createOperation(Types._Type, "conformsTo", Parameters._Type, OCLstdlibTables.Types._Boolean,
+		public static final @NonNull Operation _Type__conformsTo = LIBRARY.createOperation(Types._Type, "conformsTo", null, Parameters._Type, OCLstdlibTables.Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
 		public static final @NonNull Operation _Type__flattenedType = LIBRARY.createOperation(Types._Type, PivotPackage.Literals.TYPE___FLATTENED_TYPE, ParameterTypes.EMPTY_LIST, Types._Type,
 			1, TemplateParameters.EMPTY_LIST, null);
@@ -2144,7 +2144,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _ValueSpecification__unlimitedValue = LIBRARY.createOperation(Types._ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___UNLIMITED_VALUE, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._UnlimitedNatural,
 			5, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _VoidType__allInstances = LIBRARY.createOperation(Types._VoidType, "allInstances", ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
+		public static final @NonNull Operation _VoidType__allInstances = LIBRARY.createOperation(Types._VoidType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		static {

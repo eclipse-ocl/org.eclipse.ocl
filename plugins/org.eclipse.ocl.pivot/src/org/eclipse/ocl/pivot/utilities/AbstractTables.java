@@ -105,14 +105,6 @@ public abstract class AbstractTables
 	/**
 	 * @since 7.0
 	 */
-	public static final int LeftAssociative = HasAccumulator << 1;
-	/**
-	 * @since 7.0
-	 */
-	public static final int RightAssociative = LeftAssociative << 1;
-	/**
-	 * @since 7.0
-	 */
 	public static final int IndexMask = IsComposite - 1;			// Bottom 8 bits
 
 	public static final @NonNull Map<@NonNull String, @NonNull AbstractTables> nsURI2tables = new HashMap<>();

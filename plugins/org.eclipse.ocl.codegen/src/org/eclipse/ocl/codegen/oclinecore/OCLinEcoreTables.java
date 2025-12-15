@@ -785,7 +785,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				Iteration it = op instanceof Iteration ? (Iteration)op : null;
 				boolean hasAccumulator = (it != null) && (it.getOwnedAccumulator() != null);
 				Precedence precedence = op.getPrecedence();
-				AssociativityKind associativity = precedence != null ? precedence.getAssociativity() : null;
 				EOperation eOperation = (EOperation)op.getESObject();
 				String literalName = genModelHelper.basicGetQualifiedEcoreLiteralName(eOperation);
 				StringBuilder sFlags = new StringBuilder();
@@ -811,12 +810,6 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				if (hasAccumulator) {
 					sFlags.append(" | HasAccumulator");
 				}
-				if (associativity == AssociativityKind.LEFT) {
-					sFlags.append(" | LeftAssociative");
-				}
-				if (associativity == AssociativityKind.RIGHT) {
-					sFlags.append(" | RightAssociative");
-				}
 				s.append("		public static final ");
 				s.appendClassReference(true, it != null ? Iteration.class : Operation.class);
 				s.append(" ");
@@ -831,6 +824,15 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				}
 				else {
 					s.appendString(PivotUtil.getName(op));
+					if (it == null) {
+						s.append(", ");
+						if (precedence != null) {
+							precedence.accept(emitReferencedElement);
+						}
+						else {
+							s.append("null");
+						}
+					}
 				}
 				s.append(", ");
 				if (it != null) {

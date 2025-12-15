@@ -533,9 +533,14 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 * Create an operation. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
+	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @Nullable Precedence precedence, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
+			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+		return createOperation(asClass, null, name, precedence, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
+	}
+	@Deprecated
 	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
-		return createOperation(asClass, null, name, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
+		return createOperation(asClass, null, name, null, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
 	}
 
 	/**
@@ -546,10 +551,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 		String name = eOperation.getName();
 		assert name != null;
-		return createOperation(asClass, eOperation, name, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
+		return createOperation(asClass, eOperation, name, null, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
 	}
 
-	private @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable EOperation eOperation, @NonNull String name, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
+	private @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable EOperation eOperation, @NonNull String name, @Nullable Precedence precedence, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(name);
@@ -559,12 +564,13 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 	//	asOperation.setIndex(index);
 		asOperation.setImplementation(implementation);
-		if ((operationFlagsAndIndex & AbstractTables.LeftAssociative) != 0) {
-			asOperation.setPrecedence(getPrecedence(asClass, AssociativityKind.LEFT));
-		}
-		if ((operationFlagsAndIndex & AbstractTables.RightAssociative) != 0) {
-			asOperation.setPrecedence(getPrecedence(asClass, AssociativityKind.RIGHT));
-		}
+		asOperation.setPrecedence(precedence);
+	//	if ((operationFlagsAndIndex & AbstractTables.LeftAssociative) != 0) {
+	//		asOperation.setPrecedence(getPrecedence(asClass, AssociativityKind.LEFT));
+	//	}
+	//	if ((operationFlagsAndIndex & AbstractTables.RightAssociative) != 0) {
+	//		asOperation.setPrecedence(getPrecedence(asClass, AssociativityKind.RIGHT));
+	//	}
 		int n = 0;
 		if (typeParameters.parametersSize() > 0) {
 			List<@NonNull TemplateParameter> asTemplateParameters = PivotUtil.getOwnedTemplateParametersList(asOperation, true);

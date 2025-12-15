@@ -500,6 +500,14 @@ public class OCLinEcoreTablesUtils
 		}
 
 		@Override
+		public @Nullable Object visitPrecedence(org.eclipse.ocl.pivot.@NonNull Precedence asPrecedence) {
+			s.append(AbstractGenModelHelper.PRECEDENCES_PACKAGE_NAME);
+			s.append(".");
+			super.visitPrecedence(asPrecedence);
+			return null;
+		}
+
+		@Override
 		public @Nullable Object visitProperty(@NonNull Property asProperty) {
 			org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asProperty);
 			GenClassifier genClassifier = genModelHelper.basicGetGenClassifier(asClass);
