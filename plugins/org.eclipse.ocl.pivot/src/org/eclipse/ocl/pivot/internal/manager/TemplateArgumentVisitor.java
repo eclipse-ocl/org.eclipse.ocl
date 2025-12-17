@@ -615,7 +615,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		if (formalElements.size() > 0) {
 			OCLExpression actualElement = object.getOwnedBody();
 			Type actualType = actualElement.getType();
-			LibraryIterationOrOperation implementation = (LibraryIterationOrOperation) referredIteration.getImplementation();
+			LibraryIterationOrOperation implementation = environmentFactory.getIterationOrOperationImplementation(referredIteration);
 			if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
 				actualType = implementation.resolveBodyType(environmentFactory, object, actualType);
 			}
@@ -684,7 +684,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		//
 		//	FIXME More general processing for T2 < T1
 		//
-		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation)referredOperation.getImplementation();
+		LibraryIterationOrOperation implementation = environmentFactory.getIterationOrOperationImplementation(referredOperation);
 		if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
 			implementation.resolveUnmodeledTemplateArguments(this, object);
 		}
