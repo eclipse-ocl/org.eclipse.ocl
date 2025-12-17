@@ -153,13 +153,13 @@ public class ConstraintMerger extends AbstractProjectComponent
 			ResourceUtils.checkResourceSet(asResourceSet);
 			//
 			Set<@NonNull Resource> modifiedPrimaryASResources = new HashSet<>();
-			Map<@NonNull CompleteClass, @NonNull List<org.eclipse.ocl.pivot.Class>> completeClass2mergeTypes = new HashMap<>();
+			Map<@NonNull CompleteClass, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> completeClass2mergeTypes = new HashMap<>();
 			for (Resource secondaryASResource : asResourceSet.getResources()) {
 				if (!primaryASResources.contains(secondaryASResource)) {
 					for (TreeIterator<EObject> tit = secondaryASResource.getAllContents(); tit.hasNext(); ) {
 						EObject eObject = tit.next();
 						if (eObject instanceof Library) {
-							tit.prune();
+						//	tit.prune();		// XXX precedences
 						}
 						else if (eObject instanceof Orphanage) {
 							tit.prune();
@@ -167,7 +167,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 						else if (eObject instanceof org.eclipse.ocl.pivot.Class) {
 							org.eclipse.ocl.pivot.Class mergeType = (org.eclipse.ocl.pivot.Class)eObject;
 							CompleteClass completeClass = completeModel.getCompleteClass(mergeType);
-							List<org.eclipse.ocl.pivot.Class> mergeTypes = completeClass2mergeTypes.get(completeClass);
+							List<org.eclipse.ocl.pivot.@NonNull Class> mergeTypes = completeClass2mergeTypes.get(completeClass);
 							if (mergeTypes == null) {
 								mergeTypes = new ArrayList<>();
 								completeClass2mergeTypes.put(completeClass, mergeTypes);
@@ -179,7 +179,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				}
 			}
 			for (@NonNull CompleteClass completeClass : completeClass2mergeTypes.keySet()) {
-				List<org.eclipse.ocl.pivot.Class> mergeTypes = completeClass2mergeTypes.get(completeClass);
+				List<org.eclipse.ocl.pivot.@NonNull Class> mergeTypes = completeClass2mergeTypes.get(completeClass);
 				assert mergeTypes != null;
 				boolean merged = false;
 				for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
@@ -195,6 +195,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				}
 				if (!merged) {
 					// FIXME migrate class
+					getClass();		// XXX
 				}
 			}
 			//
