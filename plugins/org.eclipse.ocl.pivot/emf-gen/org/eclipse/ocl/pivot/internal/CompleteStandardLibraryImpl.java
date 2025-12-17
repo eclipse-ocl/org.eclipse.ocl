@@ -362,14 +362,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	private @Nullable Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap = null;
 
 	/**
-	 * The resource of the Standard Library defined by loadDefaultLibrary. If the URI corresponds to a
-	 * registered library, the registered library is loaded, else the first library in asLibraries with a matching
-	 * URI is installed. Once asLibraryResource is determined all types libraries in asLibraries and all future
-	 * asLibraries are automatically merged into the Standard Library.
-	 */
-	protected @Nullable Resource asLibraryResource = null;
-
-	/**
 	 * All Library packages imported into the current type managed domain.
 	 */
 	protected final @NonNull List<@NonNull Library> asLibraries = new ArrayList<>();
@@ -715,7 +707,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @Nullable Resource getLibraryResource() { return asLibraryResource; }
+	public @Nullable Resource getLibraryResource() {
+		return asLibraries.isEmpty() ? null : asLibraries.get(0).eResource();
+	}
 
 	@Override
 	public @NonNull List<@NonNull Library> getLibraries() { return asLibraries; }
@@ -1139,7 +1133,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	@Override
 	public void installLibrary() {
-		if (!libraryLoadInProgress && (asLibraryResource == null) && (asLibraries.size() > 0)) {
+		if (!libraryLoadInProgress && (getLibraryResource() == null) && (asLibraries.size() > 0)) {
 			getOclAnyType();
 		}
 	}
@@ -1165,7 +1159,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 				}
 			}
 			asLibraries.add(asLibrary);
-			if (asLibraryResource != null) {
+			if (getLibraryResource() != null) {
 				defineLibraryTypes(asLibrary);
 			}
 		}
@@ -1206,36 +1200,35 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		if (uri == null) {
 			return null;
 		}
-		Resource asLibraryResource2 = asLibraryResource;
-		if (asLibraryResource2 != null) {
-			return asLibraryResource2;
+		if ((nameToLibraryTypeMap != null) && nameToLibraryTypeMap.containsKey("Collection")) {
+			return getLibraryResource();
 		}
 		boolean savedLibraryLoadInProgress = libraryLoadInProgress;
 		libraryLoadInProgress = true;
+		Resource asLibraryResource = null;
 		try {
 			StandardLibraryContribution contribution = StandardLibraryContribution.REGISTRY.get(uri);
 			if (contribution != null) {
-				asLibraryResource2 = contribution.getResource();
+				asLibraryResource = contribution.getResource();
 			}
 			else {
 				for (@NonNull Library asLibrary : asLibraries) {
 					if (uri.equals(asLibrary.getURI())) {
-						asLibraryResource2 = asLibrary.eResource();
+						asLibraryResource = asLibrary.eResource();
 						break;
 					}
 				}
-				if (asLibraryResource2 == null) {
+				if (asLibraryResource == null) {
 					return null;
 				}
 			}
-			asLibraryResource = asLibraryResource2;
 			int size = asLibraries.size();
 			PivotMetamodelManager metamodelManager = (PivotMetamodelManager)getEnvironmentFactory().getMetamodelManager();
-			metamodelManager.installResource(asLibraryResource2);
+			metamodelManager.installResource(asLibraryResource);
 			for (int i = 0; i < size; i++) {
 				defineLibraryTypes(asLibraries.get(i));
 			}
-			return asLibraryResource2;
+			return asLibraryResource;
 		}
 		finally {
 			libraryLoadInProgress = savedLibraryLoadInProgress;
@@ -1245,6 +1238,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public @Nullable Resource loadLibraryResource(@NonNull String uri) {
 		if (uri.equals(getDefaultStandardLibraryURI())) {
+			Resource asLibraryResource = getLibraryResource();
 			if (asLibraryResource != null) {
 				return asLibraryResource;
 			}
@@ -1295,7 +1289,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		uniqueCollectionType = null;
 		unlimitedNaturalType = null;
 		nameToLibraryTypeMap = null;
-		asLibraryResource = null;
 		asLibraries.clear();
 		super.resetLibrary();
 	}
