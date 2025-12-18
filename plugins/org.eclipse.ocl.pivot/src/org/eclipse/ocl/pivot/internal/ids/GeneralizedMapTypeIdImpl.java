@@ -101,11 +101,6 @@ public class GeneralizedMapTypeIdImpl extends GeneralizedTypeIdImpl<@NonNull Map
 	}
 
 	@Override
-	public @NonNull String getMetaclassName() {
-		return name + "Type";
-	}
-
-	@Override
 	public @NonNull TemplateParameterId getValueTypeId() {
 		return TypeId.T_2;
 	}

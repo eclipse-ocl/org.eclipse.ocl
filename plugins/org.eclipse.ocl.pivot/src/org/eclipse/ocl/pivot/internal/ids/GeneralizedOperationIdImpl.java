@@ -106,14 +106,6 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 		return this;
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @NonNull String getMetaclassName() {
-		return TypeId.OPERATION_NAME;
-	}
-
 	@Override
 	public @NonNull ParametersId getParametersId() {
 		return parametersId;

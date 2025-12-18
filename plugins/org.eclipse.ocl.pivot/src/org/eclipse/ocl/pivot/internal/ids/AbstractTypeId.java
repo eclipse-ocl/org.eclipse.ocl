@@ -33,11 +33,6 @@ public abstract class AbstractTypeId extends AbstractElementId implements TypeId
 	}
 
 	@Override
-	public @NonNull String getMetaclassName() {
-		return TypeId.CLASS_NAME;
-	}
-
-	@Override
 	public @NonNull OperationId getOperationId(@NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
 		GeneralizedOperationIdImpl.OperationIdSingletonScope memberOperations2 = memberOperations;
 		if (memberOperations2 == null) {

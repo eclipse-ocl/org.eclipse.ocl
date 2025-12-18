@@ -29,8 +29,6 @@ public interface CollectionTypeId extends BuiltInTypeId, TemplateableId
 	 */
 	@NonNull IntegerValue getLowerValue();
 	@Override
-	@NonNull String getMetaclassName();
-	@Override
 	@NonNull CollectionTypeId getSpecializedId(@NonNull BindingsId templateBindings);
 
 	/**

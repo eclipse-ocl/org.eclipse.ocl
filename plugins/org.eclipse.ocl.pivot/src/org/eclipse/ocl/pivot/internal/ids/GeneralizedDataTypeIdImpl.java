@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 
 public class GeneralizedDataTypeIdImpl extends GeneralizedNestedTypeIdImpl implements DataTypeId
 {
@@ -90,13 +89,5 @@ public class GeneralizedDataTypeIdImpl extends GeneralizedNestedTypeIdImpl imple
 	@Override
 	protected @NonNull TemplateableTypeId createSpecializedId(@NonNull BindingsId templateBindings) {
 		return new SpecializedDataTypeIdImpl(this, templateBindings);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @NonNull String getMetaclassName() {
-		return TypeId.DATA_TYPE_NAME;
 	}
 }

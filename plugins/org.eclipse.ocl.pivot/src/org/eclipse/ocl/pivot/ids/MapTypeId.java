@@ -21,8 +21,6 @@ public interface MapTypeId extends BuiltInTypeId, TemplateableId
 	@NonNull MapTypeId getGeneralizedId();
 	@NonNull TypeId getKeyTypeId();
 	@Override
-	@NonNull String getMetaclassName();
-	@Override
 	@NonNull MapTypeId getSpecializedId(@NonNull BindingsId bindingsId);
 
 	/**

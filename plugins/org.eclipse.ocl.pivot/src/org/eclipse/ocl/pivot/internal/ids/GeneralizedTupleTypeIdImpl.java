@@ -123,11 +123,6 @@ public class GeneralizedTupleTypeIdImpl extends AbstractTypeId implements TupleT
 	}
 
 	@Override
-	public @NonNull String getMetaclassName() {
-		return TUPLE_TYPE_NAME;
-	}
-
-	@Override
 	public @NonNull String getName() {
 		return TypeId.TUPLE_NAME;
 	}

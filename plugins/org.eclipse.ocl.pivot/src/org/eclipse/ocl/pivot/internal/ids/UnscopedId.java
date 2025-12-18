@@ -12,11 +12,18 @@ package org.eclipse.ocl.pivot.internal.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.ids.PropertyId;
+import org.eclipse.ocl.pivot.internal.ids.PropertyIdImpl.PropertyIdSingletonScope;
 
 public abstract class UnscopedId extends AbstractTypeId
 {
 	protected final @NonNull String name;
 	protected final int hashCode;
+
+	/**
+	 * Map from the property name to the propertyIds.
+	 */
+	private @Nullable PropertyIdSingletonScope memberProperties = null;
 
 	/**
 	 * @since 1.18
@@ -46,6 +53,20 @@ public abstract class UnscopedId extends AbstractTypeId
 
 	public @NonNull String getName() {
 		return name;
+	}
+
+	@Override
+	public @NonNull PropertyId getPropertyId(@NonNull String name) {
+		PropertyIdSingletonScope memberProperties2 = memberProperties;
+		if (memberProperties2 == null) {
+			synchronized (this) {
+				memberProperties2 = memberProperties;
+				if (memberProperties2 == null) {
+					memberProperties = memberProperties2 = new PropertyIdSingletonScope();
+				}
+			}
+		}
+		return memberProperties2.getSingleton(this, name);
 	}
 
 	@Override

@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ids.EnumerationLiteralIdImpl.EnumerationLiteralIdSingletonScope;
 
 public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
@@ -110,11 +109,6 @@ public class EnumerationIdImpl extends AbstractTypeId implements EnumerationId
 			}
 		}
 		return memberEnumerationLiterals2.getSingleton(this, name);
-	}
-
-	@Override
-	public @NonNull String getMetaclassName() {
-		return TypeId.ENUMERATION_NAME;
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
-import org.eclipse.ocl.pivot.ids.TypeId;
 
 public class EnumerationLiteralIdImpl extends UnscopedId implements EnumerationLiteralId
 {
@@ -79,13 +78,6 @@ public class EnumerationLiteralIdImpl extends UnscopedId implements EnumerationL
 	@Override
 	public @NonNull String getDisplayName() {
 		return parentId + "::" + name;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override public @NonNull String getMetaclassName() {
-		return TypeId.ENUMERATION_NAME;
 	}
 
 	@Override

@@ -68,14 +68,6 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 		}
 	}
 
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @NonNull String getMetaclassName() {
-		return TypeId.VOID_TYPE_NAME;
-	}
-
 	public @Nullable Element getOrigin() {
 		return null;
 	}

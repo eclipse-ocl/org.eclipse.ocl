@@ -36,9 +36,4 @@ public class OclInvalidTypeIdImpl extends OclVoidTypeIdImpl implements OclInvali
 			return null;
 		}
 	}
-
-	@Override
-	public @NonNull String getMetaclassName() {
-		return TypeId.INVALID_TYPE_NAME;
-	}
 }

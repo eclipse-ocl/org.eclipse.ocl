@@ -191,11 +191,6 @@ public interface TypeId extends ElementId
 	@Nullable String getLiteralName();
 
 	/**
-	 * @since 7.0
-	 */
-	@NonNull String getMetaclassName();
-
-	/**
 	 * Return the OperationId for an Operation of this typeId.
 	 * <p>
 	 * Throws UnsupportedException for typeIds such as Primitive Types that may not have operations.
