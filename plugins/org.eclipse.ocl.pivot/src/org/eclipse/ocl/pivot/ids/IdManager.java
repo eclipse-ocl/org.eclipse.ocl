@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
@@ -39,6 +40,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl.BindingsIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.CompletePackageIdImpl.CompletePackageIdSingletonScope;
+import org.eclipse.ocl.pivot.internal.ids.ExtraParameters;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedCollectionTypeIdImpl.CollectionTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedLambdaTypeIdImpl.LambdaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedMapTypeIdImpl.MapTypeIdSingletonScope;
@@ -409,7 +411,14 @@ public final class IdManager
 				parametersId = getParametersId(typeIds);
 			}
 		}
-		return parentTypeId.getOperationId(typeParametersSize, name, parametersId);
+		int accumulators = 0;
+		int iterators = 0;
+		if (anOperation instanceof Iteration) {
+			iterators = ((Iteration)anOperation).getOwnedIterators().size();
+			accumulators = ((Iteration)anOperation).getOwnedAccumulator() != null ? 1 : 0;
+		}
+		ExtraParameters extraParameters = ExtraParameters.get(typeParametersSize, iterators, accumulators);
+		return parentTypeId.getOperationId(extraParameters, name, parametersId);
 	}
 
 	/**

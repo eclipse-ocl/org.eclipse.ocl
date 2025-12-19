@@ -23,10 +23,10 @@ public abstract class GeneralizedNestedTypeIdImpl extends GeneralizedTypeIdImpl<
 	protected final @NonNull PackageId parent;
 
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
-	protected GeneralizedNestedTypeIdImpl(int hashCode, @NonNull PackageId parent, int templateParameters, @NonNull String name) {
-		super(hashCode, templateParameters, name);
+	protected GeneralizedNestedTypeIdImpl(int hashCode, @NonNull PackageId parent, @NonNull ExtraParameters extraParameters, @NonNull String name) {
+		super(hashCode, extraParameters, name);
 		this.parent = parent;
 	}
 

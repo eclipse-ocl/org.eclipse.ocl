@@ -38,7 +38,7 @@ public abstract class AbstractTypeId extends AbstractElementId implements TypeId
 	}
 
 	@Override
-	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+	public @NonNull OperationId getOperationId(@NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
 		GeneralizedOperationIdImpl.OperationIdSingletonScope memberOperations2 = memberOperations;
 		if (memberOperations2 == null) {
 			synchronized (this) {
@@ -48,7 +48,7 @@ public abstract class AbstractTypeId extends AbstractElementId implements TypeId
 				}
 			}
 		}
-		return memberOperations2.getSingleton(this, templateParameters, name, parametersId);
+		return memberOperations2.getSingleton(this, extraParameters, name, parametersId);
 	}
 
 	@Override

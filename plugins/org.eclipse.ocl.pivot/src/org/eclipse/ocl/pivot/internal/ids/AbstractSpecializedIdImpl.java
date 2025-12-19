@@ -22,7 +22,7 @@ public abstract class AbstractSpecializedIdImpl<@NonNull T extends TemplateableI
 	protected final @NonNull BindingsId templateBindings;
 
 	public AbstractSpecializedIdImpl(@NonNull T generalizedId, @NonNull BindingsId templateBindings) {
-		super(generalizedId.hashCode() + templateBindings.hashCode(), generalizedId.getTemplateParameters());
+		super(generalizedId.hashCode() + templateBindings.hashCode(), ExtraParameters.getTemplateParameters(generalizedId.getTemplateParameters()));
 		this.generalizedId = generalizedId;
 		this.templateBindings = templateBindings;
 		int generalizedTemplateParameters = generalizedId.getTemplateParameters();

@@ -71,11 +71,17 @@ public abstract class AbstractTemplateableIdImpl<@NonNull T extends Templateable
 	 * Map from template bindings to the corresponding specialization.
 	 */
 	private @Nullable SpecializedSingletonScope<T> specializations = null;
-	protected final int templateParameters;
+	/**
+	 * @since 7.0
+	 */
+	protected final @NonNull ExtraParameters extraParameters;
 
-	protected AbstractTemplateableIdImpl(@NonNull Integer hashCode, int templateParameters) {
+	/**
+	 * @since 7.0
+	 */
+	protected AbstractTemplateableIdImpl(@NonNull Integer hashCode, @NonNull ExtraParameters extraParameters) {
 		this.hashCode = hashCode;
-		this.templateParameters = templateParameters;
+		this.extraParameters = extraParameters;
 	}
 
 	protected abstract @NonNull T createSpecializedId(@NonNull BindingsId bindingsId);
@@ -84,8 +90,15 @@ public abstract class AbstractTemplateableIdImpl<@NonNull T extends Templateable
 		throw new UnsupportedOperationException();		// Only NestableTypeIds may have enumeration literals.
 	}
 
-	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull OperationId getOperationId(@NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
 		throw new UnsupportedOperationException();		// Only NestableTypeIds may nest.
+	}
+
+	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+		return getOperationId(ExtraParameters.getTemplateParameters(templateParameters), name, parametersId);
 	}
 
 	public @NonNull PropertyId getPropertyId(@NonNull String name) {
@@ -107,13 +120,21 @@ public abstract class AbstractTemplateableIdImpl<@NonNull T extends Templateable
 	}
 
 	public @NonNull T getSpecializedId(@NonNull ElementId... templateBindings) {
-		assert templateBindings.length == templateParameters;
+		assert templateBindings.length == getTemplateParameters();
 		return getSpecializedId(IdManager.getBindingsId(templateBindings));
+	}
+
+//	@Override
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull ExtraParameters getExtraParameters() {
+		return extraParameters;
 	}
 
 	@Override
 	public int getTemplateParameters() {
-		return templateParameters;
+		return extraParameters.getTemplateParameters();
 	}
 
 	@Override

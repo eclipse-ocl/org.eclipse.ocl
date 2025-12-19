@@ -169,7 +169,7 @@ public class GeneralizedLambdaTypeIdImpl extends AbstractGeneralizedIdImpl<@NonN
 
 	private GeneralizedLambdaTypeIdImpl(@NonNull IdManager idManager, @NonNull String name,
 			@NonNull TypedElement context, @Nullable List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
-		super(computeHashCode(name, context, parameters, result), 0, name);
+		super(computeHashCode(name, context, parameters, result), ExtraParameters.NONE, name);
 		this.context = new LambdaParameterId(context);
 		List<@NonNull LambdaParameterId> parameters2 = null;
 		if (parameters != null) {

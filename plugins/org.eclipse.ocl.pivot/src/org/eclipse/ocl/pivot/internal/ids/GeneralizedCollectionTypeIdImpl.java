@@ -70,7 +70,7 @@ public class GeneralizedCollectionTypeIdImpl extends GeneralizedTypeIdImpl<@NonN
 	}
 
 	public GeneralizedCollectionTypeIdImpl(@NonNull IdManager idManager, @NonNull String name) {
-		super(computeHashCode(name), 1, name);
+		super(computeHashCode(name), ExtraParameters.getTemplateParameters(1), name);
 		assert !MAP_NAME.equals(name);
 	}
 

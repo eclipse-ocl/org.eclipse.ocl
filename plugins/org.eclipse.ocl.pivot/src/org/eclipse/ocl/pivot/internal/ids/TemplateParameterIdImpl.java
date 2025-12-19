@@ -172,8 +172,16 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 		return name;
 	}
 
+//	@Override
+//	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+//		throw new UnsupportedOperationException();
+//	}
+
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+	public @NonNull OperationId getOperationId(@NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
 		throw new UnsupportedOperationException();
 	}
 

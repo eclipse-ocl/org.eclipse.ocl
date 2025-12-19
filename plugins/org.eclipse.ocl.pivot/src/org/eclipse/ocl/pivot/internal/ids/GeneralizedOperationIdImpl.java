@@ -27,28 +27,28 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 	private static class OperationIdValue extends AbstractKeyAndValue<@NonNull OperationId>
 	{
 		private @NonNull TypeId parentId;
-		private int templateParameters;
+		private @NonNull ExtraParameters extraParameters;
 		private @NonNull String name;
 		private @NonNull ParametersId parametersId;
 
-		private OperationIdValue(@NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-			super(computeHashCode(parentId, templateParameters, name, parametersId));
+		private OperationIdValue(@NonNull TypeId parentId, @NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+			super(computeHashCode(parentId, extraParameters, name, parametersId));
 			this.parentId = parentId;
-			this.templateParameters = templateParameters;
+			this.extraParameters = extraParameters;
 			this.name = name;
 			this.parametersId = parametersId;
 		}
 
 		@Override
 		public @NonNull OperationId createSingleton() {
-			return new GeneralizedOperationIdImpl(parentId, templateParameters, name, parametersId);
+			return new GeneralizedOperationIdImpl(parentId, extraParameters, name, parametersId);
 		}
 
 		@Override
 		public boolean equals(@Nullable Object that) {
 			if (that instanceof GeneralizedOperationIdImpl) {
 				GeneralizedOperationIdImpl singleton = (GeneralizedOperationIdImpl)that;
-				return singleton.matches(templateParameters, name, parametersId);
+				return singleton.matches(extraParameters, name, parametersId);
 			}
 			else {
 				return false;
@@ -61,20 +61,23 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 	 */
 	public static class OperationIdSingletonScope extends AbstractSingletonScope<@NonNull OperationId, @NonNull OperationIdValue>
 	{
-		public @NonNull OperationId getSingleton(@NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-			return getSingletonFor(new OperationIdValue(parentId, templateParameters, name, parametersId));
+		/**
+		 * @since 7.0
+		 */
+		public @NonNull OperationId getSingleton(@NonNull TypeId parentId, @NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+			return getSingletonFor(new OperationIdValue(parentId, extraParameters, name, parametersId));
 		}
 	}
 
-	private static int computeHashCode(@NonNull ElementId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-		return IdHash.createChildHash(parentId, name) + parametersId.hashCode();
+	private static int computeHashCode(@NonNull ElementId parentId, @NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+		return IdHash.createChildHash(parentId, name) + parametersId.hashCode() + extraParameters.getValue();
 	}
 
 	protected final @NonNull TypeId parentId;
 	protected final @NonNull ParametersId parametersId;
 
-	private GeneralizedOperationIdImpl(@NonNull TypeId parentId, int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
-		super(computeHashCode(parentId, templateParameters, name, parametersId), templateParameters, name);
+	private GeneralizedOperationIdImpl(@NonNull TypeId parentId, @NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+		super(computeHashCode(parentId, extraParameters, name, parametersId), extraParameters, name);
 		this.parentId = parentId;
 		this.parametersId = parametersId;
 	}
@@ -121,11 +124,11 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 		return parentId;
 	}
 
-	private boolean matches(@NonNull Integer thoseTemplateParameters, @NonNull String thatName, @NonNull ParametersId thatParametersId) {
+	private boolean matches(@NonNull ExtraParameters thoseExtraParameters, @NonNull String thatName, @NonNull ParametersId thatParametersId) {
 		if (this.parametersId != thatParametersId) {
 			return false;
 		}
-		if (this.templateParameters != thoseTemplateParameters) {
+		if (this.extraParameters != thoseExtraParameters) {
 			return false;
 		}
 		if (!this.name.equals(thatName)) {

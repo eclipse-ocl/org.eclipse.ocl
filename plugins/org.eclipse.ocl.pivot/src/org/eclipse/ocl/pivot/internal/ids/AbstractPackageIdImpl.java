@@ -69,7 +69,7 @@ public abstract class AbstractPackageIdImpl extends AbstractElementId implements
 				}
 			}
 		}
-		return classes2.getSingleton(this, name, templateParameters);
+		return classes2.getSingleton(this, name, ExtraParameters.getTemplateParameters(templateParameters));
 	}
 
 	@Override
@@ -83,7 +83,7 @@ public abstract class AbstractPackageIdImpl extends AbstractElementId implements
 				}
 			}
 		}
-		return dataTypes2.getSingleton(this, name, templateParameters);
+		return dataTypes2.getSingleton(this, name, ExtraParameters.getTemplateParameters(templateParameters));
 	}
 
 	@Override

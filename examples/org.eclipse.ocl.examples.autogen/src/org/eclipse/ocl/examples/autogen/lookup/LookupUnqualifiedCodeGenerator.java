@@ -101,12 +101,12 @@ public class LookupUnqualifiedCodeGenerator extends LookupVisitorsCodeGenerator 
 		CompleteClass asElementCompleteClass = completeModel.getCompletePackage(standardLibrary.getPackage()).getCompleteClass(asOclElement);
 
 		String parentEnvOpName = ClassUtil.requireNonNull(envOperationName.replace(LookupVisitorsClassContext.UNQUALIFIED_ENV_NAME, LookupVisitorsClassContext.PARENT_ENV_NAME));
-		OperationId parentEnvOperationId = asOclElement.getTypeId().getOperationId(0, parentEnvOpName , emptyParametersId);
+		OperationId parentEnvOperationId = asOclElement.getTypeId().getOperationId(parentEnvOpName , emptyParametersId);
 		this.asElementParentEnvOperation = ClassUtil.requireNonNull(asElementCompleteClass.getOperation(parentEnvOperationId));
 		CompleteClass asEnvironmentCompleteClass = completeModel.getCompleteClass(asEnvironmentType);
-		OperationId nestedEnvOperationId = asEnvironmentType.getTypeId().getOperationId(0, LookupVisitorsClassContext.NESTED_ENV_NAME, emptyParametersId);
+		OperationId nestedEnvOperationId = asEnvironmentType.getTypeId().getOperationId(LookupVisitorsClassContext.NESTED_ENV_NAME, emptyParametersId);
 		this.asEnvironmentNestedEnvOperation = ClassUtil.requireNonNull(asEnvironmentCompleteClass.getOperation(nestedEnvOperationId));
-		OperationId hasFinalResultOperationId = asEnvironmentType.getTypeId().getOperationId(0, LookupVisitorsClassContext.HAS_FINAL_RESULT_NAME, emptyParametersId);
+		OperationId hasFinalResultOperationId = asEnvironmentType.getTypeId().getOperationId(LookupVisitorsClassContext.HAS_FINAL_RESULT_NAME, emptyParametersId);
 		this.asEnvironmentHasFinalResultOperation = ClassUtil.requireNonNull(asEnvironmentCompleteClass.getOperation(hasFinalResultOperationId));
 	}
 

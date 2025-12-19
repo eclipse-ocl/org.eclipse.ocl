@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.internal.ids.ExtraParameters;
 import org.eclipse.ocl.pivot.internal.ids.OclInvalidTypeIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.OclVoidTypeIdImpl;
 
@@ -198,9 +199,21 @@ public interface TypeId extends ElementId
 	 * Return the OperationId for an Operation of this typeId.
 	 * <p>
 	 * Throws UnsupportedException for typeIds such as Primitive Types that may not have operations.
+	 * @since 7.0
 	 */
 	// FIXME This should only be available to ClassId
-	@NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId);
+	default @NonNull OperationId getOperationId(@NonNull String name, @NonNull ParametersId parametersId) {
+		return getOperationId(ExtraParameters.NONE, name, parametersId);
+	}
+
+	/**
+	 * Return the OperationId for an Operation/Iteration of this typeId.
+	 * <p>
+	 * Throws UnsupportedException for typeIds such as Primitive Types that may not have operations.
+	 * @since 7.0
+	 */
+	// FIXME This should only be available to ClassId
+	@NonNull OperationId getOperationId(@NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId);
 
 	/**
 	 * Return the PropertyId for a Property of this typeId.

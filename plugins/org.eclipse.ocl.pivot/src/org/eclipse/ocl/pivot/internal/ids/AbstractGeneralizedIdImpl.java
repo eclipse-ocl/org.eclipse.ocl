@@ -25,8 +25,11 @@ public abstract class AbstractGeneralizedIdImpl<@NonNull T extends TemplateableI
 	 */
 	private @Nullable TemplateParameterIdSingletonScope templateParameterIds = null;
 
-	protected AbstractGeneralizedIdImpl(@NonNull Integer hashCode, int templateParameters, @NonNull String name) {
-		super(hashCode, templateParameters);
+	/**
+	 * @since 7.0
+	 */
+	protected AbstractGeneralizedIdImpl(@NonNull Integer hashCode, @NonNull ExtraParameters extraParameters, @NonNull String name) {
+		super(hashCode, extraParameters);
 		this.name = name;
 	}
 

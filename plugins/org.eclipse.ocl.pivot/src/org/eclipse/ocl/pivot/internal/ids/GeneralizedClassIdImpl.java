@@ -29,25 +29,25 @@ public class GeneralizedClassIdImpl extends GeneralizedNestedTypeIdImpl implemen
 	{
 		private @NonNull PackageId packageId;
 		private @NonNull String name;
-		private int templateParameters;
+		private @NonNull ExtraParameters extraParameters;
 
-		private ClassIdValue(@NonNull PackageId packageId, @NonNull String name, int templateParameters) {
-			super(computeHashCode(packageId, templateParameters, name));
+		private ClassIdValue(@NonNull PackageId packageId, @NonNull String name, @NonNull ExtraParameters extraParameters) {
+			super(computeHashCode(packageId, extraParameters, name));
 			this.packageId = packageId;
 			this.name = name;
-			this.templateParameters = templateParameters;
+			this.extraParameters = extraParameters;
 		}
 
 		@Override
 		public @NonNull ClassId createSingleton() {
-			return new GeneralizedClassIdImpl(packageId, templateParameters, name);
+			return new GeneralizedClassIdImpl(packageId, extraParameters, name);
 		}
 
 		@Override
 		public boolean equals(@Nullable Object that) {
 			if (that instanceof GeneralizedClassIdImpl) {
 				GeneralizedClassIdImpl singleton = (GeneralizedClassIdImpl)that;
-				return name.equals(singleton.getName()) && (templateParameters == singleton.getTemplateParameters());
+				return name.equals(singleton.getName()) && (extraParameters == singleton.getExtraParameters());
 			}
 			else {
 				return false;
@@ -60,17 +60,23 @@ public class GeneralizedClassIdImpl extends GeneralizedNestedTypeIdImpl implemen
 	 */
 	public static class ClassIdSingletonScope extends AbstractSingletonScope<@NonNull ClassId, @NonNull ClassIdValue>
 	{
-		public @NonNull ClassId getSingleton(@NonNull PackageId packageId, @NonNull String name, int templateParameters) {
-			return getSingletonFor(new ClassIdValue(packageId, name, templateParameters));
+		/**
+		 * @since 7.0
+		 */
+		public @NonNull ClassId getSingleton(@NonNull PackageId packageId, @NonNull String name, @NonNull ExtraParameters extraParameters) {
+			return getSingletonFor(new ClassIdValue(packageId, name, extraParameters));
 		}
 	}
 
-	private static int computeHashCode(@NonNull ElementId parentId, int templateParameters, @NonNull String name) {
-		return IdHash.createChildHash(parentId, name) + 7 * templateParameters;
+	private static int computeHashCode(@NonNull ElementId parentId, @NonNull ExtraParameters extraParameters, @NonNull String name) {
+		return IdHash.createChildHash(parentId, name) + 7 * extraParameters.getValue();
 	}
 
-	public GeneralizedClassIdImpl(@NonNull PackageId parentId, int templateParameters, @NonNull String name) {
-		super(computeHashCode(parentId, templateParameters,name), parentId, templateParameters, name);
+	/**
+	 * @since 7.0
+	 */
+	public GeneralizedClassIdImpl(@NonNull PackageId parentId, @NonNull ExtraParameters extraParameters, @NonNull String name) {
+		super(computeHashCode(parentId, extraParameters, name), parentId, extraParameters, name);
 	}
 
 	@Override

@@ -32,12 +32,15 @@ public abstract class GeneralizedTypeIdImpl<@NonNull T extends TemplateableId> e
 	 */
 	private @Nullable PropertyIdSingletonScope memberProperties = null;
 
-	protected GeneralizedTypeIdImpl(int hashCode, int templateParameters, @NonNull String name) {
-		super(hashCode, templateParameters, name);
+	/**
+	 * @since 7.0
+	 */
+	protected GeneralizedTypeIdImpl(int hashCode, @NonNull ExtraParameters extraParameters, @NonNull String name) {
+		super(hashCode, extraParameters, name);
 	}
 
 	@Override
-	public @NonNull OperationId getOperationId(int templateParameters, @NonNull String name, @NonNull ParametersId parametersId) {
+	public @NonNull OperationId getOperationId(@NonNull ExtraParameters extraParameters, @NonNull String name, @NonNull ParametersId parametersId) {
 		GeneralizedOperationIdImpl.OperationIdSingletonScope memberOperations2 = memberOperations;
 		if (memberOperations2 == null) {
 			synchronized (this) {
@@ -47,7 +50,7 @@ public abstract class GeneralizedTypeIdImpl<@NonNull T extends TemplateableId> e
 				}
 			}
 		}
-		return memberOperations2.getSingleton(this, templateParameters, name, parametersId);
+		return memberOperations2.getSingleton(this, extraParameters, name, parametersId);
 	}
 
 	@Override

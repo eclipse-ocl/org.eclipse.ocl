@@ -23,42 +23,42 @@ public interface OperationId extends TemplateableId
 	/**
 	 * @since 1.3
 	 */
-	public static final @NonNull OperationId BOOLEAN_AND = TypeId.BOOLEAN.getOperationId(0, "and", ParametersId.BOOLEAN);
+	public static final @NonNull OperationId BOOLEAN_AND = TypeId.BOOLEAN.getOperationId("and", ParametersId.BOOLEAN);
 
 	/**
 	 * @since 1.3
 	 */
-	public static final @NonNull OperationId BOOLEAN_IMPLIES = TypeId.BOOLEAN.getOperationId(0, "implies", ParametersId.BOOLEAN);
+	public static final @NonNull OperationId BOOLEAN_IMPLIES = TypeId.BOOLEAN.getOperationId("implies", ParametersId.BOOLEAN);
 
 	/**
 	 * @since 1.3
 	 */
-	public static final @NonNull OperationId BOOLEAN_NOT = TypeId.BOOLEAN.getOperationId(0, "not", ParametersId.EMPTY);
+	public static final @NonNull OperationId BOOLEAN_NOT = TypeId.BOOLEAN.getOperationId("not", ParametersId.EMPTY);
 
 	/**
 	 * @since 1.3
 	 */
-	public static final @NonNull OperationId BOOLEAN_OR = TypeId.BOOLEAN.getOperationId(0, "or", ParametersId.BOOLEAN);
+	public static final @NonNull OperationId BOOLEAN_OR = TypeId.BOOLEAN.getOperationId("or", ParametersId.BOOLEAN);
 
 	/**
 	 * @since 1.3
 	 */
-	public static final @NonNull OperationId BOOLEAN_XOR = TypeId.BOOLEAN.getOperationId(0, "xor", ParametersId.BOOLEAN);
+	public static final @NonNull OperationId BOOLEAN_XOR = TypeId.BOOLEAN.getOperationId("xor", ParametersId.BOOLEAN);
 
 	/**
 	 * @since 1.3
 	 */
-	public static final @NonNull OperationId OCLANY_EQUALS = TypeId.OCL_ANY.getOperationId(0, "=", ParametersId.OCL_SELF);
+	public static final @NonNull OperationId OCLANY_EQUALS = TypeId.OCL_ANY.getOperationId("=", ParametersId.OCL_SELF);
 
 	/**
 	 * @since 1.3
 	 */
-	public static final @NonNull OperationId OCLANY_NOT_EQUALS = TypeId.OCL_ANY.getOperationId(0, "<>", ParametersId.OCL_SELF);
+	public static final @NonNull OperationId OCLANY_NOT_EQUALS = TypeId.OCL_ANY.getOperationId("<>", ParametersId.OCL_SELF);
 
 	/**
 	 * @since 7.0
 	 */
-	public static final @NonNull OperationId OCLANY_OCL_IS_UNDEFINED = TypeId.OCL_ANY.getOperationId(0, "oclIsUndefined", ParametersId.EMPTY);
+	public static final @NonNull OperationId OCLANY_OCL_IS_UNDEFINED = TypeId.OCL_ANY.getOperationId("oclIsUndefined", ParametersId.EMPTY);
 
 	@Override
 	@NonNull OperationId getGeneralizedId();

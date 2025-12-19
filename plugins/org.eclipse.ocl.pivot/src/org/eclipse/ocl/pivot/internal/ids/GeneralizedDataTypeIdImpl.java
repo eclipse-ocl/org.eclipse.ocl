@@ -29,25 +29,25 @@ public class GeneralizedDataTypeIdImpl extends GeneralizedNestedTypeIdImpl imple
 	{
 		private @NonNull PackageId packageId;
 		private @NonNull String name;
-		private int templateParameters;
+		private @NonNull ExtraParameters extraParameters;
 
-		private DataTypeIdValue(@NonNull PackageId packageId, @NonNull String name, int templateParameters) {
-			super(computeHashCode(packageId, templateParameters, name));
+		private DataTypeIdValue(@NonNull PackageId packageId, @NonNull String name, @NonNull ExtraParameters extraParameters) {
+			super(computeHashCode(packageId, extraParameters, name));
 			this.packageId = packageId;
 			this.name = name;
-			this.templateParameters = templateParameters;
+			this.extraParameters = extraParameters;
 		}
 
 		@Override
 		public @NonNull DataTypeId createSingleton() {
-			return new GeneralizedDataTypeIdImpl(packageId, templateParameters, name);
+			return new GeneralizedDataTypeIdImpl(packageId, extraParameters, name);
 		}
 
 		@Override
 		public boolean equals(@Nullable Object that) {
 			if (that instanceof GeneralizedDataTypeIdImpl) {
 				GeneralizedDataTypeIdImpl singleton = (GeneralizedDataTypeIdImpl)that;
-				return name.equals(singleton.getName()) && (templateParameters == singleton.getTemplateParameters());
+				return name.equals(singleton.getName()) && (extraParameters == singleton.getExtraParameters());
 			}
 			else {
 				return false;
@@ -60,20 +60,26 @@ public class GeneralizedDataTypeIdImpl extends GeneralizedNestedTypeIdImpl imple
 	 */
 	public static class DataTypeIdSingletonScope extends AbstractSingletonScope<@NonNull DataTypeId, @NonNull DataTypeIdValue>
 	{
-		public @NonNull DataTypeId getSingleton(@NonNull PackageId packageId, @NonNull String name, int templateParameters) {
-			return getSingletonFor(new DataTypeIdValue(packageId, name, templateParameters));
+		/**
+		 * @since 7.0
+		 */
+		public @NonNull DataTypeId getSingleton(@NonNull PackageId packageId, @NonNull String name, @NonNull ExtraParameters extraParameters) {
+			return getSingletonFor(new DataTypeIdValue(packageId, name, extraParameters));
 		}
 	}
 
 	/**
 	 * @since 1.18
 	 */
-	private static int computeHashCode(@NonNull ElementId parentId, int templateParameters, @NonNull String name) {
-		return IdHash.createChildHash(parentId, name) + 11 * templateParameters;
+	private static int computeHashCode(@NonNull ElementId parentId, @NonNull ExtraParameters extraParameters, @NonNull String name) {
+		return IdHash.createChildHash(parentId, name) + 11 * extraParameters.getValue();
 	}
 
-	public GeneralizedDataTypeIdImpl(@NonNull PackageId parentId, int templateParameters, @NonNull String name) {
-		super(computeHashCode(parentId, templateParameters,name), parentId, templateParameters, name);
+	/**
+	 * @since 7.0
+	 */
+	public GeneralizedDataTypeIdImpl(@NonNull PackageId parentId, @NonNull ExtraParameters extraParameters, @NonNull String name) {
+		super(computeHashCode(parentId, extraParameters, name), parentId, extraParameters, name);
 	}
 
 	@Override
