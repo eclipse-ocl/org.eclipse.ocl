@@ -504,8 +504,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	protected /*final @NonNull*/ EnvironmentFactory environmentFactory;
 	private /*final @NonNull*/ CompleteStandardLibrary standardLibrary;
 
-	private Orphanage orphanage = null;
-
 	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull CompleteClass> class2completeClass = new WeakHashMap<>();
 
 	private org.eclipse.ocl.pivot.Package asMetamodel = null;
@@ -820,11 +818,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		globalNamespaces.clear();
 		globalTypes.clear();
 		partialModels.clear();
-		Orphanage orphanage2 = orphanage;
-		if (orphanage2 != null) {
-			orphanage2.removePackageListener(getOrphanCompletePackage().getPartialPackages());
-			orphanage = null;
-		}
 		orphanCompletePackage = null;
 		primitiveCompletePackage = null;
 	}
@@ -1236,27 +1229,6 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			ownedCompletePackages.add(orphanCompletePackage2);
 		}
 		return (OrphanCompletePackageImpl)orphanCompletePackage2;
-	}
-
-	@Override
-	public @NonNull Orphanage getOrphanage() {
-		Orphanage orphanage2 = orphanage;
-		if (orphanage2 == null) {
-			orphanage2 = orphanage = environmentFactory.getMetamodelManager().createOrphanage();
-			@SuppressWarnings("unused") CompletePackage completePackage = getCompletePackage(orphanage2);
-		//	OrphanCompletePackageImpl orphanCompletePackage2 = getOrphanCompletePackage();
-		//	package2completePackage.put(orphanage2, orphanCompletePackage2);
-		//	packageURI2completePackage.put(PivotConstants.ORPHANAGE_URI, orphanCompletePackage2);
-			Model orphanModel = PivotUtil.getContainingModel(orphanage2);
-			//	didAddPartialModel(orphanModel);
-			assert partialModels.contains(orphanModel);
-		//	PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
-		//	orphanage2.addPackageListener(partialPackages);
-		//	for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {
-		//		didAddPackage(asPackage);
-		//	}
-		}
-		return orphanage2;
 	}
 
 	/**

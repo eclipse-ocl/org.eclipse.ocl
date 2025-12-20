@@ -117,7 +117,10 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		IntegerValue lower = typeArguments.getLower();
 		UnlimitedNaturalValue upper = typeArguments.getUpper();
 		CollectionType genericCollectionType = getCollectionType(collectionTypeId);
-		return PivotUtil.createCollectionType(genericCollectionType, elementType, isNullFree, lower, upper);
+		CollectionType collectionType = PivotUtil.createCollectionType(genericCollectionType, elementType, isNullFree, lower, upper);
+		standardLibrary.resolveSuperClasses(collectionType, genericCollectionType);
+		standardLibrary.addOrphanClass(collectionType);
+		return collectionType;
 	}
 
 	@Override

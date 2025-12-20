@@ -103,6 +103,7 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 		TupleType tupleType = new TupleTypeImpl(tupleTypeId, asParts);
 		tupleType.setName(TypeId.TUPLE_NAME);
 		tupleType.getSuperClasses().add(standardLibrary.getOclTupleType());
+		standardLibrary.addOrphanClass(tupleType);
 		return tupleType;
 	}
 

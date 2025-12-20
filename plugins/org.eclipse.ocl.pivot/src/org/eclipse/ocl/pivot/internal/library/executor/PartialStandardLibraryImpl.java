@@ -42,6 +42,8 @@ import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -59,6 +61,7 @@ import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
@@ -70,9 +73,11 @@ import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.flat.FlatModel;
+import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
+import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
@@ -88,6 +93,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
@@ -107,11 +113,14 @@ import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables.BuiltInModel;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
+import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
@@ -276,10 +285,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class classType = null;
 	private /*@LazyNonNull*/ org.eclipse.ocl.pivot.Class enumerationType = null;
 
-//	@Override
-//	public <R> R accept(@NonNull Visitor<R> visitor) {
-//		throw new UnsupportedOperationException();
-//	}
+	private org.eclipse.ocl.pivot.@Nullable Package orphanage = null;
+
+	private TemplateParameterization templateParameterization = null;				// XXX
+
+	private boolean libraryLoadInProgress = false;			// true to lock out dynamic resolveSuperClasses
 
 	/**
 	 * @since 7.0
@@ -295,6 +305,20 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			extensions2.put(basePackage, list);
 		}
 		list.add(extensionPackage);
+	}
+
+	@Override
+	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement) {		// XXX promote
+		if (pivotElement.getGeneric() != null) {
+			assert pivotElement.getGeneric().getGeneric() == null;
+		}
+		else {
+			assert (pivotElement instanceof LambdaType)
+			|| (pivotElement instanceof TupleType);
+		}
+		if (orphanage != null) {
+			pivotElement.setOwningPackage(orphanage);
+		}
 	}
 
 	/**
@@ -736,6 +760,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	public void freeze(@NonNull Resource resource) {
+		libraryLoadInProgress  = false;
 		((ASResource)resource).setSaveable(false);
 	}
 
@@ -938,6 +963,29 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return (OrderedSetType) OCLstdlibTables.Types._OrderedSet;
 	}
 
+/*	@Override
+	public org.eclipse.ocl.pivot.@NonNull Package getOrphanage() {			// XXX promote ??
+		org.eclipse.ocl.pivot.Package orphanage2 = orphanage;
+		assert orphanage2 != null;
+/ *		if (orphanage2 == null) {
+			throw new UnsupportedOperationException();
+			orphanage2 = orphanage = environmentFactory.getMetamodelManager().createOrphanage();
+			@SuppressWarnings("unused") CompletePackage completePackage = completeModel.getCompletePackage(orphanage2);
+		//	OrphanCompletePackageImpl orphanCompletePackage2 = getOrphanCompletePackage();
+		//	package2completePackage.put(orphanage2, orphanCompletePackage2);
+		//	packageURI2completePackage.put(PivotConstants.ORPHANAGE_URI, orphanCompletePackage2);
+			Model orphanModel = PivotUtil.getContainingModel(orphanage2);
+			//	didAddPartialModel(orphanModel);
+			assert completeModel.getPartialModels().contains(orphanModel);
+		//	PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
+		//	orphanage2.addPackageListener(partialPackages);
+		//	for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {
+		//		didAddPackage(asPackage);
+		//	}
+		} * /
+		return orphanage2;
+	} */
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getPackage() {
 		return OCLstdlibTables.PACKAGE;
@@ -989,7 +1037,79 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateArguments substitutions) {
-		throw new UnsupportedOperationException();
+		if ((substitutions == null) || substitutions.isEmpty()) {
+			return type;
+		}
+		TemplateParameter asTemplateParameter = type.isTemplateParameter();
+		if ((asTemplateParameter instanceof NormalizedTemplateParameter) && (substitutions instanceof BasicTemplateSpecialization)) {
+			int index = ((NormalizedTemplateParameter)asTemplateParameter).getIndex();
+			BasicTemplateSpecialization templateSpecialization = (BasicTemplateSpecialization)substitutions;
+			Type boundType = templateSpecialization.basicGet(index);
+			if (boundType == null) {
+				TemplateParameterization templateParameterization = templateSpecialization.getTemplateParameterization();
+				boundType = templateParameterization.get(index);
+			}
+			return boundType;
+		}
+		else if (asTemplateParameter != null) {
+			Type boundType = substitutions.get(asTemplateParameter);
+			org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
+			return asClass != null ? asClass : type;
+		}
+		else if (type instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)type;
+			CollectionType genericType = PivotUtil.getGenericElement(collectionType);
+			Type elementType = getSpecializedType(ClassUtil.requireNonNull(collectionType.getElementType()), substitutions);
+			return getCollectionType(genericType, elementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+		}
+		else if (type instanceof MapType) {
+			MapType mapType = (MapType)type;
+			Type keyType = getSpecializedType(ClassUtil.requireNonNull(mapType.getKeyType()), substitutions);
+			Type valueType = getSpecializedType(ClassUtil.requireNonNull(mapType.getValueType()), substitutions);
+			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
+		}
+		else if (type instanceof TupleType) {
+			assert tupleTypeManager != null;
+			return tupleTypeManager.getTupleType((TupleType) type, substitutions);
+		}
+		else if (type instanceof LambdaType) {
+			LambdaType lambdaType = (LambdaType)type;
+			LambdaParameter context = PivotUtil.getOwnedContext(lambdaType);
+			List<@NonNull LambdaParameter> parameters = PivotUtil.getOwnedParametersList(lambdaType);
+			LambdaParameter result = PivotUtil.getOwnedResult(lambdaType);
+			return getLambdaType(context, parameters, result, substitutions);
+		}
+		else if (type instanceof org.eclipse.ocl.pivot.Class) {
+			//
+			//	Get the bindings of the type.
+			//
+			org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement((org.eclipse.ocl.pivot.Class)type);
+			//
+			//	Prepare the template argument list, one template argument per template parameter.
+			//
+			List<@NonNull TemplateParameter> asTemplateParameters = genericType.basicGetOwnedTemplateParameters();
+			if (asTemplateParameters != null) {
+				List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>(asTemplateParameters.size());
+				for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
+					Type templateArgument = substitutions.get(templateParameter);
+					templateArguments.add(templateArgument != null ? templateArgument : templateParameter);
+				}
+				return getSpecializedType(genericType, templateArguments);
+			}
+		}
+		return type;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+//	@Override
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
+			@NonNull List<@NonNull ? extends Type> templateArguments) {
+		assert genericClass == getPrimaryType(genericClass);			// Conforms that OCLmetamodel has been loaded
+		assert specializedTypeManager != null;
+		return specializedTypeManager.getSpecializedType(genericClass, templateArguments);
 	}
 
 	@Override
@@ -1046,13 +1166,15 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	 */
 	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses, @NonNull NormalizedTemplateParameter... typeParameters) {
 		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
+		libraryLoadInProgress = true;
+		orphanage = Orphanage.getLocalOrphanPackage(PivotUtil.getContainingModel(asPackage));
 		if ((typeParameters != null) && (typeParameters.length > 0)) {
-			org.eclipse.ocl.pivot.Package asOrphanPackage = Orphanage.getLocalOrphanPackage(PivotUtil.getContainingModel(asPackage));
 			ClassImpl asOrphanClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();
 			asOrphanClass.setName(PivotConstants.ORPHANAGE_NAME);
 			asOrphanClass.setIsAbstract(true);
 			initTemplateParameters(asOrphanClass, typeParameters);
-			PivotUtil.getOwnedClassesList(asOrphanPackage).add(asOrphanClass);
+			assert orphanage != null;
+			PivotUtil.getOwnedClassesList(orphanage).add(asOrphanClass);
 		}
 		EObject ePackage = asPackage.getESObject();
 		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtil.getOwnedClassesList(asPackage);
@@ -1079,7 +1201,84 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		validationKey2severity = null;
 	}
 
-	private TemplateParameterization templateParameterization = null;				// XXX
+	@Override
+	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
+		if (!libraryLoadInProgress) {		// Static xxxTables has static superClasses() init
+			List<@NonNull TemplateArgument> specializedTemplateArguments = specializedClass.basicGetOwnedTemplateArguments();
+			for (org.eclipse.ocl.pivot.@NonNull Class superClass : PivotUtil.getSuperClasses(unspecializedClass)) {
+				List<@NonNull TemplateArgument> superTemplateArguments = superClass.basicGetOwnedTemplateArguments();
+				if (superTemplateArguments != null) {
+					List<@NonNull TemplateArgument> superSpecializedTemplateArguments = new ArrayList<>();
+					for (@NonNull TemplateArgument superTemplateArgument : superTemplateArguments) {
+						TemplateArgument superSpecializedTemplateArgument = null;
+						Type superActual = PivotUtil.getActual(superTemplateArgument);
+						if (specializedTemplateArguments != null) {
+							for (@NonNull TemplateArgument specializedTemplateArgument : specializedTemplateArguments) {
+								TemplateParameter specializedFormal = PivotUtil.getFormal(specializedTemplateArgument);
+								TemplateParameterId specializedTemplateParameterId = specializedFormal.getTemplateParameterId();
+								int specializedIndex = specializedTemplateParameterId.getIndex();
+								if (specializedFormal == superActual) {
+									Type specializedActual = PivotUtil.getActual(specializedTemplateArgument);
+									superSpecializedTemplateArgument = PivotUtil.createTemplateArgument(specializedActual);
+									break;
+								}
+								else if (superActual instanceof NormalizedTemplateParameter) {
+									int superIndex = ((NormalizedTemplateParameter)superActual).getIndex();
+									if (specializedIndex == superIndex) {
+										Type specializedActual = PivotUtil.getActual(specializedTemplateArgument);
+										superSpecializedTemplateArgument = PivotUtil.createTemplateArgument(specializedActual);
+										break;
+									}
+								}
+							}
+						}
+						if (superSpecializedTemplateArgument != null) {
+							superSpecializedTemplateArguments.add(superSpecializedTemplateArgument);
+						}
+					}
+					org.eclipse.ocl.pivot.@NonNull Class genericSuperClass = PivotUtil.getGenericElement(superClass);
+					if (genericSuperClass instanceof CollectionType) {
+						CollectionType specializedCollection = (CollectionType)specializedClass;
+						if (superSpecializedTemplateArguments.size() == 1) {
+							Type templateArgument = superSpecializedTemplateArguments.get(0).getActual();
+							if (templateArgument != null) {
+								CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) genericSuperClass.getTypeId(), templateArgument,
+									specializedCollection.isIsNullFree(), specializedCollection.getLowerValue(), specializedCollection.getUpperValue());
+								org.eclipse.ocl.pivot.Class specializedSuperClass = getCollectionType(typeArguments);
+								specializedClass.getSuperClasses().add(specializedSuperClass);
+							}
+						}
+					}
+					else if (genericSuperClass instanceof MapType) {
+						MapType specializedMap = (MapType)specializedClass;
+						if (superSpecializedTemplateArguments.size() == 2) {
+							Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
+							Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
+							if ((keyArgument != null) && (valueArgument != null)) {
+								MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
+								org.eclipse.ocl.pivot.Class specializedSuperClass = getMapType(typeArguments);
+								specializedClass.getSuperClasses().add(specializedSuperClass);
+							}
+						}
+					}
+					else {
+						List<@NonNull Type> superTemplateArgumentList = new ArrayList<>(superSpecializedTemplateArguments.size());
+						for (TemplateArgument superSpecializedTemplateArgument : superSpecializedTemplateArguments) {
+							Type actual = superSpecializedTemplateArgument.getActual();
+							if (actual != null) {
+								superTemplateArgumentList.add(actual);
+							}
+						}
+						org.eclipse.ocl.pivot.Class specializedSuperType = getSpecializedType(genericSuperClass, superTemplateArgumentList);
+						specializedClass.getSuperClasses().add(specializedSuperType);
+					}
+				}
+				else {
+					specializedClass.getSuperClasses().add(superClass);
+				}
+			}
+		}
+	}
 
 	public void setNamespace(@NonNull TypedElement asTypedElement) {
 		this.templateParameterization = TemplateParameterization.getTemplateParameterization(asTypedElement);

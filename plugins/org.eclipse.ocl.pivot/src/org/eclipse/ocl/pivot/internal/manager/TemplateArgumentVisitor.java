@@ -337,7 +337,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 			TemplateParameter asTemplateParameter = (TemplateParameter)asType;
 			if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
 			//	assert false;
-				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), asTemplateParameter);
+				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getStandardLibrary().getOrphanage(), asTemplateParameter);
 			}
 		}
 		return asType;
@@ -459,7 +459,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 			if (actualType instanceof TemplateParameter) {
 				TemplateParameter asTemplateParameter = (TemplateParameter)actualType;
 				if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
-					return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), asTemplateParameter);
+					return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), asTemplateParameter);
 				}
 			}
 			return actualType;

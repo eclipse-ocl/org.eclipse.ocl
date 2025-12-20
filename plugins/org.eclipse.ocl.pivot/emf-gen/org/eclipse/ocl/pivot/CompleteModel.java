@@ -20,7 +20,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
@@ -271,11 +270,6 @@ public interface CompleteModel extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull Iterable<? extends Operation> getOperationOverloads(@NonNull Operation pivotOperation);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Orphanage getOrphanage();
 
 	/**
 	 * @since 7.0

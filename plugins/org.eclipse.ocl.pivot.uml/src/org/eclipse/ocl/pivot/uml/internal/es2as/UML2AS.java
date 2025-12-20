@@ -1239,7 +1239,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 		else if (asType instanceof TemplateParameter) { //&& ((TemplateParameter)asType).getConstrainingClasses().isEmpty()) {
 			EObject eObject = asType.getESObject();
 			if ((eObject instanceof org.eclipse.uml2.uml.ClassifierTemplateParameter) && ((org.eclipse.uml2.uml.ClassifierTemplateParameter)eObject).getConstrainingClassifiers().isEmpty()) {
-				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), (TemplateParameter)asType);
+				return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), (TemplateParameter)asType);
 			}
 		}
 		return asType;

@@ -484,7 +484,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
 			EObject eObject = asType.getESObject();
 			if ((eObject instanceof ETypeParameter) && ((ETypeParameter)eObject).getEBounds().isEmpty()) {
-				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), (TemplateParameter)asType);
+				return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), (TemplateParameter)asType);
 			}
 		}
 		return asType;
@@ -1138,7 +1138,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		if (pivotType != null) {
 			ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
 			if ((eTypeParameter != null) && eTypeParameter.getEBounds().isEmpty()) {
-				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), (TemplateParameter)pivotType);
+				return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), (TemplateParameter)pivotType);
 			}
 			return pivotType;
 		}
@@ -1197,7 +1197,7 @@ public class ExternalEcore2AS extends Ecore2AS
 //			csTypeRef.setExtends(doSwitchAll(eGenericType.getExtends()));
 //			csTypeRef.setSuper(doSwitchAll(eGenericType.getSuper()));
 			return csTypeRef; */
-		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
+		WildcardType wildcardType = Orphanage.getOrphanWildcardType(standardLibrary.getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
 		return wildcardType;		// FIXME bounds
 		/*		org.eclipse.ocl.pivot.Class pivotElement = PivotFactory.eINSTANCE.createClass();
 		String name = PivotConstants.WILDCARD_NAME;

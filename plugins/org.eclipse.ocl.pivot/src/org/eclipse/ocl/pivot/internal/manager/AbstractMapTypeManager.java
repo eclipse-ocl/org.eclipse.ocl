@@ -118,6 +118,8 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 			MapType specializedMapType = getMapType(typeArguments);
 			mapType = PivotUtil.createMapEntryType(specializedMapType, entryClass);
 		}
+		standardLibrary.resolveSuperClasses(mapType, genericMapType);
+		standardLibrary.addOrphanClass(mapType);
 		return mapType;
 	}
 

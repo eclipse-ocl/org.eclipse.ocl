@@ -145,11 +145,6 @@ public class PivotMetamodelManager implements MetamodelManager, Adapter.Internal
 	}
 
 	@Override
-	public @NonNull Orphanage createOrphanage() {
-		return Orphanage.getOrphanage(asResourceSet);
-	}
-
-	@Override
 	public void dispose() {
 		EnvironmentFactory threadEnvironmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if ((threadEnvironmentFactory != environmentFactory) && (threadEnvironmentFactory != null)) {		// XXX

@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
+import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -46,6 +47,11 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public interface StandardLibrary extends Element
 {
+	/**
+	 * @since 7.0
+	 */
+	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement);
+
 	/**
 	 * @since 7.0
 	 */
@@ -258,6 +264,12 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull LambdaTypeManager getLambdaManager();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
+			@Nullable TemplateArguments bindings);
 
 	/**
 	 * @since 7.0
@@ -490,6 +502,17 @@ public interface StandardLibrary extends Element
 	@NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateArguments TemplateArguments);
 
 	/**
+	 * @since 7.0
+	 */
+	@NonNull SpecializedTypeManager getSpecializedTypeManager();
+
+	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
+			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
+
+	/**
 	 * Obtains the instance of the PrimitiveType metatype, named
 	 * <tt>String</tt>.
 	 *
@@ -558,4 +581,9 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	boolean isEqualTo(@NonNull Type leftType, @NonNull Type rightType);
+
+	/**
+	 * @since 7.0
+	 */
+	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 } // StandardLibrary

@@ -1379,7 +1379,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 */\n");
 		s.append("		static {\n");
 		s.append("			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass");
-		Orphanage orphanage = environmentFactory.getOrphanage();
+		Orphanage orphanage = standardLibrary.getOrphanage();
 		for (int i = 0; true; i++) {
 			NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, i) ;
 			if (normalizedTemplateParameter == null) {
@@ -1543,7 +1543,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				}
 			}
 		}
-		Orphanage orphanage = environmentFactory.getOrphanage();
+		Orphanage orphanage = standardLibrary.getOrphanage();
 		List<@NonNull NormalizedTemplateParameter> normalizedTemplateParameters = new ArrayList<>();
 		NormalizedTemplateParameter normalizedTemplateParameter;
 		while ((normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size())) != null) {
@@ -1595,7 +1595,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	protected void declareTypeParameters(@NonNull Map<@NonNull String, @NonNull TemplateParameter> name2templateParameter, @NonNull TemplateableElement templateableElement) {
 		Iterable<@NonNull TemplateParameter> asTemplateParameters = templateableElement.basicGetOwnedTemplateParameters();
 		if (asTemplateParameters != null) {
-			Orphanage orphanage = environmentFactory.getOrphanage();
+			Orphanage orphanage = standardLibrary.getOrphanage();
 			for (@NonNull TemplateParameter asTemplateParameter : asTemplateParameters) {
 				Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter.getTemplateParameterId().getIndex());
 				String baseName = getTemplateParameterNameCandidate(asTemplateParameter);

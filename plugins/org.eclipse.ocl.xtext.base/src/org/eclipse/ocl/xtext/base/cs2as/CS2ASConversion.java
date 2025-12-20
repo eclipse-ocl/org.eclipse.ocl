@@ -35,7 +35,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
-import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -325,7 +324,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 		allPivotResources.addAll(standardLibrary.getLibraries());			// Library elements are not dead
 		allPivotResources.addAll(cs2asResourceMap.keySet());				// Incoming elements are not dead
-		allPivotResources.remove(completeModel.getOrphanage().eResource());			// FIXME redundant ??
+		allPivotResources.remove(standardLibrary.getOrphanage().eResource());			// FIXME redundant ??
 		Map<EObject, Collection<Setting>> referencesToOrphans = new EcoreUtil.CrossReferencer(allPivotResources)
 		{
 			{ crossReference(); }
@@ -591,7 +590,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				assert csDefinition != null;
 				List<TypedRefCS> csExtends = ((TypeParameterCS)csDefinition).getOwnedExtends();
 				if (csExtends.isEmpty()) {
-					return Orphanage.getNormalizedTemplateParameter(environmentFactory.getCompleteModel().getOrphanage(), asTemplateParameter);
+					return Orphanage.getNormalizedTemplateParameter(environmentFactory.getStandardLibrary().getOrphanage(), asTemplateParameter);
 				}
 			}
 		}
@@ -1209,10 +1208,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					templateArguments.add(templateArgument);
 				}
 			}
-			CompleteModel completeModel = environmentFactory.getCompleteModel();
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
 			if (csActualParameter instanceof WildcardTypeRefCS) {
-				Orphanage orphanage = completeModel.getOrphanage();
+				Orphanage orphanage = standardLibrary.getOrphanage();
 				templateArgument.setActual(Orphanage.getOrphanWildcardType(orphanage));
 			}
 			else {
@@ -1298,7 +1296,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 						if (templateArgument instanceof TemplateParameter) {
 							boolean canBeNormalized = canBeNormalized((TemplateParameter)templateArgument);
 							if (canBeNormalized) {
-								templateArgument = Orphanage.getNormalizedTemplateParameter(environmentFactory.getCompleteModel().getOrphanage(), (TemplateParameter)templateArgument);
+								templateArgument = Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), (TemplateParameter)templateArgument);
 							}
 						}
 

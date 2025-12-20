@@ -128,6 +128,8 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 			lambdaType.getOwnedParameters().add(createLambdaParameter(parameter));
 		}
 		lambdaType.setOwnedResult(createLambdaParameter(result));
+		lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
+		standardLibrary.addOrphanClass(lambdaType);
 		return lambdaType;
 	}
 

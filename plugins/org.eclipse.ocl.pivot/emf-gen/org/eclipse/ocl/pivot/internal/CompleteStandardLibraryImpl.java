@@ -17,7 +17,6 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -29,13 +28,12 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
@@ -52,7 +50,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -60,8 +57,8 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
-import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
@@ -69,9 +66,8 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractSpecializedTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
@@ -83,7 +79,6 @@ import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
-import org.eclipse.ocl.pivot.types.TemplateArgumentValues;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -166,18 +161,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 
 		@Override
-		protected @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments) {
-			CollectionType collectionType = super.createCollectionType(typeArguments);
-			CollectionType genericCollectionType = (CollectionType)collectionType.getGeneric();
-			assert genericCollectionType != null;
-			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
-			completeStandardLibrary.resolveSuperClasses(collectionType, genericCollectionType);
-			environmentFactory.addOrphanClass(collectionType);
-			return collectionType;
-		}
-
-		@Override
 		protected boolean isValid(@Nullable Type type) {
 			return (type != null) && (type.eResource() != null);		// XXX Built-in have null Resource
 		}
@@ -205,17 +188,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		public CompleteLambdaTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
-
-		@Override
-		protected @NonNull LambdaType createLambdaType(@NonNull TypedElement context,
-				@NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
-			LambdaType lambdaType = super.createLambdaType(context, parameters, result);
-			lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
-			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
-			environmentFactory.addOrphanClass(lambdaType);
-			return lambdaType;
-		}
 	}
 
 	/**
@@ -227,18 +199,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	{
 		public CompleteMapTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
-		}
-
-		@Override
-		protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
-			MapType mapType = super.createMapType(typeArguments, entryClass);
-			MapType genericMapType = (MapType)mapType.getGeneric();
-			assert genericMapType != null;
-			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
-			completeStandardLibrary.resolveSuperClasses(mapType, genericMapType);
-			environmentFactory.addOrphanClass(mapType);
-			return mapType;
 		}
 
 		@Override
@@ -257,35 +217,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		public CompleteSpecializedTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
-
-		/**
-		 * @since 7.0
-		 */
-		@Override
-		protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
-			org.eclipse.ocl.pivot.Class genericType = primaryClass;
-			String typeName = genericType.getName();
-			List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedTemplateParametersList(genericType, true);
-			EClass eClass = genericType.eClass();
-			EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-			org.eclipse.ocl.pivot.Class specializedType = (org.eclipse.ocl.pivot.Class) eFactoryInstance.create(eClass);
-			specializedType.setName(typeName);
-			List<@NonNull TemplateArgument> asTemplateArguments = PivotUtil.getOwnedTemplateArgumentsList(specializedType, true);
-			for (int i = 0; i < templateParameters.size(); i++) {
-				Element templateArgument = templateArguments.get(i);
-				if (templateArgument instanceof Type) {
-					Type actualType = (Type) templateArgument;
-					TemplateArgument templateArgument2 = PivotUtil.createTemplateArgument(actualType);
-					asTemplateArguments.add(templateArgument2);
-				}
-			}
-			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
-			specializedType.setGeneric(genericType);
-			environmentFactory.addOrphanClass(specializedType);
-			completeStandardLibrary.resolveSuperClasses(specializedType, genericType);
-			return specializedType;
-		}
 	}
 
 	/**
@@ -296,15 +227,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	{
 		public CompleteTupleTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
 			super(standardLibrary);
-		}
-
-		@Override
-		protected @NonNull TupleType createTupleType(@Nullable List<@NonNull Property> asProperties, @NonNull TupleTypeId tupleTypeId) {
-			TupleType tupleType = super.createTupleType(asProperties, tupleTypeId);
-			CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
-			EnvironmentFactory environmentFactory = completeStandardLibrary.getEnvironmentFactory();
-			environmentFactory.addOrphanClass(tupleType);
-			return tupleType;
 		}
 	}
 
@@ -370,6 +292,21 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 
 	private /*final*/ /*@NonNull*/ CompleteModel completeModel;
 	private /*final*/ /*@NonNull*/ EnvironmentFactory environmentFactory;
+
+	private Orphanage orphanage = null;
+
+	@Override
+	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement) {
+		if (pivotElement.getGeneric() != null) {
+			assert pivotElement.getGeneric().getGeneric() == null;
+		}
+		else {
+			assert (pivotElement instanceof LambdaType)
+			|| (pivotElement instanceof TupleType);
+		}
+		assert environmentFactory != null;
+		pivotElement.setOwningPackage(getOrphanage());
+	}
 
 	@Override
 	public @Nullable PrimitiveType basicGetBehavioralClass(@NonNull Class<?> instanceClass) {
@@ -701,12 +638,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
-			@Nullable TemplateArguments bindings) {
-		return getLambdaManager().getLambdaType(contextType, parameterTypes, resultType, bindings);
-	}
-
-	@Override
 	public @Nullable Resource getLibraryResource() {
 		return asLibraries.isEmpty() ? null : asLibraries.get(0).eResource();
 	}
@@ -931,6 +862,27 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
+	public @NonNull Orphanage getOrphanage() {
+		Orphanage orphanage2 = orphanage;
+		if (orphanage2 == null) {
+			orphanage2 = orphanage = Orphanage.getOrphanage(environmentFactory.getASResourceSet());
+			@SuppressWarnings("unused") CompletePackage completePackage = completeModel.getCompletePackage(orphanage2);
+		//	OrphanCompletePackageImpl orphanCompletePackage2 = getOrphanCompletePackage();
+		//	package2completePackage.put(orphanage2, orphanCompletePackage2);
+		//	packageURI2completePackage.put(PivotConstants.ORPHANAGE_URI, orphanCompletePackage2);
+			Model orphanModel = PivotUtil.getContainingModel(orphanage2);
+			//	didAddPartialModel(orphanModel);
+			assert completeModel.getPartialModels().contains(orphanModel);
+		//	PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
+		//	orphanage2.addPackageListener(partialPackages);
+		//	for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {
+		//		didAddPackage(asPackage);
+		//	}
+		}
+		return orphanage2;
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getPackage() {
 		org.eclipse.ocl.pivot.Package libraryPackage2 = libraryPackage;
 		if (libraryPackage2 == null) {
@@ -1002,87 +954,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 		return setType2;
 	}
-
-	@Override
-	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateArguments substitutions) {
-		if ((substitutions == null) || substitutions.isEmpty()) {
-			return type;
-		}
-		TemplateParameter asTemplateParameter = type.isTemplateParameter();
-		if ((asTemplateParameter instanceof NormalizedTemplateParameter) && (substitutions instanceof BasicTemplateSpecialization)) {
-			int index = ((NormalizedTemplateParameter)asTemplateParameter).getIndex();
-			BasicTemplateSpecialization templateSpecialization = (BasicTemplateSpecialization)substitutions;
-			Type boundType = templateSpecialization.basicGet(index);
-			if (boundType == null) {
-				TemplateParameterization templateParameterization = templateSpecialization.getTemplateParameterization();
-				boundType = templateParameterization.get(index);
-			}
-			return boundType;
-		}
-		else if (asTemplateParameter != null) {
-			Type boundType = substitutions.get(asTemplateParameter);
-			org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
-			return asClass != null ? asClass : type;
-		}
-		else if (type instanceof CollectionType) {
-			CollectionType collectionType = (CollectionType)type;
-			CollectionType genericType = PivotUtil.getGenericElement(collectionType);
-			Type elementType = getSpecializedType(ClassUtil.requireNonNull(collectionType.getElementType()), substitutions);
-			return getCollectionType(genericType, elementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
-		}
-		else if (type instanceof MapType) {
-			MapType mapType = (MapType)type;
-			Type keyType = getSpecializedType(ClassUtil.requireNonNull(mapType.getKeyType()), substitutions);
-			Type valueType = getSpecializedType(ClassUtil.requireNonNull(mapType.getValueType()), substitutions);
-			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
-		}
-		else if (type instanceof TupleType) {
-			assert tupleTypeManager != null;
-			return tupleTypeManager.getTupleType((TupleType) type, substitutions);
-		}
-		else if (type instanceof LambdaType) {
-			LambdaType lambdaType = (LambdaType)type;
-			LambdaParameter context = PivotUtil.getOwnedContext(lambdaType);
-			List<@NonNull LambdaParameter> parameters = PivotUtil.getOwnedParametersList(lambdaType);
-			LambdaParameter result = PivotUtil.getOwnedResult(lambdaType);
-			return getLambdaType(context, parameters, result, substitutions);
-		}
-		else if (type instanceof org.eclipse.ocl.pivot.Class) {
-			//
-			//	Get the bindings of the type.
-			//
-			org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement((org.eclipse.ocl.pivot.Class)type);
-			//
-			//	Prepare the template argument list, one template argument per template parameter.
-			//
-			List<@NonNull TemplateParameter> asTemplateParameters = genericType.basicGetOwnedTemplateParameters();
-			if (asTemplateParameters != null) {
-				List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>(asTemplateParameters.size());
-				for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
-					Type templateArgument = substitutions.get(templateParameter);
-					templateArguments.add(templateArgument != null ? templateArgument : templateParameter);
-				}
-				return getSpecializedType(genericType, templateArguments);
-			}
-		}
-		return type;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
-			@NonNull List<@NonNull ? extends Type> templateArguments) {
-		assert genericClass == getPrimaryType(genericClass);			// Conforms that OCLmetamodel has been loaded
-		assert specializedTypeManager != null;
-		return specializedTypeManager.getSpecializedType(genericClass, templateArguments);
-	}
-
-//	private @NonNull SpecializedTypeManager getSpecializedTypeManager() {
-//		assert specializedTypeManager != null;
-//		return specializedTypeManager;
-//	}
 
 	@Override
 	public @NonNull PrimitiveType getStringType() {
@@ -1170,7 +1041,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return libraryLoadInProgress;
 	}
 
-	public boolean isOrdered(Type sourceType) {
+/*	public boolean isOrdered(Type sourceType) {
 		if (sourceType instanceof OrderedSetType) {
 			return true;
 		}
@@ -1178,9 +1049,9 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			return true;
 		}
 		return false;
-	}
+	} */
 
-	public boolean isUnique(Type sourceType) {
+/*	public boolean isUnique(Type sourceType) {
 		if (sourceType instanceof OrderedSetType) {
 			return true;
 		}
@@ -1188,7 +1059,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 			return true;
 		}
 		return false;
-	}
+	} */
 
 	/**
 	 * Load the Standard Library for a given uri. If the uri corresponds to a registered library, that library
@@ -1290,6 +1161,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		unlimitedNaturalType = null;
 		nameToLibraryTypeMap = null;
 		asLibraries.clear();
+		Orphanage orphanage2 = orphanage;
+		if (orphanage2 != null) {
+			orphanage2.removePackageListener((PartialPackages)completeModel.getOrphanCompletePackage().getPartialPackages());
+			orphanage = null;
+		}
 		super.resetLibrary();
 	}
 
@@ -1351,8 +1227,8 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 						superSpecializedTemplateArguments.add(superSpecializedTemplateArgument);
 					}
 				}
-				org.eclipse.ocl.pivot.@NonNull Class unspecializedSuperClass = PivotUtil.getGenericElement(superClass);
-				CompleteClass superCompleteClass = completeModel.getCompleteClass(unspecializedSuperClass);
+				org.eclipse.ocl.pivot.@NonNull Class genericSuperClass = PivotUtil.getGenericElement(superClass);
+				CompleteClass superCompleteClass = completeModel.getCompleteClass(genericSuperClass);
 				org.eclipse.ocl.pivot.Class superPivotClass = superCompleteClass.getPrimaryClass();
 				if (superPivotClass instanceof CollectionType) {
 					CollectionType specializedCollection = (CollectionType)specializedClass;
@@ -1361,7 +1237,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 						if (templateArgument != null) {
 							CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) superPivotClass.getTypeId(), templateArgument,
 								specializedCollection.isIsNullFree(), specializedCollection.getLowerValue(), specializedCollection.getUpperValue());
-							org.eclipse.ocl.pivot.Class specializedSuperClass = environmentFactory.getStandardLibrary().getCollectionType(typeArguments);
+							org.eclipse.ocl.pivot.Class specializedSuperClass = getCollectionType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
 					}
@@ -1373,7 +1249,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 						Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
 						if ((keyArgument != null) && (valueArgument != null)) {
 							MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
-							org.eclipse.ocl.pivot.Class specializedSuperClass = environmentFactory.getStandardLibrary().getMapType(typeArguments);
+							org.eclipse.ocl.pivot.Class specializedSuperClass = getMapType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
 					}
@@ -1388,7 +1264,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 					}
 					FlatClass superFlatClass = superCompleteClass.getFlatClass();
 					org.eclipse.ocl.pivot.Class genericSuperType = superFlatClass.getPivotClass(); //getCompleteClass().getPrimaryClass();
-					org.eclipse.ocl.pivot.Class specializedSuperType = environmentFactory.getStandardLibrary().getSpecializedType(genericSuperType, superTemplateArgumentList);
+					org.eclipse.ocl.pivot.Class specializedSuperType = getSpecializedType(genericSuperType, superTemplateArgumentList);
 					specializedClass.getSuperClasses().add(specializedSuperType);
 				}
 			}

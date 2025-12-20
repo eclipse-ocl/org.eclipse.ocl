@@ -155,7 +155,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
 		// XXX FIXME Orphanage evolved to not-contain its Packages but Native Packages are evolving to a Native Model
 		if ((asPackage != null) && ((asPackage.eContainer() instanceof Orphanage) || (asPackage.eContainer() == null))) {
-			Orphanage orphanage = environmentFactory.getOrphanage();
+			Orphanage orphanage = environmentFactory.getStandardLibrary().getOrphanage();
 			boolean isOrphan = orphanage.isOrphanPackage(asPackage);
 			if (isOrphan) {
 				return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());
@@ -314,7 +314,7 @@ public class Id2BoxedDescriptorVisitor implements IdVisitor<BoxedDescriptor>
 		// FIXME this is the control path that has not been exercised
 		org.eclipse.ocl.pivot.Package asPackage = type.getOwningPackage();
 		if (asPackage != null) {
-			Orphanage orphanage = environmentFactory.getOrphanage();
+			Orphanage orphanage = environmentFactory.getStandardLibrary().getOrphanage();
 			boolean isOrphan = orphanage.isOrphanPackage(asPackage);
 			if (isOrphan) {
 				return new SimpleDataTypeDescriptor(id, asPackage.getName() + "." + type.getName());

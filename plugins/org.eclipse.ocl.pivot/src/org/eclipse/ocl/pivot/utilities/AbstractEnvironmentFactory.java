@@ -48,7 +48,6 @@ import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.Model;
@@ -65,7 +64,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.Slot;
 import org.eclipse.ocl.pivot.Stereotype;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VoidType;
@@ -379,18 +377,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 				lockingReferences.add((EObject) lockedElement);
 			}
 		}
-	}
-
-	@Override
-	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement) {
-		if (pivotElement.getGeneric() != null) {
-			assert pivotElement.getGeneric().getGeneric() == null;
-		}
-		else {
-			assert (pivotElement instanceof LambdaType)
-			|| (pivotElement instanceof TupleType);
-		}
-		pivotElement.setOwningPackage(getOrphanage());
 	}
 
 	@Override

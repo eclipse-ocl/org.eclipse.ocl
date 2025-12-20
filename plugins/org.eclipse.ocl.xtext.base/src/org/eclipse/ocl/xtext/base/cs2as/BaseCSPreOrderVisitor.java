@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -199,8 +200,8 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				Type contextType = PivotUtil.basicGetPivot(Type.class, csContext);
 				Type resultType = PivotUtil.basicGetPivot(Type.class, csResult);
 				if ((contextType != null) && (resultType != null)) {
-					CompleteModel completeModel = context.getCompleteModel();
-					Orphanage orphanage = completeModel.getOrphanage();
+					CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
+					Orphanage orphanage = standardLibrary.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
 					for (ParameterCS csParameter : csElement.getOwnedParameters()) {
 						assert csParameter != null;
@@ -228,7 +229,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					}
 					isRequired = context.isRequiredWithDefault(csResult);
 					TypedElement resultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.RESULT_NAME, resultType, isRequired);
-					LambdaType lambdaType = context.getStandardLibrary().getLambdaType(contextParameter, parameters, resultParameter, null);
+					LambdaType lambdaType = standardLibrary.getLambdaType(contextParameter, parameters, resultParameter, null);
 					if (lambdaParameter != null) {
 						lambdaParameter.setType(lambdaType);
 						lambdaParameter.toString();
@@ -269,8 +270,8 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				Type contextType = PivotUtil.basicGetPivot(Type.class, csContext);
 				Type resultType = PivotUtil.basicGetPivot(Type.class, csResult);
 				if ((contextType != null) && (resultType != null)) {
-					CompleteModel completeModel = context.getCompleteModel();
-					Orphanage orphanage = completeModel.getOrphanage();
+					CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
+					Orphanage orphanage = standardLibrary.getOrphanage();
 					List<@NonNull TypedElement> parameters = new ArrayList<>();
 					for (TypedRefCS csParameterType : csElement.getOwnedParameterTypes()) {
 						assert csParameterType != null;
@@ -294,7 +295,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					}
 					isRequired = context.isRequiredWithDefault(csResult);
 					TypedElement resultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotConstants.RESULT_NAME, resultType, isRequired);
-					LambdaType lambdaType = context.getStandardLibrary().getLambdaType(contextParameter, parameters, resultParameter, null);
+					LambdaType lambdaType = standardLibrary.getLambdaType(contextParameter, parameters, resultParameter, null);
 					context.installPivotTypeWithMultiplicity(lambdaType, csElement);
 				}
 			}

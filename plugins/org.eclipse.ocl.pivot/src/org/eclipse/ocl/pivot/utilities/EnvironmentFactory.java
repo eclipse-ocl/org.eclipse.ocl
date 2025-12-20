@@ -46,7 +46,6 @@ import org.eclipse.ocl.pivot.internal.library.ImplementationManager;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.resource.ICSI2ASMapping;
@@ -105,11 +104,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	void addLockedElement(@NonNull Object lockedElement);
-
-	/**
-	 * @since 7.0
-	 */
-	void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement);
 
 	/**
 	 * Analyze all OCL functioality below eRootObject,typically a pivot Package, to populate the
@@ -386,13 +380,6 @@ public interface EnvironmentFactory extends Adaptable, Customizable
 	 * @since 7.0
 	 */
 	@NonNull LibraryOperation getOperationImplementation(@NonNull Operation operation);
-
-	/**
-	 * @since 7.0
-	 */
-	default @NonNull Orphanage getOrphanage() {
-		return getCompleteModel().getOrphanage();
-	}
 
 	/**
 	 * @since 7.0

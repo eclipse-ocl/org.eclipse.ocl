@@ -15,9 +15,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.StandardLibrary;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
@@ -47,7 +52,35 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 		this.standardLibrary = standardLibrary;
 	}
 
-	protected abstract org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments);
+//	protected abstract org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments);
+
+	/**
+	 * @since 7.0
+	 */
+//	@Override
+	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
+		org.eclipse.ocl.pivot.Class genericType = primaryClass;
+		String typeName = genericType.getName();
+		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedTemplateParametersList(genericType, true);
+		EClass eClass = genericType.eClass();
+		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
+		org.eclipse.ocl.pivot.Class specializedType = (org.eclipse.ocl.pivot.Class) eFactoryInstance.create(eClass);
+		specializedType.setName(typeName);
+		List<@NonNull TemplateArgument> asTemplateArguments = PivotUtil.getOwnedTemplateArgumentsList(specializedType, true);
+		for (int i = 0; i < templateParameters.size(); i++) {
+			Element templateArgument = templateArguments.get(i);
+			if (templateArgument instanceof Type) {
+				Type actualType = (Type) templateArgument;
+				TemplateArgument templateArgument2 = PivotUtil.createTemplateArgument(actualType);
+				asTemplateArguments.add(templateArgument2);
+			}
+		}
+		CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
+		specializedType.setGeneric(genericType);
+		completeStandardLibrary.resolveSuperClasses(specializedType, genericType);
+		completeStandardLibrary.addOrphanClass(specializedType);
+		return specializedType;
+	}
 
 	@Override
 	public void dispose() {

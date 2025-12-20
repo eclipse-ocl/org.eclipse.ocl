@@ -21,7 +21,6 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
 import org.eclipse.ocl.pivot.resource.ASResource;
 
@@ -34,11 +33,6 @@ public interface MetamodelManager
 	 * @since 7.0
 	 */
 	void addExternal2AS(@NonNull External2AS external2as);
-
-	/**
-	 * @since 7.0
-	 */
-	@NonNull Orphanage createOrphanage();
 
 	/**
 	 * @since 7.0

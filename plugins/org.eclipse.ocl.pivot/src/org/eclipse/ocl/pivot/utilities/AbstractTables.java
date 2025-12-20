@@ -22,11 +22,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -142,30 +140,18 @@ public abstract class AbstractTables
 			this.orphanClasses = PivotUtil.getOwnedClassesList(localOrphanPackage);
 		}
 
-		private void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class orphanClass) {
-			if (orphanClass.eContainer() == null) {
-				orphanClasses.add(orphanClass);
-			}
-		}
-
 		public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType, boolean isNullFree) {
-			CollectionType collectionType = library.getCollectionType((CollectionType)genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
-			addOrphanClass(collectionType);
-			return collectionType;
+			return library.getCollectionType((CollectionType)genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 		}
 
 		public @NonNull Type getLambdaType(@NonNull TypedElement context, @NonNull TypedElement result, @NonNull TypedElement ... parameters) {
 			List<@NonNull TypedElement> parameterList = parameters != null ? Lists.newArrayList(parameters) : Collections.emptyList();
 			assert parameterList != null;
-			LambdaType lambdaType = library.getLambdaManager().getLambdaType(context, parameterList, result, null);
-			addOrphanClass(lambdaType);
-			return lambdaType;
+			return library.getLambdaManager().getLambdaType(context, parameterList, result, null);
 		}
 
 		public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-			MapType mapType = library.getMapType(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
-			addOrphanClass(mapType);
-			return mapType;
+			return library.getMapType(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 		}
 
 		public @NonNull TemplateParameter getTemplateParameter(int i) {
@@ -179,9 +165,7 @@ public abstract class AbstractTables
 				asPartList.add(asPart);
 				partIds.add(IdManager.getPartId(partIds.size(), PivotUtil.getName(asPart), asPart.getTypeId(), asPart.isIsRequired()));
 			}
-			TupleType tupleType = library.getTupleType(asPartList, partIds);
-			addOrphanClass(tupleType);
-			return tupleType;
+			return library.getTupleType(asPartList, partIds);
 		}
 	}
 

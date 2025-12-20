@@ -17,6 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
@@ -67,11 +68,6 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	@Override
 	@NonNull CompleteFlatModel getFlatModel();
 
-	/**
-	 * @since 7.0
-	 */
-	@NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
-			@Nullable TemplateArguments bindings);
 	@Nullable Resource getLibraryResource();
 
 	/**
@@ -80,13 +76,9 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	@NonNull List<@NonNull Library> getLibraries();
 	@Override
 	@NonNull Property getOclInvalidProperty();
+	@NonNull Orphanage getOrphanage();
 	@Deprecated
 	org.eclipse.ocl.pivot.Package getRootPackage(@NonNull String name);
-	/**
-	 * @since 7.0
-	 */
-	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
-			@NonNull List<@NonNull ? extends Type> superTemplateArgumentList);
 	@NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactory environmentFactory);
 
 	/**
@@ -98,7 +90,6 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	void installLibrary(@NonNull Library asLibrary);
 	boolean isLibraryLoadInProgress();
 	@Nullable Resource loadLibraryResource(@NonNull String uri);
-	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
 	void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI);
 	void setLibraryLoadInProgress(boolean b);
 } // CompleteStandardLibrary

@@ -10,6 +10,7 @@
  */
 package org.eclipse.ocl.pivot.internal;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -19,9 +20,11 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
@@ -40,7 +43,9 @@ import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
@@ -573,6 +578,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
+	public @NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
+			@Nullable TemplateArguments bindings) {
+		return getLambdaManager().getLambdaType(contextType, parameterTypes, resultType, bindings);
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getLibraryClass(@NonNull String className) {
 		return ClassUtil.requireNonNull(basicGetLibraryClass(className));
 	}
@@ -670,6 +681,88 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @NonNull CollectionType getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getSetType(), elementType, isNullFree, lower, upper);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
+			@NonNull List<@NonNull ? extends Type> templateArguments) {
+		assert genericClass == getPrimaryType(genericClass);			// Conforms that OCLmetamodel has been loaded
+		assert specializedTypeManager != null;
+		return specializedTypeManager.getSpecializedType(genericClass, templateArguments);
+	}
+
+	@Override
+	public @NonNull Type getSpecializedType(@NonNull Type type, @Nullable TemplateArguments substitutions) {
+		if ((substitutions == null) || substitutions.isEmpty()) {
+			return type;
+		}
+		TemplateParameter asTemplateParameter = type.isTemplateParameter();
+		if ((asTemplateParameter instanceof NormalizedTemplateParameter) && (substitutions instanceof BasicTemplateSpecialization)) {
+			int index = ((NormalizedTemplateParameter)asTemplateParameter).getIndex();
+			BasicTemplateSpecialization templateSpecialization = (BasicTemplateSpecialization)substitutions;
+			Type boundType = templateSpecialization.basicGet(index);
+			if (boundType == null) {
+				TemplateParameterization templateParameterization = templateSpecialization.getTemplateParameterization();
+				boundType = templateParameterization.get(index);
+			}
+			return boundType;
+		}
+		else if (asTemplateParameter != null) {
+			Type boundType = substitutions.get(asTemplateParameter);
+			org.eclipse.ocl.pivot.Class asClass = boundType != null ? boundType.isClass() : null;
+			return asClass != null ? asClass : type;
+		}
+		else if (type instanceof CollectionType) {
+			CollectionType collectionType = (CollectionType)type;
+			CollectionType genericType = PivotUtil.getGenericElement(collectionType);
+			Type elementType = getSpecializedType(ClassUtil.requireNonNull(collectionType.getElementType()), substitutions);
+			return getCollectionType(genericType, elementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
+		}
+		else if (type instanceof MapType) {
+			MapType mapType = (MapType)type;
+			Type keyType = getSpecializedType(ClassUtil.requireNonNull(mapType.getKeyType()), substitutions);
+			Type valueType = getSpecializedType(ClassUtil.requireNonNull(mapType.getValueType()), substitutions);
+			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
+		}
+		else if (type instanceof TupleType) {
+			assert tupleTypeManager != null;
+			return tupleTypeManager.getTupleType((TupleType) type, substitutions);
+		}
+		else if (type instanceof LambdaType) {
+			LambdaType lambdaType = (LambdaType)type;
+			LambdaParameter context = PivotUtil.getOwnedContext(lambdaType);
+			List<@NonNull LambdaParameter> parameters = PivotUtil.getOwnedParametersList(lambdaType);
+			LambdaParameter result = PivotUtil.getOwnedResult(lambdaType);
+			return getLambdaType(context, parameters, result, substitutions);
+		}
+		else if (type instanceof org.eclipse.ocl.pivot.Class) {
+			//
+			//	Get the bindings of the type.
+			//
+			org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement((org.eclipse.ocl.pivot.Class)type);
+			//
+			//	Prepare the template argument list, one template argument per template parameter.
+			//
+			List<@NonNull TemplateParameter> asTemplateParameters = genericType.basicGetOwnedTemplateParameters();
+			if (asTemplateParameters != null) {
+				List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>(asTemplateParameters.size());
+				for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
+					Type templateArgument = substitutions.get(templateParameter);
+					templateArguments.add(templateArgument != null ? templateArgument : templateParameter);
+				}
+				return getSpecializedType(genericType, templateArguments);
+			}
+		}
+		return type;
+	}
+
+	@Override
+	public @NonNull SpecializedTypeManager getSpecializedTypeManager() {
+		assert specializedTypeManager != null;
+		return specializedTypeManager;
 	}
 
 	@Override
