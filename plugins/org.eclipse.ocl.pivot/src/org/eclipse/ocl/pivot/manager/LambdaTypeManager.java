@@ -18,6 +18,7 @@ import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.values.LambdaTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
@@ -43,4 +44,6 @@ public interface LambdaTypeManager
 	void dispose();
 
 	@NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result, @Nullable TemplateArguments bindings);
+
+	@NonNull LambdaType getLambdaType(@NonNull LambdaTypeArguments typeArguments);
 }

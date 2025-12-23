@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,11 +24,10 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.values.LambdaTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
@@ -39,10 +39,10 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	protected final @NonNull StandardLibrary standardLibrary;
 
 	/**
-	 * Map from from context type via first parameter type, which may be null, to list of lambda types sharing context and first parameter types.
+	 * Map from from lambda type arguments, to the lambda type.
 	 */
-	private final @NonNull Map<@NonNull PartId, @NonNull Map<@NonNull PartId, @NonNull List<@NonNull LambdaType>>> lambdaTypes = new HashMap<>();
-	// FIXME Why does a List map give a moniker test failure
+	private @NonNull /*WeakHash*/Map<@NonNull LambdaTypeArguments, @NonNull WeakReference<@Nullable LambdaType>> lambdaTypes = new /*Weak*/HashMap<>();		// Keys are not singletons;
+	// FIXME ?? Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
 	protected AbstractLambdaTypeManager(@NonNull StandardLibrary standardLibrary) {
@@ -119,15 +119,14 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		return lambdaParameter;
 	}
 
-	protected @NonNull LambdaType createLambdaType(@NonNull TypedElement context,
-			@NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
+	protected @NonNull LambdaType createLambdaType(@NonNull LambdaTypeArguments typeArguments) {
 		LambdaType lambdaType = PivotFactory.eINSTANCE.createLambdaType();
 		lambdaType.setName(TypeId.LAMBDA_NAME);
-		lambdaType.setOwnedContext(createLambdaParameter(context));
-		for (TypedElement parameter : parameters) {
+		lambdaType.setOwnedContext(createLambdaParameter(typeArguments.getContext()));
+		for (TypedElement parameter : typeArguments.getParameters()) {
 			lambdaType.getOwnedParameters().add(createLambdaParameter(parameter));
 		}
-		lambdaType.setOwnedResult(createLambdaParameter(result));
+		lambdaType.setOwnedResult(createLambdaParameter(typeArguments.getResult()));
 		lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
 		standardLibrary.addOrphanClass(lambdaType);
 		return lambdaType;
@@ -142,7 +141,8 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	public @NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result,
 			@Nullable TemplateArguments bindings) {
 		if (bindings == null) {
-			return getLambdaType(context, parameters, result);
+			LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(context, parameters, result);
+			return getLambdaType(lambdaTypeArguments);
 		}
 		else {
 			TypedElement specializedContext = specialize(context, bindings);
@@ -151,51 +151,41 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 				specializedParameters.add(specialize(parameter, bindings));
 			}
 			TypedElement specializedResult = specialize(result, bindings);
-			return getLambdaType(specializedContext, specializedParameters, specializedResult);
+			LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(specializedContext, specializedParameters, specializedResult);
+			return getLambdaType(lambdaTypeArguments);
 		}
 	}
 
-	private @NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
-		PartId contextPartId = getPartTypeId(context);
-		Map<@NonNull PartId, @NonNull List<@NonNull LambdaType>> contextMap = lambdaTypes.get(contextPartId);
-		if (contextMap == null) {
-			contextMap = new HashMap<>();
-			lambdaTypes.put(contextPartId, contextMap);
-		}
-		PartId resultPartId  = getPartTypeId(result);
-		List<@NonNull LambdaType> lambdasList = contextMap.get(resultPartId);
-		if (lambdasList == null) {
-			lambdasList = new ArrayList<>();
-			contextMap.put(resultPartId, lambdasList);
-		}
-		int iMax = parameters.size();
-		for (@NonNull LambdaType candidateLambda : lambdasList) {
-			List<@NonNull LambdaParameter> candidateParameters = PivotUtil.getOwnedParametersList(candidateLambda);
-			if (iMax == candidateParameters.size()) {
-				boolean gotIt = true;
-				for (int i = 0; i < iMax; i++) {
-					TypedElement parameter = parameters.get(i);
-					LambdaParameter candidateParameter = candidateParameters.get(i);
-					PartId parameterPartId  = getPartTypeId(parameter);
-					PartId candidatePartId  = getPartTypeId(candidateParameter);
-					if (parameterPartId != candidatePartId) {
-						gotIt = false;
-						break;
+	@Override
+	public @NonNull LambdaType getLambdaType(@NonNull LambdaTypeArguments typeArguments) {
+		synchronized (lambdaTypes) {
+			WeakReference<@Nullable LambdaType> weakReference = lambdaTypes.get(typeArguments);
+			if (weakReference != null) {
+				LambdaType lambdaType = weakReference.get();
+				if (lambdaType != null) {
+					boolean isValid = true;
+					if (lambdaType.getOwnedContext().getType() == null) {
+						isValid = false;
 					}
+					for (TypedElement parameter : lambdaType.getOwnedParameters()) {
+						if (parameter.getType() == null) {
+							isValid = false;
+						}
+					}
+					if (lambdaType.getOwnedResult().getType() == null) {
+						isValid = false;
+					}
+					if (isValid) {		// If no GC pending
+						return lambdaType;
+					}
+					weakReference.clear();
 				}
-				if (gotIt) {
-					return candidateLambda;
-				}
+				lambdaTypes.remove(typeArguments);
 			}
+			LambdaType lambdaType = createLambdaType(typeArguments);
+			lambdaTypes.put(typeArguments, new WeakReference<@Nullable LambdaType>(lambdaType));
+			return lambdaType;
 		}
-		LambdaType lambdaType = createLambdaType(context, parameters, result);
-		lambdasList.add(lambdaType);
-		return lambdaType;
-	}
-
-	private @NonNull PartId getPartTypeId(@NonNull TypedElement typedElement) {
-		TypeId contextTypeId = typedElement.getTypeId();
-		return IdManager.getPartId(0, PivotUtil.getName(typedElement), contextTypeId, typedElement.isIsRequired());
 	}
 
 	private @NonNull TypedElement specialize(@NonNull TypedElement context, @Nullable TemplateArguments bindings) {
