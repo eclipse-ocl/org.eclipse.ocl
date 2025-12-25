@@ -15,6 +15,7 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 
 import com.google.common.collect.Iterables;
@@ -29,20 +30,24 @@ public class ParameterTypes
 
 	private final @NonNull ParametersId parametersId;
 	private final @NonNull Type @NonNull [] parameterTypes;
+//	private final @NonNull ParameterId @NonNull [] parameterIds;
 	private final int hashCode;
 	private /*@LazyNonNull*/ List<@NonNull Parameter> parameters = null;  // XXX init from ctor
 
 	public ParameterTypes(@NonNull Iterable<@NonNull Parameter> parameters) {
 		int iMax = Iterables.size(parameters);
 		@NonNull Type @NonNull [] types = new @NonNull Type[iMax];
+		@NonNull ParameterId @NonNull [] parameterIds = new @NonNull ParameterId[iMax];
 		int i = 0;
 		for (@NonNull Parameter parameter : parameters) {
+			ParameterId parameterId = IdManager.getParameterId(parameter);
+			parameterIds[i] = parameterId;
 			Type type = parameter.getType();
 			assert type != null;
 			types[i] = type;
 			i++;
 		}
-		this.parametersId = IdManager.getParametersId(types);
+		this.parametersId = IdManager.getParametersId(parameterIds);
 		this.parameterTypes = types;
 		hashCode = parametersId.hashCode() + 0x999;
 	}

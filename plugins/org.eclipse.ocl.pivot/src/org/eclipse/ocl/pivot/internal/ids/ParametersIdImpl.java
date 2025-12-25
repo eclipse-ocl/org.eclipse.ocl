@@ -15,10 +15,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.AbstractSingletonScope;
 import org.eclipse.ocl.pivot.ids.IdHash;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.SingletonScope;
 import org.eclipse.ocl.pivot.ids.SingletonScope.AbstractKeyAndValue;
-import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
  * ParametersId provides a hashed list of typeIds suitable for characterizing an operation signature.
@@ -26,18 +26,18 @@ import org.eclipse.ocl.pivot.ids.TypeId;
  */
 public class ParametersIdImpl implements ParametersId
 {
-	protected class Iterator implements java.util.Iterator<@NonNull TypeId>
+	protected class Iterator implements java.util.Iterator<@NonNull ParameterId>
 	{
 		private int index = 0;
 
 		@Override
 		public boolean hasNext() {
-			return index < typeIds.length;
+			return index < parameterIds.length;
 		}
 
 		@Override
-		public @NonNull TypeId next() {
-			return typeIds[index++];
+		public @NonNull ParameterId next() {
+			return parameterIds[index++];
 		}
 
 		@Override
@@ -49,24 +49,24 @@ public class ParametersIdImpl implements ParametersId
 	private static class ParametersIdValue extends AbstractKeyAndValue<@NonNull ParametersId>
 	{
 		private final @NonNull IdManager idManager;
-		private final @NonNull TypeId @NonNull [] value;
+		private final @NonNull ParameterId @NonNull [] parameterIds;
 
-		private ParametersIdValue(@NonNull IdManager idManager, @NonNull TypeId @NonNull [] value) {
-			super(computeHashCode(value));
+		private ParametersIdValue(@NonNull IdManager idManager, @NonNull ParameterId @NonNull [] parameterIds) {
+			super(computeHashCode(parameterIds));
 			this.idManager = idManager;
-			this.value = value;
+			this.parameterIds = parameterIds;
 		}
 
 		@Override
 		public @NonNull ParametersId createSingleton() {
-			return new ParametersIdImpl(idManager, value);
+			return new ParametersIdImpl(idManager, parameterIds);
 		}
 
 		@Override
 		public boolean equals(@Nullable Object that) {
 			if (that instanceof ParametersIdImpl) {
 				ParametersIdImpl singleton = (ParametersIdImpl)that;
-				return computeEquals(singleton.typeIds, value);
+				return computeEquals(singleton.parameterIds, parameterIds);
 			}
 			else {
 				return false;
@@ -77,38 +77,41 @@ public class ParametersIdImpl implements ParametersId
 	/**
 	 * @since 1.18
 	 */
-	public static class ParametersIdSingletonScope extends AbstractSingletonScope<@NonNull ParametersId, @NonNull TypeId @NonNull []>
+	public static class ParametersIdSingletonScope extends AbstractSingletonScope<@NonNull ParametersId, @NonNull ParameterId @NonNull []>
 	{
-		public @NonNull ParametersId getSingleton(@NonNull IdManager idManager, @NonNull TypeId @NonNull [] value) {
-			return getSingletonFor(new ParametersIdValue(idManager, value));
+		/**
+		 * @since 7.0
+		 */
+		public @NonNull ParametersId getSingleton(@NonNull IdManager idManager, @NonNull ParameterId @NonNull [] parameterIds) {
+			return getSingletonFor(new ParametersIdValue(idManager, parameterIds));
 		}
 	}
 
-	private static boolean computeEquals(@NonNull TypeId @NonNull [] theseTypeIds, @NonNull TypeId @NonNull [] thoseTypeIds) {
-		if (theseTypeIds.length != thoseTypeIds.length) {
+	private static boolean computeEquals(@NonNull ParameterId @NonNull [] theseParameterIds, @NonNull ParameterId @NonNull [] thoseParameterIds) {
+		if (theseParameterIds.length != thoseParameterIds.length) {
 			return false;
 		}
-		for (int i = 0; i < theseTypeIds.length; i++) {
-			if (theseTypeIds[i] != thoseTypeIds[i]) {
+		for (int i = 0; i < theseParameterIds.length; i++) {
+			if (theseParameterIds[i] != thoseParameterIds[i]) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	private static int computeHashCode(@NonNull TypeId @NonNull [] typeIds) {
-		return IdHash.createParametersHash(ParametersIdImpl.class, typeIds, null);
+	private static int computeHashCode(@NonNull ParameterId @NonNull [] parameterIds) {
+		return IdHash.createParametersHash(ParametersIdImpl.class, parameterIds);
 	}
 
 	private final int hashCode;
-	private final @NonNull TypeId @NonNull [] typeIds;
+	private final @NonNull ParameterId @NonNull [] parameterIds;
 
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
-	public ParametersIdImpl(@NonNull IdManager idManager, @NonNull TypeId @NonNull [] typeIds) {
-		this.hashCode = computeHashCode(typeIds);
-		this.typeIds = typeIds;
+	public ParametersIdImpl(@NonNull IdManager idManager, @NonNull ParameterId @NonNull [] parameterIds) {
+		this.hashCode = computeHashCode(parameterIds);
+		this.parameterIds = parameterIds;
 	}
 
 	@Override
@@ -122,12 +125,12 @@ public class ParametersIdImpl implements ParametersId
 	}
 
 	@Override
-	public @NonNull TypeId get(int index) {
-		return typeIds[index];
+	public @NonNull ParameterId get(int index) {
+		return parameterIds[index];
 	}
 
-	public @NonNull TypeId @NonNull [] get() {
-		return typeIds;
+	public @NonNull ParameterId @NonNull [] get() {
+		return parameterIds;
 	}
 
 	@Override
@@ -136,26 +139,26 @@ public class ParametersIdImpl implements ParametersId
 	}
 
 	@Override
-	public java.util.@NonNull Iterator<@NonNull TypeId> iterator() {
+	public java.util.@NonNull Iterator<@NonNull ParameterId> iterator() {
 		return new Iterator();
 	}
 
 	@Override
 	public int size() {
-		return typeIds.length;
+		return parameterIds.length;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append('(');
-		for (int i = 0; i < typeIds.length; i++) {
+		for (int i = 0; i < parameterIds.length; i++) {
 			if (i > 0) {
 				s.append(',');
 			}
-			TypeId typeId = typeIds[i];
-			@SuppressWarnings("null")boolean isNonNull = typeId != null;			// Never happens NE guard
-			s.append(isNonNull ? typeId.toString() : "null");
+			ParameterId parameterId = parameterIds[i];
+			@SuppressWarnings("null")boolean isNonNull = parameterId != null;			// Never happens NE guard
+			s.append(isNonNull ? parameterId.toString() : "null");
 		}
 		s.append(')');
 		return s.toString();

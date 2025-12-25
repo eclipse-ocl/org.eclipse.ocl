@@ -21,6 +21,22 @@ public class IdHash
 	private static final int PART_SCALING = 3;
 	private static final int SPECIALIZATION_SCALING = 5;
 
+	/**
+	 * @since 7.0
+	 */
+	public static int createBindingsHash(@NonNull Class<?> globalContext, @NonNull ElementId @NonNull [] typeIds, @NonNull Object @Nullable [] values) {
+		long hash = 0;
+		for (ElementId typeId : typeIds) {
+			hash = FUNCTION_PARAMETER_SCALING * hash + longValueOf(typeId.hashCode());
+		}
+		if (values != null) {
+			for (Object value : values) {
+				hash = FUNCTION_PARAMETER_SCALING * hash + longValueOf(value.hashCode());
+			}
+		}
+		return (int)hash + globalContext.getName().hashCode();
+	}
+
 	public static int createChildHash(@Nullable ElementId parentId, @Nullable String name) {
 		long hash = 0;
 		if (parentId != null) {
@@ -44,17 +60,12 @@ public class IdHash
 	}
 
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
-	public static int createParametersHash(@NonNull Class<?> globalContext, @NonNull ElementId @NonNull [] typeIds, @NonNull Object @Nullable [] values) {
+	public static int createParametersHash(@NonNull Class<?> globalContext, @NonNull ParameterId @NonNull [] parameterIds) {
 		long hash = 0;
-		for (ElementId typeId : typeIds) {
-			hash = FUNCTION_PARAMETER_SCALING * hash + longValueOf(typeId.hashCode());
-		}
-		if (values != null) {
-			for (Object value : values) {
-				hash = FUNCTION_PARAMETER_SCALING * hash + longValueOf(value.hashCode());
-			}
+		for (ParameterId parameterId : parameterIds) {
+			hash = FUNCTION_PARAMETER_SCALING * hash + longValueOf(parameterId.hashCode());
 		}
 		return (int)hash + globalContext.getName().hashCode();
 	}

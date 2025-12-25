@@ -66,7 +66,7 @@ public class BindingsIdImpl implements BindingsId
 	}
 
 	private static int computeHashCode(@NonNull ElementId @NonNull [] elementIds, @NonNull Object @Nullable [] values) {
-		return IdHash.createParametersHash(BindingsId.class, elementIds, values);
+		return IdHash.createBindingsHash(BindingsId.class, elementIds, values);
 	}
 
 	private final @NonNull ElementId @NonNull [] elementIds;

@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
+import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -1350,7 +1351,8 @@ public class OCLinEcoreTablesUtils
 	}
 
 	protected boolean isLambdaParameterList(@NonNull ParametersId parametersId) {
-		for (TypeId typeId : parametersId) {
+		for (@NonNull ParameterId parameterId : parametersId) {
+			TypeId typeId = parameterId.getTypeId();
 			if (typeId instanceof LambdaTypeId) {
 				return true;
 			}

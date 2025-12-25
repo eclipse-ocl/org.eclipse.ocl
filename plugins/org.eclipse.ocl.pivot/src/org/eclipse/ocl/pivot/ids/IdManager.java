@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -47,6 +48,7 @@ import org.eclipse.ocl.pivot.internal.ids.GeneralizedMapTypeIdImpl.MapTypeIdSing
 import org.eclipse.ocl.pivot.internal.ids.GeneralizedTupleTypeIdImpl.TupleTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.JavaTypeId.JavaTypeIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.NsURIPackageIdImpl.NsURIPackageIdSingletonScope;
+import org.eclipse.ocl.pivot.internal.ids.ParameterIdImpl.ParameterIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.ParametersIdImpl.ParametersIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.PartIdImpl.PartIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.PrimitiveTypeIdImpl.PrimitiveTypeIdSingletonScope;
@@ -127,6 +129,11 @@ public final class IdManager
 	 * Map from the Tuple hashCode to the tuple typeIds with the same hash.
 	 */
 	private static final @NonNull TupleTypeIdSingletonScope tupleTypes = new TupleTypeIdSingletonScope();
+
+	/**
+	 * Map from the ParameterId hashCode to the parameterId with the same hash.
+	 */
+	private static final @NonNull ParameterIdSingletonScope parameterIds = new ParameterIdSingletonScope();
 
 	/**
 	 * Map from the ParametersId hashCode to the parametersId with the same hash.
@@ -403,12 +410,12 @@ public final class IdManager
 				parametersId = ParametersId.EMPTY;
 			}
 			else {		// Templated operations cannot be overloaded so use the normalized template parameter ids only
-				@NonNull TypeId typeIds[] = new @NonNull TypeId[operationTemplateParameterSize];
+				@NonNull ParameterId parameterIds[] = new @NonNull ParameterId[operationTemplateParameterSize];
 				int contextTemplateParameterSize = contextTemplateParameterization != null ? contextTemplateParameterization.size() : 0;
 				for (int i = 0; i < operationTemplateParameterSize; i++) {
-					typeIds[i] = IdManager.getTemplateParameterId(contextTemplateParameterSize + i);
+					parameterIds[i] = IdManager.getParameterId(IdManager.getTemplateParameterId(contextTemplateParameterSize + i), false);
 				}
-				parametersId = getParametersId(typeIds);
+				parametersId = getParametersId(parameterIds);
 			}
 		}
 		int accumulators = 0;
@@ -528,20 +535,44 @@ public final class IdManager
 		return getNsURIPackageId(name, ePackage.getNsPrefix(), null);
 	}
 
+	/**
+	 * Return the parametersId for a given type list.
+	 * @since 7.0
+	 */
+	public static @NonNull ParameterId getParameterId(@NonNull TypeId typeId, boolean isTypeOf) {
+		return parameterIds.getSingleton(PRIVATE_INSTANCE, typeId, isTypeOf);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull ParameterId getParameterId(@NonNull Parameter parameter) {
+		return parameterIds.getSingleton(PRIVATE_INSTANCE, parameter.getTypeId(), parameter.isIsTypeof());
+	}
+
 	public static @NonNull ParametersId getParametersId(@NonNull Type @NonNull [] parameterTypes) {
 		int iSize = parameterTypes.length;
-		@NonNull TypeId @NonNull [] typeIds = new @NonNull TypeId[iSize];
+		@NonNull ParameterId @NonNull [] parameterIds = new @NonNull ParameterId[parameterTypes.length];
 		for (int i = 0; i < iSize; i++) {
-			typeIds[i] = parameterTypes[i].getTypeId();
+			parameterIds[i] = getParameterId(parameterTypes[i].getTypeId(), false);
 		}
-		return getParametersId(typeIds);
+		return getParametersId(parameterIds);
 	}
 
 	/**
 	 * Return the parametersId for a given type list.
+	 * @since 7.0
 	 */
-	public static @NonNull ParametersId getParametersId(@NonNull TypeId @NonNull ... typeIds) {
-		return parametersIds.getSingleton(PRIVATE_INSTANCE, typeIds);
+	public static @NonNull ParametersId getParametersId(@NonNull TypeId typeId) {
+		return parametersIds.getSingleton(PRIVATE_INSTANCE, new @NonNull ParameterId[] { getParameterId(typeId, false) });
+	}
+
+	/**
+	 * Return the parametersId for a given type list.
+	 * @since 7.0
+	 */
+	public static @NonNull ParametersId getParametersId(@NonNull ParameterId @NonNull ... parameterIds) {
+		return parametersIds.getSingleton(PRIVATE_INSTANCE, parameterIds);
 	}
 
 	/**

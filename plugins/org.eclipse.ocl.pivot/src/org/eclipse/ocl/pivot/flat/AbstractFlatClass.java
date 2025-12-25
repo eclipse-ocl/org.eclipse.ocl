@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
@@ -1233,10 +1234,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				if (iMax == argumentTypes.length) {
 					int i = 0;
 					for (; i < iMax; i++) {
-						@Nullable TypeId firstParameterId = firstParametersId.get(i);
+						@Nullable ParameterId firstParameterId = firstParametersId.get(i);
 						assert firstParameterId != null;
 						@NonNull Type secondParameterType = argumentTypes[i].getPivotClass();
-						if (firstParameterId != secondParameterType.getTypeId()) {
+						if (firstParameterId.getTypeId() != secondParameterType.getTypeId()) {		// XXX isTypeOf
 							break;
 						}
 					}

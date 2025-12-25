@@ -42,7 +42,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 public final class PivotSaveImpl extends XMISaveImpl
 {
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
 	public static class PivotXMIHelperImpl extends XMIHelperImpl
 	{

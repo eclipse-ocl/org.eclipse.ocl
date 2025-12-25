@@ -58,6 +58,7 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
@@ -67,7 +68,6 @@ import org.eclipse.ocl.pivot.ids.TemplateBinding;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -441,8 +441,8 @@ public class DependencyVisitor extends AbstractExtendingCGModelVisitor<@Nullable
 		@Override
 		public @Nullable Object visitOperationId(final @NonNull OperationId id) {
 			addElementIdDependency(id, id.getParent());
-			for (@NonNull TypeId parameterId : id.getParametersId()) {
-				addElementIdDependency(id, parameterId);
+			for (@NonNull ParameterId parameterId : id.getParametersId()) {
+				addElementIdDependency(id, parameterId.getTypeId());
 			}
 			return null;
 		}

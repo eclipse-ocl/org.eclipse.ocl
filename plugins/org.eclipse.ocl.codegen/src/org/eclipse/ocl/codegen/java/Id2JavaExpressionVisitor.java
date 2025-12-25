@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.OclInvalidTypeId;
 import org.eclipse.ocl.pivot.ids.OclVoidTypeId;
 import org.eclipse.ocl.pivot.ids.OperationId;
+import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
@@ -255,11 +256,11 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		js.appendClassReference(null, IdManager.class);
 		js.append(".getParametersId(");
 		boolean isFirst = true;
-		for (@NonNull TypeId parameterId : id.getParametersId()) {
+		for (@NonNull ParameterId parameterId : id.getParametersId()) {
 			if (!isFirst) {
 				js.append(", ");
 			}
-			js.appendIdReference(parameterId);
+			js.appendIdReference(parameterId.getTypeId());		// XXX isTypeOf
 			isFirst = false;
 		}
 		js.append("))");
