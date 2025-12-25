@@ -985,9 +985,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			List<@NonNull String> sortedNames = new ArrayList<>(name2parameterTypes.keySet());
 			Collections.sort(sortedNames);
 			for (@NonNull String name : sortedNames) {
-				ParameterTypes types = name2parameterTypes.get(name);
-				assert types != null;
-				if (types.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
+				ParameterTypes parameterTypes = name2parameterTypes.get(name);
+				assert parameterTypes != null;
+				if (parameterTypes.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
 					s.append("		public static final ");
 					s.appendClassReference(true, ParameterTypes.class);
 					s.append(" ");
@@ -995,11 +995,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.append(" = new ");
 					s.appendClassReference(null, ParameterTypes.class);
 					s.append("(");
-					for (int i = 0; i < types.size(); i++) {
+					for (int i = 0; i < parameterTypes.size(); i++) {
 						if (i > 0) {
 							s.append(", ");
 						}
-						Type type = types.get(i);
+						Type type = parameterTypes.getType(i);		// XXX isTypeOf
 						type.accept(emitTypeExpression);
 					}
 					s.append(");\n");

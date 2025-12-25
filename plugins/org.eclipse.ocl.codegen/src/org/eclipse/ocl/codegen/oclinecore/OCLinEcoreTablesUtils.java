@@ -1000,7 +1000,7 @@ public class OCLinEcoreTablesUtils
 					if (i > 0) {
 						s.append("___");
 					}
-					Type element = templateBindings.get(i);
+					Type element = templateBindings.getType(i);
 					getLegacyTemplateBindingsName(s, element);
 				}
 			}
@@ -1050,7 +1050,7 @@ public class OCLinEcoreTablesUtils
 		s.append("_");
 		s.append(lambdaParameter.getName());
 		s.append("_");
-		getTemplateBindingsName(s, PivotUtil.getType(lambdaParameter));
+		getTemplateBindingsName(s, PivotUtil.getType(lambdaParameter), lambdaParameter.isIsTypeof());
 		s.append("_");
 		s.append(lambdaParameter.isIsRequired() ? "T" : "F");
 		return s.toString();
@@ -1238,7 +1238,7 @@ public class OCLinEcoreTablesUtils
 	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull LambdaParameter lambdaParameter) {
 		s.append(AbstractGenModelHelper.encodeName(lambdaParameter));
 		s.append("_");
-		getTemplateBindingsName(s, PivotUtil.getType(lambdaParameter));
+		getTemplateBindingsName(s, PivotUtil.getType(lambdaParameter), lambdaParameter.isIsTypeof());
 		s.append("_");
 		s.append(lambdaParameter.isIsRequired() ? "T" : "F");
 	}
@@ -1253,8 +1253,8 @@ public class OCLinEcoreTablesUtils
 					if (i > 0) {
 						s.append("___");
 					}
-					Type element = templateBindings.get(i);
-					getTemplateBindingsName(s, element);
+					Type element = templateBindings.getType(i);
+					getTemplateBindingsName(s, element, templateBindings.getParameterId(i).isTypeOf());
 				}
 			}
 			name2 = s.toString();
@@ -1262,12 +1262,15 @@ public class OCLinEcoreTablesUtils
 		}
 		return name2;
 	}
-	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element) {
+	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element, boolean isTypeOf) {
 	//	TemplateParameter templateParameter = element.isTemplateParameter();
 	//	if (templateParameter != null) {
 	//		s.append(Integer.toString(templateParameter.getTemplateParameterId().getIndex()));
 	//		s.append("_");
 	//	}
+		if (isTypeOf) {
+			s.append("typeof_");
+		}
 		s.append(AbstractGenModelHelper.encodeName(element));
 		if (element instanceof TemplateableElement) {
 			BasicTemplateSpecialization templateSpecialization = TemplateSpecialization.basicGetTemplateSpecialization(element);
@@ -1275,7 +1278,7 @@ public class OCLinEcoreTablesUtils
 				s.append("_");
 				for (@NonNull Type actual : templateSpecialization) {
 					s.append("_");
-					getTemplateBindingsName(s, actual);
+					getTemplateBindingsName(s, actual, false);		// XXX ?? isTypeOf
 				}
 				s.append("__");
 			}

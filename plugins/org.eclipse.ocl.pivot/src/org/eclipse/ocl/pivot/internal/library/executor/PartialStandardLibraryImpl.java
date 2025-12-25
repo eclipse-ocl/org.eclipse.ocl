@@ -468,7 +468,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			}
 		}
 		for (int i = 0; i < iteratorTypes.size(); i++) {
-			@NonNull Type iteratorType = iteratorTypes.get(i);
+			@NonNull Type iteratorType = iteratorTypes.getType(i);
 			Parameter asIterator = PivotFactory.eINSTANCE.createParameter();
 			asIterator.setName("_" + n++);
 			asIterator.setType(iteratorType);
@@ -480,7 +480,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			}
 		}
 		for (int i = 0; i < parameterTypes.size(); i++) {
-			@NonNull Type parameterType = parameterTypes.get(i);
+			@NonNull Type parameterType = parameterTypes.getType(i);
 			Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 			asParameter.setName("_" + n++);
 			asParameter.setType(parameterType);
@@ -581,7 +581,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 		if (parameterTypes != null) {
 			for (int i = 0; i < parameterTypes.size(); i++) {
-				@NonNull Type parameterType = parameterTypes.get(i);
+				@NonNull Type parameterType = parameterTypes.getType(i);
 				Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 				asParameter.setName("_" + n++);
 				asParameter.setType(parameterType);

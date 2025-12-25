@@ -621,6 +621,28 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/ClassImpl.java" type="org.eclipse.ocl.pivot.internal.ClassImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="basicGetGeneric()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="generic"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedTemplateArguments"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedTemplateParameters"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CompleteClassImpl.java" type="org.eclipse.ocl.pivot.internal.CompleteClassImpl">
         <filter id="1143996420">
             <message_arguments>

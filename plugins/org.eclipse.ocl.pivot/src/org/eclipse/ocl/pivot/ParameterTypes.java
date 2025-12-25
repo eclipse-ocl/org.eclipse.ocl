@@ -79,15 +79,19 @@ public class ParameterTypes
 		return true;
 	}
 
-	public @NonNull Type get(int index) {
-		Type parameterType = parameterTypes[index];
-		assert parameterType != null;
-		return parameterType;
+//	public @NonNull Type get(int index) {
+//		Type parameterType = parameterTypes[index];
+//		assert parameterType != null;
+//		return parameterType;
+//	}
+
+	public @NonNull ParameterId getParameterId(int index) {
+		return parametersId.get(index);
 	}
 
-	public @NonNull Type @NonNull [] get() {
-		return parameterTypes;
-	}
+//	public @NonNull Type @NonNull [] get() {
+//		return parameterTypes;
+//	}
 
 	public @NonNull ParametersId getParametersId() {
 		return parametersId;
@@ -110,6 +114,13 @@ public class ParameterTypes
 			}
 		}
 		return parameters2;
+	}
+
+	@Deprecated	// recode to support isTypeOf
+	public @NonNull Type getType(int index) {
+		Type parameterType = parameterTypes[index];
+		assert parameterType != null;
+		return parameterType;
 	}
 
 	@Override

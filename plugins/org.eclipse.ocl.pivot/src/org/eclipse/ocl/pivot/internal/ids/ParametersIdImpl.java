@@ -35,6 +35,9 @@ public class ParametersIdImpl implements ParametersId
 			return index < parameterIds.length;
 		}
 
+		/**
+		 * @since 7.0
+		 */
 		@Override
 		public @NonNull ParameterId next() {
 			return parameterIds[index++];
@@ -124,11 +127,17 @@ public class ParametersIdImpl implements ParametersId
 		}
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull ParameterId get(int index) {
 		return parameterIds[index];
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	public @NonNull ParameterId @NonNull [] get() {
 		return parameterIds;
 	}
