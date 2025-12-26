@@ -578,15 +578,24 @@ public class EnvironmentView
 				&& (requiredType != PivotPackage.Literals.NAMESPACE)) {			// Don't really want properties when looking for NAMESPACE
 			assert completeModel.isTypeServeable(type);
 			CompleteClass completeClass = completeModel.getCompleteClass(type);
-			final boolean debugRequired = "extension_MyLifeline2".equals(name);
-			if (debugRequired) {
-				System.out.println("addAllProperties " + completeClass);
+			StringBuilder s = null;
+			if ("extension_MyLifeline2".equals(name)) {		// See testConsole_Bug507406
+				s = new StringBuilder();
+			}
+			if (s != null) {
+				s.append("addAllProperties " + completeClass);
+				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+					s.append("\n\tpartialClass: " + partialClass + " from " + partialClass.eResource());
+				}
+				for (Model partialModel : completeModel.getPartialModels()) {
+					s.append("\n\tpartialModel: " + partialModel + " from " + partialModel.eResource());
+				}
 			}
 			String name2 = name;
 			if (name2 != null) {
 				for (@NonNull Property property : completeClass.getProperties(featureFilter, name2)) {
-					if (debugRequired) {
-						System.out.println("\t" + property);
+					if (s != null) {
+						s.append("\n\tproperty: " + property);
 					}
 					addNamedElement(property);
 				}
@@ -595,6 +604,9 @@ public class EnvironmentView
 				for (@NonNull Property property : completeClass.getProperties(featureFilter)) {
 					addNamedElement(property);
 				}
+			}
+			if (s != null) {
+				System.out.println(s.toString());
 			}
 		}
 	}

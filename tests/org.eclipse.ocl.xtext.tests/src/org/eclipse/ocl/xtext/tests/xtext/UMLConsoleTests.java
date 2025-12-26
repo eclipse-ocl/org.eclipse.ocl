@@ -117,6 +117,55 @@ public class UMLConsoleTests extends AbstractConsoleTests
 	}
 
 	public void testConsole_Bug507406() throws Exception {
+		/*
+		 Intermittent results:
+		 OK-latest:
+			addAllProperties UML::Lifeline*3
+				partialClass: UML::Lifeline from EcoreASResourceImpl@29872edf 'http://www.eclipse.org/uml2/5.0.0/UML.oclas'
+				partialClass: UML::Lifeline from UMLASResourceImpl@466fe312 'pathmap://UML_METAMODELS/UML.metamodel.uml.oclas'
+				partialClass: $$::UML::Lifeline from UMLASResourceImpl@18a6b4c0 'platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406.uml.oclas'
+				partialModel: http://www.eclipse.org/ocl/2015/Library from OCLstdlib$ReadOnly@6064a08e 'http://www.eclipse.org/ocl/2015/Library.oclas'
+				partialModel: http://www.eclipse.org/ocl/2015/Pivot from OCLmetamodel$ReadOnly@70058b8b 'http://www.eclipse.org/ocl/2015/Pivot.oclas'
+				partialModel: platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406.uml from UMLASResourceImpl@18a6b4c0 'platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406.uml.oclas'
+				partialModel: http://www.eclipse.org/uml2/5.0.0/UML from EcoreASResourceImpl@29872edf 'http://www.eclipse.org/uml2/5.0.0/UML.oclas'
+				partialModel: http://www.eclipse.org/uml2/5.0.0/Types from EcoreASResourceImpl@49cb91ea 'http://www.eclipse.org/uml2/5.0.0/Types.oclas'
+				partialModel: http://www.eclipse.org/emf/2002/Ecore from EcoreASResourceImpl@64662ca7 'http://www.eclipse.org/emf/2002/Ecore.oclas'
+				partialModel: http://www.eclipse.org/ocl/2015/Orphanage from Orphanage$OrphanResource@21438075 'http://www.eclipse.org/ocl/2015/Orphanage.oclas'
+				partialModel: platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406Profile.uml from UMLASResourceImpl@7dc61e05 'platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406Profile.uml.oclas'
+				partialModel: pathmap://UML_METAMODELS/UML.metamodel.uml from UMLASResourceImpl@466fe312 'pathmap://UML_METAMODELS/UML.metamodel.uml.oclas'
+				partialModel: pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml from UMLASResourceImpl@68979496 'pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml.oclas'
+				partialModel: pathmap://UML_METAMODELS/Ecore.metamodel.uml from UMLASResourceImpl@3d418e37 'pathmap://UML_METAMODELS/Ecore.metamodel.uml.oclas'
+				partialModel: pathmap://UML_PROFILES/Ecore.profile.uml from UMLASResourceImpl@bcf1c2 'pathmap://UML_PROFILES/Ecore.profile.uml.oclas'
+				partialModel: pathmap://UML_PROFILES/Standard.profile.uml from UMLASResourceImpl@4dc7f1e6 'pathmap://UML_PROFILES/Standard.profile.uml.oclas'
+				partialModel: pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml from UMLASResourceImpl@1920efec 'pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml.oclas'
+				partialModel: http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard from EcoreASResourceImpl@28a1fac9 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard.oclas'
+				property: UML::Lifeline::extension_MyLifeline2 : RootElement::MyLifeline2
+			addAllProperties UML::Lifeline*3
+				partialClass: UML::Lifeline from EcoreASResourceImpl@29872edf 'http://www.eclipse.org/uml2/5.0.0/UML.oclas'
+				partialClass: UML::Lifeline from UMLASResourceImpl@466fe312 'pathmap://UML_METAMODELS/UML.metamodel.uml.oclas'
+				partialClass: $$::UML::Lifeline from UMLASResourceImpl@18a6b4c0 'platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406.uml.oclas'
+				partialModel: http://www.eclipse.org/ocl/2015/Library from OCLstdlib$ReadOnly@6064a08e 'http://www.eclipse.org/ocl/2015/Library.oclas'
+				partialModel: http://www.eclipse.org/ocl/2015/Pivot from OCLmetamodel$ReadOnly@70058b8b 'http://www.eclipse.org/ocl/2015/Pivot.oclas'
+				partialModel: platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406.uml from UMLASResourceImpl@18a6b4c0 'platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406.uml.oclas'
+				partialModel: http://www.eclipse.org/uml2/5.0.0/UML from EcoreASResourceImpl@29872edf 'http://www.eclipse.org/uml2/5.0.0/UML.oclas'
+				partialModel: http://www.eclipse.org/uml2/5.0.0/Types from EcoreASResourceImpl@49cb91ea 'http://www.eclipse.org/uml2/5.0.0/Types.oclas'
+				partialModel: http://www.eclipse.org/emf/2002/Ecore from EcoreASResourceImpl@64662ca7 'http://www.eclipse.org/emf/2002/Ecore.oclas'
+				partialModel: http://www.eclipse.org/ocl/2015/Orphanage from Orphanage$OrphanResource@21438075 'http://www.eclipse.org/ocl/2015/Orphanage.oclas'
+				partialModel: platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406Profile.uml from UMLASResourceImpl@7dc61e05 'platform:/plugin/org.eclipse.ocl.xtext.tests/models/uml/Bug507406Profile.uml.oclas'
+				partialModel: pathmap://UML_METAMODELS/UML.metamodel.uml from UMLASResourceImpl@466fe312 'pathmap://UML_METAMODELS/UML.metamodel.uml.oclas'
+				partialModel: pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml from UMLASResourceImpl@68979496 'pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml.oclas'
+				partialModel: pathmap://UML_METAMODELS/Ecore.metamodel.uml from UMLASResourceImpl@3d418e37 'pathmap://UML_METAMODELS/Ecore.metamodel.uml.oclas'
+				partialModel: pathmap://UML_PROFILES/Ecore.profile.uml from UMLASResourceImpl@bcf1c2 'pathmap://UML_PROFILES/Ecore.profile.uml.oclas'
+				partialModel: pathmap://UML_PROFILES/Standard.profile.uml from UMLASResourceImpl@4dc7f1e6 'pathmap://UML_PROFILES/Standard.profile.uml.oclas'
+				partialModel: pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml from UMLASResourceImpl@1920efec 'pathmap://UML_LIBRARIES/EcorePrimitiveTypes.library.uml.oclas'
+				partialModel: http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard from EcoreASResourceImpl@28a1fac9 'http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard.oclas'
+				property: UML::Lifeline::extension_MyLifeline2 : RootElement::MyLifeline2
+		BAD-earlier:
+				addAllProperties UML::Lifeline*2
+				addAllProperties UML::Lifeline*2
+		?? Set order dependence ??
+
+		 */
 		ResourceSet resourceSet = new ResourceSetImpl();		// Emulate the separate UML Editor's AdapterFactoryEditingDomainResourceSet
 
 		URI testModelURI = getTestModelURI("models/uml/Bug507406.uml");
