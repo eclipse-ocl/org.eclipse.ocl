@@ -19,7 +19,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateArgument;
@@ -46,18 +45,12 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 	// FIXME tests fail if keys are weak since GC is too aggressive across tests
 	// The actual types are weak keys so that parameterizations using stale types are garbage collected.
 	//
-	private @Nullable /*WeakHash*/Map<@NonNull TemplateArgumentValues, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations = null;
+	private @NonNull /*WeakHash*/Map<@NonNull TemplateArgumentValues, @NonNull WeakReference<org.eclipse.ocl.pivot.@Nullable Class>> specializations = new HashMap<>();
 
 	protected AbstractSpecializedTypeManager(@NonNull StandardLibrary standardLibrary) {
 		this.standardLibrary = standardLibrary;
 	}
 
-//	protected abstract org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments);
-
-	/**
-	 * @since 7.0
-	 */
-//	@Override
 	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
 		org.eclipse.ocl.pivot.Class genericType = primaryClass;
 		String typeName = genericType.getName();
@@ -75,16 +68,15 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 				asTemplateArguments.add(templateArgument2);
 			}
 		}
-		CompleteStandardLibrary completeStandardLibrary = (CompleteStandardLibrary)standardLibrary;
 		specializedType.setGeneric(genericType);
-		completeStandardLibrary.resolveSuperClasses(specializedType, genericType);
-		completeStandardLibrary.addOrphanClass(specializedType);
+		standardLibrary.resolveSuperClasses(specializedType, genericType);
+		standardLibrary.addOrphanClass(specializedType);
 		return specializedType;
 	}
 
 	@Override
 	public void dispose() {
-		specializations = null;
+		specializations.clear();
 	}
 
 	@Override
@@ -94,22 +86,14 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 		if (templateArguments.size() != iMax) {
 			throw new IllegalArgumentException("Incompatible template argument count");
 		}
-		return getSpecializedType(primaryClass, new TemplateArgumentValues(primaryClass.getTypeId(), templateArguments));
+		TemplateArgumentValues templateArgumentValues = new TemplateArgumentValues(primaryClass.getTypeId(), templateArguments);
+		return getSpecializedType(primaryClass, templateArgumentValues);
 	}
 
 	private synchronized org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
-		Map<@NonNull TemplateArgumentValues, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Class>> specializations2 = specializations;
-		if (specializations2 == null) {
-			synchronized(this) {
-				specializations2 = specializations;
-				if (specializations2 == null) {
-					specializations2 = specializations = new /*Weak*/HashMap<>();
-				}
-			}
-		}
-		synchronized (specializations2) {
+		synchronized (specializations) {
 			org.eclipse.ocl.pivot.Class specializedType = null;
-			WeakReference<org.eclipse.ocl.pivot.Class> weakReference = specializations2.get(templateArguments);
+			WeakReference<org.eclipse.ocl.pivot.Class> weakReference = specializations.get(templateArguments);
 			if (weakReference != null) {
 				specializedType = weakReference.get();
 				if (specializedType != null) {
@@ -126,7 +110,7 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 			}
 			if (specializedType == null) {
 				specializedType = createSpecialization(primaryClass, templateArguments);
-				specializations2.put(templateArguments, new WeakReference<>(specializedType));
+				specializations.put(templateArguments, new WeakReference<>(specializedType));
 			}
 			return specializedType;
 		}

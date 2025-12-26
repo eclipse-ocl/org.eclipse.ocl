@@ -92,6 +92,7 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractSpecializedTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -263,6 +264,13 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		}
 	}
 
+	public static class PartialSpecializedTypeManager extends AbstractSpecializedTypeManager
+	{
+		public PartialSpecializedTypeManager(@NonNull StandardLibrary standardLibrary) {
+			super(standardLibrary);
+		}
+	}
+
 	public static class PartialTupleTypeManager extends AbstractTupleTypeManager
 	{
 		public PartialTupleTypeManager(@NonNull StandardLibrary standardLibrary) {
@@ -287,8 +295,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	private org.eclipse.ocl.pivot.@Nullable Package orphanage = null;
 
-	private TemplateParameterization templateParameterization = null;				// XXX
-
 	private boolean libraryLoadInProgress = false;			// true to lock out dynamic resolveSuperClasses
 
 	/**
@@ -309,6 +315,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 
 	@Override
 	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement) {		// XXX promote
+		assert pivotElement.eContainer() == null;
 		if (pivotElement.getGeneric() != null) {
 			assert pivotElement.getGeneric().getGeneric() == null;
 		}
@@ -316,9 +323,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			assert (pivotElement instanceof LambdaType)
 			|| (pivotElement instanceof TupleType);
 		}
-		if (orphanage != null) {
-			pivotElement.setOwningPackage(orphanage);
+		if (orphanage == null) {
+			orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI);
 		}
+		pivotElement.setOwningPackage(orphanage);
 	}
 
 	/**
@@ -736,8 +744,8 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
-	protected @Nullable SpecializedTypeManager createSpecializedTypeManager() {
-		return null;
+	protected @NonNull SpecializedTypeManager createSpecializedTypeManager() {
+		return new PartialSpecializedTypeManager(this);
 	}
 
 	/**
@@ -834,12 +842,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	@Override
 	public @NonNull PrimitiveType getIntegerType() {
 		return (PrimitiveType) OCLstdlibTables.Types._Integer;
-	}
-
-	@Override
-	public @NonNull LambdaTypeManager getLambdaTypeManager() {
-		assert lambdaTypeManager != null;
-		return lambdaTypeManager;
 	}
 
 	@Override
@@ -1074,8 +1076,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
 		}
 		else if (type instanceof TupleType) {
-			assert tupleTypeManager != null;
-			return tupleTypeManager.getTupleType((TupleType) type, substitutions);
+			return getTupleTypeManager().getTupleType((TupleType) type, substitutions);
 		}
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
@@ -1113,8 +1114,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> templateArguments) {
 		assert genericClass == getPrimaryType(genericClass);			// Conforms that OCLmetamodel has been loaded
-		assert specializedTypeManager != null;
-		return specializedTypeManager.getSpecializedType(genericClass, templateArguments);
+		return getSpecializedTypeManager().getSpecializedType(genericClass, templateArguments);
 	}
 
 	@Override
@@ -1282,13 +1282,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 					specializedClass.getSuperClasses().add(superClass);
 				}
 			}
-		}
-	}
-
-	public void setNamespace(@NonNull TypedElement asTypedElement) {
-		this.templateParameterization = TemplateParameterization.getTemplateParameterization(asTypedElement);
-		for (TemplateParameter asTemplateParameter : templateParameterization) {
-			asTemplateParameter.getTemplateParameterId();
 		}
 	}
 

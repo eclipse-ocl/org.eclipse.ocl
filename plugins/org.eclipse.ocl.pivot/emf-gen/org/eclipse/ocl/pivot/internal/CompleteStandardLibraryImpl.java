@@ -293,10 +293,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	private /*final*/ /*@NonNull*/ CompleteModel completeModel;
 	private /*final*/ /*@NonNull*/ EnvironmentFactory environmentFactory;
 
-	private Orphanage orphanage = null;
+	private @Nullable Orphanage orphanage = null;
 
 	@Override
 	public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement) {
+		assert pivotElement.eContainer() == null;
 		if (pivotElement.getGeneric() != null) {
 			assert pivotElement.getGeneric().getGeneric() == null;
 		}
@@ -634,12 +635,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	@Override
 	public @NonNull CompleteFlatModel getFlatModel() {
 		return (CompleteFlatModel)super.getFlatModel();
-	}
-
-	@Override
-	public @NonNull LambdaTypeManager getLambdaTypeManager() {
-		assert lambdaTypeManager != null;
-		return lambdaTypeManager;
 	}
 
 	@Override

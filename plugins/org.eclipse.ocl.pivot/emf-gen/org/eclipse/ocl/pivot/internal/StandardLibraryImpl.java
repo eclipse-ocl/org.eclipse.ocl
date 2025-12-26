@@ -99,10 +99,10 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	{
 		this.collectionTypeManager = createCollectionTypeManager();
 		this.javaTypeManager = createJavaTypeManager();
-		this.lambdaTypeManager = createLambdaTypeManager();
-		this.mapTypeManager = createMapTypeManager();
-		this.specializedTypeManager = createSpecializedTypeManager();
-		this.tupleTypeManager = createTupleTypeManager();
+		this.lambdaTypeManager = null; //createLambdaTypeManager();
+		this.mapTypeManager = null; //createMapTypeManager();
+		this.specializedTypeManager = null; //createSpecializedTypeManager();
+		this.tupleTypeManager = null; //createTupleTypeManager();
 	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
@@ -119,9 +119,8 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
-	 * @since 7.0
 	 */
-	protected /*@NonNull*/ CollectionTypeManager collectionTypeManager = null;
+	private /*@NonNull*/ CollectionTypeManager collectionTypeManager = null;
 
 	/**
 	 * @since 7.0
@@ -139,34 +138,29 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	private /*@LazyNonNull*/ IdResolver idResolver = null;
 
 	/**
-	 * Shared cache of the lazily created lazily deleted representations of each lambda type.
-	 * @since 7.0
+	 * Shared cache of the lazily created lazily deleted representations of each type as a Java type.
 	 */
-	protected /*@NonNull*/ JavaTypeManager javaTypeManager = null;
+	private /*@NonNull*/ JavaTypeManager javaTypeManager = null;
 
 	/**
-	 * Shared cache of the lazily created lazily deleted representations of each type as a Java type.
-	 * @since 7.0
+	 * Shared cache of the lazily created lazily deleted representations of each lambda type.
 	 */
-	protected /*@NonNull*/ LambdaTypeManager lambdaTypeManager = null;
+	private @Nullable LambdaTypeManager lambdaTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each map type.
-	 * @since 7.0
 	 */
-	protected /*@NonNull*/ MapTypeManager mapTypeManager = null;
+	private @Nullable MapTypeManager mapTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted representations of each specialized class.
-	 * @since 7.0
 	 */
-	protected @Nullable SpecializedTypeManager specializedTypeManager = null;
+	private @Nullable SpecializedTypeManager specializedTypeManager = null;
 
 	/**
 	 * Shared cache of the lazily created lazily deleted specializations of each tuple type.
-	 * @since 7.0
 	 */
-	protected /*@NonNull*/ TupleTypeManager tupleTypeManager = null;
+	private @Nullable TupleTypeManager tupleTypeManager = null;
 
 	/**
 	 * @since 7.0
@@ -279,22 +273,19 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			}
 			else if (leftType instanceof MapType) {
 				if (rightType instanceof MapType) {
-					assert mapTypeManager != null;
-					return mapTypeManager.conformsToMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments, enforceNullity);
+					return getMapTypeManager().conformsToMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
 			else if (leftType instanceof LambdaType) {
 				if (rightType instanceof LambdaType) {
-					assert lambdaTypeManager != null;
-					return lambdaTypeManager.conformsToLambdaType((LambdaType)leftType, leftTemplateArguments, (LambdaType)rightType, rightTemplateArguments, enforceNullity);
+					return getLambdaTypeManager().conformsToLambdaType((LambdaType)leftType, leftTemplateArguments, (LambdaType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
 			else if (leftType instanceof TupleType) {
 				if (rightType instanceof TupleType) {
-					assert tupleTypeManager != null;
-					return tupleTypeManager.conformsToTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments, enforceNullity);
+					return getTupleTypeManager().conformsToTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
@@ -357,7 +348,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @Nullable SpecializedTypeManager createSpecializedTypeManager();
+	protected abstract @NonNull SpecializedTypeManager createSpecializedTypeManager();
 
 	/**
 	 * @since 7.0
@@ -381,13 +372,17 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments) {
 		assert collectionTypeManager != null;
-		return collectionTypeManager.getCollectionType(typeArguments);
+		CollectionType collectionType = collectionTypeManager.getCollectionType(typeArguments);
+		assert collectionType.eContainer() != null; // == basicGetOrphanage();
+		return collectionType;
 	}
 
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId) {
 		assert collectionTypeManager != null;
-		return collectionTypeManager.getCollectionType(collectionTypeId);
+		CollectionType collectionType = collectionTypeManager.getCollectionType(collectionTypeId);
+		assert collectionType.eContainer() != null; // ==  basicGetOrphanage();
+		return collectionType;
 	}
 
 	@Override
@@ -399,7 +394,9 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		assert PivotUtil.getGenericElement(genericType) == genericType;
 		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lower, upper);
 		assert collectionTypeManager != null;
-		return collectionTypeManager.getCollectionType(typeArguments);
+		CollectionType collectionType = collectionTypeManager.getCollectionType(typeArguments);
+		assert collectionType.eContainer() != null; // == basicGetOrphanage();
+		return collectionType;
 	}
 
 	@Override
@@ -436,15 +433,13 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		}
 		else if (leftType instanceof MapType) {
 			if (rightType instanceof MapType) {
-				assert mapTypeManager != null;
-				return mapTypeManager.getCommonMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments);
+				return getMapTypeManager().getCommonMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments);
 			}
 			return getOclAnyType();
 		}
 		else if (leftType instanceof TupleType) {
 			if (rightType instanceof TupleType) {
-				assert tupleTypeManager != null;
-				TupleType commonTupleType = tupleTypeManager.getCommonTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments);
+				TupleType commonTupleType = getTupleTypeManager().getCommonTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments);
 				if (commonTupleType != null) {
 					return commonTupleType;
 				}
@@ -583,6 +578,18 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		return getLambdaTypeManager().getLambdaType(contextType, parameterTypes, resultType, bindings);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull LambdaTypeManager getLambdaTypeManager() {
+		LambdaTypeManager lambdaTypeManager2 = lambdaTypeManager;
+		if (lambdaTypeManager2 == null) {
+			lambdaTypeManager2 = lambdaTypeManager = createLambdaTypeManager();
+		}
+		return lambdaTypeManager2;
+	}
+
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getLibraryClass(@NonNull String className) {
 		return ClassUtil.requireNonNull(basicGetLibraryClass(className));
@@ -593,8 +600,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	@Override
 	public @NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		assert mapTypeManager != null;
-		return mapTypeManager.getMapEntryType(entryClass);
+		return getMapTypeManager().getMapEntryType(entryClass);
 	}
 
 	/**
@@ -611,8 +617,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	@Override
 	public @NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments) {
-		assert mapTypeManager != null;
-		return mapTypeManager.getMapType(typeArguments);
+		return getMapTypeManager().getMapType(typeArguments);
 	}
 
 	/**
@@ -620,8 +625,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	@Override
 	public @NonNull MapTypeManager getMapTypeManager() {
-		assert mapTypeManager != null;
-		return mapTypeManager;
+		MapTypeManager mapTypeManager2 = mapTypeManager;
+		if (mapTypeManager2 == null) {
+			mapTypeManager2 = mapTypeManager = createMapTypeManager();
+		}
+		return mapTypeManager2;
 	}
 
 //	@Override
@@ -690,8 +698,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> templateArguments) {
 		assert genericClass == getPrimaryType(genericClass);			// Conforms that OCLmetamodel has been loaded
-		assert specializedTypeManager != null;
-		return specializedTypeManager.getSpecializedType(genericClass, templateArguments);
+		return getSpecializedTypeManager().getSpecializedType(genericClass, templateArguments);
 	}
 
 	@Override
@@ -728,8 +735,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
 		}
 		else if (type instanceof TupleType) {
-			assert tupleTypeManager != null;
-			return tupleTypeManager.getTupleType((TupleType) type, substitutions);
+			return getTupleTypeManager().getTupleType((TupleType) type, substitutions);
 		}
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
@@ -761,26 +767,26 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 
 	@Override
 	public @NonNull SpecializedTypeManager getSpecializedTypeManager() {
-		assert specializedTypeManager != null;
-		return specializedTypeManager;
+		SpecializedTypeManager specializedTypeManager2 = specializedTypeManager;
+		if (specializedTypeManager2 == null) {
+			specializedTypeManager2 = specializedTypeManager = createSpecializedTypeManager();
+		}
+		return specializedTypeManager2;
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateArguments bindings) {
-		assert tupleTypeManager != null;
-		return tupleTypeManager.getTupleType(asParts, bindings);
+		return getTupleTypeManager().getTupleType(asParts, bindings);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partIds) {
-		assert tupleTypeManager != null;
-		return tupleTypeManager.getTupleType(asParts, partIds);
+		return getTupleTypeManager().getTupleType(asParts, partIds);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		assert tupleTypeManager != null;
-		return tupleTypeManager.getTupleType(null, typeId);
+		return getTupleTypeManager().getTupleType(null, typeId);
 	}
 
 	/**
@@ -788,8 +794,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	@Override
 	public @NonNull TupleTypeManager getTupleTypeManager() {
-		assert tupleTypeManager != null;
-		return tupleTypeManager;
+		TupleTypeManager tupleTypeManager2 = tupleTypeManager;
+		if (tupleTypeManager2 == null) {
+			tupleTypeManager2 = tupleTypeManager = createTupleTypeManager();
+		}
+		return tupleTypeManager2;
 	}
 
 	/**
@@ -872,15 +881,13 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		} */
 		else if (leftType instanceof MapType) {
 			if (rightType instanceof MapType) {
-				assert mapTypeManager != null;
-				return mapTypeManager.isEqualToMapType((MapType)leftType, (MapType)rightType);
+				return getMapTypeManager().isEqualToMapType((MapType)leftType, (MapType)rightType);
 			}
 			return false;
 		}
 		else if (leftType instanceof TupleType) {
 			if (rightType instanceof TupleType) {
-				assert tupleTypeManager != null;
-				return tupleTypeManager.isEqualToTupleType((TupleType)leftType, (TupleType)rightType);
+				return getTupleTypeManager().isEqualToTupleType((TupleType)leftType, (TupleType)rightType);
 			}
 			return false;
 		}
