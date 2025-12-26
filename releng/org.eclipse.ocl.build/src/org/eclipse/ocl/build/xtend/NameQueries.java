@@ -19,12 +19,14 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper;
 import org.eclipse.ocl.codegen.generator.GenModelHelper;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.MapType;
@@ -32,6 +34,8 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -52,13 +56,15 @@ public class NameQueries
 	}
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
+	protected final @NonNull ASSaverWithInverse asSaver;
 	protected final @NonNull GenPackageManager genPackageManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	private @NonNull Map<@NonNull String, @NonNull Integer> counters = new HashMap<>();
 	private @NonNull Map<@NonNull Object, @NonNull String> definedSymbols = new HashMap<>();
 
-	public NameQueries(@NonNull EnvironmentFactory environmentFactory) {
+	public NameQueries(@NonNull EnvironmentFactory environmentFactory, @NonNull ASSaverWithInverse asSaver) {
 		this.environmentFactory = environmentFactory;
+		this.asSaver = asSaver;
 		this.genPackageManager = environmentFactory.getGenPackageManager();
 		this.genModelHelper = AbstractGenModelHelper.create(genPackageManager);		// XXX maybe UML
 	}
@@ -239,13 +245,26 @@ public class NameQueries
 	 * @return the symbol name
 	 */
 	public @NonNull String getSymbolName(@NonNull Object elem) {
-		return getPrefixedSymbolName("symbol_", elem);
+		Element element = (Element)elem;
+		Element element2 = (Element) asSaver.basicGetSource(element);
+		Element element3 = element2 != null ? element2 : element;
+		assert (element3.eResource() == asSaver.getResource()) || !Orphanage.isOrphan(element3);
+		return getPrefixedSymbolName("symbol_", element3);
 	}
 	public @NonNull String getSymbolNameWithoutNormalization(@NonNull Object elem) {
-		return getPrefixedSymbolNameWithoutNormalization("symbol_", elem);
+		Element element = (Element)elem;
+		Element element2 = (Element) asSaver.basicGetSource(element);
+		Element element3 = element2 != null ? element2 : element;
+		assert (element3.eResource() == asSaver.getResource()) || !Orphanage.isOrphan(element3);
+		return getPrefixedSymbolNameWithoutNormalization("symbol_", element3);
 	}
 
 	public @NonNull String getPrefixedSymbolName(@NonNull String prefix, @NonNull Object elem) {
+		Element element = (Element)elem;
+		Element element2 = (Element) asSaver.basicGetSource(element);
+		Element element3 = element2 != null ? element2 : element;
+		assert (element3.eResource() == asSaver.getResource()) || !Orphanage.isOrphan(element3);
+		elem = element3;
 		//		if (elem == null) {
 		//			logger.error("getPrefixedSymbolName for '" + prefix + "'and null");
 		//		}
@@ -276,16 +295,21 @@ public class NameQueries
 	}
 
 	public void putSymbolName(@NonNull Object elem, @NonNull String symbolName) {
+		assert elem instanceof EObject;
+		Element element = (Element)elem;
+		Element element2 = (Element) asSaver.basicGetSource(element);
+		Element element3 = element2 != null ? element2 : element;
+		assert (element3.eResource() == asSaver.getResource()) || !Orphanage.isOrphan(element3);
 		if (symbolName.startsWith("standardLibraryPackage")) {
 			getClass();			// FIXME Debugging
 		}
-		if (symbolName.startsWith("symbol_")) {
+		if (symbolName.startsWith("_Collection_$$0_F")) {
 			getClass();			// FIXME Debugging
 		}
-		if (symbolName.startsWith("_OclElement")) {
+		if (symbolName.startsWith("$$0")) {
 			getClass();			// FIXME Debugging
 		}
-		String oldSymbolName = definedSymbols.put(elem, symbolName);
+		String oldSymbolName = definedSymbols.put(element3, symbolName);
 		assert oldSymbolName == null;
 	}
 }

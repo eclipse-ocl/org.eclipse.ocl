@@ -1289,6 +1289,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				}
 			}
 		}
+		nameQueries = new NameQueries(environmentFactory, asSaver);
 		initLocalTypes();
 		initOrphanSymbolNames(asSaver);
 	}
@@ -1381,20 +1382,20 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 			}
 			if (s.length() > 0) {
 				String symbolName = getPrefixedSymbolName(localOrphan, s.toString());
-				EObject sharedOrphan = asSaver.basicGetSource(localOrphan);
+				EObject sharedOrphan = null;//asSaver.basicGetSource(localOrphan);
 				if (sharedOrphan != null) {
 					nameQueries.putSymbolName(sharedOrphan, symbolName);
 				}
 				else if (localOrphan == localOrphanage) {
-					Orphanage sharedOrphanage = environmentFactory.getStandardLibrary().getOrphanage();
-					nameQueries.putSymbolName(sharedOrphanage, symbolName);
+				//	Orphanage sharedOrphanage = environmentFactory.getStandardLibrary().getOrphanage();
+				//	nameQueries.putSymbolName(sharedOrphanage, symbolName);
 				}
 				else if (localOrphan.eContainer() == localOrphanage) {
 					//
 				}
 				else {
 					if (!(localOrphan instanceof Property)) {
-						nameQueries.putSymbolName(localOrphan, symbolName);
+//						nameQueries.putSymbolName(localOrphan, symbolName);
 					}
 				//	System.out.println("Missing orphan mapping for " + NameUtil.debugSimpleName(localOrphan) + " : " + localOrphan);
 				}
@@ -1436,6 +1437,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected void setEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeModel = environmentFactory.getCompleteModel();
-		nameQueries = new NameQueries(environmentFactory);
+	//	nameQueries = new NameQueries(environmentFactory);
 	}
 }
