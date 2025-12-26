@@ -657,6 +657,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 					installAliases(asResource);
 					environmentFactory.getMetamodelManager().installResource(asResource);
 					installReferencers();
+					if (pivotURI.toString().contains("Bug507406.uml.oclas")) {				// See testConsole_Bug507406
+						StringBuilder s = new StringBuilder();
+						s.append("installStereotypes for " + pivotURI);
+						for (Model partialModel : completeModel.getPartialModels()) {
+							s.append("\n\tpartialModel: " + partialModel + " from " + partialModel.eResource());
+						}
+						System.out.println(s.toString());
+					}
 					modelAnalysis.installStereotypes();
 					installProperties();
 					installUsers();
