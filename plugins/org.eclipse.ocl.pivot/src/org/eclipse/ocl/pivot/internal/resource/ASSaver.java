@@ -11,42 +11,27 @@
 package org.eclipse.ocl.pivot.internal.resource;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.emf.common.util.ECollections;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.AnyTypeImpl;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * ASSaverNew ensures that all references to synthesized types are terminated by local copies of the synthesized types.
@@ -62,6 +47,7 @@ public class ASSaver
 	 * @since 7.0
 	 */
 	@SuppressWarnings("serial")
+	@Deprecated
 	protected static class ASSaverCopier extends EcoreUtil.Copier
 	{
 		protected ASSaverCopier(@NonNull ASResource resource, boolean resolveProxies) {
@@ -91,39 +77,28 @@ public class ASSaver
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	public static class ASSaverWithInverse extends ASSaver
 	{
-		private final @NonNull Map<@NonNull EObject, @NonNull EObject> target2source = new HashMap<>();
+	//	private final @NonNull Map<@NonNull EObject, @NonNull EObject> target2source = new HashMap<>();
 
 		public ASSaverWithInverse(@NonNull ASResource resource) {
 			super(resource);
 		}
 
-		public @Nullable EObject basicGetSource(@NonNull EObject target) {
-			return target2source.get(target);
-		}
-
 		@Override
-		@SuppressWarnings("serial")
 		protected @NonNull ASSaverCopier createCopier(@NonNull ASResource resource) {
 			return new ASSaverCopier(resource, true)
 			{
 				@Override
 				public EObject put(EObject key, EObject value) {
 					assert (key != null) && (value != null);
-					EObject old = target2source.put(value, key);
-					assert (old == null) || (old == key);
+				//	EObject old = target2source.put(value, key);
+				//	assert (old == null) || (old == key);
 					return super.put(key, value);
 				}
 
 			};
-		}
-
-		/**
-		 * @since 7.0
-		 */
-		public @NonNull EObject getSource(@NonNull EObject target) {
-			return ClassUtil.requireNonNull(target2source.get(target));
 		}
 	}
 
@@ -167,35 +142,37 @@ public class ASSaver
 		}
 	}
 
-	/**
-	 * The mapping from shared orphanage elements to their local counterpart.
-	 */
-	private final EcoreUtil.@NonNull Copier copier;
-
-	/**
-	 * @since 7.0
-	 */
-	protected final @NonNull Resource resource;
+	private final @NonNull Resource resource;
 
 	/**
 	 * The appropriate normalization visitor for each Resource.
 	 * @since 7.0
 	 */
-	private /*@LazyNonNull*/ Map<@NonNull Resource, @NonNull ASSaverNormalizeVisitor> resource2normalizeVisitor = null;
+	private /*@LazyNonNull*/ Map<@NonNull Resource, @NonNull ASSaverNormalizeVisitor> resource2normalizeVisitor;
+
+	private final @NonNull SaverStandardLibraryImpl localLibrary;
 
 	/**
 	 * @since 7.0
 	 */
 	public ASSaver(@NonNull ASResource resource) {
 		this.resource = resource;
-		this.copier = createCopier(resource);
+		this.localLibrary = new SaverStandardLibraryImpl(resource);
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	public @Nullable EObject basicGetTarget(@NonNull EObject source) {
-		return copier.get(source);
+	public @Nullable EObject basicGetSource(@NonNull EObject target) {
+		return localLibrary.getLocal(target);
+	//	return target2source.get(target);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull EObject getSource(@NonNull EObject target) {		// XXX bad name
+		return ClassUtil.requireNonNull(localLibrary.getLocal(target));
 	}
 
 	/**
@@ -203,13 +180,6 @@ public class ASSaver
 	 */
 	protected @NonNull ASSaverCopier createCopier(@NonNull ASResource resource) {
 		return new ASSaverCopier(resource, true);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull EObject getTarget(@NonNull EObject source) {
-		return ClassUtil.requireNonNull(copier.get(source));
 	}
 
 	/**
@@ -241,44 +211,8 @@ public class ASSaver
 	/**
 	 * @since 7.0
 	 */
-	protected void loadOrphanage(org.eclipse.ocl.pivot.@NonNull Package localOrphanage, @NonNull Orphanage sharedOrphanage) {
-		//
-		//	Determine the global contents.
-		//
-		Map<@NonNull TypeId, org.eclipse.ocl.pivot.@NonNull Class> typeId2globalType = new HashMap<>();
-		Map<@NonNull OperationId, @NonNull Operation> operationId2globalOperation = new HashMap<>();
-		for (org.eclipse.ocl.pivot.@NonNull Class asClass : PivotUtil.getOwnedClasses(sharedOrphanage)) {
-			if (!PivotConstants.ORPHANAGE_NAME.equals(asClass.getName())) {
-				TypeId typeId = asClass.getTypeId();
-				org.eclipse.ocl.pivot.Class old = typeId2globalType.put(typeId, asClass);
-				assert old == null;
-			}
-			else {
-				for (@NonNull Operation asOperation : PivotUtil.getOwnedOperations(asClass)) {
-					Operation old = operationId2globalOperation.put(asOperation.getOperationId(), asOperation);
-					assert old == null;
-				}
-			}
-		}
-		//
-		//	Map the local contents to the global.
-		//
-		for (org.eclipse.ocl.pivot.@NonNull Class asLocalClass : PivotUtil.getOwnedClasses(localOrphanage)) {
-			if (!PivotConstants.ORPHANAGE_NAME.equals(asLocalClass.getName())) {
-				org.eclipse.ocl.pivot.Class asGlobalClass = typeId2globalType.get(asLocalClass.getTypeId());
-				if (asGlobalClass != null) {
-					copier.put(asGlobalClass, asLocalClass);
-				}
-			}
-			else {
-				for (@NonNull Operation asLocalOperation : PivotUtil.getOwnedOperations(asLocalClass)) {
-					Operation asGlobalOperation = operationId2globalOperation.get(asLocalOperation.getOperationId());
-					if (asGlobalOperation != null) {
-						copier.put(asGlobalOperation, asLocalOperation);
-					}
-				}
-			}
-		}
+	public @NonNull Resource getResource() {
+		return resource;
 	}
 
 	/**
@@ -286,100 +220,7 @@ public class ASSaver
 	 * @since 7.0
 	 */
 	public void localizeOrphans() {
-		AnyTypeImpl dummySpecializedType = new AnyTypeImpl() {};
-		Model asModel = PivotUtil.getModel(resource);
-		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetLocalOrphanPackage(asModel);
-		Orphanage sharedOrphanage = Orphanage.getOrphanage(resource.getResourceSet());
-		assert sharedOrphanage.assertIsValid();
-		if (localOrphanPackage != null) {
-			loadOrphanage(localOrphanPackage, sharedOrphanage);
-		}
-		Collection<@NonNull EObject> moreObjects = resource.getContents();
-		while (moreObjects != null) {
-			Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(moreObjects);
-			moreObjects = null;
-			for (EObject eReferencedObject : references.keySet()) {
-				assert eReferencedObject != null;
-				for (EObject eContainer = eReferencedObject; eContainer != null; eContainer = eContainer.eContainer()) {
-					if (eContainer == sharedOrphanage) {
-						if (localOrphanPackage == null) {
-							localOrphanPackage = Orphanage.createLocalOrphanPackage(asModel);
-						}
-						EObject eTarget = eReferencedObject;
-						if (eTarget instanceof Property) {				// If Tuple Property referenced (before Tuple)
-							eTarget = eTarget.eContainer();				//  copy the whole Tuple.
-						}
-						if (eTarget instanceof NormalizedTemplateParameter) {
-							int index = ((NormalizedTemplateParameter)eTarget).getIndex();
-							EObject localEObject = Orphanage.getNormalizedTemplateParameter(localOrphanPackage, index);
-							copier.put(eTarget, localEObject);
-						}
-						else if (!copier.containsKey(eTarget)) {
-							assert eTarget != null;
-							assert eTarget.eContainer() != null;
-							EObject localizedETarget = copier.copy(eTarget);
-							if (moreObjects == null) {
-								moreObjects = new ArrayList<>();
-							}
-							moreObjects.add(eTarget);
-							if (localizedETarget instanceof org.eclipse.ocl.pivot.Class) {
-								if (((org.eclipse.ocl.pivot.Class)eTarget).getGeneric() != null) {
-									((org.eclipse.ocl.pivot.Class)localizedETarget).setGeneric(dummySpecializedType);	// Defeat any generic check
-								}
-								localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localizedETarget);
-							}
-							else {//if (eTarget instanceof Operation) {
-								throw new UnsupportedOperationException();		// ?? copy whole container just like for Property??
-					//			resolveOperation((Operation)eObject);
-								}
-						}
-						break;
-					}
-					else if (eContainer == localOrphanPackage) {
-						break;
-					}
-					else if (eContainer instanceof org.eclipse.ocl.pivot.Package) {
-						break;
-					}
-					else if (eContainer instanceof Model) {
-						break;
-					}
-					else if (eReferencedObject instanceof CompleteClass) {
-						break;
-					}
-					else if (eContainer instanceof CompletePackage) {
-						break;
-					}
-					else if (eContainer instanceof CompleteModel) {
-						break;
-					}
-					else if (eContainer == null) {			// XXX Built-in orphans are containerless
-						if (localOrphanPackage == null) {
-							localOrphanPackage = Orphanage.createLocalOrphanPackage(asModel);
-						}
-						EObject eTarget = eReferencedObject;
-						assert !(eTarget instanceof Property);
-						assert !(eTarget instanceof NormalizedTemplateParameter);
-						if (!copier.containsKey(eTarget)) {
-							assert eTarget != null;
-							assert eTarget.eContainer() == null;
-							EObject localizedETarget = copier.copy(eTarget);
-							if (moreObjects == null) {
-								moreObjects = new ArrayList<>();
-							}
-							moreObjects.add(eTarget);
-							assert localizedETarget instanceof org.eclipse.ocl.pivot.Class;
-							localOrphanPackage.getOwnedClasses().add((org.eclipse.ocl.pivot.Class)localizedETarget);
-						}
-						break;
-					}
-				}
-			}
-		}
-		copier.copyReferences();
-		if (localOrphanPackage != null) {
-			ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)localOrphanPackage.getOwnedClasses(), new ClassByTypeIdAndEntryClassComparator());
-		}
+		localLibrary.localizeOrphans();
 	}
 
 	/**
@@ -411,10 +252,6 @@ public class ASSaver
 	 * @since 7.0
 	 */
 	public @Nullable EObject resolveOrphan(@NonNull EObject eObject) {
-		EObject localEObject = copier.get(eObject);
-		EObject eObject2 = localEObject != null ? localEObject : eObject;
-	//	Model containingModel = PivotUtil.getContainingModel(eObject2);
-	//	assert (containingModel == null) || !Orphanage.isOrphanage(containingModel);		// ElementLiteralExp references may be anywhere.
-		return eObject2;
+		return localLibrary.resolveOrphan(eObject);
 	}
 }
