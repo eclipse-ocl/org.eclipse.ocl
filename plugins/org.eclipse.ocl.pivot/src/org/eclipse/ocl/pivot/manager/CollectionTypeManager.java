@@ -45,4 +45,9 @@ public interface CollectionTypeManager
 				@NonNull CollectionType rightCollectionType, @Nullable TemplateArguments rightTemplateArguments);
 
 	boolean isEqualToCollectionType(@NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType);
+
+	/**
+	 * Add a pre-existing CollectionType to the managed CollectionTypes.
+	 */
+	void load(@NonNull CollectionType asCollectionType);
 }

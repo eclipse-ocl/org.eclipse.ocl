@@ -47,4 +47,9 @@ public interface MapTypeManager
 	@NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments);
 
 	boolean isEqualToMapType(@NonNull MapType leftMapType, @NonNull MapType rightMapType);
+
+	/**
+	 * Add a pre-existing MapType to the managed MapTypes.
+	 */
+	void load(@NonNull MapType asMapType);
 }

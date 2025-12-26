@@ -48,4 +48,9 @@ public interface TupleTypeManager
 	@NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateArguments usageBindings);	// FIXME Remove duplication, unify type/multiplicity
 
 	boolean isEqualToTupleType(@NonNull TupleType leftTupleType, @NonNull TupleType rightTupleType);
+
+	/**
+	 * Add a pre-existing TupleType to the managed TupleTypes.
+	 */
+	void load(@NonNull TupleType asTupleType);
 }

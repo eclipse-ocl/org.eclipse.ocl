@@ -254,4 +254,22 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	protected boolean isValid(@Nullable Type type) {
 		return type != null;
 	}
+
+	@Override
+	public void load(@NonNull CollectionType asCollectionType) {
+		CollectionType genericCollectionType = PivotUtil.getGenericElement(asCollectionType);
+		Type elementType = PivotUtil.getElementType(asCollectionType);
+		boolean isNullFree = asCollectionType.isIsNullFree();
+		IntegerValue lowerValue = asCollectionType.getLowerValue();
+		UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
+		CollectionTypeArguments collectionTypeArguments = new CollectionTypeArguments(genericCollectionType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
+		WeakReference<@Nullable CollectionType> ref = collectionTypes.get(collectionTypeArguments);
+		CollectionType old = ref != null ? ref.get() : null;
+		if (old == null) {
+			collectionTypes.put(collectionTypeArguments, new WeakReference<>(asCollectionType));
+		}
+		else {
+			assert old == asCollectionType;
+		}
+	}
 }

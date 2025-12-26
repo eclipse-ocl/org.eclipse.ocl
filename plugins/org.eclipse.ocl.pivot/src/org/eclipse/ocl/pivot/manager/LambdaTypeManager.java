@@ -46,4 +46,9 @@ public interface LambdaTypeManager
 	@NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result, @Nullable TemplateArguments bindings);
 
 	@NonNull LambdaType getLambdaType(@NonNull LambdaTypeArguments typeArguments);
+
+	/**
+	 * Add a pre-existing LambdaType to the managed LambdaTypes.
+	 */
+	void load(@NonNull LambdaType asLambdaType);
 }

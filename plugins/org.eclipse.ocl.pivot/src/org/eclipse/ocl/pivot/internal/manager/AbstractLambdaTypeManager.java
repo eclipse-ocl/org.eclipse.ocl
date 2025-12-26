@@ -188,6 +188,22 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		}
 	}
 
+	@Override
+	public void load(@NonNull LambdaType asLambdaType) {
+		LambdaParameter contextParameter = PivotUtil.getOwnedContext(asLambdaType);
+		Iterable<@NonNull LambdaParameter> parameters = PivotUtil.getOwnedParameters(asLambdaType);
+		LambdaParameter resultParameter = PivotUtil.getOwnedResult(asLambdaType);
+		LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(contextParameter, parameters, resultParameter);
+		WeakReference<@Nullable LambdaType> ref = lambdaTypes.get(lambdaTypeArguments);
+		LambdaType old = ref != null ? ref.get() : null;
+		if (old == null) {
+			lambdaTypes.put(lambdaTypeArguments, new WeakReference<>(asLambdaType));
+		}
+		else {
+			assert old == asLambdaType;
+		}
+	}
+
 	private @NonNull TypedElement specialize(@NonNull TypedElement context, @Nullable TemplateArguments bindings) {
 		String name = PivotUtil.getName(context);
 		Type specializedType = standardLibrary.getSpecializedType(PivotUtil.getType(context), bindings);

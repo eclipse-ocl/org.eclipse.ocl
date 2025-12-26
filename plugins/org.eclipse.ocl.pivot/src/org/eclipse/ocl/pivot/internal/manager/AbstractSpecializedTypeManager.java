@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,6 +114,29 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 				specializations.put(templateArguments, new WeakReference<>(specializedType));
 			}
 			return specializedType;
+		}
+	}
+
+	@Override
+	public void load(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		org.eclipse.ocl.pivot.@NonNull Class genericClass = PivotUtil.getGenericElement(asClass);
+		TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(asClass);
+		List<@NonNull TemplateParameter> asTemplateParameters = genericClass.basicGetOwnedTemplateParameters();
+		assert asTemplateParameters != null;
+		List<@NonNull Type> templateArguments = new ArrayList<@NonNull Type>(asTemplateParameters.size());
+		for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
+			Type templateArgument = templateSpecialization.get(templateParameter);
+			assert templateArgument != null;
+			templateArguments.add(templateArgument);
+		}
+		TemplateArgumentValues templateArgumentValues = new TemplateArgumentValues(genericClass.getTypeId(), templateArguments);
+		WeakReference<org.eclipse.ocl.pivot.@Nullable Class> ref = specializations.get(templateArgumentValues);
+		org.eclipse.ocl.pivot.@Nullable Class old = ref != null ? ref.get() : null;
+		if (old == null) {
+			specializations.put(templateArgumentValues, new WeakReference<>(asClass));
+		}
+		else {
+			assert old == asClass;
 		}
 	}
 }

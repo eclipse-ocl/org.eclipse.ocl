@@ -25,4 +25,9 @@ public interface SpecializedTypeManager
 	void dispose();
 
 	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull List<@NonNull ? extends Type> templateArguments);
+
+	/**
+	 * Add a pre-existing Class to the managed Class.
+	 */
+	void load(org.eclipse.ocl.pivot.@NonNull Class asClass);
 }

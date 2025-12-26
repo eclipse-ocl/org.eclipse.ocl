@@ -230,4 +230,21 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 	protected boolean isValid(@Nullable Type type) {
 		return type != null;
 	}
+
+	@Override
+	public void load(@NonNull MapType asMapType) {
+		Type keyType = PivotUtil.getKeyType(asMapType);
+		Type valueType = PivotUtil.getValueType(asMapType);
+		boolean keysAreNullFree = asMapType.isKeysAreNullFree();
+		boolean valuesAreNullFree = asMapType.isValuesAreNullFree();
+		MapTypeArguments mapTypeArguments = new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		WeakReference<@Nullable MapType> ref = mapTypes.get(mapTypeArguments);
+		MapType old = ref != null ? ref.get() : null;
+		if (old == null) {
+			mapTypes.put(mapTypeArguments, new WeakReference<>(asMapType));
+		}
+		else {
+			assert old == asMapType;
+		}
+	}
 }

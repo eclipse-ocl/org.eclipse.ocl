@@ -209,7 +209,7 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 		//
 		//	Finally create the (specialized) tuple type
 		//
-		return getTupleType(null, tupleTypeId);
+		return getTupleType(null, tupleTypeId);			// XXX Re-use asParts
 	}
 
 	@Override
@@ -252,5 +252,12 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 		TypeId leftParts = leftTupleType.getTypeId();
 		TypeId rightParts = rightTupleType.getTypeId();
 		return leftParts == rightParts;
+	}
+
+	@Override
+	public void load(@NonNull TupleType asTupleType) {
+		TupleTypeId tupleTypeId = asTupleType.getTupleTypeId();
+		TupleType old = tupleid2tuple.put(tupleTypeId, asTupleType);
+		assert (old == null) || (old == asTupleType);
 	}
 }
