@@ -43,7 +43,6 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
-import org.eclipse.ocl.pivot.internal.resource.PivotSaveImpl.PivotXMIHelperImpl;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -386,17 +385,17 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	/**
 	 * @since 1.18
 	 */
-	@Override
-	protected @NonNull PivotXMIHelperImpl createXMLHelper() {
-		return new PivotXMIHelperImpl(this);
-	}
+//	@Override
+//	protected @NonNull XMIHelperImpl createXMLHelper() {
+//		return new PivotXMISaveHelperImpl(this);
+//	}
 
 	/**
 	 * @since 1.18
 	 */
 	@Override
 	protected @NonNull PivotSaveImpl createXMLSave() {
-		return new PivotSaveImpl(createXMLHelper());
+		return new PivotSaveImpl(new PivotSaveImpl.PivotXMISaveHelperImpl(this));
 	}
 
 	@Override
