@@ -580,7 +580,7 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
 			@Nullable TemplateArguments bindings) {
-		return getLambdaManager().getLambdaType(contextType, parameterTypes, resultType, bindings);
+		return getLambdaTypeManager().getLambdaType(contextType, parameterTypes, resultType, bindings);
 	}
 
 	@Override

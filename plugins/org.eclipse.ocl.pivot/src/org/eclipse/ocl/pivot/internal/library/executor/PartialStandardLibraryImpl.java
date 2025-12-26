@@ -362,6 +362,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return null;
 	}
 
+	@Override
+	public org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanage() {
+		return orphanage;
+	}
+
 	public org.eclipse.ocl.pivot.@NonNull Class createClass(@NonNull NormalizedTemplateParameter... typeParameters) {
 			ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();
 	//		initClass(asClass, eClassifier, typeId, flags, typeParameters);
@@ -832,7 +837,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
-	public @NonNull LambdaTypeManager getLambdaManager() {
+	public @NonNull LambdaTypeManager getLambdaTypeManager() {
 		assert lambdaTypeManager != null;
 		return lambdaTypeManager;
 	}

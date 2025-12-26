@@ -68,6 +68,11 @@ public interface StandardLibrary extends Element
 	org.eclipse.ocl.pivot.@Nullable Class basicGetLibraryClass(@NonNull String className);
 
 	/**
+	 * @since 7.0
+	 */
+	org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanage();
+
+	/**
 	 * Return true if leftType conforms to rightType within standardLibrary.
 	 * @since 7.0
 	 */
@@ -263,7 +268,7 @@ public interface StandardLibrary extends Element
 	/**
 	 * @since 7.0
 	 */
-	@NonNull LambdaTypeManager getLambdaManager();
+	@NonNull LambdaTypeManager getLambdaTypeManager();
 
 	/**
 	 * @since 7.0

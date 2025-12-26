@@ -372,6 +372,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanage() {
+		return orphanage;
+	}
+
+	@Override
 	public int compareOperationMatches(@NonNull Operation referenceOperation, @Nullable TemplateArguments referenceBindings,
 			@NonNull Operation candidateOperation, @Nullable TemplateArguments candidateBindings) {
 		if ((referenceOperation instanceof Iteration) && (candidateOperation instanceof Iteration)) {
@@ -632,7 +637,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @NonNull LambdaTypeManager getLambdaManager() {
+	public @NonNull LambdaTypeManager getLambdaTypeManager() {
 		assert lambdaTypeManager != null;
 		return lambdaTypeManager;
 	}
@@ -776,7 +781,7 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	public org.eclipse.ocl.pivot.@NonNull Class getOclLambdaType() {
 		org.eclipse.ocl.pivot.Class oclLambdaType2 = oclLambdaType;
 		if (oclLambdaType2 == null) {
-			oclLambdaType2 = oclLambdaType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, "OclLambda");
+			oclLambdaType2 = oclLambdaType = resolveRequiredSimpleType(org.eclipse.ocl.pivot.Class.class, TypeId.OCL_LAMBDA_NAME);
 		}
 		return oclLambdaType2;
 	}
