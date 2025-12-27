@@ -746,6 +746,7 @@ public class ExternalEcore2AS extends Ecore2AS
 			String nsURI = eMetamodels.iterator().next().getNsURI();
 			if (nsURI != null) {
 				OCLstdlib library = OCLstdlib.getDefault(); //create(stdlibASUri, "ocl", "ocl", nsURI);
+			//	Resource library = OCLstdlibTables.RESOURCE;
 				environmentFactory.getMetamodelManager().installResource(library);
 			}
 		}

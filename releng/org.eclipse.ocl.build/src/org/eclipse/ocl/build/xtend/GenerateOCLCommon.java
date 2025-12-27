@@ -28,6 +28,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.oclinecore.OCLinEcoreTablesUtils;
 import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
@@ -69,6 +70,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -268,18 +270,25 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				Namespace importedNamespace = asImport.getImportedNamespace();
 				org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.basicGetContainingPackage(importedNamespace);
 				if (externalPackage != null) {
-					sortedExternalPackages.add(externalPackage);
+					if (!sortedExternalPackages.contains(externalPackage)) {
+						sortedExternalPackages.add(externalPackage);
+					}
 				}
 			}
 			for (Element element : context.getNamedValues()) {
 				org.eclipse.ocl.pivot.Package externalPackage = PivotUtil.basicGetContainingPackage(element);
 				if ((externalPackage != null) /*&& !LibraryConstants.STDLIB_URI.equals(externalPackage.getURI())*/)  {
-					sortedExternalPackages.add(externalPackage);
+					if (!sortedExternalPackages.contains(externalPackage)) {
+						sortedExternalPackages.add(externalPackage);
+					}
 				}
 			}
 
 			sortedAllPackages.addAll(sortedExternalPackages);
 			sortedAllPackages.addAll(sortedLocalPackages);
+
+			sortedAllPackages.remove(OCLstdlibTables.PACKAGE);				// XXX transitional fudge while migrating to just xxxTables
+			sortedExternalPackages.remove(OCLstdlibTables.PACKAGE);
 
 			Collections.sort(sortedAllPackages, packageComparator);
 			Collections.sort(sortedCoercions, monikerComparator);
@@ -685,6 +694,9 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		if (reference instanceof Model) {
 			return;
 		}
+		if (reference == OCLstdlibTables.PACKAGE) {
+			return;			// XXX transitional fudge while migrating to just xxxTables
+		}
 		if (contentAnalysis.internalClasses.contains(reference)) {
 			return;
 		}
@@ -738,6 +750,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		}
 		if (name2external.containsKey(name)) {
 			if (reference instanceof PrimitiveType) {
+				return;
+			}
+			if (reference instanceof AnyType) {				// Transitional fudge while OCLstdTables and OCLmetamodel in use
+				external2name.put(reference, name);
 				return;
 			}
 			for (int i = 0; true; i++) {
@@ -1302,7 +1318,12 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected void initOrphanSymbolNames(@NonNull ASSaverWithInverse asSaver) {
 		org.eclipse.ocl.pivot.Package localOrphanage = basicGetOrphanPackage(thisModel);
 		for (org.eclipse.ocl.pivot.Package asPackage : getSortedAllPackages(thisModel)) {
-			getPrefixedSymbolName(asPackage, partialName(asPackage));
+			String symbolName = getPrefixedSymbolName(asPackage, partialName(asPackage));
+			if (asPackage.getURI().equals(OCLstdlibTables.PACKAGE.getURI())) {
+				if (nameQueries.basicGetSymbolName(OCLstdlibTables.PACKAGE) == null) {
+					nameQueries.putSymbolName(OCLstdlibTables.PACKAGE, symbolName);		// XXX transitional fudge while migrating to just xxxTables
+				}
+			}
 		}
 		if (localOrphanage == null) {
 			return;

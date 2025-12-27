@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -43,6 +44,7 @@ import org.eclipse.ocl.pivot.TupleLiteralPart;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Unlimited;
@@ -100,6 +102,9 @@ public class PivotLUSSIDs extends LUSSIDs
 		String name = ((NamedElement)element).getName();
 		if (name == null) {
 			return null;
+		}
+		if ((element instanceof Library) && name.equals(OCLstdlibTables.PACKAGE.getName())) {
+			name = "ocl";					// XXX transitional fudge while migrating to just xxxTables
 		}
 		localId += name.hashCode();
 		if (element instanceof TemplateableElement) {

@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -197,7 +196,7 @@ public class TemplateArgumentImpl
 	 */
 	@Override
 	public TemplateParameter getFormal() {
-		return ClassUtil.requireNonNull(basicGetFormal());
+		return basicGetFormal();
 	}
 
 	/**
@@ -481,6 +480,9 @@ public class TemplateArgumentImpl
 		TemplateableElement generic = templateableElement.getGeneric();
 		if (generic == null) {
 			return null;
+		}
+		if (generic.eIsProxy()) {
+			generic = templateableElement.getGeneric();
 		}
 		List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(generic);
 		if (templateParameters.size() <= index) {
