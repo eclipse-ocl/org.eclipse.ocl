@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
-import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
@@ -1290,7 +1289,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		contentAnalysis.analyze(thisModel);
 	}
 
-	public void initModel(@NonNull Model thisModel, ASSaver.@NonNull ASSaverWithInverse asSaver) {
+	public void initModel(@NonNull Model thisModel, @NonNull ASSaver asSaver) {
 		this.thisModel = thisModel;
 		for (Model model : environmentFactory.getCompleteModel().getPartialModels()) {
 			if (LibraryConstants.STDLIB_URI.equals(model.getExternalURI())) {
@@ -1315,7 +1314,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	 * from which the local was cloned so that synthesis of references to the shared element are serialized as if the
 	 * local copy had been corrupted to point at the local.
 	 */
-	protected void initOrphanSymbolNames(@NonNull ASSaverWithInverse asSaver) {
+	protected void initOrphanSymbolNames(@NonNull ASSaver asSaver) {
 		org.eclipse.ocl.pivot.Package localOrphanage = basicGetOrphanPackage(thisModel);
 		for (org.eclipse.ocl.pivot.Package asPackage : getSortedAllPackages(thisModel)) {
 			String symbolName = getPrefixedSymbolName(asPackage, partialName(asPackage));

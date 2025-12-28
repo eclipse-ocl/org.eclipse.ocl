@@ -19,14 +19,10 @@ import java.util.Map;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -42,65 +38,6 @@ import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
  */
 public class ASSaver
 {
-	/**
-	 * @since 7.0
-	 */
-	@SuppressWarnings("serial")
-	@Deprecated
-	protected static class ASSaverCopier extends EcoreUtil.Copier
-	{
-		protected ASSaverCopier(@NonNull ASResource resource, boolean resolveProxies) {
-			super(resolveProxies);
-		}
-
-		@Override
-		public EObject copy(EObject eObject) {
-			if (eObject instanceof NormalizedTemplateParameter) {
-				return super.copy(eObject);
-			}
-			assert !(eObject instanceof TemplateParameter);		// Generalized class never needs localizing.
-			return super.copy(eObject);
-		}
-
-		@Override
-		protected void copyReference(EReference eReference, EObject eObject, EObject copyEObject) {
-			if (eReference.isMany() && (eReference.getEOpposite() == null)) {
-				@SuppressWarnings("unchecked")
-				List<EObject> copyValues = (List<EObject>)copyEObject.eGet(eReference);
-				copyValues.clear();						// Avoid dupicate superclasses when reloading
-			}
-			super.copyReference(eReference, eObject, copyEObject);
-		}
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Deprecated
-	public static class ASSaverWithInverse extends ASSaver
-	{
-	//	private final @NonNull Map<@NonNull EObject, @NonNull EObject> target2source = new HashMap<>();
-
-		public ASSaverWithInverse(@NonNull ASResource resource) {
-			super(resource);
-		}
-
-		@Override
-		protected @NonNull ASSaverCopier createCopier(@NonNull ASResource resource) {
-			return new ASSaverCopier(resource, true)
-			{
-				@Override
-				public EObject put(EObject key, EObject value) {
-					assert (key != null) && (value != null);
-				//	EObject old = target2source.put(value, key);
-				//	assert (old == null) || (old == key);
-					return super.put(key, value);
-				}
-
-			};
-		}
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -164,21 +101,6 @@ public class ASSaver
 	 */
 	public @Nullable EObject basicGetSource(@NonNull EObject target) {
 		return localLibrary.getLocal(target);
-	//	return target2source.get(target);
-	}
-
-	/**
-	 * @since 7.0
-	 *
-	public @NonNull EObject getSource(@NonNull EObject target) {		// XXX bad name
-		return ClassUtil.requireNonNull(localLibrary.getLocal(target));
-	} */
-
-	/**
-	 * @since 7.0
-	 */
-	protected @NonNull ASSaverCopier createCopier(@NonNull ASResource resource) {
-		return new ASSaverCopier(resource, true);
 	}
 
 	/**

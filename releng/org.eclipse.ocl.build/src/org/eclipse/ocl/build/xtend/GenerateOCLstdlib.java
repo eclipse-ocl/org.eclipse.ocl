@@ -46,7 +46,7 @@ import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
-import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -150,7 +150,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			//			}
 			Model pivotModel = (Model)ClassUtil.requireNonNull(asResource.getContents().get(0));
 		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
-			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
+			ASSaver saver = new ASSaver(asResource);
 			saver.localizeOrphans();
 			String fileName = folder + "/" + javaClassName + ".java";
 		//	log.info("Generating '" + fileName + "'");

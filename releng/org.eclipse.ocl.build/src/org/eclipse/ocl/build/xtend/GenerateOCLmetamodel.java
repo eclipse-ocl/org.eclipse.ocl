@@ -43,7 +43,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.resource.AS2ID;
-import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.model.OCLstdlib;
@@ -200,7 +200,7 @@ public abstract class GenerateOCLmetamodel extends GenerateOCLCommonXtend
 			}
 			sourceFile = "/" + projectName + "/" + modelFile;
 			EObject asRoot = asResource.getContents().get(0);
-			ASSaverWithInverse saver = new ASSaverWithInverse(asResource);
+			ASSaver saver = new ASSaver(asResource);
 			/*Package orphanage =*/ saver.localizeOrphans();
 			//			if ((orphanage != null) && (pivotModel instanceof Root)) {
 			//				(pivotModel as Root).getOwnedPackages().add(orphanage);

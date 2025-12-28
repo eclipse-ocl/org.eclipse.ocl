@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-import org.eclipse.ocl.pivot.internal.resource.ASSaver.ASSaverWithInverse;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -56,13 +56,13 @@ public class NameQueries
 	}
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
-	protected final @NonNull ASSaverWithInverse asSaver;
+	protected final @NonNull ASSaver asSaver;
 	protected final @NonNull GenPackageManager genPackageManager;
 	protected final @NonNull GenModelHelper genModelHelper;
 	private @NonNull Map<@NonNull String, @NonNull Integer> counters = new HashMap<>();
 	private @NonNull Map<@NonNull Object, @NonNull String> definedSymbols = new HashMap<>();
 
-	public NameQueries(@NonNull EnvironmentFactory environmentFactory, @NonNull ASSaverWithInverse asSaver) {
+	public NameQueries(@NonNull EnvironmentFactory environmentFactory, @NonNull ASSaver asSaver) {
 		this.environmentFactory = environmentFactory;
 		this.asSaver = asSaver;
 		this.genPackageManager = environmentFactory.getGenPackageManager();
