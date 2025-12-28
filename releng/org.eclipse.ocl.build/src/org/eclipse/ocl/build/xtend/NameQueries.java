@@ -19,7 +19,6 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenFeature;
 import org.eclipse.emf.codegen.ecore.genmodel.GenOperation;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.codegen.util.CodeGenUtil;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper;
@@ -34,7 +33,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
@@ -245,38 +243,28 @@ public class NameQueries
 	 * @return the symbol name
 	 */
 	public @NonNull String getSymbolName(@NonNull Object elem) {
-		Element element = (Element)elem;
-		Element element2 = (Element) asSaver.basicGetSource(element);
-		Element element3 = element2 != null ? element2 : element;
-		assert (element3.eResource() == asSaver.getResource()) || !Orphanage.isOrphan(element3);
-		return getPrefixedSymbolName("symbol_", element3);
+		Element element = asSaver.getLocal((Element)elem);
+		return getPrefixedSymbolName("symbol_", element);
 	}
 	public @NonNull String getSymbolNameWithoutNormalization(@NonNull Object elem) {
-		Element element = (Element)elem;
-		Element element2 = (Element) asSaver.basicGetSource(element);
-		Element element3 = element2 != null ? element2 : element;
-		assert (element3.eResource() == asSaver.getResource()) || !Orphanage.isOrphan(element3);
-		return getPrefixedSymbolNameWithoutNormalization("symbol_", element3);
+		Element element = asSaver.getLocal((Element)elem);
+		return getPrefixedSymbolNameWithoutNormalization("symbol_", element);
 	}
 
 	public @NonNull String getPrefixedSymbolName(@NonNull String prefix, @NonNull Object elem) {
-		Element element = (Element)elem;
-		Element element2 = (Element) asSaver.basicGetSource(element);
-		Element element3 = element2 != null ? element2 : element;
-		assert (element3.eResource() == asSaver.getResource()) || !Orphanage.isOrphan(element3);
-		elem = element3;
+		Element element = asSaver.getLocal((Element)elem);
 		//		if (elem == null) {
 		//			logger.error("getPrefixedSymbolName for '" + prefix + "'and null");
 		//		}
-		if ((elem instanceof CollectionType) && (((CollectionType)elem).getGeneric() != null)) {
+		if ((element instanceof CollectionType) && (((CollectionType)element).getGeneric() != null)) {
 		}
-		else if ((elem instanceof MapType) && (((MapType)elem).getGeneric() != null)) {
+		else if ((element instanceof MapType) && (((MapType)element).getGeneric() != null)) {
 		}
-		else if (elem instanceof org.eclipse.ocl.pivot.Class) {
-			elem = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)elem);
+		else if (element instanceof org.eclipse.ocl.pivot.Class) {
+			element = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)element);
 			//			elem = metamodelManager.getPrimaryClass((org.eclipse.ocl.pivot.Class)elem);
 		}
-		return getPrefixedSymbolNameWithoutNormalization(prefix, elem);
+		return getPrefixedSymbolNameWithoutNormalization(prefix, element);
 	}
 
 	public @NonNull String getPrefixedSymbolNameWithoutNormalization(@NonNull String prefix, @NonNull Object elem) {
@@ -295,11 +283,7 @@ public class NameQueries
 	}
 
 	public void putSymbolName(@NonNull Object elem, @NonNull String symbolName) {
-		assert elem instanceof EObject;
-		Element element = (Element)elem;
-		Element element2 = (Element) asSaver.basicGetSource(element);
-		Element element3 = element2 != null ? element2 : element;
-		assert (element3.eResource() == asSaver.getResource()) || !Orphanage.isOrphan(element3);
+		Element element = asSaver.getLocal((Element)elem);
 		if (symbolName.startsWith("standardLibraryPackage")) {
 			getClass();			// FIXME Debugging
 		}
@@ -309,7 +293,7 @@ public class NameQueries
 		if (symbolName.startsWith("$$0")) {
 			getClass();			// FIXME Debugging
 		}
-		String oldSymbolName = definedSymbols.put(element3, symbolName);
+		String oldSymbolName = definedSymbols.put(element, symbolName);
 		assert oldSymbolName == null;
 	}
 }

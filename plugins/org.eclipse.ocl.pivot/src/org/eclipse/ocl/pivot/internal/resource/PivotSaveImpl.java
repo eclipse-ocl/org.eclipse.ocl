@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIHelperImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMISaveImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.resource.ASResource;
@@ -50,7 +51,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 
 		public PivotXMISaveHelperImpl(@NonNull ASResource asResource) {
 			super(asResource);
-			this.asSaver = new ASSaver(asResource);
+			this.asSaver = new SaverStandardLibraryImpl(asResource);
 		}
 
 		@Override
@@ -58,7 +59,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 			if (unresolvedObject == null) {
 				return null;
 			}
-			EObject resolvedObject = asSaver.resolveOrphan(unresolvedObject);
+			EObject resolvedObject = unresolvedObject instanceof Element ? asSaver.getLocal((Element)unresolvedObject) : unresolvedObject;
 			return super.getHREF(resolvedObject);
 		}
 
@@ -126,7 +127,7 @@ public final class PivotSaveImpl extends XMISaveImpl
 				}
 			}
 		}
-		asSaver.localizeOrphans();
+		asSaver.localize();
 		Map<@NonNull Object, @Nullable Object> saveOptions = new HashMap<>();
 		if (options != null) {
 			for (Object key : options.keySet()) {

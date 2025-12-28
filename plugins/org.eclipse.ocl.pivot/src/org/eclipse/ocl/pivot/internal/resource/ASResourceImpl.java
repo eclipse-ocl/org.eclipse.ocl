@@ -380,7 +380,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * @since 7.0
 	 */
 	protected @NonNull ASSaver createASSaver() {
-		return new ASSaver(this);
+		return new SaverStandardLibraryImpl(this);
 	}
 
 	/**

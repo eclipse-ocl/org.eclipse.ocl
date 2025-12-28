@@ -12,14 +12,18 @@ package org.eclipse.ocl.pivot.internal.resource;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -56,20 +60,70 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
-import org.eclipse.ocl.pivot.internal.resource.ASSaver.ClassByTypeIdAndEntryClassComparator;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.util.Visitable;
+import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
-class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
+/**
+ * @since 7.0
+ */
+public class SaverStandardLibraryImpl extends PartialStandardLibraryImpl implements ASSaver
 {
+	/**
+	 * @since 7.0
+	 */
+	protected static class ClassByTypeIdAndEntryClassComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
+	{
+		@Override
+		public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
+			TypeId t1 = o1.getTypeId();
+			TypeId t2 = o2.getTypeId();
+			String s1 = t1.toString();
+			String s2 = t2.toString();
+			int compareTo = s1.compareTo(s2);
+			if (compareTo != 0) {
+				return compareTo;
+			}
+			if ((o1 instanceof MapType) && (o2 instanceof MapType)) {
+				org.eclipse.ocl.pivot.Class ec1 = ((MapType)o1).getEntryClass();
+				org.eclipse.ocl.pivot.Class ec2 = ((MapType)o2).getEntryClass();
+				if (ec1 == null) {
+					if (ec2 != null) {
+						return -1;
+					}
+				}
+				else {
+					if (ec2 == null) {
+						return 1;
+					}
+					else {
+						t1 = ec1.getTypeId();
+						t2 = ec2.getTypeId();
+						s1 = t1.toString();
+						s2 = t2.toString();
+						compareTo = s1.compareTo(s2);
+					}
+				}
+			}
+			return compareTo;
+		}
+	}
+
 	protected final @NonNull ASResource resource;
 
 	private @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses = null;
 
 	private @NonNull Map<@NonNull Element, @NonNull Element> remote2local = new HashMap<>();
+
+	/**
+	 * The appropriate normalization visitor for each Resource.
+	 * @since 7.0
+	 */
+	private /*@LazyNonNull*/ Map<@NonNull Resource, @NonNull ASSaverNormalizeVisitor> resource2normalizeVisitor;
 
 	private @Nullable BagType bagType = null;
 	private @Nullable BooleanType booleanType = null;
@@ -163,9 +217,12 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 		return integerType != null ? integerType : super.getIntegerType();
 	}
 
-	public @Nullable EObject getLocal(@NonNull EObject target) {
-	//	return local2remote.get(target);
-		return remote2local.get(target);
+	@Override
+	public @NonNull Element getLocal(@NonNull Element element) {
+		Element local = remote2local.get(element);
+		Element element3 = local != null ? local : element;
+		assert (element3.eResource() ==getResource()) || !Orphanage.isOrphan(element3);
+		return element3;
 	}
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getLocalOrphanage() {
@@ -180,6 +237,32 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	@Override
 	public @NonNull MapType getMapType() {
 		return mapType != null ? mapType : super.getMapType();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull ASSaverNormalizeVisitor getNormalizeVisitor(@NonNull EObject eObject) {
+		Resource resource = eObject.eResource();
+		if (resource == null) {
+			throw new IllegalStateException("Cannot locate " + ASSaverNormalizeVisitor.class.getName() + " for resource-less " + eObject.eClass().getName());
+		}
+		if (resource2normalizeVisitor == null) {
+			resource2normalizeVisitor = new HashMap<>();
+		}
+		ASSaverNormalizeVisitor visitor = resource2normalizeVisitor.get(resource);
+		if (visitor != null) {
+			return visitor;
+		}
+		if (resource instanceof ASResource) {
+			ASResource asResource = (ASResource)resource;
+			visitor = asResource.getASResourceFactory().createASSaverNormalizeVisitor(this);
+			resource2normalizeVisitor.put(resource, visitor);
+			return visitor;
+		}
+		else {
+			throw new IllegalStateException("Cannot locate " + ASSaverNormalizeVisitor.class.getName() + " for non-OCL " + resource.getClass().getName());
+		}
 	}
 
 	@Override
@@ -270,6 +353,11 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	@Override
 	public @NonNull PrimitiveType getRealType() {
 		return realType != null ? realType : super.getRealType();
+	}
+
+	@Override
+	public @NonNull Resource getResource() {
+		return resource;
 	}
 
 	@Override
@@ -484,6 +572,7 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	 *
 	 * @since 7.0
 	 */
+	@Override
 	public void localize() {
 		Model asModel = PivotUtil.getModel(resource);
 		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetLocalOrphanPackage(asModel);
@@ -619,16 +708,27 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	}
 
 	/**
-	 * Return the localized variant of eObject. If eObject is an orphan, localizeSpecializations should have created
-	 * a local copy that is returned here. Else returns eObject.
 	 * @since 7.0
 	 */
-	public @Nullable EObject resolveOrphan(@NonNull EObject eObject) {
-		EObject localEObject = remote2local.get(eObject);
-		EObject eObject2 = localEObject != null ? localEObject : eObject;
-	//	Model containingModel = PivotUtil.getContainingModel(eObject2);
-	//	assert (containingModel == null) || !Orphanage.isOrphanage(containingModel);		// ElementLiteralExp references may be anywhere.
-		return eObject2;
+	@Override
+	public void normalizeContents() {
+		List<@NonNull EObject> allContents = new ArrayList<>();
+		for (@NonNull TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
+			EObject eObject = tit.next();
+			if (eObject instanceof Visitable) {
+				allContents.add(eObject);
+			}
+		}
+		Map<EClass, @NonNull ASSaverNormalizeVisitor> eClass2normalizeVisitor = new HashMap<>();
+		for (@NonNull EObject eObject : allContents) {
+			EClass eClass = eObject.eClass();
+			ASSaverNormalizeVisitor normalizeVisitor = eClass2normalizeVisitor.get(eClass);
+			if (normalizeVisitor == null) {
+				normalizeVisitor = getNormalizeVisitor(eObject);
+				eClass2normalizeVisitor.put(eClass, normalizeVisitor);
+			}
+			normalizeVisitor.safeVisit((Visitable) eObject);
+		}
 	}
 
 	@Override

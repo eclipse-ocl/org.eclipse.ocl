@@ -10,169 +10,31 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.resource;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.eclipse.emf.common.util.TreeIterator;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.util.Visitable;
-import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
+import org.eclipse.ocl.pivot.Element;
 
 /**
- * ASSaverNew ensures that all references to synthesized types are terminated by local copies of the synthesized types.
- * This rewrite of ASSaver uses an EcoreUtil.Copier and EcoreUtil.CrossReferencer guaranteeing correct operation for all
- * references without requiring ASSaverLOcateVisitor or ASSaverResolveVisitor derivations with accurate overloading for
- * all references. ASSaver may well be faster but it is fragile and the improved performance is not justified.
+ * ASSaver ensures that all references to synthesized types are terminated by local copies of the synthesized types.
+ * This rewrite of the original ASSaver uses variant PartialStandardLibraryImpl guaranteeing correct operation for all
+ * references without requiring derivations with accurate overloading for all references.
  *
- * @since 1.18
+ * @since 7.0
  */
-public class ASSaver
+public interface ASSaver
 {
 	/**
-	 * @since 7.0
+	 * Return the localized variant of target. If target is an orphan, localize() should have created
+	 * a local copy that is returned here. Else returns target.
 	 */
-	protected static class ClassByTypeIdAndEntryClassComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
-	{
-		@Override
-		public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
-			TypeId t1 = o1.getTypeId();
-			TypeId t2 = o2.getTypeId();
-			String s1 = t1.toString();
-			String s2 = t2.toString();
-			int compareTo = s1.compareTo(s2);
-			if (compareTo != 0) {
-				return compareTo;
-			}
-			if ((o1 instanceof MapType) && (o2 instanceof MapType)) {
-				org.eclipse.ocl.pivot.Class ec1 = ((MapType)o1).getEntryClass();
-				org.eclipse.ocl.pivot.Class ec2 = ((MapType)o2).getEntryClass();
-				if (ec1 == null) {
-					if (ec2 != null) {
-						return -1;
-					}
-				}
-				else {
-					if (ec2 == null) {
-						return 1;
-					}
-					else {
-						t1 = ec1.getTypeId();
-						t2 = ec2.getTypeId();
-						s1 = t1.toString();
-						s2 = t2.toString();
-						compareTo = s1.compareTo(s2);
-					}
-				}
-			}
-			return compareTo;
-		}
-	}
+	@NonNull Element getLocal(@NonNull Element target);
 
-	private final @NonNull Resource resource;
-
-	/**
-	 * The appropriate normalization visitor for each Resource.
-	 * @since 7.0
-	 */
-	private /*@LazyNonNull*/ Map<@NonNull Resource, @NonNull ASSaverNormalizeVisitor> resource2normalizeVisitor;
-
-	private final @NonNull SaverStandardLibraryImpl localLibrary;
-
-	/**
-	 * @since 7.0
-	 */
-	public ASSaver(@NonNull ASResource resource) {
-		this.resource = resource;
-		this.localLibrary = new SaverStandardLibraryImpl(resource);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @Nullable EObject basicGetSource(@NonNull EObject target) {
-		return localLibrary.getLocal(target);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected @NonNull ASSaverNormalizeVisitor getNormalizeVisitor(@NonNull EObject eObject) {
-		Resource resource = eObject.eResource();
-		if (resource == null) {
-			throw new IllegalStateException("Cannot locate " + ASSaverNormalizeVisitor.class.getName() + " for resource-less " + eObject.eClass().getName());
-		}
-		if (resource2normalizeVisitor == null) {
-			resource2normalizeVisitor = new HashMap<>();
-		}
-		ASSaverNormalizeVisitor visitor = resource2normalizeVisitor.get(resource);
-		if (visitor != null) {
-			return visitor;
-		}
-		if (resource instanceof ASResource) {
-			ASResource asResource = (ASResource)resource;
-			visitor = asResource.getASResourceFactory().createASSaverNormalizeVisitor(this);
-			resource2normalizeVisitor.put(resource, visitor);
-			return visitor;
-		}
-		else {
-			throw new IllegalStateException("Cannot locate " + ASSaverNormalizeVisitor.class.getName() + " for non-OCL " + resource.getClass().getName());
-		}
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @NonNull Resource getResource() {
-		return resource;
-	}
+	@NonNull Resource getResource();
 
 	/**
 	 * Prepare a pivot resource for save by redirecting all type references to shared orphans to local copies of the orphans.
-	 * @since 7.0
 	 */
-	public void localizeOrphans() {
-		localLibrary.localize();
-	}
+	void localize();
 
-	/**
-	 * @since 7.0
-	 */
-	public void normalizeContents() {
-		List<@NonNull EObject> allContents = new ArrayList<>();
-		for (@NonNull TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
-			if (eObject instanceof Visitable) {
-				allContents.add(eObject);
-			}
-		}
-		Map<EClass, @NonNull ASSaverNormalizeVisitor> eClass2normalizeVisitor = new HashMap<>();
-		for (@NonNull EObject eObject : allContents) {
-			EClass eClass = eObject.eClass();
-			ASSaverNormalizeVisitor normalizeVisitor = eClass2normalizeVisitor.get(eClass);
-			if (normalizeVisitor == null) {
-				normalizeVisitor = getNormalizeVisitor(eObject);
-				eClass2normalizeVisitor.put(eClass, normalizeVisitor);
-			}
-			normalizeVisitor.safeVisit((Visitable) eObject);
-		}
-	}
-
-	/**
-	 * Return the localized variant of eObject. If eObject is an orphan, localizeSpecializations should have created
-	 * a local copy that is returned here. Else returns eObject.
-	 * @since 7.0
-	 */
-	public @Nullable EObject resolveOrphan(@NonNull EObject eObject) {
-		return localLibrary.resolveOrphan(eObject);
-	}
+	void normalizeContents();
 }
