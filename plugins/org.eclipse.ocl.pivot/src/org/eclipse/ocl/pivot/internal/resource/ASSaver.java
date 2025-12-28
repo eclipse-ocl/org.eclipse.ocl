@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
  * ASSaverNew ensures that all references to synthesized types are terminated by local copies of the synthesized types.
@@ -170,10 +169,10 @@ public class ASSaver
 
 	/**
 	 * @since 7.0
-	 */
+	 *
 	public @NonNull EObject getSource(@NonNull EObject target) {		// XXX bad name
 		return ClassUtil.requireNonNull(localLibrary.getLocal(target));
-	}
+	} */
 
 	/**
 	 * @since 7.0

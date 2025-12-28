@@ -407,7 +407,9 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	}
 
 	private <T extends Element> @NonNull T localize(@NonNull T asReferencedElement) {
-		if (!(PivotUtil.basicGetContainingPackage(asReferencedElement) instanceof Orphanage)) {
+		if (!Orphanage.isOrphan(asReferencedElement)) {
+		//	if (!(PivotUtil.basicGetContainingPackage(asReferencedElement) instanceof Orphanage)) {
+		//	System.out.println("localize bypass for " + NameUtil.debugSimpleName(asReferencedElement) + " " + asReferencedElement);
 			return asReferencedElement;
 		}
 		EObject localElement = remote2local.get(asReferencedElement);
@@ -532,8 +534,7 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 				return (T) localSpecializedClass;
 			}
 			else {
-			//	return (T)asSpecializedType;
-				throw new UnsupportedOperationException();
+				return (T)asSpecializedClass;		// Only implicit properties
 			}
 		}
 		else if (asReferencedElement instanceof TemplateableElement) {
@@ -546,6 +547,9 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 			Element localContainer = localize((Element)eContainer);
 			if (eContainer instanceof TupleType) {				// A tuple part
 				return (T) remote2local.get(asProperty);
+			}
+			else if (asProperty.isIsImplicit()) {
+				return (T) asProperty;
 			}
 			else {
 				assert asProperty.isIsImplicit();
@@ -566,7 +570,10 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	}
 
 	/**
-	 * Prepare a pivot resource for save by redirecting all type references to shared orphans to local copies of the orphans.
+	 * Prepare a pivot resource for save by creating local copies of all shared orphans.
+	 * References to the shared orphans are not redirected to avoid mutation of prevailing resources.
+	 * Rather BaseCSXMIResource.getHREF redirects when establishing the persisted reference.
+	 *
 	 * @since 7.0
 	 */
 	public void localizeOrphans() {
@@ -582,6 +589,9 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 			for (Map.Entry<EObject, Collection<Setting>> entry : references.entrySet()) {
 				EObject eTarget = entry.getKey();
 				if (eTarget instanceof Element) {
+					if ((eTarget instanceof Property) && ((Property)eTarget).isIsImplicit()) {
+						getClass();			// XXX
+					}
 					Element localETarget = localize((Element)eTarget);
 					if (localETarget != eTarget) {
 						if (moreEObjects == null) {
@@ -592,9 +602,13 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 				}
 			}
 		}
+
 		Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(resource.getContents());
 		for (EObject eTarget : references.keySet()) {
 			if (eTarget instanceof Element) {
+				if ((eTarget instanceof Property) && ((Property)eTarget).isIsImplicit()) {
+					continue;
+				}
 				Resource eResource = eTarget.eResource();
 				if ((eResource != resource) && Orphanage.isOrphan((Element)eTarget)) {
 					EObject localTarget = remote2local.get(eTarget);
