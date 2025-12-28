@@ -21,6 +21,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IterateExp;
@@ -408,6 +409,18 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	public @NonNull Type put(@NonNull TemplateParameter formalTemplateParameter, @NonNull Type actualType) {
 		if (formalTemplateParameter instanceof NormalizedTemplateParameter) {
 			formalTemplateParameter = getTemplateParameterization().get(((NormalizedTemplateParameter)formalTemplateParameter).getIndex());
+		}
+		else {
+			TemplateableElement templateableElement = formalTemplateParameter.getOwningTemplateableElement();
+			if (templateableElement instanceof org.eclipse.ocl.pivot.Class) {
+				CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)templateableElement);
+				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
+					List<TemplateParameter> asTemplateParameters = partialClass.getOwnedTemplateParameters();
+					for (TemplateParameter asTemplateParameter : asTemplateParameters) {
+						getClass();	// XXX
+					}
+				}
+			}
 		}
 		BasicTemplateSpecialization templateSpecialization2 = getTemplateSpecialization();
 		Type oldType = templateSpecialization2.get(formalTemplateParameter);

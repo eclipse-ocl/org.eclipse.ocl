@@ -285,6 +285,9 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 	 * Returns NO_MATCH if no match is possible.
 	 */
 	protected @Nullable TemplateArguments matches(@NonNull Operation candidateOperation, boolean useCoercions) {
+		if ("Collection(T)::=(OclSelf) : Boolean[1]".equals(candidateOperation.toString())) {
+			getClass();			// XXX
+		}
 		List<@NonNull Parameter> candidateParameters = PivotUtil.getOwnedParametersList(candidateOperation);
 		int iSize = getArgumentCount();
 		if (iSize != candidateParameters.size()) {
