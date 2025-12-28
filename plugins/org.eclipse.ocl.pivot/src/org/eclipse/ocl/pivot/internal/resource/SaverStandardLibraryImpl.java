@@ -20,7 +20,6 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -45,7 +44,6 @@ import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -72,9 +70,6 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	private @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses = null;
 
 	private @NonNull Map<@NonNull Element, @NonNull Element> remote2local = new HashMap<>();
-//	private @NonNull Map<@NonNull Element, @NonNull Element> local2remote = new HashMap<>();
-
-//	private @Nullable Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap = null;
 
 	private @Nullable BagType bagType = null;
 	private @Nullable BooleanType booleanType = null;
@@ -121,12 +116,6 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 				}
 			}
 		}
-	//	org.eclipse.ocl.pivot.Package orphanage = PivotFactory.eINSTANCE.createPackage();
-	//	orphanage.setName(PivotConstants.ORPHANAGE_NAME);
-	//	orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
-	//	orphanage.setURI(PivotConstants.ORPHANAGE_URI);
-	//	this.orphanage = orphanage;
-	//	resource.getContents().add(orphanage);
 	}
 
 	@Override
@@ -138,34 +127,6 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 		}
 		orphanClasses2.add(localClass);
 	}
-
-/*	private void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes) {
-		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
-		if (nameToLibraryTypeMap2 == null) {
-			nameToLibraryTypeMap = nameToLibraryTypeMap2 = new HashMap<>();
-		}
-		for (org.eclipse.ocl.pivot.@NonNull Class pivotType : pivotTypes) {
-			String name = pivotType.getName();
-			if (name != null) {
-				if ("Model".equals(name) || "UnlimitedNatural".equals(name)) {
-					getClass();		// XXX
-				}
-				//
-				// Multiple libraries may exploit CompleteClasses, so nameToLibraryTypeMap caches just the first.
-				if (!nameToLibraryTypeMap2.containsKey(name)) {
-					@SuppressWarnings("unused")
-					org.eclipse.ocl.pivot.Class oldType = nameToLibraryTypeMap2.put(name, pivotType);
-				/ *	if ((oldType != null) && (oldType != pivotType)) {
-						if (!(oldType instanceof PrimitiveType) || !(pivotType instanceof PrimitiveType)) {		// User primitives may only be DataType e.g. testQVTrLoad_ATL2QVTr_qvtre
-						//	logger.warn("Conflicting pivot type '" + name + "'");
-							System.err.println("Conflicting pivot type '" + name + "'");
-							// qvtruntimelibrary has two an extra definition of Model from QVTimperativeLibrary
-						}
-					} * /
-				}
-			}
-		}
-	} */
 
 	@Override
 	public @NonNull BagType getBagType() {
@@ -337,11 +298,8 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	}
 
 	private void loadLibrary(@NonNull Library asPackage) {
-	//	Map<@NonNull String, @NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
-	//	nameToLibraryTypeMap2 = nameToLibraryTypeMap = new HashMap<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class asLocalClass : PivotUtil.getOwnedClasses(asPackage)) {
 			String name = asLocalClass.getName();
-	//		nameToLibraryTypeMap2.put(name, asLocalClass);
 			switch (name) {
 				case TypeId.BAG_NAME : bagType = (BagType) asLocalClass; break;
 				case TypeId.BOOLEAN_NAME : booleanType = (BooleanType) asLocalClass; break;
@@ -406,167 +364,117 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 		}
 	}
 
-	private <T extends Element> @NonNull T localize(@NonNull T asReferencedElement) {
+	protected @NonNull CollectionType localizeCollectionType(@NonNull CollectionType asCollectionType) {
+		// parent package is localized by the CollectionTypeManager
+		// attributes are localized here along with the class
+		CollectionType genericCollectionType = PivotUtil.getGenericElement(asCollectionType);
+		Type elementType = localizeElement(PivotUtil.getElementType(asCollectionType));
+		boolean isNullFree = asCollectionType.isIsNullFree();
+		IntegerValue lowerValue = asCollectionType.getLowerValue();
+		UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
+		CollectionType localCollectionType = getCollectionType(genericCollectionType, elementType, isNullFree, lowerValue, upperValue);
+		resolveSuperClasses(localCollectionType, genericCollectionType);
+		assert localCollectionType.eContainer() != null;
+		remote2local.put(asCollectionType, localCollectionType);
+		return localCollectionType;
+	}
+
+	protected @NonNull LambdaType localizeLambdaType(@NonNull LambdaType asLambdaType) {
+		// parent package is localized by the LambdaTypeManager
+		// attributes are localized here along with the class
+		LambdaType genericLambdaType = PivotUtil.getGenericElement(asLambdaType);
+		LambdaParameter contextParameter = PivotUtil.getOwnedContext(asLambdaType);
+		Type localContextType = localizeElement(PivotUtil.getType(contextParameter));
+		TypedElement localContextParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(contextParameter), localContextType, contextParameter.isIsRequired());
+		List<@NonNull LambdaParameter> ownedParameters = PivotUtil.getOwnedParametersList(asLambdaType);
+		List<@NonNull TypedElement> localParameters = new ArrayList<>(ownedParameters.size());
+		for (@NonNull LambdaParameter asParameter : ownedParameters) {
+			Type parameterType = localizeElement(PivotUtil.getType(asParameter));
+			TypedElement localParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(asParameter), parameterType, asParameter.isIsRequired());
+			localParameters.add(localParameter);
+		}
+		LambdaParameter resultParameter = PivotUtil.getOwnedResult(asLambdaType);
+		Type localResultType = localizeElement(PivotUtil.getType(resultParameter));
+		TypedElement localResultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(resultParameter), localResultType, resultParameter.isIsRequired());
+		LambdaType localLambdaType = getLambdaType(localContextParameter, localParameters, localResultParameter, null);
+		resolveSuperClasses(localLambdaType, genericLambdaType);
+		assert localLambdaType.eContainer() != null;
+		remote2local.put(asLambdaType, localLambdaType);
+		return localLambdaType;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected <T extends Element> @NonNull T localizeElement(@NonNull T asReferencedElement) {
 		if (!Orphanage.isOrphan(asReferencedElement)) {
-		//	if (!(PivotUtil.basicGetContainingPackage(asReferencedElement) instanceof Orphanage)) {
-		//	System.out.println("localize bypass for " + NameUtil.debugSimpleName(asReferencedElement) + " " + asReferencedElement);
-			return asReferencedElement;
+			return asReferencedElement;		// Non-orphan is referenceable and so does not need localization
 		}
 		EObject localElement = remote2local.get(asReferencedElement);
 		if (localElement != null) {
-			return (T)localElement;
+			return (T)localElement;			// re-use existing localization
 		}
-		else if (asReferencedElement instanceof CollectionType) {
-			CollectionType asCollectionType = (CollectionType)asReferencedElement;
-			CollectionType genericCollectionType = PivotUtil.getGenericElement(asCollectionType);
-			Type elementType = localize(PivotUtil.getElementType(asCollectionType));
-			boolean isNullFree = asCollectionType.isIsNullFree();
-			IntegerValue lowerValue = asCollectionType.getLowerValue();
-			UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
-			CollectionType localCollectionType = getCollectionType(genericCollectionType, elementType, isNullFree, lowerValue, upperValue);
-			resolveSuperClasses(localCollectionType, genericCollectionType);
-			assert localCollectionType.eContainer() != null;
-			putLocal(asCollectionType, localCollectionType);
-			return (T)localCollectionType;
+		if (asReferencedElement instanceof CollectionType) {
+			return (T)localizeCollectionType((CollectionType)asReferencedElement);
 		}
 		else if (asReferencedElement instanceof LambdaType) {
-			LambdaType asLambdaType = (LambdaType)asReferencedElement;
-			LambdaType genericLambdaType = PivotUtil.getGenericElement(asLambdaType);
-			LambdaParameter contextParameter = PivotUtil.getOwnedContext(asLambdaType);
-			Type localContextType = localize(PivotUtil.getType(contextParameter));
-			TypedElement localContextParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(contextParameter), localContextType, contextParameter.isIsRequired());
-			List<@NonNull LambdaParameter> ownedParameters = PivotUtil.getOwnedParametersList(asLambdaType);
-			List<@NonNull TypedElement> localParameters = new ArrayList<>(ownedParameters.size());
-			for (@NonNull LambdaParameter asParameter : ownedParameters) {
-				Type parameterType = localize(PivotUtil.getType(asParameter));
-				TypedElement localParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(asParameter), parameterType, asParameter.isIsRequired());
-				localParameters.add(localParameter);
-			}
-			LambdaParameter resultParameter = PivotUtil.getOwnedResult(asLambdaType);
-			Type localResultType = localize(PivotUtil.getType(resultParameter));
-			TypedElement localResultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(resultParameter), localResultType, resultParameter.isIsRequired());
-			LambdaType localLambdaType = getLambdaType(localContextParameter, localParameters, localResultParameter, null);
-			resolveSuperClasses(localLambdaType, genericLambdaType);
-			assert localLambdaType.eContainer() != null;
-			putLocal(asLambdaType, localLambdaType);
-			return (T)localLambdaType;
+			return (T)localizeLambdaType((LambdaType)asReferencedElement);
 		}
 		else if (asReferencedElement instanceof MapType) {
-			MapType asMapType = (MapType)asReferencedElement;
-			MapType genericMapType = PivotUtil.getGenericElement(asMapType);
-			Type keyType = localize(PivotUtil.getKeyType(asMapType));
-			Type valueType = localize(PivotUtil.getValueType(asMapType));
-			boolean keysAreNullFree = asMapType.isKeysAreNullFree();
-			boolean valuesAreNullFree = asMapType.isValuesAreNullFree();
-			MapType localMapType = getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
-			resolveSuperClasses(localMapType, genericMapType);
-			assert localMapType.eContainer() != null;
-			putLocal(asMapType, localMapType);
-			return (T)localMapType;
+			return (T)localizeMapType((MapType)asReferencedElement);
 		}
 		else if (asReferencedElement instanceof NormalizedTemplateParameter) {
-			NormalizedTemplateParameter asNormalizedTemplateParameter = (NormalizedTemplateParameter)asReferencedElement;
-			int index = asNormalizedTemplateParameter.getIndex();
-			org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
-			NormalizedTemplateParameter localNormalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(localOrphanage, index);
-			putLocal(asNormalizedTemplateParameter, localNormalizedTemplateParameter);
-			return (T)localNormalizedTemplateParameter;
-		}
-		else if (asReferencedElement instanceof TupleType) {
-			TupleType asTupleType = (TupleType)asReferencedElement;
-			TupleType genericTupleType = PivotUtil.getGenericElement(asTupleType);
-			List<@NonNull Property> localParts = new ArrayList<>();
-			List<@NonNull PartId> partIds = new ArrayList<>();
-			for (@NonNull Property asPart : PivotUtil.getOwnedProperties(asTupleType)) {
-				Type partType = localize(PivotUtil.getType(asPart));
-				Property localPart = PivotUtil.createProperty(PivotUtil.getName(asPart), partType);
-				localPart.setIsRequired(asPart.isIsRequired());
-				localParts.add(localPart);
-				putLocal(asPart, localPart);
-				partIds.add(IdManager.getPartId(asPart));
-			}
-			TupleType localTupleType = getTupleType(localParts, partIds);
-			resolveSuperClasses(localTupleType, genericTupleType);
-			assert localTupleType.eContainer() != null;
-			putLocal(asTupleType, localTupleType);
-			return (T)localTupleType;
-		}
-		else if (asReferencedElement instanceof WildcardType) {
-			WildcardType asWildcardType = (WildcardType)asReferencedElement;
-			org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
-			WildcardType localWildcardType = Orphanage.getOrphanWildcardType(localOrphanage);
-			putLocal(asWildcardType, localWildcardType);
-			return (T)localWildcardType;
-		}
-		else if (asReferencedElement instanceof org.eclipse.ocl.pivot.Class) {
-			org.eclipse.ocl.pivot.Class asSpecializedClass = (org.eclipse.ocl.pivot.Class)asReferencedElement;
-			org.eclipse.ocl.pivot.Class genericSpecializedClass = PivotUtil.getGenericElement(asSpecializedClass);
-			List<@NonNull TemplateParameter> asTemplateParameters = genericSpecializedClass.basicGetOwnedTemplateParameters();
-			if (asTemplateParameters != null) {
-				TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(asSpecializedClass);
-				List<@NonNull Type> localTemplateArguments = new ArrayList<@NonNull Type>(asTemplateParameters.size());
-				for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
-					Type templateArgument = templateSpecialization.get(templateParameter);
-					localTemplateArguments.add(localize(templateArgument));
-				}
-				org.eclipse.ocl.pivot.Class localSpecializedClass = getSpecializedType(genericSpecializedClass, localTemplateArguments);
-				putLocal(asSpecializedClass, localSpecializedClass);
-				for (@NonNull Property asProperty : PivotUtil.getOwnedProperties(asSpecializedClass)) {
-					if (asProperty.isIsImplicit()) {
-						assert asProperty.isIsImplicit();
-						assert !asProperty.isIsComposite();
-						assert !asProperty.isIsDerived();
-					//	assert !asProperty.isIsResolveProxies();
-						assert !asProperty.isIsTransient();
-						assert !asProperty.isIsVolatile();
-						Property asOpposite = asProperty.getOpposite();
-						assert asOpposite != null;
-						Type asType = localize(PivotUtil.getType(asProperty));
-						Property localProperty = PivotUtil.createProperty(PivotUtil.getName(asProperty), asType);
-						localProperty.setIsReadOnly(asProperty.isIsReadOnly());
-						localProperty.setIsRequired(asProperty.isIsRequired());
-						localProperty.setIsResolveProxies(asProperty.isIsResolveProxies());
-						localProperty.setOpposite(asOpposite);
-						localSpecializedClass.getOwnedProperties().add(localProperty);
-						putLocal(asProperty, localProperty);
-					}
-				}
-				return (T) localSpecializedClass;
-			}
-			else {
-				return (T)asSpecializedClass;		// Only implicit properties
-			}
-		}
-		else if (asReferencedElement instanceof TemplateableElement) {
-			TemplateableElement asSpecializedElement = (TemplateableElement)asReferencedElement;
-			throw new UnsupportedOperationException();
+			return (T)localizeNormalizedTemplateParameter((NormalizedTemplateParameter)asReferencedElement);
 		}
 		else if (asReferencedElement instanceof Property) {
-			Property asProperty = (Property)asReferencedElement;
-			EObject eContainer = asProperty.eContainer();
-			Element localContainer = localize((Element)eContainer);
-			if (eContainer instanceof TupleType) {				// A tuple part
-				return (T) remote2local.get(asProperty);
-			}
-			else if (asProperty.isIsImplicit()) {
-				return (T) asProperty;
+			return (T) localizeProperty((Property)asReferencedElement);
+		}
+		else if (asReferencedElement instanceof TupleType) {
+			return (T)localizeTupleType((TupleType)asReferencedElement);
+		}
+		else if (asReferencedElement instanceof WildcardType) {
+			return (T)localizeWildcardType((WildcardType)asReferencedElement);
+		}
+		else if (asReferencedElement instanceof org.eclipse.ocl.pivot.Class) {
+			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asReferencedElement;
+			org.eclipse.ocl.pivot.Class genericSpecializedClass = PivotUtil.getGenericElement(asClass);
+			List<@NonNull TemplateParameter> asTemplateParameters = genericSpecializedClass.basicGetOwnedTemplateParameters();
+			if (asTemplateParameters != null) {
+				return (T)localizeSpecializedClass(asClass);
 			}
 			else {
-				assert asProperty.isIsImplicit();
-				assert !asProperty.isIsComposite();
-				assert !asProperty.isIsDerived();
-			//	assert !asProperty.isIsResolveProxies();
-				assert !asProperty.isIsTransient();
-				assert !asProperty.isIsVolatile();
-				Property asOpposite = asProperty.getOpposite();
-				assert asOpposite != null;
-				assert resource == asOpposite.eResource();
-				return (T) remote2local.get(asProperty);
+				// This class only localized when child properties are localized on demand.
+				return (T)asClass;		// Only implicit properties
 			}
 		}
+		else if (asReferencedElement instanceof org.eclipse.ocl.pivot.Package) {
+			org.eclipse.ocl.pivot.Package asPackage = (org.eclipse.ocl.pivot.Package)asReferencedElement;
+			// This package only localized when child classes are localized on demand.
+			return (T)asPackage;
+		}
 		throw new UnsupportedOperationException();
-		//	putLocal(asReferencedElement, asReferencedElement);
-		//	return asReferencedElement;
+	}
+
+	protected @NonNull MapType localizeMapType(@NonNull MapType asMapType) {
+		// parent package is localized by the MapTypeManager
+		// attributes are localized here along with the class
+		MapType genericMapType = PivotUtil.getGenericElement(asMapType);
+		Type keyType = localizeElement(PivotUtil.getKeyType(asMapType));
+		Type valueType = localizeElement(PivotUtil.getValueType(asMapType));
+		boolean keysAreNullFree = asMapType.isKeysAreNullFree();
+		boolean valuesAreNullFree = asMapType.isValuesAreNullFree();
+		MapType localMapType = getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		resolveSuperClasses(localMapType, genericMapType);
+		assert localMapType.eContainer() != null;
+		remote2local.put(asMapType, localMapType);
+		return localMapType;
+	}
+
+	protected @NonNull NormalizedTemplateParameter localizeNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter asNormalizedTemplateParameter) {
+		// create the corresponding local singletons
+		int index = asNormalizedTemplateParameter.getIndex();
+		org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
+		NormalizedTemplateParameter localNormalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(localOrphanage, index);
+		remote2local.put(asNormalizedTemplateParameter, localNormalizedTemplateParameter);
+		return localNormalizedTemplateParameter;
 	}
 
 	/**
@@ -576,7 +484,7 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 	 *
 	 * @since 7.0
 	 */
-	public void localizeOrphans() {
+	public void localize() {
 		Model asModel = PivotUtil.getModel(resource);
 		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetLocalOrphanPackage(asModel);
 		if (localOrphanPackage != null) {
@@ -589,10 +497,7 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 			for (Map.Entry<EObject, Collection<Setting>> entry : references.entrySet()) {
 				EObject eTarget = entry.getKey();
 				if (eTarget instanceof Element) {
-					if ((eTarget instanceof Property) && ((Property)eTarget).isIsImplicit()) {
-						getClass();			// XXX
-					}
-					Element localETarget = localize((Element)eTarget);
+					Element localETarget = localizeElement((Element)eTarget);
 					if (localETarget != eTarget) {
 						if (moreEObjects == null) {
 							moreEObjects = new ArrayList<>();
@@ -603,7 +508,7 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 			}
 		}
 
-		Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(resource.getContents());
+	/*	Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(resource.getContents());
 		for (EObject eTarget : references.keySet()) {
 			if (eTarget instanceof Element) {
 				if ((eTarget instanceof Property) && ((Property)eTarget).isIsImplicit()) {
@@ -612,19 +517,105 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 				Resource eResource = eTarget.eResource();
 				if ((eResource != resource) && Orphanage.isOrphan((Element)eTarget)) {
 					EObject localTarget = remote2local.get(eTarget);
-					assert localTarget instanceof Element;
+					assert localTarget instanceof Element;		-- fails for orphan Package
 					assert (localTarget.eResource() == resource) && Orphanage.isOrphan((Element) localTarget);
 				}
 			}
-		}
+		} */
 		if (orphanClasses != null) {
 			ECollections.sort((EList<org.eclipse.ocl.pivot.@NonNull Class>)orphanClasses, new ClassByTypeIdAndEntryClassComparator());
 		}
 	}
 
-	protected void putLocal(@NonNull Element remoteElement, @NonNull Element localElement) {
-		remote2local.put(remoteElement, localElement);
-//		local2remote.put(localElement, remoteElement);
+	protected @NonNull Property localizeProperty(@NonNull Property asProperty) {
+		EObject eContainer = asProperty.eContainer();
+		if (eContainer instanceof TupleType) {				// A tuple part
+			localizeTupleType((TupleType)eContainer);		// Tuple parts localized by TupleType
+			Property localProperty = (Property)remote2local.get(asProperty);
+			assert localProperty != null;
+			return localProperty;
+		}
+		else if (asProperty.isIsImplicit()) {
+			// implicit properties are not localized // XXX ??? why aren't they also transient and volatile ??
+			return asProperty;
+		}
+		else {
+			throw new UnsupportedOperationException();
+		/*	assert asProperty.isIsImplicit();
+			assert !asProperty.isIsComposite();
+			assert !asProperty.isIsDerived();
+		//	assert !asProperty.isIsResolveProxies();
+			assert !asProperty.isIsTransient();
+			assert !asProperty.isIsVolatile();
+			Property asOpposite = asProperty.getOpposite();
+			assert asOpposite != null;
+			assert resource == asOpposite.eResource();
+			return remote2local.get(asProperty); */
+		}
+	}
+
+	protected org.eclipse.ocl.pivot.@NonNull Class localizeSpecializedClass(org.eclipse.ocl.pivot.@NonNull Class asSpecializedClass) {
+		org.eclipse.ocl.pivot.Class genericSpecializedClass = PivotUtil.getGenericElement(asSpecializedClass);
+		List<@NonNull TemplateParameter> asTemplateParameters = PivotUtil.getOwnedTemplateParametersList(genericSpecializedClass);
+		TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(asSpecializedClass);
+		List<@NonNull Type> localTemplateArguments = new ArrayList<@NonNull Type>(asTemplateParameters.size());
+		for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
+			Type templateArgument = templateSpecialization.get(templateParameter);
+			assert templateArgument != null;
+			localTemplateArguments.add(localizeElement(templateArgument));
+		}
+		org.eclipse.ocl.pivot.Class localSpecializedClass = getSpecializedType(genericSpecializedClass, localTemplateArguments);
+		remote2local.put(asSpecializedClass, localSpecializedClass);
+		for (@NonNull Property asProperty : PivotUtil.getOwnedProperties(asSpecializedClass)) {
+			if (asProperty.isIsImplicit()) {			// XXX is this redundant / doable lazily on demand
+				assert asProperty.isIsImplicit();
+				assert !asProperty.isIsComposite();
+				assert !asProperty.isIsDerived();
+			//	assert !asProperty.isIsResolveProxies();
+				assert !asProperty.isIsTransient();
+				assert !asProperty.isIsVolatile();
+				Property asOpposite = asProperty.getOpposite();
+				assert asOpposite != null;
+				Type asType = localizeElement(PivotUtil.getType(asProperty));
+				Property localProperty = PivotUtil.createProperty(PivotUtil.getName(asProperty), asType);
+				localProperty.setIsReadOnly(asProperty.isIsReadOnly());
+				localProperty.setIsRequired(asProperty.isIsRequired());
+				localProperty.setIsResolveProxies(asProperty.isIsResolveProxies());
+				localProperty.setOpposite(asOpposite);
+				localSpecializedClass.getOwnedProperties().add(localProperty);
+				remote2local.put(asProperty, localProperty);
+			}
+		}
+		return localSpecializedClass;
+	}
+
+	protected @NonNull TupleType localizeTupleType(@NonNull TupleType asTupleType) {
+		// parent package is localized by the TupleTypeManager
+		// child parts are localized here along with the class
+		TupleType genericTupleType = PivotUtil.getGenericElement(asTupleType);
+		List<@NonNull Property> localParts = new ArrayList<>();
+		List<@NonNull PartId> partIds = new ArrayList<>();
+		for (@NonNull Property asPart : PivotUtil.getOwnedProperties(asTupleType)) {
+			Type partType = localizeElement(PivotUtil.getType(asPart));
+			Property localPart = PivotUtil.createProperty(PivotUtil.getName(asPart), partType);
+			localPart.setIsRequired(asPart.isIsRequired());
+			localParts.add(localPart);
+			remote2local.put(asPart, localPart);
+			partIds.add(IdManager.getPartId(asPart));
+		}
+		TupleType localTupleType = getTupleType(localParts, partIds);
+		resolveSuperClasses(localTupleType, genericTupleType);
+		assert localTupleType.eContainer() != null;
+		remote2local.put(asTupleType, localTupleType);
+		return localTupleType;
+	}
+
+	protected @NonNull WildcardType localizeWildcardType(@NonNull WildcardType asWildcardType) {
+		// create the corresponding local singleton
+		org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
+		WildcardType localWildcardType = Orphanage.getOrphanWildcardType(localOrphanage);
+		remote2local.put(asWildcardType, localWildcardType);
+		return localWildcardType;
 	}
 
 	/**
@@ -647,7 +638,7 @@ class SaverStandardLibraryImpl extends PartialStandardLibraryImpl
 		for (int i = 0; i < superClassesList.size(); i++) {
 			org.eclipse.ocl.pivot.@NonNull Class superClass = superClassesList.get(i);
 		//	if (Orphanage.isOrphan(superClass) && (superClass.eResource() != resource)) {
-			org.eclipse.ocl.pivot.Class localSuperClass = localize(superClass);
+			org.eclipse.ocl.pivot.Class localSuperClass = localizeElement(superClass);
 			if (localSuperClass != superClass) {
 				superClassesList.set(i, localSuperClass);
 			}

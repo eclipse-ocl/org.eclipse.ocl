@@ -219,7 +219,7 @@ public class ASSaver
 	 * @since 7.0
 	 */
 	public void localizeOrphans() {
-		localLibrary.localizeOrphans();
+		localLibrary.localize();
 	}
 
 	/**
