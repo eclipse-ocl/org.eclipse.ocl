@@ -43,6 +43,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -673,7 +674,12 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 			}
 			for (TreeIterator<EObject> i = getAllProperContents(getContents()); i.hasNext(); ) {
 				EObject eObject = i.next();
-				eObject.eAdapters().add(immutabilityCheckingAdapter);
+				if ((eObject instanceof Element) && Orphanage.isOrphan((Element)eObject)) {
+					i.prune();			// XXX ??? adOrphanClass() is permissible post freeze
+				}
+				else {
+					eObject.eAdapters().add(immutabilityCheckingAdapter);
+				}
 			}
 			this.eAdapters().add(immutabilityCheckingAdapter);
 		}

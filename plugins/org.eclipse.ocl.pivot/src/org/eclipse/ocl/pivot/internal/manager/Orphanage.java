@@ -51,7 +51,6 @@ import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
-import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -613,7 +612,7 @@ public class Orphanage extends PackageImpl
 	 */
 	public static boolean isOrphanage(@NonNull Model asModel) {
 		String uri = asModel.getExternalURI();
-		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
+		return PivotConstants.ORPHANAGE_URI.equals(uri);
 	}
 
 	/**
@@ -623,7 +622,7 @@ public class Orphanage extends PackageImpl
 	 */
 	public static boolean isOrphanage(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 		String uri = asPackage.getURI();
-		return PivotConstants.ORPHANAGE_URI.equals(uri) || PivotConstantsInternal.OLD_ORPHANAGE_URI.equals(uri);
+		return PivotConstants.ORPHANAGE_URI.equals(uri);
 	}
 
 	/**

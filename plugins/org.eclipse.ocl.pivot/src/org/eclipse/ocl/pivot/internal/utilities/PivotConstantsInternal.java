@@ -132,7 +132,6 @@ public interface PivotConstantsInternal
 	static final @NonNull String MONIKER_EXP_CHILD_PREFIX = "x";
 
 	static final @NonNull String LIBRARY_MONIKER_PREFIX = "$";
-	static final @NonNull String OLD_ORPHANAGE_URI = "http://www.eclipse.org/ocl/3.1.0/orphanage";
 
 	static final @NonNull String UNKNOWN_TYPE_TEXT = "unknown-type";
 
