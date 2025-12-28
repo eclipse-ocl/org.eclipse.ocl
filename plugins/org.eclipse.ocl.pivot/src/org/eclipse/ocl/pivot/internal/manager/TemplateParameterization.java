@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * TemplateParameterization facilitates the use of template parameters by aggregating a containment hierarchy of
@@ -119,8 +120,15 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 	}
 
 	public int indexOf(@NonNull TemplateParameter templateParameter) {
-		for (int i = 0; i < templateParameters.length; i++) {
+		for (int i = 0; i < templateParameters.length; i++) {			// XXX why doesn't TemplateParameter have an inherent index ??
 			if (templateParameters[i] == templateParameter) {
+				return i;
+			}
+		}
+		// XXX ??? temporary fallback for duplicate declarations (xxxTables vs xxxMetamodel)
+		TemplateParameterization templateParameterization2 = TemplateParameterization.getTemplateParameterization(PivotUtil.getOwningTemplateableElement(templateParameter));
+		for (int i = 0; i < templateParameterization2.templateParameters.length; i++) {
+			if (templateParameterization2.templateParameters[i] == templateParameter) {
 				return i;
 			}
 		}
