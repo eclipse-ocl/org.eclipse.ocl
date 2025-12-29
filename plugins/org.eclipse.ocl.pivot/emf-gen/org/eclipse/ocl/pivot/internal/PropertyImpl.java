@@ -1794,12 +1794,4 @@ implements Property {
 		}
 		throw new UnsupportedOperationException();
 	}
-
-	@Override
-	public void setType(Type newType) {
-		if ("d4qvtrExpression".equals(name)) {
-			getClass();			// XXX
-		}
-		super.setType(newType);
-	}
 } //PropertyImpl

@@ -54,8 +54,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
-import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.ids.PartId;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -64,6 +63,7 @@ import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -681,21 +681,15 @@ public class SaverStandardLibraryImpl extends PartialStandardLibraryImpl impleme
 	protected @NonNull TupleType localizeTupleType(@NonNull TupleType asTupleType) {
 		// parent package is localized by the TupleTypeManager
 		// child parts are localized here along with the class
-		TupleType genericTupleType = PivotUtil.getGenericElement(asTupleType);
-		List<@NonNull Property> localParts = new ArrayList<>();
-		List<@NonNull PartId> partIds = new ArrayList<>();
+		TupleTypeId tupleTypeId = asTupleType.getTupleTypeId();
+		TupleType localTupleType = getTupleType(tupleTypeId);
+		Element old = remote2local.put(asTupleType, localTupleType);
+		Iterable<@NonNull Property> localParts = PivotUtil.getOwnedProperties(localTupleType);
 		for (@NonNull Property asPart : PivotUtil.getOwnedProperties(asTupleType)) {
-			Type partType = localizeElement(PivotUtil.getType(asPart));
-			Property localPart = PivotUtil.createProperty(PivotUtil.getName(asPart), partType);
-			localPart.setIsRequired(asPart.isIsRequired());
-			localParts.add(localPart);
+			Property localPart = NameUtil.getNameable(localParts, PivotUtil.getName(asPart));
+			assert localPart != null;
 			remote2local.put(asPart, localPart);
-			partIds.add(IdManager.getPartId(asPart));
 		}
-		TupleType localTupleType = getTupleType(localParts, partIds);
-		resolveSuperClasses(localTupleType, genericTupleType);
-		assert localTupleType.eContainer() != null;
-		remote2local.put(asTupleType, localTupleType);
 		return localTupleType;
 	}
 
