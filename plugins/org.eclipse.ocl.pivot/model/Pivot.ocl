@@ -26,7 +26,7 @@ inv BehavioralClassIsPrimitiveType: behavioralClass <> null implies behavioralCl
 inv BehavioralClassIsSuperClass: behavioralClass <> null implies superClasses->includes(behavioralClass)
 
 context Element
-def: allOwnedElements() : Set(Element) =
+def: allOwnedElements() : Set(Element[*|1]) =
 	self->closure(oclContents()->selectByKind(Element))
 	
 --context Element
@@ -413,8 +413,8 @@ context ParameterVariable
 inv HasNoInitializer: ownedInit = null
 
 context PropertyCallExp
-def: getSpecializedReferredPropertyOwningType() : Class = referredProperty?.owningClass -- extended in Java code
-def: getSpecializedReferredPropertyType() : Class = referredProperty?.type.oclAsType(Class) -- extended in Java code
+def: getSpecializedReferredPropertyOwningType() : Type = referredProperty?.owningClass -- extended in Java code
+def: getSpecializedReferredPropertyType() : Type = referredProperty?.type.oclAsType(Class) -- extended in Java code
 /* The type of the source conforms to the owning type of the property. */
 inv NonStaticSourceTypeIsConformant: not referredProperty?.isStatic implies 
 	ownedSource?.type?.conformsTo(getSpecializedReferredPropertyOwningType())
