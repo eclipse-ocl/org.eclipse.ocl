@@ -3059,7 +3059,7 @@ public class OCLstdlib extends ASResourceImpl
 
 		private final @NonNull Property pr_CollectionType_elementType = createProperty("elementType", _Type);
 		private final @NonNull Property pr_CollectionType_lower = createProperty("lower", _Integer);
-		private final @NonNull Property pr_CollectionType_upper = createProperty("upper", _Integer);
+		private final @NonNull Property pr_CollectionType_upper = createProperty("upper", _UnlimitedNatural);
 		private final @NonNull Property pr_MapType_keyType = createProperty("keyType", _Type);
 		private final @NonNull Property pr_MapType_valueType = createProperty("valueType", _Type);
 		private final @NonNull Property pr_OclAny_OclInvalid_oclBadProperty = createProperty("OclInvalid", _Bag_OclInvalid_F);
