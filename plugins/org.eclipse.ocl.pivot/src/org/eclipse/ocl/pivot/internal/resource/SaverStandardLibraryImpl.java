@@ -519,7 +519,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibraryImpl impleme
 			return (T)localizeTupleType((TupleType)asReferencedElement);
 		}
 		else if (asReferencedElement instanceof WildcardType) {
-			return (T)localizeWildcardType((WildcardType)asReferencedElement);
+			return asReferencedElement;
 		}
 		else if (asReferencedElement instanceof org.eclipse.ocl.pivot.Class) {
 			org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asReferencedElement;
@@ -691,14 +691,6 @@ public class SaverStandardLibraryImpl extends PartialStandardLibraryImpl impleme
 			remote2local.put(asPart, localPart);
 		}
 		return localTupleType;
-	}
-
-	protected @NonNull WildcardType localizeWildcardType(@NonNull WildcardType asWildcardType) {
-		// create the corresponding local singleton
-	//	org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
-	//	WildcardType localWildcardType = Orphanage.getOrphanWildcardType(localOrphanage);
-	//	remote2local.put(asWildcardType, localWildcardType);
-		return asWildcardType;
 	}
 
 	/**

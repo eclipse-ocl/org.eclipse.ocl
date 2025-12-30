@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -556,20 +555,6 @@ public class Orphanage extends PackageImpl
 		TemplateParameter templateParameter = asTemplatedParameterTypes.get(index);
 		assert templateParameter != null;
 		return (NormalizedTemplateParameter)templateParameter;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	public static @NonNull WildcardType getOrphanWildcardType(org.eclipse.ocl.pivot.@NonNull Package orphanPackage) {
-		List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses = PivotUtil.getOwnedClassesList(orphanPackage);
-		org.eclipse.ocl.pivot.Class wildcardType = NameUtil.getNameable(orphanClasses, PivotConstants.WILDCARD_NAME);
-		if (wildcardType == null) {
-			wildcardType = PivotFactory.eINSTANCE.createWildcardType();
-			wildcardType.setName(PivotConstants.WILDCARD_NAME);
-			wildcardType.setOwningPackage(orphanPackage);
-		}
-		return (WildcardType)wildcardType;
 	}
 
 	/**

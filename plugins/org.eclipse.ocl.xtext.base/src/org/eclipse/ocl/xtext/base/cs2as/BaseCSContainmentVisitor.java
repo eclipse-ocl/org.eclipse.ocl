@@ -124,15 +124,6 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		this.helper = context.getHelper();
 	}
 
-	private void addWildcard(@NonNull TemplateableElementCS csTemplateableElement, @NonNull WildcardType wildcard) {
-		List<@NonNull WildcardType> wildcards = csTemplateableElement2wildcards.get(csTemplateableElement);
-		if (wildcards == null) {
-			wildcards = new ArrayList<>();
-			csTemplateableElement2wildcards.put(csTemplateableElement, wildcards);
-		}
-		wildcards.add(wildcard);
-	}
-
 	public @NonNull <T extends Model> T createModel(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, String newExternalURI) {
 		assert pivotEClass != null;
 		@SuppressWarnings("unchecked")
@@ -649,11 +640,16 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 
 	@Override
 	public Continuation<?> visitWildcardTypeRefCS(@NonNull WildcardTypeRefCS csElement) {
+		TemplateableElementCS csTemplateableElement = ElementUtil.getContainingTemplateableElementCS(csElement);
+		List<@NonNull WildcardType> wildcards = csTemplateableElement2wildcards.get(csTemplateableElement);
+		if (wildcards == null) {
+			wildcards = new ArrayList<>();
+			csTemplateableElement2wildcards.put(csTemplateableElement, wildcards);
+		}
 		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.WILDCARD_TYPE;
 		WildcardType pivotElement = context.refreshModelElement(WildcardType.class, eClass, null);
 		context.installPivotReference(csElement, pivotElement, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
-		TemplateableElementCS csTemplateableElement = ElementUtil.getContainingTemplateableElementCS(csElement);
-		addWildcard(csTemplateableElement, pivotElement);
+		wildcards.add(pivotElement);
 		return null;
 	}
 

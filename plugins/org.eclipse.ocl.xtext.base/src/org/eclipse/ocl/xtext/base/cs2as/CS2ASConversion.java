@@ -1208,15 +1208,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				}
 			}
 			TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
-		//	if (csActualParameter instanceof WildcardTypeRefCS) {
-		//		Orphanage orphanage = standardLibrary.getOrphanage();
-		//		templateArgument.setActual(Orphanage.getOrphanWildcardType(orphanage));
-		//	}
-		//	else {
-				Type pivotActualParameter = PivotUtil.basicGetPivot(Type.class, csActualParameter);
-				pivotActualParameter = getNormalizedType(pivotActualParameter);
-				templateArgument.setActual(pivotActualParameter);
-		//	}
+			Type pivotActualParameter = PivotUtil.basicGetPivot(Type.class, csActualParameter);
+			pivotActualParameter = getNormalizedType(pivotActualParameter);
+			templateArgument.setActual(pivotActualParameter);
 			converter.installPivotDefinition(csTemplateParameterSubstitution, templateArgument);
 			TemplateParameter actualTemplateParameter = templateParameters.get(i);
 			TemplateParameter formalTemplateParameter = templateArguments.get(i).getFormal();
