@@ -695,10 +695,10 @@ public class SaverStandardLibraryImpl extends PartialStandardLibraryImpl impleme
 
 	protected @NonNull WildcardType localizeWildcardType(@NonNull WildcardType asWildcardType) {
 		// create the corresponding local singleton
-		org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
-		WildcardType localWildcardType = Orphanage.getOrphanWildcardType(localOrphanage);
-		remote2local.put(asWildcardType, localWildcardType);
-		return localWildcardType;
+	//	org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
+	//	WildcardType localWildcardType = Orphanage.getOrphanWildcardType(localOrphanage);
+	//	remote2local.put(asWildcardType, localWildcardType);
+		return asWildcardType;
 	}
 
 	/**

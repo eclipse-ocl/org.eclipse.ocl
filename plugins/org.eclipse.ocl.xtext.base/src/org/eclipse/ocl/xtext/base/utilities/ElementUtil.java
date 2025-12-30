@@ -63,6 +63,7 @@ import org.eclipse.ocl.xtext.basecs.PathNameCS;
 import org.eclipse.ocl.xtext.basecs.StructuredClassCS;
 import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
 import org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS;
+import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
 import org.eclipse.ocl.xtext.basecs.TypeRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedElementCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
@@ -121,7 +122,16 @@ public class ElementUtil
 				return (Namespace)elementContext;
 			}
 		}
-        return null;
+		return null;
+	}
+
+	public static @Nullable TemplateableElementCS basicGetContainingTemplateableElementCS(@NonNull ElementCS csElement) {
+		for (EObject eObject = csElement; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof TemplateableElementCS) {
+				return (TemplateableElementCS)eObject;
+			}
+		}
+		return null;
 	}
 
 	public static @Nullable ParserContext basicGetParserContext(@NonNull EObject csElement) {
@@ -298,6 +308,10 @@ public class ElementUtil
 
 	public static @NonNull Namespace getContainingNamespace(@NonNull ElementCS csElement) {
 		return ClassUtil.requireNonNull(basicGetContainingNamespace(csElement));
+	}
+
+	public static @NonNull TemplateableElementCS getContainingTemplateableElementCS(@NonNull ElementCS csElement) {
+		return ClassUtil.requireNonNull(basicGetContainingTemplateableElementCS(csElement));
 	}
 
 	public static @Nullable ModelElementCS getCsElement(@NonNull Element asElement) {

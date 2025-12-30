@@ -1198,7 +1198,7 @@ public class ExternalEcore2AS extends Ecore2AS
 //			csTypeRef.setExtends(doSwitchAll(eGenericType.getExtends()));
 //			csTypeRef.setSuper(doSwitchAll(eGenericType.getSuper()));
 			return csTypeRef; */
-		WildcardType wildcardType = Orphanage.getOrphanWildcardType(standardLibrary.getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
+		WildcardType wildcardType = PivotFactory.eINSTANCE.createWildcardType();
 		return wildcardType;		// FIXME bounds
 		/*		org.eclipse.ocl.pivot.Class pivotElement = PivotFactory.eINSTANCE.createClass();
 		String name = PivotConstants.WILDCARD_NAME;

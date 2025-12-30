@@ -14,7 +14,9 @@ package org.eclipse.ocl.xtext.base.cs2as;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Constraint;
@@ -42,6 +45,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeFilter;
@@ -83,6 +87,7 @@ import org.eclipse.ocl.xtext.basecs.TemplateBindingCS;
 import org.eclipse.ocl.xtext.basecs.TemplateParameterCS;
 import org.eclipse.ocl.xtext.basecs.TemplateParameterSubstitutionCS;
 import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
+import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
 import org.eclipse.ocl.xtext.basecs.TuplePartCS;
 import org.eclipse.ocl.xtext.basecs.TupleTypeCS;
 import org.eclipse.ocl.xtext.basecs.TypeRefCS;
@@ -111,10 +116,29 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	 */
 	protected final @NonNull PivotHelper helper;
 
+	private @NonNull Map<@NonNull TemplateableElementCS, @NonNull List<@NonNull WildcardType>> csTemplateableElement2wildcards = new HashMap<>();
+
 	public BaseCSContainmentVisitor(@NonNull CS2ASConversion context) {
 		super(context);
 		this.standardLibrary = context.getStandardLibrary();
 		this.helper = context.getHelper();
+	}
+
+	private void addWildcard(@NonNull TemplateableElementCS csTemplateableElement, @NonNull WildcardType wildcard) {
+		List<@NonNull WildcardType> wildcards = csTemplateableElement2wildcards.get(csTemplateableElement);
+		if (wildcards == null) {
+			wildcards = new ArrayList<>();
+			csTemplateableElement2wildcards.put(csTemplateableElement, wildcards);
+		}
+		wildcards.add(wildcard);
+	}
+
+	public @NonNull <T extends Model> T createModel(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, String newExternalURI) {
+		assert pivotEClass != null;
+		@SuppressWarnings("unchecked")
+		T pivotElement = (T) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
+		pivotElement.setExternalURI(newExternalURI);
+		return pivotElement;
 	}
 
 	protected @NonNull CS2AS getConverter() {
@@ -131,6 +155,16 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 	}
 
+	protected @Nullable List<@NonNull WildcardType> popWildcards(@NonNull TemplateableElementCS csTemplateableElement) {
+		List<@NonNull WildcardType> wildcards = csTemplateableElement2wildcards.remove(csTemplateableElement);
+		if (wildcards != null) {
+			int i = 0;
+			for (@NonNull WildcardType wildcard : wildcards) {
+				wildcard.setName(PivotConstants.WILDCARD_NAME + i++);
+			}
+		}
+		return wildcards;
+	}
 
 	protected Continuation<?> refreshClass(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull StructuredClassCS csElement) {
 		pivotElement.setIsAbstract(csElement.isIsAbstract());
@@ -139,6 +173,8 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		context.refreshPivotList(Property.class, pivotElement.getOwnedProperties(), csElement.getOwnedProperties());
 		context.refreshPivotList(Operation.class, pivotElement.getOwnedOperations(), csElement.getOwnedOperations());
 		refreshClassifier(pivotElement, csElement);
+		List<@NonNull WildcardType> wildcards = popWildcards(csElement);
+		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), wildcards);
 		return null;
 	}
 
@@ -170,6 +206,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	}
 
 	protected <T extends org.eclipse.ocl.pivot.Package> T refreshPackage(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, @NonNull PackageCS csElement) {
+		assert csTemplateableElement2wildcards.isEmpty() : "No wildcards should be lying around";
 		assert pivotEClass != null;
 		Object pivotObject = context.getConverter().getPivotElement(csElement);
 		if (pivotObject == null) {
@@ -218,6 +255,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 		context.refreshPivotList(org.eclipse.ocl.pivot.Package.class, pivotElement.getOwnedPackages(), csElement.getOwnedPackages());
 		context.refreshPivotList(org.eclipse.ocl.pivot.Class.class, pivotElement.getOwnedClasses(), csElement.getOwnedClasses());
+		assert csTemplateableElement2wildcards.isEmpty() : "All wildcards should have been containerized";
 		return pivotElement;
 	}
 
@@ -261,13 +299,6 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 		context.getConverter().installPivotDefinition(csElement, pivotElement);
 		context.refreshComments(pivotElement, csElement);
-		return pivotElement;
-	}
-	public @NonNull <T extends Model> T createModel(@NonNull Class<T> pivotClass, /*@NonNull*/ EClass pivotEClass, String newExternalURI) {
-		assert pivotEClass != null;
-		@SuppressWarnings("unchecked")
-		T pivotElement = (T) pivotEClass.getEPackage().getEFactoryInstance().create(pivotEClass);
-		pivotElement.setExternalURI(newExternalURI);
 		return pivotElement;
 	}
 
@@ -459,6 +490,8 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		List<String> qualifiers = csElement.getQualifiers();
 		assert qualifiers != null;
 		pivotElement.setIsTransient(ElementUtil.getQualifier(qualifiers, "transient", "!transient", false));
+		List<@NonNull WildcardType> wildcards = popWildcards(csElement);
+		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), wildcards);
 		return null;
 	}
 
@@ -616,9 +649,11 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 
 	@Override
 	public Continuation<?> visitWildcardTypeRefCS(@NonNull WildcardTypeRefCS csElement) {
-		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.CLASS;
-		org.eclipse.ocl.pivot.Class pivotElement = context.refreshModelElement(org.eclipse.ocl.pivot.Class.class, eClass, null);
+		@SuppressWarnings("null") @NonNull EClass eClass = PivotPackage.Literals.WILDCARD_TYPE;
+		WildcardType pivotElement = context.refreshModelElement(WildcardType.class, eClass, null);
 		context.installPivotReference(csElement, pivotElement, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
+		TemplateableElementCS csTemplateableElement = ElementUtil.getContainingTemplateableElementCS(csElement);
+		addWildcard(csTemplateableElement, pivotElement);
 		return null;
 	}
 

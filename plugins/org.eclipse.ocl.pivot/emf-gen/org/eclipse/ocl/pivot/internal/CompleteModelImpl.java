@@ -1630,6 +1630,9 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		if (type.eContainer() instanceof TemplateArgument) {
 			return false;
 		}
+		if (type instanceof WildcardType) {
+			return false;
+		}
 		return true;
 	}
 
