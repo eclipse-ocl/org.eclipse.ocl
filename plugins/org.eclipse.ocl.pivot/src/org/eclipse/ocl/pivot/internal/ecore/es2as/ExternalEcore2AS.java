@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -57,6 +58,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -1190,29 +1192,23 @@ public class ExternalEcore2AS extends Ecore2AS
 
 	protected Type resolveWildcardType(@NonNull EGenericType eGenericType) {
 		assert eGenericType.getETypeArguments().isEmpty();
+		assert eGenericType.getETypeParameter() == null;
 		assert eGenericType.getEClassifier() == null;
 		EClassifier eClassifier = eGenericType.getERawType();
 		assert eClassifier == EcorePackage.Literals.EJAVA_OBJECT;
-		/*			WildcardTypeRefCS csTypeRef = BaseCSFactory.eINSTANCE.createWildcardTypeRefCS();
-			setOriginalMapping(csTypeRef, eObject);
-//			csTypeRef.setExtends(doSwitchAll(eGenericType.getExtends()));
-//			csTypeRef.setSuper(doSwitchAll(eGenericType.getSuper()));
-			return csTypeRef; */
-		WildcardType wildcardType = PivotFactory.eINSTANCE.createWildcardType();
-		return wildcardType;		// FIXME bounds
-		/*		org.eclipse.ocl.pivot.Class pivotElement = PivotFactory.eINSTANCE.createClass();
-		String name = PivotConstants.WILDCARD_NAME;
-		EStructuralFeature eFeature = eGenericType.eContainmentFeature();
-		if ((eFeature != null) && eFeature.isMany()) {
-			EObject eContainer = eGenericType.eContainer();
-			List<?> list = (List<?>)eContainer.eGet(eGenericType.eContainingFeature());
-			int index = list.indexOf(eGenericType);
-			if (index != 0) {
-				name += index;
+
+		WildcardType wildcard2 = getCreated(WildcardType.class, eGenericType);
+
+		ENamedElement eTemplateableElement = getContainingETemplateableElement(eGenericType);
+		TemplateableElement asTemplateableElement = getCreated(TemplateableElement.class, eTemplateableElement);
+		if (asTemplateableElement != null) {
+			for (WildcardType wildcard : asTemplateableElement.getOwnedWildcards()) {
+				if (wildcard.getESObject() == eGenericType) {
+					return wildcard;
+				}
 			}
 		}
-		pivotElement.setName(name);
-		return pivotElement; */
+		throw new IllegalStateException("Missing wildcard for " + eGenericType);
 	}
 
 	/**

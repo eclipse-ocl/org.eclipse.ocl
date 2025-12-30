@@ -16,10 +16,12 @@ import java.util.List;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -117,6 +119,21 @@ public abstract class Ecore2AS extends AbstractExternal2AS
 			}
 		}
 		return PivotConstants.DEFAULT_UPPER_BOUND;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull ENamedElement getContainingETemplateableElement(@NonNull EObject eObject) {
+		for (EObject eElement = eObject; eElement != null; eElement = eElement.eContainer()) {
+			if (eElement instanceof EClassifier) {
+				return (EClassifier)eElement;
+			}
+			if (eElement instanceof EOperation) {
+				return (EOperation)eElement;
+			}
+		}
+		throw new IllegalStateException("No containingTemplateableElement for " + eObject);
 	}
 
 	/**

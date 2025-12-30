@@ -45,6 +45,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
@@ -82,6 +83,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
@@ -108,6 +110,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	protected final @NonNull AbstractExternal2AS converter;
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull Technology technology;
+
+	private @NonNull Map<@NonNull ENamedElement, @NonNull List<@NonNull WildcardType>> eTemplateableElement2wildcards = new HashMap<>();
 
 	public Ecore2ASDeclarationSwitch(@NonNull AbstractExternal2AS converter) {
 		this.converter = converter;
@@ -251,6 +255,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				}
 			}
 		}
+		List<@NonNull WildcardType> wildcards = popWildcards(eClass);
+		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), wildcards);
 		converter.queueReference(eClass);				// For superclasses
 		return pivotElement;
 	}
@@ -391,6 +397,20 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			doSwitchAll(eObject.getETypeArguments());
 			converter.addGenericType(eObject);		// Wait till all unspecialized types converted
 		}
+		if (eObject.getETypeArguments().isEmpty() && (eClassifier == null)
+		 && (eObject.getETypeParameter() == null) && (eObject.getERawType() == EcorePackage.Literals.EJAVA_OBJECT)) {
+			ENamedElement eTemplatableElement = Ecore2AS.getContainingETemplateableElement(eObject);
+			List<@NonNull WildcardType> wildcards = eTemplateableElement2wildcards.get(eTemplatableElement);
+			if (wildcards == null) {
+				wildcards = new ArrayList<>();
+				eTemplateableElement2wildcards.put(eTemplatableElement, wildcards);
+			}
+			WildcardType wildcardType = PivotFactory.eINSTANCE.createWildcardType();
+			wildcardType.setName(PivotConstants.WILDCARD_NAME + wildcards.size());
+			wildcards.add(wildcardType);
+			converter.addMapping(eObject, wildcardType);
+			return wildcardType;
+		}
 		return true;
 	}
 
@@ -407,6 +427,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 
 	@Override
 	public Object caseEPackage(EPackage ePackage) {
+		assert eTemplateableElement2wildcards.isEmpty() : "No wildcards should be lying around";
 		assert ePackage != null;;
 		org.eclipse.ocl.pivot.Package pivotElement;
 		if (PivotUtil.isLibrary(ePackage)) {				// has http://www.eclipse.org/OCL/ASLibrary EAnnotation
@@ -474,6 +495,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		PivotUtil.refreshList(pivotElement.getOwnedClasses(), true, newList);
+		assert eTemplateableElement2wildcards.isEmpty() : "All wildcards should have been containerized";
 		return pivotElement;
 	}
 
@@ -547,6 +569,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (eAnnotation != null) {
 			specification.setESObject(eAnnotation);
 		}
+	//	List<@NonNull WildcardType> wildcards = popWildcards(eOperation);
+	//	PivotUtil.refreshList(constraint.getOwnedWildcards(), wildcards);
 		converter.addMapping(eOperation, constraint);
 		copyAnnotatedElement(constraint, eOperation);
 		return constraint;
@@ -558,6 +582,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		doSwitchAll(pivotElement.getOwnedParameters(), eOperation.getEParameters());
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateParameters(pivotElement, eTypeParameters);
+		List<@NonNull WildcardType> wildcards = popWildcards(eOperation);
+		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), wildcards);
 		doSwitchAll(eOperation.getEGenericExceptions());
 		converter.queueReference(eOperation);				// For superclasses
 		return pivotElement;
@@ -682,6 +708,13 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		for (EObject eObject : eObjects) {
 			doSwitch(eObject);
 		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @Nullable List<@NonNull WildcardType> popWildcards(@NonNull ENamedElement eTemplateableElement) {
+		return eTemplateableElement2wildcards.remove(eTemplateableElement);
 	}
 
 	/**
