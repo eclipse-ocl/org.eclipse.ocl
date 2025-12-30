@@ -114,7 +114,9 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	protected @NonNull LambdaParameter createLambdaParameter(@NonNull TypedElement typedElement) {
 		LambdaParameter lambdaParameter = PivotFactory.eINSTANCE.createLambdaParameter();
 		lambdaParameter.setName(typedElement.getName());
-		lambdaParameter.setType(typedElement.getType());
+		Type type = PivotUtil.getType(typedElement);
+		Type primaryType = standardLibrary.getPrimaryType(type);
+		lambdaParameter.setType(primaryType);
 		lambdaParameter.setIsRequired(typedElement.isIsRequired());
 		return lambdaParameter;
 	}

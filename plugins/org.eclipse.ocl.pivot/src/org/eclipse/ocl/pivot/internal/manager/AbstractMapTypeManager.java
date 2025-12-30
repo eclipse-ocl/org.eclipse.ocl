@@ -106,13 +106,15 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 
 	protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
 		Type keyType = typeArguments.getKeyType();
+		Type primaryKeyType = standardLibrary.getPrimaryType(keyType);
 		boolean keysAreNullFree = typeArguments.isKeysAreNullFree();
 		Type valueType = typeArguments.getValueType();
+		Type primaryValueType = standardLibrary.getPrimaryType(valueType);
 		boolean valuesAreNullFree = typeArguments.isValuesAreNullFree();
 		MapType genericMapType = standardLibrary.getMapType();
 		MapType mapType;
 		if (entryClass == null) {
-			mapType = PivotUtil.createMapType(genericMapType, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+			mapType = PivotUtil.createMapType(genericMapType, primaryKeyType, keysAreNullFree, primaryValueType, valuesAreNullFree);
 		}
 		else {
 			MapType specializedMapType = getMapType(typeArguments);

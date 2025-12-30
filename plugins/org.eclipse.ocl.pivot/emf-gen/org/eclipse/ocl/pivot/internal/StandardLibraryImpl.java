@@ -654,15 +654,12 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		else if (typeId == TypeId.INTEGER) {
 			return getIntegerType();
 		}
-		else if (typeId == TypeId.REAL) {
-			return getRealType();
-		}
-		else if (typeId == TypeId.STRING) {
-			return getStringType();
-		}
-		else if (typeId == TypeId.UNLIMITED_NATURAL) {
-			return getUnlimitedNaturalType();
-		}
+	//	else if (typeId == TypeId.INTEGER_RANGE) {
+	//		return getIntegerRangeType();
+	//	}
+	//	else if (typeId == TypeId.MAP_ENTRY) {
+	//		return getMapEntryType();
+	//	}
 		else if (typeId == TypeId.OCL_ANY) {
 			return getOclAnyType();
 		}
@@ -672,11 +669,26 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		else if (typeId == TypeId.OCL_ENUMERATION) {
 			return getOclEnumerationType();
 		}
+		else if (typeId == TypeId.OCL_INVALID) {
+			return getOclInvalidType();
+		}
 		else if (typeId == TypeId.OCL_SELF) {
 			return getOclSelfType();
 		}
 		else if (typeId == TypeId.OCL_SUMMABLE) {
 			return getOclSummableType();
+		}
+		else if (typeId == TypeId.OCL_VOID) {
+			return getOclVoidType();
+		}
+		else if (typeId == TypeId.REAL) {
+			return getRealType();
+		}
+		else if (typeId == TypeId.STRING) {
+			return getStringType();
+		}
+		else if (typeId == TypeId.UNLIMITED_NATURAL) {
+			return getUnlimitedNaturalType();
 		}
 		throw new UnsupportedOperationException();
 	}

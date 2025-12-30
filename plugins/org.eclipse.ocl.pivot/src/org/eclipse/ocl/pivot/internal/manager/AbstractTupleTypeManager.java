@@ -92,12 +92,12 @@ public abstract class AbstractTupleTypeManager implements TupleTypeManager
 			asParts = new ArrayList<>();
 			for (@NonNull PartId partId : partIds) {
 				Type partType = idResolver.getType(partId.getTypeId());
-				Type partType2 = standardLibrary.getPrimaryType(partType);
+				Type primaryPartType = standardLibrary.getPrimaryType(partType);
 				Property property = PivotFactory.eINSTANCE.createProperty();
 				property.setName(NameUtil.getSafeName(partId));
 				property.setIsRequired(partId.isRequired());
 				asParts.add(property);
-				property.setType(partType2);			// After container to satisfy Property.setType assertIsNormalizedType
+				property.setType(primaryPartType);			// After container to satisfy Property.setType assertIsNormalizedType
 			}
 		}
 		TupleType tupleType = new TupleTypeImpl(tupleTypeId, asParts);
