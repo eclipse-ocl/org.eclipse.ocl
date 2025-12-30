@@ -194,7 +194,7 @@ implements EnumerationLiteral {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningEnumeration != null)
-				msgs = ((InternalEObject)newOwningEnumeration).eInverseAdd(this, 23, Enumeration.class, msgs);
+				msgs = ((InternalEObject)newOwningEnumeration).eInverseAdd(this, 24, Enumeration.class, msgs);
 			msgs = basicSetOwningEnumeration(newOwningEnumeration, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -301,7 +301,7 @@ implements EnumerationLiteral {
 			case 8:
 				return eInternalContainer().eInverseRemove(this, 10, org.eclipse.ocl.pivot.Package.class, msgs);
 			case 10:
-				return eInternalContainer().eInverseRemove(this, 23, Enumeration.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 24, Enumeration.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}

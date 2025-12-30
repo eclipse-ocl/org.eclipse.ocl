@@ -4979,9 +4979,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getWildcardType_UpperBound()
+	public EReference getWildcardType_OwningTemplateableElement()
 	{
 		return (EReference)wildcardTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getWildcardType_UpperBound()
+	{
+		return (EReference)wildcardTypeEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -5242,6 +5253,17 @@ implements PivotPackage  {
 	public EReference getTemplateableElement_OwnedTemplateParameters()
 	{
 		return (EReference)templateableElementEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getTemplateableElement_OwnedWildcards()
+	{
+		return (EReference)templateableElementEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -7162,7 +7184,7 @@ implements PivotPackage  {
 		anyTypeEClass = createEClass(1);
 
 		associationClassEClass = createEClass(2);
-		createEReference(associationClassEClass, 20);
+		createEReference(associationClassEClass, 21);
 
 		associationClassCallExpEClass = createEClass(3);
 		createEReference(associationClassCallExpEClass, 15);
@@ -7170,7 +7192,7 @@ implements PivotPackage  {
 		bagTypeEClass = createEClass(4);
 
 		behaviorEClass = createEClass(5);
-		createEReference(behaviorEClass, 20);
+		createEReference(behaviorEClass, 21);
 
 		booleanLiteralExpEClass = createEClass(6);
 		createEAttribute(booleanLiteralExpEClass, 9);
@@ -7190,17 +7212,17 @@ implements PivotPackage  {
 		createEReference(callOperationActionEClass, 5);
 
 		classEClass = createEClass(10);
-		createEReference(classEClass, 9);
-		createEAttribute(classEClass, 10);
+		createEReference(classEClass, 10);
 		createEAttribute(classEClass, 11);
 		createEAttribute(classEClass, 12);
 		createEAttribute(classEClass, 13);
-		createEReference(classEClass, 14);
+		createEAttribute(classEClass, 14);
 		createEReference(classEClass, 15);
 		createEReference(classEClass, 16);
 		createEReference(classEClass, 17);
 		createEReference(classEClass, 18);
 		createEReference(classEClass, 19);
+		createEReference(classEClass, 20);
 		createEOperation(classEClass, 6);
 		createEOperation(classEClass, 7);
 
@@ -7225,10 +7247,10 @@ implements PivotPackage  {
 		createEReference(collectionRangeEClass, 9);
 
 		collectionTypeEClass = createEClass(15);
-		createEReference(collectionTypeEClass, 23);
-		createEAttribute(collectionTypeEClass, 24);
+		createEReference(collectionTypeEClass, 24);
 		createEAttribute(collectionTypeEClass, 25);
 		createEAttribute(collectionTypeEClass, 26);
+		createEAttribute(collectionTypeEClass, 27);
 
 		commentEClass = createEClass(16);
 		createEReference(commentEClass, 4);
@@ -7277,9 +7299,9 @@ implements PivotPackage  {
 		createEOperation(constraintEClass, 3);
 
 		dataTypeEClass = createEClass(24);
-		createEReference(dataTypeEClass, 20);
-		createEAttribute(dataTypeEClass, 21);
+		createEReference(dataTypeEClass, 21);
 		createEAttribute(dataTypeEClass, 22);
+		createEAttribute(dataTypeEClass, 23);
 		createEOperation(dataTypeEClass, 8);
 		createEOperation(dataTypeEClass, 9);
 		createEOperation(dataTypeEClass, 10);
@@ -7297,7 +7319,7 @@ implements PivotPackage  {
 		createEReference(dynamicPropertyEClass, 5);
 
 		dynamicTypeEClass = createEClass(29);
-		createEReference(dynamicTypeEClass, 21);
+		createEReference(dynamicTypeEClass, 22);
 
 		dynamicValueSpecificationEClass = createEClass(30);
 
@@ -7310,10 +7332,10 @@ implements PivotPackage  {
 		createEOperation(elementEClass, 1);
 
 		elementExtensionEClass = createEClass(32);
-		createEReference(elementExtensionEClass, 20);
-		createEAttribute(elementExtensionEClass, 21);
+		createEReference(elementExtensionEClass, 21);
 		createEAttribute(elementExtensionEClass, 22);
-		createEReference(elementExtensionEClass, 23);
+		createEAttribute(elementExtensionEClass, 23);
+		createEReference(elementExtensionEClass, 24);
 
 		elementLiteralExpEClass = createEClass(33);
 		createEAttribute(elementLiteralExpEClass, 9);
@@ -7323,7 +7345,7 @@ implements PivotPackage  {
 		createEOperation(enumLiteralExpEClass, 6);
 
 		enumerationEClass = createEClass(35);
-		createEReference(enumerationEClass, 23);
+		createEReference(enumerationEClass, 24);
 
 		enumerationLiteralEClass = createEClass(36);
 		createEAttribute(enumerationLiteralEClass, 9);
@@ -7388,8 +7410,8 @@ implements PivotPackage  {
 		createEOperation(iterateExpEClass, 22);
 
 		iterationEClass = createEClass(49);
-		createEReference(iterationEClass, 27);
 		createEReference(iterationEClass, 28);
+		createEReference(iterationEClass, 29);
 
 		iteratorExpEClass = createEClass(50);
 		createEReference(iteratorExpEClass, 16);
@@ -7420,9 +7442,9 @@ implements PivotPackage  {
 		lambdaParameterEClass = createEClass(52);
 
 		lambdaTypeEClass = createEClass(53);
-		createEReference(lambdaTypeEClass, 23);
 		createEReference(lambdaTypeEClass, 24);
 		createEReference(lambdaTypeEClass, 25);
+		createEReference(lambdaTypeEClass, 26);
 
 		languageExpressionEClass = createEClass(54);
 		createEAttribute(languageExpressionEClass, 8);
@@ -7467,11 +7489,11 @@ implements PivotPackage  {
 		createEReference(mapLiteralPartEClass, 5);
 
 		mapTypeEClass = createEClass(62);
-		createEReference(mapTypeEClass, 23);
 		createEReference(mapTypeEClass, 24);
-		createEAttribute(mapTypeEClass, 25);
-		createEReference(mapTypeEClass, 26);
-		createEAttribute(mapTypeEClass, 27);
+		createEReference(mapTypeEClass, 25);
+		createEAttribute(mapTypeEClass, 26);
+		createEReference(mapTypeEClass, 27);
+		createEAttribute(mapTypeEClass, 28);
 
 		messageExpEClass = createEClass(63);
 		createEReference(messageExpEClass, 9);
@@ -7482,8 +7504,8 @@ implements PivotPackage  {
 		createEOperation(messageExpEClass, 7);
 
 		messageTypeEClass = createEClass(64);
-		createEReference(messageTypeEClass, 20);
 		createEReference(messageTypeEClass, 21);
+		createEReference(messageTypeEClass, 22);
 
 		modelEClass = createEClass(65);
 		createEAttribute(modelEClass, 6);
@@ -7519,18 +7541,18 @@ implements PivotPackage  {
 		createEOperation(oclExpressionEClass, 5);
 
 		operationEClass = createEClass(75);
-		createEReference(operationEClass, 15);
-		createEAttribute(operationEClass, 16);
+		createEReference(operationEClass, 16);
 		createEAttribute(operationEClass, 17);
 		createEAttribute(operationEClass, 18);
 		createEAttribute(operationEClass, 19);
-		createEReference(operationEClass, 20);
+		createEAttribute(operationEClass, 20);
 		createEReference(operationEClass, 21);
 		createEReference(operationEClass, 22);
 		createEReference(operationEClass, 23);
 		createEReference(operationEClass, 24);
 		createEReference(operationEClass, 25);
 		createEReference(operationEClass, 26);
+		createEReference(operationEClass, 27);
 		createEOperation(operationEClass, 6);
 		createEOperation(operationEClass, 7);
 		createEOperation(operationEClass, 8);
@@ -7582,7 +7604,7 @@ implements PivotPackage  {
 		primitiveLiteralExpEClass = createEClass(86);
 
 		primitiveTypeEClass = createEClass(87);
-		createEReference(primitiveTypeEClass, 23);
+		createEReference(primitiveTypeEClass, 24);
 
 		profileEClass = createEClass(88);
 		createEReference(profileEClass, 14);
@@ -7704,13 +7726,13 @@ implements PivotPackage  {
 		createEOperation(stateExpEClass, 6);
 
 		stateMachineEClass = createEClass(108);
-		createEReference(stateMachineEClass, 21);
 		createEReference(stateMachineEClass, 22);
 		createEReference(stateMachineEClass, 23);
 		createEReference(stateMachineEClass, 24);
+		createEReference(stateMachineEClass, 25);
 
 		stereotypeEClass = createEClass(109);
-		createEReference(stereotypeEClass, 20);
+		createEReference(stereotypeEClass, 21);
 
 		stereotypeExtenderEClass = createEClass(110);
 		createEReference(stereotypeExtenderEClass, 4);
@@ -7734,6 +7756,7 @@ implements PivotPackage  {
 		createEReference(templateableElementEClass, 4);
 		createEReference(templateableElementEClass, 5);
 		createEReference(templateableElementEClass, 6);
+		createEReference(templateableElementEClass, 7);
 
 		transitionEClass = createEClass(115);
 		createEAttribute(transitionEClass, 6);
@@ -7813,8 +7836,9 @@ implements PivotPackage  {
 		voidTypeEClass = createEClass(131);
 
 		wildcardTypeEClass = createEClass(132);
-		createEReference(wildcardTypeEClass, 20);
 		createEReference(wildcardTypeEClass, 21);
+		createEReference(wildcardTypeEClass, 22);
+		createEReference(wildcardTypeEClass, 23);
 
 		// Create enums
 		associativityKindEEnum = createEEnum(133);
@@ -9380,6 +9404,7 @@ implements PivotPackage  {
 		initEReference(getTemplateableElement_Generic(), this.getTemplateableElement(), null, "generic", null, 0, 1, TemplateableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTemplateableElement_OwnedTemplateArguments(), this.getTemplateArgument(), this.getTemplateArgument_OwningTemplateableElement(), "ownedTemplateArguments", null, 0, -1, TemplateableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(getTemplateableElement_OwnedTemplateParameters(), this.getTemplateParameter(), this.getTemplateParameter_OwningTemplateableElement(), "ownedTemplateParameters", null, 0, -1, TemplateableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getTemplateableElement_OwnedWildcards(), this.getWildcardType(), this.getWildcardType_OwningTemplateableElement(), "ownedWildcards", null, 0, -1, TemplateableElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(transitionEClass, Transition.class, "Transition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEAttribute(getTransition_Kind(), this.getTransitionKind(), "kind", "external", 1, 1, Transition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
@@ -9530,6 +9555,7 @@ implements PivotPackage  {
 
 		initEClass(wildcardTypeEClass, WildcardType.class, "WildcardType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getWildcardType_LowerBound(), this.getType(), null, "lowerBound", null, 0, 1, WildcardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEReference(getWildcardType_OwningTemplateableElement(), this.getTemplateableElement(), this.getTemplateableElement_OwnedWildcards(), "owningTemplateableElement", null, 0, 1, WildcardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getWildcardType_UpperBound(), this.getType(), null, "upperBound", null, 0, 1, WildcardType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize enums and add enum literals
@@ -10159,6 +10185,13 @@ implements PivotPackage  {
 		   });
 		addAnnotation
 		  (getTemplateableElement_OwnedTemplateParameters(),
+		   source,
+		   new String[]
+		   {
+			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getTemplateableElement_OwnedWildcards(),
 		   source,
 		   new String[]
 		   {

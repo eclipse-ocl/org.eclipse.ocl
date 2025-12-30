@@ -260,9 +260,9 @@ public class TransitionImpl extends NamespaceImpl implements Transition
 		{
 			NotificationChain msgs = null;
 			if (ownedEffect != null)
-				msgs = ((InternalEObject)ownedEffect).eInverseRemove(this, 20, Behavior.class, msgs);
+				msgs = ((InternalEObject)ownedEffect).eInverseRemove(this, 21, Behavior.class, msgs);
 			if (newOwnedEffect != null)
-				msgs = ((InternalEObject)newOwnedEffect).eInverseAdd(this, 20, Behavior.class, msgs);
+				msgs = ((InternalEObject)newOwnedEffect).eInverseAdd(this, 21, Behavior.class, msgs);
 			msgs = basicSetOwnedEffect(newOwnedEffect, msgs);
 			if (msgs != null) msgs.dispatch();
 		}

@@ -1340,6 +1340,12 @@
         <details key="documentation" value="The formal parameters that are owned by this TemplateableElement."/>
       </eAnnotations>
     </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedWildcards" upperBound="-1"
+        eType="#//WildcardType" containment="true" eOpposite="#//WildcardType/owningTemplateableElement">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="The implicit 'template parameters' for wildcards within this TemplateableElement."/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Transition" eSuperTypes="#//Namespace">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1527,6 +1533,8 @@
       abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="VoidType" eSuperTypes="#//Class"/>
   <eClassifiers xsi:type="ecore:EClass" name="WildcardType" eSuperTypes="#//Class">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owningTemplateableElement"
+        eType="#//TemplateableElement" eOpposite="#//TemplateableElement/ownedWildcards"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="lowerBound" eType="#//Type"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="upperBound" eType="#//Type"/>
   </eClassifiers>

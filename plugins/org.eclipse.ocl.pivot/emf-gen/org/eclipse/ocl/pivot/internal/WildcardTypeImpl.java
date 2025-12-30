@@ -13,9 +13,12 @@ package org.eclipse.ocl.pivot.internal;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
@@ -44,6 +47,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getLowerBound <em>Lower Bound</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getOwningTemplateableElement <em>Owning Templateable Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.WildcardTypeImpl#getUpperBound <em>Upper Bound</em>}</li>
  * </ul>
  *
@@ -58,7 +62,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	 * @generated
 	 * @ordered
 	 */
-	public static final int WILDCARD_TYPE_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 2;
+	public static final int WILDCARD_TYPE_FEATURE_COUNT = ClassImpl.CLASS_FEATURE_COUNT + 3;
 
 	/**
 	 * The number of operations of the '<em>Wildcard Type</em>' class.
@@ -125,7 +129,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			if (lowerBound != oldLowerBound)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 20, oldLowerBound, lowerBound));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldLowerBound, lowerBound));
 			}
 		}
 		return lowerBound;
@@ -152,7 +156,54 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		Type oldLowerBound = lowerBound;
 		lowerBound = newLowerBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldLowerBound, lowerBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldLowerBound, lowerBound));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public TemplateableElement getOwningTemplateableElement()
+	{
+		if (eContainerFeatureID() != (22)) return null;
+		return (TemplateableElement)eInternalContainer();
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetOwningTemplateableElement(TemplateableElement newOwningTemplateableElement, NotificationChain msgs)
+	{
+		msgs = eBasicSetContainer((InternalEObject)newOwningTemplateableElement, 22, msgs);
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setOwningTemplateableElement(TemplateableElement newOwningTemplateableElement)
+	{
+		if (newOwningTemplateableElement != eInternalContainer() || (eContainerFeatureID() != (22) && newOwningTemplateableElement != null))
+		{
+			if (EcoreUtil.isAncestor(this, newOwningTemplateableElement))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newOwningTemplateableElement != null)
+				msgs = ((InternalEObject)newOwningTemplateableElement).eInverseAdd(this, 7, TemplateableElement.class, msgs);
+			msgs = basicSetOwningTemplateableElement(newOwningTemplateableElement, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 22, newOwningTemplateableElement, newOwningTemplateableElement));
 	}
 
 	/**
@@ -170,7 +221,7 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			if (upperBound != oldUpperBound)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldUpperBound, upperBound));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 23, oldUpperBound, upperBound));
 			}
 		}
 		return upperBound;
@@ -197,7 +248,110 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		Type oldUpperBound = upperBound;
 		upperBound = newUpperBound;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldUpperBound, upperBound));
+			eNotify(new ENotificationImpl(this, Notification.SET, 23, oldUpperBound, upperBound));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getAnnotatingComments()).basicAdd(otherEnd, msgs);
+			case 2:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedComments()).basicAdd(otherEnd, msgs);
+			case 3:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
+			case 7:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateArguments()).basicAdd(otherEnd, msgs);
+			case 8:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateParameters()).basicAdd(otherEnd, msgs);
+			case 9:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedWildcards()).basicAdd(otherEnd, msgs);
+			case 10:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtenders()).basicAdd(otherEnd, msgs);
+			case 17:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedOperations()).basicAdd(otherEnd, msgs);
+			case 18:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedProperties()).basicAdd(otherEnd, msgs);
+			case 19:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
+			case 22:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetOwningTemplateableElement((TemplateableElement)otherEnd, msgs);
+		}
+		return eDynamicInverseAdd(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+	{
+		switch (featureID)
+		{
+			case 0:
+				return ((InternalEList<?>)getAnnotatingComments()).basicRemove(otherEnd, msgs);
+			case 1:
+				return ((InternalEList<?>)getOwnedAnnotations()).basicRemove(otherEnd, msgs);
+			case 2:
+				return ((InternalEList<?>)getOwnedComments()).basicRemove(otherEnd, msgs);
+			case 3:
+				return ((InternalEList<?>)getOwnedExtensions()).basicRemove(otherEnd, msgs);
+			case 5:
+				return ((InternalEList<?>)getOwnedConstraints()).basicRemove(otherEnd, msgs);
+			case 7:
+				return ((InternalEList<?>)getOwnedTemplateArguments()).basicRemove(otherEnd, msgs);
+			case 8:
+				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
+			case 9:
+				return ((InternalEList<?>)getOwnedWildcards()).basicRemove(otherEnd, msgs);
+			case 10:
+				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
+			case 15:
+				return ((InternalEList<?>)getOwnedBehaviors()).basicRemove(otherEnd, msgs);
+			case 16:
+				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
+			case 17:
+				return ((InternalEList<?>)getOwnedOperations()).basicRemove(otherEnd, msgs);
+			case 18:
+				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
+			case 19:
+				return basicSetOwningPackage(null, msgs);
+			case 22:
+				return basicSetOwningTemplateableElement(null, msgs);
+		}
+		return eDynamicInverseRemove(otherEnd, featureID, msgs);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs)
+	{
+		switch (eContainerFeatureID())
+		{
+			case 19:
+				return eInternalContainer().eInverseRemove(this, 9, org.eclipse.ocl.pivot.Package.class, msgs);
+			case 22:
+				return eInternalContainer().eInverseRemove(this, 7, TemplateableElement.class, msgs);
+		}
+		return eDynamicBasicRemoveFromContainer(msgs);
 	}
 
 	/**
@@ -230,31 +384,35 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			case 8:
 				return getOwnedTemplateParameters();
 			case 9:
-				return getExtenders();
+				return getOwnedWildcards();
 			case 10:
-				return getInstanceClassName();
+				return getExtenders();
 			case 11:
-				return isIsAbstract();
+				return getInstanceClassName();
 			case 12:
-				return isIsActive();
+				return isIsAbstract();
 			case 13:
-				return isIsInterface();
+				return isIsActive();
 			case 14:
-				return getOwnedBehaviors();
+				return isIsInterface();
 			case 15:
-				return getOwnedInvariants();
+				return getOwnedBehaviors();
 			case 16:
-				return getOwnedOperations();
+				return getOwnedInvariants();
 			case 17:
-				return getOwnedProperties();
+				return getOwnedOperations();
 			case 18:
-				return getOwningPackage();
+				return getOwnedProperties();
 			case 19:
-				return getSuperClasses();
+				return getOwningPackage();
 			case 20:
+				return getSuperClasses();
+			case 21:
 				if (resolve) return getLowerBound();
 				return basicGetLowerBound();
-			case 21:
+			case 22:
+				return getOwningTemplateableElement();
+			case 23:
 				if (resolve) return getUpperBound();
 				return basicGetUpperBound();
 		}
@@ -307,48 +465,55 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
+				getOwnedWildcards().clear();
+				getOwnedWildcards().addAll((Collection<? extends WildcardType>)newValue);
+				return;
+			case 10:
 				getExtenders().clear();
 				getExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
-			case 10:
+			case 11:
 				setInstanceClassName((String)newValue);
 				return;
-			case 11:
+			case 12:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case 12:
+			case 13:
 				setIsActive((Boolean)newValue);
 				return;
-			case 13:
+			case 14:
 				setIsInterface((Boolean)newValue);
 				return;
-			case 14:
+			case 15:
 				getOwnedBehaviors().clear();
 				getOwnedBehaviors().addAll((Collection<? extends Behavior>)newValue);
 				return;
-			case 15:
+			case 16:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case 16:
+			case 17:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case 17:
+			case 18:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case 18:
+			case 19:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case 19:
+			case 20:
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case 20:
+			case 21:
 				setLowerBound((Type)newValue);
 				return;
-			case 21:
+			case 22:
+				setOwningTemplateableElement((TemplateableElement)newValue);
+				return;
+			case 23:
 				setUpperBound((Type)newValue);
 				return;
 		}
@@ -393,42 +558,48 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
-				getExtenders().clear();
+				getOwnedWildcards().clear();
 				return;
 			case 10:
-				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
+				getExtenders().clear();
 				return;
 			case 11:
-				setIsAbstract(IS_ABSTRACT_EDEFAULT);
+				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
 			case 12:
-				setIsActive(IS_ACTIVE_EDEFAULT);
+				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
 			case 13:
-				setIsInterface(IS_INTERFACE_EDEFAULT);
+				setIsActive(IS_ACTIVE_EDEFAULT);
 				return;
 			case 14:
-				getOwnedBehaviors().clear();
+				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
 			case 15:
-				getOwnedInvariants().clear();
+				getOwnedBehaviors().clear();
 				return;
 			case 16:
-				getOwnedOperations().clear();
+				getOwnedInvariants().clear();
 				return;
 			case 17:
-				getOwnedProperties().clear();
+				getOwnedOperations().clear();
 				return;
 			case 18:
-				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
+				getOwnedProperties().clear();
 				return;
 			case 19:
-				getSuperClasses().clear();
+				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
 			case 20:
-				setLowerBound((Type)null);
+				getSuperClasses().clear();
 				return;
 			case 21:
+				setLowerBound((Type)null);
+				return;
+			case 22:
+				setOwningTemplateableElement((TemplateableElement)null);
+				return;
+			case 23:
 				setUpperBound((Type)null);
 				return;
 		}
@@ -464,30 +635,34 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 			case 8:
 				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
-				return extenders != null && !extenders.isEmpty();
+				return ownedWildcards != null && !ownedWildcards.isEmpty();
 			case 10:
-				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
+				return extenders != null && !extenders.isEmpty();
 			case 11:
-				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
+				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
 			case 12:
-				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
+				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
 			case 13:
-				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
+				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
 			case 14:
-				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
+				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
 			case 15:
-				return ownedInvariants != null && !ownedInvariants.isEmpty();
+				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
 			case 16:
-				return ownedOperations != null && !ownedOperations.isEmpty();
+				return ownedInvariants != null && !ownedInvariants.isEmpty();
 			case 17:
-				return ownedProperties != null && !ownedProperties.isEmpty();
+				return ownedOperations != null && !ownedOperations.isEmpty();
 			case 18:
-				return getOwningPackage() != null;
+				return ownedProperties != null && !ownedProperties.isEmpty();
 			case 19:
-				return superClasses != null && !superClasses.isEmpty();
+				return getOwningPackage() != null;
 			case 20:
-				return lowerBound != null;
+				return superClasses != null && !superClasses.isEmpty();
 			case 21:
+				return lowerBound != null;
+			case 22:
+				return getOwningTemplateableElement() != null;
+			case 23:
 				return upperBound != null;
 		}
 		return eDynamicIsSet(featureID);

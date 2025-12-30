@@ -303,6 +303,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_TupleLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_TupleLiteralPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_ValueSpecification = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_ValueSpecification, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Variable = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Variable, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_WildcardType = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_WildcardType, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_CLSSid_Property = TypeId.SEQUENCE.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Behavior = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Behavior, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CallOperationAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CallOperationAction, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
@@ -2594,7 +2595,8 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _TemplateableElement__generic = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__GENERIC, Types._TemplateableElement, 0 | IsResolveProxies);
 		public static final @NonNull Property _TemplateableElement__ownedTemplateArguments = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._TemplateArgument, true), 1 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _TemplateableElement__ownedTemplateParameters = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._TemplateParameter, true), 2 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateableElement__TemplateableElement__generic = LIBRARY.createOppositeProperty(Types._TemplateableElement, "TemplateableElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateableElement, false), 3 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__ownedWildcards = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_WILDCARDS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._WildcardType, true), 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__TemplateableElement__generic = LIBRARY.createOppositeProperty(Types._TemplateableElement, "TemplateableElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateableElement, false), 4 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _Transition__kind = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__KIND, Types._TransitionKind, 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Transition__ownedEffect = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_EFFECT, Types._Behavior, 1 | IsComposite | IsResolveProxies);
@@ -2656,7 +2658,8 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Vertex__owningRegion = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__OWNING_REGION, Types._Region, 2 | IsResolveProxies);
 
 		public static final @NonNull Property _WildcardType__lowerBound = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, Types._Type, 0 | IsResolveProxies);
-		public static final @NonNull Property _WildcardType__upperBound = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, Types._Type, 1 | IsResolveProxies);
+		public static final @NonNull Property _WildcardType__owningTemplateableElement = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__OWNING_TEMPLATEABLE_ELEMENT, Types._TemplateableElement, 1 | IsResolveProxies);
+		public static final @NonNull Property _WildcardType__upperBound = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, Types._Type, 2 | IsResolveProxies);
 
 		static {
 			_Annotation__ownedContents.setOpposite(_Element__Annotation__ownedContents);
@@ -3058,6 +3061,7 @@ public class PivotTables extends AbstractTables
 			_TemplateableElement__generic.setOpposite(_TemplateableElement__TemplateableElement__generic);
 			_TemplateableElement__ownedTemplateArguments.setOpposite(_TemplateArgument__owningTemplateableElement);
 			_TemplateableElement__ownedTemplateParameters.setOpposite(_TemplateParameter__owningTemplateableElement);
+			_TemplateableElement__ownedWildcards.setOpposite(_WildcardType__owningTemplateableElement);
 			_TemplateableElement__TemplateableElement__generic.setOpposite(_TemplateableElement__generic);
 
 			_Transition__kind.setDefaultValueString("external");
@@ -3118,6 +3122,7 @@ public class PivotTables extends AbstractTables
 			_Vertex__owningRegion.setOpposite(_Region__ownedSubvertexes);
 
 			_WildcardType__lowerBound.setOpposite(_Type__WildcardType__lowerBound);
+			_WildcardType__owningTemplateableElement.setOpposite(_TemplateableElement__ownedWildcards);
 			_WildcardType__upperBound.setOpposite(_Type__WildcardType__upperBound);
 
 			Init.initEnd();
@@ -12324,6 +12329,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses
 		};
@@ -12349,6 +12355,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._AssociationClass__unownedAttributes
@@ -12406,6 +12413,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._CollectionType__upper,
@@ -12433,6 +12441,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Behavior__owningTransition,
 			Properties._Class__superClasses
@@ -12477,6 +12486,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value
@@ -12531,6 +12541,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses
 		};
@@ -12624,6 +12635,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._CollectionType__upper,
@@ -12759,6 +12771,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value
@@ -12798,6 +12811,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Behavior__owningTransition,
 			Properties._Class__superClasses
@@ -12847,6 +12861,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses
 		};
@@ -12899,6 +12914,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._ElementExtension__stereotype,
 			Properties._Class__superClasses
@@ -12958,6 +12974,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value
@@ -13156,6 +13173,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses
 		};
@@ -13183,6 +13201,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value
@@ -13238,6 +13257,7 @@ public class PivotTables extends AbstractTables
 			Properties._Operation__ownedPreconditions,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Operation__owningClass,
 			Properties._Operation__precedence,
 			Properties._Operation__raisedExceptions,
@@ -13326,6 +13346,7 @@ public class PivotTables extends AbstractTables
 			Properties._LambdaType__ownedResult,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value
@@ -13489,6 +13510,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value,
@@ -13535,6 +13557,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._MessageType__referredOperation,
 			Properties._MessageType__referredSignal,
@@ -13689,6 +13712,7 @@ public class PivotTables extends AbstractTables
 			Properties._Operation__ownedPreconditions,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Operation__owningClass,
 			Properties._Operation__precedence,
 			Properties._Operation__raisedExceptions,
@@ -13764,6 +13788,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._CollectionType__upper,
@@ -13906,6 +13931,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value
@@ -14094,6 +14120,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses
 		};
@@ -14135,6 +14162,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._CollectionType__upper,
@@ -14167,6 +14195,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._CollectionType__upper,
@@ -14225,6 +14254,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses
 		};
@@ -14317,6 +14347,7 @@ public class PivotTables extends AbstractTables
 			Properties._StateMachine__ownedRegions,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Behavior__owningTransition,
 			Properties._StateMachine__submachineStates,
@@ -14345,6 +14376,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses
 		};
@@ -14410,7 +14442,8 @@ public class PivotTables extends AbstractTables
 			Properties._Element__ownedComments,
 			Properties._Element__ownedExtensions,
 			Properties._TemplateableElement__ownedTemplateArguments,
-			Properties._TemplateableElement__ownedTemplateParameters
+			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards
 		};
 
 		private static final @NonNull Property @NonNull [] _Throwable = {};
@@ -14503,6 +14536,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value
@@ -14674,6 +14708,7 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses
 		};
@@ -14700,7 +14735,9 @@ public class PivotTables extends AbstractTables
 			Properties._Class__ownedProperties,
 			Properties._TemplateableElement__ownedTemplateArguments,
 			Properties._TemplateableElement__ownedTemplateParameters,
+			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
+			Properties._WildcardType__owningTemplateableElement,
 			Properties._Class__superClasses,
 			Properties._WildcardType__upperBound
 		};

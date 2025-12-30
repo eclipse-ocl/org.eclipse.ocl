@@ -172,7 +172,7 @@ public abstract class ElementImpl
 	{
 		if (ownedExtensions == null)
 		{
-			ownedExtensions = new EObjectContainmentWithInverseEList<ElementExtension>(ElementExtension.class, this, 3, 20);
+			ownedExtensions = new EObjectContainmentWithInverseEList<ElementExtension>(ElementExtension.class, this, 3, 21);
 		}
 		return ownedExtensions;
 	}

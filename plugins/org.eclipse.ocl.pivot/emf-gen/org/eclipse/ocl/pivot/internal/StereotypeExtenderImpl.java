@@ -167,7 +167,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningStereotype != null)
-				msgs = ((InternalEObject)newOwningStereotype).eInverseAdd(this, 20, Stereotype.class, msgs);
+				msgs = ((InternalEObject)newOwningStereotype).eInverseAdd(this, 21, Stereotype.class, msgs);
 			msgs = basicSetOwningStereotype(newOwningStereotype, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -235,9 +235,9 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 		{
 			NotificationChain msgs = null;
 			if (class_ != null)
-				msgs = ((InternalEObject)class_).eInverseRemove(this, 9, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)class_).eInverseRemove(this, 10, org.eclipse.ocl.pivot.Class.class, msgs);
 			if (newClass != null)
-				msgs = ((InternalEObject)newClass).eInverseAdd(this, 9, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)newClass).eInverseAdd(this, 10, org.eclipse.ocl.pivot.Class.class, msgs);
 			msgs = basicSetClass(newClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -275,7 +275,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
 			case 4:
 				if (class_ != null)
-					msgs = ((InternalEObject)class_).eInverseRemove(this, 9, org.eclipse.ocl.pivot.Class.class, msgs);
+					msgs = ((InternalEObject)class_).eInverseRemove(this, 10, org.eclipse.ocl.pivot.Class.class, msgs);
 				return basicSetClass((org.eclipse.ocl.pivot.Class)otherEnd, msgs);
 			case 6:
 				if (eInternalContainer() != null)
@@ -322,7 +322,7 @@ public class StereotypeExtenderImpl extends ElementImpl implements StereotypeExt
 		switch (eContainerFeatureID())
 		{
 			case 6:
-				return eInternalContainer().eInverseRemove(this, 20, Stereotype.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 21, Stereotype.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}

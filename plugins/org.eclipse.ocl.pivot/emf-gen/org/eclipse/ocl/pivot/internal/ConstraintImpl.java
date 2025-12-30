@@ -277,7 +277,7 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPostContext != null)
-				msgs = ((InternalEObject)newOwningPostContext).eInverseAdd(this, 21, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningPostContext).eInverseAdd(this, 22, Operation.class, msgs);
 			msgs = basicSetOwningPostContext(newOwningPostContext, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -324,7 +324,7 @@ implements Constraint {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningPreContext != null)
-				msgs = ((InternalEObject)newOwningPreContext).eInverseAdd(this, 22, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningPreContext).eInverseAdd(this, 23, Operation.class, msgs);
 			msgs = basicSetOwningPreContext(newOwningPreContext, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -641,9 +641,9 @@ implements Constraint {
 		switch (eContainerFeatureID())
 		{
 			case 9:
-				return eInternalContainer().eInverseRemove(this, 21, Operation.class, msgs);
-			case 10:
 				return eInternalContainer().eInverseRemove(this, 22, Operation.class, msgs);
+			case 10:
+				return eInternalContainer().eInverseRemove(this, 23, Operation.class, msgs);
 			case 11:
 				return eInternalContainer().eInverseRemove(this, 20, State.class, msgs);
 			case 12:

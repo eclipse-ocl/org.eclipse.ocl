@@ -491,9 +491,9 @@ implements Property {
 		{
 			NotificationChain msgs = null;
 			if (associationClass != null)
-				msgs = ((InternalEObject)associationClass).eInverseRemove(this, 20, AssociationClass.class, msgs);
+				msgs = ((InternalEObject)associationClass).eInverseRemove(this, 21, AssociationClass.class, msgs);
 			if (newAssociationClass != null)
-				msgs = ((InternalEObject)newAssociationClass).eInverseAdd(this, 20, AssociationClass.class, msgs);
+				msgs = ((InternalEObject)newAssociationClass).eInverseAdd(this, 21, AssociationClass.class, msgs);
 			msgs = basicSetAssociationClass(newAssociationClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -1201,7 +1201,7 @@ implements Property {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedExtensions()).basicAdd(otherEnd, msgs);
 			case 11:
 				if (associationClass != null)
-					msgs = ((InternalEObject)associationClass).eInverseRemove(this, 20, AssociationClass.class, msgs);
+					msgs = ((InternalEObject)associationClass).eInverseRemove(this, 21, AssociationClass.class, msgs);
 				return basicSetAssociationClass((AssociationClass)otherEnd, msgs);
 			case 26:
 				if (eInternalContainer() != null)
@@ -1250,7 +1250,7 @@ implements Property {
 		switch (eContainerFeatureID())
 		{
 			case 26:
-				return eInternalContainer().eInverseRemove(this, 17, org.eclipse.ocl.pivot.Class.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 18, org.eclipse.ocl.pivot.Class.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -1697,7 +1697,7 @@ implements Property {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningClass != null)
-				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, 17, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, 18, org.eclipse.ocl.pivot.Class.class, msgs);
 			msgs = basicSetOwningClass(newOwningClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}

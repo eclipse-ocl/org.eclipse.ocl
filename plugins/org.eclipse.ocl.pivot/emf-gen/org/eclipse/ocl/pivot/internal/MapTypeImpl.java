@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 
@@ -158,7 +159,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			if (entryClass != oldEntryClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 23, oldEntryClass, entryClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 24, oldEntryClass, entryClass));
 			}
 		}
 		return entryClass;
@@ -186,7 +187,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		org.eclipse.ocl.pivot.Class oldEntryClass = entryClass;
 		entryClass = newEntryClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 23, oldEntryClass, entryClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 24, oldEntryClass, entryClass));
 	}
 
 	/**
@@ -219,44 +220,46 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			case 8:
 				return getOwnedTemplateParameters();
 			case 9:
-				return getExtenders();
+				return getOwnedWildcards();
 			case 10:
-				return getInstanceClassName();
+				return getExtenders();
 			case 11:
-				return isIsAbstract();
+				return getInstanceClassName();
 			case 12:
-				return isIsActive();
+				return isIsAbstract();
 			case 13:
-				return isIsInterface();
+				return isIsActive();
 			case 14:
-				return getOwnedBehaviors();
+				return isIsInterface();
 			case 15:
-				return getOwnedInvariants();
+				return getOwnedBehaviors();
 			case 16:
-				return getOwnedOperations();
+				return getOwnedInvariants();
 			case 17:
-				return getOwnedProperties();
+				return getOwnedOperations();
 			case 18:
-				return getOwningPackage();
+				return getOwnedProperties();
 			case 19:
-				return getSuperClasses();
+				return getOwningPackage();
 			case 20:
+				return getSuperClasses();
+			case 21:
 				if (resolve) return getBehavioralClass();
 				return basicGetBehavioralClass();
-			case 21:
-				return isIsSerializable();
 			case 22:
-				return getValue();
+				return isIsSerializable();
 			case 23:
+				return getValue();
+			case 24:
 				if (resolve) return getEntryClass();
 				return basicGetEntryClass();
-			case 24:
-				return getKeyType();
 			case 25:
-				return isKeysAreNullFree();
+				return getKeyType();
 			case 26:
-				return getValueType();
+				return isKeysAreNullFree();
 			case 27:
+				return getValueType();
+			case 28:
 				return isValuesAreNullFree();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -308,63 +311,67 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
+				getOwnedWildcards().clear();
+				getOwnedWildcards().addAll((Collection<? extends WildcardType>)newValue);
+				return;
+			case 10:
 				getExtenders().clear();
 				getExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
-			case 10:
+			case 11:
 				setInstanceClassName((String)newValue);
 				return;
-			case 11:
+			case 12:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case 12:
+			case 13:
 				setIsActive((Boolean)newValue);
 				return;
-			case 13:
+			case 14:
 				setIsInterface((Boolean)newValue);
 				return;
-			case 14:
+			case 15:
 				getOwnedBehaviors().clear();
 				getOwnedBehaviors().addAll((Collection<? extends Behavior>)newValue);
 				return;
-			case 15:
+			case 16:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case 16:
+			case 17:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case 17:
+			case 18:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case 18:
+			case 19:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case 19:
+			case 20:
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case 20:
+			case 21:
 				setBehavioralClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case 21:
+			case 22:
 				setIsSerializable((Boolean)newValue);
 				return;
-			case 23:
+			case 24:
 				setEntryClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case 24:
+			case 25:
 				setKeyType((Type)newValue);
 				return;
-			case 25:
+			case 26:
 				setKeysAreNullFree((Boolean)newValue);
 				return;
-			case 26:
+			case 27:
 				setValueType((Type)newValue);
 				return;
-			case 27:
+			case 28:
 				setValuesAreNullFree((Boolean)newValue);
 				return;
 		}
@@ -409,57 +416,60 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
-				getExtenders().clear();
+				getOwnedWildcards().clear();
 				return;
 			case 10:
-				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
+				getExtenders().clear();
 				return;
 			case 11:
-				setIsAbstract(IS_ABSTRACT_EDEFAULT);
+				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
 			case 12:
-				setIsActive(IS_ACTIVE_EDEFAULT);
+				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
 			case 13:
-				setIsInterface(IS_INTERFACE_EDEFAULT);
+				setIsActive(IS_ACTIVE_EDEFAULT);
 				return;
 			case 14:
-				getOwnedBehaviors().clear();
+				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
 			case 15:
-				getOwnedInvariants().clear();
+				getOwnedBehaviors().clear();
 				return;
 			case 16:
-				getOwnedOperations().clear();
+				getOwnedInvariants().clear();
 				return;
 			case 17:
-				getOwnedProperties().clear();
+				getOwnedOperations().clear();
 				return;
 			case 18:
-				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
+				getOwnedProperties().clear();
 				return;
 			case 19:
-				getSuperClasses().clear();
+				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
 			case 20:
-				setBehavioralClass((org.eclipse.ocl.pivot.Class)null);
+				getSuperClasses().clear();
 				return;
 			case 21:
+				setBehavioralClass((org.eclipse.ocl.pivot.Class)null);
+				return;
+			case 22:
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
-			case 23:
+			case 24:
 				setEntryClass((org.eclipse.ocl.pivot.Class)null);
 				return;
-			case 24:
+			case 25:
 				setKeyType((Type)null);
 				return;
-			case 25:
+			case 26:
 				setKeysAreNullFree(KEYS_ARE_NULL_FREE_EDEFAULT);
 				return;
-			case 26:
+			case 27:
 				setValueType((Type)null);
 				return;
-			case 27:
+			case 28:
 				setValuesAreNullFree(VALUES_ARE_NULL_FREE_EDEFAULT);
 				return;
 		}
@@ -495,42 +505,44 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 			case 8:
 				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
-				return extenders != null && !extenders.isEmpty();
+				return ownedWildcards != null && !ownedWildcards.isEmpty();
 			case 10:
-				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
+				return extenders != null && !extenders.isEmpty();
 			case 11:
-				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
+				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
 			case 12:
-				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
+				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
 			case 13:
-				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
+				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
 			case 14:
-				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
+				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
 			case 15:
-				return ownedInvariants != null && !ownedInvariants.isEmpty();
+				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
 			case 16:
-				return ownedOperations != null && !ownedOperations.isEmpty();
+				return ownedInvariants != null && !ownedInvariants.isEmpty();
 			case 17:
-				return ownedProperties != null && !ownedProperties.isEmpty();
+				return ownedOperations != null && !ownedOperations.isEmpty();
 			case 18:
-				return getOwningPackage() != null;
+				return ownedProperties != null && !ownedProperties.isEmpty();
 			case 19:
-				return superClasses != null && !superClasses.isEmpty();
+				return getOwningPackage() != null;
 			case 20:
-				return behavioralClass != null;
+				return superClasses != null && !superClasses.isEmpty();
 			case 21:
-				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
+				return behavioralClass != null;
 			case 22:
-				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
+				return ((eFlags & IS_SERIALIZABLE_EFLAG) != 0) != IS_SERIALIZABLE_EDEFAULT;
 			case 23:
-				return entryClass != null;
+				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case 24:
-				return getKeyType() != null;
+				return entryClass != null;
 			case 25:
-				return ((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0) != KEYS_ARE_NULL_FREE_EDEFAULT;
+				return getKeyType() != null;
 			case 26:
-				return getValueType() != null;
+				return ((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0) != KEYS_ARE_NULL_FREE_EDEFAULT;
 			case 27:
+				return getValueType() != null;
+			case 28:
 				return ((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0) != VALUES_ARE_NULL_FREE_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);
@@ -620,7 +632,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		boolean oldKeysAreNullFree = (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
 		if (newKeysAreNullFree) eFlags |= KEYS_ARE_NULL_FREE_EFLAG; else eFlags &= ~KEYS_ARE_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldKeysAreNullFree, newKeysAreNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 26, oldKeysAreNullFree, newKeysAreNullFree));
 	}
 
 	@Override
@@ -650,7 +662,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 		boolean oldValuesAreNullFree = (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
 		if (newValuesAreNullFree) eFlags |= VALUES_ARE_NULL_FREE_EFLAG; else eFlags &= ~VALUES_ARE_NULL_FREE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 27, oldValuesAreNullFree, newValuesAreNullFree));
+			eNotify(new ENotificationImpl(this, Notification.SET, 28, oldValuesAreNullFree, newValuesAreNullFree));
 	}
 
 	@Override

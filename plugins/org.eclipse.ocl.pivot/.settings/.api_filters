@@ -202,6 +202,16 @@
                 <message_argument value="getTemplateableElement_OwnedTemplateParameters()"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTemplateableElement_OwnedWildcards()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getWildcardType_OwningTemplateableElement()"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
         <filter id="1211105284">
@@ -276,6 +286,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="TEMPLATEABLE_ELEMENT__OWNED_WILDCARDS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="TEMPLATE_ARGUMENT"/>
             </message_arguments>
         </filter>
@@ -302,6 +317,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="TEMPLATE_PARAMETER__OWNING_TEMPLATEABLE_ELEMENT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="WILDCARD_TYPE__OWNING_TEMPLATEABLE_ELEMENT"/>
             </message_arguments>
         </filter>
     </resource>
@@ -339,6 +359,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ORD_CLSSid_Parameter_0"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ORD_CLSSid_WildcardType"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -428,6 +453,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getOwnedWildcards()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="setGeneric(TemplateableElement)"/>
             </message_arguments>
         </filter>
@@ -436,6 +466,18 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getPartId()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/WildcardType.java" type="org.eclipse.ocl.pivot.WildcardType">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getOwningTemplateableElement()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="setOwningTemplateableElement(TemplateableElement)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -642,6 +684,11 @@
                 <message_argument value="ownedTemplateParameters"/>
             </message_arguments>
         </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedWildcards"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CompleteClassImpl.java" type="org.eclipse.ocl.pivot.internal.CompleteClassImpl">
         <filter id="1143996420">
@@ -745,6 +792,11 @@
                 <message_argument value="ownedTemplateParameters"/>
             </message_arguments>
         </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedWildcards"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/TemplateArgumentImpl.java" type="org.eclipse.ocl.pivot.internal.TemplateArgumentImpl">
         <filter id="1110441988">
@@ -779,6 +831,18 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ownedTemplateParameters"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ownedWildcards"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/WildcardTypeImpl.java" type="org.eclipse.ocl.pivot.internal.WildcardTypeImpl">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="basicSetOwningTemplateableElement(TemplateableElement, NotificationChain)"/>
             </message_arguments>
         </filter>
     </resource>

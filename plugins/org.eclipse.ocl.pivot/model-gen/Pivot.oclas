@@ -251,7 +251,7 @@
       </ownedProperties>
     </ownedClasses>
     <ownedClasses xmi:id="CwgWU" name="Detail" superClasses="#0kVqz">
-      <ownedProperties xmi:id="0m96m" isRequired="true" name="values" type="#InrGB"/>
+      <ownedProperties xmi:id="0m96m" isRequired="true" name="values" type="#WKtwN"/>
       <ownedProperties xmi:id="s7tlS" isImplicit="true" name="Annotation" opposite="#V,KBZ" type="#g7Mr0"/>
     </ownedClasses>
     <ownedClasses xmi:id="ic4It" name="DynamicBehavior" superClasses="#D4Bd4 #Kudiu"/>
@@ -1208,6 +1208,9 @@
       <ownedProperties xmi:id="2UD0c" isComposite="true" isRequired="true" name="ownedTemplateParameters" opposite="#kSrbD" type="#s1ezp">
         <ownedComments body="The formal parameters that are owned by this TemplateableElement."/>
       </ownedProperties>
+      <ownedProperties xmi:id="hh0Qp" isComposite="true" isRequired="true" name="ownedWildcards" opposite="#1gCXr" type="#JpVho">
+        <ownedComments body="The implicit 'template parameters' for wildcards within this TemplateableElement."/>
+      </ownedProperties>
       <ownedProperties xmi:id="2PUvj" isImplicit="true" isRequired="true" name="TemplateableElement" opposite="#EWnJd" type="#LuTS6"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:DataType" xmi:id="xCIJH" instanceClassName="java.lang.Throwable" name="Throwable" superClasses="&_0;#jbMkR"/>
@@ -1388,6 +1391,7 @@
     <ownedClasses xmi:id="fad2o" name="VoidType" superClasses="#pDcbe"/>
     <ownedClasses xmi:id="lfR8C" name="WildcardType" superClasses="#pDcbe">
       <ownedProperties xmi:id="mvH+v" name="lowerBound" opposite="#WU9EG" type="#rrwsa"/>
+      <ownedProperties xmi:id="1gCXr" name="owningTemplateableElement" opposite="#hh0Qp" type="#5r5y9"/>
       <ownedProperties xmi:id="lraqD" name="upperBound" opposite="#P4B7P" type="#rrwsa"/>
     </ownedClasses>
   </ownedPackages>
@@ -1737,6 +1741,10 @@
         superClasses="&_0;#IgEJU">
       <ownedTemplateArguments actual="#t4j6T"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",Q4sJ" generic="pivot:CollectionType &_0;#Vw5fK" isNullFree="true" name="OrderedCollection"
+        superClasses="&_0;#IgEJU">
+      <ownedTemplateArguments actual="#lfR8C"/>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="ZEpGc" generic="pivot:OrderedSetType &_0;#fIXUp" isNullFree="true" name="OrderedSet"
         superClasses="&_0;#Vw5fK &_0;#5a0EE #PsLS9 #zWG32">
       <ownedTemplateArguments actual="#1s6I1"/>
@@ -1812,6 +1820,10 @@
         superClasses="&_0;#Vw5fK &_0;#5a0EE #HNdUw #r3X5p">
       <ownedTemplateArguments actual="#t4j6T"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="JpVho" generic="pivot:OrderedSetType &_0;#fIXUp" isNullFree="true" name="OrderedSet"
+        superClasses="&_0;#Vw5fK &_0;#5a0EE #,Q4sJ #j7yRD">
+      <ownedTemplateArguments actual="#lfR8C"/>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="kow3e" generic="pivot:SetType &_0;#MGgHF" isNullFree="true" name="Set" superClasses="&_0;#5a0EE #R9E1d">
       <ownedTemplateArguments actual="#D4Bd4"/>
     </ownedClasses>
@@ -1881,8 +1893,8 @@
     <ownedClasses xsi:type="pivot:SetType" xmi:id="TLTSL" generic="pivot:SetType &_0;#MGgHF" isNullFree="true" name="Set" superClasses="&_0;#5a0EE #AgnPK">
       <ownedTemplateArguments actual="#K5Kb,"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="InrGB" generic="pivot:SetType &_0;#MGgHF" isNullFree="true" lower="1" name="Set" superClasses="&_0;#5a0EE #17,DA">
-      <ownedTemplateArguments actual="#CPVxu"/>
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="WKtwN" generic="pivot:SetType &_0;#MGgHF" isNullFree="true" lower="1" name="Set" superClasses="&_0;#5a0EE #DfBuM">
+      <ownedTemplateArguments actual="pivot:PrimitiveType &_0;#AlwVZ"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="hb7VK" generic="pivot:SetType &_0;#MGgHF" isNullFree="true" name="Set" superClasses="&_0;#5a0EE #OwPTJ">
       <ownedTemplateArguments actual="#IEMtV"/>
@@ -2038,9 +2050,9 @@
         superClasses="&_0;#IgEJU">
       <ownedTemplateArguments actual="#K5Kb,"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="17,DA" generic="pivot:CollectionType &_0;#5a0EE" isNullFree="true" lower="1"
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="DfBuM" generic="pivot:CollectionType &_0;#5a0EE" isNullFree="true" lower="1"
         name="UniqueCollection" superClasses="&_0;#IgEJU">
-      <ownedTemplateArguments actual="#CPVxu"/>
+      <ownedTemplateArguments actual="pivot:PrimitiveType &_0;#AlwVZ"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="OwPTJ" generic="pivot:CollectionType &_0;#5a0EE" isNullFree="true" name="UniqueCollection"
         superClasses="&_0;#IgEJU">
@@ -2077,6 +2089,10 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Tr1P+" generic="pivot:CollectionType &_0;#5a0EE" isNullFree="true" name="UniqueCollection"
         superClasses="&_0;#IgEJU">
       <ownedTemplateArguments actual="#VVKEz"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="j7yRD" generic="pivot:CollectionType &_0;#5a0EE" isNullFree="true" name="UniqueCollection"
+        superClasses="&_0;#IgEJU">
+      <ownedTemplateArguments actual="#lfR8C"/>
     </ownedClasses>
   </ownedPackages>
 </pivot:Model>

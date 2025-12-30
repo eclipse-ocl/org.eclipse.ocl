@@ -246,7 +246,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningStateMachine != null)
-				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, 22, StateMachine.class, msgs);
+				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, 23, StateMachine.class, msgs);
 			msgs = basicSetOwningStateMachine(newOwningStateMachine, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -338,7 +338,7 @@ public class PseudostateImpl extends VertexImpl implements Pseudostate
 			case 9:
 				return eInternalContainer().eInverseRemove(this, 13, State.class, msgs);
 			case 10:
-				return eInternalContainer().eInverseRemove(this, 22, StateMachine.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 23, StateMachine.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}

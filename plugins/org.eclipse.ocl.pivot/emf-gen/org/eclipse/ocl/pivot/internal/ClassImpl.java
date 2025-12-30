@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
@@ -88,6 +89,7 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getGeneric <em>Generic</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedTemplateArguments <em>Owned Template Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedTemplateParameters <em>Owned Template Parameters</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getOwnedWildcards <em>Owned Wildcards</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getExtenders <em>Extenders</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#getInstanceClassName <em>Instance Class Name</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.ClassImpl#isIsAbstract <em>Is Abstract</em>}</li>
@@ -114,7 +116,7 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int CLASS_FEATURE_COUNT = TypeImpl.TYPE_FEATURE_COUNT + 15;
+	public static final int CLASS_FEATURE_COUNT = TypeImpl.TYPE_FEATURE_COUNT + 16;
 
 	/**
 	 * The number of operations of the '<em>Class</em>' class.
@@ -164,6 +166,16 @@ implements org.eclipse.ocl.pivot.Class {
 	 * @ordered
 	 */
 	protected EList<TemplateParameter> ownedTemplateParameters;
+
+	/**
+	 * The cached value of the '{@link #getOwnedWildcards() <em>Owned Wildcards</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedWildcards()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WildcardType> ownedWildcards;
 
 	/**
 	 * The cached value of the '{@link #getExtenders() <em>Extenders</em>}' reference list.
@@ -376,6 +388,21 @@ implements org.eclipse.ocl.pivot.Class {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
+	public List<WildcardType> getOwnedWildcards()
+	{
+		if (ownedWildcards == null)
+		{
+			ownedWildcards = new EObjectContainmentWithInverseEList<WildcardType>(WildcardType.class, this, 9, 22);
+		}
+		return ownedWildcards;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private TemplateableElement getGenericGen()
 	{
 		if (generic != null && generic.eIsProxy())
@@ -431,7 +458,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		if (extenders == null)
 		{
-			extenders = new EObjectWithInverseResolvingEList<StereotypeExtender>(StereotypeExtender.class, this, 9, 4);
+			extenders = new EObjectWithInverseResolvingEList<StereotypeExtender>(StereotypeExtender.class, this, 10, 4);
 		}
 		return extenders;
 	}
@@ -458,7 +485,7 @@ implements org.eclipse.ocl.pivot.Class {
 		String oldInstanceClassName = instanceClassName;
 		instanceClassName = newInstanceClassName;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 10, oldInstanceClassName, instanceClassName));
+			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldInstanceClassName, instanceClassName));
 	}
 
 	/**
@@ -482,7 +509,7 @@ implements org.eclipse.ocl.pivot.Class {
 		boolean oldIsAbstract = (eFlags & IS_ABSTRACT_EFLAG) != 0;
 		if (newIsAbstract) eFlags |= IS_ABSTRACT_EFLAG; else eFlags &= ~IS_ABSTRACT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 11, oldIsAbstract, newIsAbstract));
+			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldIsAbstract, newIsAbstract));
 	}
 
 	/**
@@ -507,7 +534,7 @@ implements org.eclipse.ocl.pivot.Class {
 		boolean oldIsActive = (eFlags & IS_ACTIVE_EFLAG) != 0;
 		if (newIsActive) eFlags |= IS_ACTIVE_EFLAG; else eFlags &= ~IS_ACTIVE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 12, oldIsActive, newIsActive));
+			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldIsActive, newIsActive));
 	}
 
 	/**
@@ -532,7 +559,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		if (ownedInvariants == null)
 		{
-			ownedInvariants = new EObjectContainmentEList<Constraint>(Constraint.class, this, 15);
+			ownedInvariants = new EObjectContainmentEList<Constraint>(Constraint.class, this, 16);
 		}
 		return ownedInvariants;
 	}
@@ -545,7 +572,7 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public org.eclipse.ocl.pivot.Package getOwningPackage()
 	{
-		if (eContainerFeatureID() != (18)) return null;
+		if (eContainerFeatureID() != (19)) return null;
 		return (org.eclipse.ocl.pivot.Package)eInternalContainer();
 	}
 
@@ -556,7 +583,7 @@ implements org.eclipse.ocl.pivot.Class {
 	 */
 	public NotificationChain basicSetOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, 18, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningPackage, 19, msgs);
 		return msgs;
 	}
 
@@ -568,7 +595,7 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public void setOwningPackage(org.eclipse.ocl.pivot.Package newOwningPackage)
 	{
-		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (18) && newOwningPackage != null))
+		if (newOwningPackage != eInternalContainer() || (eContainerFeatureID() != (19) && newOwningPackage != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningPackage))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -581,7 +608,7 @@ implements org.eclipse.ocl.pivot.Class {
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 18, newOwningPackage, newOwningPackage));
+			eNotify(new ENotificationImpl(this, Notification.SET, 19, newOwningPackage, newOwningPackage));
 	}
 
 	/**
@@ -606,12 +633,14 @@ implements org.eclipse.ocl.pivot.Class {
 			case 8:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateParameters()).basicAdd(otherEnd, msgs);
 			case 9:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedWildcards()).basicAdd(otherEnd, msgs);
+			case 10:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getExtenders()).basicAdd(otherEnd, msgs);
-			case 16:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedOperations()).basicAdd(otherEnd, msgs);
 			case 17:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedProperties()).basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedOperations()).basicAdd(otherEnd, msgs);
 			case 18:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedProperties()).basicAdd(otherEnd, msgs);
+			case 19:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningPackage((org.eclipse.ocl.pivot.Package)otherEnd, msgs);
@@ -644,16 +673,18 @@ implements org.eclipse.ocl.pivot.Class {
 			case 8:
 				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
 			case 9:
+				return ((InternalEList<?>)getOwnedWildcards()).basicRemove(otherEnd, msgs);
+			case 10:
 				return ((InternalEList<?>)getExtenders()).basicRemove(otherEnd, msgs);
-			case 14:
-				return ((InternalEList<?>)getOwnedBehaviors()).basicRemove(otherEnd, msgs);
 			case 15:
-				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedBehaviors()).basicRemove(otherEnd, msgs);
 			case 16:
-				return ((InternalEList<?>)getOwnedOperations()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedInvariants()).basicRemove(otherEnd, msgs);
 			case 17:
-				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedOperations()).basicRemove(otherEnd, msgs);
 			case 18:
+				return ((InternalEList<?>)getOwnedProperties()).basicRemove(otherEnd, msgs);
+			case 19:
 				return basicSetOwningPackage(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -669,7 +700,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		switch (eContainerFeatureID())
 		{
-			case 18:
+			case 19:
 				return eInternalContainer().eInverseRemove(this, 9, org.eclipse.ocl.pivot.Package.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
@@ -760,7 +791,7 @@ implements org.eclipse.ocl.pivot.Class {
 		boolean oldIsInterface = (eFlags & IS_INTERFACE_EFLAG) != 0;
 		if (newIsInterface) eFlags |= IS_INTERFACE_EFLAG; else eFlags &= ~IS_INTERFACE_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 13, oldIsInterface, newIsInterface));
+			eNotify(new ENotificationImpl(this, Notification.SET, 14, oldIsInterface, newIsInterface));
 	}
 
 	/**
@@ -774,7 +805,7 @@ implements org.eclipse.ocl.pivot.Class {
 	{
 		if (ownedBehaviors == null)
 		{
-			ownedBehaviors = new EObjectContainmentEList<Behavior>(Behavior.class, this, 14);
+			ownedBehaviors = new EObjectContainmentEList<Behavior>(Behavior.class, this, 15);
 		}
 		return ownedBehaviors;
 	}
@@ -808,26 +839,28 @@ implements org.eclipse.ocl.pivot.Class {
 			case 8:
 				return getOwnedTemplateParameters();
 			case 9:
-				return getExtenders();
+				return getOwnedWildcards();
 			case 10:
-				return getInstanceClassName();
+				return getExtenders();
 			case 11:
-				return isIsAbstract();
+				return getInstanceClassName();
 			case 12:
-				return isIsActive();
+				return isIsAbstract();
 			case 13:
-				return isIsInterface();
+				return isIsActive();
 			case 14:
-				return getOwnedBehaviors();
+				return isIsInterface();
 			case 15:
-				return getOwnedInvariants();
+				return getOwnedBehaviors();
 			case 16:
-				return getOwnedOperations();
+				return getOwnedInvariants();
 			case 17:
-				return getOwnedProperties();
+				return getOwnedOperations();
 			case 18:
-				return getOwningPackage();
+				return getOwnedProperties();
 			case 19:
+				return getOwningPackage();
+			case 20:
 				return getSuperClasses();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -878,41 +911,45 @@ implements org.eclipse.ocl.pivot.Class {
 				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
+				getOwnedWildcards().clear();
+				getOwnedWildcards().addAll((Collection<? extends WildcardType>)newValue);
+				return;
+			case 10:
 				getExtenders().clear();
 				getExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
-			case 10:
+			case 11:
 				setInstanceClassName((String)newValue);
 				return;
-			case 11:
+			case 12:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case 12:
+			case 13:
 				setIsActive((Boolean)newValue);
 				return;
-			case 13:
+			case 14:
 				setIsInterface((Boolean)newValue);
 				return;
-			case 14:
+			case 15:
 				getOwnedBehaviors().clear();
 				getOwnedBehaviors().addAll((Collection<? extends Behavior>)newValue);
 				return;
-			case 15:
+			case 16:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case 16:
+			case 17:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case 17:
+			case 18:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case 18:
+			case 19:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case 19:
+			case 20:
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
@@ -957,36 +994,39 @@ implements org.eclipse.ocl.pivot.Class {
 				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
-				getExtenders().clear();
+				getOwnedWildcards().clear();
 				return;
 			case 10:
-				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
+				getExtenders().clear();
 				return;
 			case 11:
-				setIsAbstract(IS_ABSTRACT_EDEFAULT);
+				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
 			case 12:
-				setIsActive(IS_ACTIVE_EDEFAULT);
+				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
 			case 13:
-				setIsInterface(IS_INTERFACE_EDEFAULT);
+				setIsActive(IS_ACTIVE_EDEFAULT);
 				return;
 			case 14:
-				getOwnedBehaviors().clear();
+				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
 			case 15:
-				getOwnedInvariants().clear();
+				getOwnedBehaviors().clear();
 				return;
 			case 16:
-				getOwnedOperations().clear();
+				getOwnedInvariants().clear();
 				return;
 			case 17:
-				getOwnedProperties().clear();
+				getOwnedOperations().clear();
 				return;
 			case 18:
-				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
+				getOwnedProperties().clear();
 				return;
 			case 19:
+				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
+				return;
+			case 20:
 				getSuperClasses().clear();
 				return;
 		}
@@ -1021,26 +1061,28 @@ implements org.eclipse.ocl.pivot.Class {
 			case 8:
 				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
-				return extenders != null && !extenders.isEmpty();
+				return ownedWildcards != null && !ownedWildcards.isEmpty();
 			case 10:
-				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
+				return extenders != null && !extenders.isEmpty();
 			case 11:
-				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
+				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
 			case 12:
-				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
+				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
 			case 13:
-				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
+				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
 			case 14:
-				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
+				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
 			case 15:
-				return ownedInvariants != null && !ownedInvariants.isEmpty();
+				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
 			case 16:
-				return ownedOperations != null && !ownedOperations.isEmpty();
+				return ownedInvariants != null && !ownedInvariants.isEmpty();
 			case 17:
-				return ownedProperties != null && !ownedProperties.isEmpty();
+				return ownedOperations != null && !ownedOperations.isEmpty();
 			case 18:
-				return getOwningPackage() != null;
+				return ownedProperties != null && !ownedProperties.isEmpty();
 			case 19:
+				return getOwningPackage() != null;
+			case 20:
 				return superClasses != null && !superClasses.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -1069,6 +1111,7 @@ implements org.eclipse.ocl.pivot.Class {
 				case 6: return 4;
 				case 7: return 5;
 				case 8: return 6;
+				case 9: return 7;
 				default: return -1;
 			}
 		}
@@ -1098,6 +1141,7 @@ implements org.eclipse.ocl.pivot.Class {
 				case 4: return 6;
 				case 5: return 7;
 				case 6: return 8;
+				case 7: return 9;
 				default: return -1;
 			}
 		}

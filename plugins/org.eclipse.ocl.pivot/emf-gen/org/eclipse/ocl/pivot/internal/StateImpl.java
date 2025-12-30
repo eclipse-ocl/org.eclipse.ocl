@@ -738,9 +738,9 @@ public class StateImpl
 		{
 			NotificationChain msgs = null;
 			if (submachines != null)
-				msgs = ((InternalEObject)submachines).eInverseRemove(this, 24, StateMachine.class, msgs);
+				msgs = ((InternalEObject)submachines).eInverseRemove(this, 25, StateMachine.class, msgs);
 			if (newSubmachines != null)
-				msgs = ((InternalEObject)newSubmachines).eInverseAdd(this, 24, StateMachine.class, msgs);
+				msgs = ((InternalEObject)newSubmachines).eInverseAdd(this, 25, StateMachine.class, msgs);
 			msgs = basicSetSubmachines(newSubmachines, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -787,7 +787,7 @@ public class StateImpl
 				return basicSetOwnedStateInvariant((Constraint)otherEnd, msgs);
 			case 22:
 				if (submachines != null)
-					msgs = ((InternalEObject)submachines).eInverseRemove(this, 24, StateMachine.class, msgs);
+					msgs = ((InternalEObject)submachines).eInverseRemove(this, 25, StateMachine.class, msgs);
 				return basicSetSubmachines((StateMachine)otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);

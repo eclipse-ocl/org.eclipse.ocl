@@ -165,7 +165,7 @@ public class ParameterImpl
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningOperation != null)
-				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, 20, Operation.class, msgs);
+				msgs = ((InternalEObject)newOwningOperation).eInverseAdd(this, 21, Operation.class, msgs);
 			msgs = basicSetOwningOperation(newOwningOperation, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -233,7 +233,7 @@ public class ParameterImpl
 		switch (eContainerFeatureID())
 		{
 			case 10:
-				return eInternalContainer().eInverseRemove(this, 20, Operation.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 21, Operation.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}

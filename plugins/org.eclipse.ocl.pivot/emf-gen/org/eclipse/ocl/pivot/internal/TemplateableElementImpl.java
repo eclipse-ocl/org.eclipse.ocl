@@ -30,6 +30,7 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**
@@ -43,6 +44,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getGeneric <em>Generic</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getOwnedTemplateArguments <em>Owned Template Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getOwnedTemplateParameters <em>Owned Template Parameters</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.TemplateableElementImpl#getOwnedWildcards <em>Owned Wildcards</em>}</li>
  * </ul>
  *
  * @generated
@@ -58,7 +60,7 @@ public abstract class TemplateableElementImpl
 	 * @generated
 	 * @ordered
 	 */
-	public static final int TEMPLATEABLE_ELEMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 3;
+	public static final int TEMPLATEABLE_ELEMENT_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 4;
 
 	/**
 	 * The number of operations of the '<em>Templateable Element</em>' class.
@@ -98,6 +100,16 @@ public abstract class TemplateableElementImpl
 	 * @ordered
 	 */
 	protected EList<TemplateParameter> ownedTemplateParameters;
+
+	/**
+	 * The cached value of the '{@link #getOwnedWildcards() <em>Owned Wildcards</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedWildcards()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WildcardType> ownedWildcards;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -146,6 +158,21 @@ public abstract class TemplateableElementImpl
 			ownedTemplateParameters = new EObjectContainmentWithInverseEList<TemplateParameter>(TemplateParameter.class, this, 6, 6);
 		}
 		return ownedTemplateParameters;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<WildcardType> getOwnedWildcards()
+	{
+		if (ownedWildcards == null)
+		{
+			ownedWildcards = new EObjectContainmentWithInverseEList<WildcardType>(WildcardType.class, this, 7, 22);
+		}
+		return ownedWildcards;
 	}
 
 	/**
@@ -214,6 +241,8 @@ public abstract class TemplateableElementImpl
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateArguments()).basicAdd(otherEnd, msgs);
 			case 6:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateParameters()).basicAdd(otherEnd, msgs);
+			case 7:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedWildcards()).basicAdd(otherEnd, msgs);
 		}
 		return eDynamicInverseAdd(otherEnd, featureID, msgs);
 	}
@@ -240,6 +269,8 @@ public abstract class TemplateableElementImpl
 				return ((InternalEList<?>)getOwnedTemplateArguments()).basicRemove(otherEnd, msgs);
 			case 6:
 				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
+			case 7:
+				return ((InternalEList<?>)getOwnedWildcards()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -268,6 +299,8 @@ public abstract class TemplateableElementImpl
 				return getOwnedTemplateArguments();
 			case 6:
 				return getOwnedTemplateParameters();
+			case 7:
+				return getOwnedWildcards();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -309,6 +342,10 @@ public abstract class TemplateableElementImpl
 				getOwnedTemplateParameters().clear();
 				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
+			case 7:
+				getOwnedWildcards().clear();
+				getOwnedWildcards().addAll((Collection<? extends WildcardType>)newValue);
+				return;
 		}
 		eDynamicSet(featureID, newValue);
 	}
@@ -343,6 +380,9 @@ public abstract class TemplateableElementImpl
 			case 6:
 				getOwnedTemplateParameters().clear();
 				return;
+			case 7:
+				getOwnedWildcards().clear();
+				return;
 		}
 		eDynamicUnset(featureID);
 	}
@@ -370,6 +410,8 @@ public abstract class TemplateableElementImpl
 				return ownedTemplateArguments != null && !ownedTemplateArguments.isEmpty();
 			case 6:
 				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
+			case 7:
+				return ownedWildcards != null && !ownedWildcards.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
 	}

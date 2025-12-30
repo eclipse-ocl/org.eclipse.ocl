@@ -31,6 +31,7 @@ import org.eclipse.jdt.annotation.Nullable;
  *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getGeneric <em>Generic</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedTemplateArguments <em>Owned Template Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedTemplateParameters <em>Owned Template Parameters</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedWildcards <em>Owned Wildcards</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement()
@@ -70,6 +71,22 @@ public interface TemplateableElement
 	 * @generated
 	 */
 	List<TemplateParameter> getOwnedTemplateParameters();
+
+	/**
+	 * Returns the value of the '<em><b>Owned Wildcards</b></em>' containment reference list.
+	 * The list contents are of type {@link org.eclipse.ocl.pivot.WildcardType}.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.WildcardType#getOwningTemplateableElement <em>Owning Templateable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The implicit 'template parameters' for wildcards within this TemplateableElement.
+	 * <!-- end-model-doc -->
+	 * @return the value of the '<em>Owned Wildcards</em>' containment reference list.
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getTemplateableElement_OwnedWildcards()
+	 * @see org.eclipse.ocl.pivot.WildcardType#getOwningTemplateableElement
+	 * @generated
+	 */
+	List<WildcardType> getOwnedWildcards();
 
 	/**
 	 * Returns the value of the '<em><b>Generic</b></em>' reference.

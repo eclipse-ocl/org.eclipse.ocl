@@ -51,6 +51,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdManager;
@@ -86,6 +87,7 @@ import org.eclipse.ocl.pivot.values.SetValue.Accumulator;
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getGeneric <em>Generic</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedTemplateArguments <em>Owned Template Arguments</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedTemplateParameters <em>Owned Template Parameters</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getOwnedWildcards <em>Owned Wildcards</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#getBodyExpression <em>Body Expression</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsInvalidating <em>Is Invalidating</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.internal.OperationImpl#isIsTransient <em>Is Transient</em>}</li>
@@ -113,7 +115,7 @@ implements Operation {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int OPERATION_FEATURE_COUNT = FeatureImpl.FEATURE_FEATURE_COUNT + 16;
+	public static final int OPERATION_FEATURE_COUNT = FeatureImpl.FEATURE_FEATURE_COUNT + 17;
 
 	/**
 	 * The number of operations of the '<em>Operation</em>' class.
@@ -163,6 +165,16 @@ implements Operation {
 	 * @ordered
 	 */
 	protected EList<TemplateParameter> ownedTemplateParameters;
+
+	/**
+	 * The cached value of the '{@link #getOwnedWildcards() <em>Owned Wildcards</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getOwnedWildcards()
+	 * @generated
+	 * @ordered
+	 */
+	protected EList<WildcardType> ownedWildcards;
 
 	/**
 	 * The cached value of the '{@link #getBodyExpression() <em>Body Expression</em>}' containment reference.
@@ -377,7 +389,7 @@ implements Operation {
 	{
 		if (raisedExceptions == null)
 		{
-			raisedExceptions = new EObjectResolvingEList<Type>(Type.class, this, 25);
+			raisedExceptions = new EObjectResolvingEList<Type>(Type.class, this, 26);
 		}
 		return raisedExceptions;
 	}
@@ -393,7 +405,7 @@ implements Operation {
 	{
 		if (redefinedOperations == null)
 		{
-			redefinedOperations = new EObjectResolvingEList<Operation>(Operation.class, this, 26);
+			redefinedOperations = new EObjectResolvingEList<Operation>(Operation.class, this, 27);
 		}
 		return redefinedOperations;
 	}
@@ -409,7 +421,7 @@ implements Operation {
 	{
 		if (ownedParameters == null)
 		{
-			ownedParameters = new EObjectContainmentWithInverseEList<Parameter>(Parameter.class, this, 20, 10);
+			ownedParameters = new EObjectContainmentWithInverseEList<Parameter>(Parameter.class, this, 21, 10);
 		}
 		return ownedParameters;
 	}
@@ -425,7 +437,7 @@ implements Operation {
 	{
 		if (ownedPostconditions == null)
 		{
-			ownedPostconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, 21, 9);
+			ownedPostconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, 22, 9);
 		}
 		return ownedPostconditions;
 	}
@@ -441,7 +453,7 @@ implements Operation {
 	{
 		if (ownedPreconditions == null)
 		{
-			ownedPreconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, 22, 10);
+			ownedPreconditions = new EObjectContainmentWithInverseEList<Constraint>(Constraint.class, this, 23, 10);
 		}
 		return ownedPreconditions;
 	}
@@ -459,6 +471,21 @@ implements Operation {
 			ownedTemplateParameters = new EObjectContainmentWithInverseEList<TemplateParameter>(TemplateParameter.class, this, 14, 6);
 		}
 		return ownedTemplateParameters;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public List<WildcardType> getOwnedWildcards()
+	{
+		if (ownedWildcards == null)
+		{
+			ownedWildcards = new EObjectContainmentWithInverseEList<WildcardType>(WildcardType.class, this, 15, 22);
+		}
+		return ownedWildcards;
 	}
 
 	/**
@@ -524,7 +551,7 @@ implements Operation {
 			if (precedence != oldPrecedence)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 24, oldPrecedence, precedence));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 25, oldPrecedence, precedence));
 			}
 		}
 		return precedence;
@@ -549,7 +576,7 @@ implements Operation {
 		Precedence oldPrecedence = precedence;
 		precedence = newPrecedence;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 24, oldPrecedence, precedence));
+			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldPrecedence, precedence));
 	}
 
 	/**
@@ -574,7 +601,7 @@ implements Operation {
 		bodyExpression = newBodyExpression;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 15, oldBodyExpression, newBodyExpression);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 16, oldBodyExpression, newBodyExpression);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -592,14 +619,14 @@ implements Operation {
 		{
 			NotificationChain msgs = null;
 			if (bodyExpression != null)
-				msgs = ((InternalEObject)bodyExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (15), null, msgs);
+				msgs = ((InternalEObject)bodyExpression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (16), null, msgs);
 			if (newBodyExpression != null)
-				msgs = ((InternalEObject)newBodyExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (15), null, msgs);
+				msgs = ((InternalEObject)newBodyExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (16), null, msgs);
 			msgs = basicSetBodyExpression(newBodyExpression, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 15, newBodyExpression, newBodyExpression));
+			eNotify(new ENotificationImpl(this, Notification.SET, 16, newBodyExpression, newBodyExpression));
 	}
 
 	/**
@@ -624,7 +651,7 @@ implements Operation {
 		boolean oldIsInvalidating = (eFlags & IS_INVALIDATING_EFLAG) != 0;
 		if (newIsInvalidating) eFlags |= IS_INVALIDATING_EFLAG; else eFlags &= ~IS_INVALIDATING_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 16, oldIsInvalidating, newIsInvalidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, 17, oldIsInvalidating, newIsInvalidating));
 	}
 
 	/**
@@ -651,7 +678,7 @@ implements Operation {
 		boolean oldIsTransient = (eFlags & IS_TRANSIENT_EFLAG) != 0;
 		if (newIsTransient) eFlags |= IS_TRANSIENT_EFLAG; else eFlags &= ~IS_TRANSIENT_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 17, oldIsTransient, newIsTransient));
+			eNotify(new ENotificationImpl(this, Notification.SET, 18, oldIsTransient, newIsTransient));
 	}
 
 	/**
@@ -676,7 +703,7 @@ implements Operation {
 		boolean oldIsTypeof = (eFlags & IS_TYPEOF_EFLAG) != 0;
 		if (newIsTypeof) eFlags |= IS_TYPEOF_EFLAG; else eFlags &= ~IS_TYPEOF_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 18, oldIsTypeof, newIsTypeof));
+			eNotify(new ENotificationImpl(this, Notification.SET, 19, oldIsTypeof, newIsTypeof));
 	}
 
 	/**
@@ -701,7 +728,7 @@ implements Operation {
 		boolean oldIsValidating = (eFlags & IS_VALIDATING_EFLAG) != 0;
 		if (newIsValidating) eFlags |= IS_VALIDATING_EFLAG; else eFlags &= ~IS_VALIDATING_EFLAG;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 19, oldIsValidating, newIsValidating));
+			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldIsValidating, newIsValidating));
 	}
 
 	/**
@@ -711,7 +738,7 @@ implements Operation {
 	 */
 	@Override
 	public org.eclipse.ocl.pivot.Class getOwningClass() {
-		if (eContainerFeatureID() != (23)) return null;
+		if (eContainerFeatureID() != (24)) return null;
 		return (org.eclipse.ocl.pivot.Class)eInternalContainer();
 	}
 
@@ -722,7 +749,7 @@ implements Operation {
 	 */
 	public NotificationChain basicSetOwningClass(org.eclipse.ocl.pivot.Class newOwningClass, NotificationChain msgs)
 	{
-		msgs = eBasicSetContainer((InternalEObject)newOwningClass, 23, msgs);
+		msgs = eBasicSetContainer((InternalEObject)newOwningClass, 24, msgs);
 		return msgs;
 	}
 
@@ -734,7 +761,7 @@ implements Operation {
 	@Override
 	public void setOwningClass(org.eclipse.ocl.pivot.Class newOwningClass)
 	{
-		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (23) && newOwningClass != null))
+		if (newOwningClass != eInternalContainer() || (eContainerFeatureID() != (24) && newOwningClass != null))
 		{
 			if (EcoreUtil.isAncestor(this, newOwningClass))
 				throw new IllegalArgumentException("Recursive containment not allowed for " + toString()); //$NON-NLS-1$
@@ -742,12 +769,12 @@ implements Operation {
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningClass != null)
-				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, 16, org.eclipse.ocl.pivot.Class.class, msgs);
+				msgs = ((InternalEObject)newOwningClass).eInverseAdd(this, 17, org.eclipse.ocl.pivot.Class.class, msgs);
 			msgs = basicSetOwningClass(newOwningClass, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 23, newOwningClass, newOwningClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 24, newOwningClass, newOwningClass));
 	}
 
 	/**
@@ -1052,13 +1079,15 @@ implements Operation {
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateArguments()).basicAdd(otherEnd, msgs);
 			case 14:
 				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedTemplateParameters()).basicAdd(otherEnd, msgs);
-			case 20:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
+			case 15:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedWildcards()).basicAdd(otherEnd, msgs);
 			case 21:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPostconditions()).basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedParameters()).basicAdd(otherEnd, msgs);
 			case 22:
-				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPreconditions()).basicAdd(otherEnd, msgs);
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPostconditions()).basicAdd(otherEnd, msgs);
 			case 23:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getOwnedPreconditions()).basicAdd(otherEnd, msgs);
+			case 24:
 				if (eInternalContainer() != null)
 					msgs = eBasicRemoveFromContainer(msgs);
 				return basicSetOwningClass((org.eclipse.ocl.pivot.Class)otherEnd, msgs);
@@ -1091,14 +1120,16 @@ implements Operation {
 			case 14:
 				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
 			case 15:
+				return ((InternalEList<?>)getOwnedWildcards()).basicRemove(otherEnd, msgs);
+			case 16:
 				return basicSetBodyExpression(null, msgs);
-			case 20:
-				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
 			case 21:
-				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
 			case 22:
-				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
 			case 23:
+				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
+			case 24:
 				return basicSetOwningClass(null, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -1114,8 +1145,8 @@ implements Operation {
 			NotificationChain msgs) {
 		switch (eContainerFeatureID())
 		{
-			case 23:
-				return eInternalContainer().eInverseRemove(this, 16, org.eclipse.ocl.pivot.Class.class, msgs);
+			case 24:
+				return eInternalContainer().eInverseRemove(this, 17, org.eclipse.ocl.pivot.Class.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}
@@ -1162,29 +1193,31 @@ implements Operation {
 			case 14:
 				return getOwnedTemplateParameters();
 			case 15:
-				return getBodyExpression();
+				return getOwnedWildcards();
 			case 16:
-				return isIsInvalidating();
+				return getBodyExpression();
 			case 17:
-				return isIsTransient();
+				return isIsInvalidating();
 			case 18:
-				return isIsTypeof();
+				return isIsTransient();
 			case 19:
-				return isIsValidating();
+				return isIsTypeof();
 			case 20:
-				return getOwnedParameters();
+				return isIsValidating();
 			case 21:
-				return getOwnedPostconditions();
+				return getOwnedParameters();
 			case 22:
-				return getOwnedPreconditions();
+				return getOwnedPostconditions();
 			case 23:
-				return getOwningClass();
+				return getOwnedPreconditions();
 			case 24:
+				return getOwningClass();
+			case 25:
 				if (resolve) return getPrecedence();
 				return basicGetPrecedence();
-			case 25:
-				return getRaisedExceptions();
 			case 26:
+				return getRaisedExceptions();
+			case 27:
 				return getRedefinedOperations();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -1250,43 +1283,47 @@ implements Operation {
 				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 15:
-				setBodyExpression((LanguageExpression)newValue);
+				getOwnedWildcards().clear();
+				getOwnedWildcards().addAll((Collection<? extends WildcardType>)newValue);
 				return;
 			case 16:
-				setIsInvalidating((Boolean)newValue);
+				setBodyExpression((LanguageExpression)newValue);
 				return;
 			case 17:
-				setIsTransient((Boolean)newValue);
+				setIsInvalidating((Boolean)newValue);
 				return;
 			case 18:
-				setIsTypeof((Boolean)newValue);
+				setIsTransient((Boolean)newValue);
 				return;
 			case 19:
-				setIsValidating((Boolean)newValue);
+				setIsTypeof((Boolean)newValue);
 				return;
 			case 20:
+				setIsValidating((Boolean)newValue);
+				return;
+			case 21:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends Parameter>)newValue);
 				return;
-			case 21:
+			case 22:
 				getOwnedPostconditions().clear();
 				getOwnedPostconditions().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case 22:
+			case 23:
 				getOwnedPreconditions().clear();
 				getOwnedPreconditions().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case 23:
+			case 24:
 				setOwningClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case 24:
+			case 25:
 				setPrecedence((Precedence)newValue);
 				return;
-			case 25:
+			case 26:
 				getRaisedExceptions().clear();
 				getRaisedExceptions().addAll((Collection<? extends Type>)newValue);
 				return;
-			case 26:
+			case 27:
 				getRedefinedOperations().clear();
 				getRedefinedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
@@ -1346,39 +1383,42 @@ implements Operation {
 				getOwnedTemplateParameters().clear();
 				return;
 			case 15:
-				setBodyExpression((LanguageExpression)null);
+				getOwnedWildcards().clear();
 				return;
 			case 16:
-				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
+				setBodyExpression((LanguageExpression)null);
 				return;
 			case 17:
-				setIsTransient(IS_TRANSIENT_EDEFAULT);
+				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
 			case 18:
-				setIsTypeof(IS_TYPEOF_EDEFAULT);
+				setIsTransient(IS_TRANSIENT_EDEFAULT);
 				return;
 			case 19:
-				setIsValidating(IS_VALIDATING_EDEFAULT);
+				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
 			case 20:
-				getOwnedParameters().clear();
+				setIsValidating(IS_VALIDATING_EDEFAULT);
 				return;
 			case 21:
-				getOwnedPostconditions().clear();
+				getOwnedParameters().clear();
 				return;
 			case 22:
-				getOwnedPreconditions().clear();
+				getOwnedPostconditions().clear();
 				return;
 			case 23:
-				setOwningClass((org.eclipse.ocl.pivot.Class)null);
+				getOwnedPreconditions().clear();
 				return;
 			case 24:
-				setPrecedence((Precedence)null);
+				setOwningClass((org.eclipse.ocl.pivot.Class)null);
 				return;
 			case 25:
-				getRaisedExceptions().clear();
+				setPrecedence((Precedence)null);
 				return;
 			case 26:
+				getRaisedExceptions().clear();
+				return;
+			case 27:
 				getRedefinedOperations().clear();
 				return;
 		}
@@ -1425,28 +1465,30 @@ implements Operation {
 			case 14:
 				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 15:
-				return bodyExpression != null;
+				return ownedWildcards != null && !ownedWildcards.isEmpty();
 			case 16:
-				return ((eFlags & IS_INVALIDATING_EFLAG) != 0) != IS_INVALIDATING_EDEFAULT;
+				return bodyExpression != null;
 			case 17:
-				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
+				return ((eFlags & IS_INVALIDATING_EFLAG) != 0) != IS_INVALIDATING_EDEFAULT;
 			case 18:
-				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
+				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
 			case 19:
-				return ((eFlags & IS_VALIDATING_EFLAG) != 0) != IS_VALIDATING_EDEFAULT;
+				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
 			case 20:
-				return ownedParameters != null && !ownedParameters.isEmpty();
+				return ((eFlags & IS_VALIDATING_EFLAG) != 0) != IS_VALIDATING_EDEFAULT;
 			case 21:
-				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
+				return ownedParameters != null && !ownedParameters.isEmpty();
 			case 22:
-				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
+				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
 			case 23:
-				return getOwningClass() != null;
+				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
 			case 24:
-				return precedence != null;
+				return getOwningClass() != null;
 			case 25:
-				return raisedExceptions != null && !raisedExceptions.isEmpty();
+				return precedence != null;
 			case 26:
+				return raisedExceptions != null && !raisedExceptions.isEmpty();
+			case 27:
 				return redefinedOperations != null && !redefinedOperations.isEmpty();
 		}
 		return eDynamicIsSet(featureID);
@@ -1474,6 +1516,7 @@ implements Operation {
 				case 12: return 4;
 				case 13: return 5;
 				case 14: return 6;
+				case 15: return 7;
 				default: return -1;
 			}
 		}
@@ -1502,6 +1545,7 @@ implements Operation {
 				case 4: return 12;
 				case 5: return 13;
 				case 6: return 14;
+				case 7: return 15;
 				default: return -1;
 			}
 		}

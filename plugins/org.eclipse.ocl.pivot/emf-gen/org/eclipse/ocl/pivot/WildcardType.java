@@ -21,6 +21,7 @@ package org.eclipse.ocl.pivot;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getLowerBound <em>Lower Bound</em>}</li>
+ *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getOwningTemplateableElement <em>Owning Templateable Element</em>}</li>
  *   <li>{@link org.eclipse.ocl.pivot.WildcardType#getUpperBound <em>Upper Bound</em>}</li>
  * </ul>
  *
@@ -49,6 +50,33 @@ public interface WildcardType extends org.eclipse.ocl.pivot.Class
 	 * @generated
 	 */
 	void setLowerBound(Type value);
+
+	/**
+	 * Returns the value of the '<em><b>Owning Templateable Element</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedWildcards <em>Owned Wildcards</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Owning Templateable Element</em>' container reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Owning Templateable Element</em>' container reference.
+	 * @see #setOwningTemplateableElement(TemplateableElement)
+	 * @see org.eclipse.ocl.pivot.PivotPackage#getWildcardType_OwningTemplateableElement()
+	 * @see org.eclipse.ocl.pivot.TemplateableElement#getOwnedWildcards
+	 * @generated
+	 */
+	TemplateableElement getOwningTemplateableElement();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.pivot.WildcardType#getOwningTemplateableElement <em>Owning Templateable Element</em>}' container reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Owning Templateable Element</em>' container reference.
+	 * @see #getOwningTemplateableElement()
+	 * @generated
+	 */
+	void setOwningTemplateableElement(TemplateableElement value);
 
 	/**
 	 * Returns the value of the '<em><b>Upper Bound</b></em>' reference.

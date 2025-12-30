@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.util.Visitor;
 
@@ -136,7 +137,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 		ownedAccumulator = newOwnedAccumulator;
 		if (eNotificationRequired())
 		{
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 27, oldOwnedAccumulator, newOwnedAccumulator);
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, 28, oldOwnedAccumulator, newOwnedAccumulator);
 			if (msgs == null) msgs = notification; else msgs.add(notification);
 		}
 		return msgs;
@@ -154,14 +155,14 @@ public class IterationImpl extends OperationImpl implements Iteration
 		{
 			NotificationChain msgs = null;
 			if (ownedAccumulator != null)
-				msgs = ((InternalEObject)ownedAccumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (27), null, msgs);
+				msgs = ((InternalEObject)ownedAccumulator).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - (28), null, msgs);
 			if (newOwnedAccumulator != null)
-				msgs = ((InternalEObject)newOwnedAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (27), null, msgs);
+				msgs = ((InternalEObject)newOwnedAccumulator).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - (28), null, msgs);
 			msgs = basicSetOwnedAccumulator(newOwnedAccumulator, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
 		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 27, newOwnedAccumulator, newOwnedAccumulator));
+			eNotify(new ENotificationImpl(this, Notification.SET, 28, newOwnedAccumulator, newOwnedAccumulator));
 	}
 
 	/**
@@ -175,7 +176,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 	{
 		if (ownedIterators == null)
 		{
-			ownedIterators = new EObjectContainmentEList<Parameter>(Parameter.class, this, 28);
+			ownedIterators = new EObjectContainmentEList<Parameter>(Parameter.class, this, 29);
 		}
 		return ownedIterators;
 	}
@@ -205,18 +206,20 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 14:
 				return ((InternalEList<?>)getOwnedTemplateParameters()).basicRemove(otherEnd, msgs);
 			case 15:
+				return ((InternalEList<?>)getOwnedWildcards()).basicRemove(otherEnd, msgs);
+			case 16:
 				return basicSetBodyExpression(null, msgs);
-			case 20:
-				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
 			case 21:
-				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedParameters()).basicRemove(otherEnd, msgs);
 			case 22:
-				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
+				return ((InternalEList<?>)getOwnedPostconditions()).basicRemove(otherEnd, msgs);
 			case 23:
+				return ((InternalEList<?>)getOwnedPreconditions()).basicRemove(otherEnd, msgs);
+			case 24:
 				return basicSetOwningClass(null, msgs);
-			case 27:
-				return basicSetOwnedAccumulator(null, msgs);
 			case 28:
+				return basicSetOwnedAccumulator(null, msgs);
+			case 29:
 				return ((InternalEList<?>)getOwnedIterators()).basicRemove(otherEnd, msgs);
 		}
 		return eDynamicInverseRemove(otherEnd, featureID, msgs);
@@ -265,33 +268,35 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 14:
 				return getOwnedTemplateParameters();
 			case 15:
-				return getBodyExpression();
+				return getOwnedWildcards();
 			case 16:
-				return isIsInvalidating();
+				return getBodyExpression();
 			case 17:
-				return isIsTransient();
+				return isIsInvalidating();
 			case 18:
-				return isIsTypeof();
+				return isIsTransient();
 			case 19:
-				return isIsValidating();
+				return isIsTypeof();
 			case 20:
-				return getOwnedParameters();
+				return isIsValidating();
 			case 21:
-				return getOwnedPostconditions();
+				return getOwnedParameters();
 			case 22:
-				return getOwnedPreconditions();
+				return getOwnedPostconditions();
 			case 23:
-				return getOwningClass();
+				return getOwnedPreconditions();
 			case 24:
+				return getOwningClass();
+			case 25:
 				if (resolve) return getPrecedence();
 				return basicGetPrecedence();
-			case 25:
-				return getRaisedExceptions();
 			case 26:
-				return getRedefinedOperations();
+				return getRaisedExceptions();
 			case 27:
-				return getOwnedAccumulator();
+				return getRedefinedOperations();
 			case 28:
+				return getOwnedAccumulator();
+			case 29:
 				return getOwnedIterators();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
@@ -358,50 +363,54 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 15:
-				setBodyExpression((LanguageExpression)newValue);
+				getOwnedWildcards().clear();
+				getOwnedWildcards().addAll((Collection<? extends WildcardType>)newValue);
 				return;
 			case 16:
-				setIsInvalidating((Boolean)newValue);
+				setBodyExpression((LanguageExpression)newValue);
 				return;
 			case 17:
-				setIsTransient((Boolean)newValue);
+				setIsInvalidating((Boolean)newValue);
 				return;
 			case 18:
-				setIsTypeof((Boolean)newValue);
+				setIsTransient((Boolean)newValue);
 				return;
 			case 19:
-				setIsValidating((Boolean)newValue);
+				setIsTypeof((Boolean)newValue);
 				return;
 			case 20:
+				setIsValidating((Boolean)newValue);
+				return;
+			case 21:
 				getOwnedParameters().clear();
 				getOwnedParameters().addAll((Collection<? extends Parameter>)newValue);
 				return;
-			case 21:
+			case 22:
 				getOwnedPostconditions().clear();
 				getOwnedPostconditions().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case 22:
+			case 23:
 				getOwnedPreconditions().clear();
 				getOwnedPreconditions().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case 23:
+			case 24:
 				setOwningClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
-			case 24:
+			case 25:
 				setPrecedence((Precedence)newValue);
 				return;
-			case 25:
+			case 26:
 				getRaisedExceptions().clear();
 				getRaisedExceptions().addAll((Collection<? extends Type>)newValue);
 				return;
-			case 26:
+			case 27:
 				getRedefinedOperations().clear();
 				getRedefinedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case 27:
+			case 28:
 				setOwnedAccumulator((Parameter)newValue);
 				return;
-			case 28:
+			case 29:
 				getOwnedIterators().clear();
 				getOwnedIterators().addAll((Collection<? extends Parameter>)newValue);
 				return;
@@ -462,45 +471,48 @@ public class IterationImpl extends OperationImpl implements Iteration
 				getOwnedTemplateParameters().clear();
 				return;
 			case 15:
-				setBodyExpression((LanguageExpression)null);
+				getOwnedWildcards().clear();
 				return;
 			case 16:
-				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
+				setBodyExpression((LanguageExpression)null);
 				return;
 			case 17:
-				setIsTransient(IS_TRANSIENT_EDEFAULT);
+				setIsInvalidating(IS_INVALIDATING_EDEFAULT);
 				return;
 			case 18:
-				setIsTypeof(IS_TYPEOF_EDEFAULT);
+				setIsTransient(IS_TRANSIENT_EDEFAULT);
 				return;
 			case 19:
-				setIsValidating(IS_VALIDATING_EDEFAULT);
+				setIsTypeof(IS_TYPEOF_EDEFAULT);
 				return;
 			case 20:
-				getOwnedParameters().clear();
+				setIsValidating(IS_VALIDATING_EDEFAULT);
 				return;
 			case 21:
-				getOwnedPostconditions().clear();
+				getOwnedParameters().clear();
 				return;
 			case 22:
-				getOwnedPreconditions().clear();
+				getOwnedPostconditions().clear();
 				return;
 			case 23:
-				setOwningClass((org.eclipse.ocl.pivot.Class)null);
+				getOwnedPreconditions().clear();
 				return;
 			case 24:
-				setPrecedence((Precedence)null);
+				setOwningClass((org.eclipse.ocl.pivot.Class)null);
 				return;
 			case 25:
-				getRaisedExceptions().clear();
+				setPrecedence((Precedence)null);
 				return;
 			case 26:
-				getRedefinedOperations().clear();
+				getRaisedExceptions().clear();
 				return;
 			case 27:
-				setOwnedAccumulator((Parameter)null);
+				getRedefinedOperations().clear();
 				return;
 			case 28:
+				setOwnedAccumulator((Parameter)null);
+				return;
+			case 29:
 				getOwnedIterators().clear();
 				return;
 		}
@@ -548,32 +560,34 @@ public class IterationImpl extends OperationImpl implements Iteration
 			case 14:
 				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 15:
-				return bodyExpression != null;
+				return ownedWildcards != null && !ownedWildcards.isEmpty();
 			case 16:
-				return ((eFlags & IS_INVALIDATING_EFLAG) != 0) != IS_INVALIDATING_EDEFAULT;
+				return bodyExpression != null;
 			case 17:
-				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
+				return ((eFlags & IS_INVALIDATING_EFLAG) != 0) != IS_INVALIDATING_EDEFAULT;
 			case 18:
-				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
+				return ((eFlags & IS_TRANSIENT_EFLAG) != 0) != IS_TRANSIENT_EDEFAULT;
 			case 19:
-				return ((eFlags & IS_VALIDATING_EFLAG) != 0) != IS_VALIDATING_EDEFAULT;
+				return ((eFlags & IS_TYPEOF_EFLAG) != 0) != IS_TYPEOF_EDEFAULT;
 			case 20:
-				return ownedParameters != null && !ownedParameters.isEmpty();
+				return ((eFlags & IS_VALIDATING_EFLAG) != 0) != IS_VALIDATING_EDEFAULT;
 			case 21:
-				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
+				return ownedParameters != null && !ownedParameters.isEmpty();
 			case 22:
-				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
+				return ownedPostconditions != null && !ownedPostconditions.isEmpty();
 			case 23:
-				return getOwningClass() != null;
+				return ownedPreconditions != null && !ownedPreconditions.isEmpty();
 			case 24:
-				return precedence != null;
+				return getOwningClass() != null;
 			case 25:
-				return raisedExceptions != null && !raisedExceptions.isEmpty();
+				return precedence != null;
 			case 26:
-				return redefinedOperations != null && !redefinedOperations.isEmpty();
+				return raisedExceptions != null && !raisedExceptions.isEmpty();
 			case 27:
-				return ownedAccumulator != null;
+				return redefinedOperations != null && !redefinedOperations.isEmpty();
 			case 28:
+				return ownedAccumulator != null;
+			case 29:
 				return ownedIterators != null && !ownedIterators.isEmpty();
 		}
 		return eDynamicIsSet(featureID);

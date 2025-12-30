@@ -317,7 +317,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 			if (eInternalContainer() != null)
 				msgs = eBasicRemoveFromContainer(msgs);
 			if (newOwningStateMachine != null)
-				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, 23, StateMachine.class, msgs);
+				msgs = ((InternalEObject)newOwningStateMachine).eInverseAdd(this, 24, StateMachine.class, msgs);
 			msgs = basicSetOwningStateMachine(newOwningStateMachine, msgs);
 			if (msgs != null) msgs.dispatch();
 		}
@@ -370,7 +370,7 @@ public class RegionImpl extends NamespaceImpl implements Region
 			case 9:
 				return eInternalContainer().eInverseRemove(this, 19, State.class, msgs);
 			case 10:
-				return eInternalContainer().eInverseRemove(this, 23, StateMachine.class, msgs);
+				return eInternalContainer().eInverseRemove(this, 24, StateMachine.class, msgs);
 		}
 		return eDynamicBasicRemoveFromContainer(msgs);
 	}

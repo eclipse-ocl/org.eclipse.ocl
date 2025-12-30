@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.util.Visitor;
 
 /**
@@ -122,7 +123,7 @@ public class MessageTypeImpl
 			if (referredSignal != oldReferredSignal)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldReferredSignal, referredSignal));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 22, oldReferredSignal, referredSignal));
 			}
 		}
 		return referredSignal;
@@ -147,7 +148,7 @@ public class MessageTypeImpl
 		Signal oldReferredSignal = referredSignal;
 		referredSignal = newReferredSignal;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldReferredSignal, referredSignal));
+			eNotify(new ENotificationImpl(this, Notification.SET, 22, oldReferredSignal, referredSignal));
 	}
 
 	/**
@@ -164,7 +165,7 @@ public class MessageTypeImpl
 			if (referredOperation != oldReferredOperation)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 20, oldReferredOperation, referredOperation));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 21, oldReferredOperation, referredOperation));
 			}
 		}
 		return referredOperation;
@@ -189,7 +190,7 @@ public class MessageTypeImpl
 		Operation oldReferredOperation = referredOperation;
 		referredOperation = newReferredOperation;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 20, oldReferredOperation, referredOperation));
+			eNotify(new ENotificationImpl(this, Notification.SET, 21, oldReferredOperation, referredOperation));
 	}
 
 	/**
@@ -221,31 +222,33 @@ public class MessageTypeImpl
 			case 8:
 				return getOwnedTemplateParameters();
 			case 9:
-				return getExtenders();
+				return getOwnedWildcards();
 			case 10:
-				return getInstanceClassName();
+				return getExtenders();
 			case 11:
-				return isIsAbstract();
+				return getInstanceClassName();
 			case 12:
-				return isIsActive();
+				return isIsAbstract();
 			case 13:
-				return isIsInterface();
+				return isIsActive();
 			case 14:
-				return getOwnedBehaviors();
+				return isIsInterface();
 			case 15:
-				return getOwnedInvariants();
+				return getOwnedBehaviors();
 			case 16:
-				return getOwnedOperations();
+				return getOwnedInvariants();
 			case 17:
-				return getOwnedProperties();
+				return getOwnedOperations();
 			case 18:
-				return getOwningPackage();
+				return getOwnedProperties();
 			case 19:
-				return getSuperClasses();
+				return getOwningPackage();
 			case 20:
+				return getSuperClasses();
+			case 21:
 				if (resolve) return getReferredOperation();
 				return basicGetReferredOperation();
-			case 21:
+			case 22:
 				if (resolve) return getReferredSignal();
 				return basicGetReferredSignal();
 		}
@@ -297,48 +300,52 @@ public class MessageTypeImpl
 				getOwnedTemplateParameters().addAll((Collection<? extends TemplateParameter>)newValue);
 				return;
 			case 9:
+				getOwnedWildcards().clear();
+				getOwnedWildcards().addAll((Collection<? extends WildcardType>)newValue);
+				return;
+			case 10:
 				getExtenders().clear();
 				getExtenders().addAll((Collection<? extends StereotypeExtender>)newValue);
 				return;
-			case 10:
+			case 11:
 				setInstanceClassName((String)newValue);
 				return;
-			case 11:
+			case 12:
 				setIsAbstract((Boolean)newValue);
 				return;
-			case 12:
+			case 13:
 				setIsActive((Boolean)newValue);
 				return;
-			case 13:
+			case 14:
 				setIsInterface((Boolean)newValue);
 				return;
-			case 14:
+			case 15:
 				getOwnedBehaviors().clear();
 				getOwnedBehaviors().addAll((Collection<? extends Behavior>)newValue);
 				return;
-			case 15:
+			case 16:
 				getOwnedInvariants().clear();
 				getOwnedInvariants().addAll((Collection<? extends Constraint>)newValue);
 				return;
-			case 16:
+			case 17:
 				getOwnedOperations().clear();
 				getOwnedOperations().addAll((Collection<? extends Operation>)newValue);
 				return;
-			case 17:
+			case 18:
 				getOwnedProperties().clear();
 				getOwnedProperties().addAll((Collection<? extends Property>)newValue);
 				return;
-			case 18:
+			case 19:
 				setOwningPackage((org.eclipse.ocl.pivot.Package)newValue);
 				return;
-			case 19:
+			case 20:
 				getSuperClasses().clear();
 				getSuperClasses().addAll((Collection<? extends org.eclipse.ocl.pivot.Class>)newValue);
 				return;
-			case 20:
+			case 21:
 				setReferredOperation((Operation)newValue);
 				return;
-			case 21:
+			case 22:
 				setReferredSignal((Signal)newValue);
 				return;
 		}
@@ -382,42 +389,45 @@ public class MessageTypeImpl
 				getOwnedTemplateParameters().clear();
 				return;
 			case 9:
-				getExtenders().clear();
+				getOwnedWildcards().clear();
 				return;
 			case 10:
-				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
+				getExtenders().clear();
 				return;
 			case 11:
-				setIsAbstract(IS_ABSTRACT_EDEFAULT);
+				setInstanceClassName(INSTANCE_CLASS_NAME_EDEFAULT);
 				return;
 			case 12:
-				setIsActive(IS_ACTIVE_EDEFAULT);
+				setIsAbstract(IS_ABSTRACT_EDEFAULT);
 				return;
 			case 13:
-				setIsInterface(IS_INTERFACE_EDEFAULT);
+				setIsActive(IS_ACTIVE_EDEFAULT);
 				return;
 			case 14:
-				getOwnedBehaviors().clear();
+				setIsInterface(IS_INTERFACE_EDEFAULT);
 				return;
 			case 15:
-				getOwnedInvariants().clear();
+				getOwnedBehaviors().clear();
 				return;
 			case 16:
-				getOwnedOperations().clear();
+				getOwnedInvariants().clear();
 				return;
 			case 17:
-				getOwnedProperties().clear();
+				getOwnedOperations().clear();
 				return;
 			case 18:
-				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
+				getOwnedProperties().clear();
 				return;
 			case 19:
-				getSuperClasses().clear();
+				setOwningPackage((org.eclipse.ocl.pivot.Package)null);
 				return;
 			case 20:
-				setReferredOperation((Operation)null);
+				getSuperClasses().clear();
 				return;
 			case 21:
+				setReferredOperation((Operation)null);
+				return;
+			case 22:
 				setReferredSignal((Signal)null);
 				return;
 		}
@@ -452,30 +462,32 @@ public class MessageTypeImpl
 			case 8:
 				return ownedTemplateParameters != null && !ownedTemplateParameters.isEmpty();
 			case 9:
-				return extenders != null && !extenders.isEmpty();
+				return ownedWildcards != null && !ownedWildcards.isEmpty();
 			case 10:
-				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
+				return extenders != null && !extenders.isEmpty();
 			case 11:
-				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
+				return INSTANCE_CLASS_NAME_EDEFAULT == null ? instanceClassName != null : !INSTANCE_CLASS_NAME_EDEFAULT.equals(instanceClassName);
 			case 12:
-				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
+				return ((eFlags & IS_ABSTRACT_EFLAG) != 0) != IS_ABSTRACT_EDEFAULT;
 			case 13:
-				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
+				return ((eFlags & IS_ACTIVE_EFLAG) != 0) != IS_ACTIVE_EDEFAULT;
 			case 14:
-				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
+				return ((eFlags & IS_INTERFACE_EFLAG) != 0) != IS_INTERFACE_EDEFAULT;
 			case 15:
-				return ownedInvariants != null && !ownedInvariants.isEmpty();
+				return ownedBehaviors != null && !ownedBehaviors.isEmpty();
 			case 16:
-				return ownedOperations != null && !ownedOperations.isEmpty();
+				return ownedInvariants != null && !ownedInvariants.isEmpty();
 			case 17:
-				return ownedProperties != null && !ownedProperties.isEmpty();
+				return ownedOperations != null && !ownedOperations.isEmpty();
 			case 18:
-				return getOwningPackage() != null;
+				return ownedProperties != null && !ownedProperties.isEmpty();
 			case 19:
-				return superClasses != null && !superClasses.isEmpty();
+				return getOwningPackage() != null;
 			case 20:
-				return referredOperation != null;
+				return superClasses != null && !superClasses.isEmpty();
 			case 21:
+				return referredOperation != null;
+			case 22:
 				return referredSignal != null;
 		}
 		return eDynamicIsSet(featureID);

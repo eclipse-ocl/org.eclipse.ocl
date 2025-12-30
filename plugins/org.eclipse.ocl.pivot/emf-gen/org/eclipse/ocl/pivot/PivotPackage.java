@@ -3661,6 +3661,17 @@ extends EPackage
 	EReference getWildcardType_LowerBound();
 
 	/**
+	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.WildcardType#getOwningTemplateableElement <em>Owning Templateable Element</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the container reference '<em>Owning Templateable Element</em>'.
+	 * @see org.eclipse.ocl.pivot.WildcardType#getOwningTemplateableElement()
+	 * @see #getWildcardType()
+	 * @generated
+	 */
+	EReference getWildcardType_OwningTemplateableElement();
+
+	/**
 	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.WildcardType#getUpperBound <em>Upper Bound</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -3924,6 +3935,17 @@ extends EPackage
 	 * @generated
 	 */
 	EReference getTemplateableElement_OwnedTemplateParameters();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.eclipse.ocl.pivot.TemplateableElement#getOwnedWildcards <em>Owned Wildcards</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Owned Wildcards</em>'.
+	 * @see org.eclipse.ocl.pivot.TemplateableElement#getOwnedWildcards()
+	 * @see #getTemplateableElement()
+	 * @generated
+	 */
+	EReference getTemplateableElement_OwnedWildcards();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.Transition <em>Transition</em>}'.
@@ -8733,6 +8755,14 @@ extends EPackage
 		EReference WILDCARD_TYPE__LOWER_BOUND = eINSTANCE.getWildcardType_LowerBound();
 
 		/**
+		 * The meta object literal for the '<em><b>Owning Templateable Element</b></em>' container reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference WILDCARD_TYPE__OWNING_TEMPLATEABLE_ELEMENT = eINSTANCE.getWildcardType_OwningTemplateableElement();
+
+		/**
 		 * The meta object literal for the '<em><b>Upper Bound</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -8939,6 +8969,14 @@ extends EPackage
 		 * @generated
 		 */
 		EReference TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS = eINSTANCE.getTemplateableElement_OwnedTemplateParameters();
+
+		/**
+		 * The meta object literal for the '<em><b>Owned Wildcards</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference TEMPLATEABLE_ELEMENT__OWNED_WILDCARDS = eINSTANCE.getTemplateableElement_OwnedWildcards();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.TransitionImpl <em>Transition</em>}' class.

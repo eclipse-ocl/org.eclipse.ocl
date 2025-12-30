@@ -554,6 +554,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _OrderedCollection_TupleLiteralPart_T = createCollectionType(_OrderedCollection);
 		private final @NonNull CollectionType _OrderedCollection_ValueSpecification_T = createCollectionType(_OrderedCollection);
 		private final @NonNull CollectionType _OrderedCollection_Variable_T = createCollectionType(_OrderedCollection);
+		private final @NonNull CollectionType _OrderedCollection_WildcardType_T = createCollectionType(_OrderedCollection);
 		private final @NonNull OrderedSetType _OrderedSet_CollectionLiteralPart_T = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_Detail_T = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_Element_T = createOrderedSetType(_OrderedSet);
@@ -573,6 +574,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull OrderedSetType _OrderedSet_TupleLiteralPart_T = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_ValueSpecification_T = createOrderedSetType(_OrderedSet);
 		private final @NonNull OrderedSetType _OrderedSet_Variable_T = createOrderedSetType(_OrderedSet);
+		private final @NonNull OrderedSetType _OrderedSet_WildcardType_T = createOrderedSetType(_OrderedSet);
 		private final @NonNull SetType _Set_Behavior_T = createSetType(_Set);
 		private final @NonNull SetType _Set_Class_T = createSetType(_Set);
 		private final @NonNull SetType _Set_Comment_T = createSetType(_Set);
@@ -647,6 +649,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_ValueSpecification_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_Variable_T = createCollectionType(_UniqueCollection);
 		private final @NonNull CollectionType _UniqueCollection_Vertex_T = createCollectionType(_UniqueCollection);
+		private final @NonNull CollectionType _UniqueCollection_WildcardType_T = createCollectionType(_UniqueCollection);
 
 		private void installClassTypes() {
 			List<org.eclipse.ocl.pivot.Class> ownedClasses;
@@ -1795,6 +1798,11 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection);
 			ownedClasses.add(type);
+			type = _OrderedCollection_WildcardType_T;
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection);
+			ownedClasses.add(type);
 			type = _OrderedSet_CollectionLiteralPart_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
@@ -1946,6 +1954,14 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_UniqueCollection);
 			superClasses.add(_OrderedCollection_Variable_T);
 			superClasses.add(_UniqueCollection_Variable_T);
+			ownedClasses.add(type);
+			type = _OrderedSet_WildcardType_T;
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OrderedCollection);
+			superClasses.add(_UniqueCollection);
+			superClasses.add(_OrderedCollection_WildcardType_T);
+			superClasses.add(_UniqueCollection_WildcardType_T);
 			ownedClasses.add(type);
 			type = _Set_Behavior_T;
 			type.setIsNullFree(true);
@@ -2346,6 +2362,11 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_Collection);
 			ownedClasses.add(type);
 			type = _UniqueCollection_Vertex_T;
+			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection);
+			ownedClasses.add(type);
+			type = _UniqueCollection_WildcardType_T;
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection);
@@ -2809,6 +2830,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_TemplateableElement_generic = createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__GENERIC, _TemplateableElement);
 		private final @NonNull Property pr_TemplateableElement_ownedTemplateArguments = createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_ARGUMENTS, _Set_TemplateArgument_T);
 		private final @NonNull Property pr_TemplateableElement_ownedTemplateParameters = createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, _OrderedSet_TemplateParameter_T);
+		private final @NonNull Property pr_TemplateableElement_ownedWildcards = createProperty(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_WILDCARDS, _OrderedSet_WildcardType_T);
 		private final @NonNull Property pr_TemplateableElement_TemplateableElement_generic = createProperty("TemplateableElement", _Bag_TemplateableElement_F);
 		private final @NonNull Property pr_Transition_kind = createProperty(PivotPackage.Literals.TRANSITION__KIND, _TransitionKind);
 		private final @NonNull Property pr_Transition_ownedEffect = createProperty(PivotPackage.Literals.TRANSITION__OWNED_EFFECT, _Behavior);
@@ -2857,6 +2879,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_Vertex_outgoingTransitions = createProperty(PivotPackage.Literals.VERTEX__OUTGOING_TRANSITIONS, _Set_Transition_T);
 		private final @NonNull Property pr_Vertex_owningRegion = createProperty(PivotPackage.Literals.VERTEX__OWNING_REGION, _Region);
 		private final @NonNull Property pr_WildcardType_lowerBound = createProperty(PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, _Type);
+		private final @NonNull Property pr_WildcardType_owningTemplateableElement = createProperty(PivotPackage.Literals.WILDCARD_TYPE__OWNING_TEMPLATEABLE_ELEMENT, _TemplateableElement);
 		private final @NonNull Property pr_WildcardType_upperBound = createProperty(PivotPackage.Literals.WILDCARD_TYPE__UPPER_BOUND, _Type);
 
 		private void installProperties() {
@@ -4462,6 +4485,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_TemplateParameter_owningTemplateableElement);
+			ownedProperties.add(property = pr_TemplateableElement_ownedWildcards);
+			property.setIsComposite(true);
+			property.setIsRequired(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_WildcardType_owningTemplateableElement);
 			ownedProperties.add(property = pr_TemplateableElement_TemplateableElement_generic);
 			property.setIsImplicit(true);
 			property.setIsRequired(true);
@@ -4693,6 +4721,9 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_WildcardType_lowerBound);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_WildcardType_lowerBound);
+			ownedProperties.add(property = pr_WildcardType_owningTemplateableElement);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_TemplateableElement_ownedWildcards);
 			ownedProperties.add(property = pr_WildcardType_upperBound);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_Type_WildcardType_upperBound);
@@ -5090,6 +5121,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_OrderedCollection_TupleLiteralPart_T, _TupleLiteralPart);
 			addBinding(_OrderedCollection_ValueSpecification_T, _ValueSpecification);
 			addBinding(_OrderedCollection_Variable_T, _Variable);
+			addBinding(_OrderedCollection_WildcardType_T, _WildcardType);
 			addBinding(_OrderedSet_CollectionLiteralPart_T, _CollectionLiteralPart);
 			addBinding(_OrderedSet_Detail_T, _Detail);
 			addBinding(_OrderedSet_Element_T, _Element);
@@ -5109,6 +5141,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_OrderedSet_TupleLiteralPart_T, _TupleLiteralPart);
 			addBinding(_OrderedSet_ValueSpecification_T, _ValueSpecification);
 			addBinding(_OrderedSet_Variable_T, _Variable);
+			addBinding(_OrderedSet_WildcardType_T, _WildcardType);
 			addBinding(_Set_Behavior_T, _Behavior);
 			addBinding(_Set_Class_T, _Class);
 			addBinding(_Set_Comment_T, _Comment);
@@ -5183,6 +5216,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_UniqueCollection_ValueSpecification_T, _ValueSpecification);
 			addBinding(_UniqueCollection_Variable_T, _Variable);
 			addBinding(_UniqueCollection_Vertex_T, _Vertex);
+			addBinding(_UniqueCollection_WildcardType_T, _WildcardType);
 		}
 
 		private void installComments() {
@@ -5373,6 +5407,7 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(_TemplateableElement, "A TemplateableElement is an Element that can optionally be defined as a specialization of a generic TemplateableElement.");
 			installComment(pr_TemplateableElement_ownedTemplateArguments, "The optional TemplateBindings from this TemplateableElement to one or more templates.");
 			installComment(pr_TemplateableElement_ownedTemplateParameters, "The formal parameters that are owned by this TemplateableElement.");
+			installComment(pr_TemplateableElement_ownedWildcards, "The implicit \'template parameters\' for wildcards within this TemplateableElement.");
 			installComment(_Transition, "A Transition represents an arc between exactly one source Vertex and exactly one Target vertex (the source and targets may be the same Vertex). It may form part of a compound transition, which takes the StateMachine from one steady State configuration to another, representing the full response of the StateMachine to an occurrence of an Event that triggered it.");
 			installComment(pr_Transition_kind, "Indicates the precise type of the Transition.");
 			installComment(pr_Transition_ownedEffect, "Specifies an optional behavior to be performed when the Transition fires.");
