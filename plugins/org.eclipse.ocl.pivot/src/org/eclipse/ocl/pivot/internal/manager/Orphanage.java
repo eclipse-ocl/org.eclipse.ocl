@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.manager;
 
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -532,6 +533,7 @@ public class Orphanage extends PackageImpl
 	 * @since 7.0
 	 */
 	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, @NonNull TemplateParameter templateParameter) {
+		assert !(templateParameter instanceof WildcardType);
 		int index = templateParameter.getTemplateParameterId().getIndex();
 		return getNormalizedTemplateParameter(orphanPackage, index);
 	}

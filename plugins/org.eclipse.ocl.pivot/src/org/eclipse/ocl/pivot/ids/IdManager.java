@@ -55,7 +55,6 @@ import org.eclipse.ocl.pivot.internal.ids.PrimitiveTypeIdImpl.PrimitiveTypeIdSin
 import org.eclipse.ocl.pivot.internal.ids.RootPackageIdImpl.RootPackageIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.TemplateParameterIdImpl;
 import org.eclipse.ocl.pivot.internal.ids.UnspecifiedIdImpl;
-import org.eclipse.ocl.pivot.internal.ids.WildcardIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
@@ -144,8 +143,6 @@ public final class IdManager
 	 * Map from a Primitive type name to the corresponding PrimitiveTypeId.
 	 */
 	private static final @NonNull PrimitiveTypeIdSingletonScope primitiveTypes = new PrimitiveTypeIdSingletonScope();
-
-	private static @Nullable WildcardId wildcardId = null;
 
 	/**
 	 * @since 7.0
@@ -702,17 +699,6 @@ public final class IdManager
 		UnspecifiedIdImpl newId = new UnspecifiedIdImpl(PRIVATE_INSTANCE, aType);
 		//		System.out.println("Create " + newId.getClass().getSimpleName() + " " + newId + " => @" + Integer.toHexString(newId.hashCode()));
 		return newId;
-	}
-
-	/**
-	 * @since 1.18
-	 */
-	public static @NonNull WildcardId getWildcardId() {
-		WildcardId wildcardId2 = wildcardId ;
-		if (wildcardId2 == null) {
-			wildcardId = wildcardId2 = new WildcardIdImpl(PRIVATE_INSTANCE);
-		}
-		return wildcardId2;
 	}
 
 	private IdManager() {}		// private to guarantee ElementId uniqueness

@@ -29,12 +29,12 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateArgument;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
 
@@ -675,7 +675,19 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 
 	@Override
 	public @NonNull TypeId computeId() {
-		return IdManager.getWildcardId();
+	//	return IdManager.getWildcardId();
+		ElementId parentId = null;
+		TemplateableElement asTemplateableElement = getOwningTemplateableElement();
+		if (asTemplateableElement instanceof org.eclipse.ocl.pivot.Class) {
+			parentId = ((org.eclipse.ocl.pivot.Class)asTemplateableElement).getTypeId();
+			getClass();
+			return (TypeId)parentId;		// XXX index
+		}
+		else if (asTemplateableElement instanceof Operation) {
+			parentId = ((Operation)asTemplateableElement).getOperationId();
+			getClass();
+		}
+		throw new UnsupportedOperationException();
 	}
 
 } //WildcardTypeImpl

@@ -1139,6 +1139,9 @@ public class ExternalEcore2AS extends Ecore2AS
 	protected Type resolveType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
 		Type pivotType = getCreated(Type.class, eGenericType);
 		if (pivotType != null) {
+			if (pivotType instanceof WildcardType) {
+				return pivotType;
+			}
 			ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
 			if ((eTypeParameter != null) && eTypeParameter.getEBounds().isEmpty()) {
 				return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), (TemplateParameter)pivotType);
