@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 
 /**
  * <!-- begin-user-doc -->
@@ -99,4 +101,8 @@ public interface WildcardType extends org.eclipse.ocl.pivot.Class
 	 */
 	void setUpperBound(Type value);
 
+	/**
+	 * @since 7.0
+	 */
+	@NonNull WildcardId getWildcardId();
 } // WildcardType

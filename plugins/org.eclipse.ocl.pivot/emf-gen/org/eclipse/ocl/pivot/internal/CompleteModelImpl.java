@@ -1611,7 +1611,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	}
 
 	@Override
-	public boolean isTypeServeable(@NonNull Type type) {
+	public boolean isTypeServeable(@NonNull Type type) {			// XXX rename to hasCompleteType
 		//		if (pivotType .getGeneric() != null) {
 		//			return false;
 		//		}

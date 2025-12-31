@@ -9,7 +9,7 @@
  *   E.D.Willink - Initial API and implementation
  *******************************************************************************/
 
-package org.eclipse.ocl.xtext.tests.xtext;
+package org.eclipse.ocl.xtext.tests;
 
 import java.io.File;
 import java.util.Arrays;
@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.ocl.pivot.uml.internal.es2as.UML2AS;
 import org.eclipse.ocl.xtext.base.ui.BaseUIActivator;
-import org.eclipse.ocl.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.xtext.tests.ecore.ProjectMapTest;
 import org.eclipse.ocl.xtext.tests.label.PluginLabelTests;
 import org.eclipse.ocl.xtext.tests.label.StandaloneLabelTests;
@@ -52,6 +51,39 @@ import org.eclipse.ocl.xtext.tests.validity.HTMLExportOCLValidationResultTests;
 import org.eclipse.ocl.xtext.tests.validity.TextExportOCLValidationResultTests;
 import org.eclipse.ocl.xtext.tests.validity.ValidityManagerTests;
 import org.eclipse.ocl.xtext.tests.validity.ValidityModelTests;
+import org.eclipse.ocl.xtext.tests.xtext.CompletionProposalTests;
+import org.eclipse.ocl.xtext.tests.xtext.ConsoleTests;
+import org.eclipse.ocl.xtext.tests.xtext.DebuggerTests;
+import org.eclipse.ocl.xtext.tests.xtext.EcoreConsoleTests;
+import org.eclipse.ocl.xtext.tests.xtext.EditTests;
+import org.eclipse.ocl.xtext.tests.xtext.EditorTests;
+import org.eclipse.ocl.xtext.tests.xtext.ErrorTests;
+import org.eclipse.ocl.xtext.tests.xtext.FileNewWizardTest;
+import org.eclipse.ocl.xtext.tests.xtext.FirstTest;
+import org.eclipse.ocl.xtext.tests.xtext.FlowAnalysisTests;
+import org.eclipse.ocl.xtext.tests.xtext.GrammarRuleVectorTests;
+import org.eclipse.ocl.xtext.tests.xtext.GrammarTests;
+import org.eclipse.ocl.xtext.tests.xtext.IdiomsLoadTests;
+import org.eclipse.ocl.xtext.tests.xtext.ImportTests;
+import org.eclipse.ocl.xtext.tests.xtext.LoadTests;
+import org.eclipse.ocl.xtext.tests.xtext.MarkupTests;
+import org.eclipse.ocl.xtext.tests.xtext.OCLBuilderTests;
+import org.eclipse.ocl.xtext.tests.xtext.OCLinEcoreTutorialExamples;
+import org.eclipse.ocl.xtext.tests.xtext.OCLstdlibTests;
+import org.eclipse.ocl.xtext.tests.xtext.PivotDocumentationExamples;
+import org.eclipse.ocl.xtext.tests.xtext.PivotTests;
+import org.eclipse.ocl.xtext.tests.xtext.PrecedenceTests;
+import org.eclipse.ocl.xtext.tests.xtext.RegistryTests;
+import org.eclipse.ocl.xtext.tests.xtext.RoundTripTests;
+import org.eclipse.ocl.xtext.tests.xtext.SerializationBuilderTests;
+import org.eclipse.ocl.xtext.tests.xtext.SerializeTests;
+import org.eclipse.ocl.xtext.tests.xtext.StringUtilTests;
+import org.eclipse.ocl.xtext.tests.xtext.TestPrettyPrinter;
+import org.eclipse.ocl.xtext.tests.xtext.UML25LoadTests;
+import org.eclipse.ocl.xtext.tests.xtext.UMLConsoleTests;
+import org.eclipse.ocl.xtext.tests.xtext.UMLLoadTests;
+import org.eclipse.ocl.xtext.tests.xtext.UsageTests;
+import org.eclipse.ocl.xtext.tests.xtext.ValidationTutorialExamples;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

@@ -17,4 +17,8 @@ package org.eclipse.ocl.pivot.ids;
  */
 public interface WildcardId extends TypeId
 {
+	/**
+	 * @since 7.0
+	 */
+	int getIndex();
 }

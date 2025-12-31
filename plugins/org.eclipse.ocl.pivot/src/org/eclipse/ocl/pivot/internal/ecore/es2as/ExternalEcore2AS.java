@@ -63,8 +63,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
-import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
-import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
+import org.eclipse.ocl.pivot.internal.ecore.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
@@ -943,8 +942,7 @@ public class ExternalEcore2AS extends Ecore2AS
 	/**
 	 * @since 1.7
 	 */
-	protected Type resolveGenericType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
-	//	List<@NonNull ETypeParameter> allETypeParameters = getAllETypeParameters(null, eGenericType);
+	protected Type resolveGenericType(@NonNull EGenericType eGenericType) {
 		List<@NonNull EGenericType> eTypeArguments = ClassUtil.nullFree(eGenericType.getETypeArguments());
 		assert !eGenericType.getETypeArguments().isEmpty();
 		EClassifier eClassifier = eGenericType.getEClassifier();
@@ -959,7 +957,7 @@ public class ExternalEcore2AS extends Ecore2AS
 			if (eTypeArgument.getETypeParameter() != null) {
 				getClass();		// XXX
 			}
-			Type typeArgument = resolveType(resolvedSpecializations, eTypeArgument);
+			Type typeArgument = resolveType(eTypeArgument);
 			if (typeArgument != null) {
 				typeArgument = getNormalizedType(typeArgument);
 				templateArguments.add(typeArgument);
@@ -1085,10 +1083,9 @@ public class ExternalEcore2AS extends Ecore2AS
 	 * @since 1.17
 	 */
 	protected void resolveSpecializations() {
-		Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
 		assert genericTypes != null;
 		for (@NonNull EGenericType eGenericType : genericTypes) {
-			Type pivotType = resolveType(resolvedSpecializations, eGenericType);
+			Type pivotType = resolveType(eGenericType);
 			if (pivotType != null) {
 				addCreated(eGenericType, pivotType);
 			}
@@ -1136,7 +1133,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		}
 	}
 
-	protected Type resolveType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
+	protected Type resolveType(@NonNull EGenericType eGenericType) {
 		Type pivotType = getCreated(Type.class, eGenericType);
 		if (pivotType != null) {
 			if (pivotType instanceof WildcardType) {
@@ -1158,13 +1155,8 @@ public class ExternalEcore2AS extends Ecore2AS
 			pivotType = resolveWildcardType(eGenericType);
 		}
 		else if (!eTypeArguments.isEmpty()) {
-			String ecoreMoniker = Ecore2Moniker.toString(eGenericType);
-			pivotType = resolvedSpecializations.get(ecoreMoniker);
-			if (pivotType == null) {
-				pivotType = resolveGenericType(resolvedSpecializations, eGenericType);
-				pivotType = getNormalizedType(pivotType);
-				resolvedSpecializations.put(ecoreMoniker, pivotType);
-			}
+			pivotType = resolveGenericType(eGenericType);
+			pivotType = getNormalizedType(pivotType);			// XXX ??? clearer normalized/wildcard flow
 		}
 		else if (eClassifier instanceof EDataType) {
 			assert eGenericType.getETypeArguments().isEmpty();

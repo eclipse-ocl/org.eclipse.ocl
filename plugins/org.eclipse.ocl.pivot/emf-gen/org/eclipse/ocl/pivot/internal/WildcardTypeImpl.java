@@ -34,9 +34,10 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.ids.ElementId;
-import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.WildcardId;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
  * <!-- begin-user-doc -->
@@ -673,21 +674,28 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		return visitor.visitWildcardType(this);
 	}
 
+	private int index = -1;
+
 	@Override
-	public @NonNull TypeId computeId() {
-	//	return IdManager.getWildcardId();
-		ElementId parentId = null;
-		TemplateableElement asTemplateableElement = getOwningTemplateableElement();
-		if (asTemplateableElement instanceof org.eclipse.ocl.pivot.Class) {
-			parentId = ((org.eclipse.ocl.pivot.Class)asTemplateableElement).getTypeId();
-			getClass();
-			return (TypeId)parentId;		// XXX index
-		}
-		else if (asTemplateableElement instanceof Operation) {
-			parentId = ((Operation)asTemplateableElement).getOperationId();
-			getClass();
-		}
-		throw new UnsupportedOperationException();
+	public void setName(String newName) {
+		assert newName.startsWith(PivotConstants.WILDCARD_NAME);
+		index = Integer.parseInt(newName.substring(PivotConstants.WILDCARD_NAME.length()));
+		super.setName(newName);
 	}
 
+	private WildcardId wildcardId = null;
+
+	@Override
+	public @NonNull WildcardId getWildcardId() {
+		WildcardId wildcardId2 = wildcardId;
+		if (wildcardId2 == null) {
+			synchronized (this) {
+				wildcardId2 = wildcardId;
+				if (wildcardId2 == null) {
+					wildcardId = wildcardId2 = IdManager.getWildcardId(index);
+				}
+			}
+		}
+		return wildcardId2;
+	}
 } //WildcardTypeImpl
