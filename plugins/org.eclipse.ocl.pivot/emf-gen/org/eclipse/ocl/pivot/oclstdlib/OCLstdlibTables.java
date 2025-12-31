@@ -443,6 +443,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull ParameterTypes _Integer___Integer = new ParameterTypes(Types._Integer, Types._Integer);
 		public static final @NonNull ParameterTypes _Lambda_self_$$0_F_result_$$1_F = new ParameterTypes(MODEL.getLambdaType(_self_$$0_F, _result_$$1_F));
 		public static final @NonNull ParameterTypes _Lambda_self_$$0_F_result_$$2_F = new ParameterTypes(MODEL.getLambdaType(_self_$$0_F, _result_$$2_F));
+		public static final @NonNull ParameterTypes _Lambda_self_$$0_F_result_Boolean_F = new ParameterTypes(MODEL.getLambdaType(_self_$$0_F, _result_Boolean_F));
 		public static final @NonNull ParameterTypes _Lambda_self_$$0_F_result_Boolean_T = new ParameterTypes(MODEL.getLambdaType(_self_$$0_F, _result_Boolean_T));
 		public static final @NonNull ParameterTypes _Lambda_self_$$0_F_result_OclAny_F = new ParameterTypes(MODEL.getLambdaType(_self_$$0_F, _result_OclAny_F));
 		public static final @NonNull ParameterTypes _Lambda_self_$$0_F_result_OclComparable_F = new ParameterTypes(MODEL.getLambdaType(_self_$$0_F, _result_OclComparable_F));
@@ -613,19 +614,19 @@ public class OCLstdlibTables extends AbstractTables
 			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__excludingAll = LIBRARY.createOperation(Types._Collection, "excludingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__2_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Collection__2_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			15 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__1_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Collection__1_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			16 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__0_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Collection__0_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			17 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation(Types._Collection, "flatten", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, false),
 			18 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_flatten_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__2_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Collection__2_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			19 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__1_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Collection__1_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			20 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__0_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Collection__0_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			21 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Iteration _Collection__gather = LIBRARY.createIteration(Types._Collection, "gather", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			22 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_gather_V), org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE);
@@ -737,17 +738,17 @@ public class OCLstdlibTables extends AbstractTables
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Map__excludingMap = LIBRARY.createOperation(Types._Map, "excludingMap", null, Parameters._Map__$$2_$$3__, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			15, new TemplateParameters(TypeParameters._2_Map_excludingMap_K2, TypeParameters._3_Map_excludingMap_V2), org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
-		public static final @NonNull Iteration _Map__2_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Map__2_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			16 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__1_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Map__1_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			17 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__0_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Map__0_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			18 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__2_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Map__2_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			19 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__1_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Map__1_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			20 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__0_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Map__0_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			21 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Iteration _Map__gather = LIBRARY.createIteration(Types._Map, "gather", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$2, false),
 			22 | IsRequired, new TemplateParameters(TypeParameters._2_Map_gather_E), org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE);
