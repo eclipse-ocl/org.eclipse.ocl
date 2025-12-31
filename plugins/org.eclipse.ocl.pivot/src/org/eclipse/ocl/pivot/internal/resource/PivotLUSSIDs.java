@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.TemplateArgument;
@@ -290,6 +291,9 @@ public class PivotLUSSIDs extends LUSSIDs
 			return true;
 		}
 		else if ((eObject instanceof Parameter) && !(eObject instanceof LambdaParameter)) {
+			return true;
+		}
+		else if (eObject instanceof Precedence) {
 			return true;
 		}
 		else if (eObject instanceof ShadowPart) {
