@@ -683,19 +683,11 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 		super.setName(newName);
 	}
 
-	private WildcardId wildcardId = null;
-
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull WildcardId getWildcardId() {
-		WildcardId wildcardId2 = wildcardId;
-		if (wildcardId2 == null) {
-			synchronized (this) {
-				wildcardId2 = wildcardId;
-				if (wildcardId2 == null) {
-					wildcardId = wildcardId2 = IdManager.getWildcardId(index);
-				}
-			}
-		}
-		return wildcardId2;
+	public @NonNull WildcardId computeId() {
+		return IdManager.getWildcardId(index);
 	}
 } //WildcardTypeImpl
