@@ -1385,7 +1385,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				s.append(partialName(localOrphan));
 			}
 			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Class) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Class)localOrphan)) {
-				//	s.append("orphanClass_"+partialName(localOrphan));
 				s.append("_" + partialName(localOrphan));
 			}
 			else if ((localOrphan instanceof org.eclipse.ocl.pivot.Package) && Orphanage.isOrphan((org.eclipse.ocl.pivot.Package)localOrphan)) {
@@ -1457,6 +1456,5 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	protected void setEnvironmentFactory(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeModel = environmentFactory.getCompleteModel();
-	//	nameQueries = new NameQueries(environmentFactory);
 	}
 }

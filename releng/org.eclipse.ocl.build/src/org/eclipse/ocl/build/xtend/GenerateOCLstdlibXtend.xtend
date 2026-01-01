@@ -31,7 +31,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 				«IF pkg == pkge && !excludedEClassifierNames.contains(type.name)»
 					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»(«getEcoreLiteral(type)»);
 				«ELSE»
-					private final «getEClassReference(true, type)» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
+					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
 				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»

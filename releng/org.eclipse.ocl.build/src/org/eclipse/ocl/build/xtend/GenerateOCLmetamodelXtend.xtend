@@ -33,7 +33,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 				«ENDFOR»
 			«ELSE»
 				«FOR type : ClassUtil.nullFree(pkge2classTypes.get(pkge))»
-					private final «getEClassReference(true, type)» «type.getPrefixedSymbolNameWithoutNormalization("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
+					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_"+type.partialName())» = create«type.eClass().name»("«type.name»");
 				«ENDFOR»
 			«ENDIF»
 		«ENDFOR»
