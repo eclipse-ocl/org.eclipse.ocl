@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
@@ -69,7 +70,7 @@ public class AS2ID
 		AS2ID as2id = new AS2ID(options);
 		for (int i = 0; i < resources.size(); i++) {		// Proxy resolution may add new resources
 			Resource resource = resources.get(i);
-			if (resource instanceof ASResource) {			// XXX gather transistive resource to avoid redundant re-assigns
+			if (resource instanceof ASResource) {			// XXX gather transitive resource to avoid redundant re-assigns
 				as2id.assignLUSSIDs((ASResource) resource, alreadyAssigned);
 			}
 		}
@@ -119,12 +120,15 @@ public class AS2ID
 		}
 	}
 
-	public int assignLUSSID(@NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
+	/**
+	 * @since 7.0
+	 */
+	public int assignLUSSID(@NonNull Element element, boolean isReferenced, @Nullable TemplateableElement wildcardContext) {
 		Resource resource = element.eResource();
 		if (resource instanceof ASResource) {
 			ASResource asResource = (ASResource)resource;
 			LUSSIDs lussids = asResource.getLUSSIDs(options);
-			return lussids.assignLUSSID(this, element, isReferenced, normalizeTemplateParameters);
+			return lussids.assignLUSSID(this, element, isReferenced, wildcardContext);
 		}
 		else {
 			assert element instanceof NormalizedTemplateParameter; //false;			// XXX

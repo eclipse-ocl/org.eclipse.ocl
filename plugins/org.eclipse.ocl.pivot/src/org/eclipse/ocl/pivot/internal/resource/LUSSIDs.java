@@ -27,9 +27,11 @@ import org.eclipse.emf.ecore.util.EContentsEList.FeatureIterator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -83,6 +85,10 @@ public abstract class LUSSIDs
 	protected static final int SIBLING_INDEX_MULTIPLIER = 1;
 	protected static final int TEMPLATE_BINDING_MULTIPLIER = 89;
 	protected static final int TEMPLATE_PARAMETER_INDEX_MULTIPLIER = 97;
+	/**
+	 * @since 7.0
+	 */
+	protected static final int WILDCARD_TYPE_MULTIPLIER = 109;
 
 	/**
 	 * Base 64 lookup table for encoding xmi:id.
@@ -216,18 +222,30 @@ public abstract class LUSSIDs
 	protected final @NonNull ASResource asResource;
 
 	/**
-	 * Map from each identified element to its unique-ish 32 bit hash code.
+	 * Map from each identified element to its unique-ish 32 bit hash code. Each identified element ultimately has
+	 * a corresponding unambiguous base64 xmi:id.
 	 */
 	private /*final @NonNull*/ Map<@NonNull Element, @NonNull Integer> identifiedElement2lussid = new HashMap<>();
 
 	/**
-	 * Map from each non-identified element to its unique-ish 32 bit hash code.
+	 * Map from each non-identified element to its unique-ish 32 bit hash code. Internal elements are not externally
+	 * refedrfenceable and so have no xmi:id. The lussid computation is cached to save effort.
 	 */
 	private /*final @NonNull*/ Map<@NonNull Element, @NonNull Integer> internalElement2lussid = new HashMap<>();
 
 	/**
-	 * Map from each element to its unique-ish 32 bit hash code with TemplateParameters normalized to simple indexes
-	 * in order to avoid cycles for Operation/Iterations whose parameter types involve their TemplateParameters.
+	 * Map from each element to its unique-ish 32 bit hash code
+	 * with TemplateParameters normalized to simple positive absolute hierarchical indexes
+	 * and WildCardTypes to negated relative indexes.
+	 * This avoid cycles for Operation/Iterations whose parameter types involve their TemplateParameters/WildcardTypes.
+	 *
+	 * An Operation is cached in the regular identifiedElement2lussid using normalized LUSSIDs of its parameters
+	 * to avoid cycles.
+	 *
+	 * An Operation Wildcard is cached in the regular identifiedElement2lussid using the regular parent Operation LUSSID
+	 * as part of its computation.
+	 *
+	 * An intermediate type in the signature of an operation such as myOP(s : Set<? extends String>)
 	 */
 	private /*final @NonNull*/ Map<@NonNull Element, @NonNull Integer> normalizedElement2lussid = new HashMap<>();
 
@@ -307,15 +325,19 @@ public abstract class LUSSIDs
 	/**
 	 * Return the 32 bit LUSSID for element derived from the hashCode of its hierarchical path
 	 * and if necessary from the local context.
+	 * @since 7.0
 	 */
-	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, boolean normalizeTemplateParameters) {
+	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, @Nullable TemplateableElement wildcardContext) {
+		if ("rightAS!kiamaas::kiamaas::Node::Plus".equals(element.toString())) {
+			getClass();			// XXX
+		}
 		assert asResource == element.eResource();
 		int savedDepth = debugDepth;
 		assert debugDepth < 30;
 		try {
 			debugDepth++;
 			Integer idObject = null;
-			if (normalizeTemplateParameters) {
+			if (wildcardContext != null) {
 				idObject = normalizedElement2lussid.get(element);
 				if (idObject != null) {
 					return idObject.intValue();
@@ -338,13 +360,13 @@ public abstract class LUSSIDs
 			EObject eContainer = element.eContainer();
 			int id = 0;
 			if (eContainer instanceof Element) {
-				id = CONTAINER_MULTIPLIER * assignLUSSID(as2id, (Element) eContainer, false, normalizeTemplateParameters);
+				id = CONTAINER_MULTIPLIER * assignLUSSID(as2id, (Element) eContainer, false, wildcardContext);
 				EReference eContainmentFeature = element.eContainmentFeature();
 				id += CONTAINMENT_FEATURE_NAME_MULTIPLER * eContainmentFeature.getName().hashCode();
 				if (eContainmentFeature.isMany()) {
 					Integer localId = null;
 					if (eContainmentFeature.isUnique() || !eContainmentFeature.isOrdered()) {
-						localId = computeLocalLUSSID(as2id, element, normalizeTemplateParameters);
+						localId = computeLocalLUSSID(as2id, element, wildcardContext);
 					}
 					if (localId != null) {
 						id += localId.intValue();
@@ -357,7 +379,7 @@ public abstract class LUSSIDs
 			}
 			idObject = Integer.valueOf(id);
 			assert idObject != null;
-			if (normalizeTemplateParameters) {
+			if (wildcardContext != null) {
 				normalizedElement2lussid.put(element, idObject);
 			}
 			else if (isReferenced) {
@@ -367,7 +389,7 @@ public abstract class LUSSIDs
 			else {
 				internalElement2lussid.put(element, idObject);
 			}
-			if (!normalizeTemplateParameters) {
+			if (wildcardContext == null) {
 				//
 				//	Collisions on 32 bit hashcodes should be very unlikely, but poor hashing, null names may undermine
 				//	the good principles. Fortunately they do not matter; the xmi:id disambiguation just has to work harder.
@@ -411,7 +433,7 @@ public abstract class LUSSIDs
 			assert eClass != null;
 			boolean isExternallyReferenceable = isExternallyReferenceable(eObject);
 			if (isExternallyReferenceable) {
-				assignLUSSID(as2id, (ElementImpl) eObject, true, false);
+				assignLUSSID(as2id, (ElementImpl) eObject, true, null);
 			}
 			FeatureIterator<EObject> featureIterator = (FeatureIterator<EObject>)eObject.eCrossReferences().iterator();
 			while (featureIterator.hasNext()) {
@@ -424,12 +446,12 @@ public abstract class LUSSIDs
 						if (eReference.isMany()) {
 							for (Object eTarget : (List<?>)eTargetOrTargets) {
 								if (eTarget instanceof Element) {
-									as2id.assignLUSSID((Element)eTarget, true, false);
+									as2id.assignLUSSID((Element)eTarget, true, null);
 								}
 							}
 						}
 						else if (eTargetOrTargets instanceof Element) {
-							as2id.assignLUSSID((Element)eTargetOrTargets, true, false);
+							as2id.assignLUSSID((Element)eTargetOrTargets, true, null);
 						}
 					}
 					else if (eResource instanceof ASResource) {
@@ -459,6 +481,7 @@ public abstract class LUSSIDs
 			Integer lussid = identifiedElement2lussid.get(element);
 			assert lussid != null;
 			String newXMIID = computeXMIID(lussid.intValue());
+			System.out.println("assignXMIIDs " + newXMIID + " " + lussid + " " + NameUtil.debugSimpleName(element) + " " + element);
 			String oldXMIID = asResource.getID(element);
 			EObject oldElement = asResource.basicGetEObjectByID(newXMIID);
 			if ((oldElement instanceof Element) && ((oldElement != element) || !oldXMIID.equals(newXMIID))) {
@@ -511,8 +534,9 @@ public abstract class LUSSIDs
 	/**
 	 * Return the hash of the aspects of element that distinguish it from its siblings.
 	 * Return null if there are no distinguishing aspects.
+	 * @since 7.0
 	 */
-	protected abstract @Nullable Integer computeLocalLUSSID(@NonNull AS2ID as2id, @NonNull EObject element, boolean normalizeTemplateParameters);
+	protected abstract @Nullable Integer computeLocalLUSSID(@NonNull AS2ID as2id, @NonNull EObject element, @Nullable TemplateableElement wildcardContext);
 
 	/**
 	 * Return the 5 base64 letter xmi:id for the lussid.

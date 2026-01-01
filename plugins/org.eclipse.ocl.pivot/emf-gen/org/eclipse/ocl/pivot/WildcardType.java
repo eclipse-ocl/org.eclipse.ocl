@@ -97,4 +97,9 @@ public interface WildcardType extends org.eclipse.ocl.pivot.Class
 	 * @generated
 	 */
 	void setUpperBound(Type value);
+
+	/**
+	 * @since 7.0
+	 */
+	int getIndex();
 } // WildcardType

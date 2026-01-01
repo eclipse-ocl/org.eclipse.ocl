@@ -677,6 +677,11 @@ public class WildcardTypeImpl extends ClassImpl implements WildcardType
 	private int index = -1;
 
 	@Override
+	public int getIndex() {
+		return index;
+	}
+
+	@Override
 	public void setName(String newName) {
 		assert newName.startsWith(PivotConstants.WILDCARD_NAME);
 		index = Integer.parseInt(newName.substring(PivotConstants.WILDCARD_NAME.length()));

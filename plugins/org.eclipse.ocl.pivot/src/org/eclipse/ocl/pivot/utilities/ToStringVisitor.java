@@ -377,6 +377,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 					append("::"); //$NON-NLS-1$
 				}
 			}
+			else if (container instanceof org.eclipse.ocl.pivot.Class) {
+				appendQualifiedName((NamedElement) container);
+				append("::"); //$NON-NLS-1$
+			}
 			appendName(object);
 			if (object instanceof TemplateableElement) {
 				TemplateableElement templateableElement = (TemplateableElement) object;
@@ -1197,7 +1201,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		if (asResource != null) {
 			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
-				append("(" + environmentFactory.getPrecedenceManager().getOrder(precedence) + ")");
+				append("(" + environmentFactory.getPrecedenceManager().basicGetOrder(precedence) + ")");
 			}
 		}
 		return null;
@@ -1418,12 +1422,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return null;
 	}
 
-	@Override
-	public String visitWildcardType(@NonNull WildcardType object) {
-		appendName(object);
-		return null;
-	}
-
 	/**
 	 * Callback for an UnspecifiedValueExp visit.
 	 *
@@ -1476,6 +1474,12 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitVoidType(@NonNull VoidType object) {
 		appendName(object);
+		return null;
+	}
+
+	@Override
+	public String visitWildcardType(@NonNull WildcardType object) {
+		appendQualifiedName((NamedElement)object.getOwningTemplateableElement(), "::", object);
 		return null;
 	}
 

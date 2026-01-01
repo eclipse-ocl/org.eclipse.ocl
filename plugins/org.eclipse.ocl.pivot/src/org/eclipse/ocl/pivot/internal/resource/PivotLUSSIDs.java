@@ -21,9 +21,11 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionLiteralPart;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -94,11 +96,22 @@ public class PivotLUSSIDs extends LUSSIDs
 	 * Return null if there are no distinguishing aspects.
 	 */
 	@Override
-	protected @Nullable Integer computeLocalLUSSID(@NonNull AS2ID as2id, @NonNull EObject element, boolean normalizeTemplateParameters) {
+	protected @Nullable Integer computeLocalLUSSID(@NonNull AS2ID as2id, @NonNull EObject element, @Nullable TemplateableElement wildcardContext) {
 		assert asResource == element.eResource();
 		int localId = 0;
 		if (!(element instanceof NamedElement)) {
 			return null;
+		}
+		if ((element instanceof DataType) && !(element instanceof IterableType) && (((DataType)element).getOwnedTemplateArguments().size() > 0)) {
+			String s = element.toString();
+			getClass();				// XXX
+		}
+		if (element instanceof WildcardType) {		// XXX Oops bad TemplateableElement inheritance
+			WildcardType wildcard = (WildcardType)element;
+		//	Integer contextLUSSID = computeLocalLUSSID(as2id, wildcard.getOwningTemplateableElement(), true);
+		//	assert contextLUSSID != null;
+			localId = /*contextLUSSID.intValue() +*/ WILDCARD_TYPE_MULTIPLIER * (1 + wildcard.getIndex());
+			return localId;
 		}
 		String name = ((NamedElement)element).getName();
 		if (name == null) {
@@ -114,14 +127,14 @@ public class PivotLUSSIDs extends LUSSIDs
 			if (asTemplateArguments != null) {
 				for (@NonNull TemplateArgument templateArgument :  asTemplateArguments) {
 					Element actual = templateArgument.getActual();
-					if (actual instanceof WildcardType) {
+					/*if (actual instanceof WildcardType) {
 						localId += templateIndexMultiplier;
 					}
-					else if (actual instanceof Type) {
-						localId += templateIndexMultiplier * computeReferenceLUSSID(as2id, (Type) actual, normalizeTemplateParameters);
+					else*/ if (actual instanceof Type) {
+						localId += templateIndexMultiplier * computeReferenceLUSSID(as2id, (Type) actual, wildcardContext);
 					}
 					else if (actual != null) {
-						localId += templateIndexMultiplier * as2id.assignLUSSID(actual, false, normalizeTemplateParameters);
+						localId += templateIndexMultiplier * as2id.assignLUSSID(actual, false, wildcardContext);
 					}
 					templateIndexMultiplier += 2 * TEMPLATE_BINDING_MULTIPLIER;
 				}
@@ -150,7 +163,7 @@ public class PivotLUSSIDs extends LUSSIDs
 				}
 				Type entryClass = mapType.getEntryClass();
 				if (entryClass != null) {
-					localId += templateIndexMultiplier * computeReferenceLUSSID(as2id, entryClass, normalizeTemplateParameters);
+					localId += templateIndexMultiplier * computeReferenceLUSSID(as2id, entryClass, wildcardContext);
 				}
 			}
 			else if (element instanceof LambdaType) {
@@ -159,12 +172,13 @@ public class PivotLUSSIDs extends LUSSIDs
 				lambdaParameters.add(PivotUtil.getOwnedContext(lambdaType));
 				lambdaParameters.add(PivotUtil.getOwnedResult(lambdaType));
 				lambdaParameters.addAll(PivotUtil.getOwnedParametersList(lambdaType));
-				localId += computeParametersLUSSID(as2id, lambdaParameters);
+				localId += computeParametersLUSSID(as2id, lambdaParameters, wildcardContext);
 			}
 			else if (element instanceof Iteration) {
-				Iterable<@NonNull Parameter> asIterators = PivotUtil.getOwnedIterators((Iteration)element);
+				Iteration iteration = (Iteration)element;
+				Iterable<@NonNull Parameter> asIterators = PivotUtil.getOwnedIterators(iteration);
 				Iterable<@NonNull Parameter> parameters;
-				Parameter asAccumulator = ((Iteration)element).getOwnedAccumulator();
+				Parameter asAccumulator = iteration.getOwnedAccumulator();
 				if (asAccumulator == null) {
 					parameters = asIterators;
 				}
@@ -172,10 +186,11 @@ public class PivotLUSSIDs extends LUSSIDs
 					parameters = Iterables.concat(asIterators, Collections.singletonList(asAccumulator));
 					assert parameters != null;
 				}
-				localId += computeParametersLUSSID(as2id, parameters);
+				localId += computeParametersLUSSID(as2id, parameters, iteration);
 			}
 			else if (element instanceof Operation) {
-				localId += computeParametersLUSSID(as2id, PivotUtil.getOwnedParameters((Operation)element));
+				Operation operation = (Operation)element;
+				localId += computeParametersLUSSID(as2id, PivotUtil.getOwnedParameters(operation), operation);
 			}
 		}
 		else if (element instanceof Property) {
@@ -197,16 +212,22 @@ public class PivotLUSSIDs extends LUSSIDs
 			Parameter parameter = (Parameter)element;
 			Type type = parameter.getType();
 			if (type != null) {
-				localId += PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, type, true);
+				localId += PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, type, wildcardContext);
 			}
 		}
 		return Integer.valueOf(localId);
 	}
 
-	protected int computeParametersLUSSID(@NonNull AS2ID as2id, @NonNull Iterable<@NonNull ? extends Parameter> parameters) {
+	/**
+	 * @since 7.0
+	 */
+	protected int computeParametersLUSSID(@NonNull AS2ID as2id, @NonNull Iterable<@NonNull ? extends Parameter> parameters, @Nullable TemplateableElement wildcardContext) {
 		int parametersLUSSID = 0;
 		int parameterIndex = 1;
 		for (@NonNull Parameter parameter :  parameters) {
+			if (parameter instanceof WildcardType) {
+				getClass();		// XXX
+			}
 			int index = -1;
 			Type parameterType = parameter.getType();
 			assert (parameterType == null) || (parameterType instanceof NormalizedTemplateParameter) || (parameterType.eResource() != null);
@@ -225,41 +246,56 @@ public class PivotLUSSIDs extends LUSSIDs
 				parametersLUSSID += parameterIndex * TEMPLATE_PARAMETER_INDEX_MULTIPLIER * (index + 1);
 			}
 			else if (parameterType != null) {
-				parametersLUSSID += parameterIndex * OPERATION_PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, parameterType, true);
+				parametersLUSSID += parameterIndex * OPERATION_PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, parameterType, wildcardContext);
 			}
 			parameterIndex++;
 		}
 		return parametersLUSSID;
 	}
 
-	protected int computeReferenceLUSSID(@NonNull AS2ID as2id, @NonNull Type type, boolean normalizeTemplateParameters) {
-		if (normalizeTemplateParameters && (type instanceof TemplateParameter)) {
+	/**
+	 * @since 7.0
+	 */
+	protected int computeReferenceLUSSID(@NonNull AS2ID as2id, @NonNull Type type, @Nullable TemplateableElement wildcardContext) {
+		if (wildcardContext != null) {
 			boolean gotIt = false;
 			int index = 0;
-			for (EObject eContainer = type.eContainer(); eContainer != null; eContainer = eContainer.eContainer()) {
-				if (eContainer instanceof TemplateableElement) {
-					List<@NonNull TemplateParameter> asTemplateParameters = ((TemplateableElement)eContainer).basicGetOwnedTemplateParameters();
-					if (asTemplateParameters != null) {
-						int localIndex = asTemplateParameters.indexOf(type);
-						if (localIndex >= 0) {
-							index += localIndex;
-							gotIt = true;
-						}
-						else {
-							index += asTemplateParameters.size();
+			if (type instanceof TemplateParameter) {
+				for (EObject eContainer = type.eContainer(); eContainer != null; eContainer = eContainer.eContainer()) {
+					if (eContainer instanceof TemplateableElement) {
+						List<@NonNull TemplateParameter> asTemplateParameters = ((TemplateableElement)eContainer).basicGetOwnedTemplateParameters();
+						if (asTemplateParameters != null) {
+							int localIndex = asTemplateParameters.indexOf(type);
+							if (localIndex >= 0) {
+								index += localIndex;
+								gotIt = true;
+							}
+							else {
+								index += asTemplateParameters.size();
+							}
 						}
 					}
+				}
+			}
+			else if (type instanceof WildcardType) {
+				WildcardType wildcard = (WildcardType)type;
+				if (wildcard.eContainer() == wildcardContext) {
+					index += -(1 + wildcard.getIndex());
+					gotIt = true;
 				}
 			}
 			if (gotIt) {
 				return TEMPLATE_PARAMETER_INDEX_MULTIPLIER * index;
 			}
 		}
-		return as2id.assignLUSSID(type, false, true);
+		return as2id.assignLUSSID(type, false, wildcardContext);
 	}
 
 	@Override
 	protected boolean isExternallyReferenceable(@NonNull EObject eObject) {
+//		if (eObject instanceof WildcardType) {
+//			return false;
+//		}
 		if (eObject instanceof Type) {				// Class, TemplateParameter
 		//	if ((typeOrphanage == null) || (eObject.eContainer() != typeOrphanage)) {
 				return true;
