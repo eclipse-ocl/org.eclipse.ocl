@@ -460,8 +460,8 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	/**
 	 * @since 7.0
 	 */
-	public @NonNull FlatFragment createFragment(org.eclipse.ocl.pivot.@NonNull Class cses, org.eclipse.ocl.pivot.@NonNull Class cses2) {
-		return new FlatFragment(cses.getFlatClass(this), cses2.getFlatClass(this));
+	public @NonNull FlatFragment createFragment(org.eclipse.ocl.pivot.@NonNull Class derivedClass, org.eclipse.ocl.pivot.@NonNull Class baseClass) {
+		return new FlatFragment(derivedClass.getFlatClass(this), baseClass.getFlatClass(this));
 	}
 
 	@Override

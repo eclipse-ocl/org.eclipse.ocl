@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
+import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -256,9 +257,7 @@ public class NameQueries
 		//		if (elem == null) {
 		//			logger.error("getPrefixedSymbolName for '" + prefix + "'and null");
 		//		}
-		if ((element instanceof CollectionType) && (((CollectionType)element).getGeneric() != null)) {
-		}
-		else if ((element instanceof MapType) && (((MapType)element).getGeneric() != null)) {
+		if ((element instanceof IterableType) && (((IterableType)element).getGeneric() != null)) {
 		}
 		else if (element instanceof org.eclipse.ocl.pivot.Class) {
 			element = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)element);
@@ -287,7 +286,7 @@ public class NameQueries
 		if (symbolName.startsWith("standardLibraryPackage")) {
 			getClass();			// FIXME Debugging
 		}
-		if (symbolName.startsWith("_Collection_$$0_F")) {
+		if (symbolName.startsWith("_Annotation")) {
 			getClass();			// FIXME Debugging
 		}
 		if (symbolName.startsWith("$$0")) {

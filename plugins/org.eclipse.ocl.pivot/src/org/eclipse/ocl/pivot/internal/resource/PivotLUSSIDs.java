@@ -212,7 +212,8 @@ public class PivotLUSSIDs extends LUSSIDs
 			Parameter parameter = (Parameter)element;
 			Type type = parameter.getType();
 			if (type != null) {
-				localId += PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, type, wildcardContext);
+				TemplateableElement nestedWildcardContext = getNestedWildcardContext(parameter, wildcardContext);
+				localId += PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, type, nestedWildcardContext);
 			}
 		}
 		return Integer.valueOf(localId);
@@ -246,7 +247,8 @@ public class PivotLUSSIDs extends LUSSIDs
 				parametersLUSSID += parameterIndex * TEMPLATE_PARAMETER_INDEX_MULTIPLIER * (index + 1);
 			}
 			else if (parameterType != null) {
-				parametersLUSSID += parameterIndex * OPERATION_PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, parameterType, wildcardContext);
+				TemplateableElement nestedWildcardContext = getNestedWildcardContext(parameter, wildcardContext);
+				parametersLUSSID += parameterIndex * OPERATION_PARAMETER_TYPE_MULTIPLIER * computeReferenceLUSSID(as2id, parameterType, nestedWildcardContext);
 			}
 			parameterIndex++;
 		}
@@ -288,7 +290,21 @@ public class PivotLUSSIDs extends LUSSIDs
 				return TEMPLATE_PARAMETER_INDEX_MULTIPLIER * index;
 			}
 		}
+	//	TemplateableElement nestedWildcardContext = getNestedWildcardContext(parameter, wildcardContext);
 		return as2id.assignLUSSID(type, false, wildcardContext);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @Nullable TemplateableElement getNestedWildcardContext(@NonNull Parameter parameter, @Nullable TemplateableElement wildcardContext) {
+		EObject eContainer = parameter.eContainer();
+		if (eContainer instanceof TemplateableElement) {			// Operation / Iteration
+			return (TemplateableElement) eContainer;
+		}
+		else {
+			return wildcardContext;
+		}
 	}
 
 	@Override

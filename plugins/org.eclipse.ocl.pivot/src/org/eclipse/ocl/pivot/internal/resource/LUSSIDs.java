@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.resource.ASResource;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.UniqueList;
@@ -328,9 +327,6 @@ public abstract class LUSSIDs
 	 * @since 7.0
 	 */
 	protected int assignLUSSID(@NonNull AS2ID as2id, @NonNull Element element, boolean isReferenced, @Nullable TemplateableElement wildcardContext) {
-		if ("rightAS!kiamaas::kiamaas::Node::Plus".equals(element.toString())) {
-			getClass();			// XXX
-		}
 		assert asResource == element.eResource();
 		int savedDepth = debugDepth;
 		assert debugDepth < 30;
@@ -481,7 +477,10 @@ public abstract class LUSSIDs
 			Integer lussid = identifiedElement2lussid.get(element);
 			assert lussid != null;
 			String newXMIID = computeXMIID(lussid.intValue());
-			System.out.println("assignXMIIDs " + newXMIID + " " + lussid + " " + NameUtil.debugSimpleName(element) + " " + element);
+		//	System.out.println("assignXMIIDs " + newXMIID + " " + lussid + " " + NameUtil.debugSimpleName(element) + " " + element);
+		//	if ("aFlMK".equals(newXMIID) ) {
+		//		getClass();		// XXX
+		//	}
 			String oldXMIID = asResource.getID(element);
 			EObject oldElement = asResource.basicGetEObjectByID(newXMIID);
 			if ((oldElement instanceof Element) && ((oldElement != element) || !oldXMIID.equals(newXMIID))) {
