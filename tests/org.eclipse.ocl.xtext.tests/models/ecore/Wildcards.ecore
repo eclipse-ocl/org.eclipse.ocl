@@ -10,14 +10,23 @@
       </eGenericType>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="EJavaClass" instanceClassName="java.lang.Class">
+    <eTypeParameters name="T"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EStructuralFeature" abstract="true">
     <eOperations name="getContainerClass">
       <eGenericType eClassifier="#//EJavaClass">
-        <eTypeArguments/>
+        <eTypeArguments>
+          <eLowerBound eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eTypeArguments>
       </eGenericType>
     </eOperations>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EDataType" name="EJavaClass" instanceClassName="java.lang.Class">
-    <eTypeParameters name="T"/>
+    <eOperations name="op">
+      <eGenericType eClassifier="#//EJavaClass">
+        <eTypeArguments>
+          <eUpperBound eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBooleanObject"/>
+        </eTypeArguments>
+      </eGenericType>
+    </eOperations>
   </eClassifiers>
 </ecore:EPackage>

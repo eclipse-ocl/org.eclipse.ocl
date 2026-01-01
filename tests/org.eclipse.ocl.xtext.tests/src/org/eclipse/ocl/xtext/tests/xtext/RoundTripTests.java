@@ -605,6 +605,27 @@ public class RoundTripTests extends XtextTestCase
 		doRoundTripFromOCLinEcore(testFile);
 	}
 
+	public void testWildcards_oclinecore() throws IOException, InterruptedException {
+		String testFileContents =
+				"package wildcards : wildcards = 'http://www.eclipse.org/ocl/test/wildcards'\n"
+				+ "{\n"
+				+ "	abstract class EClassifier\n"
+				+ "	{\n"
+				+ "		attribute instanceClass : EJavaClass(?)[?] { derived readonly transient volatile };\n"
+				+ "	}\n"
+				+ "\n"
+				+ "	datatype EJavaClass(T) : 'java.lang.Class' { serializable };\n"
+				+ "\n"
+				+ "	abstract class EStructuralFeature\n"
+				+ "	{\n"
+				+ "		operation getContainerClass() : EJavaClass(? extends String)[?];\n"
+				+ "		operation op() : EJavaClass(?)[?];\n"
+				+ "	}\n"
+				+ "}\n";
+		TestFile testFile = createFile("Wildcards.oclinecore", testFileContents);
+		doRoundTripFromOCLinEcore(testFile);
+	}
+
 	public void testCompleteOCLRoundTrip_Bug496768() throws IOException, InterruptedException {
 		OCL ocl = OCL.newInstance(getProjectMap());
 		getTestFileURI("Bug496768.ecore", ocl, getTestModelURI("models/ecore/Bug496768.ecore"));

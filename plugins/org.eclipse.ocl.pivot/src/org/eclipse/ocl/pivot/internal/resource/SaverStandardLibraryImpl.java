@@ -109,7 +109,9 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 					}
 				}
 			}
-			return compareTo;
+			String c1 = o1.toString();			// ToStringVisitor shows wildcard scope
+			String c2 = o2.toString();
+			return c1.compareTo(c2);
 		}
 	}
 
