@@ -89,10 +89,8 @@ import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
-import org.eclipse.ocl.pivot.internal.ecore.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
-import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.Technology;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
@@ -477,9 +475,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			pivotElement.setNsPrefix(null);
 		}
 		if (!(ePackage.eContainer() instanceof EAnnotation)) {
-			String moniker = AS2Moniker.toString(pivotElement);
-			MonikerAliasAdapter adapter = MonikerAliasAdapter.getAdapter(ClassUtil.requireNonNull(ePackage.eResource()));
-			adapter.getAliasMap().put(ePackage, moniker);
+//			String moniker = AS2Moniker.toString(pivotElement);
+//			MonikerAliasAdapter adapter = MonikerAliasAdapter.getAdapter(ClassUtil.requireNonNull(ePackage.eResource()));
+//			adapter.getAliasMap().put(ePackage, moniker);
 		}
 		converter.addMapping(ePackage, pivotElement);
 		//		copyNamedElement(pivotElement, eObject2);

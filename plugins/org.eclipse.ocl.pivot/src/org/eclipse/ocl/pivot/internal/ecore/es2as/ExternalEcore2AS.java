@@ -63,7 +63,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
-import org.eclipse.ocl.pivot.internal.ecore.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
@@ -212,7 +211,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		//		conversion.installImports();
 		conversion.update(ecoreASResource, ClassUtil.requireNonNull(ecoreResource.getContents()));
 
-		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
+/*		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
 		if (ecoreAdapter != null) {
 			Map<@NonNull EObject, @Nullable String> ecoreAliasMap = ecoreAdapter.getAliasMap();
 			MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(ecoreASResource);
@@ -223,7 +222,7 @@ public class ExternalEcore2AS extends Ecore2AS
 				assert element != null;
 				pivotAliasMap.put(element, alias);
 			}
-		}
+		} */
 		environmentFactory.getMetamodelManager().installResource(ecoreASResource);
 		conversion.installImports();
 		return conversion;
@@ -872,23 +871,6 @@ public class ExternalEcore2AS extends Ecore2AS
 		return castElement;
 	}
 
-	/**
-	 * @since 1.17
-	 */
-	protected void resolveAliases(@NonNull Resource asResource) {
-		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
-		if (ecoreAdapter != null) {
-			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
-			MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(asResource);
-			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
-			for (EObject eObject : ecoreAliasMap.keySet()) {
-				String alias = ecoreAliasMap.get(eObject);
-				Element element = newCreateMap.get(eObject);
-				pivotAliasMap.put(element, alias);
-			}
-		}
-	}
-
 	protected Type resolveDataType(@NonNull EDataType eClassifier) {
 		Type pivotType = ecore2asMap.get(eClassifier);
 		if (pivotType == null) {
@@ -1240,9 +1222,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		 */
 		resolveSuperDataTypes();
 		/*
-		 * Add any aliases
 		 */
-		resolveAliases(asResource);
 		environmentFactory.getMetamodelManager().installResource(asResource);
 		/*
 		 * Remap known Ecore EDataTypes after custom pivot types have had a chance to be declared.

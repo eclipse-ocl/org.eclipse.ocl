@@ -61,7 +61,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
-import org.eclipse.ocl.pivot.internal.ecore.MonikerAliasAdapter;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
@@ -654,7 +653,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 						}
 					}
 					installImports();
-					installAliases(asResource);
 					environmentFactory.getMetamodelManager().installResource(asResource);
 					installReferencers();
 					if (pivotURI.toString().contains("Bug507406.uml.oclas")) {				// See testConsole_Bug507406
@@ -849,24 +847,6 @@ public abstract class UML2AS extends AbstractExternal2AS
 		@Override
 		public @NonNull Outer getRoot() {
 			return this;
-		}
-
-		/**
-		 * @since 7.0
-		 */
-		protected void installAliases(@NonNull Resource asResource) {
-			MonikerAliasAdapter umlAdapter = MonikerAliasAdapter.findAdapter(umlResource);
-			if (umlAdapter != null) {
-				Map<@NonNull EObject, @Nullable String> umlAliasMap = umlAdapter.getAliasMap();
-				MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(asResource);
-				Map<@NonNull EObject, @Nullable String> pivotAliasMap = pivotAdapter.getAliasMap();
-				for (EObject eObject : umlAliasMap.keySet()) {
-					String alias = umlAliasMap.get(eObject);
-					Element element = createMap.get(eObject);
-					assert element != null;
-					pivotAliasMap.put(element, alias);
-				}
-			}
 		}
 
 		protected void installImports() throws ParserException {
