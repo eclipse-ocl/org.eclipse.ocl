@@ -1693,8 +1693,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("\n");
 		s.append("	{\n");
 		s.append("		@Override\n");
-		s.append("		public @NonNull ");
-		s.appendClassReference(null, Model.class);
+		s.append("		public ");
+		s.appendClassReference(true, Model.class);
 		s.append(" getModel() {\n");
 		s.append("			return MODEL;\n");
 		s.append("		}\n");

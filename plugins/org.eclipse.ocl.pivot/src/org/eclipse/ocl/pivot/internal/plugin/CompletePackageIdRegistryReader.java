@@ -201,7 +201,7 @@ public class CompletePackageIdRegistryReader extends RegistryReader
      */
     public static interface Descriptor
     {
-		@NonNull Model getModel();
+		/*@NonNull*/ Model getModel();		// -- nullity annotations are optional for derived classes
     }
 
 	public CompletePackageIdRegistryReader() {
