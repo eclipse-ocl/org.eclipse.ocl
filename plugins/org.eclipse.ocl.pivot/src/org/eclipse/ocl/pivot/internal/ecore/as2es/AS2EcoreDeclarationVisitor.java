@@ -82,6 +82,7 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -280,7 +281,41 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				name = "activity";
 			}
 		}
+		else if (name != null) {
+			String validName = wellFormedIdentifier(name);
+			if (!name.equals(validName)) {
+				NameUtil.setOriginalName(eNamedElement, name);
+				name = validName;
+			}
+		}
 		eNamedElement.setName(name);
+	}
+
+
+	private static @NonNull String wellFormedIdentifier(@NonNull String name) {
+		if (name.length() == 0) {
+			return name;
+		}
+		boolean isOk = Character.isJavaIdentifierStart(name.charAt(0));
+		for (int i = 1; isOk && (i < name.length()); ++i) {
+			if (!Character.isJavaIdentifierPart(name.charAt(i))) {
+				isOk = false;
+			}
+		}
+		if (isOk) {
+			return name;
+		}
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < name.length(); ++i) {
+			char ch = name.charAt(i);
+			if (i == 0 ? Character.isJavaIdentifierStart(ch) : Character.isJavaIdentifierPart(ch)) {
+				s.append(ch);
+			}
+			else {
+				s.append("_" + Integer.toString(ch));
+			}
+		}
+		return s.toString();
 	}
 
 	/**
