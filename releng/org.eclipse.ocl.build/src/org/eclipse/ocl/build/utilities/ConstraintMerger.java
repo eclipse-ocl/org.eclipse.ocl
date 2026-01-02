@@ -36,7 +36,6 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LanguageExpression;
-import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -158,10 +157,7 @@ public class ConstraintMerger extends AbstractProjectComponent
 				if (!primaryASResources.contains(secondaryASResource)) {
 					for (TreeIterator<EObject> tit = secondaryASResource.getAllContents(); tit.hasNext(); ) {
 						EObject eObject = tit.next();
-						if (eObject instanceof Library) {
-						//	tit.prune();		// XXX precedences
-						}
-						else if (eObject instanceof Orphanage) {
+						if (eObject instanceof Orphanage) {
 							tit.prune();
 						}
 						else if (eObject instanceof org.eclipse.ocl.pivot.Class) {

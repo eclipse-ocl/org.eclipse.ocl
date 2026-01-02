@@ -137,16 +137,10 @@ public class OCLstdlibCS2AS extends EssentialOCLCS2AS
 
 	@Override
 	public synchronized void update(@NonNull IDiagnosticConsumer diagnosticsConsumer) {
-		boolean loadInProgress = standardLibrary.getLibraryResource() == null;
-		standardLibrary.setLibraryLoadInProgress(loadInProgress);
+		standardLibrary.setLibraryLoadInProgress(standardLibrary.getLibraryResource() == null);
 		try {
 			getMetaclassNameCS("");								// create all metatypes eagerly to avoid lazy creation debugging confusion
 			super.update(diagnosticsConsumer);
-			if (loadInProgress) {
-				standardLibrary.setLibraryLoadInProgress(false);
-//				standardLibrary.installLibrary();
-				standardLibrary.getOclAnyType();
-			}
 		} finally {
 			standardLibrary.setLibraryLoadInProgress(false);
 		}
