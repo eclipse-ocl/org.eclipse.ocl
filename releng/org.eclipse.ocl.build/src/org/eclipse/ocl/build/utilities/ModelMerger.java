@@ -36,9 +36,11 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Model;
@@ -374,13 +376,27 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 	}
 
+	public static class BooleanAndSingleSlotMerger extends SingleSlotMerger
+	{
+		@Override
+		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
+			Boolean mergedSlot = Boolean.TRUE;
+			for (Object slot : slots) {
+				if (slot == Boolean.FALSE) {
+					mergedSlot = Boolean.FALSE;
+				}
+			}
+			return mergedSlot;
+		}
+	}
+
 	public static class BooleanOrSingleSlotMerger extends SingleSlotMerger
 	{
 		@Override
 		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
 			Boolean mergedSlot = Boolean.FALSE;
 			for (Object slot : slots) {
-				if (mergedSlot == Boolean.TRUE) {
+				if (slot == Boolean.TRUE) {
 					mergedSlot = Boolean.TRUE;
 				}
 			}
@@ -612,6 +628,7 @@ public class ModelMerger extends AbstractProjectComponent
 	protected Map<Object, Object> getSaveOptions(@NonNull XMLResource resource) {
 		Map<Object, Object> result = XMIUtil.createSaveOptions(resource);
 		result.put(Resource.OPTION_SAVE_ONLY_IF_CHANGED, Resource.OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER);
+		result.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 		return result;
 	}
 
@@ -694,12 +711,13 @@ public class ModelMerger extends AbstractProjectComponent
 			feature2singleSlotMerger.put(PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION, new FirstSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, new StringSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR, new EObjectSingleSlotMerger());
+		//	feature2singleSlotMerger.put(PivotPackage.Literals.NAMED_ELEMENT__NAME, new PivotNameSingleSlotMerger());		// XXX Fudge irregularity
 			feature2singleSlotMerger.put(PivotPackage.Literals.OPERATION__BODY_EXPRESSION, new FirstSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.PACKAGE__NS_PREFIX, new FirstSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.PACKAGE__URI, new FirstSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__DEFAULT_VALUE_STRING, new StringSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_DERIVED, new BooleanOrSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_RESOLVE_PROXIES, new BooleanOrSingleSlotMerger());
+			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_RESOLVE_PROXIES, new BooleanAndSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_TRANSIENT, new BooleanOrSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_VOLATILE, new BooleanOrSingleSlotMerger());
 			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__OPPOSITE, new OppositeSingleSlotMerger());
@@ -707,7 +725,7 @@ public class ModelMerger extends AbstractProjectComponent
 			feature2singleSlotMerger.put(PivotPackage.Literals.TYPED_ELEMENT__TYPE, new TypeSingleSlotMerger(environmentFactory.getCompleteModel()));
 			URI mergedFileURI = projectDescriptor.getPlatformResourceURI(mergedURI);
 			URI mergedASFileURI = mergedFileURI.trimFileExtension().appendFileExtension("oclas");
-			XMLResource mergedResource = (XMLResource) resourceSet.createResource(mergedASFileURI, null);
+			ASResource mergedResource = (ASResource) resourceSet.createResource(mergedASFileURI, null);
 			Model asModel = helper.createModel(mergedFileURI.toString());
 			for (CompletePackage completePackage : completeModel.getOwnedCompletePackages()) {
 				if (completePackage != completeModel.getOrphanCompletePackage()) {
@@ -794,6 +812,7 @@ public class ModelMerger extends AbstractProjectComponent
 				}
 			} */
 			//
+			irregularPivotConditioning(mergedResource);
 			Map<@NonNull String, @Nullable Object> options = new HashMap<>();
 			options.put(AS2Ecore.OPTION_SUPPRESS_DUPLICATES, true);
 			options.put(AS2Ecore.OPTION_INVARIANT_PREFIX, invariantPrefix);
@@ -833,6 +852,35 @@ public class ModelMerger extends AbstractProjectComponent
 		} catch (IOException e) {
 			throw new RuntimeException("Problems running " + getClass().getSimpleName(), e);
 		}
+	}
+
+	private void irregularPivotConditioning(@NonNull ASResource asResource) {
+		Model asModel = PivotUtil.getModel(asResource);
+		for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages(asModel)) {
+			if ("ocl".equals(asPackage.getName())) {
+				asPackage.setName("pivot");
+			}
+			if ("ocl".equals(asPackage.getNsPrefix())) {
+				asPackage.setNsPrefix("pivot");
+			}
+			if ("http://www.eclipse.org/ocl/2015/Library".equals(asPackage.getURI())) {
+				asPackage.setURI("http://www.eclipse.org/ocl/2015/Pivot");
+			}
+			for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
+				List<Element> ownedAnnotations = asClass.getOwnedAnnotations();
+				for (Element asAnnotation : ownedAnnotations) {
+					if ((asAnnotation instanceof Annotation) && "http://www.omg.org/ocl".equals(((Annotation)asAnnotation).getName())) {
+						ownedAnnotations.remove(asAnnotation);
+						break;
+					}
+				}
+				//DelegateInstaller.setConstraintNames(null, ecoreURIs);
+				for (Constraint asConstraint : PivotUtil.getOwnedInvariants(asClass)) {
+					asConstraint.setIsCallable(true);
+				}
+			}
+		}
+
 	}
 
 	private org.eclipse.ocl.pivot.@Nullable Package mergePackage(@NonNull PivotHelper helper, @NonNull CompletePackage completePackage) {
@@ -882,8 +930,10 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 		SingleSlotMerger featureMerger = getSingleSlotMerger(eFeature);
 		Object mergedSlot = featureMerger.merge(path, slots);
-		if ((eFeature instanceof EReference) && ((EReference)eFeature).isContainment()) {
-			mergedSlot = EcoreUtil.copy((EObject) mergedSlot);
+		if ((mergedSlot != null) && (eFeature instanceof EReference) && ((EReference)eFeature).isContainment()) {
+			if (slots.contains(mergedSlot)) {
+				mergedSlot = EcoreUtil.copy((EObject) mergedSlot);
+			}
 		}
 		mergedEObject.eSet(eFeature, mergedSlot);
 	}

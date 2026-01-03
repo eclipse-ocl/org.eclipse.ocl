@@ -195,7 +195,7 @@ Workflow {
     }
 */
 
-/*	bean = ResourceSetImpl : pivotRenameResourceSet {}
+	bean = ResourceSetImpl : pivotRenameResourceSet {}
     bean = ProjectMapSetup { resourceSet = pivotRenameResourceSet }
 //    bean = UMLStandaloneSetup { resourceSet = pivotRenameResourceSet }
     bean = OCLStandaloneSetup {}
@@ -208,7 +208,7 @@ Workflow {
     		from = "model/PivotStructural.ecore"
     		to = "model/Pivot.ecore"
     	}
-    } */
+    }
     //
     //
     //
@@ -227,15 +227,6 @@ Workflow {
     	mergedURI = "model-gen/PivotMerged.ecore"
     	invariantPrefix = "validate"
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
 /*    component = ConstraintMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	projectName = "${internalProjectName}"
     //	libraryURI = "http://www.eclipse.org/ocl/2015/Library"

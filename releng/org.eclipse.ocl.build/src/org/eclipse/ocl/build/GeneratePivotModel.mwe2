@@ -217,11 +217,19 @@ Workflow {
 //    bean = UMLStandaloneSetup { resourceSet = pivotMergeResourceSet }
     bean = OCLStandaloneSetup {}
     bean = EcoreGenModelSetup { resourceSet = pivotMergeResourceSet }
-    component = ConstraintMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
+/*    component = ConstraintMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	projectName = "${internalProjectName}"
     	libraryURI = "http://www.eclipse.org/ocl/2015/Library"
     	ecoreURI = "model/Pivot.ecore"
     	oclURI = "model/Pivot.ocl"
+    	invariantPrefix = "validate"
+    } */
+    component = ModelMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
+    	projectName = "${internalProjectName}"
+    //	ecoreURI = "model/Pivot.ecore"
+    	oclURI = "model/OCL-2.5.oclstdlib"
+    	oclURI = "model/Pivot.ocl"
+    	mergedURI = "model/Pivot.ecore"
     	invariantPrefix = "validate"
     }
     component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true

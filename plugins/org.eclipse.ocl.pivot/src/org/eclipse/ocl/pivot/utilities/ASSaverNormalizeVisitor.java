@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.Enumeration;
+import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -29,6 +31,30 @@ import org.eclipse.ocl.pivot.util.Visitable;
  */
 public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, ASSaver>
 {
+
+	/**
+	 * @since 7.0
+	 */
+	protected static final class EnumerationLiteralComparator implements Comparator<@NonNull EnumerationLiteral>
+	{
+		public static final @NonNull Comparator<@NonNull EnumerationLiteral> INSTANCE = new EnumerationLiteralComparator();
+
+		@Override
+		public int compare(@NonNull EnumerationLiteral o1, @NonNull EnumerationLiteral o2) {
+			String l1 = o1.getLiteral();
+			String l2 = o2.getLiteral();
+			int diff = l1.compareTo(l2);
+			if (diff != 0) {
+				return diff;
+			}
+			String n1 = o1.getName();
+			String n2 = o2.getName();
+			if (n1 == null) n1 = "";
+			if (n2 == null) n2 = "";
+			return n1.compareTo(n2);
+		}
+	}
+
 	/**
 	 * @since 1.4
 	 */
@@ -103,6 +129,12 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AS
 	public Object visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
 		ClassUtil.sort(PivotUtil.getOwnedOperationsList(object), OperationComparator.INSTANCE);
 		ClassUtil.sort(PivotUtil.getOwnedPropertiesList(object), PropertyComparator.INSTANCE);
+		return null;
+	}
+
+	@Override
+	public Object visitEnumeration(@NonNull Enumeration object) {
+		ClassUtil.sort(PivotUtil.getOwnedLiteralsList(object), EnumerationLiteralComparator.INSTANCE);
 		return null;
 	}
 
