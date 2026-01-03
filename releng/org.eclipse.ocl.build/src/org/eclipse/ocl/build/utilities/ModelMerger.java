@@ -54,11 +54,9 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
-import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -81,22 +79,330 @@ import com.google.common.collect.Sets;
  */
 public class ModelMerger extends AbstractProjectComponent
 {
-	public static class MultipleSlotMerger
+	public static abstract class AbstractSlotMerger
+	{
+		protected final @NonNull ModelMerger modelMerger;
+
+		protected AbstractSlotMerger(@NonNull ModelMerger modelMerger) {
+			this.modelMerger = modelMerger;
+		}
+
+		protected <T extends EObject> @Nullable T createMergedEObject(@NonNull Iterable<@NonNull T> eObjects) {
+			EClass mergedEClass = getMergedEClass(eObjects);
+			if (mergedEClass == null) {
+				return null;
+			}
+			EObject mergedEObject = mergedEClass.getEPackage().getEFactoryInstance().create(mergedEClass);
+			for (@NonNull T eObject : eObjects) {
+				modelMerger.putMerged(mergedEObject, eObject);
+			}
+			return (T) mergedEObject;
+		}
+
+		protected EClass getMergedEClass(Iterable<@NonNull ? extends EObject> eObjects) {
+			EClass mergedEClass = null;
+			for (@NonNull EObject eObject : eObjects) {
+				EClass eClass = eObject.eClass();
+				if ((mergedEClass == null) || mergedEClass.isSuperTypeOf(eClass)) {
+					mergedEClass = eClass;
+				}
+			}
+			return mergedEClass;
+		}
+
+		protected @Nullable EObject mergeEObjects(@NonNull String path, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
+			EObject mergedEObject = createMergedEObject(eObjects);
+			if (mergedEObject != null) {
+				EClass mergedEClass = mergedEObject.eClass();
+				List<@NonNull EStructuralFeature> eAllStructuralFeatures = mergedEClass.getEAllStructuralFeatures();
+				for (@NonNull EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
+					if (eStructuralFeature.isDerived() || eStructuralFeature.isTransient() || eStructuralFeature.isVolatile()) {
+						continue;
+					}
+					if (eStructuralFeature instanceof EReference) {
+						EReference eReference = (EReference)eStructuralFeature;
+						if (eReference.isContainer()) {
+							continue;
+						}
+					}
+					if (eStructuralFeature.isMany()) {
+						mergeMultipleFeature(mergedEObject, path+ "." + eStructuralFeature.getName(), eStructuralFeature, eObjects);
+					}
+					else {
+						mergeSingleFeature(mergedEObject, path+ "." + eStructuralFeature.getName(), eStructuralFeature, eObjects);
+					}
+				}
+			}
+			return mergedEObject;
+		}
+
+		protected void mergeSingleFeature(@NonNull EObject mergedEObject, @NonNull String path, @NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
+			assert !eFeature.isMany();
+			List<Object> slots = new ArrayList<>();
+			for (@NonNull EObject eObject : eObjects) {
+				if (eObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
+					slots.add(eObject.eGet(eFeature));
+				}
+			}
+			SingleSlotMerger featureMerger = modelMerger.getSingleSlotMerger(eFeature);
+			Object mergedSlot = featureMerger.merge(path, slots);
+			if ((mergedSlot != null) && (eFeature instanceof EReference) && ((EReference)eFeature).isContainment()) {
+				if (slots.contains(mergedSlot)) {
+					mergedSlot = EcoreUtil.copy((EObject) mergedSlot);
+				}
+			}
+			mergedEObject.eSet(eFeature, mergedSlot);
+		}
+
+		protected void mergeMultipleFeature(@NonNull EObject mergedEObject, @NonNull String path, @NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
+			assert eFeature.isMany();
+			List<Iterable<Object>> slots = new ArrayList<>();
+			for (@NonNull EObject eObject : eObjects) {
+				if (eObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
+					slots.add((List<Object>)eObject.eGet(eFeature));
+				}
+			}
+			MultipleSlotMerger featureMerger = modelMerger.getMultipleSlotMerger(eFeature);
+			Collection<Object> mergedSlots = featureMerger.merge(path, slots);
+			if ((mergedSlots != null) && !mergedSlots.isEmpty()) {
+				if ((eFeature instanceof EReference) && ((EReference)eFeature).isContainment()) {
+					boolean hasContainer = false;
+					for (@NonNull Object mergedSlot : mergedSlots) {
+						if (mergedSlot instanceof EObject) {
+							if (((EObject)mergedSlot).eContainer() != null) {
+								hasContainer = true;
+							}
+						}
+					}
+					if (hasContainer) {
+						System.out.println("Unexpected container for " + eFeature.getName() + " : " + mergedSlots);
+						mergedSlots = EcoreUtil.copyAll(mergedSlots);
+					}
+				}
+				((List<Object>)mergedEObject.eGet(eFeature)).addAll(mergedSlots);
+			}
+		}
+	}
+
+	public static class BooleanAndSingleSlotMerger extends SingleSlotMerger
+	{
+		public BooleanAndSingleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+		@Override
+		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
+			Boolean mergedSlot = Boolean.TRUE;
+			for (Object slot : slots) {
+				if (slot == Boolean.FALSE) {
+					mergedSlot = Boolean.FALSE;
+				}
+			}
+			return mergedSlot;
+		}
+	}
+
+	public static class BooleanOrSingleSlotMerger extends SingleSlotMerger
+	{
+		public BooleanOrSingleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+		@Override
+		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
+			Boolean mergedSlot = Boolean.FALSE;
+			for (Object slot : slots) {
+				if (slot == Boolean.TRUE) {
+					mergedSlot = Boolean.TRUE;
+				}
+			}
+			return mergedSlot;
+		}
+	}
+
+	public static class ClassMultipleSlotMerger extends MultipleSlotMerger
+	{
+		public ClassMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger, PivotPackage.Literals.CLASS);
+		}
+
+		public String getKey(Object slot) {
+			return ((org.eclipse.ocl.pivot.Class)slot).getName();
+		}
+
+	/*	@Override
+		protected EClass getMergedEClass(Iterable<@NonNull ? extends EObject> eObjects) {
+			EClass mergedEClass = super.getMergedEClass(eObjects);
+			if (mergedEClass == PivotPackage.Literals.PRIMITIVE_TYPE) {
+				mergedEClass = PivotPackage.Literals.CLASS;
+			}
+			return mergedEClass;
+		} */
+
+		@Override
+		public @NonNull List<Object> merge(@NonNull String path, @NonNull Iterable<@NonNull Iterable<Object>> slotSlots) {
+			Map<String, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> key2slots = new HashMap<>();
+			for (@NonNull Iterable<Object> slots : slotSlots) {
+				for (Object slot : slots) {
+					assert slot != null;
+					org.eclipse.ocl.pivot.@NonNull Class asClass = (org.eclipse.ocl.pivot.Class)slot;
+					String key = getKey(asClass);
+					List<org.eclipse.ocl.pivot.@NonNull Class> keyedSlots = key2slots.get(key);
+					if (keyedSlots == null) {
+						keyedSlots = new ArrayList<>();
+						key2slots.put(key, keyedSlots);
+					}
+					keyedSlots.add(asClass);
+				}
+			}
+			List<Object> mergedSlots = new ArrayList<>();
+			List<String> keys = new ArrayList<>(key2slots.keySet());
+			Collections.sort(keys);
+			for (String key : keys) {
+				List<org.eclipse.ocl.pivot.@NonNull Class> keyedSlots = key2slots.get(key);
+				assert keyedSlots != null;
+				EObject mergedClass = mergeEObjects(path, keyedSlots);
+				mergedSlots.add(mergedClass);
+			}
+			return mergedSlots;
+		}
+	}
+
+	public static class CommentMultipleSlotMerger extends MultipleSlotMerger
+	{
+		public CommentMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger, PivotPackage.Literals.COMMENT);
+		}
+
+		@Override
+		public @Nullable List<Object> merge(@NonNull String path, @NonNull Iterable<@NonNull Iterable<Object>> slots) {
+			List<Object> mergedSlots = null;
+			for (@NonNull Iterable<Object> slot : slots) {
+				if (!Iterables.isEmpty(slot)) {
+					if (mergedSlots == null) {
+						mergedSlots = new ArrayList<>();
+					}
+					Iterables.addAll(mergedSlots, slot);		// XXX duplicates
+				}
+			}
+			if (mergedSlots != null) {
+				mergedSlots = Collections.singletonList(mergeEObjects(path, (Iterable<@NonNull ? extends EObject>) mergedSlots));
+			}
+			return mergedSlots;
+		}
+	}
+
+	public static class EObjectSingleSlotMerger extends SingleSlotMerger
+	{
+		public EObjectSingleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+		@Override
+		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
+			List<@NonNull EObject> eObjects = null;
+			for (Object slot : slots) {
+				if (slot != null) {
+					if (eObjects == null) {
+						eObjects = new ArrayList<>();
+					}
+					eObjects.add((EObject)slot);
+				}
+			}
+			return eObjects != null ? mergeEObjects(path, eObjects) : null;
+		}
+	}
+
+	public static class FirstSingleSlotMerger extends SingleSlotMerger
+	{
+		public FirstSingleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+		@Override
+		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
+			Object mergedSlot = this;
+			for (Object slot : slots) {
+				if (mergedSlot == this) {
+					mergedSlot = slot;
+				}
+			}
+			return mergedSlot;
+		}
+	}
+
+	public static class IteratorsMultipleSlotMerger extends NamedElementMultipleSlotMerger
+	{
+		public IteratorsMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+		@Override
+		public Integer getKey(Object slot) {
+			Parameter iterator = (Parameter)slot;
+			Iteration iteration = (Iteration)iterator.eContainer();			// XXX bad containeerID getOwningOperation();
+			int index = iteration.getOwnedIterators().indexOf(iterator);
+			return index;
+		}
+
+		@Override
+		protected void sort(@NonNull List<Object> keys) {}
+	}
+
+	public static class ModelPackagesMultipleSlotMerger extends MultipleSlotMerger
+	{
+		public ModelPackagesMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+	/*	@Override
+		public @Nullable List<Object> merge(@NonNull String path, @NonNull Iterable<@NonNull Iterable<Object>> slots) {
+			List<Object> mergedSlots = null;
+			for (@NonNull Iterable<Object> slot : slots) {
+				if (!Iterables.isEmpty(slot)) {
+					if (mergedSlots == null) {
+						mergedSlots = new ArrayList<>();
+					}
+					Iterables.addAll(mergedSlots, slot);		// XXX duplicates
+				}
+			}
+			if (mergedSlots != null) {
+				mergedSlots = Collections.singletonList(mergeEObjects(path, (Iterable<@NonNull ? extends EObject>) mergedSlots));
+			}
+			return mergedSlots;
+		} */
+
+		public org.eclipse.ocl.pivot.@Nullable Package mergePackage(@NonNull PivotHelper helper, @NonNull CompletePackage completePackage) {
+			String packageName = completePackage.getName();
+			String packagePrefix = completePackage.getNsPrefix();
+			String packageURI = completePackage.getURI();
+		//	org.eclipse.ocl.pivot.@NonNull Package mergedPackage = helper.createPackage(packageName, packagePrefix, packageURI);
+
+			EObject mergedEObject = mergeEObjects("partialPackages", completePackage.getPartialPackages());
+			org.eclipse.ocl.pivot.@NonNull Package mergedPackage = (org.eclipse.ocl.pivot.Package) mergedEObject;
+			return mergedPackage;
+		}
+	}
+
+	public static class MultipleSlotMerger extends AbstractSlotMerger
 	{
 		protected final @Nullable EStructuralFeature eFeature;
 		protected final @Nullable EClassifier eClassifier;
 
-		protected MultipleSlotMerger() {
+		protected MultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
 			this.eFeature = null;
 			this.eClassifier = null;
 		}
 
-		protected MultipleSlotMerger(@NonNull EStructuralFeature eFeature) {
+		protected MultipleSlotMerger(@NonNull ModelMerger modelMerger, @NonNull EStructuralFeature eFeature) {
+			super(modelMerger);
 			this.eFeature = eFeature;
 			this.eClassifier = eFeature.getEType();
 		}
 
-		protected MultipleSlotMerger(@NonNull EClassifier eClassifier) {
+		protected MultipleSlotMerger(@NonNull ModelMerger modelMerger, @NonNull EClassifier eClassifier) {
+			super(modelMerger);
 			this.eFeature = null;
 			this.eClassifier = eClassifier;
 		}
@@ -121,8 +427,12 @@ public class ModelMerger extends AbstractProjectComponent
 		} */
 	}
 
-	public class NamedElementMultipleSlotMerger extends MultipleSlotMerger
+	public static class NamedElementMultipleSlotMerger extends MultipleSlotMerger
 	{
+		public NamedElementMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
 		public Object getKey(Object slot) {
 			return ((NamedElement)slot).getName();
 		}
@@ -160,8 +470,12 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 	}
 
-	public class OperationMultipleSlotMerger extends NamedElementMultipleSlotMerger
+	public static class OperationMultipleSlotMerger extends NamedElementMultipleSlotMerger
 	{
+		public OperationMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
 		@Override
 		public Object getKey(Object slot) {
 			return ((Operation)slot).getOperationId();
@@ -173,150 +487,12 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 	}
 
-	public class PropertyMultipleSlotMerger extends NamedElementMultipleSlotMerger
+	public static class OppositeSingleSlotMerger extends SingleSlotMerger
 	{
-		@Override
-		public Object getKey(Object slot) {
-			return ((Property)slot).getPropertyId();
+		protected OppositeSingleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
 		}
 
-		@Override
-		protected void sort(@NonNull List<Object> keys) {
-			Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
-		}
-	}
-
-	public class IteratorsMultipleSlotMerger extends NamedElementMultipleSlotMerger
-	{
-		@Override
-		public Integer getKey(Object slot) {
-			Parameter iterator = (Parameter)slot;
-			Iteration iteration = (Iteration)iterator.eContainer();			// XXX bad containeerID getOwningOperation();
-			int index = iteration.getOwnedIterators().indexOf(iterator);
-			return index;
-		}
-
-		@Override
-		protected void sort(@NonNull List<Object> keys) {}
-	}
-
-	public class ParametersMultipleSlotMerger extends NamedElementMultipleSlotMerger
-	{
-		@Override
-		public Integer getKey(Object slot) {
-			Parameter parameter = (Parameter)slot;
-			Operation operation = parameter.getOwningOperation();
-			int index = operation.getOwnedParameters().indexOf(parameter);
-			return index;
-		}
-
-		@Override
-		protected void sort(@NonNull List<Object> keys) {}
-	}
-
-	public class TemplateParametersMultipleSlotMerger extends NamedElementMultipleSlotMerger
-	{
-		@Override
-		public Integer getKey(Object slot) {
-			TemplateParameter templateParameter = (TemplateParameter)slot;
-			TemplateableElement templateableElement = templateParameter.getOwningTemplateableElement();
-			int index = templateableElement.getOwnedTemplateParameters().indexOf(templateParameter);
-			return index;
-		}
-
-		@Override
-		protected void sort(@NonNull List<Object> keys) {}
-	}
-
-	public class ClassMultipleSlotMerger extends MultipleSlotMerger
-	{
-		public ClassMultipleSlotMerger() {
-			super(PivotPackage.Literals.CLASS);
-		}
-
-		public String getKey(Object slot) {
-			return ((org.eclipse.ocl.pivot.Class)slot).getName();
-		}
-
-		@Override
-		public @NonNull List<Object> merge(@NonNull String path, @NonNull Iterable<@NonNull Iterable<Object>> slotSlots) {
-			Map<String, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> key2slots = new HashMap<>();
-			for (@NonNull Iterable<Object> slots : slotSlots) {
-				for (Object slot : slots) {
-					assert slot != null;
-					org.eclipse.ocl.pivot.@NonNull Class asClass = (org.eclipse.ocl.pivot.Class)slot;
-					String key = getKey(asClass);
-					List<org.eclipse.ocl.pivot.@NonNull Class> keyedSlots = key2slots.get(key);
-					if (keyedSlots == null) {
-						keyedSlots = new ArrayList<>();
-						key2slots.put(key, keyedSlots);
-					}
-					keyedSlots.add(asClass);
-				}
-			}
-			List<Object> mergedSlots = new ArrayList<>();
-			List<String> keys = new ArrayList<>(key2slots.keySet());
-			Collections.sort(keys);
-			for (String key : keys) {
-				List<org.eclipse.ocl.pivot.@NonNull Class> keyedSlots = key2slots.get(key);
-				assert keyedSlots != null;
-				EObject mergedClass = mergeEObjects(path, keyedSlots);
-				mergedSlots.add(mergedClass);
-			}
-			return mergedSlots;
-		}
-	}
-
-	public class CommentMultipleSlotMerger extends MultipleSlotMerger
-	{
-		public CommentMultipleSlotMerger() {
-			super(PivotPackage.Literals.COMMENT);
-		}
-
-		@Override
-		public @Nullable List<Object> merge(@NonNull String path, @NonNull Iterable<@NonNull Iterable<Object>> slots) {
-			List<Object> mergedSlots = null;
-			for (@NonNull Iterable<Object> slot : slots) {
-				if (!Iterables.isEmpty(slot)) {
-					if (mergedSlots == null) {
-						mergedSlots = new ArrayList<>();
-					}
-					Iterables.addAll(mergedSlots, slot);		// XXX duplicates
-				}
-			}
-			if (mergedSlots != null) {
-				mergedSlots = Collections.singletonList(mergeEObjects(path, (Iterable<@NonNull ? extends EObject>) mergedSlots));
-			}
-			return mergedSlots;
-		}
-	}
-
-	public static class SingleSlotMerger
-	{
-		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
-			Object mergedSlot = this;
-			for (Object slot : slots) {
-				if (mergedSlot == this) {
-					mergedSlot = slot;
-				}
-				else {
-					if (!Objects.equal(slot, mergedSlot)) {
-						StringBuilder s = new StringBuilder();
-						s.append("Conflicting " + path);
-						for (Object slot2 : slots) {
-							s.append("\n\t" + slot2);
-						}
-						System.out.println(s.toString());
-						break;
-					}
-				}
-			}
-			return mergedSlot;
-		}
-	}
-
-	public class OppositeSingleSlotMerger extends SingleSlotMerger
-	{
 		@Override
 		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
 			Object mergedSlot = null;
@@ -345,59 +521,63 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 	}
 
-	public class EObjectSingleSlotMerger extends SingleSlotMerger
+	public static class PropertyMultipleSlotMerger extends NamedElementMultipleSlotMerger
 	{
+		public PropertyMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
 		@Override
-		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
-			List<@NonNull EObject> eObjects = null;
-			for (Object slot : slots) {
-				if (slot != null) {
-					if (eObjects == null) {
-						eObjects = new ArrayList<>();
-					}
-					eObjects.add((EObject)slot);
-				}
-			}
-			return eObjects != null ? mergeEObjects(path, eObjects) : null;
+		public Object getKey(Object slot) {
+			return ((Property)slot).getPropertyId();
+		}
+
+		@Override
+		protected void sort(@NonNull List<Object> keys) {
+			Collections.sort(keys, NameUtil.TO_STRING_COMPARATOR);
 		}
 	}
 
-	public static class FirstSingleSlotMerger extends SingleSlotMerger
+	public static class ParametersMultipleSlotMerger extends NamedElementMultipleSlotMerger
 	{
+		public ParametersMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
 		@Override
+		public Integer getKey(Object slot) {
+			Parameter parameter = (Parameter)slot;
+			Operation operation = parameter.getOwningOperation();
+			int index = operation.getOwnedParameters().indexOf(parameter);
+			return index;
+		}
+
+		@Override
+		protected void sort(@NonNull List<Object> keys) {}
+	}
+
+	public static class SingleSlotMerger extends AbstractSlotMerger
+	{
+		protected SingleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
 		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
 			Object mergedSlot = this;
 			for (Object slot : slots) {
 				if (mergedSlot == this) {
 					mergedSlot = slot;
 				}
-			}
-			return mergedSlot;
-		}
-	}
-
-	public static class BooleanAndSingleSlotMerger extends SingleSlotMerger
-	{
-		@Override
-		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
-			Boolean mergedSlot = Boolean.TRUE;
-			for (Object slot : slots) {
-				if (slot == Boolean.FALSE) {
-					mergedSlot = Boolean.FALSE;
-				}
-			}
-			return mergedSlot;
-		}
-	}
-
-	public static class BooleanOrSingleSlotMerger extends SingleSlotMerger
-	{
-		@Override
-		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
-			Boolean mergedSlot = Boolean.FALSE;
-			for (Object slot : slots) {
-				if (slot == Boolean.TRUE) {
-					mergedSlot = Boolean.TRUE;
+				else {
+					if (!Objects.equal(slot, mergedSlot)) {
+						StringBuilder s = new StringBuilder();
+						s.append("Conflicting " + path);
+						for (Object slot2 : slots) {
+							s.append("\n\t" + slot2);
+						}
+						System.out.println(s.toString());
+						break;
+					}
 				}
 			}
 			return mergedSlot;
@@ -406,6 +586,10 @@ public class ModelMerger extends AbstractProjectComponent
 
 	public static class StringSingleSlotMerger extends SingleSlotMerger
 	{
+		public StringSingleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
 		@Override
 		public String merge(@NonNull String path, @NonNull Iterable<Object> slots) {
 			String mergedSlot = null;
@@ -418,11 +602,30 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 	}
 
+	public static class TemplateParametersMultipleSlotMerger extends NamedElementMultipleSlotMerger
+	{
+		public TemplateParametersMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+		@Override
+		public Integer getKey(Object slot) {
+			TemplateParameter templateParameter = (TemplateParameter)slot;
+			TemplateableElement templateableElement = templateParameter.getOwningTemplateableElement();
+			int index = templateableElement.getOwnedTemplateParameters().indexOf(templateParameter);
+			return index;
+		}
+
+		@Override
+		protected void sort(@NonNull List<Object> keys) {}
+	}
+
 	public static class TypeSingleSlotMerger extends SingleSlotMerger
 	{
 		protected final @NonNull CompleteModel completeModel;
 
-		public TypeSingleSlotMerger(@NonNull CompleteModel completeModel) {
+		public TypeSingleSlotMerger(@NonNull ModelMerger modelMerger, @NonNull CompleteModel completeModel) {
+			super(modelMerger);
 			this.completeModel = completeModel;
 		}
 
@@ -570,24 +773,6 @@ public class ModelMerger extends AbstractProjectComponent
 		return slotMerger;
 	} */
 
-	protected <T extends EObject> @Nullable T createMergedEObject(@NonNull Iterable<@NonNull T> eObjects) {
-		EClass mergedEClass = null;
-		for (@NonNull T eObject : eObjects) {
-			EClass eClass = eObject.eClass();
-			if ((mergedEClass == null) || mergedEClass.isSuperTypeOf(eClass)) {
-				mergedEClass = eClass;
-			}
-		}
-		if (mergedEClass == null) {
-			return null;
-		}
-		EObject mergedEObject = mergedEClass.getEPackage().getEFactoryInstance().create(mergedEClass);
-		for (@NonNull T eObject : eObjects) {
-			eObject2mergedEObject.put(eObject, mergedEObject);
-		}
-		return (T) mergedEObject;
-	}
-
 /*	protected @NonNull FeatureMerger getFeatureMerger(@NonNull EStructuralFeature eFeature) {
 		FeatureMerger featureMerger = feature2merger.get(eFeature);
 		if (featureMerger == null) {
@@ -604,7 +789,7 @@ public class ModelMerger extends AbstractProjectComponent
 			EClassifier eType = eFeature.getEType();
 			slotMerger = classifier2multipleSlotMerger.get(eType);
 			if (slotMerger == null) {
-				slotMerger = new MultipleSlotMerger(eFeature);
+				slotMerger = new MultipleSlotMerger(this, eFeature);
 			}
 			feature2multipleSlotMerger.put(eFeature, slotMerger);
 		}
@@ -618,7 +803,7 @@ public class ModelMerger extends AbstractProjectComponent
 			EClassifier eType = eFeature.getEType();
 			slotMerger = classifier2singleSlotMerger.get(eType);
 			if (slotMerger == null) {
-				slotMerger = new SingleSlotMerger();
+				slotMerger = new SingleSlotMerger(this);
 			}
 			feature2singleSlotMerger.put(eFeature, slotMerger);
 		}
@@ -632,9 +817,46 @@ public class ModelMerger extends AbstractProjectComponent
 		return result;
 	}
 
+	public void installSlotMergers(EnvironmentFactory environmentFactory) {
+		feature2multipleSlotMerger.put(PivotPackage.Literals.ANNOTATION__OWNED_DETAILS, new NamedElementMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_INVARIANTS, new NamedElementMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_OPERATIONS, new OperationMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_PROPERTIES, new PropertyMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, new NamedElementMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.ELEMENT__OWNED_COMMENTS, new CommentMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, new NamedElementMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, new IteratorsMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, new NamedElementMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, new ParametersMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS, new NamedElementMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, new NamedElementMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.PACKAGE__OWNED_CLASSES, new ClassMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, new TemplateParametersMultipleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME, new FirstSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__IS_ABSTRACT, new BooleanOrSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__IS_INTERFACE, new BooleanOrSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.COMMENT__BODY, new FirstSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.CONSTRAINT__IS_CALLABLE, new BooleanOrSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION, new FirstSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, new StringSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR, new EObjectSingleSlotMerger(this));
+		//	feature2singleSlotMerger.put(PivotPackage.Literals.NAMED_ELEMENT__NAME, new PivotNameSingleSlotMerger(this));		// XXX Fudge irregularity
+		feature2singleSlotMerger.put(PivotPackage.Literals.OPERATION__BODY_EXPRESSION, new FirstSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.PACKAGE__NS_PREFIX, new FirstSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.PACKAGE__URI, new FirstSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__DEFAULT_VALUE_STRING, new StringSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_DERIVED, new BooleanOrSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_RESOLVE_PROXIES, new BooleanAndSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_TRANSIENT, new BooleanOrSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_VOLATILE, new BooleanOrSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__OPPOSITE, new OppositeSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.TYPED_ELEMENT__IS_REQUIRED, new FirstSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.TYPED_ELEMENT__TYPE, new TypeSingleSlotMerger(this, environmentFactory.getCompleteModel()));
+	}
+
 	@Override
 	public void invokeInternal(WorkflowContext ctx, ProgressMonitor arg1, Issues arg2) {
-		StandardLibraryContribution savedContribution = StandardLibraryContribution.REGISTRY.remove(OCLstdlib.STDLIB_URI);	// XXX
+	//	StandardLibraryContribution savedContribution = StandardLibraryContribution.REGISTRY.remove(OCLstdlib.STDLIB_URI);	// XXX
 		ResourceSet resourceSet = getResourceSet();
 		StandaloneProjectMap.IProjectDescriptor projectDescriptor = ClassUtil.requireNonNull(getProjectDescriptor());
 		//		Resource ecoreResource = (Resource) ctx.get(getModelSlot());
@@ -689,47 +911,15 @@ public class ModelMerger extends AbstractProjectComponent
 			ResourceUtils.checkResourceSet(asResourceSet);
 			//
 
-			feature2multipleSlotMerger.put(PivotPackage.Literals.ANNOTATION__OWNED_DETAILS, new NamedElementMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_INVARIANTS, new NamedElementMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_OPERATIONS, new OperationMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_PROPERTIES, new PropertyMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, new NamedElementMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.ELEMENT__OWNED_COMMENTS, new CommentMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, new NamedElementMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, new IteratorsMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, new NamedElementMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, new ParametersMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS, new NamedElementMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, new NamedElementMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.PACKAGE__OWNED_CLASSES, new ClassMultipleSlotMerger());
-			feature2multipleSlotMerger.put(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, new TemplateParametersMultipleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME, new FirstSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__IS_ABSTRACT, new BooleanOrSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__IS_INTERFACE, new BooleanOrSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.COMMENT__BODY, new FirstSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.CONSTRAINT__IS_CALLABLE, new BooleanOrSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION, new FirstSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.FEATURE__IMPLEMENTATION_CLASS, new StringSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR, new EObjectSingleSlotMerger());
-		//	feature2singleSlotMerger.put(PivotPackage.Literals.NAMED_ELEMENT__NAME, new PivotNameSingleSlotMerger());		// XXX Fudge irregularity
-			feature2singleSlotMerger.put(PivotPackage.Literals.OPERATION__BODY_EXPRESSION, new FirstSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PACKAGE__NS_PREFIX, new FirstSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PACKAGE__URI, new FirstSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__DEFAULT_VALUE_STRING, new StringSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_DERIVED, new BooleanOrSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_RESOLVE_PROXIES, new BooleanAndSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_TRANSIENT, new BooleanOrSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__IS_VOLATILE, new BooleanOrSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.PROPERTY__OPPOSITE, new OppositeSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.TYPED_ELEMENT__IS_REQUIRED, new FirstSingleSlotMerger());
-			feature2singleSlotMerger.put(PivotPackage.Literals.TYPED_ELEMENT__TYPE, new TypeSingleSlotMerger(environmentFactory.getCompleteModel()));
+			installSlotMergers(environmentFactory);
 			URI mergedFileURI = projectDescriptor.getPlatformResourceURI(mergedURI);
 			URI mergedASFileURI = mergedFileURI.trimFileExtension().appendFileExtension("oclas");
 			ASResource mergedResource = (ASResource) resourceSet.createResource(mergedASFileURI, null);
 			Model asModel = helper.createModel(mergedFileURI.toString());
+			ModelPackagesMultipleSlotMerger rootSlotMerger = new ModelPackagesMultipleSlotMerger(this);	// XXX regularize
 			for (CompletePackage completePackage : completeModel.getOwnedCompletePackages()) {
 				if (completePackage != completeModel.getOrphanCompletePackage()) {
-					org.eclipse.ocl.pivot.Package mergedPackage = mergePackage(helper, completePackage);
+					org.eclipse.ocl.pivot.Package mergedPackage = rootSlotMerger.mergePackage(helper, completePackage);
 					if (mergedPackage != null) {
 						asModel.getOwnedPackages().add(mergedPackage);
 					}
@@ -883,90 +1073,6 @@ public class ModelMerger extends AbstractProjectComponent
 
 	}
 
-	private org.eclipse.ocl.pivot.@Nullable Package mergePackage(@NonNull PivotHelper helper, @NonNull CompletePackage completePackage) {
-		String packageName = completePackage.getName();
-		String packagePrefix = completePackage.getNsPrefix();
-		String packageURI = completePackage.getURI();
-	//	org.eclipse.ocl.pivot.@NonNull Package mergedPackage = helper.createPackage(packageName, packagePrefix, packageURI);
-
-		EObject mergedEObject = mergeEObjects("partialPackages", completePackage.getPartialPackages());
-		org.eclipse.ocl.pivot.@NonNull Package mergedPackage = (org.eclipse.ocl.pivot.Package) mergedEObject;
-		return mergedPackage;
-	}
-
-	private @Nullable EObject mergeEObjects(@NonNull String path, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
-		EObject mergedEObject = createMergedEObject(eObjects);
-		if (mergedEObject != null) {
-			EClass mergedEClass = mergedEObject.eClass();
-			List<@NonNull EStructuralFeature> eAllStructuralFeatures = mergedEClass.getEAllStructuralFeatures();
-			for (@NonNull EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
-				if (eStructuralFeature.isDerived() || eStructuralFeature.isTransient() || eStructuralFeature.isVolatile()) {
-					continue;
-				}
-				if (eStructuralFeature instanceof EReference) {
-					EReference eReference = (EReference)eStructuralFeature;
-					if (eReference.isContainer()) {
-						continue;
-					}
-				}
-				if (eStructuralFeature.isMany()) {
-					mergeMultipleFeature(mergedEObject, path+ "." + eStructuralFeature.getName(), eStructuralFeature, eObjects);
-				}
-				else {
-					mergeSingleFeature(mergedEObject, path+ "." + eStructuralFeature.getName(), eStructuralFeature, eObjects);
-				}
-			}
-		}
-		return mergedEObject;
-	}
-
-	protected void mergeSingleFeature(@NonNull EObject mergedEObject, @NonNull String path, @NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
-		assert !eFeature.isMany();
-		List<Object> slots = new ArrayList<>();
-		for (@NonNull EObject eObject : eObjects) {
-			if (eObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
-				slots.add(eObject.eGet(eFeature));
-			}
-		}
-		SingleSlotMerger featureMerger = getSingleSlotMerger(eFeature);
-		Object mergedSlot = featureMerger.merge(path, slots);
-		if ((mergedSlot != null) && (eFeature instanceof EReference) && ((EReference)eFeature).isContainment()) {
-			if (slots.contains(mergedSlot)) {
-				mergedSlot = EcoreUtil.copy((EObject) mergedSlot);
-			}
-		}
-		mergedEObject.eSet(eFeature, mergedSlot);
-	}
-
-	protected void mergeMultipleFeature(@NonNull EObject mergedEObject, @NonNull String path, @NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
-		assert eFeature.isMany();
-		List<Iterable<Object>> slots = new ArrayList<>();
-		for (@NonNull EObject eObject : eObjects) {
-			if (eObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
-				slots.add((List<Object>)eObject.eGet(eFeature));
-			}
-		}
-		MultipleSlotMerger featureMerger = getMultipleSlotMerger(eFeature);
-		Collection<Object> mergedSlots = featureMerger.merge(path, slots);
-		if ((mergedSlots != null) && !mergedSlots.isEmpty()) {
-			if ((eFeature instanceof EReference) && ((EReference)eFeature).isContainment()) {
-				boolean hasContainer = false;
-				for (@NonNull Object mergedSlot : mergedSlots) {
-					if (mergedSlot instanceof EObject) {
-						if (((EObject)mergedSlot).eContainer() != null) {
-							hasContainer = true;
-						}
-					}
-				}
-				if (hasContainer) {
-					System.out.println("Unexpected container for " + eFeature.getName() + " : " + mergedSlots);
-					mergedSlots = EcoreUtil.copyAll(mergedSlots);
-				}
-			}
-			((List<Object>)mergedEObject.eGet(eFeature)).addAll(mergedSlots);
-		}
-	}
-
 /*	protected Object mergeSlot(@NonNull EStructuralFeature eFeature, @NonNull Iterable<Object> slots) {
 		Object mergedSlot = this;
 		for (Object slot : slots) {
@@ -981,17 +1087,6 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 		return mergedSlot;
 	} */
-
-	protected List<? extends Object> mergeEObjects(@NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull EObject> eObjects) {
-		List<Object> mergedSlots = new ArrayList<>();
-		for (@NonNull EObject eObject : eObjects) {
-			List<?> slots = ((List<?>)eObject.eGet(eFeature));
-			if (slots != null) {
-				mergedSlots.addAll(slots);		// XXX duplicates
-			}
-		}
-		return null;
-	}
 
 /*	protected List<? extends Object> mergeSlots(@NonNull EStructuralFeature eFeature, @NonNull Iterable<? extends Object> slots) {
 		List<Object> mergedSlots = new ArrayList<>();
@@ -1083,6 +1178,10 @@ public class ModelMerger extends AbstractProjectComponent
 	 */
 	public void setInvariantPrefix(String invariantPrefix) {
 		this.invariantPrefix = invariantPrefix;
+	}
+
+	public void putMerged(@NonNull EObject mergedEObject, @NonNull EObject eObject) {
+		eObject2mergedEObject.put(eObject, mergedEObject);
 	}
 
 	/**
