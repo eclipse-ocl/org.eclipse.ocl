@@ -132,15 +132,19 @@ public class CompleteClasses extends EObjectContainmentWithInverseEList<Complete
 
 	protected void doRefreshPartialClass(org.eclipse.ocl.pivot.@NonNull Class partialClass) {
 		if (partialClass instanceof TupleType) {
-			getClass();
+			getClass();			// XXX
 		}
-		Map<@NonNull String, @NonNull CompleteClass> name2completeClass2 = name2completeClass;
-		assert name2completeClass2 != null;
+		CompleteModel completeModel = getCompleteModel();
+		CompleteClass completeClass1 = completeModel.basicGetCompleteClass(partialClass);
+		if (completeClass1 != null) {
+			return;
+		}
+	//	Map<@NonNull String, @NonNull CompleteClass> name2completeClass2 = name2completeClass;
+		assert name2completeClass != null;
 		String name = partialClass.getName();
 		if (name == null) {
 			return;				// XXX ignore nameless classes
 		}
-		CompleteModel completeModel = getCompleteModel();
 		CompletePackage sharedCompletePackage = completeModel.basicGetSharedCompletePackage(partialClass);
 		if (sharedCompletePackage != null) {
 			getClass();		// XXX
