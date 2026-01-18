@@ -467,7 +467,7 @@ public class EnvironmentView
 				}
 			}
 			else {
-				for (@NonNull Operation operation : completeClass.getOperations(featureFilter)) {
+				for (@NonNull Operation operation : completeClass.getBestOperations(featureFilter)) {
 					//					if ((operation != null) /*&& (operation.isStatic() == selectStatic)*/) {
 					addNamedElement(operation);
 					//					}

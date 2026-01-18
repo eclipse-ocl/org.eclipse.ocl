@@ -1166,7 +1166,7 @@ implements OperationCallExp {
 		OperationId baseOperationId = referredOperation.getOperationId();
 		org.eclipse.ocl.pivot.Class oclVoidType = executor.getStandardLibrary().getOclVoidType();
 		CompleteClass oclVoidCompleteClass = executor.getEnvironmentFactory().getCompleteModel().getCompleteClass(oclVoidType);
-		Operation oclVoidOperation = oclVoidCompleteClass.getOperation(baseOperationId);
+		Operation oclVoidOperation = oclVoidCompleteClass.getBestOperation(baseOperationId);
 		return oclVoidOperation != null;
 	}
 } //OperationCallExpImpl

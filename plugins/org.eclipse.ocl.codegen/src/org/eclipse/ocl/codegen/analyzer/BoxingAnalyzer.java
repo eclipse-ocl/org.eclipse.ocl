@@ -121,7 +121,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 
 	protected boolean hasOclInvalidOperation(@NonNull OperationId operationId) {
 		CompleteClass completeClass = completeModel.getCompleteClass(standardLibrary.getOclInvalidType());
-		Operation memberOperation = completeClass.getOperation(operationId);
+		Operation memberOperation = completeClass.getBestOperation(operationId);
 		if (memberOperation == null) {
 			return false;
 		}
@@ -135,7 +135,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 
 	protected boolean hasOclVoidOperation(@NonNull OperationId operationId) {
 		CompleteClass completeClass = completeModel.getCompleteClass(standardLibrary.getOclVoidType());
-		Operation memberOperation = completeClass.getOperation(operationId);
+		Operation memberOperation = completeClass.getBestOperation(operationId);
 		if (memberOperation == null) {
 			return false;
 		}

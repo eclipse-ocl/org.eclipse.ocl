@@ -75,14 +75,14 @@ public class FinalAnalysis
 		for (@NonNull CompleteClass superCompleteClass : superCompleteClass2subCompleteClasses.keySet()) {
 			Set<@NonNull CompleteClass> subCompleteClasses = superCompleteClass2subCompleteClasses.get(superCompleteClass);
 			assert subCompleteClasses != null;
-			for (@NonNull Operation domainOperation : superCompleteClass.getOperations(null)) {
+			for (@NonNull Operation domainOperation : superCompleteClass.getBestOperations(null)) {
 				String opName = domainOperation.getName();
 				ParametersId parametersId = domainOperation.getParametersId();
 				LibraryIterationOrOperation domainImplementation = environmentFactory.getIterationOrOperationImplementation(domainOperation);
 				Set<@NonNull Operation> overrides = operation2overrides.get(domainOperation);
 				for (@NonNull CompleteClass subCompleteClass : subCompleteClasses) {
 					if (subCompleteClass != superCompleteClass) {
-						for (@NonNull Operation subOperation : subCompleteClass.getOperations(null)) {
+						for (@NonNull Operation subOperation : subCompleteClass.getBestOperations(null)) {
 							if (opName.equals(subOperation.getName()) && parametersId.equals(subOperation.getParametersId())) {
 								CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 								CompleteClass subOwningCompleteClass = completeModel.getCompleteClass(PivotUtil.getOwningClass(subOperation));

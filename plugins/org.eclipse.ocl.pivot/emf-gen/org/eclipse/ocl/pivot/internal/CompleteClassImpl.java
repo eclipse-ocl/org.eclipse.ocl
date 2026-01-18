@@ -504,6 +504,16 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
+	public @Nullable Operation getBestOperation(@NonNull OperationId operationId) {
+		return getFlatClass().getBestOperation(operationId);
+	}
+
+	@Override
+	public @NonNull Iterable<@NonNull Operation> getBestOperations(final @Nullable FeatureFilter featureFilter) {
+		return getFlatClass().getBestOperations(featureFilter);
+	}
+
+	@Override
 	public @NonNull CompleteModel getCompleteModel() {
 		return getOwningCompletePackage().getCompleteModel();
 	}
@@ -538,7 +548,7 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	public @NonNull Iterable<Operation> getMemberOperations() {
-		return getFlatClass().getOperations();
+		return getFlatClass().getBestOperations(null);
 	}
 
 	@Override
@@ -547,23 +557,8 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 	}
 
 	@Override
-	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
-		return getFlatClass().getOperation(operationId);
-	}
-
-	@Override
-	public @Nullable Operation getOperation(@NonNull Operation operation) {
-		return getFlatClass().getOperation(operation);
-	}
-
-	@Override
 	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
 		return getFlatClass().getOperationOverloads(pivotOperation);
-	}
-
-	@Override
-	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
-		return getFlatClass().getOperations(featureFilter);
 	}
 
 	@Override
@@ -600,6 +595,11 @@ public class CompleteClassImpl extends NamedElementImpl implements CompleteClass
 			return partialClass;
 		}
 		throw new IllegalStateException();
+	}
+
+	@Override
+	public @Nullable Operation getPrimaryOperation(@NonNull Operation operation) {
+		return getFlatClass().getPrimaryOperation(operation);
 	}
 
 	@Override

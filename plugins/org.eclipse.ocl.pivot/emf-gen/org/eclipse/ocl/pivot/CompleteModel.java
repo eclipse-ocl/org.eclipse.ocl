@@ -267,9 +267,11 @@ public interface CompleteModel extends NamedElement
 	@NonNull MetamodelManager getMetamodelManager();
 
 	/**
+	 * Return all partial operations that contribute to the logically complete operation for asOperation.
+	 *
 	 * @since 7.0
 	 */
-	@NonNull Iterable<? extends Operation> getOperationOverloads(@NonNull Operation pivotOperation);
+	@NonNull Iterable<? extends Operation> getOperationOverloads(@NonNull Operation asOperation);
 
 	/**
 	 * @since 7.0
@@ -292,9 +294,11 @@ public interface CompleteModel extends NamedElement
 	@NonNull <T extends EObject> T getPrimaryElement(@NonNull T element);
 
 	/**
+	 * Return the primary partial operation from the overloads that contribute to the logically complete operation for asOperation.
+	 *
 	 * @since 7.0
 	 */
-	@NonNull Operation getPrimaryOperation(@NonNull Operation pivotOperation);
+	@NonNull Operation getPrimaryOperation(@NonNull Operation asOperation);
 
 	/**
 	 * @since 7.0
@@ -307,9 +311,11 @@ public interface CompleteModel extends NamedElement
 	org.eclipse.ocl.pivot.@Nullable Package getPrimaryPackage(@NonNull String nsURI, String... subPackagePath);
 
 	/**
+	 * Return the primary partial property from the properties that contribute to the logically complete property for asProperty.
+	 *
 	 * @since 7.0
 	 */
-	@NonNull Property getPrimaryProperty(@NonNull Property pivotProperty);
+	@NonNull Property getPrimaryProperty(@NonNull Property asProperty);
 
 	/**
 	 * @since 7.0

@@ -118,6 +118,14 @@ public interface CompleteClass extends NamedElement
 	/**
 	 * @since 7.0
 	 */
+	@Nullable Operation getBestOperation(@NonNull OperationId operationId);
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Iterable<@NonNull Operation> getBestOperations(@Nullable FeatureFilter featureFilter);
+	/**
+	 * @since 7.0
+	 */
 	@NonNull CompleteModel getCompleteModel();
 	/**
 	 * @since 7.0
@@ -131,12 +139,13 @@ public interface CompleteClass extends NamedElement
 	 * @since 7.0
 	 */
 	@NonNull MetamodelManager getMetamodelManager();
-	@Nullable Operation getOperation(@NonNull OperationId operationId);
-	@Nullable Operation getOperation(@NonNull Operation operationId);
 	@Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation);
-	@NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter);
 	@NonNull Iterable<@NonNull Operation> getOperations(@Nullable FeatureFilter featureFilter, @Nullable String name);
 	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass();
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Operation getPrimaryOperation(@NonNull Operation operation);
 	/**
 	 * Return an iterable over each primary Property for each property that satisfies featureFilter.
 	 * Conflicting static and non-static properties are both returned.

@@ -952,7 +952,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 	@Override
 	public @NonNull Iterable<@NonNull Operation> getAllOperations(@NonNull Type type, @Nullable FeatureFilter featureFilter) {
 		CompleteClass completeClass = getCompleteClass(type);
-		return completeClass.getOperations(featureFilter);
+		return completeClass.getBestOperations(featureFilter);
 	}
 
 	/**
@@ -1324,7 +1324,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		FlatClass flatClass = pivotOperation.getFlatClass(standardLibrary);
 		if (flatClass != null) {					// Null for an EAnnotation element
 			CompleteClass completeClass = getCompleteClass(flatClass.getPivotClass());		// XXX why use FlatClass at all ??
-			Operation operation = completeClass.getOperation(pivotOperation);
+			Operation operation = completeClass.getPrimaryOperation(pivotOperation);
 			if (operation != null) {
 				return operation;
 			}

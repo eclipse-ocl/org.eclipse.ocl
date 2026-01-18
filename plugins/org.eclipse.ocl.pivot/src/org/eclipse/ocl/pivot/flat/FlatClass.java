@@ -148,7 +148,8 @@ public interface FlatClass extends Nameable
 	 * Return a depth ordered, OclAny-first, OclSelf-last, Iterable of all the super-fragments including this one.
 	 */
 	@NonNull FragmentIterable getAllSuperFragments();
-	@Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
+	@Nullable Operation getBestOperation(@NonNull OperationId id);
+	@Nullable Operation getBestOperation(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation);
 	@NonNull FlatClass getCommonFlatClass(@NonNull FlatClass inheritance);
 
 	@Deprecated // XXX eliminate unsound inheritance
@@ -172,7 +173,6 @@ public interface FlatClass extends Nameable
 	@Deprecated
 	int getIndexes();
 
-	@Nullable Operation getOperation(@NonNull OperationId id);
 	org.eclipse.ocl.pivot.@NonNull Class getPivotClass();
 
 	@NonNull Property getPrimaryProperty(@Nullable FeatureFilter featureFilter, @NonNull String name);

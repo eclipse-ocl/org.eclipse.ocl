@@ -108,7 +108,7 @@ public abstract class LookupVisitorsCodeGenerator extends AutoVisitorsCodeGenera
 		// org.eclipse.ocl.pivot.Class asOclAny = standardLibrary.getOclAnyType();
 		CompleteClass asElementCompleteClass = completeModel.getCompletePackage(standardLibrary.getPackage()).getCompleteClass(asOclElement);
 		OperationId envOperationId = asOclElement.getTypeId().getOperationId(envOpName, IdManager.getParametersId(asOclElement.getTypeId()));
-		this.asElementEnvOperation = ClassUtil.requireNonNull(asElementCompleteClass.getOperation(envOperationId));
+		this.asElementEnvOperation = ClassUtil.requireNonNull(asElementCompleteClass.getBestOperation(envOperationId));
 		this.asEnvironmentType = ClassUtil.requireNonNull(asElementEnvOperation.getType().isClass());
 
 		//

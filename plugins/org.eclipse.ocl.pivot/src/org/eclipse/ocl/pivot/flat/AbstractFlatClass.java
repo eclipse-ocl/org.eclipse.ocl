@@ -13,8 +13,10 @@ package org.eclipse.ocl.pivot.flat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -33,7 +35,6 @@ import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
-import org.eclipse.ocl.pivot.internal.complete.PartialOperations;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.Disambiguator;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -49,7 +50,6 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
 /**
@@ -66,6 +66,132 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	protected static final @NonNull Operation @NonNull [] NO_OPERATIONS = new @NonNull Operation[0];
 	protected static final @NonNull Property @NonNull [] NO_PROPERTIES = new @NonNull Property[0];
+
+	/**
+	 * An OverloadsList is a non-empty list of Operations sharing the same name and parameter types.
+	 * It can be sorted into most-derived first order.
+	 *
+	private static class OverloadsList extends ArrayList<@NonNull Operation>
+	{
+		private static final long serialVersionUID = 1L;
+
+
+		public OverloadsList() {
+			super(4);
+		}
+
+		public void sort(@NonNull StandardLibrary standardLibrary) {
+			int size = size();
+			@NonNull Integer @NonNull [] keys = new @NonNull Integer[size];
+			/ *@NonNull* / Integer[] metrics = new @NonNull Integer[size];
+			OverloadsComparator comparator = new OverloadsComparator(metrics);
+			@NonNull Integer index = 0;
+			for (@NonNull Operation operation : this) {
+				keys[index] = index;
+			//	int metric = 0;
+				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
+				FlatClass flatClass = owningClass.getFlatClass(standardLibrary);
+				int depth = flatClass.getDepth();
+				//				int isRedefinition = (operation instanceof Operation) && (((Operation)operation).getRedefinedOperation().size() > 0) ? 1 : 0;
+			//	metric = depth;
+				metrics[index] = depth;
+				index++;
+			}
+			Arrays.sort(keys, comparator);
+			List<@NonNull Operation> savedOperations = new ArrayList<@NonNull Operation>(this);
+			clear();
+			for (int i = 0; i < size; i++) {
+				add(savedOperations.get(keys[i]));
+			}
+		}
+	} */
+
+	/**
+	 * PartialOperations maintains the aggregate static and non-static operations including overloads that forming a 'Complete' Operation.
+	 */
+	private static class PartialOperations implements Iterable<@NonNull Operation>
+	{
+		private static class OverloadsComparator implements Comparator</*@NonNull*/ Integer>
+		{
+			private /*@NonNull*/ Integer @NonNull [] staticDepthMetrics;
+
+			public OverloadsComparator(/*@NonNull*/ Integer @NonNull [] staticDepthMetrics) {
+				this.staticDepthMetrics = staticDepthMetrics;
+			}
+
+			@Override
+			public int compare(/*@NonNull*/ Integer o1, /*@NonNull*/ Integer o2) {
+				/*@NonNull*/ Integer m1 = staticDepthMetrics[o1];
+				/*@NonNull*/ Integer m2 = staticDepthMetrics[o2];
+				return m2 - m1;
+			}
+		}
+
+		private @NonNull List<@NonNull Operation> operations = new ArrayList<>();
+		private int firstNonStaticIndex = -1;			// -ve if operations not sorted, non-ve when sorted
+
+		public void add(@NonNull Operation pivotOperation) {
+			if (!operations.contains(pivotOperation)) {
+				operations.add(pivotOperation);
+				firstNonStaticIndex = -1;
+			}
+		}
+
+		public @NonNull Operation getBest(@NonNull StandardLibrary standardLibrary, @Nullable FeatureFilter featureFilter) {
+			if (firstNonStaticIndex < 0) {
+				sort(standardLibrary);
+			}
+			if ((featureFilter == FeatureFilter.SELECT_STATIC) && (0 < firstNonStaticIndex)) {
+				return operations.get(0);
+			}		// else SELECT_NON_STATIC or null (there are no SELECT_EXTENSION Operations
+			if (firstNonStaticIndex < operations.size()) {
+				return operations.get(firstNonStaticIndex);
+			}
+			return operations.get(0);
+		}
+
+		@Override
+		public @NonNull Iterator<@NonNull Operation> iterator() {
+			return operations.iterator();
+		}
+
+	//	public int size() {
+	//		return operations.size();
+	//	}
+
+		private void sort(@NonNull StandardLibrary standardLibrary) {
+			int size = operations.size();
+			@NonNull Integer @NonNull [] keys = new @NonNull Integer[size];
+			@NonNull Integer[] staticDepthMetrics = new @NonNull Integer[size];
+			@NonNull Integer index = 0;
+			int staticCount = 0;
+			for (@NonNull Operation operation : this) {
+				boolean isStatic = operation.isIsStatic();
+				if (isStatic) {
+					staticCount++;
+				}
+				keys[index] = index;
+				org.eclipse.ocl.pivot.Class owningClass = operation.getOwningClass();
+				FlatClass flatClass = owningClass.getFlatClass(standardLibrary);
+				int depth = flatClass.getDepth();
+				//	int isRedefinition = (operation instanceof Operation) && (((Operation)operation).getRedefinedOperation().size() > 0) ? 1 : 0;
+				staticDepthMetrics[index] = depth + (isStatic ? 0x10000 : 0);
+				index++;
+			}
+			if (operations.size() > 1) {
+				OverloadsComparator comparator = new OverloadsComparator(staticDepthMetrics);
+				Arrays.sort(keys, comparator);
+				List<@NonNull Operation> savedOperations = new ArrayList<>(operations);
+				operations.clear();
+				for (int i = 0; i < size; i++) {
+					Operation asOperation = savedOperations.get(keys[i]);
+					assert asOperation.isIsStatic() == i < staticCount;
+					add(asOperation);
+				}
+			}
+			firstNonStaticIndex = staticCount;
+		}
+	}
 
 	/**
 	 * PartialProperties maintains the aggregate of properties forming a 'Complete' Property.
@@ -221,7 +347,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	/**
 	 * Lazily created map from operation name to the mapping from ParametersId to the list of partial operations to be treated as merged.
 	 */
-	private @Nullable Map<@NonNull String, @NonNull PartialOperations> name2partialOperations = null;
+	private @Nullable Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations = null;
 
 	/**
 	 * Lazily created map from property name to the Property or PartialProperties that has that name within
@@ -272,15 +398,35 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	protected void addOperation(@NonNull Operation pivotOperation) {
 // XXX		assert operationMap == null;
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
-		if (name2partialOperations2 != null) {
+		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = name2parametersId2operationOrOperations;
+		if (name2parametersId2operationOrOperations2 != null) {
 			String operationName = PivotUtil.getName(pivotOperation);
-			PartialOperations partialOperations = name2partialOperations2.get(operationName);
-			if (partialOperations == null) {
-				partialOperations = new PartialOperations(getStandardLibrary(), operationName);
-				name2partialOperations2.put(operationName, partialOperations);
+			Map<@NonNull ParametersId, Object> parametersId2operationOrOperations2 = name2parametersId2operationOrOperations2.get(operationName);
+			if (parametersId2operationOrOperations2 == null) {
+				parametersId2operationOrOperations2 = new HashMap<>();
+				name2parametersId2operationOrOperations2.put(operationName, parametersId2operationOrOperations2);
 			}
-			partialOperations.didAddOperation(pivotOperation);
+		//	parametersId2operationOrOperations2.didAddOperation(pivotOperation);
+
+		//	public void didAddOperation(@NonNull Operation pivotOperation) {
+				ParametersId parametersId = pivotOperation.getParametersId();
+				Object operationOrOperations = parametersId2operationOrOperations2.get(parametersId);
+				if (operationOrOperations instanceof PartialOperations) {
+					PartialOperations overloads = (PartialOperations)operationOrOperations;
+					overloads.add(pivotOperation);
+				}
+				else if (operationOrOperations != null) {		// Must be an Operation
+					if (operationOrOperations != pivotOperation) {
+						PartialOperations overloads = new PartialOperations();
+						parametersId2operationOrOperations2.put(parametersId, overloads);
+						overloads.add((Operation)operationOrOperations);
+						overloads.add(pivotOperation);
+					}
+				}
+				else {
+					parametersId2operationOrOperations2.put(parametersId, pivotOperation);
+				}
+		//	}
 		}
 	}
 
@@ -435,7 +581,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 		}
 		if (memberOperation == null) {				// Non-trivial, search up the inheritance tree for an inherited operation
-			Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(this, apparentOperation);
+			Operation bestOverload = flatFragment.baseFlatClass.getBestOperation(this, apparentOperation);
 			if (bestOverload != null) {
 				memberOperation = bestOverload;
 			}
@@ -463,7 +609,62 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	@Override
-	public @Nullable Operation getBestOverload(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation) {
+	public @Nullable Operation getBestOperation(@NonNull OperationId operationId) {
+		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = getName2ParametersId2OperationOrOperations();
+		String operationName = operationId.getName();
+		Map<@NonNull ParametersId, Object> parametersId2operationOrOperations = name2parametersId2operationOrOperations2.get(operationName);
+		if (parametersId2operationOrOperations == null) {
+			return null;
+		}
+		return getBestOperation(parametersId2operationOrOperations, operationId.getParametersId(), null);
+	}
+
+	private @Nullable Operation getBestOperation(@NonNull Map<@NonNull ParametersId, Object> parametersId2operationOrOperations, @NonNull ParametersId parametersId, @Nullable FeatureFilter featureFilter) {
+		Object partials = parametersId2operationOrOperations.get(parametersId);
+		if (partials instanceof PartialOperations) {
+			PartialOperations overloads = (PartialOperations)partials;
+			Operation bestOperation = overloads.getBest(getStandardLibrary(), featureFilter);
+			if (featureFilter == null) {
+				return bestOperation;
+			}
+			for (@NonNull Operation operation : overloads) {
+				if (featureFilter.accept(operation)) {
+					return operation;
+				}
+			}
+		}
+		else if (partials != null) {			// Must be an Operation
+			Operation operation = (Operation) partials;
+			if ((featureFilter == null) || featureFilter.accept(operation)) {
+				return operation;
+			}
+		}
+		return null;
+	}
+
+	public @NonNull Iterable<@NonNull Operation> getBestOperations(@Nullable FeatureFilter featureFilter) {
+		StandardLibrary standardLibrary = getStandardLibrary();
+		List<@NonNull Operation> operations = new ArrayList<>();
+		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = getName2ParametersId2OperationOrOperations();
+		for (@NonNull Map<@NonNull ParametersId, Object> parametersId2operationOrOperations : name2parametersId2operationOrOperations2.values()) {
+			for (Object operationOrOperations : parametersId2operationOrOperations.values()) {
+				if (operationOrOperations instanceof PartialOperations) {
+					Operation operation = ((PartialOperations)operationOrOperations).getBest(standardLibrary, featureFilter);
+					operations.add(operation);
+				}
+				else if (operationOrOperations != null) {			// Must be an Operation
+					Operation operation = (Operation) operationOrOperations;
+					if ((featureFilter == null) || featureFilter.accept(operation)) {
+						operations.add(operation);
+					}
+				}
+			}
+		}
+		return operations;
+	}
+
+	@Override
+	public @Nullable Operation getBestOperation(@NonNull FlatClass derivedFlatClass, @NonNull Operation apparentOperation) {
 		AbstractFlatClass baseFlatClass = this;
 		Operation bestOverload = null;
 		FlatClass bestFlatClass = null;
@@ -655,7 +856,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				libraryFeature = PivotUtil.basicGetImplementation(memberOperation);
 			}
 			else {										// Non-trivial, search up the inheritance tree for an inherited operation
-				Operation bestOverload = flatFragment.baseFlatClass.getBestOverload(derivedFlatClass, apparentOperation);
+				Operation bestOverload = flatFragment.baseFlatClass.getBestOperation(derivedFlatClass, apparentOperation);
 				if (bestOverload != null) {
 					libraryFeature = PivotUtil.basicGetImplementation(bestOverload);
 				}
@@ -687,14 +888,14 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name;
 	}
 
-	protected @NonNull Map<@NonNull String, @NonNull PartialOperations> getName2PartialOperations() {
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
-		if (name2partialOperations2 == null) {
+	protected @NonNull Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> getName2ParametersId2OperationOrOperations() {
+		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = name2parametersId2operationOrOperations;
+		if (name2parametersId2operationOrOperations2 == null) {
 			@NonNull FlatFragment @NonNull [] fragments = getFragments();
 			synchronized(this) {
-				name2partialOperations2 = name2partialOperations;
-				if (name2partialOperations2 == null) {
-					name2partialOperations2 = name2partialOperations = new HashMap<>();
+				name2parametersId2operationOrOperations2 = name2parametersId2operationOrOperations;
+				if (name2parametersId2operationOrOperations2 == null) {
+					name2parametersId2operationOrOperations2 = name2parametersId2operationOrOperations = new HashMap<>();
 					/*	for (org.eclipse.ocl.pivot.@NonNull Class superType : PivotUtil.getSuperClasses(asClass)) {
 						org.eclipse.ocl.pivot.Class genericType = PivotUtil.getUnspecializedTemplateableElement(superType);
 						//	initMemberOperationsFrom(unspecializedPartialType);
@@ -725,7 +926,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				}
 			}
 		}
-		return name2partialOperations2;
+		return name2parametersId2operationOrOperations2;
 	}
 
 	protected @NonNull Map<@NonNull String, @NonNull Object> getName2PropertyOrProperties() {
@@ -781,71 +982,82 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return name2propertyOrProperties2;
 	}
 
-	public @Nullable Operation getOperation(@NonNull Operation pivotOperation) {
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = getName2PartialOperations();
-		String operationName = pivotOperation.getName();
-		PartialOperations partialOperations = name2partialOperations2.get(operationName);
-		if (partialOperations == null) {
-			return null;
+	public @NonNull Iterable<@NonNull Operation> getOperationOverloads(@Nullable FeatureFilter featureFilter) {
+		List<@NonNull Operation> operations = new ArrayList<>();
+		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = getName2ParametersId2OperationOrOperations();
+		for (@NonNull Map<@NonNull ParametersId, Object> parametersId2operationOrOperations : name2parametersId2operationOrOperations2.values()) {
+			for (Object operationOrOperations : parametersId2operationOrOperations.values()) {
+				operations = getOperationOverloads(operations, operationOrOperations, featureFilter);
+			}
 		}
-		return partialOperations.getOperation(pivotOperation.getParametersId(), FeatureFilter.getStaticFilter(pivotOperation.isIsStatic()));
-	}
-
-	@Override
-	public @Nullable Operation getOperation(@NonNull OperationId operationId) {
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = getName2PartialOperations();
-		String operationName = operationId.getName();
-		PartialOperations partialOperations = name2partialOperations2.get(operationName);
-		if (partialOperations == null) {
-			return null;
-		}
-		return partialOperations.getOperation(operationId.getParametersId(), null);
+		return operations != null ? operations : Collections.emptyList();
 	}
 
 	public @Nullable Iterable<@NonNull Operation> getOperationOverloads(@NonNull Operation pivotOperation) {
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = getName2PartialOperations();
+		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = getName2ParametersId2OperationOrOperations();
 		String operationName = pivotOperation.getName();
-		PartialOperations partialOperations = name2partialOperations2.get(operationName);
-		if (partialOperations == null) {
+		Map<@NonNull ParametersId, Object> parametersId2operationOrOperations = name2parametersId2operationOrOperations2.get(operationName);
+		if (parametersId2operationOrOperations == null) {
 			return null;
 		}
 		ParametersId parametersId = pivotOperation.getParametersId();
-		return partialOperations.getOperationOverloads(parametersId, FeatureFilter.getStaticFilter(pivotOperation.isIsStatic()));
+		return getOperationOverloads(parametersId2operationOrOperations, parametersId, FeatureFilter.getStaticFilter(pivotOperation.isIsStatic()));
 	}
 
-	public @NonNull Iterable<@NonNull Operation> getOperationOverloads(final @Nullable FeatureFilter featureFilter, @Nullable String name) {
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = getName2PartialOperations();
-		PartialOperations partialOperations = name2partialOperations2.get(name);
-		if (partialOperations == null) {
+	public @NonNull Iterable<@NonNull Operation> getOperationOverloads(@Nullable FeatureFilter featureFilter, @Nullable String name) {
+		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = getName2ParametersId2OperationOrOperations();
+		Map<@NonNull ParametersId, Object> parametersId2operationOrOperations = name2parametersId2operationOrOperations2.get(name);
+		if (parametersId2operationOrOperations == null) {
 			return PivotConstants.EMPTY_OPERATION_LIST;
 		}
-		return partialOperations.getOperationOverloads(featureFilter);
+		return getOperationOverloads(parametersId2operationOrOperations, featureFilter);
 	}
 
-	public @NonNull Iterable<@NonNull Operation> getOperations() {
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = getName2PartialOperations();
-		@NonNull Iterable<@NonNull Iterable<@NonNull Iterable<@NonNull Operation>>> transformed = ClassUtil.requireNonNull(Iterables.transform(name2partialOperations2.values(), PartialOperations.partialOperations2allOperations));
-		return ClassUtil.requireNonNull(Iterables.concat(ClassUtil.requireNonNull(Iterables.concat(transformed))));
-	}
-
-	public @NonNull Iterable<@NonNull Operation> getOperations(final @Nullable FeatureFilter featureFilter) {
-		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = getName2PartialOperations();
-		@NonNull Iterable<@NonNull PartialOperations> itMapListOps = name2partialOperations2.values();
-		@NonNull Iterable<@NonNull Iterable<@NonNull Iterable<@NonNull Operation>>> itItListOps = ClassUtil.requireNonNull(Iterables.transform(itMapListOps, PartialOperations.partialOperations2allOperations));
-		@NonNull Iterable<@NonNull Iterable<@NonNull Operation>> itListOps = ClassUtil.requireNonNull(Iterables.concat(itItListOps));
-		@NonNull Iterable<@NonNull Operation> itOps = ClassUtil.requireNonNull(Iterables.concat(itListOps));
-		if (featureFilter == null) {
-			return itOps;
+	private @NonNull Iterable<@NonNull Operation> getOperationOverloads(@NonNull Map<@NonNull ParametersId, Object> parametersId2operationOrOperations, @Nullable FeatureFilter featureFilter) {
+		@Nullable List<@NonNull Operation> operationOverloads = null;
+		for (Object operationOrOperations : parametersId2operationOrOperations.values()) {
+			operationOverloads = getOperationOverloads(operationOverloads, operationOrOperations, featureFilter);
 		}
-		Iterable<@NonNull Operation> subItOps = Iterables.filter(itOps,
-			new Predicate<@NonNull Operation>()
-			{
-				@Override
-				public boolean apply(@NonNull Operation domainOperation) {
-					return featureFilter.accept(domainOperation);
+		return operationOverloads != null ? operationOverloads : Collections.emptyList();
+	}
+
+	private @NonNull Iterable<@NonNull Operation> getOperationOverloads(@NonNull Map<@NonNull ParametersId, Object> parametersId2operationOrOperations, @NonNull ParametersId parametersId, @Nullable FeatureFilter featureFilter) {
+		Object operationOrOperations = parametersId2operationOrOperations.get(parametersId);
+		@Nullable List<@NonNull Operation> operationOverloads = getOperationOverloads(null, operationOrOperations, featureFilter);
+		return operationOverloads != null ? operationOverloads : Collections.emptyList();
+	}
+
+	private @Nullable List<@NonNull Operation> getOperationOverloads(@Nullable List<@NonNull Operation> operationOverloads, Object operationOrOperations, @Nullable FeatureFilter featureFilter) {
+		if (operationOrOperations instanceof PartialOperations) {
+			for (@NonNull Operation op : (PartialOperations)operationOrOperations) {
+				if ((featureFilter == null) || featureFilter.accept(op)) {
+					if (operationOverloads == null) {
+						operationOverloads =  new ArrayList<>();
+					}
+					operationOverloads.add(op);
 				}
-			});
-		return ClassUtil.requireNonNull(subItOps);
+			}
+		}
+		else if (operationOrOperations != null) {			// Must be an Operation
+			Operation operation = (Operation) operationOrOperations;
+			if ((featureFilter == null) || featureFilter.accept(operation)) {
+				if (operationOverloads == null) {
+					operationOverloads =  new ArrayList<>();
+				}
+				operationOverloads.add(operation);
+			}
+		}
+		return operationOverloads;
+	}
+
+	public @Nullable Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
+		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = getName2ParametersId2OperationOrOperations();
+		String operationName = pivotOperation.getName();
+		Map<@NonNull ParametersId, Object> parametersId2operationOrOperations = name2parametersId2operationOrOperations2.get(operationName);
+		if (parametersId2operationOrOperations == null) {
+			return null;
+		}
+		return getBestOperation(parametersId2operationOrOperations, pivotOperation.getParametersId(), FeatureFilter.getStaticFilter(pivotOperation.isIsStatic()));
 	}
 
 	@Override
@@ -1259,7 +1471,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	public void resetFragments() {
 		if (mutable == null) {				// 'premature' resetFragments
 			assert fragments == null;
-			assert name2partialOperations == null;
+			assert name2parametersId2operationOrOperations == null;
 			assert name2propertyOrProperties == null;
 			return;
 		}
@@ -1287,9 +1499,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	public void resetOperations() {
-		if (name2partialOperations != null) {
-			name2partialOperations.clear();
-			name2partialOperations = null;
+		if (name2parametersId2operationOrOperations != null) {
+			name2parametersId2operationOrOperations.clear();
+			name2parametersId2operationOrOperations = null;
 		}
 		if (operationMap != null) {
 			operationMap.clear();
@@ -1311,4 +1523,15 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 //	public String toString() {
 //		return completeClass.getPrimaryClass().toString();
 //	}
+
+/*	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		s.append(name);
+		for (@NonNull ParametersId parametersId : map.keySet()) {
+			s.append("\n  ");
+			s.append(parametersId);
+		}
+		return s.toString();
+	} */
 }
