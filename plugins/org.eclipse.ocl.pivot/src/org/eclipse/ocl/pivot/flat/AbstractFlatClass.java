@@ -219,12 +219,12 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	protected final int flags;
 
 	/**
-	 * Lazily created map from operation name to map of parameter types to the list of partial operations to be treated as merged.
+	 * Lazily created map from operation name to the mapping from ParametersId to the list of partial operations to be treated as merged.
 	 */
 	private @Nullable Map<@NonNull String, @NonNull PartialOperations> name2partialOperations = null;
 
 	/**
-	 * Cached mapping from a property name to the Property or PartialProperties that has that name within
+	 * Lazily created map from property name to the Property or PartialProperties that has that name within
 	 * the FlatClass hierarchy. The PartialProperties holds the ambiguity until a lazy resolution replaces it
 	 * by a Property or null
 	 */				// XXX Use binary search of array rather than map
@@ -232,8 +232,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 
 	/**
-	 * Map from invoked operation to its resolved implementation. Theis map is lazily populated with each
-	 * enry computed on the first invocation.
+	 * Map from invoked operation to its resolved implementation. This map is lazily populated with each
+	 * entry computed on the first invocation.
 	 */
 	private @Nullable Map<@NonNull Operation, @NonNull LibraryFeature> operationMap = null;
 
@@ -271,17 +271,16 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	protected void addOperation(@NonNull Operation pivotOperation) {
+// XXX		assert operationMap == null;
 		Map<@NonNull String, @NonNull PartialOperations> name2partialOperations2 = name2partialOperations;
 		if (name2partialOperations2 != null) {
-			String operationName = pivotOperation.getName();
-			if (operationName != null) {
-				PartialOperations partialOperations = name2partialOperations2.get(operationName);
-				if (partialOperations == null) {
-					partialOperations = new PartialOperations(getStandardLibrary(), operationName);
-					name2partialOperations2.put(operationName, partialOperations);
-				}
-				partialOperations.didAddOperation(pivotOperation);
+			String operationName = PivotUtil.getName(pivotOperation);
+			PartialOperations partialOperations = name2partialOperations2.get(operationName);
+			if (partialOperations == null) {
+				partialOperations = new PartialOperations(getStandardLibrary(), operationName);
+				name2partialOperations2.put(operationName, partialOperations);
 			}
+			partialOperations.didAddOperation(pivotOperation);
 		}
 	}
 
@@ -625,8 +624,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	}
 
 	private @NonNull LibraryFeature getImplementation(@NonNull FlatFragment flatFragment, @NonNull Operation apparentOperation) {
-		int index = apparentOperation.getIndex();
-		assert index < 0;
+//XXX		int index = apparentOperation.getIndex();
+//XXX		assert index < 0;
 		Map<@NonNull Operation, @NonNull LibraryFeature> operationMap2 = operationMap;
 		if (operationMap2 == null) {
 			synchronized (this) {
@@ -695,7 +694,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			synchronized(this) {
 				name2partialOperations2 = name2partialOperations;
 				if (name2partialOperations2 == null) {
-					name2partialOperations2 = name2partialOperations = new HashMap<@NonNull String, @NonNull PartialOperations>();
+					name2partialOperations2 = name2partialOperations = new HashMap<>();
 					/*	for (org.eclipse.ocl.pivot.@NonNull Class superType : PivotUtil.getSuperClasses(asClass)) {
 						org.eclipse.ocl.pivot.Class genericType = PivotUtil.getUnspecializedTemplateableElement(superType);
 						//	initMemberOperationsFrom(unspecializedPartialType);
@@ -721,7 +720,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 						}
 					}
 					if (s != null) {
-						PROPERTIES.println(s.toString());
+						OPERATIONS.println(s.toString());
 					}
 				}
 			}
@@ -1291,6 +1290,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (name2partialOperations != null) {
 			name2partialOperations.clear();
 			name2partialOperations = null;
+		}
+		if (operationMap != null) {
+			operationMap.clear();
+			operationMap = null;
 		}
 	}
 

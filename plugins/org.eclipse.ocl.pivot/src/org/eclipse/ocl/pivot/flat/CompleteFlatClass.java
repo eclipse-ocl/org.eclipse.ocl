@@ -81,6 +81,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
 		assert !isOclAny();
 		List<@NonNull FlatClass> superFlatClasses = null;
+		FlatClass flatClass = completeClass.getFlatClass();
 		CompleteModel completeModel = completeClass.getCompleteModel();
 		CompleteStandardLibrary standardLibrary = completeModel.getStandardLibrary();
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
@@ -90,7 +91,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 				}
 				CompleteClass superCompleteClass = completeModel.getCompleteClass(PivotUtil.getGenericElement(partialSuperClass));
 				FlatClass superFlatClass = superCompleteClass.getFlatClass();
-				if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
+				if ((superFlatClass != flatClass) && !superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
 					superFlatClasses.add(superFlatClass);
 				}
 			}

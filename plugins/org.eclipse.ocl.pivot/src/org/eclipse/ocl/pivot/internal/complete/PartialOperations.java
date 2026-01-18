@@ -33,7 +33,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 
-public class PartialOperations //extends HashMap<ParametersId, List<DomainOperation>>
+public class PartialOperations //extends HashMap<ParametersId, List<DomainOperation>>	// XXX Fold into AbstractFlatClass
 {
 	//	private static final long serialVersionUID = 1L;
 	public static final @NonNull Function<@NonNull PartialOperations, @NonNull Iterable<@NonNull Iterable<@NonNull Operation>>> partialOperations2allOperations =
