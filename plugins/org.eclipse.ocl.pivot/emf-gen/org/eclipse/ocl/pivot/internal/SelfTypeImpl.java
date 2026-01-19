@@ -21,13 +21,13 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.SelfType;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 /**
@@ -123,10 +123,10 @@ public class SelfTypeImpl extends ClassImpl implements SelfType
 		if (selfType instanceof org.eclipse.ocl.pivot.Class) {
 			@Nullable Iterable<@NonNull TemplateParameter> templateParameters = ((TemplateableElement)selfType).basicGetOwnedTemplateParameters();
 			if (templateParameters != null) {
-				EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
-				if (environmentFactory != null) {
+				StandardLibrary standardLibrary = ThreadLocalExecutor.getStandardLibrary();
+				if (standardLibrary != null) {
 					assert expr != null;
-					return TemplateArgumentVisitor.specializeType(selfType, expr, environmentFactory, selfType, null);
+					return TemplateArgumentVisitor.specializeType(selfType, expr, standardLibrary, selfType, null);
 				}
 				else {
 					return this;

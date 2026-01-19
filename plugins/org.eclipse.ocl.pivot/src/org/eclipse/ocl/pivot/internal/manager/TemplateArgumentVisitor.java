@@ -21,8 +21,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
@@ -85,7 +83,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	 *
 	 * @since 7.0
 	 */
-	public static @NonNull TemplateArgumentVisitor create(@NonNull EnvironmentFactory environmentFactory,
+	public static @NonNull TemplateArgumentVisitor create(@NonNull StandardLibrary standardLibrary,
 				@NonNull CallExp actualExp, @Nullable Type selfType) {
 		Element referredElement;
 		 if (actualExp instanceof NavigationCallExp) {
@@ -94,9 +92,9 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		else {
 			referredElement = PivotUtil.getReferredOperation(actualExp);
 		}
-		TemplateArgumentVisitor visitor = createVisitor(referredElement, environmentFactory, selfType, null);
+		TemplateArgumentVisitor visitor = createVisitor(referredElement, standardLibrary, selfType, null);
 		if (visitor == null) {
-			visitor = environmentFactory.createTemplateArgumentVisitor(selfType, null);
+			visitor = standardLibrary.createTemplateArgumentVisitor(selfType, null);
 		}
 		else {
 			visitor.exclude(actualExp);
@@ -108,12 +106,12 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	/**
 	 * @since 7.0
 	 */
-	public static @Nullable TemplateArgumentVisitor createVisitor(@NonNull EObject eObject, @NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public static @Nullable TemplateArgumentVisitor createVisitor(@NonNull EObject eObject, @NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		BasicTemplateSpecialization templateSpecialization = BasicTemplateSpecialization.basicGetTemplateSpecialization((Element)eObject);
 		if (templateSpecialization == null) {
 			return null;
 		}
-		TemplateArgumentVisitor visitor = environmentFactory.createTemplateArgumentVisitor(selfType, null);
+		TemplateArgumentVisitor visitor = standardLibrary.createTemplateArgumentVisitor(selfType, null);
 		visitor.setTemplateSpecialization(templateSpecialization);
 		return visitor;
 	}
@@ -205,17 +203,17 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	 *
 	 * @since 7.0
 	 */
-	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
-		TemplateArgumentVisitor visitor = create(environmentFactory, actualExp, selfType);
+		TemplateArgumentVisitor visitor = create(standardLibrary, actualExp, selfType);
 		return visitor.specializeType(type);
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	public static org.eclipse.ocl.pivot.@NonNull Class specializeTypeToLowerBound(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull EnvironmentFactory environmentFactory) {
-		TemplateArgumentVisitor visitor = createVisitor(type, environmentFactory, null, null);
+	public static org.eclipse.ocl.pivot.@NonNull Class specializeTypeToLowerBound(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull StandardLibrary standardLibrary) {
+		TemplateArgumentVisitor visitor = createVisitor(type, standardLibrary, null, null);
 		if (visitor == null) {
 			return type;
 		}
@@ -223,14 +221,14 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		for (@NonNull TemplateParameter templateParameter : templateParameterization) {
 			org.eclipse.ocl.pivot.Class lowerBound = PivotUtil.basicGetLowerBound(templateParameter);
 			if (lowerBound == null) {
-				lowerBound = environmentFactory.getStandardLibrary().getOclAnyType();
+				lowerBound = standardLibrary.getOclAnyType();
 			}
 			visitor.put(templateParameter, lowerBound);
 		}
 		return (org.eclipse.ocl.pivot.Class) visitor.specializeType(type);
 	}
 
-	private final @NonNull EnvironmentFactory environmentFactory;
+	private final @NonNull StandardLibrary standardLibrary;
 	private final @Nullable Type selfType;
 	private @Nullable NamedElement excludedTarget = null;
 
@@ -244,9 +242,9 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	/**
 	 * @since 7.0
 	 */
-	public TemplateArgumentVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public TemplateArgumentVisitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue) {
 		super(null);
-		this.environmentFactory = environmentFactory;
+		this.standardLibrary = standardLibrary;
 		this.selfType = selfType;
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
@@ -338,7 +336,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 			TemplateParameter asTemplateParameter = (TemplateParameter)asType;
 			if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
 			//	assert false;
-				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getStandardLibrary().getOrphanage(), asTemplateParameter);
+				return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), asTemplateParameter);
 			}
 		}
 		return asType;
@@ -360,7 +358,6 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 				}
 			}
 		}
-		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		if (resolutions != null) {
 			List<@NonNull PartId> partIds = new ArrayList<>(parts.size());
 			Collections.sort(partIds);
@@ -410,10 +407,10 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		if (formalTemplateParameter instanceof NormalizedTemplateParameter) {
 			formalTemplateParameter = getTemplateParameterization().get(((NormalizedTemplateParameter)formalTemplateParameter).getIndex());
 		}
-		else {
+	/*	else {
 			TemplateableElement templateableElement = formalTemplateParameter.getOwningTemplateableElement();
 			if (templateableElement instanceof org.eclipse.ocl.pivot.Class) {
-				CompleteClass completeClass = environmentFactory.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)templateableElement);
+				CompleteClass completeClass = standardLibrary.getCompleteModel().getCompleteClass((org.eclipse.ocl.pivot.Class)templateableElement);
 				for (org.eclipse.ocl.pivot.Class partialClass : completeClass.getPartialClasses()) {
 					List<TemplateParameter> asTemplateParameters = partialClass.getOwnedTemplateParameters();
 					for (TemplateParameter asTemplateParameter : asTemplateParameters) {
@@ -421,16 +418,15 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 					}
 				}
 			}
-		}
+		} */
 		BasicTemplateSpecialization templateSpecialization2 = getTemplateSpecialization();
 		Type oldType = templateSpecialization2.get(formalTemplateParameter);
 		if (oldType == actualType) {
 			return actualType;
 		}
 		else if (oldType != null) {
-			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			Type commonType = standardLibrary.getCommonType(oldType, actualType);	// FIXME casts
-			Type bestType = environmentFactory.getCompleteModel().getPrimaryType(commonType);
+			Type bestType = standardLibrary.getPrimaryType(commonType);
 			if (bestType != oldType) {
 				templateSpecialization2.put(formalTemplateParameter, bestType);
 			}
@@ -455,7 +451,6 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	}
 
 	public @NonNull Type specializeType(@NonNull Type type) {
-		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 		if (type instanceof NormalizedTemplateParameter) {
 			Type actualType = getTemplateSpecialization().get(((NormalizedTemplateParameter)type).getIndex());
 			if (!(actualType instanceof NormalizedTemplateParameter) && (actualType instanceof TemplateParameter) && ((TemplateParameter)actualType).getConstrainingClasses().isEmpty()) {
@@ -628,10 +623,11 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		if (formalElements.size() > 0) {
 			OCLExpression actualElement = object.getOwnedBody();
 			Type actualType = actualElement.getType();
+			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(object);
 			LibraryIterationOrOperation implementation = environmentFactory.getIterationOrOperationImplementation(referredIteration);
-			if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
-				actualType = implementation.resolveBodyType(environmentFactory, object, actualType);
-			}
+		//	if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
+				actualType = implementation.resolveBodyType(standardLibrary, object, actualType);
+		//	}
 			analyzeType(formalElements.get(0).getType(), actualType);
 		}
 		return null;
@@ -697,10 +693,11 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		//
 		//	FIXME More general processing for T2 < T1
 		//
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(object);
 		LibraryIterationOrOperation implementation = environmentFactory.getIterationOrOperationImplementation(referredOperation);
-		if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
+	//	if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
 			implementation.resolveUnmodeledTemplateArguments(this, object);
-		}
+	//	}
 		return null;
 	}
 

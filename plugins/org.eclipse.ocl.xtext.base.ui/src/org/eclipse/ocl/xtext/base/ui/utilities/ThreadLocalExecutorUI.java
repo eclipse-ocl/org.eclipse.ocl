@@ -19,6 +19,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -293,6 +294,22 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		}
 		else {
 			return super.localBasicGetExecutor();
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable StandardLibrary localBasicGetStandardLibrary() {
+		if (closingPartThread != null) {
+			return closingPartThread.localBasicGetStandardLibrary();
+		}
+		else if (activePartThread != null) {
+			return activePartThread.localBasicGetStandardLibrary();
+		}
+		else {
+			return super.localBasicGetStandardLibrary();
 		}
 	}
 

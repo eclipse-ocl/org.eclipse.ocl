@@ -23,6 +23,7 @@ import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.internal.evaluation.ExecutorInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
@@ -128,6 +129,14 @@ public class ThreadLocalExecutor implements Nameable
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static @Nullable StandardLibrary basicGetStandardLibrary() {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		return threadLocalExecutor.localBasicGetStandardLibrary();
+	}
+
+	/**
 	 * @since 1.15
 	 */
 	protected static synchronized @NonNull ThreadLocalExecutor createThreadLocalExecutor() {
@@ -198,6 +207,14 @@ public class ThreadLocalExecutor implements Nameable
 	public static void init(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		threadLocalExecutor.localInit(editingDomain, callBack);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull StandardLibrary getStandardLibrary() {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		return ClassUtil.requireNonNull(threadLocalExecutor.localBasicGetStandardLibrary());
 	}
 
 	/**
@@ -477,6 +494,23 @@ public class ThreadLocalExecutor implements Nameable
 		}
 		EnvironmentFactory environmentFactory2 = environmentFactory;
 		return (environmentFactory2 == null) || !environmentFactory2.isDisposed() ? executor : null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable StandardLibrary localBasicGetStandardLibrary() {
+		if (concurrentEnvironmentFactories) {
+			assert environmentFactory == null;
+			assert executor == null;
+		}
+		if (environmentFactory != null) {
+			return environmentFactory.getStandardLibrary();
+		}
+		if (executor != null) {
+			return executor.getStandardLibrary();
+		}
+		return null;
 	}
 
 	/**

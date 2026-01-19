@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -47,10 +46,10 @@ public class CollectIteration extends AbstractIteration
 	/**
 	 *	Special case processing for collect() body type.
 	 *
-	 * @since 1.12
+	 * @since 7.0
 	 */
 	@Override
-	public @Nullable Type resolveBodyType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	public @Nullable Type resolveBodyType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		IteratorExp iteratorExp = (IteratorExp)callExp;
 		OCLExpression body = iteratorExp.getOwnedBody();
 		Type asType = body != null ? body.getType() : null;
@@ -73,10 +72,10 @@ public class CollectIteration extends AbstractIteration
 	/**
 	 *	Special case processing for collect() return type.
 	 *
-	 * @since 1.12
+	 * @since 7.0
 	 */
 	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	public @Nullable Type resolveReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		IteratorExp iteratorExp = (IteratorExp)callExp;
 		OCLExpression body = iteratorExp.getOwnedBody();
 		Type asType = body != null ? body.getType() : null;
@@ -94,7 +93,6 @@ public class CollectIteration extends AbstractIteration
 			boolean isOrdered = (returnType instanceof CollectionType) && ((CollectionType)returnType).isOrdered();
 			boolean isNullFree = asType instanceof CollectionType && ((CollectionType)asType).isIsNullFree();
 			boolean isRequired = !(asType instanceof CollectionType) && (body != null) && body.isIsRequired();
-			StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, false);
 			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree || isRequired, null, null);	// FIXME null, null
 			returnType = standardLibrary.getCollectionType(typeArguments);

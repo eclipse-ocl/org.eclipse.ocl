@@ -13,9 +13,9 @@ package org.eclipse.ocl.pivot.library;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 
 /**
  * @since 1.18
@@ -26,8 +26,9 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	 * Return the actual type of te body of callExp for which the regular library modeling suggests bodyType.
 	 *
 	 * The default implementation just returns bodyType.
+	 * @since 7.0
 	 */
-	default @Nullable Type resolveBodyType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type bodyType) {
+	default @Nullable Type resolveBodyType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type bodyType) {
 		return bodyType;
 	}
 
@@ -35,8 +36,9 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	 * Return the actual return nullity of callExp for which the regular library modeling suggests returnIsRequired.
 	 *
 	 * The default implementation just returns returnIsRequired.
+	 * @since 7.0
 	 */
-	default boolean resolveReturnNullity(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, boolean returnIsRequired) {
+	default boolean resolveReturnNullity(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, boolean returnIsRequired) {
 		return returnIsRequired;
 	}
 
@@ -44,8 +46,9 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	 * Return the actual return type of callExp for which the regular library modeling suggests returnType.
 	 *
 	 * The default implementation just returns returnType.
+	 * @since 7.0
 	 */
-	default @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	default @Nullable Type resolveReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		return returnType;
 	}
 
@@ -57,8 +60,9 @@ public interface LibraryIterationOrOperation extends LibraryFeature
 	 * It may evolve to a full constant folder.
 	 *
 	 * The default implementation just returns null for not known.
+	 * @since 7.0
 	 */
-	default @Nullable Object resolveReturnValue(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp) {
+	default @Nullable Object resolveReturnValue(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp) {
 		return null;
 	}
 

@@ -387,6 +387,7 @@ implements org.eclipse.ocl.pivot.Class {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
+	 * @since 7.0
 	 */
 	@Override
 	public List<WildcardType> getOwnedWildcards()
@@ -1622,14 +1623,14 @@ implements org.eclipse.ocl.pivot.Class {
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp callExpr, @Nullable Type selfType) {
 		assert callExpr != null;
 		if (selfType != null) {
-			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(callExpr);
+			StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(callExpr);
 			@Nullable Iterable<@NonNull TemplateParameter> templateParameters = basicGetOwnedTemplateParameters();
 			if (templateParameters != null) {
-				return TemplateArgumentVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
+				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType, null);
 			}
 			List<@NonNull TemplateArgument> templateArguments = basicGetOwnedTemplateArguments();
 			if (templateArguments != null) {
-				return TemplateArgumentVisitor.specializeType(this, callExpr, environmentFactory, selfType, null);
+				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType, null);
 			}
 		}
 		return this;

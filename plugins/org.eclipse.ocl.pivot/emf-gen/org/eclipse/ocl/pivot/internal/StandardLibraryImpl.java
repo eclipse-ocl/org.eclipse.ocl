@@ -45,6 +45,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
@@ -55,6 +56,7 @@ import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotTemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
@@ -351,6 +353,14 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	protected abstract @NonNull SpecializedTypeManager createSpecializedTypeManager();
 
 	/**
+	 * @since 1.1
+	 */
+	@Override
+	public @NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue) {
+		return new PivotTemplateArgumentVisitor(this, selfType, null);
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	protected abstract @NonNull TupleTypeManager createTupleTypeManager();
@@ -644,6 +654,11 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	@Override
 	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		return getCollectionType(getOrderedSetType(), elementType, isNullFree, lower, upper);
+	}
+
+	@Override
+	public @NonNull Orphanage getOrphanage() {
+		throw new UnsupportedOperationException();			// XXX
 	}
 
 	@Override

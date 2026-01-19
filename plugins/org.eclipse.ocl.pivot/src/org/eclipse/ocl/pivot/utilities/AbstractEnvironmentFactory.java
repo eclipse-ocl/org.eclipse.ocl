@@ -92,7 +92,6 @@ import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.manager.GenPackageManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
@@ -804,15 +803,6 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	protected @NonNull CompleteStandardLibrary createStandardLibrary() {
 		return PivotFactory.eINSTANCE.createCompleteStandardLibrary();
-	}
-
-	/**
-	 * @since 1.1
-	 */
-	@Override
-	public @NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(
-			@Nullable Type selfType, @Nullable Type selfTypeValue) {
-		return new PivotTemplateArgumentVisitor(this, selfType, null);
 	}
 
 	protected @NonNull HashMap<Object, StatusCodes.Severity> createValidationKey2severityMap() {

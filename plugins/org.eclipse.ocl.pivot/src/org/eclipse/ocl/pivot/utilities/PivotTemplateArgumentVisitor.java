@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.utilities;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 
@@ -24,8 +25,8 @@ public class PivotTemplateArgumentVisitor extends TemplateArgumentVisitor {
 	/**
 	 * @since 7.0
 	 */
-	public PivotTemplateArgumentVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
-		super(environmentFactory, selfType, null);
+	public PivotTemplateArgumentVisitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+		super(standardLibrary, selfType, null);
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 }

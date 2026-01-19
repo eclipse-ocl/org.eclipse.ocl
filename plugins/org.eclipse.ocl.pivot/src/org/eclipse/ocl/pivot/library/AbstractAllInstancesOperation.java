@@ -14,10 +14,10 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.SetValue;
 
@@ -31,12 +31,15 @@ public abstract class AbstractAllInstancesOperation extends AbstractUnaryOperati
 	@Override
 	public abstract @NonNull SetValue evaluate(@NonNull Executor executor, @NonNull TypeId returnTypeId, @Nullable Object sourceVal);
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	public @Nullable Type resolveReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		OCLExpression asSource = PivotUtil.getOwnedSource(callExp);
 		Type asTypeValue = asSource.getTypeValue();
 		if (asTypeValue != null) {
-			return environmentFactory.getStandardLibrary().getSetType(asTypeValue, true, null, null);
+			return standardLibrary.getSetType(asTypeValue, true, null, null);
 		}
 		else {
 			return returnType;			// Shouldn't happen

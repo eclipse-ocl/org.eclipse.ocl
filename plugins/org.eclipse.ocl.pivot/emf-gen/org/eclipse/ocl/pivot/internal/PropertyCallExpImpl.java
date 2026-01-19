@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.PropertyCallExp;
 import org.eclipse.ocl.pivot.ReferringElement;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -44,7 +45,6 @@ import org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringGetSeverityOperation;
 import org.eclipse.ocl.pivot.library.string.CGStringLogDiagnosticOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
@@ -470,8 +470,8 @@ implements PropertyCallExp {
 		if (!TemplateArgumentVisitor.needsSpecialization(owningType)) {
 			return owningType;
 		}
-		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(this);
-		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.create(environmentFactory, this, owningType);
+		StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(this);
+		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.create(standardLibrary, this, owningType);
 		return visitor.specializeType(owningType);
 	}
 
@@ -495,8 +495,8 @@ implements PropertyCallExp {
 		if (!TemplateArgumentVisitor.needsSpecialization(referencedType)) {
 			return referencedType;
 		}
-		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(this);
-		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.create(environmentFactory, this, referencedType);
+		StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(this);
+		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.create(standardLibrary, this, referencedType);
 		return visitor.specializeType(referencedType);
 	}
 

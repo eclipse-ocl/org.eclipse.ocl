@@ -135,7 +135,10 @@ public abstract class ExecutorManager implements Executor
 		}
 	};
 
-	protected final @NonNull StandardLibrary standardLibrary;
+	/**
+	 * The prevailing StandardLibrary, may start as a PartialStandardLibrary before upgrading to a CompleteStandardLibrary if required.
+	 */
+	protected @NonNull StandardLibrary standardLibrary;
 
 	/**
 	 * Lazily-created cache of reusable regex patterns to avoid

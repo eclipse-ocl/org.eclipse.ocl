@@ -13,9 +13,9 @@ package org.eclipse.ocl.pivot.library.collection;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.library.AbstractSimpleUnaryOperation;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
@@ -33,10 +33,10 @@ public class CollectionAsSequenceOperation extends AbstractSimpleUnaryOperation
 	/**
 	 *	Special case processing for return collection types based on the source collection types and multiplicities.
 	 *
-	 * @since 1.18
+	 * @since 7.0
 	 */
 	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		return resolveCollectionAsCollectionReturnType(environmentFactory, callExp, returnType);
+	public @Nullable Type resolveReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
+		return resolveCollectionAsCollectionReturnType(standardLibrary, callExp, returnType);
 	}
 }

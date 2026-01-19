@@ -455,7 +455,7 @@ public class PivotHelper extends PivotUtil
 		boolean returnIsRequired = asOperation.isIsRequired();
 		Object returnValue = null;			// Currently always a Type - see Bug 577902
 		if ((formalType != null) && (sourceType != null)) {
-			returnType = TemplateArgumentVisitor.specializeType(formalType, asCallExp, environmentFactory, sourceType, null);
+			returnType = TemplateArgumentVisitor.specializeType(formalType, asCallExp, standardLibrary, sourceType, null);
 		}
 		//
 		//	The flattening of collect() and consequently implicit-collect is not modelled accurately.
@@ -464,9 +464,9 @@ public class PivotHelper extends PivotUtil
 		//
 		LibraryIterationOrOperation implementation = (LibraryIterationOrOperation)asOperation.getImplementation();
 		if (implementation != null) {		// Library classes have implementations, Complete OCL classes may be recursive
-			returnType = implementation.resolveReturnType(environmentFactory, asCallExp, returnType);
-			returnIsRequired = implementation.resolveReturnNullity(environmentFactory, asCallExp, returnIsRequired);
-			returnValue = implementation.resolveReturnValue(environmentFactory, asCallExp);
+			returnType = implementation.resolveReturnType(standardLibrary, asCallExp, returnType);
+			returnIsRequired = implementation.resolveReturnNullity(standardLibrary, asCallExp, returnIsRequired);
+			returnValue = implementation.resolveReturnValue(standardLibrary, asCallExp);
 		//	assert (returnValue == null) || ((returnType != null) && returnType.getName().equals(((EObject)returnValue).eClass().getName()));	// Not valid once AnyType/VoidType get involved
 		}
 		else {

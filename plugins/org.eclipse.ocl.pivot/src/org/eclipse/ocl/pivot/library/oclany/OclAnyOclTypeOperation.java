@@ -16,11 +16,11 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.OCLExpression;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.library.AbstractUntypedUnaryOperation;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -40,19 +40,19 @@ public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 	}
 
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
 	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	public @Nullable Type resolveReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		assert returnType != null;
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		Type sourceType = PivotUtil.getType(source);
 	//	if (sourceType.eClass() == PivotPackage.Literals.CLASS) {
 		if ((sourceType instanceof AnyType) || (sourceType instanceof InvalidType) || (sourceType instanceof VoidType)) {	// Irregular super/sub-meta-type conformance
-			return environmentFactory.getStandardLibrary().getClassType();	// Suppress the irregularity ?? Class<OclAny> rather than Class<Class>
+			return standardLibrary.getClassType();	// Suppress the irregularity ?? Class<OclAny> rather than Class<Class>
 		}
 	//	if (sourceType instanceof DataType) {	// collections, maps, lambdas, tuples, enumerations
-			return environmentFactory.getIdResolver().getStaticClassOf(sourceType);
+			return standardLibrary.getIdResolver().getStaticClassOf(sourceType);
 	//	}
 	//	else {
 	//		return environmentFactory.getStandardLibrary().getClassType();	// FIXME could be common type of all possible metatypes
@@ -60,10 +60,10 @@ public class OclAnyOclTypeOperation extends AbstractUntypedUnaryOperation
 	}
 
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
 	@Override
-	public @Nullable Object resolveReturnValue(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp) {
+	public @Nullable Object resolveReturnValue(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp) {
 		OCLExpression source = PivotUtil.getOwnedSource(callExp);
 		return PivotUtil.getType(source);
 	}

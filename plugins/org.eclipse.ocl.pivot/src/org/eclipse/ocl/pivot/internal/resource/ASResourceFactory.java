@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintVisitor;
@@ -109,7 +110,7 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 	 * Create a visitor to resolve template substitutions.
 	 * @since 7.0
 	 */
-	@NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(@NonNull EnvironmentFactory environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue);
+	@NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue);
 
 	/**
 	 * Create a visitor to provide a debug representation of one or more elements in the resource.

@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.library.AbstractSimpleBinaryOperation;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 
@@ -43,10 +42,10 @@ public class CollectionIncludingOperation extends AbstractSimpleBinaryOperation
 	/**
 	 *	Special case processing for including() that deduces nullFree both source and argument.
 	 *
-	 * @since 1.18
+	 * @since 7.0
 	 */
 	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	public @Nullable Type resolveReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		if (returnType instanceof CollectionType) {
 			OCLExpression ownedSource = callExp.getOwnedSource();
 			if (ownedSource != null) {
@@ -61,7 +60,6 @@ public class CollectionIncludingOperation extends AbstractSimpleBinaryOperation
 							CollectionType returnCollectionType = (CollectionType)returnType;
 							if (returnCollectionType.isIsNullFree() != isNullFree) {
 								@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
-								StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 								CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
 								CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
 								returnType = standardLibrary.getCollectionType(typeArguments);

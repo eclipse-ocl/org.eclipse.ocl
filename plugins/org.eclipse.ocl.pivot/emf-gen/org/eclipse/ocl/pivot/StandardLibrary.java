@@ -24,6 +24,8 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
@@ -110,6 +112,14 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType);
+
+	/**
+	 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
+	 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
+	 * this alternative creation mechanism is available via an EnvironmentFactory override.
+	 * @since 7.0
+	 */
+	@NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
 
 	/**
 	 * Obtains the generic instance of the BagType metatype, named
@@ -449,6 +459,11 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull CollectionType getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull Orphanage getOrphanage();
 
 	/**
 	 * Obtains the package containing the library types

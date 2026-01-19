@@ -19,7 +19,6 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 
@@ -32,8 +31,9 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 {
 	/**
 	 * Special case processing for return collection types based on the source collection types and multiplicities.
+	 * @since 7.0
 	 */
-	protected @Nullable Type resolveCollectionAsCollectionReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	protected @Nullable Type resolveCollectionAsCollectionReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		if (returnType instanceof CollectionType) {
 			OCLExpression ownedSource = callExp.getOwnedSource();
 			if (ownedSource != null) {
@@ -42,7 +42,6 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				if (sourceType instanceof CollectionType) {
 					CollectionType sourceCollectionType = (CollectionType)sourceType;
 					Type elementType = PivotUtil.getElementType(sourceCollectionType);
-					StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 					CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
 					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, sourceCollectionType.isIsNullFree(), sourceCollectionType.getLowerValue(), sourceCollectionType.getUpperValue());
 					returnType = standardLibrary.getCollectionType(typeArguments);
@@ -54,8 +53,9 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 
 	/**
 	 * Special case processing for return types based on the source collection element types.
+	 * @since 7.0
 	 */
-	protected boolean resolveCollectionSourceElementReturnNullity(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, boolean returnIsRequired) {
+	protected boolean resolveCollectionSourceElementReturnNullity(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, boolean returnIsRequired) {
 		OCLExpression ownedSource = callExp.getOwnedSource();
 		if (ownedSource != null) {
 			Type sourceType = ownedSource.getType();
@@ -69,8 +69,9 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 
 	/**
 	 * Special case processing for return collection types based on the source collection types.
+	 * @since 7.0
 	 */
-	protected @Nullable Type resolveCollectionSourceReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
+	protected @Nullable Type resolveCollectionSourceReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		if (returnType instanceof CollectionType) {
 			OCLExpression ownedSource = callExp.getOwnedSource();
 			if (ownedSource != null) {
@@ -78,7 +79,6 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				CollectionType collectionType = (CollectionType)returnType;
 				if ((sourceType instanceof CollectionType) && ((CollectionType)sourceType).isIsNullFree() && !collectionType.isIsNullFree()) {
 					@SuppressWarnings("null")@NonNull Type elementType = collectionType.getElementType();
-					StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
 					CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(collectionType.isOrdered(), collectionType.isUnique());
 					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
 					returnType = standardLibrary.getCollectionType(typeArguments);

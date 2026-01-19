@@ -42,7 +42,6 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -454,8 +453,8 @@ public class TemplateParameterImpl
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp expr, @Nullable Type selfType) {
 		assert expr != null;
 		if (selfType != null) {
-			EnvironmentFactory environmentFactory = ThreadLocalExecutor.getEnvironmentFactory();
-			return TemplateArgumentVisitor.specializeType(this, expr, environmentFactory, selfType, null);
+			StandardLibrary standardLibrary = ThreadLocalExecutor.getStandardLibrary();
+			return TemplateArgumentVisitor.specializeType(this, expr, standardLibrary, selfType, null);
 		}
 		return this;
 	}

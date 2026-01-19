@@ -224,7 +224,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 				OCLExpression body2 = this.getOwnedBody();
 				Type sourceType = source2.getType();
 				Type bodyType = body2.getType();
-				Type specializedBodyType = bodyType != null ? TemplateArgumentVisitor.specializeType(bodyType, this, environmentFactory, sourceType, null) : null;
+				Type specializedBodyType = bodyType != null ? TemplateArgumentVisitor.specializeType(bodyType, this, standardLibrary, sourceType, null) : null;
 				boolean isOk = false;
 				if (bodyType != null) {
 					specializedBodyType = specializedBodyType != null ? specializedBodyType/*.behavioralType()*/ : null;

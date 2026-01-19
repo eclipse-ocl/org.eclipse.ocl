@@ -788,7 +788,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected <T extends Element> @NonNull T resolveGenericName(@NonNull T element) {
 		if (element instanceof org.eclipse.ocl.pivot.Class) {
 			@SuppressWarnings("unchecked")
-			T castType = (T) TemplateArgumentVisitor.specializeTypeToLowerBound((org.eclipse.ocl.pivot.Class)element, environmentFactory);
+			T castType = (T) TemplateArgumentVisitor.specializeTypeToLowerBound((org.eclipse.ocl.pivot.Class)element, standardLibrary);
 			element = castType;
 		}
 		return element;
@@ -1001,7 +1001,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		OCLExpression asError = null;
 		boolean hasIteratorOrAccumulator = false;
 		Type sourceType = PivotUtil.getType(PivotUtil.getOwnedSource(asLoopExp));
-		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.createVisitor(asIteration, environmentFactory, sourceType, null);
+		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.createVisitor(asIteration, standardLibrary, sourceType, null);
 		assert visitor != null;
 		{
 			visitor.analyzeType(asIteration.getOwningClass(), sourceType);
@@ -1531,7 +1531,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		OCLExpression source = callExp.getOwnedSource();
 		Type sourceType = source != null ? source.getType() : null;
-		TemplateArguments templateSubstitutions = TemplateArgumentVisitor.create(environmentFactory, callExp, sourceType);
+		TemplateArguments templateSubstitutions = TemplateArgumentVisitor.create(standardLibrary, callExp, sourceType);
 		@SuppressWarnings("unused")		// Should never happen; just for debugging
 		boolean isConformant = true;
 		if (callExp instanceof OperationCallExp) {
@@ -1619,7 +1619,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type actualType;
 		Type sourceType = source != null ? source.getType() : null;
 		if ((source != null) && (sourceType != null)) {				// XXX just one
-			actualType = TemplateArgumentVisitor.specializeType(formalType, callExp, environmentFactory, sourceType, null);
+			actualType = TemplateArgumentVisitor.specializeType(formalType, callExp, standardLibrary, sourceType, null);
 		}
 		else {
 			actualType = formalType;

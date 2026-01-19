@@ -2729,6 +2729,21 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * Return the prevailing StandardLibrary, from the executor if there is one, else from the thread EnvironmentFactory
+	 * which will be created if necessary.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull StandardLibrary getStandardLibrary(@Nullable Notifier notifier) {
+		StandardLibrary standardLibrary = ThreadLocalExecutor.basicGetStandardLibrary();
+		if (standardLibrary != null) {
+			return standardLibrary;
+		}
+		EnvironmentFactory environmentFactory = getEnvironmentFactory(notifier);
+		return environmentFactory.getStandardLibrary();
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	public static @NonNull Stereotype getStereotype(@NonNull ElementExtension elementExtension) {

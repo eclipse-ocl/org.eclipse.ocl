@@ -17,7 +17,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.flat.CompleteFlatModel;
 import org.eclipse.ocl.pivot.ids.CompletePackageId;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
@@ -76,7 +75,6 @@ public interface CompleteStandardLibrary extends StandardLibrary
 	@NonNull List<@NonNull Library> getLibraries();
 	@Override
 	@NonNull Property getOclInvalidProperty();
-	@NonNull Orphanage getOrphanage();
 	@Deprecated
 	org.eclipse.ocl.pivot.Package getRootPackage(@NonNull String name);
 	@NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactory environmentFactory);

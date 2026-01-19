@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractBinaryOperation;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
@@ -63,9 +62,11 @@ public class CollectionProductOperation extends AbstractBinaryOperation
         }
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @Nullable Type resolveReturnType(@NonNull EnvironmentFactory environmentFactory, @NonNull CallExp callExp, @Nullable Type returnType) {
-		StandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+	public @Nullable Type resolveReturnType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type returnType) {
 		OCLExpression first = PivotUtil.getOwnedSource(callExp);
 		OCLExpression second = PivotUtil.getOwnedArgument((OperationCallExp)callExp, 0);
 		CollectionType firstCollectionType = (CollectionType)PivotUtil.getType(first);
