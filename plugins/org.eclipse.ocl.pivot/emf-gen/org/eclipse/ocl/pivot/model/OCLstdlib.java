@@ -477,7 +477,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_OclSelf_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclSelf_F_L1_U1 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclSelf_T = createCollectionType(_Collection_Collection_T);
-		private final @NonNull CollectionType _Collection_OclSelf_T_U0 = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_OclSelf_T_U1 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclSelf_T_L1_U1 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclSelf_T_L2_U2 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_String_T = createCollectionType(_Collection_Collection_T);
@@ -502,7 +502,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull SetType _Set_OclSelf_F = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_OclSelf_F_L1_U1 = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_OclSelf_T = createSetType(_Set_Set_T);
-		private final @NonNull SetType _Set_OclSelf_T_U0 = createSetType(_Set_Set_T);
+		private final @NonNull SetType _Set_OclSelf_T_U1 = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_OclSelf_T_L1_U1 = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_OclSelf_T_L2_U2 = createSetType(_Set_Set_T);
 		private final @NonNull SetType _Set_Tuple_T = createSetType(_Set_Set_T);
@@ -514,7 +514,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_OclSelf_F = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OclSelf_F_L1_U1 = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OclSelf_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
-		private final @NonNull CollectionType _UniqueCollection_OclSelf_T_U0 = createCollectionType(_UniqueCollection_UniqueCollection_T);
+		private final @NonNull CollectionType _UniqueCollection_OclSelf_T_U1 = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OclSelf_T_L1_U1 = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_OclSelf_T_L2_U2 = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_Tuple_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
@@ -803,8 +803,8 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
-			type = _Collection_OclSelf_T_U0;
-			type.setUpper(0);
+			type = _Collection_OclSelf_T_U1;
+			type.setUpper(1);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
@@ -928,11 +928,11 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_UniqueCollection_OclSelf_T);
 			ownedClasses.add(type);
-			type = _Set_OclSelf_T_U0;
-			type.setUpper(0);
+			type = _Set_OclSelf_T_U1;
+			type.setUpper(1);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
-			superClasses.add(_UniqueCollection_OclSelf_T_U0);
+			superClasses.add(_UniqueCollection_OclSelf_T_U1);
 			ownedClasses.add(type);
 			type = _Set_OclSelf_T_L1_U1;
 			type.setLower(1);
@@ -990,11 +990,11 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OclSelf_T);
 			ownedClasses.add(type);
-			type = _UniqueCollection_OclSelf_T_U0;
-			type.setUpper(0);
+			type = _UniqueCollection_OclSelf_T_U1;
+			type.setUpper(1);
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_OclSelf_T_U0);
+			superClasses.add(_Collection_OclSelf_T_U1);
 			ownedClasses.add(type);
 			type = _UniqueCollection_OclSelf_T_L1_U1;
 			type.setLower(1);
@@ -1454,7 +1454,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclVoid_concat = createOperation("concat", _String, "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_implies = createOperation("implies", _Boolean, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_not = createOperation("not", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanNotOperation", org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
-		private final @NonNull Operation op_OclVoid_oclAsSet = createOperation("oclAsSet", _Set_OclSelf_T_U0, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
+		private final @NonNull Operation op_OclVoid_oclAsSet = createOperation("oclAsSet", _Set_OclSelf_T_U1, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_oclAsType = createOperation("oclAsType", $$0, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE, tp_OclVoid_oclAsType_TT);
 		private final @NonNull Operation op_OclVoid_oclIsInvalid = createOperation("oclIsInvalid", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_oclIsKindOf = createOperation("oclIsKindOf", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
@@ -3192,7 +3192,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_OclSelf_T, _OclSelf);
 			addBinding(_Collection_OclSelf_T_L1_U1, _OclSelf);
 			addBinding(_Collection_OclSelf_T_L2_U2, _OclSelf);
-			addBinding(_Collection_OclSelf_T_U0, _OclSelf);
+			addBinding(_Collection_OclSelf_T_U1, _OclSelf);
 			addBinding(_Collection_String_T, _String);
 			addBinding(_Collection_Tuple_T, _Tuple);
 			addBinding(_Map_$$0_T_$$1_T, $$0);
@@ -3223,7 +3223,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Set_OclSelf_T, _OclSelf);
 			addBinding(_Set_OclSelf_T_L1_U1, _OclSelf);
 			addBinding(_Set_OclSelf_T_L2_U2, _OclSelf);
-			addBinding(_Set_OclSelf_T_U0, _OclSelf);
+			addBinding(_Set_OclSelf_T_U1, _OclSelf);
 			addBinding(_Set_Tuple_T, _Tuple);
 			addBinding(_UniqueCollection_$$0_F, $$0);
 			addBinding(_UniqueCollection_$$1_F, $$1);
@@ -3235,7 +3235,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_UniqueCollection_OclSelf_T, _OclSelf);
 			addBinding(_UniqueCollection_OclSelf_T_L1_U1, _OclSelf);
 			addBinding(_UniqueCollection_OclSelf_T_L2_U2, _OclSelf);
-			addBinding(_UniqueCollection_OclSelf_T_U0, _OclSelf);
+			addBinding(_UniqueCollection_OclSelf_T_U1, _OclSelf);
 			addBinding(_UniqueCollection_Tuple_T, _Tuple);
 		}
 

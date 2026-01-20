@@ -1650,7 +1650,7 @@
       <ownedOperations xmi:id="XHfd6" implementationClass="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation" isInvalidating="true"
           isValidating="true" name="not" precedence="#tgQwH" type="#XEMMs"/>
       <ownedOperations xmi:id="cuIN2" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation" isRequired="true"
-          name="oclAsSet" type="#XRF4+"/>
+          name="oclAsSet" type="#aSF4+"/>
       <ownedOperations xmi:id="pUVv2" implementationClass="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation" isInvalidating="true"
           name="oclAsType" type="#YVcXo">
         <ownedParameters xmi:id="qPp6a" isRequired="true" isTypeof="true" name="type" type="#YVcXo"/>
@@ -2570,10 +2570,6 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Qqp5N" generic="#IgEJU" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedTemplateArguments actual="#zlfMH"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Trp5N" generic="#IgEJU" isNullFree="true" name="Collection" superClasses="#jbMkR"
-        upper="0">
-      <ownedTemplateArguments actual="#zlfMH"/>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Oup5N" generic="#IgEJU" lower="1" name="Collection" superClasses="#jbMkR" upper="1">
       <ownedTemplateArguments actual="#zlfMH"/>
     </ownedClasses>
@@ -2583,6 +2579,10 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Tvp5N" generic="#IgEJU" isNullFree="true" lower="2" name="Collection" superClasses="#jbMkR"
         upper="2">
+      <ownedTemplateArguments actual="#zlfMH"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Wsp5N" generic="#IgEJU" isNullFree="true" name="Collection" superClasses="#jbMkR"
+        upper="1">
       <ownedTemplateArguments actual="#zlfMH"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="VjRyc" generic="#IgEJU" isNullFree="true" name="Collection" superClasses="#jbMkR">
@@ -2800,9 +2800,6 @@
     <ownedClasses xsi:type="pivot:SetType" xmi:id="UQF4+" generic="#MGgHF" isNullFree="true" name="Set" superClasses="#BlZ19">
       <ownedTemplateArguments actual="#zlfMH"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="XRF4+" generic="#MGgHF" isNullFree="true" name="Set" superClasses="#EmZ19" upper="0">
-      <ownedTemplateArguments actual="#zlfMH"/>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="SUF4+" generic="#MGgHF" lower="1" name="Set" superClasses="#,oZ19" upper="1">
       <ownedTemplateArguments actual="#zlfMH"/>
     </ownedClasses>
@@ -2812,6 +2809,9 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="XVF4+" generic="#MGgHF" isNullFree="true" lower="2" name="Set" superClasses="#EqZ19"
         upper="2">
+      <ownedTemplateArguments actual="#zlfMH"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="aSF4+" generic="#MGgHF" isNullFree="true" name="Set" superClasses="#HnZ19" upper="1">
       <ownedTemplateArguments actual="#zlfMH"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:SetType" xmi:id="AVIYn" generic="#MGgHF" isNullFree="true" name="Set" superClasses="#tpcVm">
@@ -2842,10 +2842,6 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="BlZ19" generic="#5a0EE" isNullFree="true" name="UniqueCollection" superClasses="#Qqp5N">
       <ownedTemplateArguments actual="#zlfMH"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="EmZ19" generic="#5a0EE" isNullFree="true" name="UniqueCollection" superClasses="#Trp5N"
-        upper="0">
-      <ownedTemplateArguments actual="#zlfMH"/>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id=",oZ19" generic="#5a0EE" lower="1" name="UniqueCollection" superClasses="#Oup5N"
         upper="1">
       <ownedTemplateArguments actual="#zlfMH"/>
@@ -2856,6 +2852,10 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="EqZ19" generic="#5a0EE" isNullFree="true" lower="2" name="UniqueCollection"
         superClasses="#Tvp5N" upper="2">
+      <ownedTemplateArguments actual="#zlfMH"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="HnZ19" generic="#5a0EE" isNullFree="true" name="UniqueCollection" superClasses="#Wsp5N"
+        upper="1">
       <ownedTemplateArguments actual="#zlfMH"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tpcVm" generic="#5a0EE" isNullFree="true" name="UniqueCollection" superClasses="#8usZ2">
