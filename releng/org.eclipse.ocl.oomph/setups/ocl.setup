@@ -388,7 +388,8 @@
     <configSections
         name="core">
       <properties
-          key="autocrlf"/>
+          key="autocrlf"
+          value="input"/>
     </configSections>
     <description>OCL Git repository clone</description>
   </setupTask>
