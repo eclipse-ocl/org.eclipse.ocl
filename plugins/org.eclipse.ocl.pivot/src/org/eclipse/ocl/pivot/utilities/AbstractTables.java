@@ -30,7 +30,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.internal.ModelImpl;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 
 import com.google.common.collect.Lists;
@@ -129,10 +129,10 @@ public abstract class AbstractTables
 	 */
 	public static class BuiltInModel extends ModelImpl
 	{
-		private final @NonNull PartialStandardLibraryImpl library;
+		private final @NonNull PartialStandardLibrary library;
 		private final @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses;
 
-		public BuiltInModel(@NonNull PartialStandardLibraryImpl library, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		public BuiltInModel(@NonNull PartialStandardLibrary library, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 			this.library = library;
 			setExternalURI(asPackage.getURI());
 			getOwnedPackages().add(asPackage);

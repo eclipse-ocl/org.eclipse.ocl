@@ -1,14 +1,14 @@
-/*******************************************************************************
- * Copyright (c) 2011, 2022 Willink Transformations and others.
- * All rights reserved.   This program and the accompanying materials
+/**
+ * Copyright (c) 2025 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
  *   E.D.Willink - Initial API and implementation
- *******************************************************************************/
-package org.eclipse.ocl.pivot.internal.library.executor;
+ */
+package org.eclipse.ocl.pivot.internal.library;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -53,7 +53,6 @@ import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.ParameterTypes;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
@@ -74,7 +73,6 @@ import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
-import org.eclipse.ocl.pivot.ids.CompletePackageId;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
@@ -87,7 +85,6 @@ import org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
-import org.eclipse.ocl.pivot.internal.StandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
@@ -97,7 +94,6 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
-import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
@@ -107,16 +103,13 @@ import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
-import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
-import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables.BuiltInModel;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -127,9 +120,9 @@ import org.eclipse.ocl.pivot.values.TemplateArguments;
 /**
  * @since 7.0
  */
-public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl implements PartialStandardLibrary
+public class PartialStandardLibrary extends ConcreteStandardLibrary
 {
-	public static class ReadOnly extends PartialStandardLibraryImpl
+/*	public static class ReadOnly extends PartialStandardLibrary
 	{
 		public ReadOnly(org.eclipse.ocl.pivot.@NonNull Package... execPackages) {
 			//	OCLstdlibTables.PACKAGE.getClass();
@@ -145,22 +138,23 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return ((ClassImpl)type).getFlatClass();
 		}
 
+		@Override
 		public void createOpposite(@NonNull String name, @NonNull Property asProperty) {
 			installImplicitOppositeProperty(asProperty, name);
 		}
-	}
+	} */
 
-	public static class Mutable extends PartialStandardLibraryImpl
+/*	public static class Mutable extends PartialStandardLibrary
 	{
 		public Mutable(@NonNull ReadOnly readonlyStandardLibrary) {
-			for (WeakReference<org.eclipse.ocl.pivot.@NonNull Package> execPackageRef : ((PartialStandardLibraryImpl)readonlyStandardLibrary).ePackageMap.values()) {
+			for (WeakReference<org.eclipse.ocl.pivot.@NonNull Package> execPackageRef : ((PartialStandardLibrary)readonlyStandardLibrary).ePackageMap.values()) {
 				assert execPackageRef != null;
 				org.eclipse.ocl.pivot.Package execPackage = execPackageRef.get();
 				if (execPackage != null) {
 					addPackage(execPackage, null);
 				}
 			}
-			for (Map.Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> entry : ((PartialStandardLibraryImpl)readonlyStandardLibrary).extensions.entrySet()) {
+			for (Map.Entry<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> entry : ((PartialStandardLibrary)readonlyStandardLibrary).extensions.entrySet()) {
 				org.eclipse.ocl.pivot.@NonNull Package basePackage = entry.getKey();
 				for (org.eclipse.ocl.pivot.@NonNull Package extensionPackage : entry.getValue()) {
 					addExtension(basePackage, extensionPackage);
@@ -210,7 +204,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			//	initTemplateParameters(asClass, typeParameters);
 				EcoreFlatModel flatModel = getFlatModel();
 				flatClass = flatModel.getEcoreFlatClass(asClass);
-			} */
+			} * /
 			return flatClass;
 		}
 
@@ -231,7 +225,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			}
 			return null;
 		}
-	}
+	} */
 
 	public static class PartialCollectionTypeManager extends AbstractCollectionTypeManager
 	{
@@ -277,15 +271,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			super(standardLibrary);
 		}
 	}
-
-	/**
-	 * Configuration of validation preferences.
-	 *
-	 * The key used to be a magic String publicly exports from XXXTables polluting the API.
-	 *
-	 * Now it is the EOperation literal of the validation method.
-	 */
-	private /*LazyNonNull*/ Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity = null;
 
 	private @NonNull Map<@NonNull String, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> ePackageMap = new WeakHashMap<>();		// Keys are interned // XXX Unify with CompleteModel
 	// private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> asPackageMap = null;
@@ -347,7 +332,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	}
 
 	@Override
-	protected @Nullable Type basicGetBehavioralType(@NonNull Type type) {
+	public @Nullable Type basicGetBehavioralType(@NonNull Type type) {
 		if (type instanceof DataType) {
 			return ((DataType)type).getBehavioralClass();
 		}
@@ -630,6 +615,10 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return asOperation;
 	}
 
+	public void createOpposite(@NonNull String name, @NonNull Property asProperty) {
+		installImplicitOppositeProperty(asProperty, name);
+	}
+
 	public void setParameters(@NonNull Operation asOperation, @NonNull Type @NonNull ... parameterTypes) {
 		List<@NonNull Parameter> asParameters = PivotUtil.getOwnedParametersList(asOperation);
 		List<@NonNull TemplateParameter> asTemplateParameters = asOperation.basicGetOwnedTemplateParameters();
@@ -768,10 +757,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return new PartialTupleTypeManager(this);
 	}
 
-	protected @NonNull HashMap<@Nullable Object, StatusCodes.@Nullable Severity> createValidationKey2severityMap() {
-		return PivotValidationOptions.createValidationKey2severityMap();
-	}
-
 	public void freeze(@NonNull Resource resource) {
 		libraryLoadInProgress  = false;
 		((ASResource)resource).setSaveable(false);
@@ -832,6 +817,11 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			return enumerationType;
 		}
 		throw new IllegalStateException("No extension package defines Enumeration type"); //$NON-NLS-1$
+	}
+
+	@Override
+	public @NonNull FlatClass getFlatClass(org.eclipse.ocl.pivot.@NonNull Class type) {
+		return ((ClassImpl)type).getFlatClass();
 	}
 
 	@Override
@@ -998,7 +988,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 		return OCLstdlibTables.PACKAGE;
 	}
 
-	@Override
+//	@Override
 	public synchronized org.eclipse.ocl.pivot.@Nullable Package getPackage(@NonNull EPackage ePackage) {
 		String nsURI = ePackage.getNsURI();
 		return nsURI != null ? weakGet(ePackageMap, nsURI.intern()) : null;
@@ -1032,14 +1022,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 	@Override
 	public @NonNull SetType getSetType() {
 		return (SetType) OCLstdlibTables.Types._Set;
-	}
-
-	public StatusCodes.@Nullable Severity getSeverity(@Nullable Object validationKey) {
-		Map<@Nullable Object, StatusCodes.@Nullable Severity> validationKey2severity2 = validationKey2severity;
-		if (validationKey2severity2 == null) {
-			validationKey2severity = validationKey2severity2 = createValidationKey2severityMap();
-		}
-		return validationKey2severity2.get(validationKey);
 	}
 
 	@Override
@@ -1200,10 +1182,6 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 				asTemplateParameters.add(templateParameter);
 			}
 		}
-	}
-
-	public void resetSeverities() {
-		validationKey2severity = null;
 	}
 
 	@Override

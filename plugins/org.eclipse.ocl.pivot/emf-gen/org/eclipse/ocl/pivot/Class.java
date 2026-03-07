@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
@@ -313,6 +314,11 @@ extends Type, Namespace, TemplateableElement {
 	default @NonNull SetValue allInstances(@NonNull Executor executor, @NonNull CollectionTypeId returnTypeId) {
 		return ValueUtil.createSetValue(returnTypeId, Collections.emptySet());
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable FlatClass basicGetFlatClass();
 
 	/**
 	 * Return a new instance of this type from valueFactory. Properties may be initialised using

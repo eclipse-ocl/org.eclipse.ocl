@@ -120,22 +120,12 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
-	public R visitCompleteEnvironment(org.eclipse.ocl.pivot.@NonNull CompleteEnvironment object) {
-		return visiting(object);
-	}
-
-	@Override
 	public R visitCompleteModel(org.eclipse.ocl.pivot.@NonNull CompleteModel object) {
 		return visiting(object);
 	}
 
 	@Override
 	public R visitCompletePackage(org.eclipse.ocl.pivot.@NonNull CompletePackage object) {
-		return visiting(object);
-	}
-
-	@Override
-	public R visitCompleteStandardLibrary(org.eclipse.ocl.pivot.@NonNull CompleteStandardLibrary object) {
 		return visiting(object);
 	}
 
@@ -531,11 +521,6 @@ public abstract class AbstractMergedVisitor<R, C>
 
 	@Override
 	public R visitSlot(org.eclipse.ocl.pivot.@NonNull Slot object) {
-		return visiting(object);
-	}
-
-	@Override
-	public R visitStandardLibrary(org.eclipse.ocl.pivot.@NonNull StandardLibrary object) {
 		return visiting(object);
 	}
 

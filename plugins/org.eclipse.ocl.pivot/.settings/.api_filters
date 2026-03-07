@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteStandardLibrary.java" type="org.eclipse.ocl.pivot.CompleteStandardLibrary">
-        <filter id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.CompleteStandardLibrary"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/IterateExp.java" type="org.eclipse.ocl.pivot.IterateExp">
         <filter id="1211105284">
             <message_arguments>
@@ -694,13 +687,6 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="getStandardLibrary()"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/CompleteStandardLibraryImpl.java" type="org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl">
-        <filter id="1110441988">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl"/>
             </message_arguments>
         </filter>
     </resource>

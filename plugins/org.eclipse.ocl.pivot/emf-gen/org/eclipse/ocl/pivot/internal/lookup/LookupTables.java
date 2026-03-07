@@ -38,7 +38,7 @@ import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 // import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
 // import org.eclipse.ocl.pivot.internal.lookup.LookupTables;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
@@ -62,7 +62,7 @@ public class LookupTables extends AbstractTables
 	/**
 	 *	The overall library of all packages and types.
 	 */
-	public static final PartialStandardLibraryImpl.@NonNull ReadOnly LIBRARY = OCLstdlibTables.LIBRARY;
+	public static final @NonNull PartialStandardLibrary LIBRARY = OCLstdlibTables.LIBRARY;
 
 	/**
 	 *	The AS package for the LookupPackage.eINSTANCE EPackage.

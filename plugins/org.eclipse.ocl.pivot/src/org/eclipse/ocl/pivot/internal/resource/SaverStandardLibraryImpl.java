@@ -56,7 +56,7 @@ import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
@@ -71,7 +71,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 /**
  * @since 7.0
  */
-public class SaverStandardLibraryImpl extends PartialStandardLibraryImpl implements ASSaver
+public class SaverStandardLibraryImpl extends PartialStandardLibrary implements ASSaver
 {
 	/**
 	 * @since 7.0

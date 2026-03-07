@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
+import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
@@ -45,9 +46,9 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  *
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getStandardLibrary()
- * @generated
+ * @since 7.0
  */
-public interface StandardLibrary extends Element
+public interface StandardLibrary
 {
 	/**
 	 * @since 7.0
@@ -58,6 +59,11 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	org.eclipse.ocl.pivot.@Nullable Class basicGetBehavioralClass(java.lang.@NonNull Class<?> javaClass);
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable Type basicGetBehavioralType(@NonNull Type type);
 
 	/**
 	 * @since 7.0
@@ -507,6 +513,11 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	@NonNull CollectionType getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper);
+
+	/**
+	 * @since 7.0
+	 */
+	StatusCodes.@Nullable Severity getSeverity(@Nullable Object validationKey);
 
 	/**
 	 * @since 7.0

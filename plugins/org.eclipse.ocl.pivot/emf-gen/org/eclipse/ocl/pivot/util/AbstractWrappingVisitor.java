@@ -298,18 +298,6 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 	}
 
 	@Override
-	public R visitCompleteEnvironment(org.eclipse.ocl.pivot.@NonNull CompleteEnvironment object) {
-		@Nullable P prologue = preVisit(object);
-		try {
-			R result = delegate.visitCompleteEnvironment(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	@Override
 	public R visitCompleteModel(org.eclipse.ocl.pivot.@NonNull CompleteModel object) {
 		@Nullable P prologue = preVisit(object);
 		try {
@@ -326,18 +314,6 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 		@Nullable P prologue = preVisit(object);
 		try {
 			R result = delegate.visitCompletePackage(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	@Override
-	public R visitCompleteStandardLibrary(org.eclipse.ocl.pivot.@NonNull CompleteStandardLibrary object) {
-		@Nullable P prologue = preVisit(object);
-		try {
-			R result = delegate.visitCompleteStandardLibrary(object);
 			return postVisit(object, prologue, result);
 		}
 		catch (Throwable e) {
@@ -1286,18 +1262,6 @@ public abstract class AbstractWrappingVisitor<R, C, @NonNull D extends Visitor<R
 		@Nullable P prologue = preVisit(object);
 		try {
 			R result = delegate.visitSlot(object);
-			return postVisit(object, prologue, result);
-		}
-		catch (Throwable e) {
-			return badVisit(object, prologue, e);
-		}
-	}
-
-	@Override
-	public R visitStandardLibrary(org.eclipse.ocl.pivot.@NonNull StandardLibrary object) {
-		@Nullable P prologue = preVisit(object);
-		try {
-			R result = delegate.visitStandardLibrary(object);
 			return postVisit(object, prologue, result);
 		}
 		catch (Throwable e) {

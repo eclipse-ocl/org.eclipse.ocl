@@ -178,15 +178,6 @@ extends EFactory {
 	@NonNull CompleteClass createCompleteClass();
 
 	/**
-	 * Returns a new object of class '<em>Complete Environment</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Complete Environment</em>'.
-	 * @generated
-	 */
-	@NonNull CompleteEnvironment createCompleteEnvironment();
-
-	/**
 	 * Returns a new object of class '<em>Complete Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -646,15 +637,6 @@ extends EFactory {
 	 * @generated
 	 */
 	@NonNull Slot createSlot();
-
-	/**
-	 * Returns a new object of class '<em>Complete Standard Library</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Complete Standard Library</em>'.
-	 * @generated
-	 */
-	@NonNull CompleteStandardLibrary createCompleteStandardLibrary();
 
 	/**
 	 * Returns a new object of class '<em>Message Type</em>'.

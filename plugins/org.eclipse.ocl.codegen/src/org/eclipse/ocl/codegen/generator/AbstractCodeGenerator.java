@@ -22,8 +22,8 @@ import org.eclipse.ocl.codegen.analyzer.AnalysisVisitor;
 import org.eclipse.ocl.codegen.analyzer.NameManager;
 import org.eclipse.ocl.codegen.java.ImportNameManager;
 import org.eclipse.ocl.pivot.CompleteModel;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.Operation;
+import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 

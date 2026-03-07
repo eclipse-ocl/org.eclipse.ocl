@@ -47,7 +47,7 @@ import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
+import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
@@ -77,7 +77,7 @@ public class CodegencompanyTables extends AbstractTables
 	/**
 	 *	The overall library of all packages and types.
 	 */
-	public static final PartialStandardLibraryImpl.@NonNull ReadOnly LIBRARY = OCLstdlibTables.LIBRARY;
+	public static final @NonNull PartialStandardLibrary LIBRARY = OCLstdlibTables.LIBRARY;
 
 	/**
 	 *	The AS package for the CodegencompanyPackage.eINSTANCE EPackage.

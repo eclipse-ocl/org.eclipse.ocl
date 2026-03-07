@@ -1,5 +1,5 @@
-/**
- * Copyright (c) 2010, 2025 Willink Transformations and others.
+
+/** * Copyright (c) 2010, 2025 Willink Transformations and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.pivot.internal;
+package org.eclipse.ocl.pivot.internal.library;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -27,7 +26,6 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -39,7 +37,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
@@ -59,7 +56,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
-import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
@@ -79,7 +75,6 @@ import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
 import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
 import org.eclipse.ocl.pivot.manager.TupleTypeManager;
-import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -97,56 +92,18 @@ import org.eclipse.osgi.util.NLS;
  * An implementation of the model object '<em><b>Standard Library Internal</b></em>'.
  * <!-- end-user-doc -->
  *
- * @generated
+ * @since 7.0
  */
-public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements CompleteStandardLibrary
+public class CompleteStandardLibrary extends ConcreteStandardLibrary
 {
 	/**
-	 * The number of structural features of the '<em>Complete Standard Library</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	public static final int COMPLETE_STANDARD_LIBRARY_FEATURE_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Complete Standard Library</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	public static final int COMPLETE_STANDARD_LIBRARY_OPERATION_COUNT = StandardLibraryImpl.STANDARD_LIBRARY_OPERATION_COUNT + 0;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected CompleteStandardLibraryImpl()
+	public CompleteStandardLibrary()
 	{
 		super();
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass()
-	{
-		return PivotPackage.Literals.COMPLETE_STANDARD_LIBRARY;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * @generated
-	 */
-	@Override
-	public <R> R accept(@NonNull Visitor<R> visitor) {
-		return visitor.visitCompleteStandardLibrary(this);
 	}
 
 	/**
@@ -310,18 +267,17 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	@Override
-	public @Nullable PrimitiveType basicGetBehavioralClass(@NonNull Class<?> instanceClass) {
+	public @Nullable PrimitiveType basicGetBehavioralClass(java.lang.@NonNull Class<?> instanceClass) {
 		return (PrimitiveType)PivotUtil.basicGetBehavioralClass(this, instanceClass);
 	}
 
 	@Override
-	protected @Nullable Type basicGetBehavioralType(@NonNull Type type) {
+	public @Nullable Type basicGetBehavioralType(@NonNull Type type) {
 		CompleteClass completeClass = completeModel.getCompleteClass(type);
 		Type behavioralType = completeClass.getBehavioralClass();
 		return behavioralType;
 	}
 
-	@Override
 	public @Nullable CompletePackage basicGetCompletePackage(@NonNull CompletePackageId completePackageId) {
 		return completeModel.basicGetCompletePackage(completePackageId);
 	}
@@ -352,22 +308,18 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return nameToLibraryTypeMap2.get(typeName);
 	}
 
-	@Override
 	public @Nullable AnyType basicGetOclAnyType() {
 		return oclAnyType;
 	}
 
-	@Override
 	public @Nullable Operation basicGetOclInvalidOperation() {
 		return oclInvalidOperation;
 	}
 
-	@Override
 	public @Nullable Property basicGetOclInvalidProperty() {
 		return oclInvalidProperty;
 	}
 
-	@Override
 	public @Nullable InvalidType basicGetOclInvalidType() {
 		return oclInvalidType;
 	}
@@ -377,7 +329,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return orphanage;
 	}
 
-	@Override
+	/**
+	 * Return -ve if match1 is inferior to match2, +ve if match2 is inferior to match1, or
+	 * zero if both matches are of equal validity.
+	 *
+	 * @since 7.0
+	 */
 	public int compareOperationMatches(@NonNull Operation referenceOperation, @Nullable TemplateArguments referenceBindings,
 			@NonNull Operation candidateOperation, @Nullable TemplateArguments candidateBindings) {
 		if ((referenceOperation instanceof Iteration) && (candidateOperation instanceof Iteration)) {
@@ -508,7 +465,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 	}
 
-	@Override
 	public void defineLibraryTypes(@NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> pivotTypes) {
 		Map<@NonNull String, org.eclipse.ocl.pivot.@NonNull Class> nameToLibraryTypeMap2 = nameToLibraryTypeMap;
 		if (nameToLibraryTypeMap2 == null) {
@@ -537,7 +493,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 	}
 
-	@Override
 	public void dispose() {
 		resetLibrary();
 	}
@@ -588,13 +543,11 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return super.getCollectionType(genericType, elementType, isNullFree, lower, upper);
 	}
 
-	@Override
 	public @NonNull CompleteModel getCompleteModel() {
 		assert completeModel != null;
 		return completeModel;
 	}
 
-	@Override
 	public @NonNull String getDefaultStandardLibraryURI() {
 		return defaultStandardLibraryURI;
 	}
@@ -611,7 +564,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	/**
 	 * @since 7.0
 	 */
-	@Override
 	public @NonNull EnvironmentFactory getEnvironmentFactory() {
 		return ClassUtil.requireNonNull(environmentFactory);
 	}
@@ -637,12 +589,10 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return (CompleteFlatModel)super.getFlatModel();
 	}
 
-	@Override
 	public @Nullable Resource getLibraryResource() {
 		return asLibraries.isEmpty() ? null : asLibraries.get(0).eResource();
 	}
 
-	@Override
 	public @NonNull List<@NonNull Library> getLibraries() { return asLibraries; }
 
 	/**
@@ -923,7 +873,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return type;
 	}
 
-	@Override
 	public org.eclipse.ocl.pivot.@Nullable Package getRootPackage(@NonNull String completeURIorName) {
 		throw new UnsupportedOperationException();
 /*		Package rootPackage = completeModel.getRootPackage(completeURIorName);
@@ -982,7 +931,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		return unlimitedNaturalType2;
 	}
 
-	@Override
 	public @NonNull CompleteStandardLibrary init(@NonNull EnvironmentFactory environmentFactory) {
 		this.environmentFactory = environmentFactory;
 		this.completeModel = environmentFactory.getCompleteModel();
@@ -990,19 +938,18 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	}
 
 	/**
+	 * Create and install the implicit opposite of asProperty with the default name.
 	 * @since 7.0
 	 */
-	@Override
-	public void installImplicitOppositeProperty(@NonNull Property thisProperty) {
-		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(thisProperty);
+	public void installImplicitOppositeProperty(@NonNull Property asProperty) {
+		org.eclipse.ocl.pivot.Class thisClass = PivotUtil.getOwningClass(asProperty);
 		String oppositeName = thisClass.getName();
 		if (oppositeName == null) {
 			return;
 		}
-		installImplicitOppositeProperty(thisProperty, oppositeName);
+		installImplicitOppositeProperty(asProperty, oppositeName);
 	}
 
-	@Override
 	public void installLibrary() {
 		if (!libraryLoadInProgress && (getLibraryResource() == null) && (asLibraries.size() > 0)) {
 			getOclAnyType();
@@ -1012,7 +959,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 	/**
 	 * @since 7.0
 	 */
-	@Override
 	public void installLibrary(@NonNull Library asLibrary) {
 		if (!asLibraries.contains(asLibrary)) {
 			String uri = asLibrary.getURI();
@@ -1036,7 +982,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 	}
 
-	@Override
 	public boolean isLibraryLoadInProgress() {
 		return libraryLoadInProgress;
 	}
@@ -1106,7 +1051,6 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 	}
 
-	@Override
 	public @Nullable Resource loadLibraryResource(@NonNull String uri) {
 		if (uri.equals(getDefaultStandardLibraryURI())) {
 			Resource asLibraryResource = getLibraryResource();
@@ -1169,12 +1113,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		super.resetLibrary();
 	}
 
-	protected @NonNull <T extends TemplateableElement> T resolveRequiredSimpleType(@NonNull Class<@NonNull T> requiredClassType, @NonNull String name) {
+	protected @NonNull <T extends TemplateableElement> T resolveRequiredSimpleType(java.lang.@NonNull Class<@NonNull T> requiredClassType, @NonNull String name) {
 		org.eclipse.ocl.pivot.Class type = getRequiredLibraryType(name);
 		return requiredClassType.cast(type);
 	}
 
-	protected @NonNull <T extends TemplateableElement> T resolveRequiredTemplateableType(@NonNull Class<T> requiredClassType, @NonNull String name, int parameterCount) {
+	protected @NonNull <T extends TemplateableElement> T resolveRequiredTemplateableType(java.lang.@NonNull Class<T> requiredClassType, @NonNull String name, int parameterCount) {
 		org.eclipse.ocl.pivot.Class type = getRequiredLibraryType(name);
 		if (requiredClassType.isAssignableFrom(type.getClass())) {
 			List<@NonNull TemplateParameter> asTemplateParameters = type.basicGetOwnedTemplateParameters();
@@ -1274,14 +1218,12 @@ public class CompleteStandardLibraryImpl extends StandardLibraryImpl implements 
 		}
 	}
 
-	@Override
 	public void setDefaultStandardLibraryURI(@NonNull String defaultStandardLibraryURI) {
 		assert !PivotUtil.isASURI(URI.createURI(defaultStandardLibraryURI));
 		this.defaultStandardLibraryURI = defaultStandardLibraryURI;
 		this.explicitDefaultStandardLibraryURI = true;
 	}
 
-	@Override
 	public void setLibraryLoadInProgress(boolean libraryLoadInProgress) {
 		this.libraryLoadInProgress = libraryLoadInProgress;
 	}

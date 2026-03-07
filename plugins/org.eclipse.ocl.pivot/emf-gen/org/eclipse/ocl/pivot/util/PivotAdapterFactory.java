@@ -32,7 +32,6 @@ import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.CompleteClass;
-import org.eclipse.ocl.pivot.CompleteEnvironment;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.ConnectionPointReference;
@@ -115,16 +114,14 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.Signal;
 import org.eclipse.ocl.pivot.Slot;
-import org.eclipse.ocl.pivot.StandardLibrary;
-import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.State;
 import org.eclipse.ocl.pivot.StateExp;
 import org.eclipse.ocl.pivot.StateMachine;
 import org.eclipse.ocl.pivot.Stereotype;
 import org.eclipse.ocl.pivot.StereotypeExtender;
 import org.eclipse.ocl.pivot.StringLiteralExp;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateArgument;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Transition;
 import org.eclipse.ocl.pivot.Trigger;
@@ -299,11 +296,6 @@ extends AdapterFactoryImpl {
 				return createCompleteClassAdapter();
 			}
 			@Override
-			public Adapter caseCompleteEnvironment(CompleteEnvironment object)
-			{
-				return createCompleteEnvironmentAdapter();
-			}
-			@Override
 			public Adapter caseCompleteModel(CompleteModel object)
 			{
 				return createCompleteModelAdapter();
@@ -312,11 +304,6 @@ extends AdapterFactoryImpl {
 			public Adapter caseCompletePackage(CompletePackage object)
 			{
 				return createCompletePackageAdapter();
-			}
-			@Override
-			public Adapter caseCompleteStandardLibrary(CompleteStandardLibrary object)
-			{
-				return createCompleteStandardLibraryAdapter();
 			}
 			@Override
 			public Adapter caseConnectionPointReference(ConnectionPointReference object)
@@ -732,11 +719,6 @@ extends AdapterFactoryImpl {
 			public Adapter caseSlot(Slot object)
 			{
 				return createSlotAdapter();
-			}
-			@Override
-			public Adapter caseStandardLibrary(StandardLibrary object)
-			{
-				return createStandardLibraryAdapter();
 			}
 			@Override
 			public Adapter caseState(State object)
@@ -1632,21 +1614,6 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.StandardLibrary <em>Standard Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.StandardLibrary
-	 * @generated
-	 */
-	public Adapter createStandardLibraryAdapter()
-	{
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.MessageType <em>Message Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2514,21 +2481,6 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.CompleteEnvironment <em>Complete Environment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.CompleteEnvironment
-	 * @generated
-	 */
-	public Adapter createCompleteEnvironmentAdapter()
-	{
-		return null;
-	}
-
-	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.CompleteModel <em>Complete Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -2554,21 +2506,6 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCompletePackageAdapter()
-	{
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary <em>Complete Standard Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary
-	 * @generated
-	 */
-	public Adapter createCompleteStandardLibraryAdapter()
 	{
 		return null;
 	}

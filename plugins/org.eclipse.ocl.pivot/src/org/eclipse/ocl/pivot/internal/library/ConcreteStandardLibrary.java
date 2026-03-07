@@ -8,18 +8,16 @@
  * Contributors:
  *   E.D.Willink - Initial API and implementation
  */
-package org.eclipse.ocl.pivot.internal;
+package org.eclipse.ocl.pivot.internal.library;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
@@ -33,7 +31,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatModel;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
@@ -70,34 +67,16 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * An implementation of the model object '<em><b>Standard Library</b></em>'.
  * <!-- end-user-doc -->
  *
- * @generated
+ * @since 7.0
  */
-public abstract class StandardLibraryImpl extends ElementImpl implements StandardLibrary
+public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 {
-	/**
-	 * The number of structural features of the '<em>Standard Library</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	public static final int STANDARD_LIBRARY_FEATURE_COUNT = ElementImpl.ELEMENT_FEATURE_COUNT + 0;
-
-	/**
-	 * The number of operations of the '<em>Standard Library</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	public static final int STANDARD_LIBRARY_OPERATION_COUNT = ElementImpl.ELEMENT_OPERATION_COUNT + 0;
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
-	protected StandardLibraryImpl()
+	protected ConcreteStandardLibrary()
 	{
 		this.collectionTypeManager = createCollectionTypeManager();
 		this.javaTypeManager = createJavaTypeManager();
@@ -106,17 +85,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 		this.specializedTypeManager = null; //createSpecializedTypeManager();
 		this.tupleTypeManager = null; //createTupleTypeManager();
 	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EClass eStaticClass()
-	{
-		return PivotPackage.Literals.STANDARD_LIBRARY;
 	}
 
 	/**
@@ -164,157 +132,10 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	private @Nullable TupleTypeManager tupleTypeManager = null;
 
-	/**
-	 * @since 7.0
-	 */
-	protected abstract @Nullable Type basicGetBehavioralType(@NonNull Type type);
-
 	@Override
 	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments) {
 		assert collectionTypeManager != null;
 		return collectionTypeManager.basicGetCollectionType(typeArguments);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull Type leftType, @NonNull Type rightType) {
-		return conformsTo(leftType, null, rightType, null, false);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull Type leftType, boolean leftIsRequired, @Nullable TemplateArguments leftTemplateArguments,
-			@NonNull Type rightType, boolean rightIsRequired, @Nullable TemplateArguments rightTemplateArguments) {
-		if (!leftIsRequired && rightIsRequired) {
-			return false;
-		}
-		return conformsTo(leftType, leftTemplateArguments, rightType, rightTemplateArguments, true);
-	}
-
-	@Override
-	public boolean conformsTo(@NonNull Type leftType, @Nullable TemplateArguments leftTemplateArguments,
-			@NonNull Type rightType, @Nullable TemplateArguments rightTemplateArguments) {
-		return conformsTo(leftType, leftTemplateArguments, rightType, rightTemplateArguments, false);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public boolean conformsTo(@NonNull Type leftType, @Nullable TemplateArguments leftTemplateArguments,
-			@NonNull Type rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity) {
-		if (leftType == rightType) {
-			return true;
-		}
-		if (leftType instanceof InvalidType) {
-			return true;
-		}
-		else if (leftType instanceof VoidType) {
-			if (rightType instanceof InvalidType) {
-				return false;
-			}
-			else {
-				return true;
-			}
-		}
-		//
-		//	Resolve left template parameters to its TemplateArgument
-		//
-		if ((leftType instanceof TemplateParameter) && (leftTemplateArguments != null)) {
-			TemplateParameter leftTemplateParameter = (TemplateParameter)leftType;
-			Type leftTemplateArgument = leftTemplateArguments.get(leftTemplateParameter);
-			if (leftTemplateArgument != null) {
-				leftType = leftTemplateArgument;
-			}
-		}
-		//
-		//	Accrue solution to the right template parameter
-		//
-		if ((rightType instanceof TemplateParameter) && (rightTemplateArguments != null)) {
-			TemplateParameter rightTemplateParameter = (TemplateParameter)rightType;
-			rightTemplateArguments.put(rightTemplateParameter, leftType);
-			return true;
-		}
-		if (leftType == rightType) {
-			return true;
-		}
-		//
-		//	Normalize types to their behavioral class
-		//
-//		CompleteClass leftCompleteClass = getCompleteClass(leftType);
-//		CompleteClass rightCompleteClass = getCompleteClass(rightType);
-//		if (leftCompleteClass == rightCompleteClass) {
-//			return true;
-//		}
-	//	leftType = leftCompleteClass.getPrimaryClass();
-//		Type behavioralClass = rightCompleteClass.getBehavioralClass();
-//		if ((behavioralClass != null) && (behavioralClass != rightType)) {
-//			rightCompleteClass = getCompleteClass(behavioralClass);		// See Bug 574431 / Issue 2190 for discussion of this dodgy downcast
-//			rightType = behavioralClass;
-//		}
-		leftType = getPrimaryType(leftType);
-		rightType = getPrimaryType(rightType);
-		if (leftType == rightType) {
-			return true;
-		}
-	//	Type behavioralSecondType = basicGetBehavioralType(rightType);
-	//	if (behavioralSecondType != null) {
-	//		rightType = behavioralSecondType;
-	//	}
-		//
-		//	Use specialized conformance for compound types, inheritance tree intersection for simple types
-		//
-	//	if (leftType == rightType) {
-	//		return true;
-	//	}
-		if (leftType instanceof DataType) {
-			if (leftType instanceof CollectionType) {
-				if (rightType instanceof CollectionType) {
-					assert collectionTypeManager != null;
-					return collectionTypeManager.conformsToCollectionType((CollectionType)leftType, leftTemplateArguments, (CollectionType)rightType, rightTemplateArguments, enforceNullity);
-				}
-				// Drop through to simple inheritance for e.g. OclAny
-			}
-			else if (leftType instanceof MapType) {
-				if (rightType instanceof MapType) {
-					return getMapTypeManager().conformsToMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments, enforceNullity);
-				}
-				// Drop through to simple inheritance for e.g. OclAny
-			}
-			else if (leftType instanceof LambdaType) {
-				if (rightType instanceof LambdaType) {
-					return getLambdaTypeManager().conformsToLambdaType((LambdaType)leftType, leftTemplateArguments, (LambdaType)rightType, rightTemplateArguments, enforceNullity);
-				}
-				// Drop through to simple inheritance for e.g. OclAny
-			}
-			else if (leftType instanceof TupleType) {
-				if (rightType instanceof TupleType) {
-					return getTupleTypeManager().conformsToTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments, enforceNullity);
-				}
-				// Drop through to simple inheritance for e.g. OclAny
-			}
-			else {
-				if (rightType instanceof DataType) {
-					Type behavioralRightType = basicGetBehavioralType(rightType);
-					if (behavioralRightType != null) {
-						rightType = behavioralRightType;
-					}
-				}
-			}
-		}
-		return conformsToSimpleType(leftType, rightType);
-	}
-
-	@Override
-	public boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType) {	// After compound types handled
-	//	assert leftType instanceof org.eclipse.ocl.pivot.Class;// && !(leftType instanceof DataType);
-	//	assert rightType instanceof org.eclipse.ocl.pivot.Class;// && !(rightType instanceof DataType);
-		if (leftType == rightType) {		// XXX specializations
-			return true;
-		}
-		Type leftPrimaryType = getPrimaryType(leftType);
-		Type rightPrimaryType = getPrimaryType(rightType);
-		FlatClass leftFlatClass = leftPrimaryType.getFlatClass(this);
-		FlatClass rightFlatClass = rightPrimaryType.getFlatClass(this);
-		return leftFlatClass.isSubFlatClassOf(rightFlatClass);
 	}
 
 	/**
@@ -357,11 +178,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 * @since 7.0
 	 */
 	protected abstract @NonNull TupleTypeManager createTupleTypeManager();
-
-	@Override
-	public @NonNull CollectionType getBagType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(getBagType(), elementType, isNullFree, lower, upper);
-	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class basicGetBehavioralClass(java.lang.@NonNull Class<?> javaClass) {
@@ -645,11 +461,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	}
 
 	@Override
-	public @NonNull CollectionType getOrderedSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(getOrderedSetType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
 	public @NonNull Orphanage getOrphanage() {
 		throw new UnsupportedOperationException();			// XXX
 	}
@@ -699,16 +510,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			return getUnlimitedNaturalType();
 		}
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public @NonNull CollectionType getSequenceType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(getSequenceType(), elementType, isNullFree, lower, upper);
-	}
-
-	@Override
-	public @NonNull CollectionType getSetType(@NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
-		return getCollectionType(getSetType(), elementType, isNullFree, lower, upper);
 	}
 
 	/**

@@ -28,10 +28,10 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.internal.library.DelegateStandardLibrary;
+import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
@@ -65,17 +65,16 @@ public class EcoreExecutorManager extends ExecutorManager
 	 *
 	 * @since 7.0
 	 */
-	public EcoreExecutorManager(@Nullable Object contextObject, PartialStandardLibraryImpl.@NonNull ReadOnly standardLibrary) {
-		super(new PartialStandardLibraryImpl.Mutable(standardLibrary));
+	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull PartialStandardLibrary standardLibrary) {
+		super(new DelegateStandardLibrary(standardLibrary));
 		this.contextObject = contextObject;
 		ThreadLocalExecutor.setExecutor(this);
 	}
 
 	protected @NonNull IdResolver createIdResolver() {
-		PartialStandardLibrary standardLibrary2 = getStandardLibrary();
 		if (!(contextObject instanceof EObject)) {
 			@NonNull List<EObject> emptyList = Collections.<EObject>emptyList();
-			return new EcoreIdResolver(emptyList, standardLibrary2);
+			return new EcoreIdResolver(emptyList, standardLibrary);
 		}
 		EObject rootContainer = EcoreUtil.getRootContainer((EObject)contextObject);
 		Notifier notifier;
@@ -116,7 +115,7 @@ public class EcoreExecutorManager extends ExecutorManager
 				roots = new ArrayList<>();
 				roots.add(rootContainer);
 			}
-			org.eclipse.ocl.pivot.Package root = standardLibrary2.getPackage();
+			org.eclipse.ocl.pivot.Package root = standardLibrary.getPackage();
 		//	if (root instanceof PivotObject) {
 		//		if (roots == null) {
 		//			roots = new ArrayList<>();
@@ -124,7 +123,7 @@ public class EcoreExecutorManager extends ExecutorManager
 				roots.add(root);
 		//	}
 			assert roots != null;
-			EcoreIdResolver adapter = new EcoreIdResolver(roots, standardLibrary2);
+			EcoreIdResolver adapter = new EcoreIdResolver(roots, standardLibrary);
 			eAdapters.add(adapter);
 			return adapter;
 		}
@@ -193,16 +192,8 @@ public class EcoreExecutorManager extends ExecutorManager
 
 	@Override
 	public int getSeverity(@Nullable Object validationKey) {
-		StatusCodes.Severity severity = ((PartialStandardLibraryImpl)standardLibrary).getSeverity(validationKey);
+		StatusCodes.Severity severity = standardLibrary.getSeverity(validationKey);
 		return severity != null ? severity.getStatusCode() : StatusCodes.WARNING;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	@Override
-	public @NonNull PartialStandardLibrary getStandardLibrary() {
-		return (PartialStandardLibrary)standardLibrary;
 	}
 
 	/**

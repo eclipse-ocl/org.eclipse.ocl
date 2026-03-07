@@ -100,7 +100,6 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.AnyType;
 			import org.eclipse.ocl.pivot.BagType;
 			import org.eclipse.ocl.pivot.CollectionType;
-			import org.eclipse.ocl.pivot.CompleteStandardLibrary;
 			import org.eclipse.ocl.pivot.Constraint;
 			import org.eclipse.ocl.pivot.DataType;
 			import org.eclipse.ocl.pivot.Enumeration;
@@ -113,6 +112,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 			import org.eclipse.ocl.pivot.Property;
 			import org.eclipse.ocl.pivot.SetType;
 			import org.eclipse.ocl.pivot.TemplateParameter;
+			import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;

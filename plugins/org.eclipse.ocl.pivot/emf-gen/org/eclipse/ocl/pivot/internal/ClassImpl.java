@@ -1204,12 +1204,10 @@ implements org.eclipse.ocl.pivot.Class {
 	/**
 	 * @since 7.0
 	 */
+	@Override
 	public @Nullable FlatClass basicGetFlatClass() {
 		if (flatClass != null) {
-		//	Executor executor = ThreadLocalExecutor.basicGetExecutor();
-		//	assert executor != null;
-			assert flatClass != null;
-			assert flatClass.getStandardLibrary() == OCLstdlibTables.LIBRARY;			// XXX
+			assert flatClass.getStandardLibrary() == OCLstdlibTables.LIBRARY;
 		}
 		return flatClass;
 	}

@@ -2232,26 +2232,6 @@ extends EPackage
 	EReference getSlot_OwningInstance();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.StandardLibrary <em>Standard Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Standard Library</em>'.
-	 * @see org.eclipse.ocl.pivot.StandardLibrary
-	 * @generated
-	 */
-	EClass getStandardLibrary();
-
-	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CompleteStandardLibrary <em>Complete Standard Library</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Complete Standard Library</em>'.
-	 * @see org.eclipse.ocl.pivot.CompleteStandardLibrary
-	 * @generated
-	 */
-	EClass getCompleteStandardLibrary();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.MessageType <em>Message Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4965,16 +4945,6 @@ extends EPackage
 	EReference getCompleteClass_PartialClasses();
 
 	/**
-	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CompleteEnvironment <em>Complete Environment</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>Complete Environment</em>'.
-	 * @see org.eclipse.ocl.pivot.CompleteEnvironment
-	 * @generated
-	 */
-	EClass getCompleteEnvironment();
-
-	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.CompleteModel <em>Complete Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -7593,16 +7563,6 @@ extends EPackage
 		EReference SLOT__OWNING_INSTANCE = eINSTANCE.getSlot_OwningInstance();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.StandardLibraryImpl <em>Standard Library</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.StandardLibraryImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getStandardLibrary()
-		 * @generated
-		 */
-		EClass STANDARD_LIBRARY = eINSTANCE.getStandardLibrary();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.MessageTypeImpl <em>Message Type</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9775,16 +9735,6 @@ extends EPackage
 		EReference COMPLETE_CLASS__PARTIAL_CLASSES = eINSTANCE.getCompleteClass_PartialClasses();
 
 		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CompleteEnvironmentImpl <em>Complete Environment</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.CompleteEnvironmentImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCompleteEnvironment()
-		 * @generated
-		 */
-		EClass COMPLETE_ENVIRONMENT = eINSTANCE.getCompleteEnvironment();
-
-		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CompleteModelImpl <em>Complete Model</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -9891,16 +9841,6 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING = eINSTANCE.getCompletePackage__GetOwnedCompleteClass__String();
-
-		/**
-		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl <em>Complete Standard Library</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see org.eclipse.ocl.pivot.internal.CompleteStandardLibraryImpl
-		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getCompleteStandardLibrary()
-		 * @generated
-		 */
-		EClass COMPLETE_STANDARD_LIBRARY = eINSTANCE.getCompleteStandardLibrary();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.ConnectionPointReferenceImpl <em>Connection Point Reference</em>}' class.

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.EcoreFlatClass;
 import org.eclipse.ocl.pivot.flat.EcoreFlatModel;
@@ -36,8 +37,6 @@ import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibrary;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 
@@ -55,7 +54,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	/**
 	 * @since 7.0
 	 */
-	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull PartialStandardLibrary standardLibrary) {
+	public EcoreIdResolver(@NonNull Iterable<? extends EObject> roots, @NonNull StandardLibrary standardLibrary) {
 		super(standardLibrary);
 		for (@SuppressWarnings("null")@NonNull EObject root : roots) {
 			addRoot(root);
@@ -101,7 +100,7 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 				}
 				asClass.setName(eClassifier.getName());
 				asClass.setESObject(eClassifier);
-				EcoreFlatModel flatModel = getStandardLibrary().getFlatModel();
+				EcoreFlatModel flatModel = (EcoreFlatModel)getStandardLibrary().getFlatModel();
 				EcoreFlatClass flatClass = flatModel.getEcoreFlatClass(asClass);
 		//		asClass.setFlatClass(flatClass);
 				asClasses.add(asClass);
@@ -213,10 +212,10 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 	/**
 	 * @since 7.0
 	 */
-	@Override
-	public @NonNull PartialStandardLibraryImpl getStandardLibrary() {
-		return (PartialStandardLibraryImpl)standardLibrary;
-	}
+//	@Override
+//	public @NonNull PartialStandardLibrary getStandardLibrary() {
+//		return (PartialStandardLibrary)standardLibrary;
+//	}
 
 	@Override
 	public Notifier getTarget() {

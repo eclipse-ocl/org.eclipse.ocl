@@ -73,7 +73,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.library.executor.PartialStandardLibraryImpl.ReadOnly;
+import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
@@ -1648,7 +1648,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("	 *	The overall library of all packages and types.\n");
 		s.append("	 */\n");
 		s.append("	public static final ");
-		s.appendClassReference(true, ReadOnly.class);
+		s.appendClassReference(true, PartialStandardLibrary.class);
 		s.append(" LIBRARY = ");
 		if (hasSharedLibrary()) {
 			s.appendClassReference(null, getSharedLibrary());
@@ -1656,7 +1656,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		}
 		else {
 			s.append("new ");
-			s.appendClassReference(null, ReadOnly.class);
+			s.appendClassReference(null, PartialStandardLibrary.class);
 			s.append("()");
 		}
 		s.append(";\n");

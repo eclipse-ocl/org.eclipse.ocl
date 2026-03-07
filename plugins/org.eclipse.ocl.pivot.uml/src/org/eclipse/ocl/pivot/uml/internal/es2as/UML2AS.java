@@ -666,14 +666,14 @@ public abstract class UML2AS extends AbstractExternal2AS
 						System.out.println(s.toString());
 					}
 					modelAnalysis.installStereotypes();
-					if (pivotURI.toString().contains("Bug507406.uml.oclas")) {				// See testConsole_Bug507406
+				/*	if (pivotURI.toString().contains("Bug507406.uml.oclas")) {				// See testConsole_Bug507406
 						StringBuilder s = new StringBuilder();
 						s.append("installProperties for " + pivotURI);
 						for (Model partialModel : completeModel.getPartialModels()) {
 							s.append("\n\tpartialModel: " + partialModel + " from " + partialModel.eResource());
 						}
 						System.out.println(s.toString());
-					}
+					} */
 					installProperties();
 					installUsers();
 				}
