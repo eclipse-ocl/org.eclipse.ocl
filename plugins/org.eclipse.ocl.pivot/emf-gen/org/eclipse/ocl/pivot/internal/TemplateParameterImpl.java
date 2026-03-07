@@ -454,7 +454,7 @@ public class TemplateParameterImpl
 		assert expr != null;
 		if (selfType != null) {
 			StandardLibrary standardLibrary = ThreadLocalExecutor.getStandardLibrary();
-			return TemplateArgumentVisitor.specializeType(this, expr, standardLibrary, selfType, null);
+			return TemplateArgumentVisitor.specializeType(this, expr, standardLibrary, selfType);
 		}
 		return this;
 	}

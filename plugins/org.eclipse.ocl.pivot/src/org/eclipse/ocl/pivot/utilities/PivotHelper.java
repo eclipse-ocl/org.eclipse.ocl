@@ -455,7 +455,7 @@ public class PivotHelper extends PivotUtil
 		boolean returnIsRequired = asOperation.isIsRequired();
 		Object returnValue = null;			// Currently always a Type - see Bug 577902
 		if ((formalType != null) && (sourceType != null)) {
-			returnType = TemplateArgumentVisitor.specializeType(formalType, asCallExp, standardLibrary, sourceType, null);
+			returnType = TemplateArgumentVisitor.specializeType(formalType, asCallExp, standardLibrary, sourceType);
 		}
 		//
 		//	The flattening of collect() and consequently implicit-collect is not modelled accurately.

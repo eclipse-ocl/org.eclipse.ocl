@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EPackage
 import org.eclipse.ocl.pivot.Type
 import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor
+import org.eclipse.ocl.pivot.StandardLibrary
 
 abstract class GenerateVisitorsXtend extends GenerateVisitors
 {
@@ -377,8 +378,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 			import «returnClass.getName()»;
 			import org.eclipse.jdt.annotation.NonNull;
 			import org.eclipse.jdt.annotation.Nullable;
+			import «StandardLibrary.getName()»;
 			import «Type.getName()»;
-			import «contextClass.getName()»;
 			«IF isDerived && !superProjectPrefix.equals("")»import «superVisitorPackageName»ities.«superProjectPrefix»«generic»Visitor;«ENDIF»
 			«IF isDerived && superProjectPrefix.equals("")»import «TemplateArgumentVisitor.getName()»;«ENDIF»
 
@@ -398,8 +399,8 @@ abstract class GenerateVisitorsXtend extends GenerateVisitors
 				 *
 				 * @param context my initial result value
 				 */
-				protected Abstract«projectPrefix»«generic»Visitor(«emitNonNull(contextClass.getSimpleName())» environmentFactory, @Nullable Type selfType, @Nullable Type selfTypeValue) {
-					super(environmentFactory, selfType, selfTypeValue);
+				protected Abstract«projectPrefix»«generic»Visitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType) {
+					super(standardLibrary, selfType);
 				}
 				«FOR eClass : getSortedEClasses(ePackage)»
 				«var EClass firstSuperClass = eClass.firstSuperClass(eClass)»

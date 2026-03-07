@@ -295,7 +295,7 @@ public abstract class AbstractOperationMatcher implements OperationArguments
 		}
 		TemplateArguments bindings = null;
 		if (TemplateArgumentVisitor.hasTemplateParameters(candidateOperation)) {
-			TemplateArgumentVisitor visitor = TemplateArgumentVisitor.createVisitor(candidateOperation, standardLibrary, sourceType, null);
+			TemplateArgumentVisitor visitor = TemplateArgumentVisitor.createVisitor(candidateOperation, standardLibrary, sourceType);
 			if (visitor != null) {
 				bindings = visitor;
 				visitor.analyzeType(candidateOperation.getOwningClass(), sourceType);

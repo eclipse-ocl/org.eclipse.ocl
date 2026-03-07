@@ -352,13 +352,6 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 	 */
 	protected abstract @NonNull SpecializedTypeManager createSpecializedTypeManager();
 
-	/**
-	 * @since 1.1
-	 */
-	@Override
-	public @NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue) {
-		return new PivotTemplateArgumentVisitor(this, selfType, null);
-	}
 
 	/**
 	 * @since 7.0
@@ -954,4 +947,41 @@ public abstract class StandardLibraryImpl extends ElementImpl implements Standar
 			tupleTypeManager = null;
 		}
 	}
+
+	/**
+	 * DefaultCreateStrategy provides the mandatory default implementation of the flexible CreateStrategy..
+	 *
+	 * @since 7.0
+	 */
+	public static class DefaultCreateStrategy implements CreateStrategy
+	{
+		public static final @NonNull DefaultCreateStrategy INSTANCE = new DefaultCreateStrategy();
+
+		@Override
+		public @NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(
+				@NonNull StandardLibrary standardLibrary, @Nullable Type selfType) {
+			return new PivotTemplateArgumentVisitor(standardLibrary, selfType);
+		}
+	}
+
+	private @NonNull CreateStrategy createStrategy = DefaultCreateStrategy.INSTANCE;
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull CreateStrategy getCreateStrategy() {
+		return createStrategy;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull CreateStrategy setCreateStrategy(@NonNull CreateStrategy createStrategy) {
+		CreateStrategy savedCreateStrategy = this.createStrategy;
+		this.createStrategy = createStrategy;
+		return savedCreateStrategy;
+	}
+
 } //StandardLibraryImpl

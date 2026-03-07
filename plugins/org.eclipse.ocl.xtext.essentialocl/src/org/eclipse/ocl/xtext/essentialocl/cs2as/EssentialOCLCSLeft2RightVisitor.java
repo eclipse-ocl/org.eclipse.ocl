@@ -1001,7 +1001,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		OCLExpression asError = null;
 		boolean hasIteratorOrAccumulator = false;
 		Type sourceType = PivotUtil.getType(PivotUtil.getOwnedSource(asLoopExp));
-		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.createVisitor(asIteration, standardLibrary, sourceType, null);
+		TemplateArgumentVisitor visitor = TemplateArgumentVisitor.createVisitor(asIteration, standardLibrary, sourceType);
 		assert visitor != null;
 		{
 			visitor.analyzeType(asIteration.getOwningClass(), sourceType);
@@ -1619,7 +1619,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Type actualType;
 		Type sourceType = source != null ? source.getType() : null;
 		if ((source != null) && (sourceType != null)) {				// XXX just one
-			actualType = TemplateArgumentVisitor.specializeType(formalType, callExp, standardLibrary, sourceType, null);
+			actualType = TemplateArgumentVisitor.specializeType(formalType, callExp, standardLibrary, sourceType);
 		}
 		else {
 			actualType = formalType;

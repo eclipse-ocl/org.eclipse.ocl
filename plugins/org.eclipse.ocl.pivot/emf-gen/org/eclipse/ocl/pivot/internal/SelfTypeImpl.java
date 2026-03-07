@@ -126,7 +126,7 @@ public class SelfTypeImpl extends ClassImpl implements SelfType
 				StandardLibrary standardLibrary = ThreadLocalExecutor.getStandardLibrary();
 				if (standardLibrary != null) {
 					assert expr != null;
-					return TemplateArgumentVisitor.specializeType(selfType, expr, standardLibrary, selfType, null);
+					return TemplateArgumentVisitor.specializeType(selfType, expr, standardLibrary, selfType);
 				}
 				else {
 					return this;

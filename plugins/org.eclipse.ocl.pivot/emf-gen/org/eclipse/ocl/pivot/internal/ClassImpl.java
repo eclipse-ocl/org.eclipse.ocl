@@ -1626,11 +1626,11 @@ implements org.eclipse.ocl.pivot.Class {
 			StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(callExpr);
 			@Nullable Iterable<@NonNull TemplateParameter> templateParameters = basicGetOwnedTemplateParameters();
 			if (templateParameters != null) {
-				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType, null);
+				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType);
 			}
 			List<@NonNull TemplateArgument> templateArguments = basicGetOwnedTemplateArguments();
 			if (templateArguments != null) {
-				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType, null);
+				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType);
 			}
 		}
 		return this;

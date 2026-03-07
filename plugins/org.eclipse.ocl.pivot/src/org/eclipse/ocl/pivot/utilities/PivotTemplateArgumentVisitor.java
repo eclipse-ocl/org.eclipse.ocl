@@ -25,8 +25,8 @@ public class PivotTemplateArgumentVisitor extends TemplateArgumentVisitor {
 	/**
 	 * @since 7.0
 	 */
-	public PivotTemplateArgumentVisitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue) {
-		super(standardLibrary, selfType, null);
+	public PivotTemplateArgumentVisitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType) {
+		super(standardLibrary, selfType);
 		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 }

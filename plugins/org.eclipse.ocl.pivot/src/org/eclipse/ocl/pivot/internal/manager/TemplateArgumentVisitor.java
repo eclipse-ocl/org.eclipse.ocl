@@ -61,16 +61,16 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
- * A TemplateArgumentVisitor supports synthesis of TemplateArghuments by visiting AS elements that
+ * A TemplateArgumentVisitor supports synthesis of TemplateArguments by visiting AS elements that
  * have a partial parameterization and a partial specialization to establish the total specialization.
  *
- * Construction using create() analyzes the passed Callxp.
+ * Construction using create() analyzes the passed CallExp.
  *
  * Construction using createVisitor() defers analysis via calls to analyzeType() to the caller.
  *
  * Thereafter specializeType() may be used to import the specialization on a partially/un-specialized type.
  * <p>
- * The visitor should be constructed with an EnvironmentFactory in case any synthetic types need constructing, and the identity
+ * The visitor should be constructed with a StandardLibrary in case any synthetic types need constructing, and the identity
  * of the self type in case one of the substitutions uses OclSelf.
  *
  * @since 7.0
@@ -92,13 +92,13 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		else {
 			referredElement = PivotUtil.getReferredOperation(actualExp);
 		}
-		TemplateArgumentVisitor visitor = createVisitor(referredElement, standardLibrary, selfType, null);
-		if (visitor == null) {
-			visitor = standardLibrary.createTemplateArgumentVisitor(selfType, null);
-		}
-		else {
+		TemplateArgumentVisitor visitor = createVisitor(referredElement, standardLibrary, selfType);
+		if (visitor != null) {
 			visitor.exclude(actualExp);
 			visitor.visit(actualExp);
+		}
+		else {	// Nothing to specialize but may still have parameters and need to localize to the standardLibrary's orphanage.
+			visitor = new TemplateArgumentVisitor(standardLibrary, selfType);
 		}
 		return visitor;
 	}
@@ -106,12 +106,12 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	/**
 	 * @since 7.0
 	 */
-	public static @Nullable TemplateArgumentVisitor createVisitor(@NonNull EObject eObject, @NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public static @Nullable TemplateArgumentVisitor createVisitor(@NonNull EObject eObject, @NonNull StandardLibrary standardLibrary, @Nullable Type selfType) {
 		BasicTemplateSpecialization templateSpecialization = BasicTemplateSpecialization.basicGetTemplateSpecialization((Element)eObject);
 		if (templateSpecialization == null) {
 			return null;
 		}
-		TemplateArgumentVisitor visitor = standardLibrary.createTemplateArgumentVisitor(selfType, null);
+		TemplateArgumentVisitor visitor = standardLibrary.getCreateStrategy().createTemplateArgumentVisitor(standardLibrary, selfType);
 		visitor.setTemplateSpecialization(templateSpecialization);
 		return visitor;
 	}
@@ -203,8 +203,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	 *
 	 * @since 7.0
 	 */
-	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue) {
-		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
+	public static @NonNull Type specializeType(@NonNull Type type, @NonNull CallExp actualExp, @NonNull StandardLibrary standardLibrary, @Nullable Type selfType) {
 		TemplateArgumentVisitor visitor = create(standardLibrary, actualExp, selfType);
 		return visitor.specializeType(type);
 	}
@@ -213,7 +212,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	 * @since 7.0
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Class specializeTypeToLowerBound(org.eclipse.ocl.pivot.@NonNull Class type, @NonNull StandardLibrary standardLibrary) {
-		TemplateArgumentVisitor visitor = createVisitor(type, standardLibrary, null, null);
+		TemplateArgumentVisitor visitor = createVisitor(type, standardLibrary, null);
 		if (visitor == null) {
 			return type;
 		}
@@ -242,11 +241,10 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	/**
 	 * @since 7.0
 	 */
-	public TemplateArgumentVisitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType, @Nullable Type selfTypeValue) {
+	public TemplateArgumentVisitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType) {
 		super(null);
 		this.standardLibrary = standardLibrary;
 		this.selfType = selfType;
-		// assert selfTypeValue == null;			// Bug 580791 Enforcing redundant argument
 	}
 
 	/**

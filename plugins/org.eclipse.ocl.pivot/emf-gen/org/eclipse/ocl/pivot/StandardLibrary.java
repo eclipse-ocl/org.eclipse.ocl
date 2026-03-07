@@ -114,14 +114,6 @@ public interface StandardLibrary extends Element
 	boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType);
 
 	/**
-	 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
-	 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
-	 * this alternative creation mechanism is available via an EnvironmentFactory override.
-	 * @since 7.0
-	 */
-	@NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(@Nullable Type selfType, @Nullable Type selfTypeValue);
-
-	/**
 	 * Obtains the generic instance of the BagType metatype, named
 	 * <tt>Bag(T)</tt>.
 	 *
@@ -606,4 +598,32 @@ public interface StandardLibrary extends Element
 	 * @since 7.0
 	 */
 	void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass);
+
+	/**
+	 * CreateStrategy provides an ability for a neutral StandardLibrary to have tailored creation.
+	 * Minimally so that QVTd can override createTemplateArgumentVisitor. Other creatioon methods can probably migrate
+	 * and perhaps use getAdapter() to avoid regular API chnages for yet another 'create'.
+	 *
+	 * @since 7.0
+	 */
+	public static interface CreateStrategy
+	{
+		/**
+		 * Create a visitor to resolve TemplateParameter specializations. The visitor is normally created
+		 * by the ASResourceFactory override of a relevant ASResource, but in the event that the ASResource is null,
+		 * this alternative creation mechanism is available via an StandardLibrary override.
+		 * @since 7.0
+		 */
+		@NonNull TemplateArgumentVisitor createTemplateArgumentVisitor(@NonNull StandardLibrary standardLibrary, @Nullable Type selfType);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CreateStrategy getCreateStrategy();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CreateStrategy setCreateStrategy(@NonNull CreateStrategy createStrategy);
 } // StandardLibrary
