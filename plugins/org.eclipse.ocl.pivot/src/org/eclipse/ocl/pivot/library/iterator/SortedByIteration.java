@@ -24,6 +24,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.values.ValueImpl;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
@@ -129,15 +130,14 @@ public class SortedByIteration extends AbstractIteration
 	@Override
 	public SortedByIteration.@NonNull SortingValue createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		StandardLibrary standardLibrary = executor.getStandardLibrary();
-		FlatClass comparableType = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
-		FlatClass selfType = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
-		Operation staticOperation = comparableType.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfType);
+		FlatClass comparableFlatClass = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
+		Operation staticOperation = comparableFlatClass.getBestOperation(OperationId.OCLCOMPARABLE_COMPARE_TO);
 		if (staticOperation != null) {
 			org.eclipse.ocl.pivot.Class bodyType = executor.getIdResolver().getClass(bodyTypeId, null);
 			LibraryFeature implementation = bodyType.lookupImplementation(standardLibrary, staticOperation);
 			return new SortingValue(executor, (CollectionTypeId)accumulatorTypeId, (LibraryBinaryOperation) implementation);
 		}
-		throw new InvalidValueException(PivotMessages.UndefinedOperation, String.valueOf(comparableType) + "::" + LibraryConstants.COMPARE_TO); //$NON-NLS-1$
+		throw new InvalidValueException(PivotMessages.UndefinedOperation, String.valueOf(comparableFlatClass) + "::" + LibraryConstants.COMPARE_TO); //$NON-NLS-1$
 	}
 
 	/**

@@ -208,7 +208,6 @@ public interface FlatClass extends Nameable
 	 * by the given Standard Library.
 	 */
 	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
-	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes);
 
 	/**
 	 * Reset the sub-fragment hierarchy following a class mutation.

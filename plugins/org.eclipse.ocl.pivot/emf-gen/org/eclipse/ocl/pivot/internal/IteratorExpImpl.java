@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -211,8 +212,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 		try {
 			org.eclipse.ocl.pivot.Class oclComparableType = standardLibrary.getOclComparableType();
 			FlatClass comparableFlatClass = oclComparableType.getFlatClass(standardLibrary);
-			FlatClass selfFlatClass = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
-			Operation staticOperation = comparableFlatClass.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfFlatClass);
+			Operation staticOperation = comparableFlatClass.getBestOperation(OperationId.OCLCOMPARABLE_COMPARE_TO);
 			if (staticOperation == null) {
 				if (diagnostics == null) {
 					return false;

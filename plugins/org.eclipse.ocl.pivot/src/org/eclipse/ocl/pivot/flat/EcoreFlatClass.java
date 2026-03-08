@@ -10,34 +10,18 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.flat;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
-import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.RealValue;
-import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
-
-import com.google.common.collect.Lists;
 
 /**
  * An EcoreFlatClass identifies an EClassifier and a corresponding Pivot Class as the client for which caches are provided.
  * @since 7.0
  */
-public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable metamodels
+public class EcoreFlatClass extends PartialFlatClass
 {
+	@Deprecated /* no longer used */
 	/*public*/ static class EcoreFlatProperty extends PropertyImpl {}
 
 	protected final @NonNull EClassifier eClassifier;
@@ -47,10 +31,11 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		this.eClassifier = eClassifier;
 	}
 
-	@Override
+/*	@Override 		// No need to check for extra EOperations since Ecore2AS should have mapped them to AS already.
 	protected @NonNull Operation @NonNull [] computeDirectOperations() {
+		@NonNull Operation[] asDirectOperations = super.computeDirectOperations();
 		if (!(eClassifier instanceof EClass) ) {
-			return NO_OPERATIONS;
+			return asDirectOperations;
 		}
 		List<EOperation> eOperations = ((EClass)eClassifier).getEOperations();
 		int iSize = eOperations.size();
@@ -66,12 +51,12 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 		//	ParameterTypes parameterTypes = TypeUtil.createParameterTypes(CodegencompanyTables.Types._Employee);
 
 		//	array[i] = new ExecutorOperation(eOperation, asClass, i);
-			throw new UnsupportedOperationException();					// XXX TODO WIP
+			throw new UnsupportedOperationException();					// X X X  T O D O WIP
 		}
 		return array;
-	}
+	} */
 
-	@Override
+/*	@Override 		// No need to check for extra EStructuralFeatures since Ecore2AS should have mapped them to AS already.
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
 		if (!(eClassifier instanceof EClass) ) {
 			return NO_PROPERTIES;
@@ -92,9 +77,9 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 			array[i] = asProperty;
 		}
 		return array;
-	}
+	} */
 
-	@Override
+/*	@Override 		// No need to check for extra E(super)Classes since Ecore2AS should have mapped them to AS already.
 	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {	// This occurs before AS superclasses are defined
 		assert !isOclAny();
 		List<@NonNull FlatClass> superFlatClasses = null;
@@ -146,7 +131,7 @@ public class EcoreFlatClass extends PartialFlatClass		// XXX FIXME immutable met
 			superFlatClasses = Collections.singletonList(oclElementFlatClass);
 		}
 		return superFlatClasses;
-	}
+	} */
 
 	public @NonNull EClassifier getEClassifier() {
 		return eClassifier;

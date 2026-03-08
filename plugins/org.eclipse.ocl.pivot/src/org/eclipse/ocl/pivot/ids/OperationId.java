@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.ids;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.library.LibraryConstants;
 
 /**
  * An OperationId provides a unique hierarchical identifier for an operation name, operation parameter-types and template parameters.
@@ -59,6 +60,11 @@ public interface OperationId extends TemplateableId
 	 * @since 7.0
 	 */
 	public static final @NonNull OperationId OCLANY_OCL_IS_UNDEFINED = TypeId.OCL_ANY.getOperationId("oclIsUndefined", ParametersId.EMPTY);
+
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull OperationId OCLCOMPARABLE_COMPARE_TO = TypeId.OCL_COMPARABLE.getOperationId(LibraryConstants.COMPARE_TO, ParametersId.OCL_SELF);
 
 	@Override
 	@NonNull OperationId getGeneralizedId();

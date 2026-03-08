@@ -17,10 +17,10 @@ import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractUntypedBinaryOperation;
 import org.eclipse.ocl.pivot.library.LibraryBinaryOperation;
-import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -40,8 +40,7 @@ public abstract class OclComparableComparisonOperation extends AbstractUntypedBi
 		FlatClass rightFlatClass = idResolver.getDynamicClassOf(right).getFlatClass(standardLibrary);
 		FlatClass commonFlatClass = leftFlatClass.getCommonFlatClass(rightFlatClass);
 		FlatClass comparableFlatClass = standardLibrary.getOclComparableType().getFlatClass(standardLibrary);
-		FlatClass selfFlatClass = standardLibrary.getOclSelfType().getFlatClass(standardLibrary);
-		Operation staticOperation = comparableFlatClass.lookupLocalOperation(standardLibrary, LibraryConstants.COMPARE_TO, selfFlatClass);
+		Operation staticOperation = comparableFlatClass.getBestOperation(OperationId.OCLCOMPARABLE_COMPARE_TO);
 		LibraryBinaryOperation implementation = null;
 		try {
 			if (staticOperation != null) {

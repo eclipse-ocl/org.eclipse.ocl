@@ -31,7 +31,6 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.OperationId;
-import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.ClassListeners.IClassListener;
@@ -1466,7 +1465,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return implementation;
 	}
 
-	@Override
+/*	@Override
 	public @Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, @NonNull FlatClass... argumentTypes) {
 		for (Operation memberOperation : getPivotClass().getOwnedOperations()) {
 			if (memberOperation.getName().equals(operationName)) {
@@ -1489,7 +1488,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			}
 		}
 		return null;
-	}
+	} */
 
 	private void removeSubFlatClass(@NonNull FlatClass subFlatClass) {
 		if (subFlatClasses != null) {
