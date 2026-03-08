@@ -286,7 +286,7 @@ public abstract class GenerateGrammar extends AbstractWorkflowComponent
 //		}
 		File folder = new File(rootPath + javaFolder + "/" + javaPackageName.replace(".", "/"));
 		try {
-			sourceFile = new File(folder, grammarFileStem + ".xtextbin").toString();
+			sourceFile = new File(folder, grammarFileStem + ".xtextbin").getCanonicalPath();
 			URI fileURI = URI.createFileURI(sourceFile);
 			log.info("Loading Grammar '" + fileURI);
 			ResourceSet resourceSet = getResourceSet();

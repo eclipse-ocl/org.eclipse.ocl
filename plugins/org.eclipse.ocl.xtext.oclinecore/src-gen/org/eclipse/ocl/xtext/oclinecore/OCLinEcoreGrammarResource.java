@@ -9,8 +9,8 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\releng..\..\plugins\org.eclipse.ocl.xtext.oclinecore\src-gen\org\eclipse\ocl\xtext\oclinecore\OCLinEcore.xtextbin
- * by: org.eclipse.ocl.build.xtend.generateGrammar.xtend
+ * from: E:\GIT\org.eclipse.ocl\plugins\org.eclipse.ocl.xtext.oclinecore\src-gen\org\eclipse\ocl\xtext\oclinecore\OCLinEcore.xtextbin
+ * by: org.eclipse.ocl.build.xtend.GenerateGrammarXtend.xtend
  *
  * Do not edit it.
  *******************************************************************************/

@@ -65,7 +65,7 @@ import java.util.GregorianCalendar
 			 *******************************************************************************
 			 * This code is 100% auto-generated
 			 * from: «sourceFile»
-			 * by: org.eclipse.ocl.build.xtend.generateGrammar.xtend
+			 * by: org.eclipse.ocl.build.xtend.GenerateGrammarXtend.xtend
 			 *
 			 * Do not edit it.
 			 *******************************************************************************/

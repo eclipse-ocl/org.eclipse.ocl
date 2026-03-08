@@ -9,8 +9,8 @@
  *     E.D.Willink - initial API and implementation
  *******************************************************************************
  * This code is 100% auto-generated
- * from: E:\GIT\org.eclipse.ocl\releng..\..\plugins\org.eclipse.ocl.xtext.markup\src-gen\org\eclipse\ocl\xtext\markup\Markup.xtextbin
- * by: org.eclipse.ocl.build.xtend.generateGrammar.xtend
+ * from: E:\GIT\org.eclipse.ocl\plugins\org.eclipse.ocl.xtext.markup\src-gen\org\eclipse\ocl\xtext\markup\Markup.xtextbin
+ * by: org.eclipse.ocl.build.xtend.GenerateGrammarXtend.xtend
  *
  * Do not edit it.
  *******************************************************************************/
