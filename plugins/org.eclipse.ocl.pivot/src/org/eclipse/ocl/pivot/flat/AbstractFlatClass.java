@@ -771,7 +771,9 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		getFragments();
 		int @Nullable [] indexes2 = indexes;
 		assert indexes2 != null;
-		return indexes2.length-2;
+		int depth = indexes2.length-1;
+		assert (fragments != null) && (fragments[indexes2[depth]].baseFlatClass == this);
+		return depth;
 	}
 
 	/**
@@ -875,8 +877,10 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	/*private*/ @Override
 	public int getIndex(int fragmentNumber) {
 		int @Nullable [] indexes2 = indexes;
+		@NonNull FlatFragment[] fragments2 = fragments;
 		assert indexes2 != null;
-		return indexes2[fragmentNumber];
+		assert fragments2 != null;
+		return fragmentNumber < indexes2.length ? indexes2[fragmentNumber] : fragments2.length;
 	}
 
 	/*private*/ @Override
@@ -1215,6 +1219,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] startIndexes, org.eclipse.ocl.pivot.@NonNull Class... distantSuperClass) {
+		assert fragments.length == startIndexes[startIndexes.length-1]+1;
 		assert this.mutable == null;
 		assert this.fragments == null;
 		assert this.indexes == null;
@@ -1250,7 +1255,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			final @NonNull FlatFragment[] superFragments = abstractDirectSuperFlatClass.getFragments();
 			final int [] superIndexes = abstractDirectSuperFlatClass.indexes;
 			assert superIndexes != null;
-			final int superDepths = superIndexes.length-1;
+			final int superDepths = superIndexes.length;
 			for (int i = 0; i < superDepths; i++) {
 				List<@NonNull FlatClass> superFlatClasses;
 				if (i >= depth2superFlatClasses.size()) {
@@ -1261,7 +1266,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 					superFlatClasses = depth2superFlatClasses.get(i);
 				}
 				final int firstIndex = superIndexes[i];
-				final int lastIndex = superIndexes[i+1];
+				final int lastIndex = i+1 < superIndexes.length ? superIndexes[i+1] : superIndexes[superIndexes.length-1]+1;
 				for (int index = firstIndex; index < lastIndex; index++) {
 					FlatFragment superFragment = superFragments[index];
 					AbstractFlatClass baseFlatClass = (AbstractFlatClass)superFragment.getBaseFlatClass();
@@ -1283,23 +1288,24 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		fragmentsSize++;				// Extra 'OclSelf' entry
 	//	assert superDepths > 0;
 		@NonNull FlatFragment @NonNull [] fragments = new @NonNull FlatFragment[fragmentsSize];	// +1 for OclSelf
-		int @NonNull [] indexes = new int[superDepths+2];		// +1 for OclSelf, +1 for tail pointer
+		int @NonNull [] indexes = new int[superDepths+1];		// +1 for OclSelf
 		int fragmentsIndex = 0;
 		int indexesIndex = 0;
 		indexes[indexesIndex++] = 0;
 		while (indexesIndex <= superDepths) {
 			List<@NonNull FlatClass> superFlatClasses = depth2superFlatClasses.get(indexesIndex-1);
-			Collections.sort(superFlatClasses, NameUtil.NAMEABLE_COMPARATOR);
+			Collections.sort(superFlatClasses, NameUtil.NAMEABLE_COMPARATOR);	// XXX if size > 1
 			for (@NonNull FlatClass superFlatClass : superFlatClasses) {
 				fragments[fragmentsIndex++] = createFragment(superFlatClass);
 			}
 			indexes[indexesIndex++] = fragmentsIndex;
 		}
-		indexes[superDepths++] = fragmentsIndex;
+	//	indexes[superDepths++] = fragmentsIndex;
 		fragments[fragmentsIndex++] = createFragment(this);
-		indexes[superDepths++] = fragmentsIndex;
+	//	indexes[superDepths++] = fragmentsIndex;
 		this.fragments = fragments;
 		this.indexes = indexes;
+		assert fragments.length-1 == indexes[indexes.length-1];
 		installClassListeners();
 	}
 
