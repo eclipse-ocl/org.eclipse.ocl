@@ -453,6 +453,20 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return asProperties;
 	}
 
+	private boolean assertValidFragments() {
+		// There used to be a gratuitous past-end final indexes, so we need to check that it is gone
+		@NonNull FlatFragment[] fragments2 = fragments;
+		int @Nullable [] indexes2 = indexes;
+		assert indexes2 != null;
+		assert fragments2 != null;
+		int selfDepth = indexes2.length-1;
+		int selfIndex = indexes2[selfDepth];
+		FlatFragment selfFragment = fragments2[selfIndex];
+		assert selfIndex == fragments2.length-1;
+		assert selfFragment.baseFlatClass == this;
+		return true;
+	}
+
 	@Override
 	public @Nullable Operation basicGetOperation(@NonNull OperationId id) {
 		throw new UnsupportedOperationException();
@@ -783,7 +797,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	public @NonNull FragmentIterable getDirectSuperFragments() {
 		@NonNull FlatFragment @NonNull [] fragments = getFragments();
 		int length = indexes.length;
-		return length >= 3 ? new FragmentIterable(fragments, indexes[length-3], indexes[length-2]) : FragmentIterable.EMPTY;
+		return length >= 2 ? new FragmentIterable(fragments, indexes[length-2], indexes[length-1]) : FragmentIterable.EMPTY;
 	}
 
 	@Override
@@ -822,6 +836,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (fragments == null) {
 			initFragments();
 		}
+		assert assertValidFragments();
 		assert fragments != null;
 		return fragments;
 	}
@@ -885,6 +900,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	/*private*/ @Override
 	public int getIndexes() {
+		assert assertValidFragments();
 		return indexes.length;
 	}
 	@Override
@@ -1163,7 +1179,13 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 
 	@Override
 	public final @NonNull FragmentIterable getSuperFragments(int depth) {
-		return new FragmentIterable(ClassUtil.requireNonNull(fragments), indexes[depth], indexes[depth+1]);
+		@NonNull FlatFragment[] fragments2 = ClassUtil.requireNonNull(fragments);
+		if (depth+1 < indexes.length) {
+			return new FragmentIterable(fragments2, indexes[depth], indexes[depth+1]);
+		}
+		else {
+			return new FragmentIterable(fragments2, indexes[depth], fragments2.length);
+		}
 	}
 
 	/**
@@ -1208,6 +1230,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 				throw new IllegalStateException(s.toString());
 			}
 		}
+		assert assertValidFragments();
 		if (DYNAMIC_FRAGMENTS.isActive()) {
 			StringBuilder s = new StringBuilder();
 			s.append(NameUtil.debugSimpleName(getStandardLibrary()) + " " + NameUtil.debugSimpleName(this) + " : " + this + " " + Arrays.toString(indexes) + " " + Arrays.toString(fragments));
@@ -1231,6 +1254,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			s.append(NameUtil.debugSimpleName(getStandardLibrary()) + " " + NameUtil.debugSimpleName(this) + " : " + this + " " + Arrays.toString(indexes) + " " + Arrays.toString(fragments));
 			STATIC_FRAGMENTS.println(s.toString());
 		}
+		assert assertValidFragments();
 	}
 
 	/**
@@ -1305,7 +1329,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 	//	indexes[superDepths++] = fragmentsIndex;
 		this.fragments = fragments;
 		this.indexes = indexes;
-		assert fragments.length-1 == indexes[indexes.length-1];
+		assert assertValidFragments();
 		installClassListeners();
 	}
 
@@ -1379,7 +1403,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		if (apparentFlatClass != null) {
 			int apparentDepth = apparentFlatClass.getDepth();
 			assert indexes != null;
-			int depths = indexes.length-1;
+			int depths = indexes.length;
 			if (apparentDepth+1 < depths) {				// null and invalid may fail here
 				int iMax = getIndex(apparentDepth+1);
 				for (int i = getIndex(apparentDepth); i < iMax; i++) {
