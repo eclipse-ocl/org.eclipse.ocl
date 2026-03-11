@@ -195,6 +195,7 @@ public class ReflectiveEcoreFlatClass extends EcoreFlatClass
 		// TODO Auto-generated method stub
 		Iterable<@NonNull FlatClass> superDirectSuperFlatClasses = computeDirectSuperFlatClasses2();
 		Iterable<@NonNull FlatClass> localDirectSuperFlatClasses = localComputeDirectSuperFlatClasses();
-		return superDirectSuperFlatClasses;
+		throw new UnsupportedOperationException();
+	//	return superDirectSuperFlatClasses;
 	}
 }

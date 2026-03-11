@@ -143,13 +143,13 @@ public /*final*/ class FlatFragment
 	} */
 
 	public @NonNull Operation @NonNull [] getOperations() {
-		assert operations != null;
-		return operations;
+	//	assert operations != null;
+		return operations != null ? operations : AbstractFlatClass.NO_OPERATIONS;
 	}
 
 	public @NonNull Property @NonNull [] getProperties() {
-		assert properties != null;
-		return properties;
+	//	assert properties != null;
+		return properties != null ? properties : AbstractFlatClass.NO_PROPERTIES;
 	}
 
 	public void initOperations(@NonNull Operation @NonNull [] operations) {
