@@ -1526,7 +1526,7 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public void initFragments(@NonNull FlatFragment @NonNull [] fragments, int @NonNull [] startIndexes, org.eclipse.ocl.pivot.@NonNull Class... distantSuperClass) {
-		getFlatClass().initFragments(fragments, startIndexes, distantSuperClass);
+		getFlatClass().initFragments(fragments, startIndexes);
 		if (startIndexes.length >= 2) {
 			List<org.eclipse.ocl.pivot.Class> superClasses2 = getSuperClasses();
 			assert superClasses2.isEmpty();

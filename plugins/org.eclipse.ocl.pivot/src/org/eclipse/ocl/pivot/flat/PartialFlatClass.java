@@ -82,15 +82,15 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 		return superFlatClasses;
 	}
 
-	@Override
-	public final void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		// Partial class ignores siblings
-	}
+//	@Override
+//	public final void didAddPartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+//		// Partial class ignores siblings
+//	}
 
-	@Override
-	public final void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
-		// Partial class ignores siblings
-	}
+//	@Override
+//	public final void didRemovePartialClass(int index, org.eclipse.ocl.pivot.@NonNull Class partialClass) {
+//		// Partial class ignores siblings
+//	}
 
 	@Override
 	public @NonNull CompleteClass getCompleteClass() {
@@ -164,17 +164,17 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 		}
 	} */
 
-	@Override
-	protected void installClassListeners() {
-		assert isMutable();
-		asClass.addClassListener(this);
-	}
+//	@Override
+//	protected void installClassListeners() {
+//		assert isMutable();
+//		asClass.addClassListener(this);
+//	}
 
-	@Override
-	public void resetFragments() {
-		asClass.removeClassListener(this);
-		super.resetFragments();
-	}
+//	@Override
+//	public void resetFragments() {
+//		asClass.removeClassListener(this);
+//		super.resetFragments();
+//	}
 
 	@Override
 	public @NonNull String toString() {
