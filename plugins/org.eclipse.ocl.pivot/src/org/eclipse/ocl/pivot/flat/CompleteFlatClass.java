@@ -24,6 +24,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Region;
@@ -43,9 +44,12 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
+ * A CompleteFlatClass provides a FlatClass by merging the contributions from the partial FlatClasses of each partial class.
+ * The CompleteFlatClass is mutable; updates when CompleteClass changes.
+ *
  * @since 7.0
  */
-public class CompleteFlatClass extends AbstractFlatClass implements IClassListener		// XXX FIXME immutable metamodels
+public class CompleteFlatClass extends AbstractFlatClass implements IClassListener
 {
 	protected final @NonNull CompleteClassImpl completeClass;
 
@@ -80,7 +84,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		subFlatClasses2.add(subFlatClass);
 	}
 
-	protected @NonNull Operation @NonNull [] computeDirectOperations() {
+	private @NonNull Operation @NonNull [] computeDirectOperations() {
 		List<@NonNull Operation> asOperations = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement(partialClass);
@@ -89,7 +93,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		return asOperations != null ? asOperations.toArray(new @NonNull Operation[asOperations.size()]) : NO_OPERATIONS;
 	}
 
-	protected @NonNull Property @NonNull [] computeDirectProperties() {
+	private @NonNull Property @NonNull [] computeDirectProperties() {
 		List<@NonNull Property> asProperties = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			org.eclipse.ocl.pivot.Class genericType = PivotUtil.getGenericElement(partialClass);
@@ -98,8 +102,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
 	}
 
-	@Override
-	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
+	private @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
 		assert !isOclAny();
 		List<@NonNull FlatClass> superFlatClasses = null;
 		FlatClass flatClass = completeClass.getFlatClass();
@@ -118,10 +121,10 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 			}
 		}
 		if (superFlatClasses == null) {
-			org.eclipse.ocl.pivot.@NonNull Class oclAnyClass = standardLibrary.getOclAnyType();
-			CompleteClass completeOclAnyClass = completeModel.getCompleteClass(oclAnyClass);
-			FlatClass oclAnyFlatClass = completeOclAnyClass.getFlatClass();
-			superFlatClasses = Collections.singletonList(oclAnyFlatClass);
+			org.eclipse.ocl.pivot.@NonNull Class oclClass = completeClass.getPrimaryClass() instanceof DataType ? standardLibrary.getOclAnyType() : standardLibrary.getOclElementType();		// XXX oclType ??
+			CompleteClass completeOclClass = completeModel.getCompleteClass(oclClass);
+			FlatClass oclFlatClass = completeOclClass.getFlatClass();
+			superFlatClasses = Collections.singletonList(oclFlatClass);
 		}
 		return superFlatClasses;
 	}
@@ -166,7 +169,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		resetFragments();
 	}
 
-	protected @Nullable List<@NonNull Operation> gatherDirectOperations(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Operation> asOperations) {
+	private @Nullable List<@NonNull Operation> gatherDirectOperations(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Operation> asOperations) {
 		assert PivotUtil.getGenericElement(asClass) == asClass;
 		for (@NonNull Operation partialOperation : PivotUtil.getOwnedOperations(asClass)) {
 			if (asOperations == null) {
@@ -177,7 +180,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		return asOperations;
 	}
 
-	protected @Nullable List<@NonNull Property> gatherDirectProperties(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Property> asProperties) {
+	private @Nullable List<@NonNull Property> gatherDirectProperties(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable List<@NonNull Property> asProperties) {
 		assert PivotUtil.getGenericElement(asClass) == asClass;		// FIXME This is much less than PartialClasses.initMemberProperties
 		for (@NonNull Property partialProperty : PivotUtil.getOwnedProperties(asClass)) {
 			if (asProperties == null) {
@@ -188,7 +191,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		return asProperties;
 	}
 
-	protected @Nullable Set<@NonNull Stereotype> gatherExtendingStereotypes(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable Set<@NonNull Stereotype> extendingStereotypes) {
+	private @Nullable Set<@NonNull Stereotype> gatherExtendingStereotypes(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable Set<@NonNull Stereotype> extendingStereotypes) {
 		assert PivotUtil.getGenericElement(asClass) == asClass;		// FIXME This is much than PartialClasses.initMemberProperties
 		List<StereotypeExtender> extendedBys = asClass.getExtenders();
 		if (extendedBys.size() > 0) {
@@ -457,7 +460,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 	//	assert assertValidFragments();
 	}
 
-	protected @NonNull Map<@NonNull String, @NonNull State> initStates() {
+	private @NonNull Map<@NonNull String, @NonNull State> initStates() {
 		Map<@NonNull String, @NonNull State> name2states = new HashMap<@NonNull String, @NonNull State>();
 		for (@NonNull CompleteClass superCompleteClass : completeClass.getSuperCompleteClasses()) {
 			for (org.eclipse.ocl.pivot.@NonNull Class superPartialClass : ClassUtil.nullFree(superCompleteClass.getPartialClasses())) {
@@ -471,7 +474,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		}
 		return name2states;
 	}
-	protected void initStatesForRegions(@NonNull Map<String, State> name2states, @NonNull List<@NonNull Region> regions) {
+	private void initStatesForRegions(@NonNull Map<String, State> name2states, @NonNull List<@NonNull Region> regions) {
 		for (@NonNull Region region : regions) {
 			for (@NonNull Vertex vertex : ClassUtil.nullFree(region.getOwnedSubvertexes())) {
 				if (vertex instanceof State) {
@@ -484,7 +487,7 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		}
 	}
 
-	protected void installClassListeners() {
+	private void installClassListeners() {
 		assert isMutable();
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
 			((ClassImpl)partialClass).addClassListener(this);
@@ -513,7 +516,6 @@ public class CompleteFlatClass extends AbstractFlatClass implements IClassListen
 		super.resetFragments();
 	} */
 
-//	@Override
 	public void resetFragments() {
 		if (mutable == null) {				// 'premature' resetFragments
 			assert basicGetFragments() == null;

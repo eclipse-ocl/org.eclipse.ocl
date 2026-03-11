@@ -22,6 +22,7 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -70,7 +71,7 @@ public class ReflectiveEcoreFlatClass extends EcoreFlatClass
 	} */
 
 //	@Override 		// No need to check for extra EStructuralFeatures since Ecore2AS should have mapped them to AS already.
-	protected @NonNull Property @NonNull [] localComputeDirectProperties() {
+	private @NonNull Property @NonNull [] localComputeDirectProperties() {
 		if (!(eClassifier instanceof EClass) ) {
 			return NO_PROPERTIES;
 		}
@@ -168,10 +169,31 @@ public class ReflectiveEcoreFlatClass extends EcoreFlatClass
 		return superDirectProperties;
 	} */
 
-	@Override
+	private @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses2() {	// This occurs before AS superclasses are defined
+		assert !isOclAny();
+		List<@NonNull FlatClass> superFlatClasses = null;
+		FlatModel flatModel2 = getFlatModel();
+		for (org.eclipse.ocl.pivot.@NonNull Class asSuperClass : PivotUtil.getSuperClasses(asClass)) {
+			if (superFlatClasses == null) {
+				superFlatClasses = new ArrayList<>();
+			}
+			FlatClass superFlatClass = flatModel2.getFlatClass(asSuperClass);
+			if (!superFlatClasses.contains(superFlatClass)) {		// (very) small list does not merit any usage of a Set within a UniqueList
+				superFlatClasses.add(superFlatClass);
+			}
+		}
+		if (superFlatClasses == null) {
+			StandardLibrary standardLibrary = getStandardLibrary();
+			org.eclipse.ocl.pivot.@NonNull Class oclAnyClass = standardLibrary.getOclAnyType();
+			FlatClass oclAnyFlatClass = oclAnyClass.getFlatClass(standardLibrary);
+			superFlatClasses = Collections.singletonList(oclAnyFlatClass);
+		}
+		return superFlatClasses;
+	}
+
 	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {
 		// TODO Auto-generated method stub
-		Iterable<@NonNull FlatClass> superDirectSuperFlatClasses = super.computeDirectSuperFlatClasses();
+		Iterable<@NonNull FlatClass> superDirectSuperFlatClasses = computeDirectSuperFlatClasses2();
 		Iterable<@NonNull FlatClass> localDirectSuperFlatClasses = localComputeDirectSuperFlatClasses();
 		return superDirectSuperFlatClasses;
 	}

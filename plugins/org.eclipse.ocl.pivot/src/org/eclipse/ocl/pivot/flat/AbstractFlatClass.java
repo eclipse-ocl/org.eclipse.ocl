@@ -491,7 +491,7 @@ public abstract class AbstractFlatClass implements FlatClass
 	 * Return the immediate super-FlatClasses without reference to the fragments.
 	 * This method is never invoked for OclAny, consequently there is always at least one direct super-FlatClass.
 	 */
-	protected abstract @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses();
+//	protected abstract @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses();
 
 	protected /*final*/ @NonNull FlatFragment createFragment(@NonNull FlatClass baseFlatClass) {
 		return new FlatFragment(this, baseFlatClass);
