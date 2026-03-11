@@ -137,7 +137,7 @@ public class DelegateStandardLibrary extends AbstractStandardLibrary
 
 	@Override
 	public @NonNull CollectionType getCollectionType( @NonNull CollectionTypeId collectionTypeId) {
-		return standardLibrary.getCollectionType();
+		return standardLibrary.getCollectionType(collectionTypeId);
 	}
 
 	@Override
