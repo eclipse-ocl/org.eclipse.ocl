@@ -221,7 +221,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			FlatClass baseFlatClass = fragment.getBaseFlatClass();
 			String name = PivotUtil.getName(asProperty);
 			for (FlatFragment superFlatFragment : baseFlatClass.getDirectSuperFragments()) {
-				for (@NonNull Property asSuperProperty : superFlatFragment.getProperties()) {
+				for (@NonNull Property asSuperProperty : getProperties(superFlatFragment)) {
 					if (name.equals(asSuperProperty.getName()) && !asSuperProperty.isIsImplicit()) {
 						partials.remove(asSuperProperty);
 					//	System.out.println("Occluded " + asSuperProperty);
@@ -486,14 +486,6 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 			return partialProperties.getPrimaryProperty();
 		}
 	}
-
-	/**
-	 * Return the properties defined for this flat class, which may be need merging for a complete class.
-	 * FIXME super flat class properties should not be returned, but are due to legacy static initialization.
-	 */
-	protected abstract @NonNull Property @NonNull [] computeDirectProperties();
-
-	protected abstract @NonNull Operation @NonNull [] computeDirectOperations();
 
 	/**
 	 * Return the immediate super-FlatClasses without reference to the fragments.
@@ -932,7 +924,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 						s.append(NameUtil.debugSimpleName(flatModel) + " " + this);
 					}
 					for (@NonNull FlatFragment fragment : fragments) {
-						for (@NonNull Operation operation : fragment.getOperations()) {
+						for (@NonNull Operation operation : getOperations(fragment)) {
 							if (s != null) {
 								s.append("\n\t" + NameUtil.debugSimpleName(operation) + " " + operation);
 							}
@@ -964,7 +956,7 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 						s.append(NameUtil.debugSimpleName(flatModel) + " " + this);
 					}
 					for (@NonNull FlatFragment fragment : fragments) {
-						for (@NonNull Property property : fragment.getProperties()) {
+						for (@NonNull Property property : getProperties(fragment)) {
 							if (s != null) {
 								s.append ("\n\t" + NameUtil.debugSimpleName(property) + " " + property);
 								Property opposite = property.getOpposite();
@@ -1069,6 +1061,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		return operationOverloads;
 	}
 
+	protected abstract @NonNull Operation[] getOperations(@NonNull FlatFragment fragment);
+
 	public @Nullable Operation getPrimaryOperation(@NonNull Operation pivotOperation) {
 		Map<@NonNull String, @NonNull Map<@NonNull ParametersId, Object>> name2parametersId2operationOrOperations2 = getName2ParametersId2OperationOrOperations();
 		String operationName = pivotOperation.getName();
@@ -1163,6 +1157,8 @@ public abstract class AbstractFlatClass implements FlatClass, IClassListener
 		}
 		return Collections.emptyList();
 	}
+
+	protected abstract @NonNull Property[] getProperties(@NonNull FlatFragment fragment);
 
 	@Override
 	public @NonNull FlatFragment getSelfFragment() {

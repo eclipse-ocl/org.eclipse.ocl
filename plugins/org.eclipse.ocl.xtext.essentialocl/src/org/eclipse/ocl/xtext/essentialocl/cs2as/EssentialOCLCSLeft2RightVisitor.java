@@ -862,6 +862,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		PathNameCS csPathName = csNameExp.getOwnedPathName();
 		if (csPathName != null) {			// QVTr overrides to select a wider search
+			if ("oclIsInvalid".equals(csPathName.toString())) {
+				getClass();		// XXX
+			}
 			List<PathElementCS> csPath = csPathName.getOwnedPathElements();
 			int pathSize = csPath.size();
 			if (pathSize > 0) {

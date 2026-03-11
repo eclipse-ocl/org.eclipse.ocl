@@ -47,17 +47,17 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 		assert PivotUtil.getGenericElement(asClass) == asClass;
 	}
 
-	@Override
-	protected @NonNull Operation @NonNull [] computeDirectOperations() {
-		List<@NonNull Operation> asOperations = gatherDirectOperations(asClass, null);
-		return asOperations != null ? asOperations.toArray(new @NonNull Operation[asOperations.size()]) : NO_OPERATIONS;
-	}
+//	@Override
+//	protected @NonNull Operation @NonNull [] computeDirectOperations() {
+//		List<@NonNull Operation> asOperations = gatherDirectOperations(asClass, null);
+//		return asOperations != null ? asOperations.toArray(new @NonNull Operation[asOperations.size()]) : NO_OPERATIONS;
+//	}
 
-	@Override
-	protected @NonNull Property @NonNull [] computeDirectProperties() {
-		List<@NonNull Property> asProperties = gatherDirectProperties(asClass, null);
-		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
-	}
+//	@Override
+//	protected @NonNull Property @NonNull [] computeDirectProperties() {
+//		List<@NonNull Property> asProperties = gatherDirectProperties(asClass, null);
+//		return asProperties != null ? asProperties.toArray(new @NonNull Property[asProperties.size()]) : NO_PROPERTIES;
+//	}
 
 	@Override
 	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {	// This occurs before AS superclasses are defined
@@ -113,8 +113,18 @@ public class PartialFlatClass extends AbstractFlatClass		// XXX FIXME immutable 
 	}
 
 	@Override
+	protected @NonNull Operation[] getOperations(@NonNull FlatFragment fragment) {
+		return fragment.getOperations();
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		return asClass;
+	}
+
+	@Override
+	protected @NonNull Property[] getProperties(@NonNull FlatFragment fragment) {
+		return fragment.getProperties();
 	}
 
 /*	private @NonNull Map<@NonNull String, @NonNull PartialOperations> initMemberOperations() {

@@ -16,11 +16,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
@@ -48,7 +45,7 @@ public class ReflectiveEcoreFlatClass extends EcoreFlatClass
 	}
 
 //	@Override 		// No need to check for extra EOperations since Ecore2AS should have mapped them to AS already.
-	protected @NonNull Operation @NonNull [] localComputeDirectOperations() {
+/*	protected @NonNull Operation @NonNull [] localComputeDirectOperations() {
 		@NonNull Operation[] asDirectOperations = super.computeDirectOperations();
 		if (!(eClassifier instanceof EClass) ) {
 			return asDirectOperations;
@@ -70,7 +67,7 @@ public class ReflectiveEcoreFlatClass extends EcoreFlatClass
 			throw new UnsupportedOperationException();					// X X X  T O D O WIP
 		}
 		return array;
-	}
+	} */
 
 //	@Override 		// No need to check for extra EStructuralFeatures since Ecore2AS should have mapped them to AS already.
 	protected @NonNull Property @NonNull [] localComputeDirectProperties() {
@@ -150,15 +147,15 @@ public class ReflectiveEcoreFlatClass extends EcoreFlatClass
 		return superFlatClasses;
 	}
 
-	@Override
+/*	@Override
 	protected @NonNull Operation @NonNull [] computeDirectOperations() {
 		// TODO Auto-generated method stub
 		@NonNull Operation[] superDirectOperations = super.computeDirectOperations();
 		@NonNull Operation[] localDirectOperations = localComputeDirectOperations();
 		return superDirectOperations;
-	}
+	} */
 
-	@Override
+/*	@Override
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
 		// TODO Auto-generated method stub
 		FlatClass immutableFlatClass = asClass.basicGetFlatClass();
@@ -169,7 +166,7 @@ public class ReflectiveEcoreFlatClass extends EcoreFlatClass
 		@NonNull Property[] superDirectProperties = super.computeDirectProperties();
 		@NonNull Property[] localDirectProperties = localComputeDirectProperties();
 		return superDirectProperties;
-	}
+	} */
 
 	@Override
 	protected @NonNull Iterable<@NonNull FlatClass> computeDirectSuperFlatClasses() {

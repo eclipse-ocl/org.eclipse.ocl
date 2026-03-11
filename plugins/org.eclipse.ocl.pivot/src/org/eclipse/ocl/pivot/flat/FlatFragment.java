@@ -143,20 +143,13 @@ public /*final*/ class FlatFragment
 	} */
 
 	public @NonNull Operation @NonNull [] getOperations() {
-		@NonNull Operation [] operations2 = this.operations;
-		if (operations2 == null) {
-			this.operations = operations2 = ((AbstractFlatClass)baseFlatClass).computeDirectOperations();
-		}
-		return operations2;
+		assert operations != null;
+		return operations;
 	}
 
 	public @NonNull Property @NonNull [] getProperties() {
-		@NonNull Property [] properties2 = this.properties;
-		if (properties2 == null) {
-			properties2 = ((AbstractFlatClass)baseFlatClass).computeDirectProperties();
-			initProperties(properties2);
-		}
-		return properties2;
+		assert properties != null;
+		return properties;
 	}
 
 	public void initOperations(@NonNull Operation @NonNull [] operations) {

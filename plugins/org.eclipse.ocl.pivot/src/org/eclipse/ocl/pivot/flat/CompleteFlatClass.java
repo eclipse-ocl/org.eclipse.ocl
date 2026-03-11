@@ -57,7 +57,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		this.completeClass.addClassListener(this);
 	}
 
-	@Override
+//	@Override
 	protected @NonNull Operation @NonNull [] computeDirectOperations() {
 		List<@NonNull Operation> asOperations = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
@@ -67,7 +67,7 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 		return asOperations != null ? asOperations.toArray(new @NonNull Operation[asOperations.size()]) : NO_OPERATIONS;
 	}
 
-	@Override
+//	@Override
 	protected @NonNull Property @NonNull [] computeDirectProperties() {
 		List<@NonNull Property> asProperties = null;
 		for (org.eclipse.ocl.pivot.@NonNull Class partialClass : PivotUtil.getPartialClasses(completeClass)) {
@@ -162,8 +162,28 @@ public class CompleteFlatClass extends AbstractFlatClass		// XXX FIXME immutable
 	}
 
 	@Override
+	protected @NonNull Operation[] getOperations(@NonNull FlatFragment fragment) {
+		@NonNull Operation [] operations = fragment.basicGetOperations();
+		if (operations == null) {
+			operations = ((CompleteFlatClass) fragment.getBaseFlatClass()).computeDirectOperations();
+			fragment.initOperations(operations);
+		}
+		return operations;
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		return completeClass.getPrimaryClass();
+	}
+
+	@Override
+	protected @NonNull Property[] getProperties(@NonNull FlatFragment fragment) {
+		@NonNull Property [] properties = fragment.basicGetProperties();
+		if (properties == null) {
+			properties = ((CompleteFlatClass) fragment.getBaseFlatClass()).computeDirectProperties();
+			fragment.initProperties(properties);
+		}
+		return properties;
 	}
 
 	public @NonNull Iterable<@NonNull State> getStates() {
