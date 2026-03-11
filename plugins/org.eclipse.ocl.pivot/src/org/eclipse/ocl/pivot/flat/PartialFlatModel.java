@@ -23,10 +23,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 public class PartialFlatModel extends AbstractFlatModel
 {
 	protected final /*@NonNull*/ Model model;
-//	private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull PartialFlatClass> asClass2flatClass =  new HashMap<>();
 
-	@Deprecated
-	public PartialFlatModel(@NonNull PartialStandardLibrary standardLibrary) {
+	protected PartialFlatModel(@NonNull PartialStandardLibrary standardLibrary) {
 		super(standardLibrary, "");
 		this.model = null;
 	}

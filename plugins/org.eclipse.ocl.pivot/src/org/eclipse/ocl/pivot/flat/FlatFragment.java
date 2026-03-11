@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.flat.EcoreFlatClass.EcoreFlatProperty;
+import org.eclipse.ocl.pivot.flat.ReflectiveEcoreFlatClass.EcoreFlatProperty;
 
 /**
  * A FlatFragment provides the description of the properties and operations defined by some class when accessed by the same

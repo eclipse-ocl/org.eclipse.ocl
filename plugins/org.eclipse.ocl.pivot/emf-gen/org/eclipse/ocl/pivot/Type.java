@@ -56,6 +56,12 @@ public interface Type extends NamedElement, org.eclipse.ocl.pivot.values.OCLValu
 	Type specializeIn(CallExp expr, Type selfType);
 
 	/**
+	 * Return the inheritance description for this type within standardLibrary returns non-null if not built-in.
+	 * @since 7.0
+	 */
+	@Nullable FlatClass basicGetFlatClass();
+
+	/**
 	 * Return the inheritance description for this type within standardLibrary.
 	 * @since 7.0
 	 */

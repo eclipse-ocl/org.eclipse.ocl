@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.internal.ids.AbstractGeneralizedIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -372,6 +373,12 @@ public class TemplateParameterImpl
 	/**
 	 * @since 7.0
 	 */
+	@Override
+	public @Nullable FlatClass basicGetFlatClass() {
+		org.eclipse.ocl.pivot.@NonNull Class lowerBound = PivotUtil.getClass(this, OCLstdlibTables.LIBRARY);
+		return lowerBound.basicGetFlatClass();
+	}
+
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		org.eclipse.ocl.pivot.@NonNull Class lowerBound = PivotUtil.getClass(this, standardLibrary);

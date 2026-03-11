@@ -34,13 +34,17 @@ public class EcoreFlatModel extends PartialFlatModel
 {
 	private final @NonNull Map<@NonNull EClassifier, @NonNull EcoreFlatClass> eClassifier2flatClass =  new HashMap<>();
 
-	@Deprecated
+	@Deprecated			// Pass asModel from OCLstdlibTables
 	public EcoreFlatModel(@NonNull PartialStandardLibrary standardLibrary) {
 		super(standardLibrary);
 	}
 
 	public EcoreFlatModel(@NonNull Model model, @NonNull PartialStandardLibrary standardLibrary) {
 		super(model, standardLibrary);
+	}
+
+	protected EcoreFlatClass createFlatClass(@NonNull EClassifier eClassifier, org.eclipse.ocl.pivot.@NonNull Class asClass, int flags) {
+		return new EcoreFlatClass(this, eClassifier, asClass, flags);
 	}
 
 	public @NonNull EcoreFlatClass getEcoreFlatClass(@NonNull EClassifier eClassifier) {
@@ -95,7 +99,7 @@ public class EcoreFlatModel extends PartialFlatModel
 			if ((eClassifier instanceof EClass) && ((EClass)eClassifier).isAbstract()) {
 				flags |= FlatClass.ABSTRACT;
 			}
-			flatClass = new EcoreFlatClass(this, eClassifier, asClass, flags);
+			flatClass = createFlatClass(eClassifier, asClass, flags);
 			eClassifier2flatClass.put(eClassifier, flatClass);
 		}
 		return flatClass;
