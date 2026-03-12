@@ -40,6 +40,12 @@ import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractSpecializedTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
@@ -141,7 +147,9 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @NonNull CollectionTypeManager createCollectionTypeManager();
+	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
+		return new AbstractCollectionTypeManager();
+	}
 
 	/**
 	 * @since 7.0
@@ -156,33 +164,43 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @NonNull JavaTypeManager createJavaTypeManager();
+	protected @NonNull JavaTypeManager createJavaTypeManager() {
+		return new AbstractJavaTypeManager();
+	}
 
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @NonNull LambdaTypeManager createLambdaTypeManager();
+	protected @NonNull LambdaTypeManager createLambdaTypeManager() {
+		return new AbstractLambdaTypeManager();
+	}
 
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @NonNull MapTypeManager createMapTypeManager();
+	protected @NonNull MapTypeManager createMapTypeManager() {
+		return new AbstractMapTypeManager();
+	}
 
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @NonNull SpecializedTypeManager createSpecializedTypeManager();
+	protected @NonNull SpecializedTypeManager createSpecializedTypeManager() {
+		return new AbstractSpecializedTypeManager();
+	}
 
 
 	/**
 	 * @since 7.0
 	 */
-	protected abstract @NonNull TupleTypeManager createTupleTypeManager();
+	protected @NonNull TupleTypeManager createTupleTypeManager() {
+		return new AbstractTupleTypeManager();
+	}
 
 	@Override
 	public org.eclipse.ocl.pivot.@Nullable Class basicGetBehavioralClass(java.lang.@NonNull Class<?> javaClass) {
 		assert javaTypeManager != null;
-		return javaTypeManager.getBehavioralClass(javaClass);
+		return javaTypeManager.getBehavioralClass(this, javaClass);
 	}
 
 	/**
@@ -252,13 +270,13 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		}
 		else if (leftType instanceof MapType) {
 			if (rightType instanceof MapType) {
-				return getMapTypeManager().getCommonMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments);
+				return getMapTypeManager().getCommonMapType(this, (MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments);
 			}
 			return getOclAnyType();
 		}
 		else if (leftType instanceof TupleType) {
 			if (rightType instanceof TupleType) {
-				TupleType commonTupleType = getTupleTypeManager().getCommonTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments);
+				TupleType commonTupleType = getTupleTypeManager().getCommonTupleType(this, (TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments);
 				if (commonTupleType != null) {
 					return commonTupleType;
 				}
@@ -379,7 +397,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object) {
 		assert javaTypeManager != null;
-		return javaTypeManager.getJavaType(object);
+		return javaTypeManager.getJavaType(this, object);
 	}
 
 	/**
@@ -394,7 +412,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	@Override
 	public @NonNull LambdaType getLambdaType(@NonNull TypedElement contextType, @NonNull List<@NonNull ? extends TypedElement> parameterTypes, @NonNull TypedElement resultType,
 			@Nullable TemplateArguments bindings) {
-		return getLambdaTypeManager().getLambdaType(contextType, parameterTypes, resultType, bindings);
+		return getLambdaTypeManager().getLambdaType(this, contextType, parameterTypes, resultType, bindings);
 	}
 
 	/**
@@ -419,7 +437,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 */
 	@Override
 	public @NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		return getMapTypeManager().getMapEntryType(entryClass);
+		return getMapTypeManager().getMapEntryType(this, entryClass);
 	}
 
 	/**
@@ -436,7 +454,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 */
 	@Override
 	public @NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments) {
-		return getMapTypeManager().getMapType(typeArguments);
+		return getMapTypeManager().getMapType(this, typeArguments);
 	}
 
 	/**
@@ -519,7 +537,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> templateArguments) {
 		assert genericClass == getPrimaryType(genericClass);			// Conforms that OCLmetamodel has been loaded
-		return getSpecializedTypeManager().getSpecializedType(genericClass, templateArguments);
+		return getSpecializedTypeManager().getSpecializedType(this, genericClass, templateArguments);
 	}
 
 	@Override
@@ -556,7 +574,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
 		}
 		else if (type instanceof TupleType) {
-			return getTupleTypeManager().getTupleType((TupleType) type, substitutions);
+			return getTupleTypeManager().getTupleType(this, (TupleType) type, substitutions);
 		}
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
@@ -597,17 +615,17 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull ? extends TypedElement> asParts, @Nullable TemplateArguments bindings) {
-		return getTupleTypeManager().getTupleType(asParts, bindings);
+		return getTupleTypeManager().getTupleType(this, asParts, bindings);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partIds) {
-		return getTupleTypeManager().getTupleType(asParts, partIds);
+		return getTupleTypeManager().getTupleType(this, asParts, partIds);
 	}
 
 	@Override
 	public @NonNull TupleType getTupleType(@NonNull TupleTypeId typeId) {
-		return getTupleTypeManager().getTupleType(null, typeId);
+		return getTupleTypeManager().getTupleType(this, null, typeId);
 	}
 
 	/**
@@ -702,7 +720,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		} */
 		else if (leftType instanceof MapType) {
 			if (rightType instanceof MapType) {
-				return getMapTypeManager().isEqualToMapType((MapType)leftType, (MapType)rightType);
+				return getMapTypeManager().isEqualToMapType(this, (MapType)leftType, (MapType)rightType);
 			}
 			return false;
 		}

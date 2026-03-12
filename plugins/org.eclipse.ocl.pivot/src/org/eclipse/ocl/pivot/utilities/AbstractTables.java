@@ -147,7 +147,7 @@ public abstract class AbstractTables
 		public @NonNull Type getLambdaType(@NonNull TypedElement context, @NonNull TypedElement result, @NonNull TypedElement ... parameters) {
 			List<@NonNull TypedElement> parameterList = parameters != null ? Lists.newArrayList(parameters) : Collections.emptyList();
 			assert parameterList != null;
-			return library.getLambdaTypeManager().getLambdaType(context, parameterList, result, null);
+			return library.getLambdaTypeManager().getLambdaType(library, context, parameterList, result, null);
 		}
 
 		public @NonNull MapType getMapType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {

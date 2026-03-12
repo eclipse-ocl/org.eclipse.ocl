@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.manager;
 import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 
 /**
@@ -24,7 +25,7 @@ public interface SpecializedTypeManager
 {
 	void dispose();
 
-	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull List<@NonNull ? extends Type> templateArguments);
+	org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull List<@NonNull ? extends Type> templateArguments);
 
 	/**
 	 * Add a pre-existing Class to the managed Class.

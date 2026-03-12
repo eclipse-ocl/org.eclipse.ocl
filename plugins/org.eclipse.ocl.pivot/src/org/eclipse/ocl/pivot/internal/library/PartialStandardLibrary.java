@@ -58,7 +58,6 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -85,24 +84,13 @@ import org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
-import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractSpecializedTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
-import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
-import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
-import org.eclipse.ocl.pivot.manager.MapTypeManager;
-import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
-import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
@@ -227,48 +215,6 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		}
 	} */
 
-	public static class PartialCollectionTypeManager extends AbstractCollectionTypeManager
-	{
-	}
-
-	public static class PartialJavaTypeManager extends AbstractJavaTypeManager
-	{
-		public PartialJavaTypeManager(@NonNull StandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
-	/**
-	 * PartialLambdaTypeManager encapsulates the knowledge about known lambda types.
-	 */
-	public static class PartialLambdaTypeManager extends AbstractLambdaTypeManager
-	{
-		public PartialLambdaTypeManager(@NonNull StandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
-	public static class PartialMapTypeManager extends AbstractMapTypeManager
-	{
-		public PartialMapTypeManager(@NonNull StandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
-	public static class PartialSpecializedTypeManager extends AbstractSpecializedTypeManager
-	{
-		public PartialSpecializedTypeManager(@NonNull StandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
-	public static class PartialTupleTypeManager extends AbstractTupleTypeManager
-	{
-		public PartialTupleTypeManager(@NonNull StandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
 	private @NonNull Map<@NonNull String, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> ePackageMap = new WeakHashMap<>();		// Keys are interned // XXX Unify with CompleteModel
 	// private Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull WeakReference<org.eclipse.ocl.pivot.@NonNull Package>> asPackageMap = null;
 	private /*@LazyNonNull*/ Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions = null;
@@ -384,11 +330,6 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.create(eMetaClass);
 		initClass(asClass, eClassifier, typeId, flags, typeParameters);
 		return asClass;
-	}
-
-	@Override
-	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
-		return new PartialCollectionTypeManager();
 	}
 
 	/**
@@ -510,26 +451,11 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		return asIteration;
 	}
 
-	@Override
-	protected @NonNull JavaTypeManager createJavaTypeManager() {
-		return new PartialJavaTypeManager(this);
-	}
-
 	/**
 	 * @since 7.0
 	 */
 	public @NonNull TypedElement createLambdaParameter(@NonNull String name, @NonNull Type type, boolean isRequired) {
 		return LambdaTypeManager.createCandidateLambdaParameter(name, type, isRequired);
-	}
-
-	@Override
-	protected @NonNull LambdaTypeManager createLambdaTypeManager() {
-		return new PartialLambdaTypeManager(this);
-	}
-
-	@Override
-	protected @NonNull MapTypeManager createMapTypeManager() {
-		return new PartialMapTypeManager(this);
 	}
 
 	/**
@@ -729,11 +655,6 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		return resource;
 	}
 
-	@Override
-	protected @NonNull SpecializedTypeManager createSpecializedTypeManager() {
-		return new PartialSpecializedTypeManager(this);
-	}
-
 	/**
 	 * @since 7.0
 	 */
@@ -747,11 +668,6 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	@Deprecated
 	public @NonNull NormalizedTemplateParameter createTemplateParameter(int index, @NonNull String name) {
 		return createNormalizedTemplateParameter(index, name);
-	}
-
-	@Override
-	protected @NonNull TupleTypeManager createTupleTypeManager() {
-		return new PartialTupleTypeManager(this);
 	}
 
 	public void freeze(@NonNull Resource resource) {
@@ -1055,7 +971,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 			return getMapType(keyType, mapType.isKeysAreNullFree(), valueType, mapType.isValuesAreNullFree());
 		}
 		else if (type instanceof TupleType) {
-			return getTupleTypeManager().getTupleType((TupleType) type, substitutions);
+			return getTupleTypeManager().getTupleType(this, (TupleType) type, substitutions);
 		}
 		else if (type instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)type;
@@ -1093,7 +1009,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class genericClass,
 			@NonNull List<@NonNull ? extends Type> templateArguments) {
 		assert genericClass == getPrimaryType(genericClass);			// Conforms that OCLmetamodel has been loaded
-		return getSpecializedTypeManager().getSpecializedType(genericClass, templateArguments);
+		return getSpecializedTypeManager().getSpecializedType(this, genericClass, templateArguments);
 	}
 
 	@Override

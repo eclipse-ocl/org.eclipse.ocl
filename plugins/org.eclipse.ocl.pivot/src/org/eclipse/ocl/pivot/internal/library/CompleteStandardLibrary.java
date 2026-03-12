@@ -57,11 +57,7 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractSpecializedTypeManager;
-import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
@@ -70,11 +66,7 @@ import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
-import org.eclipse.ocl.pivot.manager.JavaTypeManager;
-import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
-import org.eclipse.ocl.pivot.manager.SpecializedTypeManager;
-import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -105,85 +97,6 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	{
 		super();
 	}
-
-	/**
-	 * CompleteCollectionTypeManager encapsulates the knowledge about known collection types.
-	 *
-	 * @since 7.0
-	 */
-	public static class CompleteCollectionTypeManager extends AbstractCollectionTypeManager
-	{
-		@Override
-		protected boolean isValid(@Nullable Type type) {
-			return (type != null) && (type.eResource() != null);		// XXX Built-in have null Resource
-		}
-	}
-
-	/**
-	 * CompleteJavaTypeManager encapsulates the knowledge about known java types.
-	 *
-	 * @since 7.0
-	 */
-	protected static class CompleteJavaTypeManager extends AbstractJavaTypeManager
-	{
-		protected CompleteJavaTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
-	/**
-	 * CompleteLambdaTypeManager encapsulates the knowledge about known lambda types.
-	 *
-	 * @since 7.0
-	 */
-	public static class CompleteLambdaTypeManager extends AbstractLambdaTypeManager
-	{
-		public CompleteLambdaTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
-	/**
-	 * CompleteMapTypeManager encapsulates the knowledge about known map types.
-	 *
-	 * @since 7.0
-	 */
-	public static class CompleteMapTypeManager extends AbstractMapTypeManager
-	{
-		public CompleteMapTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-
-		@Override
-		protected boolean isValid(@Nullable Type type) {
-			return (type != null) && (type.eResource() != null);
-		}
-	}
-
-	/**
-	 * CompleteSpecializedTypeManager encapsulates the knowledge about known specialized types.
-	 *
-	 * @since 7.0
-	 */
-	public static class CompleteSpecializedTypeManager extends AbstractSpecializedTypeManager
-	{
-		public CompleteSpecializedTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
-	/**
-	 * CompleteTupleTypeManager encapsulates the knowledge about known tuple types.
-	 * @since 7.0
-	 */
-	public static class CompleteTupleTypeManager extends AbstractTupleTypeManager
-	{
-		public CompleteTupleTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-	}
-
-//	private static final Logger logger = Logger.getLogger(CompleteStandardLibrary.class);
 
 	/**
 	 * The URI used by default for the OCL Standard Library. NB. This
@@ -403,7 +316,13 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
-		return new CompleteCollectionTypeManager();
+		return new AbstractCollectionTypeManager()				// XXX Fix this irregularity
+		{
+			@Override
+			protected boolean isValid(@Nullable Type type) {
+				return (type != null) && (type.eResource() != null);		// XXX Built-in have null Resource
+			}
+		};
 	}
 
 	@Override
@@ -418,28 +337,14 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	}
 
 	@Override
-	protected @NonNull JavaTypeManager createJavaTypeManager() {
-		return new CompleteJavaTypeManager(this);
-	}
-
-	@Override
-	protected @NonNull LambdaTypeManager createLambdaTypeManager() {
-		return new CompleteLambdaTypeManager(this);
-	}
-
-	@Override
 	protected @NonNull MapTypeManager createMapTypeManager() {
-		return new CompleteMapTypeManager(this);
-	}
-
-	@Override
-	protected @NonNull SpecializedTypeManager createSpecializedTypeManager() {
-		return new CompleteSpecializedTypeManager(this);
-	}
-
-	@Override
-	protected @NonNull TupleTypeManager createTupleTypeManager() {
-		return new CompleteTupleTypeManager(this);
+		return new AbstractMapTypeManager()		// XXX fix this irregularity
+		{
+			@Override
+			protected boolean isValid(@Nullable Type type) {
+				return (type != null) && (type.eResource() != null);
+			}
+		};
 	}
 
 	/**

@@ -149,19 +149,19 @@ public abstract class AbstractStandardLibrary implements StandardLibrary
 			}
 			else if (leftType instanceof MapType) {
 				if (rightType instanceof MapType) {
-					return getMapTypeManager().conformsToMapType((MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments, enforceNullity);
+					return getMapTypeManager().conformsToMapType(this, (MapType)leftType, leftTemplateArguments, (MapType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
 			else if (leftType instanceof LambdaType) {
 				if (rightType instanceof LambdaType) {
-					return getLambdaTypeManager().conformsToLambdaType((LambdaType)leftType, leftTemplateArguments, (LambdaType)rightType, rightTemplateArguments, enforceNullity);
+					return getLambdaTypeManager().conformsToLambdaType(this, (LambdaType)leftType, leftTemplateArguments, (LambdaType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
 			else if (leftType instanceof TupleType) {
 				if (rightType instanceof TupleType) {
-					return getTupleTypeManager().conformsToTupleType((TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments, enforceNullity);
+					return getTupleTypeManager().conformsToTupleType(this, (TupleType)leftType, leftTemplateArguments, (TupleType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}

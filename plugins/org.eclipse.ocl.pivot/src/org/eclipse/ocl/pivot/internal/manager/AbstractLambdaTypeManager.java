@@ -34,10 +34,8 @@ import org.eclipse.ocl.pivot.values.TemplateArguments;
  * LambdaTypeManager encapsulates the knowledge about known lambda types.
  * @since 7.0
  */
-public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
+public /*abstract*/ class AbstractLambdaTypeManager implements LambdaTypeManager
 {
-	protected final @NonNull StandardLibrary standardLibrary;
-
 	/**
 	 * Map from from lambda type arguments, to the lambda type.
 	 */
@@ -45,12 +43,8 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	// FIXME ?? Why does a List map give a moniker test failure
 	//	private final @NonNull Map<Type, Map<List<? extends Type>, LambdaType>> lambdaTypes = new HashMap<>();
 
-	protected AbstractLambdaTypeManager(@NonNull StandardLibrary standardLibrary) {
-		this.standardLibrary = standardLibrary;
-	}
-
 	@Override
-	public boolean conformsToLambdaType(@NonNull LambdaType actualType, @Nullable TemplateArguments actualTemplateArguments,
+	public boolean conformsToLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull LambdaType actualType, @Nullable TemplateArguments actualTemplateArguments,
 			@NonNull LambdaType requiredType, @Nullable TemplateArguments requiredTemplateArguments, boolean enforceNullity) {
 		LambdaParameter actualContext = PivotUtil.getOwnedContext(actualType);
 		LambdaParameter requiredContext = PivotUtil.getOwnedContext(requiredType);
@@ -111,7 +105,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		return true;
 	}
 
-	protected @NonNull LambdaParameter createLambdaParameter(@NonNull TypedElement typedElement) {
+	protected @NonNull LambdaParameter createLambdaParameter(@NonNull StandardLibrary standardLibrary, @NonNull TypedElement typedElement) {
 		LambdaParameter lambdaParameter = PivotFactory.eINSTANCE.createLambdaParameter();
 		lambdaParameter.setName(typedElement.getName());
 		Type type = PivotUtil.getType(typedElement);
@@ -121,14 +115,14 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		return lambdaParameter;
 	}
 
-	protected @NonNull LambdaType createLambdaType(@NonNull LambdaTypeArguments typeArguments) {
+	protected @NonNull LambdaType createLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull LambdaTypeArguments typeArguments) {
 		LambdaType lambdaType = PivotFactory.eINSTANCE.createLambdaType();
 		lambdaType.setName(TypeId.LAMBDA_NAME);
-		lambdaType.setOwnedContext(createLambdaParameter(typeArguments.getContext()));
+		lambdaType.setOwnedContext(createLambdaParameter(standardLibrary, typeArguments.getContext()));
 		for (TypedElement parameter : typeArguments.getParameters()) {
-			lambdaType.getOwnedParameters().add(createLambdaParameter(parameter));
+			lambdaType.getOwnedParameters().add(createLambdaParameter(standardLibrary, parameter));
 		}
-		lambdaType.setOwnedResult(createLambdaParameter(typeArguments.getResult()));
+		lambdaType.setOwnedResult(createLambdaParameter(standardLibrary, typeArguments.getResult()));
 		lambdaType.getSuperClasses().add(standardLibrary.getOclLambdaType());
 		standardLibrary.addOrphanClass(lambdaType);
 		return lambdaType;
@@ -140,26 +134,26 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	}
 
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result,
+	public @NonNull LambdaType getLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result,
 			@Nullable TemplateArguments bindings) {
 		if (bindings == null) {
 			LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(context, parameters, result);
-			return getLambdaType(lambdaTypeArguments);
+			return getLambdaType(standardLibrary, lambdaTypeArguments);
 		}
 		else {
-			TypedElement specializedContext = specialize(context, bindings);
+			TypedElement specializedContext = specialize(standardLibrary,context, bindings);
 			List<@NonNull TypedElement> specializedParameters = new ArrayList<>();
 			for (@NonNull TypedElement parameter : parameters) {
-				specializedParameters.add(specialize(parameter, bindings));
+				specializedParameters.add(specialize(standardLibrary,parameter, bindings));
 			}
-			TypedElement specializedResult = specialize(result, bindings);
+			TypedElement specializedResult = specialize(standardLibrary,result, bindings);
 			LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(specializedContext, specializedParameters, specializedResult);
-			return getLambdaType(lambdaTypeArguments);
+			return getLambdaType(standardLibrary, lambdaTypeArguments);
 		}
 	}
 
 	@Override
-	public @NonNull LambdaType getLambdaType(@NonNull LambdaTypeArguments typeArguments) {
+	public @NonNull LambdaType getLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull LambdaTypeArguments typeArguments) {
 		synchronized (lambdaTypes) {
 			WeakReference<@Nullable LambdaType> weakReference = lambdaTypes.get(typeArguments);
 			if (weakReference != null) {
@@ -184,7 +178,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 				}
 				lambdaTypes.remove(typeArguments);
 			}
-			LambdaType lambdaType = createLambdaType(typeArguments);
+			LambdaType lambdaType = createLambdaType(standardLibrary, typeArguments);
 			lambdaTypes.put(typeArguments, new WeakReference<@Nullable LambdaType>(lambdaType));
 			return lambdaType;
 		}
@@ -206,7 +200,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		}
 	}
 
-	private @NonNull TypedElement specialize(@NonNull TypedElement context, @Nullable TemplateArguments bindings) {
+	private @NonNull TypedElement specialize(@NonNull StandardLibrary standardLibrary, @NonNull TypedElement context, @Nullable TemplateArguments bindings) {
 		String name = PivotUtil.getName(context);
 		Type specializedType = standardLibrary.getSpecializedType(PivotUtil.getType(context), bindings);
 		boolean isRequired = context.isIsRequired();

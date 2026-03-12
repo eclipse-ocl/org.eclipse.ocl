@@ -16,6 +16,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.values.LambdaTypeArguments;
@@ -38,14 +39,14 @@ public interface LambdaTypeManager
 		return typedElement;
 	}
 
-	boolean conformsToLambdaType(@NonNull LambdaType actualType, @Nullable TemplateArguments actualTemplateArguments,
+	boolean conformsToLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull LambdaType actualType, @Nullable TemplateArguments actualTemplateArguments,
 			@NonNull LambdaType requiredType, @Nullable TemplateArguments requiredTemplateArguments, boolean enforceNullity);
 
 	void dispose();
 
-	@NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result, @Nullable TemplateArguments bindings);
+	@NonNull LambdaType getLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result, @Nullable TemplateArguments bindings);
 
-	@NonNull LambdaType getLambdaType(@NonNull LambdaTypeArguments typeArguments);
+	@NonNull LambdaType getLambdaType(@NonNull StandardLibrary standardLibrary, @NonNull LambdaTypeArguments typeArguments);
 
 	/**
 	 * Add a pre-existing LambdaType to the managed LambdaTypes.

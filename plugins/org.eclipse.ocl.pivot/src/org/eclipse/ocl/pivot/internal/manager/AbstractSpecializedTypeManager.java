@@ -34,10 +34,8 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  * @since 7.0
  */
-public abstract class AbstractSpecializedTypeManager implements SpecializedTypeManager
+public /*abstract*/ class AbstractSpecializedTypeManager implements SpecializedTypeManager
 {
-	protected final @NonNull StandardLibrary standardLibrary;
-
 	/**
 	 * Map from actual types to specialization.
 	 * <br>
@@ -48,11 +46,7 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 	//
 	private @NonNull /*WeakHash*/Map<@NonNull TemplateArgumentValues, @NonNull WeakReference<org.eclipse.ocl.pivot.@Nullable Class>> specializations = new HashMap<>();
 
-	protected AbstractSpecializedTypeManager(@NonNull StandardLibrary standardLibrary) {
-		this.standardLibrary = standardLibrary;
-	}
-
-	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
+	protected org.eclipse.ocl.pivot.@NonNull Class createSpecialization(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
 		org.eclipse.ocl.pivot.Class genericType = primaryClass;
 		String typeName = genericType.getName();
 		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedTemplateParametersList(genericType, true);
@@ -82,17 +76,17 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull List<@NonNull ? extends Type> templateArguments) {
+	public org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull List<@NonNull ? extends Type> templateArguments) {
 		List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedTemplateParametersList(primaryClass, true);
 		int iMax = templateParameters.size();
 		if (templateArguments.size() != iMax) {
 			throw new IllegalArgumentException("Incompatible template argument count");
 		}
 		TemplateArgumentValues templateArgumentValues = new TemplateArgumentValues(primaryClass.getTypeId(), templateArguments);
-		return getSpecializedType(primaryClass, templateArgumentValues);
+		return getSpecializedType(standardLibrary, primaryClass, templateArgumentValues);
 	}
 
-	private synchronized org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
+	private synchronized org.eclipse.ocl.pivot.@NonNull Class getSpecializedType(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Class primaryClass, @NonNull TemplateArgumentValues templateArguments) {
 		synchronized (specializations) {
 			org.eclipse.ocl.pivot.Class specializedType = null;
 			WeakReference<org.eclipse.ocl.pivot.Class> weakReference = specializations.get(templateArguments);
@@ -111,7 +105,7 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 				}
 			}
 			if (specializedType == null) {
-				specializedType = createSpecialization(primaryClass, templateArguments);
+				specializedType = createSpecialization(standardLibrary, primaryClass, templateArguments);
 				specializations.put(templateArguments, new WeakReference<>(specializedType));
 			}
 			return specializedType;
