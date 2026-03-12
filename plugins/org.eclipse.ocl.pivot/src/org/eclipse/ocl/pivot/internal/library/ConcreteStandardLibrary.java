@@ -191,7 +191,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments) {
 		assert collectionTypeManager != null;
-		CollectionType collectionType = collectionTypeManager.getCollectionType(typeArguments);
+		CollectionType collectionType = collectionTypeManager.getCollectionType(this, typeArguments);
 		assert collectionType.eContainer() != null; // == basicGetOrphanage();
 		return collectionType;
 	}
@@ -199,7 +199,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	@Override
 	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId) {
 		assert collectionTypeManager != null;
-		CollectionType collectionType = collectionTypeManager.getCollectionType(collectionTypeId);
+		CollectionType collectionType = collectionTypeManager.getCollectionType(this, collectionTypeId);
 		assert collectionType.eContainer() != null; // ==  basicGetOrphanage();
 		return collectionType;
 	}
@@ -213,7 +213,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		assert PivotUtil.getGenericElement(genericType) == genericType;
 		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lower, upper);
 		assert collectionTypeManager != null;
-		CollectionType collectionType = collectionTypeManager.getCollectionType(typeArguments);
+		CollectionType collectionType = collectionTypeManager.getCollectionType(this, typeArguments);
 		assert collectionType.eContainer() != null; // == basicGetOrphanage();
 		return collectionType;
 	}
@@ -240,7 +240,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		if (leftType instanceof CollectionType) {
 			if (rightType instanceof CollectionType) {
 				assert collectionTypeManager != null;
-				return collectionTypeManager.getCommonCollectionType((CollectionType)leftType, leftTemplateArguments, (CollectionType)rightType, rightTemplateArguments);
+				return collectionTypeManager.getCommonCollectionType(this, (CollectionType)leftType, leftTemplateArguments, (CollectionType)rightType, rightTemplateArguments);
 			}
 			return getOclAnyType();
 		}
@@ -690,7 +690,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		else if (leftType instanceof CollectionType) {
 			if (rightType instanceof CollectionType) {
 				assert collectionTypeManager != null;
-				return collectionTypeManager.isEqualToCollectionType((CollectionType)leftType, (CollectionType)rightType);
+				return collectionTypeManager.isEqualToCollectionType(this, (CollectionType)leftType, (CollectionType)rightType);
 			}
 			return false;
 		}

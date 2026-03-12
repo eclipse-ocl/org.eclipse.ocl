@@ -113,10 +113,6 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	 */
 	public static class CompleteCollectionTypeManager extends AbstractCollectionTypeManager
 	{
-		public CompleteCollectionTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
-
 		@Override
 		protected boolean isValid(@Nullable Type type) {
 			return (type != null) && (type.eResource() != null);		// XXX Built-in have null Resource
@@ -407,7 +403,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
-		return new CompleteCollectionTypeManager(this);
+		return new CompleteCollectionTypeManager();
 	}
 
 	@Override

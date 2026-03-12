@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.manager;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
@@ -29,7 +30,7 @@ public interface CollectionTypeManager
 	 */
 	@Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments);
 
-	boolean conformsToCollectionType(@NonNull CollectionType leftType, @Nullable TemplateArguments leftTemplateArguments,
+	boolean conformsToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType leftType, @Nullable TemplateArguments leftTemplateArguments,
 			@NonNull CollectionType rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity);
 
 	void dispose();
@@ -37,14 +38,14 @@ public interface CollectionTypeManager
 	/**
 	 * Return, and if necessary create, the collection type characterized by the typeArguments.
 	 */
-	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments);
+	@NonNull CollectionType getCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionTypeArguments typeArguments);
 
-	@NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId);
+	@NonNull CollectionType getCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionTypeId collectionTypeId);
 
-	@NonNull CollectionType getCommonCollectionType(@NonNull CollectionType leftCollectionType, @Nullable TemplateArguments leftTemplateArguments,
+	@NonNull CollectionType getCommonCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType leftCollectionType, @Nullable TemplateArguments leftTemplateArguments,
 				@NonNull CollectionType rightCollectionType, @Nullable TemplateArguments rightTemplateArguments);
 
-	boolean isEqualToCollectionType(@NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType);
+	boolean isEqualToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType);
 
 	/**
 	 * Add a pre-existing CollectionType to the managed CollectionTypes.

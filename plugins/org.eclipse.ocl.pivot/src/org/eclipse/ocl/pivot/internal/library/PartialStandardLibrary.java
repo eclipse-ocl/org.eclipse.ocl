@@ -229,9 +229,6 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 
 	public static class PartialCollectionTypeManager extends AbstractCollectionTypeManager
 	{
-		public PartialCollectionTypeManager(@NonNull StandardLibrary standardLibrary) {
-			super(standardLibrary);
-		}
 	}
 
 	public static class PartialJavaTypeManager extends AbstractJavaTypeManager
@@ -391,7 +388,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 
 	@Override
 	protected @NonNull CollectionTypeManager createCollectionTypeManager() {
-		return new PartialCollectionTypeManager(this);
+		return new PartialCollectionTypeManager();
 	}
 
 	/**
