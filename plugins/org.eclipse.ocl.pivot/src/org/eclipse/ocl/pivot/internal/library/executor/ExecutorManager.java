@@ -31,6 +31,7 @@ import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 import org.eclipse.ocl.pivot.utilities.Option;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.Value;
 
@@ -198,7 +199,9 @@ public abstract class ExecutorManager implements Executor
 	}
 
 	@Override
-	public void dispose() {}
+	public void dispose() {
+		ThreadLocalExecutor.setExecutor(null);
+	}
 
 	@Override
 	public @NonNull Value evaluate(@NonNull OCLExpression body) {

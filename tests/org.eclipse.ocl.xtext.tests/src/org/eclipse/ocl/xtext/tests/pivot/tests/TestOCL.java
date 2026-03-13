@@ -786,16 +786,17 @@ public class TestOCL extends OCLInternal
 	}
 
 	public @Nullable Object evaluate(Object unusedHelper, @Nullable Object context, @NonNull String expression) throws Exception {
-		assert ThreadLocalExecutor.basicGetExecutor() == null;			// In case previous execution created it.
+		assert ThreadLocalExecutor.basicGetExecutor() == null;				// In case previous execution created it.
 		EnvironmentFactory environmentFactory = getEnvironmentFactory();
 		org.eclipse.ocl.pivot.Class classContext = getContextType(context);
 		ParserContext parserContext = new ClassContext(environmentFactory, null, classContext, (context instanceof Type) && !(context instanceof ElementExtension) ? (Type)context : null);
 		ExpressionInOCL query = parserContext.parse(classContext, expression);
 		PivotTestSuite.assertNoValidationErrors(expression, query);
 		try {
-			assert ThreadLocalExecutor.basicGetExecutor() == null;			// In case previous execution created it.
+			assert ThreadLocalExecutor.basicGetExecutor() == null;			// In case side effect created it.
 			return evaluate(query, context);
 		} finally {
+			assert ThreadLocalExecutor.basicGetExecutor() == null;			// Ensure execution disposed it.
 			environmentFactory.getASResourceSet().getResources().remove(query.eResource());
 		}
 	}

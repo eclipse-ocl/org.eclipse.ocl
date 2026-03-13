@@ -129,12 +129,6 @@ public class EcoreExecutorManager extends ExecutorManager
 	}
 
 	@Override
-	public void dispose() {
-		super.dispose();
-		ThreadLocalExecutor.setExecutor(null);
-	}
-
-	@Override
 	public @NonNull IdResolver getIdResolver() {
 		IdResolver idResolver2 = idResolver;
 		if (idResolver2 == null) {
