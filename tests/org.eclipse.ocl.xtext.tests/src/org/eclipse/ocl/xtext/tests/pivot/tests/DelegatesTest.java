@@ -311,13 +311,14 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ValidationRegistryAdapter validationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
 		validationRegistry.put(CompanyPackage.eINSTANCE, CompanyValidator.INSTANCE);
 		validationRegistry.put(NoreflectioncompanyPackage.eINSTANCE, NoreflectioncompanyValidator.INSTANCE);
+	//	BuiltInASResourceFactory.addModelDescriptor(URI.createURI(CompanyPackage.eNS_URI), new CompanyTables.Descriptor());
+	//	BuiltInASResourceFactory.addModelDescriptor(URI.createURI(NoreflectioncompanyPackage.eNS_URI), new NoreflectioncompanyTables.Descriptor());
 	}
 
 	protected void initCodeGeneratedPackageRegistrations(@NonNull ResourceSet resourceSet) {
 		resourceSet.getPackageRegistry().put(CodegencompanyPackage.eNS_URI, CodegencompanyPackage.eINSTANCE);
 		ValidationRegistryAdapter.getAdapter(resourceSet).put(CodegencompanyPackage.eINSTANCE, CodegencompanyValidator.INSTANCE);
-
-		BuiltInASResourceFactory.INSTANCE.addModelDescriptor(URI.createURI(CodegencompanyPackage.eNS_URI), new CodegencompanyTables.Descriptor());
+		BuiltInASResourceFactory.addModelDescriptor(URI.createURI(CodegencompanyPackage.eNS_URI), new CodegencompanyTables.Descriptor());
 	}
 
 	protected void removePackageRegistrations() {
@@ -330,6 +331,9 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 		ValidationRegistryAdapter.getAdapter(resourceSet).remove(CompanyPackage.eNS_URI);
 		ValidationRegistryAdapter.getAdapter(resourceSet).remove(NoreflectioncompanyPackage.eNS_URI);
 		ValidationRegistryAdapter.getAdapter(resourceSet).remove(CodegencompanyPackage.eNS_URI); */
+		BuiltInASResourceFactory.removeModelDescriptor(URI.createURI(CompanyPackage.eNS_URI));
+	//	BuiltInASResourceFactory.removeModelDescriptor(URI.createURI(NoreflectioncompanyPackage.eNS_URI));
+	//	BuiltInASResourceFactory.removeModelDescriptor(URI.createURI(CodegencompanyPackage.eNS_URI));
 	}
 	//
 	// Test framework

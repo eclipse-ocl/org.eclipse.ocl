@@ -28,7 +28,6 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.ModelManager;
 import org.eclipse.ocl.pivot.evaluation.NullModelManager;
 import org.eclipse.ocl.pivot.ids.IdResolver;
-import org.eclipse.ocl.pivot.internal.library.DelegateStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
 import org.eclipse.ocl.pivot.internal.library.executor.LazyEcoreModelManager;
@@ -66,7 +65,7 @@ public class EcoreExecutorManager extends ExecutorManager
 	 * @since 7.0
 	 */
 	public EcoreExecutorManager(@Nullable Object contextObject, @NonNull PartialStandardLibrary standardLibrary) {
-		super(new DelegateStandardLibrary(standardLibrary));
+		super(standardLibrary);
 		this.contextObject = contextObject;
 		ThreadLocalExecutor.setExecutor(this);
 	}
