@@ -35,7 +35,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  *
  * @since 7.0
  */
-public /*abstract*/ class AbstractCollectionTypeManager implements CollectionTypeManager
+public abstract class AbstractCollectionTypeManager implements CollectionTypeManager
 {
 	/**
 	 * Map from actual types to specialization.

@@ -38,10 +38,7 @@ import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.library.executor.AbstractIdResolver;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.ParserException;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * EcoreIdResolver provides a package discovery capability so that package identifiers can be resolved.
@@ -69,22 +66,12 @@ public class EcoreIdResolver extends AbstractIdResolver implements Adapter
 		String nsURI = ePackage.getNsURI();
 		org.eclipse.ocl.pivot.Package asPackage = nsURI2package.get(nsURI);
 		if (asPackage == null) {
-		//	asPackage = createPackage(ePackage);			// XXX Re-use avoid duplicating Ecore2AS
-
-			EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(asPackage);
-			try {
-				asPackage =  environmentFactory.getASOf(org.eclipse.ocl.pivot.Package.class, ePackage);
-				// XXX asPackage has no Resource
-				assert asPackage != null;
-				PackageId packageId = asPackage.getPackageId();
-				nsURI2package.put(nsURI, asPackage);
-				if (packageId instanceof RootPackageId) {
-					assert roots2package != null;
-					roots2package.put(((RootPackageId)packageId).getName(), asPackage);
-				}
-			} catch (ParserException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			asPackage = createPackage(ePackage);			// XXX Re-use avoid duplicating Ecore2AS
+			PackageId packageId = asPackage.getPackageId();
+			nsURI2package.put(nsURI, asPackage);
+			if (packageId instanceof RootPackageId) {
+				assert roots2package != null;
+				roots2package.put(((RootPackageId)packageId).getName(), asPackage);
 			}
 		}
 		return asPackage;

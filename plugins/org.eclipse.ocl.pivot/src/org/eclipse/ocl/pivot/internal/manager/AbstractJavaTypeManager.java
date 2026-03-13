@@ -31,9 +31,14 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  * @since 7.0
  */
-public /*abstract*/ class AbstractJavaTypeManager implements JavaTypeManager
+public abstract class AbstractJavaTypeManager implements JavaTypeManager
 {
+	protected final @NonNull StandardLibrary standardLibrary;
 	protected final @NonNull Map<@NonNull Object, org.eclipse.ocl.pivot.@NonNull Class> key2class = new HashMap<>();	// Concurrent puts are duplicates
+
+	public AbstractJavaTypeManager(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
+	}
 
 	@Override
 	public void dispose() {
@@ -41,7 +46,7 @@ public /*abstract*/ class AbstractJavaTypeManager implements JavaTypeManager
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(@NonNull StandardLibrary standardLibrary, @NonNull Class<?> javaClass) {
+	public org.eclipse.ocl.pivot.@Nullable Class getBehavioralClass(@NonNull Class<?> javaClass) {
 		if (javaClass == boolean.class) {
 			return standardLibrary.getBooleanType();
 		}
@@ -103,7 +108,7 @@ public /*abstract*/ class AbstractJavaTypeManager implements JavaTypeManager
 	}
 
 	@Override
-	public final synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull StandardLibrary standardLibrary, @NonNull Object object) {		// XXX heavy; can import an Ecore model
+	public final synchronized org.eclipse.ocl.pivot.@NonNull Class getJavaType(@NonNull Object object) {		// XXX heavy; can import an Ecore model
 		if (object instanceof TypeId) {
 			TypeId typeId = (TypeId)object;
 			org.eclipse.ocl.pivot.Class asClass;

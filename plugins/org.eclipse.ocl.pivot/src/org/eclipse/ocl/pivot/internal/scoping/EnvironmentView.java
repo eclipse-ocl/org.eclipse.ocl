@@ -54,7 +54,6 @@ import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.FeatureFilter;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -735,7 +734,6 @@ public class EnvironmentView
 					if (eObject.eResource() != null) {
 						break;
 					}
-					System.out.println("addElement " + NameUtil.debugSimpleName(element));
 					logger.error("Orphan '" + element + "'");
 					return;
 				}

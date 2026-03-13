@@ -13,7 +13,6 @@ package org.eclipse.ocl.pivot.manager;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
@@ -29,25 +28,25 @@ public interface MapTypeManager
 	 */
 	@Nullable MapType basicGetMapType(@NonNull MapTypeArguments typeArguments);
 
-	boolean conformsToMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType leftType, @Nullable TemplateArguments leftTemplateArguments,
+	boolean conformsToMapType(@NonNull MapType leftType, @Nullable TemplateArguments leftTemplateArguments,
 			@NonNull MapType rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity);
 
 	void dispose();
 
-	@NonNull MapType getCommonMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType leftMapType, @Nullable TemplateArguments leftTemplateArguments,
+	@NonNull MapType getCommonMapType(@NonNull MapType leftMapType, @Nullable TemplateArguments leftTemplateArguments,
 			@NonNull MapType rightMapType, @Nullable TemplateArguments rightTemplateArguments);
 
 	/**
 	 * Return, and if necessary create, the map entry type characterized by the typeArguments and entryClass.
 	 */
-	@NonNull MapType getMapEntryType(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Class entryClass);
+	@NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass);
 
 	/**
 	 * Return, and if necessary create, the map type characterized by the typeArguments.
 	 */
-	@NonNull MapType getMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapTypeArguments typeArguments);
+	@NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments);
 
-	boolean isEqualToMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType leftMapType, @NonNull MapType rightMapType);
+	boolean isEqualToMapType(@NonNull MapType leftMapType, @NonNull MapType rightMapType);
 
 	/**
 	 * Add a pre-existing MapType to the managed MapTypes.

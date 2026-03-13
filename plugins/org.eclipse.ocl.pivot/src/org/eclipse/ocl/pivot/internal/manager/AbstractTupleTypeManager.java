@@ -37,19 +37,25 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
- * AbstractTupleTypeManager encapsulates the knowledge about known tuple types.
+ * TupleypeManagerInternal encapsulates the knowledge about known tuple types.
  *
  * @since 7.0
  */
-public /*abstract*/ class AbstractTupleTypeManager implements TupleTypeManager
+public abstract class AbstractTupleTypeManager implements TupleTypeManager
 {
+	protected final @NonNull StandardLibrary standardLibrary;
+
 	/**
 	 * Map from the tuple typeId to the tuple type.
 	 */
 	protected final @NonNull Map<@NonNull TupleTypeId, @NonNull TupleType> tupleid2tuple = new HashMap<>();
 
+	protected AbstractTupleTypeManager(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
+	}
+
 	@Override
-	public boolean conformsToTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType actualType, @Nullable TemplateArguments actualTemplateArguments,
+	public boolean conformsToTupleType(@NonNull TupleType actualType, @Nullable TemplateArguments actualTemplateArguments,
 			@NonNull TupleType requiredType, @Nullable TemplateArguments requiredTemplateArguments, boolean enforceNullity) {
 		List<Property> actualProperties = actualType.getOwnedProperties();
 		List<Property> requiredProperties = requiredType.getOwnedProperties();
@@ -79,7 +85,7 @@ public /*abstract*/ class AbstractTupleTypeManager implements TupleTypeManager
 		return true;
 	}
 
-	protected @NonNull TupleType createTupleType(@NonNull StandardLibrary standardLibrary, @Nullable List<@NonNull Property> asParts, @NonNull TupleTypeId tupleTypeId) {
+	protected @NonNull TupleType createTupleType(@Nullable List<@NonNull Property> asParts, @NonNull TupleTypeId tupleTypeId) {
 		if (asParts == null) {
 			IdResolver idResolver = standardLibrary.getIdResolver();
 			@NonNull PartId[] partIds = tupleTypeId.getPartIds();
@@ -107,7 +113,7 @@ public /*abstract*/ class AbstractTupleTypeManager implements TupleTypeManager
 	}
 
 	@Override
-	public @Nullable TupleType getCommonTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType leftType, @Nullable TemplateArguments leftTemplateArguments,
+	public @Nullable TupleType getCommonTupleType(@NonNull TupleType leftType, @Nullable TemplateArguments leftTemplateArguments,
 			@NonNull TupleType rightType, @Nullable TemplateArguments rightTemplateArguments) {
 		List<Property> leftProperties = leftType.getOwnedProperties();
 		List<Property> rightProperties = rightType.getOwnedProperties();
@@ -143,11 +149,11 @@ public /*abstract*/ class AbstractTupleTypeManager implements TupleTypeManager
 			commonPartIds.add(commonPartId);
 		}
 		TupleTypeId commonTupleTypeId = IdManager.getTupleTypeId(commonPartIds);
-		return getTupleType(standardLibrary, null, commonTupleTypeId);
+		return getTupleType(null, commonTupleTypeId);
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull StandardLibrary standardLibrary, @Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partIds) {
+	public @NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partIds) {
 		//
 		//	Create the tuple type id (and then specialize it)
 		//
@@ -163,17 +169,17 @@ public /*abstract*/ class AbstractTupleTypeManager implements TupleTypeManager
 		//
 		//	Finally create the (specialized) tuple type
 		//
-		return getTupleType(standardLibrary, asSortedParts, tupleTypeId);
+		return getTupleType(asSortedParts, tupleTypeId);
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull StandardLibrary standardLibrary, @Nullable List<@NonNull Property> asProperties, @NonNull TupleTypeId tupleTypeId) {
+	public @NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asProperties, @NonNull TupleTypeId tupleTypeId) {
 		TupleType tupleType = tupleid2tuple.get(tupleTypeId);
 		if (tupleType == null) {
 			synchronized (tupleid2tuple) {
 				tupleType = tupleid2tuple.get(tupleTypeId);
 				if (tupleType == null) {
-					tupleType = createTupleType(standardLibrary, asProperties, tupleTypeId);		// XXX sort asProperties in tupleTypeId order
+					tupleType = createTupleType(asProperties, tupleTypeId);		// XXX sort asProperties in tupleTypeId order
 					tupleid2tuple.put(tupleTypeId, tupleType);
 				}
 			}
@@ -182,7 +188,7 @@ public /*abstract*/ class AbstractTupleTypeManager implements TupleTypeManager
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull StandardLibrary standardLibrary, @NonNull Collection<@NonNull? extends TypedElement> parts, @Nullable TemplateArguments usageBindings) {
+	public @NonNull TupleType getTupleType(@NonNull Collection<@NonNull? extends TypedElement> parts, @Nullable TemplateArguments usageBindings) {
 		List<@NonNull TypedElement> sortedParts = new ArrayList<>(parts);
 		Collections.sort(sortedParts, NameUtil.NAMEABLE_COMPARATOR);
 		@NonNull PartId @NonNull [] orderedPartIds = new @NonNull PartId [sortedParts.size()];
@@ -203,11 +209,11 @@ public /*abstract*/ class AbstractTupleTypeManager implements TupleTypeManager
 		//
 		//	Finally create the (specialized) tuple type
 		//
-		return getTupleType(standardLibrary, null, tupleTypeId);			// XXX Re-use asParts
+		return getTupleType(null, tupleTypeId);			// XXX Re-use asParts
 	}
 
 	@Override
-	public @NonNull TupleType getTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType type, @Nullable TemplateArguments usageBindings) {	// FIXME Remove duplication, unify type/multiplicity
+	public @NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateArguments usageBindings) {	// FIXME Remove duplication, unify type/multiplicity
 		//		return getTupleType(type.getName(), type.getOwnedAttribute(), usageBindings);
 		TupleType specializedTupleType = type;
 		Map<@NonNull String, @NonNull Type> resolutions =  null;
@@ -233,11 +239,11 @@ public /*abstract*/ class AbstractTupleTypeManager implements TupleTypeManager
 				partIds.add(partId);
 			}
 			TupleTypeId tupleTypeId = IdManager.getTupleTypeId(partIds);
-			specializedTupleType = getTupleType(standardLibrary, null, tupleTypeId);
+			specializedTupleType = getTupleType(null, tupleTypeId);
 			return specializedTupleType;
 		}
 		else {
-			return getTupleType(standardLibrary, PivotUtil.getOwnedPropertiesList(type), usageBindings);
+			return getTupleType(PivotUtil.getOwnedPropertiesList(type), usageBindings);
 		}
 	}
 

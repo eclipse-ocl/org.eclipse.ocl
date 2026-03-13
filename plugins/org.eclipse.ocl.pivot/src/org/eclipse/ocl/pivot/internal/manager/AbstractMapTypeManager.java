@@ -29,8 +29,10 @@ import org.eclipse.ocl.pivot.values.TemplateArguments;
  *
  * @since 7.0
  */
-public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
+public abstract class AbstractMapTypeManager implements MapTypeManager
 {
+	protected final @NonNull StandardLibrary standardLibrary;
+
 	/**
 	 * Map from actual types to specialization.
 	 * <br>
@@ -45,6 +47,10 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 	private @NonNull /*WeakHash*/Map<@NonNull MapTypeArguments, @NonNull WeakReference<@Nullable MapType>> mapTypes = new /*Weak*/HashMap<>();		// Keys are not singletons;
 
 	private @Nullable Map<@NonNull MapType, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull MapType>> mapType2entryClass2mapEntryType = null;
+
+	protected AbstractMapTypeManager(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
+	}
 
 	@Override
 	public @Nullable MapType basicGetMapType(@NonNull MapTypeArguments typeArguments) {
@@ -70,7 +76,7 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 	 * @since 7.0
 	 */
 	@Override
-	public boolean conformsToMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType leftType, @Nullable TemplateArguments leftTemplateArguments,
+	public boolean conformsToMapType(@NonNull MapType leftType, @Nullable TemplateArguments leftTemplateArguments,
 			@NonNull MapType rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity) {
 		Type leftKeyType = PivotUtil.getKeyType(leftType);
 		Type rightKeyType = PivotUtil.getKeyType(rightType);
@@ -98,7 +104,7 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 		}
 	}
 
-	protected @NonNull MapType createMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
+	protected @NonNull MapType createMapType(@NonNull MapTypeArguments typeArguments, org.eclipse.ocl.pivot.@Nullable Class entryClass) {
 		Type keyType = typeArguments.getKeyType();
 		Type primaryKeyType = standardLibrary.getPrimaryType(keyType);
 		boolean keysAreNullFree = typeArguments.isKeysAreNullFree();
@@ -111,7 +117,7 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 			mapType = PivotUtil.createMapType(genericMapType, primaryKeyType, keysAreNullFree, primaryValueType, valuesAreNullFree);
 		}
 		else {
-			MapType specializedMapType = getMapType(standardLibrary, typeArguments);
+			MapType specializedMapType = getMapType(typeArguments);
 			mapType = PivotUtil.createMapEntryType(specializedMapType, entryClass);
 		}
 		standardLibrary.resolveSuperClasses(mapType, genericMapType);
@@ -128,7 +134,7 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 	 * @since 7.0
 	 */
 	@Override
-	public @NonNull MapType getCommonMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType leftMapType, @Nullable TemplateArguments leftTemplateArguments,
+	public @NonNull MapType getCommonMapType(@NonNull MapType leftMapType, @Nullable TemplateArguments leftTemplateArguments,
 				@NonNull MapType rightMapType, @Nullable TemplateArguments rightTemplateArguments) {
 		Type leftKeyType = PivotUtil.getKeyType(leftMapType);
 		Type rightKeyType = PivotUtil.getKeyType(rightMapType);
@@ -149,15 +155,15 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 			return rightMapType;
 		}
 		MapTypeArguments typeArguments = new MapTypeArguments(commonKeyType, commonKeysAreNullFree, commonValueType, commonValuesAreNullFree);
-		return getMapType(standardLibrary, typeArguments);
+		return getMapType(typeArguments);
 	}
 
 	@Override
-	public @NonNull MapType getMapEntryType(@NonNull StandardLibrary standardLibrary, org.eclipse.ocl.pivot.@NonNull Class entryClass) {
+	public @NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		assert !entryClass.eIsProxy();
 		synchronized (mapTypes) {
 			MapTypeArguments typeArguments = PivotUtil.createMapTypeArguments(entryClass);
-			MapType mapType = getMapType(standardLibrary, typeArguments);
+			MapType mapType = getMapType(typeArguments);
 			Map<@NonNull MapType, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull MapType>> mapType2entryClass2mapEntryType2 = mapType2entryClass2mapEntryType;
 			if (mapType2entryClass2mapEntryType2 == null) {
 				mapType2entryClass2mapEntryType = mapType2entryClass2mapEntryType2 = new HashMap<>();
@@ -169,7 +175,7 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 			}
 			MapType mapEntryType = entryClass2mapEntryType.get(entryClass);
 			if (mapEntryType == null) {
-				mapEntryType = createMapType(standardLibrary, typeArguments, entryClass);
+				mapEntryType = createMapType(typeArguments, entryClass);
 				entryClass2mapEntryType.put(entryClass, mapEntryType);
 			}
 			return mapEntryType;
@@ -177,7 +183,7 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 	}
 
 	@Override
-	public @NonNull MapType getMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapTypeArguments typeArguments) {
+	public @NonNull MapType getMapType(@NonNull MapTypeArguments typeArguments) {
 		synchronized (mapTypes) {
 			WeakReference<@Nullable MapType> weakReference = mapTypes.get(typeArguments);
 			if (weakReference != null) {
@@ -192,14 +198,14 @@ public /*abstract*/ class AbstractMapTypeManager implements MapTypeManager
 				}
 				mapTypes.remove(typeArguments);
 			}
-			MapType specializedType = createMapType(standardLibrary, typeArguments, null);
+			MapType specializedType = createMapType(typeArguments, null);
 			mapTypes.put(typeArguments, new WeakReference<@Nullable MapType>(specializedType));
 			return specializedType;
 		}
 	}
 
 	@Override
-	public boolean isEqualToMapType(@NonNull StandardLibrary standardLibrary, @NonNull MapType leftMapType, @NonNull MapType rightMapType) {
+	public boolean isEqualToMapType(@NonNull MapType leftMapType, @NonNull MapType rightMapType) {
 		Type leftKeyType = leftMapType.getKeyType();
 		Type rightKeyType = rightMapType.getKeyType();
 		if (leftKeyType != rightKeyType) {

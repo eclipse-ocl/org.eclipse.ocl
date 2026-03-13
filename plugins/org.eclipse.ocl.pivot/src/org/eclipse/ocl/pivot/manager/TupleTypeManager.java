@@ -16,7 +16,6 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Property;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.PartId;
@@ -30,23 +29,23 @@ import org.eclipse.ocl.pivot.values.TemplateArguments;
  */
 public interface TupleTypeManager
 {
-	boolean conformsToTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType actualType, @Nullable TemplateArguments actualTemplateArguments,
+	boolean conformsToTupleType(@NonNull TupleType actualType, @Nullable TemplateArguments actualTemplateArguments,
 			@NonNull TupleType requiredType, @Nullable TemplateArguments requiredTemplateArguments, boolean enforceNullity);
 
 	void dispose();
 
-	@Nullable TupleType getCommonTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType leftType, @Nullable TemplateArguments leftTemplateArguments,
+	@Nullable TupleType getCommonTupleType(@NonNull TupleType leftType, @Nullable TemplateArguments leftTemplateArguments,
 			@NonNull TupleType rightType, @Nullable TemplateArguments rightTemplateArguments);
 
 	/**
 	 * Return the named tuple typeId with the defined parts (which need not be alphabetically ordered).
 	 */
-	@NonNull TupleType getTupleType(@NonNull StandardLibrary standardLibrary, @Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partIds);
+	@NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull List<@NonNull PartId> partIds);
 
-	@NonNull TupleType getTupleType(@NonNull StandardLibrary standardLibrary, @Nullable List<@NonNull Property> asParts, @NonNull TupleTypeId tupleTypeId);
+	@NonNull TupleType getTupleType(@Nullable List<@NonNull Property> asParts, @NonNull TupleTypeId tupleTypeId);
 
-	@NonNull TupleType getTupleType(@NonNull StandardLibrary standardLibrary, @NonNull Collection<@NonNull? extends TypedElement> parts, @Nullable TemplateArguments usageBindings);
-	@NonNull TupleType getTupleType(@NonNull StandardLibrary standardLibrary, @NonNull TupleType type, @Nullable TemplateArguments usageBindings);	// FIXME Remove duplication, unify type/multiplicity
+	@NonNull TupleType getTupleType(@NonNull Collection<@NonNull? extends TypedElement> parts, @Nullable TemplateArguments usageBindings);
+	@NonNull TupleType getTupleType(@NonNull TupleType type, @Nullable TemplateArguments usageBindings);	// FIXME Remove duplication, unify type/multiplicity
 
 	boolean isEqualToTupleType(@NonNull TupleType leftTupleType, @NonNull TupleType rightTupleType);
 
