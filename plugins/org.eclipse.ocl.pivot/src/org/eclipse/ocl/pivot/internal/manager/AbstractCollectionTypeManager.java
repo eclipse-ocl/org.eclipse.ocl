@@ -37,6 +37,8 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public abstract class AbstractCollectionTypeManager implements CollectionTypeManager
 {
+	protected final @NonNull StandardLibrary standardLibrary;
+
 	/**
 	 * Map from actual types to specialization.
 	 * <br>
@@ -49,6 +51,10 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	// to work, and failing to GC within the scope of this CompleteClass is not a disaster. May change once CompleteClass goes.
 	//
 	private @NonNull /*WeakHash*/Map<@NonNull CollectionTypeArguments, @NonNull WeakReference<@Nullable CollectionType>> collectionTypes = new /*Weak*/HashMap<>();		// Keys are not singletons;
+
+	protected AbstractCollectionTypeManager(@NonNull StandardLibrary standardLibrary) {
+		this.standardLibrary = standardLibrary;
+	}
 
 	@Override
 	public @Nullable CollectionType basicGetCollectionType(@NonNull CollectionTypeArguments typeArguments) {
@@ -70,7 +76,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	}
 
 	@Override
-	public boolean conformsToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType leftType, @Nullable TemplateArguments leftTemplateArguments,
+	public boolean conformsToCollectionType(@NonNull CollectionType leftType, @Nullable TemplateArguments leftTemplateArguments,
 			@NonNull CollectionType rightType, @Nullable TemplateArguments rightTemplateArguments, boolean enforceNullity) {
 		org.eclipse.ocl.pivot.Class leftContainerType = leftType.getContainerType();
 		org.eclipse.ocl.pivot.Class rightContainerType = rightType.getContainerType();
@@ -104,14 +110,14 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		}
 	}
 
-	protected @NonNull CollectionType createCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionTypeArguments typeArguments) {
+	protected @NonNull CollectionType createCollectionType(@NonNull CollectionTypeArguments typeArguments) {
 		CollectionTypeId collectionTypeId = typeArguments.getCollectionTypeId();
 		Type elementType = typeArguments.getElementType();
 		Type primaryElementType = standardLibrary.getPrimaryType(elementType);
 		boolean isNullFree = typeArguments.isNullFree();
 		IntegerValue lower = typeArguments.getLower();
 		UnlimitedNaturalValue upper = typeArguments.getUpper();
-		CollectionType genericCollectionType = getCollectionType(standardLibrary, collectionTypeId);
+		CollectionType genericCollectionType = getCollectionType(collectionTypeId);
 		CollectionType collectionType = PivotUtil.createCollectionType(genericCollectionType, primaryElementType, isNullFree, lower, upper);
 		standardLibrary.resolveSuperClasses(collectionType, genericCollectionType);
 		standardLibrary.addOrphanClass(collectionType);
@@ -124,7 +130,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	}
 
 	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionTypeArguments typeArguments) {
+	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeArguments typeArguments) {
 		synchronized (collectionTypes) {
 			WeakReference<@Nullable CollectionType> weakReference = collectionTypes.get(typeArguments);
 			if (weakReference != null) {
@@ -138,14 +144,14 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 				}
 				collectionTypes.remove(typeArguments);
 			}
-			CollectionType specializedType = createCollectionType(standardLibrary, typeArguments);
+			CollectionType specializedType = createCollectionType(typeArguments);
 			collectionTypes.put(typeArguments, new WeakReference<@Nullable CollectionType>(specializedType));
 			return specializedType;
 		}
 	}
 
 	@Override
-	public @NonNull CollectionType getCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionTypeId collectionTypeId) {
+	public @NonNull CollectionType getCollectionType(@NonNull CollectionTypeId collectionTypeId) {
 //		if (collectionTypeId instanceof SpecializedCollectionTypeIdImpl) {
 //			SpecializedCollectionTypeIdImpl specializedCollectionTypeId = (SpecializedCollectionTypeIdImpl)collectionTypeId;
 //			Boolean isNullFree = specializedCollectionTypeId.isNullFree();
@@ -185,7 +191,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	}
 
 	@Override
-	public @NonNull CollectionType getCommonCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType leftCollectionType, @Nullable TemplateArguments leftTemplateArguments,
+	public @NonNull CollectionType getCommonCollectionType(@NonNull CollectionType leftCollectionType, @Nullable TemplateArguments leftTemplateArguments,
 			@NonNull CollectionType rightCollectionType, @Nullable TemplateArguments rightTemplateArguments) {
 		CollectionType leftGenericType = PivotUtil.getGenericElement(leftCollectionType);
 		CollectionType rightGenericType = PivotUtil.getGenericElement(rightCollectionType);
@@ -200,7 +206,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		IntegerValue commonLower = getCommonLowerValue(leftCollectionType.getLowerValue(), rightCollectionType.getLowerValue());
 		UnlimitedNaturalValue commonUpper = getCommonUpperValue(leftCollectionType.getUpperValue(), rightCollectionType.getUpperValue());
 		CollectionTypeArguments typeArguments = new CollectionTypeArguments(commonGenericType.getTypeId(), commonElementType, commonIsNullFree, commonLower, commonUpper);
-		return getCollectionType(standardLibrary, typeArguments);
+		return getCollectionType(typeArguments);
 	}
 
 	protected @NonNull IntegerValue getCommonLowerValue(@NonNull IntegerValue thisLowerValue, @NonNull IntegerValue thatLowerValue) {
@@ -227,7 +233,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 	}
 
 	@Override
-	public boolean isEqualToCollectionType(@NonNull StandardLibrary standardLibrary, @NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType) {
+	public boolean isEqualToCollectionType(@NonNull CollectionType leftCollectionType, @NonNull CollectionType rightCollectionType) {
 		Type leftContainerType = leftCollectionType.getContainerType();
 		Type rightContainerType = rightCollectionType.getContainerType();
 		if ((leftContainerType != rightContainerType) && !leftContainerType.isEqualToGenericType(standardLibrary, rightContainerType)) {

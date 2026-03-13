@@ -144,7 +144,7 @@ public abstract class AbstractStandardLibrary implements StandardLibrary
 		if (leftType instanceof DataType) {
 			if (leftType instanceof CollectionType) {
 				if (rightType instanceof CollectionType) {
-					return getCollectionTypeManager().conformsToCollectionType(this, (CollectionType)leftType, leftTemplateArguments, (CollectionType)rightType, rightTemplateArguments, enforceNullity);
+					return getCollectionTypeManager().conformsToCollectionType((CollectionType)leftType, leftTemplateArguments, (CollectionType)rightType, rightTemplateArguments, enforceNullity);
 				}
 				// Drop through to simple inheritance for e.g. OclAny
 			}
