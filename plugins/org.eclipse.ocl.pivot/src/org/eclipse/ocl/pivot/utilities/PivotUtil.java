@@ -1854,16 +1854,17 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * Locate an OCL Executor from the Resource containing an eObject, else create a default one.
+	 * Locate an OCL Executor from the Resource containing an object, else create a default one.
 	 *
-	 * @since 1.7
+	 * @since 7.0
 	 */
-	public static @NonNull Executor getExecutor(@Nullable EObject eObject) {
+	public static @NonNull Executor getExecutor(@Nullable Object object) {
 		Executor executor = ThreadLocalExecutor.basicGetExecutor();
 		if (executor != null) {
 			return executor;
 		}
-		if (eObject != null) {
+		if (object instanceof EObject) {
+			EObject eObject = (EObject)object;
 			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 			if (environmentFactory != null) {
 				executor = new PivotExecutorManager(environmentFactory, eObject);
@@ -1899,7 +1900,7 @@ public class PivotUtil implements PivotConstants
 		}
 		if (executor == null) {
 			PartialStandardLibrary library = PivotTables.LIBRARY;
-			executor = new EcoreExecutorManager(eObject, library);
+			executor = new EcoreExecutorManager(object, library);
 			// This leaks unless caller dispose()s
 		}
 		ThreadLocalExecutor.setExecutor(executor);

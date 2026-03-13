@@ -19,7 +19,6 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -822,8 +821,7 @@ public class TestOCL extends OCLInternal
 			String className = "TestClass" + testCounter++;
 			LibraryUnaryOperation testInstance = (LibraryUnaryOperation) genModelHelper.loadClass(expr, targetFolder, packageName, className, true);
 			assert testInstance != null;
-		//	Executor executor = new EcoreExecutorManager(self, PivotTables.LIBRARY);
-			Executor executor = PivotUtil.getExecutor((EObject)self);
+			Executor executor = PivotUtil.getExecutor(self);
 			try {
 				OperationCallExp callExp = PivotFactory.eINSTANCE.createOperationCallExp();
 				callExp.setType(expr.getType());
