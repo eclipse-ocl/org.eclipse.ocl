@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -38,7 +39,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 public abstract class AbstractStandardLibrary implements StandardLibrary
 {
 	protected AbstractStandardLibrary() {
-	//	System.out.println("ctor " + NameUtil.debugSimpleName(this));
+		System.out.println("ctor " + NameUtil.debugSimpleName(this));
 	}
 
 	/**

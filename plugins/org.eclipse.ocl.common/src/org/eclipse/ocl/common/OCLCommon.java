@@ -24,7 +24,9 @@ import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EModelElement;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.ocl.common.preferences.PreferenceableOption;
 import org.eclipse.ocl.common.preferences.PreferenceableOption.PreferenceableOption2;
 
@@ -200,6 +202,33 @@ public class OCLCommon implements OCLConstants
 				new PreferenceListenerInstaller((PreferenceableOption.PreferenceableOption2<?>)option);
 			}
 		}
+	}
+
+	/**
+	 * Return true if ePackage has an OCL delegate.
+	 *
+	 * @since 1.24
+	 */
+	public static boolean hasDelegates(EPackage ePackage) {
+		List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
+		for (String validationDelegate : validationDelegates) {
+			if (isDelegateURI(validationDelegate)) {
+				return true;
+			}
+		}
+		List<String> settingDelegates = EcoreUtil.getSettingDelegates(ePackage);
+		for (String settingDelegate : settingDelegates) {
+			if (isDelegateURI(settingDelegate)) {
+				return true;
+			}
+		}
+		List<String> invocationDelegates = EcoreUtil.getInvocationDelegates(ePackage);
+		for (String invocationDelegate : invocationDelegates) {
+			if (isDelegateURI(invocationDelegate)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

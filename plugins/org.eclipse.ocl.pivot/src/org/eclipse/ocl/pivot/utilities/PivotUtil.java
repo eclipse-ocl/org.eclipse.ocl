@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
+import org.eclipse.emf.ecore.impl.DynamicEObjectImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
@@ -47,6 +48,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
@@ -139,7 +141,7 @@ import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
-import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceImpl;
+import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView.DiagnosticWrappedException;
 import org.eclipse.ocl.pivot.internal.utilities.AS2Moniker;
@@ -148,10 +150,10 @@ import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.messages.StatusCodes.Severity;
-import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
+import org.eclipse.ocl.pivot.utilities.AbstractTables.BuiltInModel;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
@@ -608,32 +610,6 @@ public class PivotUtil implements PivotConstants
 		if (warnings.size() > 0) {
 			throw new SemanticException(formatResourceDiagnostics(warnings, message, "\n"));
 		}
-	}
-
-	/**
-	 * Return true if asResource transitively reads a private copy of any Pivot model.
-	 */
-	private static boolean computeNeedsCompleteStandardLibrary(@Nullable Resource asResource, @NonNull Set<@NonNull Resource> asResources) {
-		if ((asResource != null) && !(asResource instanceof BuiltInASResourceImpl) && asResources.add(asResource)) {
-			for (EObject eRoot : asResource.getContents()) {
-				if (eRoot instanceof Model) {
-					Model asModel = (Model)eRoot;
-					for (org.eclipse.ocl.pivot.Package asPackage : asModel.getOwnedPackages()) {
-						String uri = asPackage.getURI();
-						if (OCLstdlibTables.PACKAGE.getURI().equals(uri) || PivotTables.PACKAGE.getURI().equals(uri)) {
-							return true;
-						}
-					}
-					for (Import asImport : asModel.getOwnedImports()) {
-						Resource eResource = asImport.getImportedNamespace().eResource();
-						if (computeNeedsCompleteStandardLibrary(eResource, asResources)) {
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
 	}
 
 	public static boolean conformsTo(@Nullable EClassifier targetType, @NonNull EClassifier contentType) {
@@ -1590,6 +1566,64 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * Analyze the eResource root contents and imports to identify known built-in AS models and other generated EPackages that have no corresponding generated AS tables.
+	 */
+	private static void gatherModels(@Nullable Resource eResource, @NonNull Set<@NonNull Model> asModels, @NonNull Set<@NonNull EPackage> ePackagesWithoutAS) {
+		if (eResource != null) {//&& !(eResource instanceof BuiltInASResourceImpl) && eResources.add(eResource)) {
+			for (EObject eRoot : eResource.getContents()) {
+				if (eRoot instanceof DynamicEObjectImpl) {
+					// Not using a generated EPackage, so very unlikely to use a BuiltInASResource
+					// XXX ?? return false ??
+				}
+				else if (eRoot instanceof Model) {
+					Model asModel = (Model)eRoot;
+					asModels.add(asModel);
+				//	Iterables.addAll(asPackages, getOwnedPackages(asModel));
+				/*	for (org.eclipse.ocl.pivot.Package asPackage : asModel.getOwnedPackages()) {
+						String uri = asPackage.getURI();
+					//	CompletePackageIdWithAspects completePackageIdWithAspects = CompletePackageIdRegistryReader.basicGetCompletePackageIdWithAspects(uri);
+						if (OCLstdlibTables.PACKAGE.getURI().equals(uri) || PivotTables.PACKAGE.getURI().equals(uri)) {
+							assert completePackageIdWithAspects != null;
+							return true;
+						}
+						assert completePackageIdWithAspects == null;
+					} */
+					for (Import asImport : asModel.getOwnedImports()) {
+						Resource importedResource = asImport.getImportedNamespace().eResource();
+						gatherModels(importedResource, asModels, ePackagesWithoutAS);
+					}
+				}
+				else {
+					EClass eClass = eRoot.eClass();
+					EPackage ePackage = eClass.getEPackage();
+					String nsURI = ePackage.getNsURI();
+					URI uri = URI.createURI(nsURI);
+					Model asModel = BuiltInASResourceFactory.basicGetModel(uri);
+					if (asModel != null) {
+						asModels.add(asModel);
+					/*	for (org.eclipse.ocl.pivot.Package asPackage : asModel.getOwnedPackages()) {
+							String uri = asPackage.getURI();
+						//	CompletePackageIdWithAspects completePackageIdWithAspects = CompletePackageIdRegistryReader.basicGetCompletePackageIdWithAspects(uri);
+							if (OCLstdlibTables.PACKAGE.getURI().equals(uri) || PivotTables.PACKAGE.getURI().equals(uri)) {
+								assert completePackageIdWithAspects != null;
+								return true;
+							}
+							assert completePackageIdWithAspects == null;
+						} */
+						for (Import asImport : asModel.getOwnedImports()) {
+							Resource importedResource = asImport.getImportedNamespace().eResource();
+							gatherModels(importedResource, asModels, ePackagesWithoutAS);
+						}
+					}
+					else {
+						ePackagesWithoutAS.add(ePackage);
+					}
+				}
+			}
+		}
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	public static @NonNull Type getActual(@NonNull TemplateArgument templateArgument) {
@@ -1836,7 +1870,28 @@ public class PivotUtil implements PivotConstants
 			}
 			if (executor == null) {
 				Resource eResource = eObject.eResource();
-				if (computeNeedsCompleteStandardLibrary(eResource, new HashSet<>())) {
+				Set<Model> asModels = new HashSet<>();
+				Set<@NonNull EPackage> ePackagesWithoutAS = new HashSet<>();
+				gatherModels(eResource, asModels, ePackagesWithoutAS);
+				boolean needsCompleteStandardLibrary = false;
+				for (@NonNull Model asModel : asModels) {
+					if (!(asModel instanceof BuiltInModel)) {
+						needsCompleteStandardLibrary = true;
+						break;
+					}
+				}
+				if (!needsCompleteStandardLibrary) {
+					for (@NonNull EPackage ePackage : ePackagesWithoutAS) {
+						if (OCLCommon.hasDelegates(ePackage)) {
+							needsCompleteStandardLibrary = true;
+							break;
+						}
+						else {
+							// ?? complete class extensions ??
+						}
+					}
+				}
+				if (needsCompleteStandardLibrary) {
 					environmentFactory = getEnvironmentFactory(eObject);
 					executor = new PivotExecutorManager(environmentFactory, eObject);
 				}

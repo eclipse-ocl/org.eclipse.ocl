@@ -79,6 +79,7 @@ import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.messages.PivotMessages;
@@ -103,6 +104,7 @@ import org.eclipse.ocl.xtext.tests.TestUtil;
 import org.eclipse.ocl.xtext.tests.XtextVersionUtil;
 import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyFactory;
 import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyPackage;
+import org.eclipse.ocl.xtext.tests.codegen.company.CodegencompanyTables;
 import org.eclipse.ocl.xtext.tests.codegen.company.util.CodegencompanyValidator;
 import org.eclipse.ocl.xtext.tests.company.Bug418716;
 import org.eclipse.ocl.xtext.tests.company.CompanyFactory;
@@ -314,6 +316,8 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	protected void initCodeGeneratedPackageRegistrations(@NonNull ResourceSet resourceSet) {
 		resourceSet.getPackageRegistry().put(CodegencompanyPackage.eNS_URI, CodegencompanyPackage.eINSTANCE);
 		ValidationRegistryAdapter.getAdapter(resourceSet).put(CodegencompanyPackage.eINSTANCE, CodegencompanyValidator.INSTANCE);
+
+		BuiltInASResourceFactory.INSTANCE.addModelDescriptor(URI.createURI(CodegencompanyPackage.eNS_URI), new CodegencompanyTables.Descriptor());
 	}
 
 	protected void removePackageRegistrations() {

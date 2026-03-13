@@ -1312,7 +1312,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		Map<@NonNull String, @NonNull Package> roots2package2 = roots2package;
 		assert roots2package2 != null;
 		roots2package2.put(PivotConstants.METAMODEL_NAME, standardLibrary.getPackage());
-		Set<@NonNull EPackage> ePackages = new HashSet<>();
+		Set<@NonNull EPackage> ePackages = new HashSet<>();				// ?? make deterministic ??
 		for (@NonNull EObject eObject : directRoots) {
 			if (eObject instanceof Model) {
 				addPackages(PivotUtil.getOwnedPackages((Model)eObject));

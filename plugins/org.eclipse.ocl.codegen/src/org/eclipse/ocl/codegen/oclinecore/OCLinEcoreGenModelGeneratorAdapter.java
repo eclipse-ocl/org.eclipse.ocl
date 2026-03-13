@@ -588,7 +588,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		protected void pruneDelegates(@NonNull GenModel genModel) {
 			for (GenPackage genPackage : genModel.getAllGenPackagesWithClassifiers()) {
 				EPackage ePackage = genPackage.getEcorePackage();
-				if ((ePackage != null) && hasDelegates(ePackage)) {
+				if ((ePackage != null) && OCLCommon.hasDelegates(ePackage)) {
 					edits.add(new SetValidationDelegates(ePackage));
 					edits.add(new SetSettingDelegates(ePackage));
 					edits.add(new SetInvocationDelegates(ePackage));
@@ -855,31 +855,15 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 	protected boolean hasDelegates(@NonNull GenModel genModel) {
 		for (GenPackage genPackage : genModel.getAllGenPackagesWithClassifiers()) {
 			EPackage ePackage = genPackage.getEcorePackage();
-			if ((ePackage != null) && hasDelegates(ePackage)) {
+			if ((ePackage != null) && OCLCommon.hasDelegates(ePackage)) {
 				return true;
 			}
 		}
 		return false;
 	}
+
+	@Deprecated /* @deprecated use OCLCommon */
 	protected boolean hasDelegates(@NonNull EPackage ePackage) {
-		List<String> validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
-		for (String validationDelegate : validationDelegates) {
-			if (OCLCommon.isDelegateURI(validationDelegate)) {
-				return true;
-			}
-		}
-		List<String> settingDelegates = EcoreUtil.getSettingDelegates(ePackage);
-		for (String settingDelegate : settingDelegates) {
-			if (OCLCommon.isDelegateURI(settingDelegate)) {
-				return true;
-			}
-		}
-		List<String> invocationDelegates = EcoreUtil.getInvocationDelegates(ePackage);
-		for (String invocationDelegate : invocationDelegates) {
-			if (OCLCommon.isDelegateURI(invocationDelegate)) {
-				return true;
-			}
-		}
-		return false;
+		return OCLCommon.hasDelegates(ePackage);
 	}
 }

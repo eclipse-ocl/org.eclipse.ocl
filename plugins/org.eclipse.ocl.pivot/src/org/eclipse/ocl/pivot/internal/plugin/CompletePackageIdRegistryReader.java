@@ -34,6 +34,8 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 /**
  * A plugin extension reader that populates the CompletePackageId mappings.
  *
+ * The registered classes populate the BuiltInASResourceFactory.
+ *
  * @since 7.0
  */
 public class CompletePackageIdRegistryReader extends RegistryReader
