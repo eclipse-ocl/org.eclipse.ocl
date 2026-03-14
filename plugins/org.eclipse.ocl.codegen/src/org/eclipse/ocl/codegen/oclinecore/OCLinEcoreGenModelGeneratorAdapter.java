@@ -86,6 +86,10 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.uml2.codegen.ecore.genmodel.util.UML2GenModelUtil;
 
+/**
+ * OCLinEcoreGenModelGeneratorAdapter augments the regular GenModelGeneratorAdapter to rewrite the
+ * in-memory model during doPreGenerate with EAnnotations that provide Java bodies for OCL expressions.
+ */
 public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 {
 	public static final @NonNull String OCL_GENMODEL_URI = "http://www.eclipse.org/OCL/GenModel";
@@ -173,9 +177,9 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 	 * OCLinEcoreStateAdapter caches properties of the input model during doPreGenerate and accumulates all
 	 * in-memory modifications so that they are reverted during doPostGenerate.
 	 */
-	protected class OCLinEcoreStateAdapter implements Adapter
+	protected static class OCLinEcoreStateAdapter implements Adapter
 	{
-		protected class AddEAnnotation implements Edit
+		protected static class AddEAnnotation implements Edit
 		{
 			private final @NonNull List<EAnnotation> eAnnotations;
 			private final @NonNull EAnnotation eAnnotation;
@@ -193,7 +197,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 
-		protected class AddEOperation implements Edit
+		protected static class AddEOperation implements Edit
 		{
 			private final @NonNull List<EOperation> eOperations;
 			private final @NonNull EOperation eOperation;
@@ -211,11 +215,13 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 
-		protected class AddModelPluginVariable implements Edit
+		protected static class AddModelPluginVariable implements Edit
 		{
+			private final @NonNull GenModel genModel;
 			private final @NonNull String modelPluginVariable;
 
-			public AddModelPluginVariable(@NonNull String modelPluginVariable) {
+			public AddModelPluginVariable(@NonNull GenModel genModel, @NonNull String modelPluginVariable) {
+				this.genModel = genModel;
 				this.modelPluginVariable = modelPluginVariable;
 				genModel.getModelPluginVariables().add(modelPluginVariable);
 			}
@@ -226,7 +232,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 
-		protected class RemoveEAnnotation implements Edit
+		protected static class RemoveEAnnotation implements Edit
 		{
 			private final @NonNull EAnnotation eAnnotation;
 			private final @NonNull List<EAnnotation> eAnnotations;
@@ -246,7 +252,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 
-		protected class SetEAnnotationDetail implements Edit
+		protected static class SetEAnnotationDetail implements Edit
 		{
 			private final @NonNull EAnnotation eAnnotation;
 			private final @NonNull String detailName;
@@ -288,60 +294,77 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			}
 		}
 
-		protected class SetInvocationDelegates implements Edit
+		protected static abstract class AbstractSetDelegates implements Edit
 		{
-			private final @NonNull EPackage ePackage;
-			private final @NonNull List<String> invocationDelegates;
+			protected final @NonNull EPackage ePackage;
+			protected final @NonNull List<String> delegates;
 
+			@SuppressWarnings("null")
+			public AbstractSetDelegates(@NonNull EPackage ePackage, @NonNull List<String> delegates) {
+				this.ePackage = ePackage;
+				this.delegates = delegates;
+			}
+
+			public @NonNull EPackage getEPackage() {
+				return ePackage;
+			}
+
+			protected @NonNull List<String> pruneDelegates(@Nullable List<String> oldDelegates) {
+				List<String> newDelegates = new ArrayList<>();
+				if (oldDelegates != null) {
+					for (String aDelegate : oldDelegates) {
+						if (!OCLCommon.isDelegateURI(aDelegate)) {
+							newDelegates.add(aDelegate);
+						}
+					}
+				}
+				return newDelegates;
+			}
+		}
+
+		protected static class SetInvocationDelegates extends AbstractSetDelegates
+		{
 			@SuppressWarnings("null")
 			public SetInvocationDelegates(@NonNull EPackage ePackage) {
-				this.ePackage = ePackage;
-				this.invocationDelegates = EcoreUtil.getInvocationDelegates(ePackage);
-				EcoreUtil.setInvocationDelegates(ePackage, pruneDelegates(invocationDelegates));
+				super(ePackage, EcoreUtil.getInvocationDelegates(ePackage));
+				EcoreUtil.setInvocationDelegates(ePackage, pruneDelegates(delegates));
 			}
 
 			@Override
 			public void undo() {
-				EcoreUtil.setInvocationDelegates(ePackage, invocationDelegates);
+				EcoreUtil.setInvocationDelegates(ePackage, delegates);
 			}
 		}
 
-		protected class SetSettingDelegates implements Edit
+		protected static class SetSettingDelegates extends AbstractSetDelegates
 		{
-			private final @NonNull EPackage ePackage;
-			private final @NonNull List<String> settingDelegates;
-
 			@SuppressWarnings("null")
 			public SetSettingDelegates(@NonNull EPackage ePackage) {
-				this.ePackage = ePackage;
-				this.settingDelegates = EcoreUtil.getSettingDelegates(ePackage);
-				EcoreUtil.setSettingDelegates(ePackage, pruneDelegates(settingDelegates));
+				super(ePackage, EcoreUtil.getSettingDelegates(ePackage));
+				EcoreUtil.setSettingDelegates(ePackage, pruneDelegates(delegates));
 			}
 
 			@Override
 			public void undo() {
-				EcoreUtil.setSettingDelegates(ePackage, settingDelegates);
+				EcoreUtil.setSettingDelegates(ePackage, delegates);
 			}
 		}
 
-		protected class SetValidationDelegates implements Edit
+		protected static class SetValidationDelegates extends AbstractSetDelegates
 		{
-			private final @NonNull EPackage ePackage;
-			private final @NonNull List<String> validationDelegates;
-
 			@SuppressWarnings("null")
 			public SetValidationDelegates(@NonNull EPackage ePackage) {
-				this.ePackage = ePackage;
-				this.validationDelegates = EcoreUtil.getValidationDelegates(ePackage);
-				EcoreUtil.setValidationDelegates(ePackage, pruneDelegates(validationDelegates));
+				super(ePackage, EcoreUtil.getValidationDelegates(ePackage));
+				EcoreUtil.setValidationDelegates(ePackage, pruneDelegates(delegates));
 			}
 
 			@Override
 			public void undo() {
-				EcoreUtil.setValidationDelegates(ePackage, validationDelegates);
+				EcoreUtil.setValidationDelegates(ePackage, delegates);
 			}
 		}
 
+		protected final @NonNull OCLinEcoreGenModelGeneratorAdapter adapter;
 		protected final @NonNull OCLInternal ocl;
 		protected final @NonNull GenModel genModel;
 
@@ -356,7 +379,8 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		 */
 		private @NonNull List<Edit> edits = new ArrayList<>();
 
-		private OCLinEcoreStateAdapter(@NonNull GenModel genModel) {
+		private OCLinEcoreStateAdapter(OCLinEcoreGenModelGeneratorAdapter adapter, @NonNull GenModel genModel) {
+			this.adapter = adapter;
 			Resource eResource = genModel.eResource();
 			ResourceSet resourceSet = eResource != null ? eResource.getResourceSet() : null;
 			EnvironmentFactory environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
@@ -387,7 +411,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		}
 
 		protected void addModelPluginVariable(@NonNull String modelPluginVariable) {
-			edits.add(new AddModelPluginVariable(modelPluginVariable));
+			edits.add(new AddModelPluginVariable(genModel, modelPluginVariable));
 		}
 
 		protected void convertConstraintToOperation(@NonNull Ecore2AS ecore2as, @NonNull GenModel genModel, @NonNull EClass eClass, @NonNull String key, @NonNull String body, @Nullable String message) {
@@ -507,7 +531,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		}
 
 		protected @NonNull OCLinEcoreGenModelGeneratorAdapter getGenModelGeneratorAdapter() {
-			return OCLinEcoreGenModelGeneratorAdapter.this;
+			return adapter;
 		}
 
 		@Override
@@ -582,6 +606,18 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 		}
 
 
+		public boolean hasDelegates(@NonNull GenPackage genPackage) {
+			EPackage ecorePackage = genPackage.getEcorePackage();
+			for (Edit edit : edits) {
+				if (edit instanceof AbstractSetDelegates) {
+					if (((AbstractSetDelegates)edit).getEPackage() == ecorePackage) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		/**
 		 * Eliminate all OCL validation/setting/invocation delegates.
 		 */
@@ -594,17 +630,6 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 					edits.add(new SetInvocationDelegates(ePackage));
 				}
 			}
-		}
-		protected @NonNull List<String> pruneDelegates(@Nullable List<String> oldDelegates) {
-			List<String> newDelegates = new ArrayList<>();
-			if (oldDelegates != null) {
-				for (String aDelegate : oldDelegates) {
-					if (!OCLCommon.isDelegateURI(aDelegate)) {
-						newDelegates.add(aDelegate);
-					}
-				}
-			}
-			return newDelegates;
 		}
 
 		protected void removeEAnnotation(@Nullable EAnnotation oclAnnotation) {
@@ -823,7 +848,7 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				return (OCLinEcoreStateAdapter) adapter;
 			}
 		}
-		return new OCLinEcoreStateAdapter(genModel);
+		return new OCLinEcoreStateAdapter(this, genModel);
 	}
 
 	protected boolean hasConstraints(org.eclipse.ocl.pivot.Class pivotClass) {
@@ -857,6 +882,21 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			EPackage ePackage = genPackage.getEcorePackage();
 			if ((ePackage != null) && OCLCommon.hasDelegates(ePackage)) {
 				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Determine whether genPackage uses delegates by interrohgating the OCLinEcoreStateAdapter that retains the state prior to
+	 * pruning delegates from the in-memory model.
+	 */
+	public static boolean hasDelegates(@NonNull GenPackage genPackage) {
+		for (Adapter adapter : genPackage.getGenModel().eAdapters()) {
+			if ((adapter instanceof OCLinEcoreStateAdapter)) {// && (((OCLinEcoreStateAdapter)adapter).getGenModelGeneratorAdapter() == this)) {
+				if (((OCLinEcoreStateAdapter)adapter).hasDelegates(genPackage)) {
+					return true;
+				}
 			}
 		}
 		return false;

@@ -57,7 +57,7 @@
          <attribute name="completePackageId" type="string">
             <annotation>
                <documentation>
-                  The CompletePackageId that merges the packageURIs
+                  The CompletePackageId that merges the packageURIs. Defaults to PackageURI for the normal no-merge use case.
                </documentation>
             </annotation>
          </attribute>

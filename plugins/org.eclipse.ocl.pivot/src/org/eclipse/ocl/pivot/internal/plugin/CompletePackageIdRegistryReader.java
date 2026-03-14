@@ -218,7 +218,7 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		}
 		final String packageURIstring = element.getAttribute(ATTRIBUTE_PACKAGE_URI);
 		String aspect = element.getAttribute(ATTRIBUTE_ASPECT);
-		final String completePackageID = element.getAttribute(ATTRIBUTE_COMPLETE_PACKAGE_ID);
+		String completePackageID = element.getAttribute(ATTRIBUTE_COMPLETE_PACKAGE_ID);
 		final boolean regex = Boolean.parseBoolean(element.getAttribute(ATTRIBUTE_REGEX));
 		final String tablesClass = element.getAttribute(ATTRIBUTE_CLASS);
 		if (packageURIstring == null) {
@@ -227,8 +227,7 @@ public class CompletePackageIdRegistryReader extends RegistryReader
 		}
 		final URI packageURI = URI.createURI(packageURIstring);
 		if (completePackageID == null) {
-			logMissingAttribute(element, ATTRIBUTE_COMPLETE_PACKAGE_ID);
-			return false;
+			completePackageID = packageURIstring;
 		}
 		if (aspect == null) {
 			aspect = "";
