@@ -58,14 +58,15 @@ public class PluginXML
   protected final String TEXT_41 = NL + "         </describer>" + NL + "      </content-type>" + NL + "   </extension>";
   protected final String TEXT_42 = NL + NL + "   <extension point=\"org.eclipse.emf.ecore.extension_parser\">";
   protected final String TEXT_43 = NL + "      <parser" + NL + "            type=\"";
-  protected final String TEXT_44 = NL + "      <extension point=\"org.eclipse.ocl.pivot.complete_package_id\">" + NL + "         <!-- @generated ";
-  protected final String TEXT_45 = NL + "         <mapping completePackageId=\"$metamodel$\" aspect=\"metamodel\"";
-  protected final String TEXT_46 = NL + "         <mapping completePackageId=\"$metamodel$\" aspect=\"library\"";
-  protected final String TEXT_47 = NL + "         <mapping";
-  protected final String TEXT_48 = NL + "            packageURI=\"";
-  protected final String TEXT_49 = ".";
-  protected final String TEXT_50 = "Tables$Descriptor\"/>" + NL + "      </extension>";
-  protected final String TEXT_51 = NL + NL + "</plugin>";
+  protected final String TEXT_44 = NL + "   <extension point=\"org.eclipse.ocl.pivot.complete_package_id\">" + NL + "      <!-- @generated ";
+  protected final String TEXT_45 = NL + "      <mapping completePackageId=\"$metamodel$\" aspect=\"metamodel\"";
+  protected final String TEXT_46 = NL + "      <mapping completePackageId=\"$metamodel$\" aspect=\"library\"";
+  protected final String TEXT_47 = NL + "      <mapping";
+  protected final String TEXT_48 = NL + "         packageURI=\"";
+  protected final String TEXT_49 = "\"" + NL + "         class=\"";
+  protected final String TEXT_50 = ".";
+  protected final String TEXT_51 = "Tables$Descriptor\"/>" + NL + "   </extension>";
+  protected final String TEXT_52 = NL + NL + "</plugin>";
 
   public String generate(Object argument)
   {
@@ -217,15 +218,15 @@ public class PluginXML
     }
     stringBuffer.append(TEXT_48);
     stringBuffer.append(genPackage.getNSURI());
-    stringBuffer.append(TEXT_32);
-    stringBuffer.append(genPackage.getQualifiedPackageName());
     stringBuffer.append(TEXT_49);
-    stringBuffer.append(genPackage.getPrefix());
+    stringBuffer.append(genPackage.getQualifiedPackageName());
     stringBuffer.append(TEXT_50);
-    }
-    }
-    }
+    stringBuffer.append(genPackage.getPrefix());
     stringBuffer.append(TEXT_51);
+    }
+    }
+    }
+    stringBuffer.append(TEXT_52);
     stringBuffer.append(TEXT_2);
     return stringBuffer.toString();
   }
