@@ -93,6 +93,7 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.BagValue;
@@ -1312,7 +1313,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		Map<@NonNull String, @NonNull Package> roots2package2 = roots2package;
 		assert roots2package2 != null;
 		roots2package2.put(PivotConstants.METAMODEL_NAME, standardLibrary.getPackage());
-		Set<@NonNull EPackage> ePackages = new HashSet<>();				// ?? make deterministic ??
+		Set<@NonNull EPackage> ePackages = new UniqueList<>();
 		for (@NonNull EObject eObject : directRoots) {
 			if (eObject instanceof Model) {
 				addPackages(PivotUtil.getOwnedPackages((Model)eObject));
