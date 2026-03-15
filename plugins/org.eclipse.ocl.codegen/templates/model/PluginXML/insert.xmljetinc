@@ -3,7 +3,16 @@
    <%if (org.eclipse.ocl.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter.hasDelegates(genPackage)) {%>
       <extension point="org.eclipse.ocl.pivot.complete_package_id">
          <!-- @generated <%=key%> -->
-            <mapping packageURI="<%=genPackage.getNSURI()%>"
+         <%if (org.eclipse.ocl.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter.isMetamodel(genPackage)) {%>
+         <mapping completePackageId="$metamodel$" aspect="metamodel"
+         <%}%>
+         <%else if (org.eclipse.ocl.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter.isLibrary(genPackage)) {%>
+         <mapping completePackageId="$metamodel$" aspect="library"
+         <%}%>
+         <%else {%>
+         <mapping
+         <%}%>
+            packageURI="<%=genPackage.getNSURI()%>"
             class="<%=genPackage.getQualifiedPackageName()%>.<%=genPackage.getPrefix()%>Tables$Descriptor"/>
       </extension>
       <%}%>

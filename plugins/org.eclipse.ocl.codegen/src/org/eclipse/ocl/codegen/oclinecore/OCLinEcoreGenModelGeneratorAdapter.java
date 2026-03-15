@@ -191,6 +191,10 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 				eAnnotations.add(eAnnotation);
 			}
 
+			public @NonNull EAnnotation getEAnnotation() {
+				return eAnnotation;
+			}
+
 			@Override
 			public void undo() {
 				eAnnotations.remove(eAnnotation);
@@ -618,6 +622,36 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 			return false;
 		}
 
+		public boolean isLibrary(@NonNull GenPackage genPackage) {
+			EPackage ecorePackage = genPackage.getEcorePackage();
+			if (ecorePackage.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) != null) {
+				return true;
+			}
+			for (Edit edit : edits) {
+				if (edit instanceof AddEAnnotation) {
+					if (PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE.equals(((AddEAnnotation)edit).getEAnnotation().getSource())) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
+		public boolean isMetamodel(@NonNull GenPackage genPackage) {
+			EPackage ecorePackage = genPackage.getEcorePackage();
+			if (ecorePackage.getEAnnotation(PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE) != null) {
+				return true;
+			}
+			for (Edit edit : edits) {
+				if (edit instanceof AddEAnnotation) {
+					if (PivotConstants.AS_METAMODEL_ANNOTATION_SOURCE.equals(((AddEAnnotation)edit).getEAnnotation().getSource())) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+
 		/**
 		 * Eliminate all OCL validation/setting/invocation delegates.
 		 */
@@ -905,5 +939,27 @@ public class OCLinEcoreGenModelGeneratorAdapter extends GenBaseGeneratorAdapter
 	@Deprecated /* @deprecated use OCLCommon */
 	protected boolean hasDelegates(@NonNull EPackage ePackage) {
 		return OCLCommon.hasDelegates(ePackage);
+	}
+
+	public static boolean isLibrary(@NonNull GenPackage genPackage) {
+		for (Adapter adapter : genPackage.getGenModel().eAdapters()) {
+			if ((adapter instanceof OCLinEcoreStateAdapter)) {// && (((OCLinEcoreStateAdapter)adapter).getGenModelGeneratorAdapter() == this)) {
+				if (((OCLinEcoreStateAdapter)adapter).isLibrary(genPackage)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean isMetamodel(@NonNull GenPackage genPackage) {
+		for (Adapter adapter : genPackage.getGenModel().eAdapters()) {
+			if ((adapter instanceof OCLinEcoreStateAdapter)) {// && (((OCLinEcoreStateAdapter)adapter).getGenModelGeneratorAdapter() == this)) {
+				if (((OCLinEcoreStateAdapter)adapter).isMetamodel(genPackage)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 }

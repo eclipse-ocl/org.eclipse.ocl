@@ -59,10 +59,13 @@ public class PluginXML
   protected final String TEXT_42 = NL + NL + "   <extension point=\"org.eclipse.emf.ecore.extension_parser\">";
   protected final String TEXT_43 = NL + "      <parser" + NL + "            type=\"";
   protected final String TEXT_44 = NL + "      <extension point=\"org.eclipse.ocl.pivot.complete_package_id\">" + NL + "         <!-- @generated ";
-  protected final String TEXT_45 = " -->" + NL + "            <mapping packageURI=\"";
-  protected final String TEXT_46 = ".";
-  protected final String TEXT_47 = "Tables$Descriptor\"/>" + NL + "      </extension>";
-  protected final String TEXT_48 = NL + NL + "</plugin>";
+  protected final String TEXT_45 = NL + "         <mapping completePackageId=\"$metamodel$\" aspect=\"metamodel\"";
+  protected final String TEXT_46 = NL + "         <mapping completePackageId=\"$metamodel$\" aspect=\"library\"";
+  protected final String TEXT_47 = NL + "         <mapping";
+  protected final String TEXT_48 = NL + "            packageURI=\"";
+  protected final String TEXT_49 = ".";
+  protected final String TEXT_50 = "Tables$Descriptor\"/>" + NL + "      </extension>";
+  protected final String TEXT_51 = NL + NL + "</plugin>";
 
   public String generate(Object argument)
   {
@@ -202,17 +205,27 @@ public class PluginXML
     if (org.eclipse.ocl.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter.hasDelegates(genPackage)) {
     stringBuffer.append(TEXT_44);
     stringBuffer.append(key);
+    stringBuffer.append(TEXT_24);
+    if (org.eclipse.ocl.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter.isMetamodel(genPackage)) {
     stringBuffer.append(TEXT_45);
+    }
+    else if (org.eclipse.ocl.codegen.oclinecore.OCLinEcoreGenModelGeneratorAdapter.isLibrary(genPackage)) {
+    stringBuffer.append(TEXT_46);
+    }
+    else {
+    stringBuffer.append(TEXT_47);
+    }
+    stringBuffer.append(TEXT_48);
     stringBuffer.append(genPackage.getNSURI());
     stringBuffer.append(TEXT_32);
     stringBuffer.append(genPackage.getQualifiedPackageName());
-    stringBuffer.append(TEXT_46);
+    stringBuffer.append(TEXT_49);
     stringBuffer.append(genPackage.getPrefix());
-    stringBuffer.append(TEXT_47);
+    stringBuffer.append(TEXT_50);
     }
     }
     }
-    stringBuffer.append(TEXT_48);
+    stringBuffer.append(TEXT_51);
     stringBuffer.append(TEXT_2);
     return stringBuffer.toString();
   }
