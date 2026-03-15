@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.codegen.ecore.generator.GeneratorAdapterFactory;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModelPackage;
 import org.eclipse.emf.common.EMFPlugin;
@@ -97,6 +98,7 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Rule;
 import org.junit.rules.TestName;
+import org.osgi.framework.Bundle;
 
 import junit.framework.TestCase;
 
@@ -257,6 +259,16 @@ public class AbstractPivotTestCase extends TestCase
 			//			projectMap.dispose();
 			//			projectMap = null;
 			//		}
+		}
+	}
+
+	protected static void assertBadBundlesAreNotOnClasspath(@NonNull String @NonNull [] badBundles) {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			// Diagnose auto-generated test projects that contribute conflicting registrations causing confusing failures.
+			for (String badBundle : badBundles) {
+				Bundle bundle = Platform.getBundle(badBundle);
+				assertNull("Auto-generated " + badBundle + " bundle is on classpath; close it.", bundle);
+			}
 		}
 	}
 

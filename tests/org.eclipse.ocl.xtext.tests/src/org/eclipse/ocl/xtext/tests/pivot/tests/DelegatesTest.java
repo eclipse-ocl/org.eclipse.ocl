@@ -79,6 +79,7 @@ import org.eclipse.ocl.pivot.internal.delegate.ValidationDelegate;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.OCLEvaluationVisitor;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
+import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
 import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -305,6 +306,11 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	}
 
 	protected void initPackageRegistrations(@NonNull ResourceSet resourceSet) {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			// Lose registrations from accidentally open auto-generated test projects
+			CompletePackageIdRegistryReader.removeStringMapping(URI.createURI(CompanyPackage.eNS_URI), "");
+			CompletePackageIdRegistryReader.removeStringMapping(URI.createURI(NoreflectioncompanyPackage.eNS_URI), "");
+		}
 		Registry packageRegistry = resourceSet.getPackageRegistry();
 		packageRegistry.put(CompanyPackage.eNS_URI, CompanyPackage.eINSTANCE);
 		packageRegistry.put(NoreflectioncompanyPackage.eNS_URI, NoreflectioncompanyPackage.eINSTANCE);
