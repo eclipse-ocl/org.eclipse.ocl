@@ -206,6 +206,15 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	 * @generated
 	 */
 	@Override
+	public @Nullable Boolean isEquivalentTo(@NonNull CGValuedElement thatValue) {
+		return isEquivalentToInternal(thatValue);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
 		if (!thatValue.isNonInvalid()) {
 			return null;

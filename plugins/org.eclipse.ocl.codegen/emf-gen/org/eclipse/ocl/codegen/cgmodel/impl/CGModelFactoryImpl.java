@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EFactoryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.codegen.cgmodel.*;
 import org.eclipse.ocl.codegen.cgmodel.CGAccumulator;
 import org.eclipse.ocl.codegen.cgmodel.CGAssertNonNullExp;
 import org.eclipse.ocl.codegen.cgmodel.CGBoolean;

@@ -28,6 +28,9 @@ public class OrOperationHandler extends AbstractLibraryOperationHandler
 
 		@Override
 		public @NonNull Boolean generate(@NonNull CGLibraryOperationCallExp cgOperationCallExp) {
+			if ("$CATCH(1_.isDerived.or(1_.isImplicit).or(1_.isStatic)).or(1_.isTransient)".equals(cgOperationCallExp.toString())) {
+				getClass();			// XXX
+			}
 			assert cgOperationCallExp.getReferredOperation().isIsValidating();
 			boolean hasDeclaration = false;
 			//
