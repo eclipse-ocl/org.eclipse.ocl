@@ -78,6 +78,15 @@ public class CGNullImpl extends CGConstantImpl implements CGNull {
 	 * @generated
 	 */
 	@Override
+	public @Nullable Boolean isEquivalentTo(@NonNull CGValuedElement thatValue) {
+		return isEquivalentToInternal(thatValue);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @generated
+	 */
+	@Override
 	public @Nullable Boolean isEquivalentToInternal(@NonNull CGValuedElement thatValue) {
 		if (thatValue.isNull()) {
 			return Boolean.TRUE;

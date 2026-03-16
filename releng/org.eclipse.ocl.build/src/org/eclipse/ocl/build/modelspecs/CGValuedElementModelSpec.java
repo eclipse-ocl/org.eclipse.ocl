@@ -807,7 +807,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 		public static final @NonNull Eq INVLD = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
+				return "return isEquivalentTo(thatValue);";
 			}
 			@Override public @Nullable String generateIsEquivalentToInternal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "if (thatValue.isInvalid()) {\n" +
@@ -840,7 +840,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 		public static final @NonNull Eq NULL = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
+				return "return isEquivalentTo(thatValue);";
 			}
 			@Override public @Nullable String generateIsEquivalentToInternal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "if (thatValue.isNull()) {\n" +
@@ -859,7 +859,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 		};
 		public static final @NonNull Eq NUMBR = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
+				return "return isEquivalentTo(thatValue);";
 			}
 			@Override public @Nullable String generateIsEquivalentToInternal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				String equivalenceUtilImport = ImportUtils.getAffixedName(EquivalenceUtil.class);
@@ -893,7 +893,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Eq SELF = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
+				return "return isEquivalentTo(thatValue);";
 			}
 			@Override public @Nullable String generateIsEquivalentToInternal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "if (this == thatValue) {\n" +
@@ -907,7 +907,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Eq STRNG = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
+				return "return isEquivalentTo(thatValue);";
 			}
 			@Override public @Nullable String generateIsEquivalentToInternal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "if (!thatValue.isNonInvalid()) {\n" +
@@ -931,7 +931,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Eq TEXT = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
+				return "return isEquivalentTo(thatValue);";
 			}
 			@Override public @Nullable String generateIsEquivalentToInternal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "if (!thatValue.isNonInvalid()) {\n" +
@@ -996,7 +996,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 
 		public static final @NonNull Eq UNLMT = new Eq() {
 			@Override public @Nullable String generateIsEquivalentTo(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return null;
+				return "return isEquivalentTo(thatValue);";
 			}
 			@Override public @Nullable String generateIsEquivalentToInternal(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "if (!thatValue.isNonInvalid()) {\n" +
@@ -1771,7 +1771,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "return false;";
 			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return referredOperation != null ? referredOperation.isIsRequired() : isRequired();";
+				return "isRequired() || ((referredOperation != null) && referredOperation.isIsRequired());";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return false;";
