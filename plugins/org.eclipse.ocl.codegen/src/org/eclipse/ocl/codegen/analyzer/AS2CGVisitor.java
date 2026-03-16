@@ -673,7 +673,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGValuedElement generateOperationCallExp(@Nullable CGValuedElement cgSource, @NonNull OperationCallExp element) {
 		Operation asOperation = ClassUtil.requireNonNull(element.getReferredOperation());
-		boolean isRequired = asOperation.isIsRequired();
+		boolean isRequired = element.isIsRequired();
 		OCLExpression pSource = element.getOwnedSource();
 		LibraryFeature libraryOperation = environmentFactory.getOperationImplementation(asOperation);
 		CGOperationCallExp cgOperationCallExp = null;
@@ -882,7 +882,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	protected @NonNull CGValuedElement generatePropertyCallExp(@NonNull CGValuedElement cgSource, @NonNull PropertyCallExp element) {
 		Property asProperty = ClassUtil.requireNonNull(element.getReferredProperty());
-		boolean isRequired = asProperty.isIsRequired();
+		boolean isRequired = element.isIsRequired();
 		LibraryProperty libraryProperty = environmentFactory.getPropertyImplementation(element, null, asProperty);
 		CGPropertyCallExp cgPropertyCallExp = null;
 		if (libraryProperty instanceof NativeProperty) {
