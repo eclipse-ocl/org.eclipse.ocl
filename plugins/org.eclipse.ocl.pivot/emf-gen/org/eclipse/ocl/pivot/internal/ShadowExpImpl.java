@@ -549,29 +549,21 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							catch (Exception e) {
 								CAUGHT_or_0 = ValueUtil.createInvalidValue(e);
 							}
-							final /*@Thrown*/ @Nullable Boolean or_1;
+							final /*@Thrown*/ boolean or_1;
 							if (CAUGHT_or_0 == ValueUtil.TRUE_VALUE) {
-								or_1 = ValueUtil.TRUE_VALUE;
+								or_1 = true;
 							}
 							else {
 								final /*@NonInvalid*/ boolean isTransient = _1_2.isIsTransient();
 								if (isTransient) {
-									or_1 = ValueUtil.TRUE_VALUE;
+									or_1 = true;
 								}
 								else {
 									if (CAUGHT_or_0 instanceof InvalidValueException) {
 										throw (InvalidValueException)CAUGHT_or_0;
 									}
-									if (CAUGHT_or_0 == null) {
-										or_1 = null;
-									}
-									else {
-										or_1 = ValueUtil.FALSE_VALUE;
-									}
+									or_1 = false;
 								}
-							}
-							if (or_1 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (or_1 == ValueUtil.FALSE_VALUE) {
@@ -646,9 +638,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 * isVolatile or not isRequired
 							 */
 							final /*@NonInvalid*/ boolean isVolatile = _1_5.isIsVolatile();
-							final /*@Thrown*/ @Nullable Boolean or_2;
+							final /*@Thrown*/ boolean or_2;
 							if (isVolatile) {
-								or_2 = ValueUtil.TRUE_VALUE;
+								or_2 = true;
 							}
 							else {
 								final /*@NonInvalid*/ boolean isRequired = _1_5.isIsRequired();
@@ -665,19 +657,11 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									}
 								}
 								if (not == ValueUtil.TRUE_VALUE) {
-									or_2 = ValueUtil.TRUE_VALUE;
+									or_2 = true;
 								}
 								else {
-									if (not == null) {
-										or_2 = null;
-									}
-									else {
-										or_2 = ValueUtil.FALSE_VALUE;
-									}
+									or_2 = false;
 								}
-							}
-							if (or_2 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (or_2 == ValueUtil.FALSE_VALUE) {
@@ -720,9 +704,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 */
 							final /*@NonInvalid*/ @Nullable Property opposite = _1_7.getOpposite();
 							final /*@NonInvalid*/ boolean ne_0 = opposite != null;
-							final /*@Thrown*/ @Nullable Boolean and;
+							final /*@Thrown*/ boolean and;
 							if (!ne_0) {
-								and = ValueUtil.FALSE_VALUE;
+								and = false;
 							}
 							else {
 								/*@Caught*/ @NonNull Object CAUGHT_isComposite;
@@ -737,17 +721,14 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									CAUGHT_isComposite = ValueUtil.createInvalidValue(e);
 								}
 								if (CAUGHT_isComposite == ValueUtil.FALSE_VALUE) {
-									and = ValueUtil.FALSE_VALUE;
+									and = false;
 								}
 								else {
 									if (CAUGHT_isComposite instanceof InvalidValueException) {
 										throw (InvalidValueException)CAUGHT_isComposite;
 									}
-									and = ValueUtil.TRUE_VALUE;
+									and = true;
 								}
-							}
-							if (and == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (and == ValueUtil.FALSE_VALUE) {

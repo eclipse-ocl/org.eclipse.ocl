@@ -96,11 +96,14 @@ public class OrOperationHandler extends AbstractLibraryOperationHandler
 				if (!appendThrowIfInvalid(cgSource, "or source") && !appendThrowIfInvalid(cgSource, "or argument")) {
 					appendThrowIfMayBeInvalid(cgSource);
 					appendThrowIfMayBeInvalid(cgArgument);
-					if (cgSource.isNull() || cgArgument.isNull()) {
+					if (cgOperationCallExp.isNonNull()) {
+						appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
+					}
+					else if (cgSource.isNull() || cgArgument.isNull()) {
 						appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 					}
-					else if (cgSource.isNonNull()){
-						if (cgArgument.isNonNull()){
+					else if (cgSource.isNonNull()) {
+						if (cgArgument.isNonNull()) {
 							appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, false);
 						}
 						else {
@@ -112,7 +115,7 @@ public class OrOperationHandler extends AbstractLibraryOperationHandler
 						}
 					}
 					else {
-						if (cgArgument.isNonNull()){
+						if (cgArgument.isNonNull()) {
 							appendIfEqualsNull(cgSource);
 							appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 							appendElse();

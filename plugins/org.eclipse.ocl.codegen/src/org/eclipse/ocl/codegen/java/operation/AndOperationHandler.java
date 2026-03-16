@@ -93,7 +93,10 @@ public class AndOperationHandler extends AbstractLibraryOperationHandler
 				if (!appendThrowIfInvalid(cgSource, "and source") && !appendThrowIfInvalid(cgSource, "and argument")) {
 					appendThrowIfMayBeInvalid(cgSource);
 					appendThrowIfMayBeInvalid(cgArgument);
-					if (cgSource.isNull() || cgArgument.isNull()) {
+					if (cgOperationCallExp.isNonNull()) {
+						appendAssignBooleanLiteral(hasDeclaration, cgOperationCallExp, true);
+					}
+					else if (cgSource.isNull() || cgArgument.isNull()) {
 						appendAssignNullLiteral(hasDeclaration, cgOperationCallExp);
 					}
 					else if (cgSource.isNonNull()){
