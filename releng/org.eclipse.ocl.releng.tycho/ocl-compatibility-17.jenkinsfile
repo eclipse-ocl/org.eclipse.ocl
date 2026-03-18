@@ -1,0 +1,136 @@
+def targetPlatformToJavaVersionMap = [
+  '2024-12' : '17',
+  '2024-09' : '17',
+  '2024-06' : '17',
+  '2024-03' : '17',
+  '2023-12' : '17',
+  '2023-09' : '17',
+  '2023-06' : '17',
+]
+
+/*def targetPlatformToTychoVersionMap = [
+  '2024-12' : '',
+  '2024-09' : '',
+  '2024-06' : '',
+  '2024-03' : '',
+  '2023-12' : '',
+  '2023-09' : '',
+  '2023-06' : '',
+] */
+
+def targetPlatforms = targetPlatformToJavaVersionMap.keySet() as List
+
+pipeline {
+	agent {
+		label 'ubuntu-latest'
+	}
+
+	triggers {
+		cron('H 17 * * 0')
+	}
+
+	options {
+		buildDiscarder(logRotator(numToKeepStr: '5'))
+		disableConcurrentBuilds()
+		durabilityHint('MAX_SURVIVABILITY')
+		skipDefaultCheckout false
+	}
+
+	tools {
+		maven 'apache-maven-latest'
+		jdk 'openjdk-jdk17-latest'		// jdk21 gives an unknown SE for 'oxygen','photon' - weird
+	}									// jdk17 fails to create 'xtext' injector for '2025-12' - weird
+
+	environment {
+		BUILD_TIMESTAMP = sh(returnStdout: true, script: 'date +%Y%m%d%H%M').trim()
+	}
+	
+	parameters {
+		string(
+			name: 'BRANCH_NAME',
+			defaultValue: 'master',
+			description: 'Specify a bug branch name for example: (issue/123).'
+		)
+		string(
+			name: 'SELECTION',
+			defaultValue: '',
+			description: 'list of platforms to test, example: (2023-06 2024-06). Blank defaults to all of 2023-06 to 2024-12 inclusive'
+		)
+	}
+
+	stages {
+		//
+		//	Set parameters in the Jenkins job description.
+		//
+		stage('Display') {
+			steps {
+				script {
+					env.BRANCH_NAME = params.BRANCH_NAME
+					env.SELECTION = params.SELECTION
+					echo "${params.BRANCH_NAME}: ${params.SELECTION}"
+					currentBuild.description = "${params.BRANCH_NAME}: ${params.SELECTION}"
+				}
+			}
+		}
+		//
+		//	Do the compatibility tests.
+		//
+		stage('For Loop') {
+			steps {
+				script {
+					for (targetPlatform in targetPlatforms) {
+//						timeout(time: 1, unit: 'HOURS')
+						if (params.SELECTION == '' || params.SELECTION.contains(targetPlatform)) {
+							echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ${targetPlatform}"
+							stage("${targetPlatform}") {
+								wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
+									sh """
+										mvn \
+											-f tests/org.eclipse.ocl.compatibility.tests/pom.xml \
+											--no-transfer-progress \
+											--show-version \
+											clean \
+											verify \
+											-P${targetPlatform} \
+											--global-toolchains toolchains.xml
+										"""
+								}
+								archiveArtifacts allowEmptyArchive: true, artifacts: "tests/org.eclipse.ocl.compatibility.tests/target/surefire-reports/**/*.xml"
+							}
+						}
+						else {
+							echo "---------------------------------------------------------- ${targetPlatform}"
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	post {
+		failure {
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+body: "Project: ${env.JOB_NAME} \n\
+Build Number: ${env.BUILD_NUMBER} \n\
+Build URL: <${env.BUILD_URL}> \n\
+Console: <${env.BUILD_URL}console>"
+			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
+		}
+
+		fixed {
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+body: "Project: ${env.JOB_NAME} \n\
+Build Number: ${env.BUILD_NUMBER} \n\
+Build URL: <${env.BUILD_URL}> \n\
+Console: <${env.BUILD_URL}console>"
+		}
+
+		always {
+			junit 'tests/org.eclipse.ocl.compatibility.tests/target/surefire-reports/**/*.xml'		
+		}
+
+//		cleanup {
+//			deleteDir()
+//		}
+	}
+}

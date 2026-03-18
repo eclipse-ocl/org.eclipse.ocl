@@ -1,0 +1,127 @@
+pipeline {
+	agent {
+		label 'ubuntu-latest'
+	}
+
+	options {
+		buildDiscarder(logRotator(numToKeepStr: '5'))
+		disableConcurrentBuilds()
+		skipDefaultCheckout false
+	}
+
+	tools {
+		maven 'apache-maven-latest'
+		jdk 'openjdk-jdk17-latest'
+	}
+
+	environment {
+		BUILD_TIMESTAMP = sh(returnStdout: true, script: 'date +%Y%m%d%H%M').trim()
+	}
+	
+	parameters {
+		choice(
+			name: 'OCL_REPO',
+			choices: ['masterLatest', 'branchTestsLatest', 'release'],
+			description: '''
+The repo to be tested:
+<ul>
+<li> - the most recent master build
+<li> - the most recent ocl-branch-tests build
+<li> - the most recent OCL release
+</ul>				'''
+		)
+		
+		string(
+			name: 'BRANCH_NAME',
+			defaultValue: 'master',
+			description: 'Specify a bug branch name for example: (issue/123).'
+		)
+	}
+
+	stages {
+		//
+		//	Set BUILD_TYPE in the Jenkins job description.
+		//
+		stage('Display Parameters') {
+			steps {
+				script {
+					env.BRANCH_NAME = params.BRANCH_NAME
+					env.OCL_REPO = params.OCL_REPO
+					def description = """
+BRANCH_NAME=${env.BRANCH_NAME}
+OCL_REPO=${env.OCL_REPO}
+""".trim()
+					echo description
+					currentBuild.description = description.replace("\n", "<br/>")
+				}
+			}
+		}
+		//
+		//	Do the standalone Ecore test.
+		//
+		stage('Test-Ecore') {
+			steps {
+				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
+					sh '''
+						mvn	\
+							-f tests/org.eclipse.ocl.standalone.ecore.tests/pom.xml \
+							--no-transfer-progress \
+							--show-version \
+							clean \
+							test \
+							-P${OCL_REPO} \
+							--global-toolchains toolchains.xml
+						'''
+				}
+				archiveArtifacts artifacts: 'tests/org.eclipse.ocl.standalone.ecore.tests/target/*-reports/**/*.xml'
+			}
+		}
+		//
+		//	Do the standalone UML test.
+		//
+		stage('Test-UML') {
+			steps {
+				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
+					sh '''
+						mvn	\
+							-f tests/org.eclipse.ocl.standalone.uml.tests/pom.xml \
+							--no-transfer-progress \
+							--show-version \
+							clean \
+							test \
+							-P${OCL_REPO} \
+							--global-toolchains toolchains.xml
+						'''
+				}
+				archiveArtifacts artifacts: 'tests/org.eclipse.ocl.standalone.uml.tests/target/*-reports/**/*.xml'
+			}
+		}
+	}
+	
+	post {
+		failure {
+			mail to: 'ed@willink.me.uk', subject: "[MoDisco CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+body: "Project: ${env.JOB_NAME} \n\
+Build Number: ${env.BUILD_NUMBER} \n\
+Build URL: <${env.BUILD_URL}> \n\
+Console: <${env.BUILD_URL}console>"
+			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
+		}
+
+		fixed {
+			mail to: 'ed@willink.me.uk', subject: "[MoDisco CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+body: "Project: ${env.JOB_NAME} \n\
+Build Number: ${env.BUILD_NUMBER} \n\
+Build URL: <${env.BUILD_URL}> \n\
+Console: <${env.BUILD_URL}console>"
+		}
+
+		always {
+			junit '**/*-reports/**/*.xml'		
+		}
+
+//		cleanup {
+//			deleteDir()
+//		}
+	}
+}

@@ -1,0 +1,95 @@
+pipeline {
+	agent {
+		label 'ubuntu-latest'
+	}
+
+	triggers {
+		cron('H 7 * * 0')
+	}
+
+	options {
+		buildDiscarder(logRotator(numToKeepStr: '5'))
+		disableConcurrentBuilds()
+		skipDefaultCheckout false
+	}
+
+	tools {
+		maven 'apache-maven-latest'
+		jdk 'openjdk-jdk21-latest'
+	}
+
+	environment {
+		BUILD_TIMESTAMP = sh(returnStdout: true, script: 'date +%Y%m%d%H%M').trim()
+	}
+	
+	parameters {
+		string(
+			name: 'BRANCH_NAME',
+			defaultValue: 'master',
+			description: 'Specify a bug branch name for example: (issue/123).'
+		)
+	}
+
+	stages {
+		//
+		//	Set parameters in the Jenkins job description.
+		//
+		stage('Display') {
+			steps {
+				script {
+					env.BRANCH_NAME = params.BRANCH_NAME
+					env.SELECTION = params.SELECTION
+					echo "${params.BRANCH_NAME}"
+					currentBuild.description = "${params.BRANCH_NAME}"
+				}
+			}
+		}
+		//
+		//	Do the codegen tests.
+		//
+		stage('Test') {
+			steps {
+				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
+					sh """
+						mvn \
+							-f tests/org.eclipse.ocl.codegen.tests/pom.xml \
+							--no-transfer-progress \
+							--show-version \
+							clean \
+							verify \
+							-PmasterLatest \
+							--global-toolchains toolchains.xml
+						"""
+				}
+				archiveArtifacts allowEmptyArchive: true, artifacts: "tests/org.eclipse.ocl.codegen.tests/target/surefire-reports/**/*.xml"
+			}
+		}
+	}
+
+	post {
+		failure {
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+body: "Project: ${env.JOB_NAME} \n\
+Build Number: ${env.BUILD_NUMBER} \n\
+Build URL: <${env.BUILD_URL}> \n\
+Console: <${env.BUILD_URL}console>"
+			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
+		}
+
+		fixed {
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+body: "Project: ${env.JOB_NAME} \n\
+Build Number: ${env.BUILD_NUMBER} \n\
+Build URL: <${env.BUILD_URL}> \n\
+Console: <${env.BUILD_URL}console>"
+		}
+
+		always {
+			junit 'tests/org.eclipse.ocl.codegen.tests/target/surefire-reports/**/*.xml'		
+		}
+
+//		cleanup {
+//			deleteDir()
+//		}
+	}
+}

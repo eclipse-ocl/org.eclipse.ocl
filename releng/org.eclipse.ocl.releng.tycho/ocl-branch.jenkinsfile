@@ -1,0 +1,101 @@
+pipeline {
+	agent {
+		label 'ubuntu-latest'
+	}
+
+	options {
+		buildDiscarder(logRotator(numToKeepStr: '5'))
+		disableConcurrentBuilds()
+		skipDefaultCheckout false
+	}
+
+	tools {
+		maven 'apache-maven-latest'
+		jdk 'openjdk-jdk21-latest'
+	}
+
+	environment {
+		BUILD_TIMESTAMP = sh(returnStdout: true, script: 'date +%Y%m%d%H%M').trim()
+	}
+	
+	parameters {
+		choice(
+			name: 'BUILD_TYPE',
+			choices: ['nightly', 'milestone'],
+			description: '''
+<ul>
+<li> N - Nightly build
+<li> S - Stable / Milestone build
+</ul>				'''
+		)
+		
+		string(
+			name: 'BRANCH_NAME',
+			defaultValue: 'master',
+			description: 'Specify a bug branch name for example: (issue/123).'
+		)
+	}
+
+	stages {
+		//
+		//	Set BUILD_TYPE in the Jenkins job description.
+		//
+		stage('Display Parameters') {
+			steps {
+				script {
+					env.BUILD_TYPE = params.BUILD_TYPE
+					echo "${params.BUILD_TYPE} ${params.JAVADOC} ${params.SIGNING}"
+					currentBuild.description = "${params.BUILD_TYPE} ${params.JAVADOC} ${params.SIGNING}"
+				}
+			}
+		}
+		//
+		//	Do the regular project build and test.
+		//
+		stage('Build') {
+			steps {
+				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
+					sh """
+						mvn	\
+							-f releng/org.eclipse.ocl.releng.tycho/pom.xml \
+							--no-transfer-progress \
+							--show-version \
+							clean \
+							verify \
+							-P${BUILD_TYPE} \
+							 --global-toolchains toolchains.xml
+						"""
+				}
+				archiveArtifacts allowEmptyArchive: true, artifacts: 'releng/org.eclipse.ocl.releng.build-site/target/repository/**/*'
+				archiveArtifacts allowEmptyArchive: true, artifacts: 'tests/*/target/**/surefire-reports/**/TEST-*.xml'
+			}
+		}
+	}
+
+	post {
+		failure {
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+body: "Project: ${env.JOB_NAME} \n\
+Build Number: ${env.BUILD_NUMBER} \n\
+Build URL: <${env.BUILD_URL}> \n\
+Console: <${env.BUILD_URL}console>"
+			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
+		}
+
+		fixed {
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+body: "Project: ${env.JOB_NAME} \n\
+Build Number: ${env.BUILD_NUMBER} \n\
+Build URL: <${env.BUILD_URL}> \n\
+Console: <${env.BUILD_URL}console>"
+		}
+
+		always {
+			junit 'tests/*/target/**/surefire-reports/**/TEST-*.xml'
+		}
+
+//		cleanup {
+//			deleteDir()
+//		}
+	}
+}
