@@ -238,6 +238,9 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		if ((cgChild == null) || cgChild.isNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
+		if (cgChild.toString().contains("specializeIn")) {
+			getClass();		// XXX
+		}
 		CGGuardExp cgGuardExp = CGModelFactory.eINSTANCE.createCGGuardExp();
 		cgGuardExp.setMessage(message);
 		cgGuardExp.setSafe(isSafe);
