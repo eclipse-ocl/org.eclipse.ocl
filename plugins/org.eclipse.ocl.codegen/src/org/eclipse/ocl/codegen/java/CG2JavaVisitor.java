@@ -1957,6 +1957,9 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.appendValueName(cgSource);
 				js.append(" != null;\n");
 			}
+			else if (cgSource.isNull()) {
+				appendGuardFailure(cgGuardExp);
+			}
 			else if (!cgSource.isNonNull()) {
 				js.append("if (");
 				js.appendValueName(cgSource);

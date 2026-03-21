@@ -1066,6 +1066,9 @@ public class IteratorsTest4 extends PivotTestSuite
 	 */
 	@Test public void test_reject_invalidBody_142518() {
 		MyOCL ocl = createOCL();
+		ocl.assertQueryInvalid(EcorePackage.eINSTANCE,
+				"let b:Boolean = null in Bag{1, 2, 3}->reject(b and b)");
+// XXX
 		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->reject('true')", PivotMessages.ExpectedArgumentType, "reject", 1, "Boolean", "String");
 		ocl.assertSemanticErrorQuery(null, "Bag{1, 2, 3}->reject(2)", PivotMessages.ExpectedArgumentType, "reject", 1, "Boolean", "Integer");
 

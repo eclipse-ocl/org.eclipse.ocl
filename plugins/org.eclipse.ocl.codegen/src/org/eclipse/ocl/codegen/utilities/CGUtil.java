@@ -32,6 +32,7 @@ import org.eclipse.ocl.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.codegen.cgmodel.CGIterator;
 import org.eclipse.ocl.codegen.cgmodel.CGLetExp;
 import org.eclipse.ocl.codegen.cgmodel.CGModelFactory;
+import org.eclipse.ocl.codegen.cgmodel.CGOperation;
 import org.eclipse.ocl.codegen.cgmodel.CGParameter;
 import org.eclipse.ocl.codegen.cgmodel.CGTupleExp;
 import org.eclipse.ocl.codegen.cgmodel.CGTuplePart;
@@ -222,6 +223,21 @@ public class CGUtil
 		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
 			if (cgElement instanceof CGConstraint) {
 				return (CGConstraint) cgElement;
+			}
+		}
+		return null;
+	}
+
+	public static @Nullable CGElement getContainingNamespace(@NonNull CGElement cgExpression) {
+		for (CGElement cgElement = cgExpression; cgElement != null; cgElement = cgElement.getParent()) {
+			if (cgElement instanceof CGClass) {
+				return cgElement;
+			}
+			else if (cgElement instanceof CGConstraint) {
+				return cgElement;
+			}
+			else if (cgElement instanceof CGOperation) {
+				return cgElement;
 			}
 		}
 		return null;
