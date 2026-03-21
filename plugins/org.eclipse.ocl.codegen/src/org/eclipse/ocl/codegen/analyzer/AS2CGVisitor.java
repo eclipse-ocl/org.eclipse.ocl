@@ -101,7 +101,6 @@ import org.eclipse.ocl.codegen.generator.IterationHelper;
 import org.eclipse.ocl.codegen.library.NativeProperty;
 import org.eclipse.ocl.codegen.library.NativeStaticOperation;
 import org.eclipse.ocl.codegen.library.NativeVisitorOperation;
-import org.eclipse.ocl.codegen.utilities.CGUtil;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
@@ -630,7 +629,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 			if (asParameter.isIsRequired()) {
 				if (!cgBody.isRequired()) {
-					System.err.println("Supporting invalid null return from \"" + cgBody + "\" in " + CGUtil.getContainingNamespace(cgSource));
+					System.err.println("Supporting non-conforming null return from \"" + cgBody + "\" in " + PivotUtil.getContainingNamespace(cgSource.getAst()));
 				}
 			//	cgBody.setRequired(true);
 			}
