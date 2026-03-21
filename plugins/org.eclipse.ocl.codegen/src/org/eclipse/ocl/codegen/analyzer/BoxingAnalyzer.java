@@ -84,6 +84,7 @@ import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -316,8 +317,9 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		super.visitCGBuiltInIterationCallExp(cgElement);
 		Iteration referredIteration = cgElement.getReferredIteration();
 		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + referredIteration + "'"));
+		Parameter asParameter = referredIteration.getOwnedParameters().get(0);
 		CGValuedElement cgBody = cgElement.getBodies().get(0);
-		if (cgBody.isRequired()) {
+		if (PivotUtil.isNonLambdaTypeRequired(asParameter)) {
 			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, "body for '" + referredIteration + "'"));
 		}
 		else {

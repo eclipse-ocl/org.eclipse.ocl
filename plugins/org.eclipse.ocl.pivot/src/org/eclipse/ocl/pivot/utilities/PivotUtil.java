@@ -3067,6 +3067,20 @@ public class PivotUtil implements PivotConstants
 		return (testNameSuffix != null) && testNameSuffix.startsWith("maven");
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public static boolean isNonLambdaTypeRequired(@NonNull TypedElement asTypedElement) {
+		Type type = asTypedElement.getType();
+		if (type instanceof LambdaType) {
+			LambdaParameter asResult = getOwnedResult((LambdaType)type);
+			return asResult.isIsRequired();
+		}
+		else {
+			return asTypedElement.isIsRequired();
+		}
+	}
+
 	public static boolean isObjectNavigationOperator(/*@NonNull*/ String operatorName) {
 		return OBJECT_NAVIGATION_OPERATOR.equals(operatorName)
 				|| SAFE_OBJECT_NAVIGATION_OPERATOR.equals(operatorName);

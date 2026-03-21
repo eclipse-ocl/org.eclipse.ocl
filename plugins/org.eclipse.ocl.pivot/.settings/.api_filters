@@ -6,6 +6,11 @@
                 <message_argument value="getOwnedBodies()"/>
             </message_arguments>
         </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="validateBodyTypesAreConformant(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/Iteration.java" type="org.eclipse.ocl.pivot.Iteration">
         <filter id="1211105284">
@@ -16,6 +21,13 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="setOwnedAccumulator(Parameter)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/IteratorExp.java" type="org.eclipse.ocl.pivot.IteratorExp">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="validateBodyTypeIsConformant(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -107,12 +119,22 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="getIterateExp__ValidateBodyTypesAreConformant__DiagnosticChain_Map()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="getIteration_OwnedAccumulator()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getIteratorExp_OwnedBody()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getIteratorExp__ValidateBodyTypeIsConformant__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -219,12 +241,22 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="ITERATE_EXP___VALIDATE_BODY_TYPES_ARE_CONFORMANT__DIAGNOSTICCHAIN_MAP"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="ITERATION__OWNED_ACCUMULATOR"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERATOR_EXP__OWNED_BODY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP___VALIDATE_BODY_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -958,7 +990,27 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="ITERATE_EXP__VALIDATE_BODY_TYPES_ARE_CONFORMANT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="ITERATOR_EXP__VALIDATE_BODY_TYPE_IS_CONFORMANT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="validateCompleteStandardLibrary(CompleteStandardLibrary, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateIterateExp_validateBodyTypesAreConformant(IterateExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="validateIteratorExp_validateBodyTypeIsConformant(IteratorExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
