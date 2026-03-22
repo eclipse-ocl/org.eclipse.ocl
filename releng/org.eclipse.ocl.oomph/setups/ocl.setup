@@ -17,6 +17,16 @@
   <setupTask
       xsi:type="jdt:JRETask"
       version="JavaSE-11"
+      location="${jre.location-11}"
+      name="JRE for JavaSE-11"/>
+  <setupTask
+      xsi:type="jdt:JRETask"
+      version="JavaSE-17"
+      location="${jre.location-17}"
+      name="JRE for JavaSE-17"/>
+  <setupTask
+      xsi:type="jdt:JRETask"
+      version="JavaSE-21"
       location="${jre.location-21}"
       name="JRE for JavaSE-21"/>
   <setupTask
@@ -52,7 +62,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2025-09"
+      defaultValue="2026-03"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -111,6 +121,20 @@
             url="https://download.eclipse.org/releases/latest"/>
         <repository
             url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/latest"/>
+      </repositoryList>
+      <repositoryList
+          name="2026-06">
+        <repository
+            url="https://download.eclipse.org/releases/2026-06"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2026-06"/>
+      </repositoryList>
+      <repositoryList
+          name="2026-03">
+        <repository
+            url="https://download.eclipse.org/releases/2026-03"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2026-03"/>
       </repositoryList>
       <repositoryList
           name="2025-12">
@@ -644,6 +668,9 @@
         name="master"
         label="Master (Latest)"/>
     <stream
+        name="6.23.0"
+        label="6.23.0 (2026-03)"/>
+    <stream
         name="6.22.0"
         label="6.22.0 (2024-09)"/>
     <stream
@@ -858,6 +885,9 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.23.0"
+        label="6.23.0 (2026-03)"/>
     <stream
         name="6.22.0"
         label="6.22.0 (2024-09)"/>
@@ -1445,6 +1475,9 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.23.0"
+        label="6.23.0 (2026-03)"/>
     <stream
         name="6.22.0"
         label="6.22.0 (2024-09)"/>
