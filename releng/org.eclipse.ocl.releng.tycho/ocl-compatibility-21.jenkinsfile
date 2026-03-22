@@ -40,17 +40,23 @@ pipeline {
 	environment {
 		BUILD_TIMESTAMP = sh(returnStdout: true, script: 'date +%Y%m%d%H%M').trim()
 	}
-	
+
 	parameters {
-		string(
-			name: 'BRANCH_NAME',
-			defaultValue: 'master',
-			description: 'Specify a bug branch name for example: (issue/123).'
-		)
 		string(
 			name: 'SELECTION',
 			defaultValue: '',
-			description: 'list of platforms to test, example: (2025-03 2026-03). Blank defaults to all of 2025-03 to 2026-03 inclusive'
+			description: '''
+<ul>
+<li> reload -- to reload the parameter definitions from GIT and bypass testing
+<li> 2025-03 2026-03 -- to test a list of (two) specific platforms
+<li> &lt;blank&gt; -- to test all of the 2025-03 to 2026-03 inclusive platforms
+</ul>'''
+		)
+
+		string(
+			name: 'BRANCH_NAME',
+			defaultValue: 'master',
+			description: 'Specify the branch to be tested for example: (master).'
 		)
 	}
 
@@ -72,6 +78,9 @@ pipeline {
 		//	Do the compatibility tests.
 		//
 		stage('For Loop') {
+			when {
+				expression { return params.SELECTION != 'reload' && currentBuild.getPreviousBuild() != null }
+			}
 			steps {
 				script {
 					for (targetPlatform in targetPlatforms) {
@@ -106,23 +115,23 @@ pipeline {
 	post {
 		failure {
 			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME} \n\
-Build Number: ${env.BUILD_NUMBER} \n\
-Build URL: <${env.BUILD_URL}> \n\
+body: "Project: ${env.JOB_NAME}\n\
+Build Number: ${env.BUILD_NUMBER}\n\
+Build URL: <${env.BUILD_URL}>\n\
 Console: <${env.BUILD_URL}console>"
 			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
 		}
 
 		fixed {
 			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME} \n\
-Build Number: ${env.BUILD_NUMBER} \n\
-Build URL: <${env.BUILD_URL}> \n\
+body: "Project: ${env.JOB_NAME}\n\
+Build Number: ${env.BUILD_NUMBER}\n\
+Build URL: <${env.BUILD_URL}>\n\
 Console: <${env.BUILD_URL}console>"
 		}
 
 		always {
-			junit 'tests/org.eclipse.ocl.compatibility.tests/target/surefire-reports/**/*.xml'		
+			junit allowEmptyResults: params.SELECTION == 'reload' || currentBuild.getPreviousBuild() == null, testResults: 'tests/org.eclipse.ocl.compatibility.tests/target/surefire-reports/**/*.xml'		
 		}
 
 //		cleanup {

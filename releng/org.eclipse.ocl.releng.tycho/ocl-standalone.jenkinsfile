@@ -21,20 +21,21 @@ pipeline {
 	parameters {
 		choice(
 			name: 'OCL_REPO',
-			choices: ['masterLatest', 'branchTestsLatest', 'release'],
+			choices: ['masterLatest', 'branchTestsLatest', 'release', 'reload'],
 			description: '''
 The repo to be tested:
 <ul>
-<li> - the most recent master build
-<li> - the most recent ocl-branch-tests build
-<li> - the most recent OCL release
+<li> masterLatest - the most recent master build
+<li> branchTestsLatest - the most recent ocl-branch-tests build
+<li> release - the most recent OCL release
+<li> reload -- to reload the parameter definitions from GIT and bypass testing
 </ul>				'''
 		)
 		
 		string(
 			name: 'BRANCH_NAME',
 			defaultValue: 'master',
-			description: 'Specify a bug branch name for example: (issue/123).'
+			description: 'Specify the branch to be tested for example: (master).'
 		)
 	}
 
@@ -60,6 +61,9 @@ OCL_REPO=${env.OCL_REPO}
 		//	Do the standalone Ecore test.
 		//
 		stage('Test-Ecore') {
+			when {
+				expression { return params.OCL_REPO != 'reload' && currentBuild.getPreviousBuild() != null }
+			}
 			steps {
 				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 					sh '''
@@ -80,6 +84,9 @@ OCL_REPO=${env.OCL_REPO}
 		//	Do the standalone UML test.
 		//
 		stage('Test-UML') {
+			when {
+				expression { return params.OCL_REPO != 'reload' && currentBuild.getPreviousBuild() != null }
+			}
 			steps {
 				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 					sh '''
@@ -101,23 +108,23 @@ OCL_REPO=${env.OCL_REPO}
 	post {
 		failure {
 			mail to: 'ed@willink.me.uk', subject: "[MoDisco CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME} \n\
-Build Number: ${env.BUILD_NUMBER} \n\
-Build URL: <${env.BUILD_URL}> \n\
+body: "Project: ${env.JOB_NAME}\n\
+Build Number: ${env.BUILD_NUMBER}\n\
+Build URL: <${env.BUILD_URL}>\n\
 Console: <${env.BUILD_URL}console>"
 			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
 		}
 
 		fixed {
 			mail to: 'ed@willink.me.uk', subject: "[MoDisco CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME} \n\
-Build Number: ${env.BUILD_NUMBER} \n\
-Build URL: <${env.BUILD_URL}> \n\
+body: "Project: ${env.JOB_NAME}\n\
+Build Number: ${env.BUILD_NUMBER}\n\
+Build URL: <${env.BUILD_URL}>\n\
 Console: <${env.BUILD_URL}console>"
 		}
 
 		always {
-			junit '**/*-reports/**/*.xml'		
+			junit allowEmptyResults: params.OCL_REPO == 'reload' || currentBuild.getPreviousBuild() == null, testResults: '**/*-reports/**/*.xml'		
 		}
 
 //		cleanup {

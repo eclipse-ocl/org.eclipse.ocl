@@ -23,10 +23,16 @@ pipeline {
 	}
 	
 	parameters {
+		booleanParam(
+			name: 'RELOAD',
+			defaultValue: false,
+			description: 'reload the parameter definitions from GIT and bypass testing.'
+		)
+		
 		string(
 			name: 'BRANCH_NAME',
 			defaultValue: 'master',
-			description: 'Specify a bug branch name for example: (issue/123).'
+			description: 'Specify the branch to be tested for example: (master).'
 		)
 	}
 
@@ -38,9 +44,8 @@ pipeline {
 			steps {
 				script {
 					env.BRANCH_NAME = params.BRANCH_NAME
-					env.SELECTION = params.SELECTION
-					echo "${params.BRANCH_NAME}"
-					currentBuild.description = "${params.BRANCH_NAME}"
+					echo "${params.BRANCH_NAME}: ${params.RELOAD}"
+					currentBuild.description = "${params.BRANCH_NAME}: ${params.RELOAD}"
 				}
 			}
 		}
@@ -48,6 +53,9 @@ pipeline {
 		//	Do the codegen tests.
 		//
 		stage('Test') {
+			when {
+				expression { return params.RELOAD == false && currentBuild.getPreviousBuild() != null }
+			}
 			steps {
 				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 					sh """
@@ -69,23 +77,23 @@ pipeline {
 	post {
 		failure {
 			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME} \n\
-Build Number: ${env.BUILD_NUMBER} \n\
-Build URL: <${env.BUILD_URL}> \n\
+body: "Project: ${env.JOB_NAME}\n\
+Build Number: ${env.BUILD_NUMBER}\n\
+Build URL: <${env.BUILD_URL}>\n\
 Console: <${env.BUILD_URL}console>"
 			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
 		}
 
 		fixed {
 			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME} \n\
-Build Number: ${env.BUILD_NUMBER} \n\
-Build URL: <${env.BUILD_URL}> \n\
+body: "Project: ${env.JOB_NAME}\n\
+Build Number: ${env.BUILD_NUMBER}\n\
+Build URL: <${env.BUILD_URL}>\n\
 Console: <${env.BUILD_URL}console>"
 		}
 
 		always {
-			junit 'tests/org.eclipse.ocl.codegen.tests/target/surefire-reports/**/*.xml'		
+			junit allowEmptyResults: params.RELOAD == true || currentBuild.getPreviousBuild() == null, testResults: 'tests/org.eclipse.ocl.codegen.tests/target/surefire-reports/**/*.xml'		
 		}
 
 //		cleanup {
