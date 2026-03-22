@@ -126,6 +126,7 @@ import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NullLiteralExp;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
@@ -166,6 +167,7 @@ import org.eclipse.ocl.pivot.internal.library.StaticProperty;
 import org.eclipse.ocl.pivot.internal.library.StereotypeProperty;
 import org.eclipse.ocl.pivot.internal.library.TuplePartProperty;
 import org.eclipse.ocl.pivot.internal.manager.FinalAnalysis;
+import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryOperation;
@@ -629,7 +631,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			}
 			if (asParameter.isIsRequired()) {
 				if (!cgBody.isRequired()) {
-					System.err.println("Supporting non-conforming null return from \"" + cgBody + "\" in " + PivotUtil.getContainingNamespace(cgSource.getAst()));
+					System.err.println("Supporting non-conforming null return from \"" + cgBody + "\" in " + getContext(cgSource.getAst()));
 				}
 			//	cgBody.setRequired(true);
 			}
@@ -1010,6 +1012,20 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	public @NonNull CodeGenAnalyzer getAnalyzer() {
 		return context;
+	}
+
+	private @NonNull String getContext(Element element) {
+		String expression = null;
+		String namespace = null;
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof ExpressionInOCL) {
+				expression = eObject.toString();
+			}
+			else if (eObject instanceof Namespace) {
+				namespace = eObject.toString();
+			}
+		}
+		return (namespace != null ? namespace : PivotConstantsInternal.NULL_MARKER) + " " + (expression != null ? expression : PivotConstantsInternal.NULL_MARKER);
 	}
 
 	public @NonNull CGIterator getIterator(@NonNull VariableDeclaration asVariable) {
