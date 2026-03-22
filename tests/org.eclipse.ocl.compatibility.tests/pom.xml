@@ -37,7 +37,8 @@
     <maven.build.timestamp.format>yyyyMMdd-HHmm</maven.build.timestamp.format>
     <buildTimestamp>${maven.build.timestamp}</buildTimestamp>
     <buildId>${buildType}${buildTimestamp}</buildId>
-    <executionEnvironment>unspecified</executionEnvironment>
+    <!-- Default for use till overridden for execution-->
+    <executionEnvironment>JavaSE-11</executionEnvironment>
     <targetRelease>unspecified</targetRelease>
     <targetPlatform>targetPlatforms/unspecified</targetPlatform>
 
@@ -178,11 +179,6 @@
                 <type>eclipse-plugin</type>
                 <id>org.eclipse.jdt.annotation</id>
                 <versionRange>[2.0.0,3.0.0)</versionRange>
-              </requirement>
-              <requirement>
-                <type>eclipse-plugin</type>
-                <id>javax.annotation</id>
-                <versionRange>[1.0.0,2.0.0)</versionRange>
               </requirement>
               <requirement>
                 <type>eclipse-plugin</type>
@@ -513,110 +509,6 @@
     </pluginManagement>
   </build>
   <profiles>
-    <profile>
-      <id>luna</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.6</executionEnvironment>
-        <runtime-jdk-version>1.6</runtime-jdk-version>
-        <targetRelease>luna</targetRelease>
-        <tycho-version>3.0.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>mars</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.7</executionEnvironment>
-        <runtime-jdk-version>1.7</runtime-jdk-version>
-        <targetRelease>mars</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>neon</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>neon</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>oxygen</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>oxygen</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>photon</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>photon</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>2018-09</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>2018-09</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>2018-12</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>2018-12</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
-    <profile>
-      <id>2019-03</id>
-      <activation>
-        <activeByDefault>false</activeByDefault>
-      </activation>
-      <properties>
-        <buildType></buildType>
-        <executionEnvironment>JavaSE-1.8</executionEnvironment>
-        <runtime-jdk-version>1.8</runtime-jdk-version>
-        <targetRelease>2019-03</targetRelease>
-        <tycho-version>2.7.5</tycho-version>
-      </properties>
-    </profile>
     <profile>
       <id>2019-06</id>
       <activation>
