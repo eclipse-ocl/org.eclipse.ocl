@@ -352,7 +352,7 @@ public class CodeGenAnalyzer
 	 */
 	public @NonNull CGValuedElement replace(@NonNull CGValuedElement oldElement, @NonNull CGValuedElement newElement,
 			/*@NonNull*/ String messageTemplate, Object... bindings) {
-		if (oldElement.isRequired() && newElement.isNull()) {
+		if (oldElement.isNonNull() && newElement.isNull()) {
 			newElement = getInvalid(messageTemplate, bindings);
 		}
 		return CGUtil.replace(oldElement, newElement);

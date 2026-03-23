@@ -228,7 +228,7 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 			return null;
 		}
 		else if (value instanceof CGElementId) {
-			return getASTypeId() == ((CGElementId)thatValue).getASTypeId();
+			return getASTypeId() == thatValue.getASTypeId();
 		}
 		else {
 			return Boolean.FALSE;
@@ -253,4 +253,12 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT
+	 */
+	@Override
+	public boolean basicIsRequired() {
+		return true;
+	}
 } //CGElementIdImpl

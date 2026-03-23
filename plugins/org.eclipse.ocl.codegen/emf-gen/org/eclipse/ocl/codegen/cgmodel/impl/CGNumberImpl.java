@@ -252,5 +252,4 @@ public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 		return false;
 	}
 
-
 } //CGNumberImpl

@@ -629,12 +629,12 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 			if (asParameterType instanceof LambdaType) {				// Always true
 				asParameter = PivotUtil.getOwnedResult((LambdaType)asParameterType);
 			}
-			if (asParameter.isIsRequired()) {
-				if (!cgBody.isRequired()) {
-					System.err.println("Supporting non-conforming null return from \"" + cgBody + "\" in " + getContext(cgSource.getAst()));
-				}
+		//	if (asParameter.isIsRequired()) {
+			//	if (!cgBody.isNonNull()) {			// XXX need symbolic execution to avoid this cautionary code
+			//		System.err.println("Supporting non-conforming null return from \"" + cgBody + "\" in " + getContext(cgSource.getAst()));
+			//	}
 			//	cgBody.setRequired(true);
-			}
+		//	}
 			CGTypeId cgAccumulatorId = iterationHelper.getAccumulatorTypeId(context, cgBuiltInIterationCallExp);
 			if (cgAccumulatorId != null) {
 				CGAccumulator cgAccumulator = CGModelFactory.eINSTANCE.createCGAccumulator();

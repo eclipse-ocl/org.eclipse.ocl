@@ -133,4 +133,4 @@ public class CGUnlimitedImpl extends CGConstantImpl implements CGUnlimited {
 		return false;
 	}
 
-} //CGInfinityImpl
+} //CGUnlimitedImpl

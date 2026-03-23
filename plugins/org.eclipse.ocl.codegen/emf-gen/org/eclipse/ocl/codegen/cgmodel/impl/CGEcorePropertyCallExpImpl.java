@@ -195,7 +195,7 @@ public class CGEcorePropertyCallExpImpl extends CGPropertyCallExpImpl implements
 	 */
 	@Override
 	public boolean isNonNull() {
-		return isRequired();
+		return basicIsRequired();
 	}
 
 	/**
