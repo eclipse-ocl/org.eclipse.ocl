@@ -630,7 +630,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 				asParameter = PivotUtil.getOwnedResult((LambdaType)asParameterType);
 			}
 			if (asParameter.isIsRequired()) {
-				if (!cgBody.isRequired()) {
+				if (!cgBody.isNonNull()) {
 					System.err.println("Supporting non-conforming null return from \"" + cgBody + "\" in " + getContext(cgSource.getAst()));
 				}
 			//	cgBody.setRequired(true);
