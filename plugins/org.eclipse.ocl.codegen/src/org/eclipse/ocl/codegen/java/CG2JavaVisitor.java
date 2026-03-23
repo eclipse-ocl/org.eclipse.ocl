@@ -1181,7 +1181,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		if (isMap && (cgCoIterator != null)) { // && !isImplicit
 			Variable asCoIterator = CGUtil.getAST(cgCoIterator);
 			if (!asCoIterator.isIsImplicit()) {
-				if (cgCoIterator.isRequired()) {
+				if (cgCoIterator.isNonNull()) {
 					js.appendSuppressWarningsNull(true);
 				}
 				js.appendDeclaration(cgCoIterator);
