@@ -625,7 +625,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGProperty(@NonNull CGProperty cgElement) {
 		super.visitCGProperty(cgElement);
-		if (cgElement.isRequired()) {
+		if (cgElement.isNonNull()) {
 			CGValuedElement body = cgElement.getBody();
 			if (body != null) {
 				rewriteAsGuarded(body, false, "body for '" + cgElement.getAst() + "'");
