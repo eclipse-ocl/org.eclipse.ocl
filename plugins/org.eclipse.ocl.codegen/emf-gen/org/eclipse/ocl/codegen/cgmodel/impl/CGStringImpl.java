@@ -246,9 +246,9 @@ public class CGStringImpl extends CGConstantImpl implements CGString {
 	/**
 	 * {@inheritDoc}
 	 * @generated NOT
-	 */
+	 *
 	@Override
 	public boolean isRequired() {
 		return stringValue != null;
-	}
+	} */
 } //CGStringImpl

@@ -1773,9 +1773,9 @@ public class PivotUtil implements PivotConstants
 		return ClassUtil.requireNonNull(basicGetContainingModel(element));
 	}
 
-//	public static @NonNull Namespace getContainingNamespace(@NonNull EObject element) {
-//		return ClassUtil.requireNonNull(basicGetContainingNamespace(element));
-//	}
+	public static @NonNull Namespace getContainingNamespace(@NonNull EObject element) {
+		return ClassUtil.requireNonNull(basicGetContainingNamespace(element));
+	}
 
 	public static @NonNull Operation getContainingOperation(@Nullable EObject element) {
 		return ClassUtil.requireNonNull(basicGetContainingOperation(element));

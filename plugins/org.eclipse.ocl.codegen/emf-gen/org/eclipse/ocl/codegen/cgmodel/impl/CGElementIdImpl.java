@@ -256,9 +256,9 @@ public class CGElementIdImpl extends CGConstantImpl implements CGElementId {
 	/**
 	 * {@inheritDoc}
 	 * @generated NOT
-	 */
+	 *
 	@Override
 	public boolean isRequired() {
 		return true;
-	}
+	} */
 } //CGElementIdImpl

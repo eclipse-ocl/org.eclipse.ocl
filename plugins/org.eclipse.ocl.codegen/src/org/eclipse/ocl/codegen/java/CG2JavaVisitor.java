@@ -1130,7 +1130,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		//
 		//	Declare iterator
 		//
-		js.appendClassReference(cgIterator.isRequired(), Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
+		js.appendClassReference(cgIterator.isNonNull(), Iterator.class, false, Object.class); //, getJavaClass(cgIterator));
 		js.append(" " + iteratorName + " = ");
 		js.appendAtomicReferenceTo(cgSource);
 		js.append(".iterator();\n");
@@ -2757,7 +2757,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				boolean cgOperationIsInvalid = cgOperation.getInvalidValue() != null;
 				js.appendIsCaught(!cgOperationIsInvalid, cgOperationIsInvalid);
 				js.append(" ");
-				js.appendClassReference(cgOperation.isRequired() ? true : null, cgOperation);
+				js.appendClassReference(cgOperation.isNonNull() ? true : null, cgOperation);
 				js.append(" ");
 				js.append(cgOperation.getName());
 				js.append("(");

@@ -285,7 +285,7 @@ public abstract class CGOperationCallExpImpl extends CGCallExpImpl implements CG
 	 */
 	@Override
 	public boolean isNonNull() {
-		return isRequired() || ((referredOperation != null) && referredOperation.isIsRequired());
+		return basicIsRequired() || ((referredOperation != null) && referredOperation.isIsRequired());
 	}
 
 	/**

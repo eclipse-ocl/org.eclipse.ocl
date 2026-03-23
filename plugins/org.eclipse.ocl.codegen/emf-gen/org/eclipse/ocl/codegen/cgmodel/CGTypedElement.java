@@ -74,6 +74,11 @@ public interface CGTypedElement extends CGNamedElement {
 	boolean isRequired();
 
 	/**
+	 * @generated NOT
+	 */
+	boolean basicIsRequired();
+
+	/**
 	 * Sets the value of the '{@link org.eclipse.ocl.codegen.cgmodel.CGTypedElement#isRequired <em>Required</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

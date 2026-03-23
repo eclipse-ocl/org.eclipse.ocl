@@ -289,9 +289,9 @@ public class CGInvalidImpl extends CGConstantImpl implements CGInvalid {
 	/**
 	 * {@inheritDoc}
 	 * @generated NOT
-	 */
+	 *
 	@Override
 	public boolean isRequired() {
 		return true;
-	}
+	} */
 } //CGInvalidImpl

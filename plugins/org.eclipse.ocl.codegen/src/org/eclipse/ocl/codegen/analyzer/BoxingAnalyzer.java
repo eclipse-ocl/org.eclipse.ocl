@@ -613,7 +613,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		//		if ("isAttribute".equals(cgElement.getName())) {
 		//			System.out.println("visitCGOperation for " + cgElement.getAst().toString());
 		//		}
-		if (cgElement.isRequired()) {
+		if (cgElement.isNonNull()) {
 			CGValuedElement body = cgElement.getBody();
 			if (body != null) {
 				rewriteAsGuarded(body, false, "body for '" + cgElement.getAst() + "'");

@@ -300,10 +300,10 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 	/**
 	 * {@inheritDoc}
 	 * @generated NOT
-	 */
+	 *
 	@Override
 	public boolean isRequired() {
 		return (referredConstant != null) ? referredConstant.isRequired() : super.isRequired();
-	}
+	} */
 
 } //CGConstantExpImpl

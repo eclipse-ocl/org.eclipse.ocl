@@ -122,7 +122,18 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	 * @generated
 	 */
 	@Override
-	public boolean isRequired() {
+	public boolean basicIsRequired() {
+		return required;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public final boolean isRequired() {
+		System.out.println("Use three-valued isNull/isNonNull rather than isRequired");
 		return required;
 	}
 
