@@ -252,5 +252,12 @@ public abstract class CGNumberImpl extends CGConstantImpl implements CGNumber {
 		return false;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isRequired() {
+		return true;
+	}
 } //CGNumberImpl

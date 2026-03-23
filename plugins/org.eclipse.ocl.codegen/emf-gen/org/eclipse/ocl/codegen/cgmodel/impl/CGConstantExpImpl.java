@@ -297,4 +297,13 @@ public class CGConstantExpImpl extends CGValuedElementImpl implements CGConstant
 		return (referredConstant != null) && referredConstant.isUncommonable();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isRequired() {
+		return (referredConstant != null) ? referredConstant.isRequired() : super.isRequired();
+	}
+
 } //CGConstantExpImpl

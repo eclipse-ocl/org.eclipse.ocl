@@ -124,6 +124,7 @@ public class CodeGenAnalyzer
 		CGConstantExp cgConstantExp = CGModelFactory.eINSTANCE.createCGConstantExp();
 		cgConstantExp.setAst(element);
 		cgConstantExp.setReferredConstant(cgConstant);
+		cgConstantExp.setRequired(cgConstant.isRequired());
 		cgConstantExp.setTypeId(getTypeId(element.getTypeId()));
 		return cgConstantExp;
 	}

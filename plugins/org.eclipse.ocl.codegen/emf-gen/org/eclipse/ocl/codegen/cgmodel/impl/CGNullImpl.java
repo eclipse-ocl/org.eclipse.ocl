@@ -126,4 +126,13 @@ public class CGNullImpl extends CGConstantImpl implements CGNull {
 		return true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isRequired() {
+		return false;
+	}
+
 } //CGNullImpl

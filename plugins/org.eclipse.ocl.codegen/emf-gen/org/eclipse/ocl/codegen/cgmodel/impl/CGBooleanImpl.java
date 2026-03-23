@@ -244,6 +244,15 @@ public class CGBooleanImpl extends CGConstantImpl implements CGBoolean {
 
 	/**
 	 * {@inheritDoc}
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isRequired() {
+		return true;
+	}
+
+	/**
+	 * {@inheritDoc}
 	 * @generated
 	 */
 	@Override

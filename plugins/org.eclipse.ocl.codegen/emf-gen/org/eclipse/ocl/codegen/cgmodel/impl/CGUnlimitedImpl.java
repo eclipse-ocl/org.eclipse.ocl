@@ -133,4 +133,12 @@ public class CGUnlimitedImpl extends CGConstantImpl implements CGUnlimited {
 		return false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @generated NOT
+	 */
+	@Override
+	public boolean isRequired() {
+		return true;
+	}
 } //CGInfinityImpl
