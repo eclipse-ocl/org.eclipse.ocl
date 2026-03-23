@@ -117,9 +117,8 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * FIXME tidy up basicIsRequired/isRequired/isNonNull as part of symbolic execution
+	 * @generated NOT
 	 */
 	@Override
 	public boolean basicIsRequired() {
@@ -127,13 +126,12 @@ public abstract class CGTypedElementImpl extends CGNamedElementImpl implements C
 	}
 
 	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
+	 * FIXME tidy up basicIsRequired/isRequired/isNonNull as part of symbolic execution
+	 * @generated NOT
 	 */
 	@Override
 	public final boolean isRequired() {
-		System.out.println("Use three-valued isNull/isNonNull rather than isRequired");
+		System.out.println("Use basicIsRequired or three-valued isNull/isNonNull rather than isRequired");
 		return required;
 	}
 

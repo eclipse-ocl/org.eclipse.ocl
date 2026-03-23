@@ -789,7 +789,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 						"			return null;\n" +
 						"		}\n" +
 						"		else if (value instanceof CGElementId) {\n" +
-						"			return getASTypeId() == ((CGElementId)thatValue).getASTypeId();\n" +
+						"			return getASTypeId() == thatValue.getASTypeId();\n" +
 						"		}\n" +
 						"		else {\n" +
 						"			return Boolean.FALSE;\n" +
@@ -1699,7 +1699,7 @@ public class CGValuedElementModelSpec extends ModelSpec
 				return "return false;";
 			}
 			@Override public @NonNull String generateIsNonNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
-				return "return isRequired();";
+				return "return basicIsRequired();";
 			}
 			@Override public @NonNull String generateIsNull(@NonNull CGValuedElementModelSpec cgModelSpec, @NonNull GenModel genModel) {
 				return "return false;";

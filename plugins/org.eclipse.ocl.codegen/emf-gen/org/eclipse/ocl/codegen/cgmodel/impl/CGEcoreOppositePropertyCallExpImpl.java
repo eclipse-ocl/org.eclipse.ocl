@@ -198,7 +198,7 @@ public class CGEcoreOppositePropertyCallExpImpl extends CGOppositePropertyCallEx
 	 */
 	@Override
 	public boolean isNonNull() {
-		return isRequired();
+		return basicIsRequired();
 	}
 
 	/**

@@ -206,8 +206,19 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		}
 		else {
 			safeVisit(cgTypedElement.getTypeId());
-			if (!cgTypedElement.basicIsRequired()) {			// FIXME use CGVariable isNonNull too
-				append("[?]");
+			boolean isRequired = cgTypedElement.basicIsRequired();
+			if (cgTypedElement instanceof CGValuedElement) {			// FIXME use CGVariable isNonNull too
+				boolean isNonNull = ((CGValuedElement)cgTypedElement).isNonNull();
+				assert isNonNull == isRequired;
+				if (!isNonNull) {			// FIXME use CGVariable isNonNull too
+					append("[?]");
+				}
+			}
+			else {
+				assert false : "Using CGTypedElement.basicIsRequired()";
+				if (!isRequired) {			// FIXME use CGVariable isNonNull too
+					append("[?]");
+				}
 			}
 		}
 	}
