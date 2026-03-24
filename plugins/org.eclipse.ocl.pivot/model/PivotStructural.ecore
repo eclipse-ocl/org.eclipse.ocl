@@ -5,9 +5,9 @@
   <eAnnotations source="http://www.eclipse.org/OCL/Collection">
     <details key="nullFree" value="true"/>
   </eAnnotations>
-  <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="boolean">
+  <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-      <details key="documentation" value="Boolean is used for logical expressions, consisting of the predefined values true and false."/>
+      <details key="documentation" value="Boolean is used for 3-valued logical expressions, consisting of the predefined values true, false and null.&#xA;Code generation may use a narrower 2-valued type when possible,"/>
     </eAnnotations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="EcoreObject" instanceClassName="org.eclipse.emf.ecore.EObject"/>
@@ -118,10 +118,10 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BooleanType" eSuperTypes="#//PrimitiveType"/>
   <eClassifiers xsi:type="ecore:EClass" name="CallExp" abstract="true" eSuperTypes="#//OCLExpression">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" eType="#//Boolean"
-        defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSafe" eType="#//Boolean"
-        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isSafe" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedSource" eType="#//OCLExpression"
         containment="true"/>
   </eClassifiers>
@@ -751,8 +751,8 @@
         <details key="documentation" value="Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTransient" eType="#//Boolean"
-        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTransient" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTypeof" lowerBound="1"
         eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isValidating" lowerBound="1"
@@ -960,8 +960,8 @@
         <details key="documentation" value="True indicates this property can be used to uniquely identify an instance of the containing Class."/>
       </eAnnotations>
     </eStructuralFeatures>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" eType="#//Boolean"
-        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isReadOnly" lowerBound="1"
         eType="#//Boolean" defaultValueLiteral="false">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1487,8 +1487,8 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Variable" eSuperTypes="#//VariableDeclaration">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" eType="#//Boolean"
-        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedInit" eType="#//OCLExpression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="representedParameter" eType="#//Parameter"/>
@@ -1499,8 +1499,8 @@
         transient="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VariableExp" eSuperTypes="#//OCLExpression #//ReferringElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" eType="#//Boolean"
-        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isImplicit" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredVariable" eType="#//VariableDeclaration"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Vertex" abstract="true" eSuperTypes="#//NamedElement">

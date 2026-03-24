@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
@@ -196,6 +197,14 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			return OCLstdlibPackage.Literals.OCL_ANY;
 		}
 	}
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public EObject visitBooleanType(@NonNull BooleanType pivotType) {
+		EObject eClassifier = super.visitBooleanType(pivotType);
+		return isRequired ? EcorePackage.Literals.EBOOLEAN : EcorePackage.Literals.EBOOLEAN_OBJECT;
+	}
 
 	@Override
 	public EObject visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotType) {
@@ -331,6 +340,9 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 	public EObject visitPrimitiveType(@NonNull PrimitiveType pivotType) {
 		EDataType eClassifier = context.getCreated(EDataType.class, pivotType);
 		if (eClassifier != null) {
+			if (!isRequired && (eClassifier == EcorePackage.Literals.EBOOLEAN)) {
+				return EcorePackage.Literals.EBOOLEAN_OBJECT;
+			}
 			return eClassifier;
 		}
 	//	EDataType eClassifier2 = getESObject(EDataType.class, pivotType);  -- too simple can give String rather than EString
