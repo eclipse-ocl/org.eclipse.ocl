@@ -2113,7 +2113,7 @@ public class PivotTables extends AbstractTables
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _ValueSpecification__booleanValue = LIBRARY.createOperation(Types._ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___BOOLEAN_VALUE, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
-			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+			0, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _ValueSpecification__integerValue = LIBRARY.createOperation(Types._ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___INTEGER_VALUE, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Integer,
 			1, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _ValueSpecification__isComputable = LIBRARY.createOperation(Types._ValueSpecification, PivotPackage.Literals.VALUE_SPECIFICATION___IS_COMPUTABLE, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,

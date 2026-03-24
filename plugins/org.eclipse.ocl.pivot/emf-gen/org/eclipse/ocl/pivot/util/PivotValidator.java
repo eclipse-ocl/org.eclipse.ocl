@@ -4968,8 +4968,8 @@ extends EObjectValidator {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public boolean validateBoolean(boolean boolean_,
-			DiagnosticChain diagnostics, Map<Object, Object> context) {
+	public boolean validateBoolean(Boolean boolean_, DiagnosticChain diagnostics, Map<Object, Object> context)
+	{
 		return true;
 	}
 

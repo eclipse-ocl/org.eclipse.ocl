@@ -55,7 +55,7 @@ public interface ValueSpecification
 	 * <!-- end-model-doc -->
 	 * @generated
 	 */
-	boolean booleanValue();
+	Boolean booleanValue();
 
 	/**
 	 * <!-- begin-user-doc -->

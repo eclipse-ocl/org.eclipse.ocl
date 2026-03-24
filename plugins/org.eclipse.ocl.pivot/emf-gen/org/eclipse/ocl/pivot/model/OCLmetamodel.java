@@ -2466,7 +2466,6 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedOperations = _ValueSpecification.getOwnedOperations();
 			ownedOperations.add(operation = op_ValueSpecification_booleanValue);
-			operation.setIsRequired(true);
 			ownedOperations.add(operation = op_ValueSpecification_integerValue);
 			ownedOperations.add(operation = op_ValueSpecification_isComputable);
 			operation.setIsRequired(true);

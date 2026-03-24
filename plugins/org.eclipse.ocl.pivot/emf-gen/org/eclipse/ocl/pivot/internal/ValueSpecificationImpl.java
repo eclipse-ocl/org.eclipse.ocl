@@ -93,7 +93,7 @@ public abstract class ValueSpecificationImpl
 	 * @generated
 	 */
 	@Override
-	public boolean booleanValue() {
+	public Boolean booleanValue() {
 		throw new UnsupportedOperationException();  // FIXME Unimplemented http://www.eclipse.org/ocl/2015/Pivot!ValueSpecification!booleanValue()
 	}
 
