@@ -1057,9 +1057,6 @@ implements Property {
 				and = ValueUtil.TRUE_VALUE;
 			}
 		}
-		if (and == null) {
-			throw new InvalidValueException("Null body for \'Property::isAttribute(Property[1]) : Boolean[1]\'");
-		}
 		return and;
 	}
 

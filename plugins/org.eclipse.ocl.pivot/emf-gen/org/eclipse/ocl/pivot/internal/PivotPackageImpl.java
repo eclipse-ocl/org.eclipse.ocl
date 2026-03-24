@@ -2490,7 +2490,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIterateExp__ValidateTypeIsResultType__DiagnosticChain_Map()
 	{
-		return iterateExpEClass.getEOperations().get(4);
+		return iterateExpEClass.getEOperations().get(5);
 	}
 
 	/**
@@ -2501,7 +2501,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIterateExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map()
 	{
-		return iterateExpEClass.getEOperations().get(5);
+		return iterateExpEClass.getEOperations().get(6);
 	}
 
 	/**
@@ -2521,7 +2521,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getIterateExp__ValidateOneInitializer__DiagnosticChain_Map()
+	public EOperation getIterateExp__ValidateBodyTypesAreConformant__DiagnosticChain_Map()
 	{
 		return iterateExpEClass.getEOperations().get(1);
 	}
@@ -2532,7 +2532,7 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getIterateExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map()
+	public EOperation getIterateExp__ValidateOneInitializer__DiagnosticChain_Map()
 	{
 		return iterateExpEClass.getEOperations().get(2);
 	}
@@ -2543,9 +2543,20 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EOperation getIterateExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()
+	public EOperation getIterateExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map()
 	{
 		return iterateExpEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getIterateExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()
+	{
+		return iterateExpEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -2611,7 +2622,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateClosureBodyTypeIsConformanttoIteratorType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(4);
+		return iteratorExpEClass.getEOperations().get(5);
 	}
 
 	/**
@@ -2622,7 +2633,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSortedByIteratorTypeIsComparable__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(18);
+		return iteratorExpEClass.getEOperations().get(19);
 	}
 
 	/**
@@ -2633,7 +2644,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateUnsafeSourceCanNotBeNull__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(19);
+		return iteratorExpEClass.getEOperations().get(20);
 	}
 
 	/**
@@ -2693,6 +2704,17 @@ implements PivotPackage  {
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EOperation getIteratorExp__ValidateBodyTypeIsConformant__DiagnosticChain_Map()
+	{
+		return iteratorExpEClass.getEOperations().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * @since 1.3
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -2700,7 +2722,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(3);
+		return iteratorExpEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -2722,7 +2744,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateClosureHasOneIterator__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(6);
+		return iteratorExpEClass.getEOperations().get(7);
 	}
 
 	/**
@@ -2734,7 +2756,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateClosureResultElementTypeIsIteratorType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(7);
+		return iteratorExpEClass.getEOperations().get(8);
 	}
 
 	/**
@@ -2745,7 +2767,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateClosureTypeIsUniqueCollection__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(9);
+		return iteratorExpEClass.getEOperations().get(10);
 	}
 
 	/**
@@ -2756,7 +2778,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateCollectElementTypeIsFlattenedBodyType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(10);
+		return iteratorExpEClass.getEOperations().get(11);
 	}
 
 	/**
@@ -2767,7 +2789,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateClosureSourceElementTypeIsBodyElementType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(8);
+		return iteratorExpEClass.getEOperations().get(9);
 	}
 
 	/**
@@ -2778,7 +2800,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateClosureElementTypeIsSourceElementType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(5);
+		return iteratorExpEClass.getEOperations().get(6);
 	}
 
 	/**
@@ -2789,7 +2811,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateCollectTypeIsUnordered__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(11);
+		return iteratorExpEClass.getEOperations().get(12);
 	}
 
 	/**
@@ -2800,7 +2822,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSortedByIsOrderedIfSourceIsOrdered__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(17);
+		return iteratorExpEClass.getEOperations().get(18);
 	}
 
 	/**
@@ -2811,7 +2833,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSortedByElementTypeIsSourceElementType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(16);
+		return iteratorExpEClass.getEOperations().get(17);
 	}
 
 	/**
@@ -2822,7 +2844,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateIteratorTypeIsSourceElementType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(12);
+		return iteratorExpEClass.getEOperations().get(13);
 	}
 
 	/**
@@ -2833,7 +2855,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateIteratorTypeIsSourceKeyType__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(13);
+		return iteratorExpEClass.getEOperations().get(14);
 	}
 
 	/**
@@ -2844,7 +2866,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSafeIteratorIsRequired__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(14);
+		return iteratorExpEClass.getEOperations().get(15);
 	}
 
 	/**
@@ -2855,7 +2877,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getIteratorExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map()
 	{
-		return iteratorExpEClass.getEOperations().get(15);
+		return iteratorExpEClass.getEOperations().get(16);
 	}
 
 	/**
@@ -7347,6 +7369,7 @@ implements PivotPackage  {
 		createEOperation(iterateExpEClass, 20);
 		createEOperation(iterateExpEClass, 21);
 		createEOperation(iterateExpEClass, 22);
+		createEOperation(iterateExpEClass, 23);
 
 		iterationEClass = createEClass(47);
 		createEReference(iterationEClass, 28);
@@ -7374,6 +7397,7 @@ implements PivotPackage  {
 		createEOperation(iteratorExpEClass, 34);
 		createEOperation(iteratorExpEClass, 35);
 		createEOperation(iteratorExpEClass, 36);
+		createEOperation(iteratorExpEClass, 37);
 
 		iteratorVariableEClass = createEClass(49);
 		createEOperation(iteratorVariableEClass, 7);
@@ -8403,6 +8427,15 @@ implements PivotPackage  {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
+		op = initEOperation(getIterateExp__ValidateBodyTypesAreConformant__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateBodyTypesAreConformant", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		op = initEOperation(getIterateExp__ValidateOneInitializer__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateOneInitializer", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
@@ -8474,6 +8507,15 @@ implements PivotPackage  {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getIteratorExp__ValidateAnyTypeIsSourceElementType__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateAnyTypeIsSourceElementType", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(ecorePackage.getEMap());
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		g2 = createEGenericType(ecorePackage.getEJavaObject());
+		g1.getETypeArguments().add(g2);
+		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getIteratorExp__ValidateBodyTypeIsConformant__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateBodyTypeIsConformant", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(ecorePackage.getEMap());
 		g2 = createEGenericType(ecorePackage.getEJavaObject());
@@ -10362,6 +10404,13 @@ implements PivotPackage  {
 			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getIterateExp__ValidateBodyTypesAreConformant__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tSequence{1..ownedBodies->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedBodies->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\tlet isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\t\tlet nullityConforms : Boolean = argument.isRequired or not isRequired in\n\t\targument.type?.conformsTo(requiredType) and nullityConforms)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getIterateExp__ValidateOneInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
@@ -10394,7 +10443,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateAnyBodyTypeIsBoolean__DiagnosticChain_Map(),
@@ -10416,6 +10465,13 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "body", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getIteratorExp__ValidateBodyTypeIsConformant__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "body", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tlet argument : OCLExpression = ownedBody in\n\tlet parameter : Parameter = parameters?->at(1) in\n\tlet parameterType : Type = parameter.type in\n\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\tlet isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\tlet nullityConforms : Boolean = argument.isRequired or not isRequired in\n\targument.type?.conformsTo(requiredType) and nullityConforms\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map(),
@@ -10534,7 +10590,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map(),
@@ -11158,6 +11214,13 @@ implements PivotPackage  {
 			   "originalName", "BodyTypeConformsToResultType" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getIterateExp__ValidateBodyTypesAreConformant__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "BodyTypesAreConformant" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getIterateExp__ValidateOneInitializer__DiagnosticChain_Map(),
 		   source,
 		   new String[]
@@ -11212,6 +11275,13 @@ implements PivotPackage  {
 		   new String[]
 		   {
 			   "originalName", "AnyTypeIsSourceElementType" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getIteratorExp__ValidateBodyTypeIsConformant__DiagnosticChain_Map(),
+		   source,
+		   new String[]
+		   {
+			   "originalName", "BodyTypeIsConformant" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map(),
