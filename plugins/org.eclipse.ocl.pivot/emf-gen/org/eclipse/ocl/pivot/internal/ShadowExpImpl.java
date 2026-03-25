@@ -275,8 +275,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						final /*@NonInvalid*/ @NonNull List<ShadowPart> ownedParts = this.getOwnedParts();
 						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedParts = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_ShadowPart, ownedParts);
 						final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedParts);
-						final /*@NonInvalid*/ boolean eq = size.equals(PivotTables.INT_1);
-						if (eq) {
+						final /*@NonInvalid*/ boolean EQ_size_INT_1 = size.equals(PivotTables.INT_1);
+						if (EQ_size_INT_1) {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
@@ -592,17 +592,17 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 * name?.startsWith('ocl')
 							 */
 							final /*@NonInvalid*/ @Nullable String name = _1_3.getName();
-							final /*@NonInvalid*/ @NonNull Object startsWith = name == null;
+							final /*@NonInvalid*/ @NonNull Object EQ_name_null = name == null;
 							/*@Thrown*/ @Nullable Boolean safe_startsWith_source;
-							if (startsWith == Boolean.TRUE) {
+							if (EQ_name_null == Boolean.TRUE) {
 								safe_startsWith_source = null;
 							}
 							else {
 								if (name == null) {
 									throw new InvalidValueException("Null \'\'String\'\' rather than \'\'OclVoid\'\' value required");
 								}
-								final /*@Thrown*/ boolean startsWith_0 = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
-								safe_startsWith_source = startsWith_0;
+								final /*@Thrown*/ boolean startsWith = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
+								safe_startsWith_source = startsWith;
 							}
 							if (safe_startsWith_source == null) {
 								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
@@ -626,9 +626,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 * defaultValueString <> null
 							 */
 							final /*@NonInvalid*/ @Nullable String defaultValueString = _1_4.getDefaultValueString();
-							final /*@NonInvalid*/ boolean ne = defaultValueString != null;
+							final /*@NonInvalid*/ boolean NE_defaultValueString_null = defaultValueString != null;
 							//
-							if (!ne) {
+							if (!NE_defaultValueString_null) {
 								accumulator_3.add(_1_4);
 							}
 						}
@@ -719,9 +719,9 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							 * opposite <> null and opposite.isComposite
 							 */
 							final /*@NonInvalid*/ @Nullable Property opposite = _1_7.getOpposite();
-							final /*@NonInvalid*/ boolean ne_0 = opposite != null;
+							final /*@NonInvalid*/ boolean NE_opposite_null = opposite != null;
 							final /*@Thrown*/ @Nullable Boolean and;
-							if (!ne_0) {
+							if (!NE_opposite_null) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
@@ -914,8 +914,8 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			else {
 				final /*@NonInvalid*/ @NonNull InvalidType TYP_OclInvalid_0 = (@NonNull InvalidType)idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean NE_type_TYP_OclInvalid_0 = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, NE_type_TYP_OclInvalid_0, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

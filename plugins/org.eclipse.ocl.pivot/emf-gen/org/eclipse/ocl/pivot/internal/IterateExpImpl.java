@@ -715,15 +715,15 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						/*@Caught*/ @NonNull Object CAUGHT_IF_oclIsKindOf;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
+							final /*@NonInvalid*/ @NonNull Object EQ_ownedSource_null = ownedSource == null;
 							/*@Thrown*/ @Nullable Type safe_type_source;
-							if (type == Boolean.TRUE) {
+							if (EQ_ownedSource_null == Boolean.TRUE) {
 								safe_type_source = null;
 							}
 							else {
 								assert ownedSource != null;
-								final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
-								safe_type_source = type_0;
+								final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
+								safe_type_source = type;
 							}
 							final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
 							final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_MapType_0).booleanValue();
@@ -860,28 +860,28 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 				/*@Caught*/ @Nullable Object CAUGHT_forAll;
 				try {
 					final /*@NonInvalid*/ @Nullable Iteration iteration = this.getReferredIteration();
-					final /*@NonInvalid*/ @NonNull Object ownedParameters = iteration == null;
+					final /*@NonInvalid*/ @NonNull Object EQ_iteration_null = iteration == null;
 					/*@Thrown*/ @Nullable OrderedSetValue safe_ownedParameters_source;
-					if (ownedParameters == Boolean.TRUE) {
+					if (EQ_iteration_null == Boolean.TRUE) {
 						safe_ownedParameters_source = null;
 					}
 					else {
 						assert iteration != null;
-						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters_0 = iteration.getOwnedParameters();
-						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters_0 = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters_0);
-						safe_ownedParameters_source = BOXED_ownedParameters_0;
+						final /*@Thrown*/ @NonNull List<Parameter> ownedParameters = iteration.getOwnedParameters();
+						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
+						safe_ownedParameters_source = BOXED_ownedParameters;
 					}
 					/*@Caught*/ @Nullable Object CAUGHT_safe_owningClass_source;
 					try {
-						final /*@NonInvalid*/ @NonNull Object owningClass = iteration == null;
+						final /*@NonInvalid*/ @NonNull Object EQ_iteration_null_0 = iteration == null;
 						/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class safe_owningClass_source;
-						if (owningClass == Boolean.TRUE) {
+						if (EQ_iteration_null_0 == Boolean.TRUE) {
 							safe_owningClass_source = null;
 						}
 						else {
 							assert iteration != null;
-							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass_0 = iteration.getOwningClass();
-							safe_owningClass_source = owningClass_0;
+							final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass = iteration.getOwningClass();
+							safe_owningClass_source = owningClass;
 						}
 						CAUGHT_safe_owningClass_source = safe_owningClass_source;
 					}
@@ -985,9 +985,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 									requiredType = TYP_Class;
 								}
 								else {
-									final /*@NonInvalid*/ @NonNull Object specializeIn = CAUGHT_parameterType == null;
+									final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_parameterType_null = CAUGHT_parameterType == null;
 									/*@Thrown*/ @Nullable Type safe_specializeIn_source;
-									if (specializeIn == Boolean.TRUE) {
+									if (EQ_CAUGHT_parameterType_null == Boolean.TRUE) {
 										safe_specializeIn_source = null;
 									}
 									else {
@@ -999,8 +999,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 											throw (InvalidValueException)CAUGHT_safe_owningClass_source;
 										}
 										@SuppressWarnings("null")
-										final /*@Thrown*/ @NonNull Type specializeIn_0 = ((Type)CAUGHT_parameterType).specializeIn(this, (Type)CAUGHT_safe_owningClass_source);
-										safe_specializeIn_source = specializeIn_0;
+										final /*@Thrown*/ @NonNull Type specializeIn = ((Type)CAUGHT_parameterType).specializeIn(this, (Type)CAUGHT_safe_owningClass_source);
+										safe_specializeIn_source = specializeIn;
 									}
 									requiredType = safe_specializeIn_source;
 								}
@@ -1113,9 +1113,9 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 								catch (Exception e) {
 									CAUGHT_type = ValueUtil.createInvalidValue(e);
 								}
-								final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_type == null;
+								final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_type_null = CAUGHT_type == null;
 								/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-								if (conformsTo == Boolean.TRUE) {
+								if (EQ_CAUGHT_type_null == Boolean.TRUE) {
 									safe_conformsTo_source = null;
 								}
 								else {
@@ -1125,8 +1125,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 									if (CAUGHT_requiredType instanceof InvalidValueException) {
 										throw (InvalidValueException)CAUGHT_requiredType;
 									}
-									final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, CAUGHT_requiredType).booleanValue();
-									safe_conformsTo_source = conformsTo_0;
+									final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, CAUGHT_requiredType).booleanValue();
+									safe_conformsTo_source = conformsTo;
 								}
 								CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 							}
@@ -1363,15 +1363,15 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							/*@Caught*/ @NonNull Object CAUGHT_IF_oclIsKindOf;
 							try {
 								final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-								final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
+								final /*@NonInvalid*/ @NonNull Object EQ_ownedSource_null = ownedSource == null;
 								/*@Thrown*/ @Nullable Type safe_type_source;
-								if (type == Boolean.TRUE) {
+								if (EQ_ownedSource_null == Boolean.TRUE) {
 									safe_type_source = null;
 								}
 								else {
 									assert ownedSource != null;
-									final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
-									safe_type_source = type_0;
+									final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
+									safe_type_source = type;
 								}
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_MapType_0 = idResolver.getClass(PivotTables.CLSSid_MapType, null);
 								final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, safe_type_source, TYP_MapType_0).booleanValue();

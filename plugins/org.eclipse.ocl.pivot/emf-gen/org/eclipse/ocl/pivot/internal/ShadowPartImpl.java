@@ -204,9 +204,9 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull OCLExpression ownedInit = this.getOwnedInit();
 					final /*@NonInvalid*/ @Nullable Type type = ownedInit.getType();
-					final /*@NonInvalid*/ @NonNull Object conformsTo = type == null;
+					final /*@NonInvalid*/ @NonNull Object EQ_type_null = type == null;
 					/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-					if (conformsTo == Boolean.TRUE) {
+					if (EQ_type_null == Boolean.TRUE) {
 						safe_conformsTo_source = null;
 					}
 					else {
@@ -214,8 +214,8 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 							throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 						}
 						final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-						final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-						safe_conformsTo_source = conformsTo_0;
+						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+						safe_conformsTo_source = conformsTo;
 					}
 					CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 				}
@@ -266,8 +266,8 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			else {
 				final /*@NonInvalid*/ @NonNull InvalidType TYP_OclInvalid_0 = (@NonNull InvalidType)idResolver.getClass(TypeId.OCL_INVALID, null);
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean NE_type_TYP_OclInvalid_0 = (type != null) ? (type.getTypeId() != TYP_OclInvalid_0.getTypeId()) : true;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, NE_type_TYP_OclInvalid_0, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -310,8 +310,8 @@ public class ShadowPartImpl extends TypedElementImpl implements ShadowPart
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
-				final /*@NonInvalid*/ boolean result = type != null;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean NE_type_null = type != null;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, NE_type_null, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

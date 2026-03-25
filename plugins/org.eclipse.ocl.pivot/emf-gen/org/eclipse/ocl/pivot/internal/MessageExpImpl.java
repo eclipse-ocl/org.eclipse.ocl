@@ -346,7 +346,7 @@ public class MessageExpImpl
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_EQ_sum_INT_1;
 				try {
 					final /*@NonInvalid*/ @Nullable CallOperationAction ownedCalledOperation = this.getOwnedCalledOperation();
 					final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_CallOperationAction, ownedCalledOperation);
@@ -358,13 +358,13 @@ public class MessageExpImpl
 						throw (InvalidValueException)size_0;
 					}
 					final /*@Thrown*/ @NonNull IntegerValue sum = (@Nullable IntegerValue)NumericPlusOperation.INSTANCE.evaluate(size, size_0);
-					final /*@Thrown*/ boolean result = sum.equals(PivotTables.INT_1);
-					CAUGHT_result = result;
+					final /*@Thrown*/ boolean EQ_sum_INT_1 = sum.equals(PivotTables.INT_1);
+					CAUGHT_EQ_sum_INT_1 = EQ_sum_INT_1;
 				}
 				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
+					CAUGHT_EQ_sum_INT_1 = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_EQ_sum_INT_1, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

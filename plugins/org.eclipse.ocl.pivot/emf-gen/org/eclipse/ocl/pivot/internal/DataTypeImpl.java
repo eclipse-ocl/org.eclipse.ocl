@@ -664,9 +664,9 @@ implements DataType {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean ne = behavioralClass != null;
+					final /*@NonInvalid*/ boolean NE_behavioralClass_null = behavioralClass != null;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!ne) {
+					if (!NE_behavioralClass_null) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -719,13 +719,13 @@ implements DataType {
 								 */
 								final /*@NonInvalid*/ @Nullable String name = b.getName();
 								final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
-								final /*@NonInvalid*/ boolean ne_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
+								final /*@NonInvalid*/ boolean NE_name_name_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
 								//
-								if (!ne_0) {					// Normal unsuccessful body evaluation result
+								if (!NE_name_name_0) {					// Normal unsuccessful body evaluation result
 									forAll = ValueUtil.FALSE_VALUE;
 									break;														// Stop immediately
 								}
-								else if (ne_0) {				// Normal successful body evaluation result
+								else if (NE_name_name_0) {				// Normal successful body evaluation result
 									;															// Carry on
 								}
 								else {															// Impossible badly typed result
@@ -803,9 +803,9 @@ implements DataType {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean ne = behavioralClass != null;
+					final /*@NonInvalid*/ boolean NE_behavioralClass_null = behavioralClass != null;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!ne) {
+					if (!NE_behavioralClass_null) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -879,9 +879,9 @@ implements DataType {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class behavioralClass = this.getBehavioralClass();
-					final /*@NonInvalid*/ boolean ne = behavioralClass != null;
+					final /*@NonInvalid*/ boolean NE_behavioralClass_null = behavioralClass != null;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!ne) {
+					if (!NE_behavioralClass_null) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {

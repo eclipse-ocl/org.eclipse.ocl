@@ -187,8 +187,8 @@ public class CollectionItemImpl
 				@SuppressWarnings("null")
 				final /*@NonInvalid*/ @NonNull OCLExpression ownedItem = this.getOwnedItem();
 				final /*@NonInvalid*/ @Nullable Type type_0 = ownedItem.getType();
-				final /*@NonInvalid*/ boolean result = (type != null) && (type_0 != null) ? (type.getTypeId() == type_0.getTypeId()) : false;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean EQ_type_type_0 = (type != null) && (type_0 != null) ? (type.getTypeId() == type_0.getTypeId()) : false;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, EQ_type_type_0, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

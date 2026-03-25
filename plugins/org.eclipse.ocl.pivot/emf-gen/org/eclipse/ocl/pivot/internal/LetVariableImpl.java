@@ -115,27 +115,27 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_EQ_safe_isRequired_source_isRequired_0;
 				try {
 					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ @NonNull Object isRequired = ownedInit == null;
+					final /*@NonInvalid*/ @NonNull Object EQ_ownedInit_null = ownedInit == null;
 					/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
-					if (isRequired == Boolean.TRUE) {
+					if (EQ_ownedInit_null == Boolean.TRUE) {
 						safe_isRequired_source = null;
 					}
 					else {
 						assert ownedInit != null;
-						final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
-						safe_isRequired_source = isRequired_0;
+						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+						safe_isRequired_source = isRequired;
 					}
-					final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
-					final /*@Thrown*/ boolean result = (safe_isRequired_source == Boolean.TRUE) == isRequired_1;
-					CAUGHT_result = result;
+					final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
+					final /*@Thrown*/ boolean EQ_safe_isRequired_source_isRequired_0 = (safe_isRequired_source == Boolean.TRUE) == isRequired_0;
+					CAUGHT_EQ_safe_isRequired_source_isRequired_0 = EQ_safe_isRequired_source_isRequired_0;
 				}
 				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
+					CAUGHT_EQ_safe_isRequired_source_isRequired_0 = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_EQ_safe_isRequired_source_isRequired_0, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -180,9 +180,9 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ boolean ne = ownedInit != null;
+					final /*@NonInvalid*/ boolean NE_ownedInit_null = ownedInit != null;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!ne) {
+					if (!NE_ownedInit_null) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -199,9 +199,9 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 							catch (Exception e) {
 								CAUGHT_type = ValueUtil.createInvalidValue(e);
 							}
-							final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_type == null;
+							final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_type_null = CAUGHT_type == null;
 							/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-							if (conformsTo == Boolean.TRUE) {
+							if (EQ_CAUGHT_type_null == Boolean.TRUE) {
 								safe_conformsTo_source = null;
 							}
 							else {
@@ -209,8 +209,8 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-								safe_conformsTo_source = conformsTo_0;
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+								safe_conformsTo_source = conformsTo;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 						}
@@ -279,8 +279,8 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-				final /*@NonInvalid*/ boolean result = ownedInit != null;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean NE_ownedInit_null = ownedInit != null;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, NE_ownedInit_null, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

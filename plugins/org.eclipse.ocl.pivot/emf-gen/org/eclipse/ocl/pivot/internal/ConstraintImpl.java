@@ -495,21 +495,21 @@ implements Constraint {
 					final /*@NonInvalid*/ @NonNull LanguageExpression ownedSpecification_0 = this.getOwnedSpecification();
 					final /*@NonInvalid*/ @Nullable Type type_0 = ownedSpecification_0.getType();
 					final /*@NonInvalid*/ @Nullable Boolean and;
-					final /*@NonInvalid*/ boolean ne = type_0 != null;
-					and = ne;
+					final /*@NonInvalid*/ boolean NE_type_null = type_0 != null;
+					and = NE_type_null;
 					final /*@Thrown*/ @Nullable Boolean result;
 					if (and == ValueUtil.FALSE_VALUE) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ boolean eq = (type_0 != null) ? (type_0.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
+						final /*@NonInvalid*/ boolean EQ_type_0_TYP_Boolean_0 = (type_0 != null) ? (type_0.getTypeId() == TYP_Boolean_0.getTypeId()) : false;
 						final /*@NonInvalid*/ @Nullable Boolean or;
-						if (eq) {
+						if (EQ_type_0_TYP_Boolean_0) {
 							or = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							final /*@NonInvalid*/ boolean eq_0 = (type_0 != null) ? (type_0.getTypeId() == TYP_OclVoid.getTypeId()) : false;
-							if (eq_0) {
+							final /*@NonInvalid*/ boolean EQ_type_1_TYP_OclVoid = (type_0 != null) ? (type_0.getTypeId() == TYP_OclVoid.getTypeId()) : false;
+							if (EQ_type_1_TYP_OclVoid) {
 								or = ValueUtil.TRUE_VALUE;
 							}
 							else {

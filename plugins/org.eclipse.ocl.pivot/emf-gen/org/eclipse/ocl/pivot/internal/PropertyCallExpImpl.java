@@ -540,15 +540,15 @@ implements PropertyCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isStatic_source;
 						try {
 							final /*@NonInvalid*/ @Nullable Property referredProperty = this.getReferredProperty();
-							final /*@NonInvalid*/ @NonNull Object isStatic = referredProperty == null;
+							final /*@NonInvalid*/ @NonNull Object EQ_referredProperty_null = referredProperty == null;
 							/*@Thrown*/ @Nullable Boolean safe_isStatic_source;
-							if (isStatic == Boolean.TRUE) {
+							if (EQ_referredProperty_null == Boolean.TRUE) {
 								safe_isStatic_source = null;
 							}
 							else {
 								assert referredProperty != null;
-								final /*@Thrown*/ boolean isStatic_0 = referredProperty.isIsStatic();
-								safe_isStatic_source = isStatic_0;
+								final /*@Thrown*/ boolean isStatic = referredProperty.isIsStatic();
+								safe_isStatic_source = isStatic;
 							}
 							CAUGHT_safe_isStatic_source = safe_isStatic_source;
 						}
@@ -583,15 +583,15 @@ implements PropertyCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-							final /*@NonInvalid*/ @NonNull Object type = ownedSource == null;
+							final /*@NonInvalid*/ @NonNull Object EQ_ownedSource_null = ownedSource == null;
 							/*@Thrown*/ @Nullable Type safe_type_source;
-							if (type == Boolean.TRUE) {
+							if (EQ_ownedSource_null == Boolean.TRUE) {
 								safe_type_source = null;
 							}
 							else {
 								assert ownedSource != null;
-								final /*@Thrown*/ @Nullable Type type_0 = ownedSource.getType();
-								safe_type_source = type_0;
+								final /*@Thrown*/ @Nullable Type type = ownedSource.getType();
+								safe_type_source = type;
 							}
 							/*@Caught*/ @Nullable Object CAUGHT_safe_type_source;
 							try {
@@ -600,9 +600,9 @@ implements PropertyCallExp {
 							catch (Exception e) {
 								CAUGHT_safe_type_source = ValueUtil.createInvalidValue(e);
 							}
-							final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_safe_type_source == null;
+							final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_safe_type_source_null = CAUGHT_safe_type_source == null;
 							/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-							if (conformsTo == Boolean.TRUE) {
+							if (EQ_CAUGHT_safe_type_source_null == Boolean.TRUE) {
 								safe_conformsTo_source = null;
 							}
 							else {
@@ -611,8 +611,8 @@ implements PropertyCallExp {
 								}
 								@SuppressWarnings("null")
 								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
-								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
-								safe_conformsTo_source = conformsTo_0;
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, safe_type_source, getSpecializedReferredPropertyOwningType).booleanValue();
+								safe_conformsTo_source = conformsTo;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 						}
@@ -687,9 +687,9 @@ implements PropertyCallExp {
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-					final /*@NonInvalid*/ boolean ne = ownedSource != null;
+					final /*@NonInvalid*/ boolean NE_ownedSource_null = ownedSource != null;
 					final /*@NonInvalid*/ @Nullable Boolean and;
-					if (!ne) {
+					if (!NE_ownedSource_null) {
 						and = ValueUtil.FALSE_VALUE;
 					}
 					else {
@@ -806,9 +806,9 @@ implements PropertyCallExp {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean ne = ownedSource != null;
+						final /*@NonInvalid*/ boolean NE_ownedSource_null = ownedSource != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!ne) {
+						if (!NE_ownedSource_null) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
@@ -926,8 +926,8 @@ implements PropertyCallExp {
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
 				@SuppressWarnings("null")
 				final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean EQ_type_getSpecializedReferredPropertyType = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, EQ_type_getSpecializedReferredPropertyType, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

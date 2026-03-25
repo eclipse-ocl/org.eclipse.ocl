@@ -816,30 +816,30 @@ implements Operation {
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable LanguageExpression bodyExpression = this.getBodyExpression();
-						final /*@NonInvalid*/ boolean ne = bodyExpression != null;
+						final /*@NonInvalid*/ boolean NE_bodyExpression_null = bodyExpression != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!ne) {
+						if (!NE_bodyExpression_null) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
+							/*@Caught*/ @NonNull Object CAUGHT_NE_ownedBody_null;
 							try {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_ExpressionInOCL = idResolver.getClass(PivotTables.CLSSid_ExpressionInOCL, null);
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull ExpressionInOCL oclAsType = (@NonNull ExpressionInOCL)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, bodyExpression, TYP_ExpressionInOCL);
 								final /*@Thrown*/ @Nullable OCLExpression ownedBody = oclAsType.getOwnedBody();
-								final /*@Thrown*/ boolean ne_0 = ownedBody != null;
-								CAUGHT_ne_0 = ne_0;
+								final /*@Thrown*/ boolean NE_ownedBody_null = ownedBody != null;
+								CAUGHT_NE_ownedBody_null = NE_ownedBody_null;
 							}
 							catch (Exception e) {
-								CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
+								CAUGHT_NE_ownedBody_null = ValueUtil.createInvalidValue(e);
 							}
-							if (CAUGHT_ne_0 == ValueUtil.FALSE_VALUE) {
+							if (CAUGHT_NE_ownedBody_null == ValueUtil.FALSE_VALUE) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if (CAUGHT_ne_0 instanceof InvalidValueException) {
-									throw (InvalidValueException)CAUGHT_ne_0;
+								if (CAUGHT_NE_ownedBody_null instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_NE_ownedBody_null;
 								}
 								and = ValueUtil.TRUE_VALUE;
 							}

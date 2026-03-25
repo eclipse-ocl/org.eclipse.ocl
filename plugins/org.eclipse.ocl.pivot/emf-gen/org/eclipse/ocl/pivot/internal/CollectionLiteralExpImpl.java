@@ -237,8 +237,8 @@ implements CollectionLiteralExp {
 				@SuppressWarnings("null")
 				final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 				final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-				final /*@NonInvalid*/ boolean result = BOXED_kind != PivotTables.ELITid_Collection;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean NE_BOXED_kind_ELITid_Collection = BOXED_kind != PivotTables.ELITid_Collection;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, NE_BOXED_kind_ELITid_Collection, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
@@ -286,9 +286,9 @@ implements CollectionLiteralExp {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Set;
+					final /*@NonInvalid*/ boolean EQ_BOXED_kind_ELITid_Set = BOXED_kind == PivotTables.ELITid_Set;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!eq) {
+					if (!EQ_BOXED_kind_ELITid_Set) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -365,9 +365,9 @@ implements CollectionLiteralExp {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_OrderedSet;
+					final /*@NonInvalid*/ boolean EQ_BOXED_kind_ELITid_OrderedSet = BOXED_kind == PivotTables.ELITid_OrderedSet;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!eq) {
+					if (!EQ_BOXED_kind_ELITid_OrderedSet) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -444,9 +444,9 @@ implements CollectionLiteralExp {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Sequence;
+					final /*@NonInvalid*/ boolean EQ_BOXED_kind_ELITid_Sequence = BOXED_kind == PivotTables.ELITid_Sequence;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!eq) {
+					if (!EQ_BOXED_kind_ELITid_Sequence) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -523,9 +523,9 @@ implements CollectionLiteralExp {
 					@SuppressWarnings("null")
 					final /*@NonInvalid*/ @NonNull CollectionKind kind = this.getKind();
 					final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_kind = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId(ClassUtil.requireNonNull(kind.getName()));
-					final /*@NonInvalid*/ boolean eq = BOXED_kind == PivotTables.ELITid_Bag;
+					final /*@NonInvalid*/ boolean EQ_BOXED_kind_ELITid_Bag = BOXED_kind == PivotTables.ELITid_Bag;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!eq) {
+					if (!EQ_BOXED_kind_ELITid_Bag) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {

@@ -186,9 +186,9 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-					final /*@NonInvalid*/ boolean ne = ownedSource != null;
+					final /*@NonInvalid*/ boolean NE_ownedSource_null = ownedSource != null;
 					final /*@NonInvalid*/ @Nullable Boolean and;
-					if (!ne) {
+					if (!NE_ownedSource_null) {
 						and = ValueUtil.FALSE_VALUE;
 					}
 					else {
@@ -305,9 +305,9 @@ public class OppositePropertyCallExpImpl extends NavigationCallExpImpl implement
 					/*@Caught*/ @Nullable Object CAUGHT_and;
 					try {
 						final /*@NonInvalid*/ @Nullable OCLExpression ownedSource = this.getOwnedSource();
-						final /*@NonInvalid*/ boolean ne = ownedSource != null;
+						final /*@NonInvalid*/ boolean NE_ownedSource_null = ownedSource != null;
 						final /*@Thrown*/ @Nullable Boolean and;
-						if (!ne) {
+						if (!NE_ownedSource_null) {
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {

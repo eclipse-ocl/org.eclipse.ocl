@@ -122,15 +122,15 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 						/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-							final /*@NonInvalid*/ @NonNull Object isRequired = ownedInit == null;
+							final /*@NonInvalid*/ @NonNull Object EQ_ownedInit_null = ownedInit == null;
 							/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
-							if (isRequired == Boolean.TRUE) {
+							if (EQ_ownedInit_null == Boolean.TRUE) {
 								safe_isRequired_source = null;
 							}
 							else {
 								assert ownedInit != null;
-								final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
-								safe_isRequired_source = isRequired_0;
+								final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
+								safe_isRequired_source = isRequired;
 							}
 							CAUGHT_safe_isRequired_source = safe_isRequired_source;
 						}
@@ -162,13 +162,13 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						final /*@NonInvalid*/ boolean isRequired_1 = this.isIsRequired();
+						final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
 						final /*@NonInvalid*/ @Nullable Boolean not_0;
-						if (!isRequired_1) {
+						if (!isRequired_0) {
 							not_0 = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (isRequired_1) {
+							if (isRequired_0) {
 								not_0 = ValueUtil.FALSE_VALUE;
 							}
 							else {
@@ -240,9 +240,9 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
 					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ boolean ne = ownedInit != null;
+					final /*@NonInvalid*/ boolean NE_ownedInit_null = ownedInit != null;
 					final /*@Thrown*/ @Nullable Boolean result;
-					if (!ne) {
+					if (!NE_ownedInit_null) {
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
@@ -259,9 +259,9 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 							catch (Exception e) {
 								CAUGHT_type = ValueUtil.createInvalidValue(e);
 							}
-							final /*@NonInvalid*/ @NonNull Object conformsTo = CAUGHT_type == null;
+							final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_type_null = CAUGHT_type == null;
 							/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-							if (conformsTo == Boolean.TRUE) {
+							if (EQ_CAUGHT_type_null == Boolean.TRUE) {
 								safe_conformsTo_source = null;
 							}
 							else {
@@ -269,8 +269,8 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
 								}
 								final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
-								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
-								safe_conformsTo_source = conformsTo_0;
+								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
+								safe_conformsTo_source = conformsTo;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 						}
@@ -339,8 +339,8 @@ public class ResultVariableImpl extends VariableImpl implements ResultVariable
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-				final /*@NonInvalid*/ boolean result = ownedInit != null;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean NE_ownedInit_null = ownedInit != null;
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, NE_ownedInit_null, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

@@ -31,6 +31,8 @@ import org.eclipse.ocl.codegen.cgmodel.CGCollectionPart;
 import org.eclipse.ocl.codegen.cgmodel.CGEcoreExp;
 import org.eclipse.ocl.codegen.cgmodel.CGGuardExp;
 import org.eclipse.ocl.codegen.cgmodel.CGIfExp;
+import org.eclipse.ocl.codegen.cgmodel.CGIsEqual2Exp;
+import org.eclipse.ocl.codegen.cgmodel.CGIsEqualExp;
 import org.eclipse.ocl.codegen.cgmodel.CGIterationCallExp;
 import org.eclipse.ocl.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.codegen.cgmodel.CGOppositePropertyCallExp;
@@ -494,16 +496,16 @@ public class NameManager
 
 		public Context() {
 			this.context = null;
-			this.name2object = new HashMap<String, Object>();
-			this.object2name = new HashMap<Object, String>();
+			this.name2object = new HashMap<>();
+			this.object2name = new HashMap<>();
 			this.name2counter = null;
 		}
 
 		public Context(@NonNull Context context) {
 			this.context = context;
-			this.name2object = new HashMap<String, Object>(context.name2object);
-			this.object2name = new HashMap<Object, String>(context.object2name);
-			this.name2counter = context.name2counter != null ? new HashMap<String, Integer>(context.name2counter) : null;
+			this.name2object = new HashMap<>(context.name2object);
+			this.object2name = new HashMap<>(context.object2name);
+			this.name2counter = context.name2counter != null ? new HashMap<>(context.name2counter) : null;
 			//			context.frozen = true;
 		}
 
@@ -525,8 +527,19 @@ public class NameManager
 		}
 
 		public @NonNull String getSymbolName(@Nullable Object anObject, @Nullable String... nameHints) {
-			if ((nameHints != null) && (nameHints.length > 0) && (nameHints[0] != null)) {
-				return getUniqueName(anObject, nameHints);
+			if ((anObject instanceof CGBoxExp)
+				|| (anObject instanceof CGCastExp)
+				|| (anObject instanceof CGEcoreExp)
+				|| (anObject instanceof CGIsEqualExp)
+				|| (anObject instanceof CGIsEqual2Exp)
+				|| (anObject instanceof CGCatchExp)
+				|| (anObject instanceof CGGuardExp)
+				|| (anObject instanceof CGThrowExp)
+				|| (anObject instanceof CGUnboxExp)) {
+				return getUniqueName(anObject, getNameHint(anObject));
+			}
+			else if ((nameHints != null) && (nameHints.length > 0) && (nameHints[0] != null)) {
+				return getUniqueName(anObject, nameHints);		// XXX is this control path needed ??
 			}
 			else {
 				return getUniqueName(anObject, anObject != null ? getNameHint(anObject) : null);
@@ -561,6 +574,9 @@ public class NameManager
 					for (String rawNameHint : nameHints) {
 						if (rawNameHint != null)  {
 							hasRawNameHint = true;
+							if (rawNameHint.length() > 50) {
+								rawNameHint = rawNameHint.substring(0,48) + "__";	// Prevent unlimited names
+							}
 							String nameHint = hintSuffix > 0 ? rawNameHint + hintSuffix : rawNameHint;
 							String validHint = getValidJavaIdentifier(nameHint, false, anObject);
 							if (!reservedJavaNames.contains(validHint) || isNative) {
@@ -598,7 +614,7 @@ public class NameManager
 				lastResort = context == null ? DEFAULT_GLOBAL_NAME_PREFIX : DEFAULT_LOCAL_NAME_PREFIX;
 			}
 			if (name2counter == null) {
-				name2counter = new HashMap<String, Integer>();
+				name2counter = new HashMap<>();
 			}
 			Integer counter = name2counter.get(lastResort);
 			int count = counter != null ? counter : 0;
@@ -818,8 +834,22 @@ public class NameManager
 			else if (anObject instanceof CGEcoreExp) {
 				return "ECORE_" + ((CGEcoreExp)anObject).getSourceValue().getValueName();
 			}
-			else if (anObject instanceof CGUnboxExp) {
-				return "UNBOXED_" + ((CGUnboxExp)anObject).getSourceValue().getValueName();
+			else if (anObject instanceof CGIsEqualExp) {
+				CGIsEqualExp cgIsEqualExp = (CGIsEqualExp)anObject;
+				CGValuedElement source = cgIsEqualExp.getSource();
+				CGValuedElement argument = cgIsEqualExp.getArgument();
+				String sourceName = source.getValueName();
+				String argumentName = argument.getValueName();
+				boolean notEquals = cgIsEqualExp.isNotEquals();
+				return (notEquals ? "NE_" : "EQ_") + sourceName + "_" + argumentName;
+			}
+			else if (anObject instanceof CGIsEqual2Exp) {
+				CGIsEqual2Exp cgIsEqual2Exp = (CGIsEqual2Exp)anObject;
+				CGValuedElement source = cgIsEqual2Exp.getSource();
+				CGValuedElement argument = cgIsEqual2Exp.getArgument();
+				String sourceName = source.getValueName();
+				String argumentName = argument.getValueName();
+				return "EQ_" + sourceName + "_" + argumentName;
 			}
 			else if (anObject instanceof CGCatchExp) {
 				return "CAUGHT_" + ((CGCatchExp)anObject).getSourceValue().getValueName();
@@ -829,6 +859,9 @@ public class NameManager
 			}
 			else if (anObject instanceof CGThrowExp) {
 				return "THROWN_" + ((CGThrowExp)anObject).getSourceValue().getValueName();
+			}
+			else if (anObject instanceof CGUnboxExp) {
+				return "UNBOXED_" + ((CGUnboxExp)anObject).getSourceValue().getValueName();
 			}
 			else {
 				return null;

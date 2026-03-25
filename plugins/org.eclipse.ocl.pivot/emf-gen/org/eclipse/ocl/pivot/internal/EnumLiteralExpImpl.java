@@ -177,28 +177,28 @@ public class EnumLiteralExpImpl
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_result;
+				/*@Caught*/ @NonNull Object CAUGHT_EQ_type_safe_owningEnumeration_source;
 				try {
 					final /*@NonInvalid*/ @Nullable Type type = this.getType();
 					final /*@NonInvalid*/ @Nullable EnumerationLiteral referredLiteral = this.getReferredLiteral();
-					final /*@NonInvalid*/ @NonNull Object owningEnumeration = referredLiteral == null;
+					final /*@NonInvalid*/ @NonNull Object EQ_referredLiteral_null = referredLiteral == null;
 					/*@Thrown*/ @Nullable Enumeration safe_owningEnumeration_source;
-					if (owningEnumeration == Boolean.TRUE) {
+					if (EQ_referredLiteral_null == Boolean.TRUE) {
 						safe_owningEnumeration_source = null;
 					}
 					else {
 						assert referredLiteral != null;
 						@SuppressWarnings("null")
-						final /*@Thrown*/ @NonNull Enumeration owningEnumeration_0 = referredLiteral.getOwningEnumeration();
-						safe_owningEnumeration_source = owningEnumeration_0;
+						final /*@Thrown*/ @NonNull Enumeration owningEnumeration = referredLiteral.getOwningEnumeration();
+						safe_owningEnumeration_source = owningEnumeration;
 					}
-					final /*@Thrown*/ boolean result = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
-					CAUGHT_result = result;
+					final /*@Thrown*/ boolean EQ_type_safe_owningEnumeration_source = (type != null) && (safe_owningEnumeration_source != null) ? (type.getTypeId() == safe_owningEnumeration_source.getTypeId()) : false;
+					CAUGHT_EQ_type_safe_owningEnumeration_source = EQ_type_safe_owningEnumeration_source;
 				}
 				catch (Exception e) {
-					CAUGHT_result = ValueUtil.createInvalidValue(e);
+					CAUGHT_EQ_type_safe_owningEnumeration_source = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_EQ_type_safe_owningEnumeration_source, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;
