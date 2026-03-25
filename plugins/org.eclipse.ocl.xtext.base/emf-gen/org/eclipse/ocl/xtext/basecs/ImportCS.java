@@ -34,6 +34,33 @@ import org.eclipse.ocl.pivot.Namespace;
  */
 public interface ImportCS extends NamespaceCS {
 	/**
+	 * Returns the value of the '<em><b>Is All</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is All</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is All</em>' attribute.
+	 * @see #setIsAll(boolean)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getImportCS_IsAll()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isIsAll();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.ImportCS#isIsAll <em>Is All</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is All</em>' attribute.
+	 * @see #isIsAll()
+	 * @generated
+	 */
+	void setIsAll(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Owned Path Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -73,32 +100,5 @@ public interface ImportCS extends NamespaceCS {
 	 * @generated
 	 */
 	Namespace getReferredNamespace();
-
-	/**
-	 * Returns the value of the '<em><b>Is All</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>All</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is All</em>' attribute.
-	 * @see #setIsAll(boolean)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getImportCS_IsAll()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
-	 * @generated
-	 */
-	boolean isIsAll();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.ImportCS#isIsAll <em>Is All</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is All</em>' attribute.
-	 * @see #isIsAll()
-	 * @generated
-	 */
-	void setIsAll(boolean value);
 
 } // ImportCS

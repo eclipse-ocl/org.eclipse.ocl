@@ -43,7 +43,7 @@ public interface DataTypeCS extends ClassCS, NamespaceCS
 	 * @return the value of the '<em>Is Primitive</em>' attribute.
 	 * @see #setIsPrimitive(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getDataTypeCS_IsPrimitive()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false" required="true"
 	 * @generated
 	 */
 	boolean isIsPrimitive();
@@ -70,7 +70,7 @@ public interface DataTypeCS extends ClassCS, NamespaceCS
 	 * @return the value of the '<em>Is Serializable</em>' attribute.
 	 * @see #setIsSerializable(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getDataTypeCS_IsSerializable()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false" required="true"
 	 * @generated
 	 */
 	boolean isIsSerializable();

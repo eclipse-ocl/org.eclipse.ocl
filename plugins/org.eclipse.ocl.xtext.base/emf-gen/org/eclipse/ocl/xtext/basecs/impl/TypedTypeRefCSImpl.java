@@ -110,6 +110,31 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 	 * @generated
 	 */
 	@Override
+	public boolean isIsTypeof()
+	{
+		return isTypeof;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setIsTypeof(boolean newIsTypeof)
+	{
+		boolean oldIsTypeof = isTypeof;
+		isTypeof = newIsTypeof;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldIsTypeof, isTypeof));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public PathNameCS getOwnedPathName()
 	{
 		return ownedPathName;
@@ -202,31 +227,6 @@ public class TypedTypeRefCSImpl extends TypedRefCSImpl implements TypedTypeRefCS
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 5, newOwnedBinding, newOwnedBinding));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isIsTypeof()
-	{
-		return isTypeof;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setIsTypeof(boolean newIsTypeof)
-	{
-		boolean oldIsTypeof = isTypeof;
-		isTypeof = newIsTypeof;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 4, oldIsTypeof, isTypeof));
 	}
 
 	/**

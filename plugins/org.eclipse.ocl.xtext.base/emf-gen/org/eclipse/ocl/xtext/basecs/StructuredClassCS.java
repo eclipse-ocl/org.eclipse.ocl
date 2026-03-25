@@ -47,7 +47,7 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @return the value of the '<em>Is Abstract</em>' attribute.
 	 * @see #setIsAbstract(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_IsAbstract()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false" required="true"
 	 * @generated
 	 */
 	boolean isIsAbstract();
@@ -74,7 +74,7 @@ public interface StructuredClassCS extends ClassCS, NamespaceCS {
 	 * @return the value of the '<em>Is Interface</em>' attribute.
 	 * @see #setIsInterface(boolean)
 	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getStructuredClassCS_IsInterface()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
+	 * @model default="false" required="true"
 	 * @generated
 	 */
 	boolean isIsInterface();

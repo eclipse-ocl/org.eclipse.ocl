@@ -33,6 +33,33 @@ import org.eclipse.ocl.pivot.Type;
  */
 public interface TypedTypeRefCS extends TypedRefCS {
 	/**
+	 * Returns the value of the '<em><b>Is Typeof</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Typeof</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Typeof</em>' attribute.
+	 * @see #setIsTypeof(boolean)
+	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedTypeRefCS_IsTypeof()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isIsTypeof();
+
+	/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.TypedTypeRefCS#isIsTypeof <em>Is Typeof</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Typeof</em>' attribute.
+	 * @see #isIsTypeof()
+	 * @generated
+	 */
+	void setIsTypeof(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Owned Path Name</b></em>' containment reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -100,32 +127,5 @@ public interface TypedTypeRefCS extends TypedRefCS {
 	 * @generated
 	 */
 	void setOwnedBinding(TemplateBindingCS value);
-
-	/**
-	 * Returns the value of the '<em><b>Is Typeof</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Typeof</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Typeof</em>' attribute.
-	 * @see #setIsTypeof(boolean)
-	 * @see org.eclipse.ocl.xtext.basecs.BaseCSPackage#getTypedTypeRefCS_IsTypeof()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean" required="true"
-	 * @generated
-	 */
-	boolean isIsTypeof();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.basecs.TypedTypeRefCS#isIsTypeof <em>Is Typeof</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Typeof</em>' attribute.
-	 * @see #isIsTypeof()
-	 * @generated
-	 */
-	void setIsTypeof(boolean value);
 
 } // TypedTypeRefCS

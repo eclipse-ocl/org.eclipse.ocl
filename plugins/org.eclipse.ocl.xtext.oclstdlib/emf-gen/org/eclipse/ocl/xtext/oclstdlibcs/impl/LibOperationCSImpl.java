@@ -204,48 +204,6 @@ public class LibOperationCSImpl
 	 * @generated
 	 */
 	@Override
-	public Precedence getPrecedence() {
-		if (precedence != null && precedence.eIsProxy())
-		{
-			InternalEObject oldPrecedence = (InternalEObject)precedence;
-			precedence = (Precedence)eResolveProxy(oldPrecedence);
-			if (precedence != oldPrecedence)
-			{
-				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4, oldPrecedence, precedence));
-			}
-		}
-		return precedence;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Precedence basicGetPrecedence() {
-		return precedence;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setPrecedence(Precedence newPrecedence) {
-		Precedence oldPrecedence = precedence;
-		precedence = newPrecedence;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4, oldPrecedence, precedence));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public boolean isIsInvalidating()
 	{
 		return isInvalidating;
@@ -313,6 +271,48 @@ public class LibOperationCSImpl
 		isValidating = newIsValidating;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 3, oldIsValidating, isValidating));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Precedence getPrecedence() {
+		if (precedence != null && precedence.eIsProxy())
+		{
+			InternalEObject oldPrecedence = (InternalEObject)precedence;
+			precedence = (Precedence)eResolveProxy(oldPrecedence);
+			if (precedence != oldPrecedence)
+			{
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4, oldPrecedence, precedence));
+			}
+		}
+		return precedence;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Precedence basicGetPrecedence() {
+		return precedence;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setPrecedence(Precedence newPrecedence) {
+		Precedence oldPrecedence = precedence;
+		precedence = newPrecedence;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4, oldPrecedence, precedence));
 	}
 
 	/**

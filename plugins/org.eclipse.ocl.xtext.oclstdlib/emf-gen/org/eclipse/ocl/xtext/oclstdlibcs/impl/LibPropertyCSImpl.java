@@ -163,7 +163,8 @@ public class LibPropertyCSImpl
 	 * @generated
 	 */
 	@Override
-	public boolean isIsStatic() {
+	public boolean isIsStatic()
+	{
 		return isStatic;
 	}
 
@@ -173,7 +174,8 @@ public class LibPropertyCSImpl
 	 * @generated
 	 */
 	@Override
-	public void setIsStatic(boolean newIsStatic) {
+	public void setIsStatic(boolean newIsStatic)
+	{
 		boolean oldIsStatic = isStatic;
 		isStatic = newIsStatic;
 		if (eNotificationRequired())

@@ -200,21 +200,6 @@ public class LibIterationCSImpl
 	 * @generated
 	 */
 	@Override
-	public EList<ParameterCS> getOwnedIterators()
-	{
-		if (ownedIterators == null)
-		{
-			ownedIterators = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4);
-		}
-		return ownedIterators;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public boolean isIsInvalidating()
 	{
 		return isInvalidating;
@@ -257,6 +242,21 @@ public class LibIterationCSImpl
 		isValidating = newIsValidating;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 2, oldIsValidating, isValidating));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EList<ParameterCS> getOwnedIterators()
+	{
+		if (ownedIterators == null)
+		{
+			ownedIterators = new EObjectContainmentEList<ParameterCS>(ParameterCS.class, this, OperationCSImpl.OPERATION_CS_FEATURE_COUNT + 4);
+		}
+		return ownedIterators;
 	}
 
 	/**

@@ -99,6 +99,31 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 	 * @generated
 	 */
 	@Override
+	public boolean isIsAll()
+	{
+		return isAll;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public void setIsAll(boolean newIsAll)
+	{
+		boolean oldIsAll = isAll;
+		isAll = newIsAll;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldIsAll, isAll));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public PathNameCS getOwnedPathName()
 	{
 		return ownedPathName;
@@ -141,31 +166,6 @@ public class ImportCSImpl extends NamespaceCSImpl implements ImportCS {
 		}
 		else if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, 7, newOwnedPathName, newOwnedPathName));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isIsAll()
-	{
-		return isAll;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setIsAll(boolean newIsAll)
-	{
-		boolean oldIsAll = isAll;
-		isAll = newIsAll;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 6, oldIsAll, isAll));
 	}
 
 	/**

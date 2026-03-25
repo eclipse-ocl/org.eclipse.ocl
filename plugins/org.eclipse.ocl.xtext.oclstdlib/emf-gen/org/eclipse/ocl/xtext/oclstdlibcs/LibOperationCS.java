@@ -38,6 +38,87 @@ public interface LibOperationCS
 		extends OperationCS, JavaImplementationCS {
 
 	/**
+	 * Returns the value of the '<em><b>Is Invalidating</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Invalidating</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Invalidating</em>' attribute.
+	 * @see #setIsInvalidating(boolean)
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibOperationCS_IsInvalidating()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isIsInvalidating();
+
+	    /**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsInvalidating <em>Is Invalidating</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Invalidating</em>' attribute.
+	 * @see #isIsInvalidating()
+	 * @generated
+	 */
+	void setIsInvalidating(boolean value);
+
+	/**
+	 * Returns the value of the '<em><b>Is Static</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Static</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Static</em>' attribute.
+	 * @see #setIsStatic(boolean)
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibOperationCS_IsStatic()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isIsStatic();
+
+		/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsStatic <em>Is Static</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Static</em>' attribute.
+	 * @see #isIsStatic()
+	 * @generated
+	 */
+	void setIsStatic(boolean value);
+
+		/**
+	 * Returns the value of the '<em><b>Is Validating</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Validating</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Validating</em>' attribute.
+	 * @see #setIsValidating(boolean)
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibOperationCS_IsValidating()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isIsValidating();
+
+		/**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsValidating <em>Is Validating</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Validating</em>' attribute.
+	 * @see #isIsValidating()
+	 * @generated
+	 */
+	void setIsValidating(boolean value);
+
+		/**
 	 * Returns the value of the '<em><b>Precedence</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
@@ -62,86 +143,5 @@ public interface LibOperationCS
 	 * @generated
 	 */
 	void setPrecedence(Precedence value);
-
-	/**
-	 * Returns the value of the '<em><b>Is Invalidating</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Invalidating</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Invalidating</em>' attribute.
-	 * @see #setIsInvalidating(boolean)
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibOperationCS_IsInvalidating()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
-	 * @generated
-	 */
-	boolean isIsInvalidating();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsInvalidating <em>Is Invalidating</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Invalidating</em>' attribute.
-	 * @see #isIsInvalidating()
-	 * @generated
-	 */
-	void setIsInvalidating(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Is Static</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Static</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Static</em>' attribute.
-	 * @see #setIsStatic(boolean)
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibOperationCS_IsStatic()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
-	 * @generated
-	 */
-	boolean isIsStatic();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsStatic <em>Is Static</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Static</em>' attribute.
-	 * @see #isIsStatic()
-	 * @generated
-	 */
-	void setIsStatic(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Is Validating</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Validating</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Validating</em>' attribute.
-	 * @see #setIsValidating(boolean)
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibOperationCS_IsValidating()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
-	 * @generated
-	 */
-	boolean isIsValidating();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibOperationCS#isIsValidating <em>Is Validating</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Validating</em>' attribute.
-	 * @see #isIsValidating()
-	 * @generated
-	 */
-	void setIsValidating(boolean value);
 
 } // LibOperationCS

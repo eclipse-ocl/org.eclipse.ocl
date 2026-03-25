@@ -39,6 +39,60 @@ public interface LibIterationCS
 		extends OperationCS, JavaImplementationCS {
 
 	/**
+	 * Returns the value of the '<em><b>Is Invalidating</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Invalidating</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Invalidating</em>' attribute.
+	 * @see #setIsInvalidating(boolean)
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibIterationCS_IsInvalidating()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isIsInvalidating();
+
+	    /**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#isIsInvalidating <em>Is Invalidating</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Invalidating</em>' attribute.
+	 * @see #isIsInvalidating()
+	 * @generated
+	 */
+	void setIsInvalidating(boolean value);
+
+	    /**
+	 * Returns the value of the '<em><b>Is Validating</b></em>' attribute.
+	 * The default value is <code>"false"</code>.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Is Validating</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Is Validating</em>' attribute.
+	 * @see #setIsValidating(boolean)
+	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibIterationCS_IsValidating()
+	 * @model default="false" required="true"
+	 * @generated
+	 */
+	boolean isIsValidating();
+
+	    /**
+	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#isIsValidating <em>Is Validating</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Is Validating</em>' attribute.
+	 * @see #isIsValidating()
+	 * @generated
+	 */
+	void setIsValidating(boolean value);
+
+	/**
 	 * Returns the value of the '<em><b>Owned Iterators</b></em>' containment reference list.
 	 * The list contents are of type {@link org.eclipse.ocl.xtext.basecs.ParameterCS}.
 	 * <!-- begin-user-doc -->
@@ -53,60 +107,6 @@ public interface LibIterationCS
 	 * @generated
 	 */
 	EList<ParameterCS> getOwnedIterators();
-
-	/**
-	 * Returns the value of the '<em><b>Is Invalidating</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Invalidating</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Invalidating</em>' attribute.
-	 * @see #setIsInvalidating(boolean)
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibIterationCS_IsInvalidating()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
-	 * @generated
-	 */
-	boolean isIsInvalidating();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#isIsInvalidating <em>Is Invalidating</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Invalidating</em>' attribute.
-	 * @see #isIsInvalidating()
-	 * @generated
-	 */
-	void setIsInvalidating(boolean value);
-
-	/**
-	 * Returns the value of the '<em><b>Is Validating</b></em>' attribute.
-	 * The default value is <code>"false"</code>.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Is Validating</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Is Validating</em>' attribute.
-	 * @see #setIsValidating(boolean)
-	 * @see org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage#getLibIterationCS_IsValidating()
-	 * @model default="false" dataType="org.eclipse.ocl.pivot.Boolean"
-	 * @generated
-	 */
-	boolean isIsValidating();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.xtext.oclstdlibcs.LibIterationCS#isIsValidating <em>Is Validating</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Is Validating</em>' attribute.
-	 * @see #isIsValidating()
-	 * @generated
-	 */
-	void setIsValidating(boolean value);
 
 	/**
 	 * Returns the value of the '<em><b>Owned Accumulator</b></em>' containment reference.

@@ -17,10 +17,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="LibCoercionCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//OperationCS ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//JavaImplementationCS"/>
   <eClassifiers xsi:type="ecore:EClass" name="LibConstraintCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ConstraintCS"/>
   <eClassifiers xsi:type="ecore:EClass" name="LibIterationCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//OperationCS ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//JavaImplementationCS">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInvalidating" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isValidating" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInvalidating" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isValidating" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedAccumulator" eType="ecore:EClass ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//ParameterCS"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedIterators" upperBound="-1"
@@ -28,12 +28,12 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LibOperationCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//OperationCS ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//JavaImplementationCS">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInvalidating" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isValidating" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInvalidating" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isValidating" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="precedence" eType="ecore:EClass ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Precedence"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LibOppositeCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//FeatureCS"/>
@@ -42,8 +42,8 @@
         eType="#//PrecedenceCS" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LibPropertyCS" eSuperTypes="../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//AttributeCS ../../org.eclipse.ocl.xtext.base/model/BaseCS.ecore#//JavaImplementationCS">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" eType="ecore:EDataType ../../org.eclipse.ocl.pivot/model/Pivot.ecore#T-pivot-Boolean"
-        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isStatic" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedOpposite" eType="#//LibOppositeCS"
         containment="true"/>
   </eClassifiers>
