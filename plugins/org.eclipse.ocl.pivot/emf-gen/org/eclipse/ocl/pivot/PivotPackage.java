@@ -4605,6 +4605,16 @@ extends EPackage
 	EReference getOperation_RedefinedOperations();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Operation#conformsTo(org.eclipse.ocl.pivot.CallExp, org.eclipse.ocl.pivot.OCLExpression, org.eclipse.ocl.pivot.Parameter) <em>Conforms To</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Conforms To</em>' operation.
+	 * @see org.eclipse.ocl.pivot.Operation#conformsTo(org.eclipse.ocl.pivot.CallExp, org.eclipse.ocl.pivot.OCLExpression, org.eclipse.ocl.pivot.Parameter)
+	 * @generated
+	 */
+	EOperation getOperation__ConformsTo__CallExp_OCLExpression_Parameter();
+
+	/**
 	 * Returns the meta object for the containment reference '{@link org.eclipse.ocl.pivot.Operation#getBodyExpression <em>Body Expression</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -9485,6 +9495,14 @@ extends EPackage
 		 * @generated
 		 */
 		EReference OPERATION__REDEFINED_OPERATIONS = eINSTANCE.getOperation_RedefinedOperations();
+
+		/**
+		 * The meta object literal for the '<em><b>Conforms To</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation OPERATION___CONFORMS_TO__CALLEXP_OCLEXPRESSION_PARAMETER = eINSTANCE.getOperation__ConformsTo__CallExp_OCLExpression_Parameter();
 
 		/**
 		 * The meta object literal for the '<em><b>Body Expression</b></em>' containment reference feature.

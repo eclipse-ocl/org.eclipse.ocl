@@ -645,6 +645,11 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Operation-precedence"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Operation-raisedExceptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Operation-redefinedOperations"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Operation/conformsTo">
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/conformsTo/caller"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/conformsTo/argument"/>
+        <genParameters ecoreParameter="Pivot.ecore#//Operation/conformsTo/parameter"/>
+      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//Operation/validateCompatibleReturn">
         <genParameters ecoreParameter="Pivot.ecore#//Operation/validateCompatibleReturn/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//Operation/validateCompatibleReturn/context"/>

@@ -222,7 +222,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_1 = ValueUtil.integerValueOf("1");
 	public static final /*@NonInvalid*/ @NonNull PartId PARTid_ = IdManager.getPartId(1, "status", TypeId.BOOLEAN, false);
 	public static final /*@NonInvalid*/ @NonNull PartId PARTid__0 = IdManager.getPartId(0, "message", TypeId.STRING, true);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull String STR_Missing_32_initializers_c = "Missing initializers:";
 	public static final /*@NonInvalid*/ @NonNull String STR_Unexpected_32_initializers_c = "Unexpected initializers:";
@@ -1857,6 +1856,7 @@ public class PivotTables extends AbstractTables
 			Fragments.init();
 		}
 
+		public static final @NonNull ParameterTypes _CallExp___OCLExpression___Parameter = new ParameterTypes(Types._CallExp, Types._OCLExpression, Types._Parameter);
 		public static final @NonNull ParameterTypes _CallExp___Type = new ParameterTypes(Types._CallExp, Types._Type);
 		public static final @NonNull ParameterTypes _Property = new ParameterTypes(Types._Property);
 		public static final @NonNull ParameterTypes _String = new ParameterTypes(OCLstdlibTables.Types._String);
@@ -1925,7 +1925,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Constraint _IntegerLiteralExp__TypeIsInteger = LIBRARY.createConstraint(Types._IntegerLiteralExp, PivotPackage.Literals.INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_INTEGER__DIAGNOSTICCHAIN_MAP, "TypeIsInteger", "self.type = Integer");
 
 		public static final @NonNull Constraint _IterateExp__BodyTypeConformsToResultType = LIBRARY.createConstraint(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP___VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE__DIAGNOSTICCHAIN_MAP, "BodyTypeConformsToResultType", "true");
-		public static final @NonNull Constraint _IterateExp__BodyTypesAreConformant = LIBRARY.createConstraint(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP___VALIDATE_BODY_TYPES_ARE_CONFORMANT__DIAGNOSTICCHAIN_MAP, "BodyTypesAreConformant", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tSequence{1..ownedBodies->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedBodies->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\tlet isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\t\tlet nullityConforms : Boolean = argument.isRequired or not isRequired in\n\t\targument.type?.conformsTo(requiredType) and nullityConforms)\n\n");
+		public static final @NonNull Constraint _IterateExp__BodyTypesAreConformant = LIBRARY.createConstraint(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP___VALIDATE_BODY_TYPES_ARE_CONFORMANT__DIAGNOSTICCHAIN_MAP, "BodyTypesAreConformant", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tparameters->forAll(parameter with i |\n\t\tlet argument : OCLExpression = ownedBodies->at(i) in\n\t\titeration?.conformsTo(self, argument, parameter)\n\t)\n\n");
 		public static final @NonNull Constraint _IterateExp__OneInitializer = LIBRARY.createConstraint(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP___VALIDATE_ONE_INITIALIZER__DIAGNOSTICCHAIN_MAP, "OneInitializer", "true");
 		public static final @NonNull Constraint _IterateExp__SafeIteratorIsRequired = LIBRARY.createConstraint(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP, "SafeIteratorIsRequired", "isSafe implies ownedIterators->forAll(isRequired)");
 		public static final @NonNull Constraint _IterateExp__SafeSourceCanBeNull = LIBRARY.createConstraint(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n");
@@ -1935,7 +1935,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Constraint _IteratorExp__AnyBodyTypeIsBoolean = LIBRARY.createConstraint(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP, "AnyBodyTypeIsBoolean", "true");
 		public static final @NonNull Constraint _IteratorExp__AnyHasOneIterator = LIBRARY.createConstraint(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP, "AnyHasOneIterator", "true");
 		public static final @NonNull Constraint _IteratorExp__AnyTypeIsSourceElementType = LIBRARY.createConstraint(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "AnyTypeIsSourceElementType", "true");
-		public static final @NonNull Constraint _IteratorExp__BodyTypeIsConformant = LIBRARY.createConstraint(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP___VALIDATE_BODY_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP, "BodyTypeIsConformant", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tlet argument : OCLExpression = ownedBody in\n\tlet parameter : Parameter = parameters?->at(1) in\n\tlet parameterType : Type = parameter.type in\n\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\tlet isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\tlet nullityConforms : Boolean = argument.isRequired or not isRequired in\n\targument.type?.conformsTo(requiredType) and nullityConforms\n\n");
+		public static final @NonNull Constraint _IteratorExp__BodyTypeIsConformant = LIBRARY.createConstraint(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP___VALIDATE_BODY_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP, "BodyTypeIsConformant", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet argument : OCLExpression = self.ownedBody in\n\tlet parameter : Parameter = iteration?.ownedParameters?->at(1) in\n\titeration?.conformsTo(self, argument, parameter)\n\n");
 		public static final @NonNull Constraint _IteratorExp__ClosureBodyElementTypeIsIteratorType = LIBRARY.createConstraint(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_BODY_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureBodyElementTypeIsIteratorType", "name = \'closure\' implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType?.conformsTo(iteratorType)\n\n");
 		public static final @NonNull Constraint _IteratorExp__ClosureBodyTypeIsConformanttoIteratorType = LIBRARY.createConstraint(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureBodyTypeIsConformanttoIteratorType", "true");
 		public static final @NonNull Constraint _IteratorExp__ClosureElementTypeIsSourceElementType = LIBRARY.createConstraint(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureElementTypeIsSourceElementType", "true");
@@ -1983,7 +1983,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Constraint _Operation__UniquePreconditionName = LIBRARY.createConstraint(Types._Operation, PivotPackage.Literals.OPERATION___VALIDATE_UNIQUE_PRECONDITION_NAME__DIAGNOSTICCHAIN_MAP, "UniquePreconditionName", "ownedPreconditions->isUnique(name)");
 
 		public static final @NonNull Constraint _OperationCallExp__ArgumentCount = LIBRARY.createConstraint(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_COUNT__DIAGNOSTICCHAIN_MAP, "ArgumentCount", "ownedArguments->size() = referredOperation?.ownedParameters?->size()");
-		public static final @NonNull Constraint _OperationCallExp__ArgumentTypeIsConformant = LIBRARY.createConstraint(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP, "ArgumentTypeIsConformant", "\n\tlet operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tlet selfType : Type = operation?.owningClass in\n\tSequence{1..ownedArguments->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\targument.type?.conformsTo(requiredType))\n\n");
+		public static final @NonNull Constraint _OperationCallExp__ArgumentTypeIsConformant = LIBRARY.createConstraint(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_ARGUMENT_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP, "ArgumentTypeIsConformant", "\n\tlet operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tparameters->forAll(parameter with i |\n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\toperation?.conformsTo(self, argument, parameter)\n\t)\n\n");
 		public static final @NonNull Constraint _OperationCallExp__SafeSourceCanBeNull = LIBRARY.createConstraint(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "(ownedSource <> null) and isSafe implies not ownedSource.isNonNull()");
 		public static final @NonNull Constraint _OperationCallExp__UnsafeSourceCanNotBeNull = LIBRARY.createConstraint(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___VALIDATE_UNSAFE_SOURCE_CAN_NOT_BE_NULL__DIAGNOSTICCHAIN_MAP, "UnsafeSourceCanNotBeNull", "(not hasOclVoidOverload()) implies ((ownedSource <> null) and not isSafe implies ownedSource.isNonNull())");
 
@@ -2077,6 +2077,9 @@ public class PivotTables extends AbstractTables
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _OCLExpression__isNull = LIBRARY.createOperation(Types._OCLExpression, PivotPackage.Literals.OCL_EXPRESSION___IS_NULL, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, null);
+
+		public static final @NonNull Operation _Operation__conformsTo = LIBRARY.createOperation(Types._Operation, PivotPackage.Literals.OPERATION___CONFORMS_TO__CALLEXP_OCLEXPRESSION_PARAMETER, Parameters._CallExp___OCLExpression___Parameter, OCLstdlibTables.Types._Boolean,
+			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
 		public static final @NonNull Operation _OperationCallExp__hasOclVoidOverload = LIBRARY.createOperation(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP___HAS_OCL_VOID_OVERLOAD, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
@@ -7221,7 +7224,9 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
-		private static final @NonNull Operation @NonNull [] _Iteration__Operation = {};
+		private static final @NonNull Operation @NonNull [] _Iteration__Operation = {
+			Operations._Operation__conformsTo /* conformsTo(CallExp[1],OCLExpression[1],Parameter[1]) */
+		};
 		private static final @NonNull Operation @NonNull [] _Iteration__TemplateableElement = {};
 		private static final @NonNull Operation @NonNull [] _Iteration__TypedElement = {
 			Operations._TypedElement__CompatibleBody /* CompatibleBody(ValueSpecification[1]) */
@@ -8348,7 +8353,9 @@ public class PivotTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _Operation__Operation = {};
+		private static final @NonNull Operation @NonNull [] _Operation__Operation = {
+			Operations._Operation__conformsTo /* conformsTo(CallExp[1],OCLExpression[1],Parameter[1]) */
+		};
 		private static final @NonNull Operation @NonNull [] _Operation__Element = {
 			Operations._Element__allOwnedElements /* allOwnedElements() */,
 			Operations._Element__getValue /* getValue(Type[1],String[1]) */

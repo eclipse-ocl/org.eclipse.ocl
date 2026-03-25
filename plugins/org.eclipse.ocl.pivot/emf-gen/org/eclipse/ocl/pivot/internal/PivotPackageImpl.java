@@ -5905,6 +5905,17 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EOperation getOperation__ConformsTo__CallExp_OCLExpression_Parameter()
+	{
+		return operationEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EReference getOperation_BodyExpression()
 	{
 		return (EReference)operationEClass.getEStructuralFeatures().get(0);
@@ -6006,7 +6017,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getOperation__ValidateCompatibleReturn__DiagnosticChain_Map()
 	{
-		return operationEClass.getEOperations().get(0);
+		return operationEClass.getEOperations().get(1);
 	}
 
 	/**
@@ -6017,7 +6028,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getOperation__ValidateLoadableImplementation__DiagnosticChain_Map()
 	{
-		return operationEClass.getEOperations().get(1);
+		return operationEClass.getEOperations().get(2);
 	}
 
 	/**
@@ -6028,7 +6039,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getOperation__ValidateUniquePreconditionName__DiagnosticChain_Map()
 	{
-		return operationEClass.getEOperations().get(3);
+		return operationEClass.getEOperations().get(4);
 	}
 
 	/**
@@ -6039,7 +6050,7 @@ implements PivotPackage  {
 	@Override
 	public EOperation getOperation__ValidateUniquePostconditionName__DiagnosticChain_Map()
 	{
-		return operationEClass.getEOperations().get(2);
+		return operationEClass.getEOperations().get(3);
 	}
 
 	/**
@@ -7520,6 +7531,7 @@ implements PivotPackage  {
 		createEOperation(operationEClass, 7);
 		createEOperation(operationEClass, 8);
 		createEOperation(operationEClass, 9);
+		createEOperation(operationEClass, 10);
 
 		operationCallExpEClass = createEClass(74);
 		createEAttribute(operationCallExpEClass, 13);
@@ -8932,6 +8944,11 @@ implements PivotPackage  {
 		initEReference(getOperation_Precedence(), this.getPrecedence(), null, "precedence", null, 0, 1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getOperation_RaisedExceptions(), this.getType(), null, "raisedExceptions", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
 		initEReference(getOperation_RedefinedOperations(), this.getOperation(), null, "redefinedOperations", null, 0, -1, Operation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getOperation__ConformsTo__CallExp_OCLExpression_Parameter(), ecorePackage.getEBoolean(), "conformsTo", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getCallExp(), "caller", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getOCLExpression(), "argument", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getParameter(), "parameter", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOperation__ValidateCompatibleReturn__DiagnosticChain_Map(), ecorePackage.getEBoolean(), "validateCompatibleReturn", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, ecorePackage.getEDiagnosticChain(), "diagnostics", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -10408,7 +10425,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tSequence{1..ownedBodies->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedBodies->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\tlet isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\t\tlet nullityConforms : Boolean = argument.isRequired or not isRequired in\n\t\targument.type?.conformsTo(requiredType) and nullityConforms)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tparameters->forAll(parameter with i |\n\t\tlet argument : OCLExpression = ownedBodies->at(i) in\n\t\titeration?.conformsTo(self, argument, parameter)\n\t)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIterateExp__ValidateOneInitializer__DiagnosticChain_Map(),
@@ -10471,7 +10488,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tlet argument : OCLExpression = ownedBody in\n\tlet parameter : Parameter = parameters?->at(1) in\n\tlet parameterType : Type = parameter.type in\n\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\tlet isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\tlet nullityConforms : Boolean = argument.isRequired or not isRequired in\n\targument.type?.conformsTo(requiredType) and nullityConforms\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet argument : OCLExpression = self.ownedBody in\n\tlet parameter : Parameter = iteration?.ownedParameters?->at(1) in\n\titeration?.conformsTo(self, argument, parameter)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map(),
@@ -10712,6 +10729,13 @@ implements PivotPackage  {
 			   "body", "type <> null" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getOperation__ConformsTo__CallExp_OCLExpression_Parameter(),
+		   source,
+		   new String[]
+		   {
+			   "body", "\n\tlet selfType : Type = owningClass in\n\tlet parameterType : Type = parameter.type in\n\tlet nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in\n\tlet nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, selfType) endif in\n\tlet nullityConforms : Boolean = argument.isRequired or not nonLambdaParameter.isRequired in\n\tlet typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in\n\ttypeConforms and nullityConforms\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getOperation__ValidateCompatibleReturn__DiagnosticChain_Map(),
 		   source,
 		   new String[]
@@ -10758,7 +10782,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tlet operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tlet selfType : Type = operation?.owningClass in\n\tSequence{1..ownedArguments->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in\n\t\targument.type?.conformsTo(requiredType))\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "\n\tlet operation : Operation = self.referredOperation in\n\tlet parameters : OrderedSet(Parameter) = operation?.ownedParameters in\n\tparameters->forAll(parameter with i |\n\t\tlet argument : OCLExpression = ownedArguments->at(i) in\n\t\toperation?.conformsTo(self, argument, parameter)\n\t)\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperationCallExp__ValidateSafeSourceCanBeNull__DiagnosticChain_Map(),

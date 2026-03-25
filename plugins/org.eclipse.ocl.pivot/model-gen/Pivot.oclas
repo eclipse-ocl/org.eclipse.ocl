@@ -403,7 +403,7 @@
       </ownedInvariants>
       <ownedInvariants xmi:id="6bsZi" isCallable="true" name="BodyTypesAreConformant">
         <ownedComments body="The bodies must conform to the parameters of the referred iteration."/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;let selfType : Type = iteration?.owningClass in&#xA;&#x9;Sequence{1..ownedBodies->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedBodies->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters?->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;let isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in&#xA;&#x9;&#x9;let nullityConforms : Boolean = argument.isRequired or not isRequired in&#xA;&#x9;&#x9;argument.type?.conformsTo(requiredType) and nullityConforms)&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;parameters->forAll(parameter with i |&#xA;&#x9;&#x9;let argument : OCLExpression = ownedBodies->at(i) in&#xA;&#x9;&#x9;iteration?.conformsTo(self, argument, parameter)&#xA;&#x9;)&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="4nkmK" isCallable="true" name="OneInitializer">
         <ownedComments body="A result variable must have an init expression."/>
@@ -445,7 +445,7 @@
       </ownedInvariants>
       <ownedInvariants xmi:id=",kxb8" isCallable="true" name="BodyTypeIsConformant">
         <ownedComments body="The body must conform to the parameter of the referred iteration."/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;let selfType : Type = iteration?.owningClass in&#xA;&#x9;let argument : OCLExpression = ownedBody in&#xA;&#x9;let parameter : Parameter = parameters?->at(1) in&#xA;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;let isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not isRequired in&#xA;&#x9;argument.type?.conformsTo(requiredType) and nullityConforms&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let argument : OCLExpression = self.ownedBody in&#xA;&#x9;let parameter : Parameter = iteration?.ownedParameters?->at(1) in&#xA;&#x9;iteration?.conformsTo(self, argument, parameter)&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="DSk3n" isCallable="true" name="ClosureBodyElementTypeIsIteratorType">
         <ownedComments body="The result element type is the same as type of the body elements or element."/>
@@ -729,6 +729,12 @@
       <ownedInvariants xmi:id="ko3xJ" isCallable="true" name="UniquePreconditionName">
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedPreconditions->isUnique(name)"/>
       </ownedInvariants>
+      <ownedOperations xmi:id="VNk9Z" isRequired="true" name="conformsTo" type="pivot:BooleanType &_0;#XEMMs">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let selfType : Type = owningClass in&#xA;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;let nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in&#xA;&#x9;let nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, selfType) endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not nonLambdaParameter.isRequired in&#xA;&#x9;let typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in&#xA;&#x9;typeConforms and nullityConforms&#xA;&#xA;"/>
+        <ownedParameters xmi:id="nk91+" isRequired="true" name="caller" type="#QJrde"/>
+        <ownedParameters xmi:id="U8r5v" isRequired="true" name="argument" type="#BFtK4"/>
+        <ownedParameters xmi:id="zGTB," isRequired="true" name="parameter" type="#as9eG"/>
+      </ownedOperations>
       <ownedProperties xmi:id="qfUk8" isComposite="true" name="bodyExpression" opposite="#SOZSu" type="#BfHsW"/>
       <ownedProperties xmi:id="S+5tf" defaultValueString="false" isRequired="true" name="isInvalidating" type="pivot:BooleanType &_0;#XEMMs">
         <ownedComments body="Whether this operation may return an invalid result for non-invalid (or invalid if also validating) inputs."/>
@@ -770,7 +776,7 @@
       </ownedInvariants>
       <ownedInvariants xmi:id="f2r2V" isCallable="true" name="ArgumentTypeIsConformant">
         <ownedComments body="All the arguments must conform to the parameters of the referred operation."/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters?->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument.type?.conformsTo(requiredType))&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;parameters->forAll(parameter with i |&#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;operation?.conformsTo(self, argument, parameter)&#xA;&#x9;)&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="v+X3T" isCallable="true" name="SafeSourceCanBeNull">
         <ownedComments body="Safe navigation is not necessary when the source cannot be null."/>

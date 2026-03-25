@@ -1149,7 +1149,7 @@
     </eOperations>
     <eOperations name="validateBodyTypesAreConformant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;let selfType : Type = iteration?.owningClass in&#xA;&#x9;Sequence{1..ownedBodies->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedBodies->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters?->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;let isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in&#xA;&#x9;&#x9;let nullityConforms : Boolean = argument.isRequired or not isRequired in&#xA;&#x9;&#x9;argument.type?.conformsTo(requiredType) and nullityConforms)&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;parameters->forAll(parameter with i |&#xA;&#x9;&#x9;let argument : OCLExpression = ownedBodies->at(i) in&#xA;&#x9;&#x9;iteration?.conformsTo(self, argument, parameter)&#xA;&#x9;)&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The bodies must conform to the parameters of the referred iteration."/>
@@ -1325,7 +1325,7 @@
     </eOperations>
     <eOperations name="validateBodyTypeIsConformant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;let selfType : Type = iteration?.owningClass in&#xA;&#x9;let argument : OCLExpression = ownedBody in&#xA;&#x9;let parameter : Parameter = parameters?->at(1) in&#xA;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;let isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not isRequired in&#xA;&#x9;argument.type?.conformsTo(requiredType) and nullityConforms&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let argument : OCLExpression = self.ownedBody in&#xA;&#x9;let parameter : Parameter = iteration?.ownedParameters?->at(1) in&#xA;&#x9;iteration?.conformsTo(self, argument, parameter)&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The body must conform to the parameter of the referred iteration."/>
@@ -2160,6 +2160,14 @@
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="An Operation is a BehavioralFeature of a Classifier that specifies the name, type, parameters, and constraints for invoking an associated Behavior. An Operation may invoke both the execution of method behaviors as well as other behavioral responses. Operation specializes TemplateableElement in order to support specification of template operations and bound operations. Operation specializes ParameterableElement to specify that an operation can be exposed as a formal template parameter, and provided as an actual parameter in a binding of a template."/>
     </eAnnotations>
+    <eOperations name="conformsTo" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="&#xA;&#x9;let selfType : Type = owningClass in&#xA;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;let nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in&#xA;&#x9;let nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, selfType) endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not nonLambdaParameter.isRequired in&#xA;&#x9;let typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in&#xA;&#x9;typeConforms and nullityConforms&#xA;&#xA;"/>
+      </eAnnotations>
+      <eParameters name="caller" lowerBound="1" eType="#T-pivot-CallExp"/>
+      <eParameters name="argument" lowerBound="1" eType="#T-pivot-OCLExpression"/>
+      <eParameters name="parameter" lowerBound="1" eType="#T-pivot-Parameter"/>
+    </eOperations>
     <eOperations name="validateCompatibleReturn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="body" value="bodyExpression &lt;> null and bodyExpression.oclAsType(ExpressionInOCL).ownedBody &lt;> null implies CompatibleBody(bodyExpression)"/>
@@ -2326,7 +2334,7 @@
     </eOperations>
     <eOperations name="validateArgumentTypeIsConformant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;let selfType : Type = operation?.owningClass in&#xA;&#x9;Sequence{1..ownedArguments->size()}->forAll (i | &#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;let parameter : Parameter = parameters?->at(i) in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in&#xA;&#x9;&#x9;argument.type?.conformsTo(requiredType))&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;let operation : Operation = self.referredOperation in&#xA;&#x9;let parameters : OrderedSet(Parameter) = operation?.ownedParameters in&#xA;&#x9;parameters->forAll(parameter with i |&#xA;&#x9;&#x9;let argument : OCLExpression = ownedArguments->at(i) in&#xA;&#x9;&#x9;operation?.conformsTo(self, argument, parameter)&#xA;&#x9;)&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="All the arguments must conform to the parameters of the referred operation."/>

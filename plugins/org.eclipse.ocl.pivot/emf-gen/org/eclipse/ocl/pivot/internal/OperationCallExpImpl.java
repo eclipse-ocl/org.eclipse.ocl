@@ -45,7 +45,6 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation;
 import org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation;
 import org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation;
@@ -56,11 +55,9 @@ import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.IntegerRange;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.OrderedSetValue;
-import org.eclipse.ocl.pivot.values.SequenceValue;
 
 /**
  * <!-- begin-user-doc -->
@@ -591,6 +588,9 @@ implements OperationCallExp {
 	@Override
 	public boolean validateArgumentTypeIsConformant(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
+		if ("iteration?.conformsTo(self, argument, parameter)".equals(toString())) {
+			getClass();		// XXX
+		}
 		final @NonNull String constraintName = "OperationCallExp::ArgumentTypeIsConformant";
 		try {
 			/**
@@ -606,23 +606,9 @@ implements OperationCallExp {
 			 *         in
 			 *           let parameters : OrderedSet(Parameter)[?] = operation?.ownedParameters
 			 *           in
-			 *             let selfType : Type[?] = operation?.owningClass
-			 *             in
-			 *               Sequence{1..ownedArguments->size()
-			 *               }
-			 *               ->forAll(i |
-			 *                 let argument : OCLExpression[1] = ownedArguments->at(i)
-			 *                 in
-			 *                   let parameter : Parameter[1] = parameters?->at(i)
-			 *                   in
-			 *                     let parameterType : Type[?] = parameter.type
-			 *                     in
-			 *                       let
-			 *                         requiredType : Type[?] = if parameter.isTypeof
-			 *                         then Class
-			 *                         else parameterType?.specializeIn(self, selfType)
-			 *                         endif
-			 *                       in argument.type?.conformsTo(requiredType))
+			 *             parameters->forAll(parameter with i |
+			 *               let argument : OCLExpression[1] = ownedArguments->at(i)
+			 *               in operation?.conformsTo(self, argument, parameter))
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -650,26 +636,15 @@ implements OperationCallExp {
 						final /*@Thrown*/ @NonNull OrderedSetValue BOXED_ownedParameters = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Parameter, ownedParameters);
 						safe_ownedParameters_source = BOXED_ownedParameters;
 					}
-					final /*@NonInvalid*/ @NonNull Object EQ_operation_null_0 = operation == null;
-					/*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class safe_owningClass_source;
-					if (EQ_operation_null_0 == Boolean.TRUE) {
-						safe_owningClass_source = null;
+					if (safe_ownedParameters_source == null) {
+						throw new InvalidValueException("Null source for \'Collection(T).forAll($$0 | Lambda $$0() : Boolean) : Boolean\'");
 					}
-					else {
-						assert operation != null;
-						final /*@Thrown*/ org.eclipse.ocl.pivot.@Nullable Class owningClass = operation.getOwningClass();
-						safe_owningClass_source = owningClass;
-					}
-					final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
-					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression_0, ownedArguments);
-					final /*@NonInvalid*/ @NonNull IntegerValue size = CollectionSizeOperation.INSTANCE.evaluate(BOXED_ownedArguments);
-					final /*@NonInvalid*/ @NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
-					final /*@NonInvalid*/ @NonNull SequenceValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
 					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-					@NonNull Iterator<Object> ITERATOR_i = Sequence.iterator();
+					@Nullable Iterator<Object> ITERATOR_parameter_0 = safe_ownedParameters_source.iterator();
+					/*@NonInvalid*/ @NonNull IntegerValue i = ValueUtil.ONE_VALUE;
 					/*@Thrown*/ @Nullable Boolean forAll;
 					while (true) {
-						if (!ITERATOR_i.hasNext()) {
+						if (!ITERATOR_parameter_0.hasNext()) {
 							if (accumulator == null) {
 								forAll = null;
 							}
@@ -681,79 +656,26 @@ implements OperationCallExp {
 							}
 							break;
 						}
-						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull IntegerValue i = (@NonNull IntegerValue)ITERATOR_i.next();
+						/*@NonInvalid*/ @Nullable Parameter parameter_0 = (@Nullable Parameter)ITERATOR_parameter_0.next();
 						/**
 						 *
 						 * let argument : OCLExpression[1] = ownedArguments->at(i)
-						 * in
-						 *   let parameter : Parameter[1] = parameters?->at(i)
-						 *   in
-						 *     let parameterType : Type[?] = parameter.type
-						 *     in
-						 *       let
-						 *         requiredType : Type[?] = if parameter.isTypeof
-						 *         then Class
-						 *         else parameterType?.specializeIn(self, selfType)
-						 *         endif
-						 *       in argument.type?.conformsTo(requiredType)
+						 * in operation?.conformsTo(self, argument, parameter)
 						 */
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
+							final /*@NonInvalid*/ @NonNull List<OCLExpression> ownedArguments = this.getOwnedArguments();
+							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedArguments = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_OCLExpression_0, ownedArguments);
 							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull OCLExpression argument = (@NonNull OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
-							if (safe_ownedParameters_source == null) {
-								throw new InvalidValueException("Null \'\'Collection\'\' rather than \'\'OclVoid\'\' value required");
-							}
-							final /*@Thrown*/ @NonNull OrderedSetValue safe_at_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
-							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull Parameter parameter = (@NonNull Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_at_sources, i);
-							final /*@Thrown*/ @Nullable Type parameterType = parameter.getType();
-							final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
-							/*@Thrown*/ @Nullable Type requiredType;
-							if (isTypeof) {
-								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-								requiredType = TYP_Class_0;
-							}
-							else {
-								/*@Caught*/ @Nullable Object CAUGHT_parameterType;
-								try {
-									CAUGHT_parameterType = parameterType;
-								}
-								catch (Exception e) {
-									CAUGHT_parameterType = ValueUtil.createInvalidValue(e);
-								}
-								final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_parameterType_null = CAUGHT_parameterType == null;
-								/*@Thrown*/ @Nullable Type safe_specializeIn_source;
-								if (EQ_CAUGHT_parameterType_null == Boolean.TRUE) {
-									safe_specializeIn_source = null;
-								}
-								else {
-									assert parameterType != null;
-									@SuppressWarnings("null")
-									final /*@Thrown*/ @NonNull Type specializeIn = parameterType.specializeIn(this, safe_owningClass_source);
-									safe_specializeIn_source = specializeIn;
-								}
-								requiredType = safe_specializeIn_source;
-							}
-							final /*@Thrown*/ @Nullable Type type = argument.getType();
-							/*@Caught*/ @Nullable Object CAUGHT_type;
-							try {
-								CAUGHT_type = type;
-							}
-							catch (Exception e) {
-								CAUGHT_type = ValueUtil.createInvalidValue(e);
-							}
-							final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_type_null = CAUGHT_type == null;
+							final /*@Thrown*/ @NonNull OCLExpression argument_0 = (@NonNull OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
+							final /*@NonInvalid*/ @NonNull Object EQ_operation_null_0 = operation == null;
 							/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-							if (EQ_CAUGHT_type_null == Boolean.TRUE) {
+							if (EQ_operation_null_0 == Boolean.TRUE) {
 								safe_conformsTo_source = null;
 							}
 							else {
-								if (type == null) {
-									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
-								}
-								final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
+								assert operation != null;
+								final /*@Thrown*/ boolean conformsTo = operation.conformsTo(this, argument_0, parameter_0);
 								safe_conformsTo_source = conformsTo;
 							}
 							CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
@@ -780,6 +702,7 @@ implements OperationCallExp {
 						else {															// Impossible badly typed result
 							accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
 						}
+						i = i.addInteger(ValueUtil.ONE_VALUE);
 					}
 					CAUGHT_forAll = forAll;
 				}
