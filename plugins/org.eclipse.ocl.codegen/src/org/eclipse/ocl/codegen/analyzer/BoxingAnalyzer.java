@@ -610,11 +610,11 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgElement) {
 		super.visitCGOperation(cgElement);
-		//		if ("isAttribute".equals(cgElement.getName())) {
-		//			System.out.println("visitCGOperation for " + cgElement.getAst().toString());
-		//		}
-		if (cgElement.isNonNull()) {
-			CGValuedElement body = cgElement.getBody();
+//				if ("CompatibleBody".equals(cgElement.getName())) {
+//					System.out.println("visitCGOperation for " + cgElement.getAst().toString());
+//				}
+		if (cgElement.basicIsRequired()) {							// If declared to return non-null
+			CGValuedElement body = cgElement.getBody();				// Make sure it does
 			if (body != null) {
 				rewriteAsGuarded(body, false, "body for '" + cgElement.getAst() + "'");
 			}
@@ -625,8 +625,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGProperty(@NonNull CGProperty cgElement) {
 		super.visitCGProperty(cgElement);
-		if (cgElement.isNonNull()) {
-			CGValuedElement body = cgElement.getBody();
+		if (cgElement.basicIsRequired()) {							// If declared to return non-null
+			CGValuedElement body = cgElement.getBody();				// Make sure it does
 			if (body != null) {
 				rewriteAsGuarded(body, false, "body for '" + cgElement.getAst() + "'");
 			}

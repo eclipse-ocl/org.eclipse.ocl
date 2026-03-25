@@ -209,9 +209,14 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 			boolean isRequired = cgTypedElement.basicIsRequired();
 			if (cgTypedElement instanceof CGValuedElement) {			// FIXME use CGVariable isNonNull too
 				boolean isNonNull = ((CGValuedElement)cgTypedElement).isNonNull();
-				assert isNonNull == isRequired;
-				if (!isNonNull) {			// FIXME use CGVariable isNonNull too
+			//	For eg a CGOperation, isRequired is what it declares as its return, isNonNull is what is actually returnable
+			//		so for a non-conforming body there is a difference; the null is thrown so isRequired is 'correct'.
+			//	assert isNonNull == isRequired : "isNonNull != isRequired";
+				if (!isRequired) {			// FIXME use CGVariable isNonNull too
 					append("[?]");
+				}
+				else if (!isNonNull) {
+					append("[1!]");
 				}
 			}
 			else {

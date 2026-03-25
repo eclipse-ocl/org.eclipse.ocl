@@ -64,6 +64,7 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 			js.append(")");
 		}
 		js.appendValueName(cgValue);
+	//	js.appendReferenceTo(this, cgValue);		-- ?? this should do the above cast ??
 	}
 
 	@Override

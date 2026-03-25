@@ -999,7 +999,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 											throw (InvalidValueException)CAUGHT_safe_owningClass_source;
 										}
 										@SuppressWarnings("null")
-										final /*@Thrown*/ @NonNull Type specializeIn_0 = ((Type)CAUGHT_parameterType).specializeIn(this, (Type) CAUGHT_safe_owningClass_source);
+										final /*@Thrown*/ @NonNull Type specializeIn_0 = ((Type)CAUGHT_parameterType).specializeIn(this, (Type)CAUGHT_safe_owningClass_source);
 										safe_specializeIn_source = specializeIn_0;
 									}
 									requiredType = safe_specializeIn_source;

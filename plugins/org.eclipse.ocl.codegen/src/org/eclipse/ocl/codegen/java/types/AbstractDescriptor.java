@@ -218,7 +218,7 @@ public abstract class AbstractDescriptor implements TypeDescriptor
 
 	@Override
 	public void appendEcoreValue(@NonNull JavaStream js, @NonNull String requiredClassName, @NonNull CGValuedElement cgValue) {
-		js.appendValueName(cgValue);
+		js.appendReferenceTo(this, cgValue);
 	}
 
 	@Override
