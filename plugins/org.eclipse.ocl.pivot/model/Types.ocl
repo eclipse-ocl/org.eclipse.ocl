@@ -40,6 +40,17 @@ def: referredElements() : Set(Element) = Set{referredType}
 context VariableExp
 def: referredElements() : Set(Element) = Set{referredVariable}
 */
+
+context Operation
+def: conformsTo(caller : CallExp[1], argument : OCLExpression[1], parameter : Parameter[1]) : Boolean[1] =
+	let selfType : Type = owningClass in
+	let parameterType : Type = parameter.type in
+	let nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in
+	let nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, selfType) endif in
+	let nullityConforms : Boolean = argument.isRequired or not nonLambdaParameter.isRequired in
+	let typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in
+	typeConforms and nullityConforms
+
 context SelfType
 def: specializeIn(expr : CallExp, selfType : Type) : Type = selfType
 
