@@ -749,8 +749,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	/**
 	 * Resolve an invocation such as source.name  or source-&gt;name
+	 * @param isSafe
 	 */
-	protected @NonNull OCLExpression resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp) {
+	protected @NonNull OCLExpression resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, boolean isSafe, @NonNull NameExpCS csNameExp) {
 		PathNameCS ownedPathName = ClassUtil.requireNonNull(csNameExp.getOwnedPathName());
 		ScopeFilter propertyScopeFilter = AbstractAttribution.NOT_STATIC_SCOPE_FILTER;
 		List<SquareBracketedClauseCS> csSquareBracketedClauses = csNameExp.getOwnedSquareBracketedClauses();
@@ -766,12 +767,12 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Property resolvedProperty = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
 		if ((resolvedProperty != null) && !resolvedProperty.eIsProxy()) {
 			if (resolvedProperty.getType() instanceof Stereotype) {			// FIXME Bug 578010 - M2 properties need reification with correct types at M1
-				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
+				return resolvePropertyCallExp(sourceExp, csNameExp, isSafe, resolvedProperty);
 			}
 			Type resolvedSourceType = PivotUtil.getType(sourceExp);
 			Type propertySourceType = PivotUtil.getOwningClass(resolvedProperty);
 			if (standardLibrary.conformsTo(resolvedSourceType, propertySourceType)) {
-				return resolvePropertyCallExp(sourceExp, csNameExp, resolvedProperty);
+				return resolvePropertyCallExp(sourceExp, csNameExp, isSafe, resolvedProperty);
 			}
 			context.addError(csNameExp, EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, resolvedProperty);
 		}
@@ -1600,7 +1601,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		helper.setOperationReturnType(callExp, operation);
 	}
 
-	protected @NonNull CallExp resolvePropertyCallExp(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp, @NonNull Property property) {
+	protected @NonNull CallExp resolvePropertyCallExp(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp, boolean isSafe, @NonNull Property property) {
 		NavigationCallExp callExp;
 		if (property.isIsImplicit()) {
 			callExp = refreshOppositePropertyCallExp(csNameExp, sourceExp, property);
@@ -1608,17 +1609,23 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		else {
 			callExp = refreshPropertyCallExp(csNameExp, sourceExp, property);
 		}
+		callExp.setIsSafe(isSafe);
 		//		if (isInvalidType(property.getType())) {
 		//			EssentialOCLUtils.setHasError(csNameExp);
 		//		}
 		resolveAtPre(csNameExp, callExp);
 		Type returnType = resolvePropertyReturnType(callExp, csNameExp, property);
-		helper.setType(callExp, returnType, property.isIsRequired() && !callExp.isIsSafe(), null);
-		if (sourceExp.toString().contains("iteration")) {
-			System.out.println("resolvePropertyCallExp " + NameUtil.debugSimpleName(callExp) + " - " + callExp);
-			getClass();	// XXX
-			callExp.toString();
+		boolean isRequired;
+		if (PivotUtil.isAggregate(returnType)) {
+			isRequired = true;							// Aggregates are never null; just empty
 		}
+		else if (isSafe) {
+			isRequired = sourceExp.isIsRequired() && property.isIsRequired();	// Safe navigation is non-null only if non-null source and non-null property
+		}
+		else {
+			isRequired = sourceExp.isIsRequired() && property.isIsRequired();
+		}
+		helper.setType(callExp, returnType, isRequired, null);
 		return callExp;
 	}
 
@@ -1685,7 +1692,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		else if (element instanceof Property) {
 			Property property = (Property) element;
 			OCLExpression sourceExp = createImplicitSourceVariableExp(csNameExp, property.getOwningClass());
-			return resolvePropertyCallExp(sourceExp, csNameExp, property);
+			return resolvePropertyCallExp(sourceExp, csNameExp, false, property);
 		}
 		else if (element instanceof Operation) {
 			return context.addBadExpressionError(csNameExp, "No parameters for operation " + ((Operation)element).getName());
@@ -2037,6 +2044,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected OCLExpression doVisitNavigationOperatorCS(@NonNull InfixExpCS csOperator) {
+		if ("iteration?.ownedParameters?->at(1)".equals(csOperator.toString())) {
+			getClass();	// XXX
+		//	navigatingExp.toString();
+		}
 		OCLExpression navigatingExp = null;
 		ExpCS csSource = csOperator.getSource();
 		if (csSource != null) {
@@ -2069,6 +2080,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 								collectedSourceExp = resolveImplicitAsSet(sourceExp, actualSourceType, csOperator);
 							}
 						}
+						boolean isSafe = PivotUtil.isSafeNavigationOperator(navigationOperatorName);
 						Type sourceType = collectedSourceExp.getType();
 						csNameExp.setSourceType(sourceType);
 						csNameExp.setSourceTypeValue(collectedSourceExp.getTypeValue());
@@ -2081,7 +2093,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							callExp = resolveInvocation(collectedSourceExp, csRoundBracketedClause);
 						}
 						else if (argument instanceof NameExpCS) {
-							callExp = resolveExplicitSourceNavigation(collectedSourceExp, (NameExpCS) argument);
+							callExp = resolveExplicitSourceNavigation(collectedSourceExp, isSafe, (NameExpCS) argument);
 						}
 						else {
 							callExp = context.addBadExpressionError(argument, "bad navigation argument");
@@ -2090,7 +2102,6 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						//	Complete the wrapping of the inner call expression in an outer implicit collect expression
 						//
 						if (callExp instanceof CallExp) {
-							boolean isSafe = PivotUtil.isSafeNavigationOperator(navigationOperatorName);
 							//							((CallExp) callExp).setIsSafe(isSafe && (implicitCollectExp == null));
 							//							if (isSafe) {
 							//								callExp.setIsRequired(true);		// FIXME Why?
@@ -2126,6 +2137,16 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (navigatingExp != null) {
 				context.installPivotUsage(csOperator, navigatingExp);
 			}
+		}
+		if (navigatingExp != null) {
+			if (PivotUtil.isAggregate(navigatingExp.getType())) {
+				assert navigatingExp.isIsRequired();
+			}
+		}
+		if ("iteration?.ownedParameters".equals(csOperator.toString())) {
+			System.out.println("doVisitNavigationOperatorCS " + NameUtil.debugSimpleName(navigatingExp) + " - " + navigatingExp);
+			getClass();	// XXX
+		//	navigatingExp.toString();
 		}
 		return navigatingExp;
 	}
