@@ -1172,6 +1172,10 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	protected void resolveIterationContent(@NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull LoopExp expression) {
 		boolean allOk = true;
 		OCLExpression source = PivotUtil.getOwnedSource(expression);
+		if (source.toString().contains("iteration")) {
+			System.out.println("resolveIterationContent " + NameUtil.debugSimpleName(source) + " - " + source);
+			getClass();	// XXX
+		}
 		if (allOk) {
 			resolveIterationIterators(csRoundBracketedClause, source, expression);
 		}
@@ -1610,6 +1614,11 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		resolveAtPre(csNameExp, callExp);
 		Type returnType = resolvePropertyReturnType(callExp, csNameExp, property);
 		helper.setType(callExp, returnType, property.isIsRequired() && !callExp.isIsSafe(), null);
+		if (sourceExp.toString().contains("iteration")) {
+			System.out.println("resolvePropertyCallExp " + NameUtil.debugSimpleName(callExp) + " - " + callExp);
+			getClass();	// XXX
+			callExp.toString();
+		}
 		return callExp;
 	}
 
@@ -1928,6 +1937,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	@Override
 	public Element visitInfixExpCS(@NonNull InfixExpCS csInfixExp) {
+		if (csInfixExp.toString().contains("?.")) {
+			getClass();		// XXX
+		}
 		//
 		//	If this is a new Operation tree start at its root.
 		//
@@ -2042,8 +2054,8 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						//	Condition the source for implicit set or implicit collect
 						//
 						String navigationOperatorName = csOperator.getName();
-						boolean isAggregate = PivotUtil.isAggregate(actualSourceType);
-						if (isAggregate) {
+						boolean sourceIsAggregate = PivotUtil.isAggregate(actualSourceType);
+						if (sourceIsAggregate) {
 							if (PivotUtil.isObjectNavigationOperator(navigationOperatorName)) {
 								implicitCollectExp = resolveImplicitCollect(sourceExp, csOperator);
 								if (implicitCollectExp != null) {
@@ -2090,8 +2102,14 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 							}
 							else {
 								((CallExp) callExp).setIsSafe(isSafe);
-								if (isSafe && !isAggregate) {
-									callExp.setIsRequired(isAggregate);
+//								if (sourceIsAggregate) {
+//									assert callExp.isIsRequired();
+//								}
+//								else if (isSafe) {
+//									callExp.setIsRequired(false);
+//								}
+								if (isSafe && !sourceIsAggregate) {
+									callExp.setIsRequired(sourceIsAggregate);
 								}
 								navigatingExp = callExp;
 							}

@@ -49,7 +49,6 @@ import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
 import org.eclipse.ocl.pivot.InvalidType;
-import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -259,11 +258,13 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			else {
 				safeVisit(type);
 			}
-			if (!typedElement.isIsRequired()) {
-			//	append("[?]");
-			}
-			else if (!(type instanceof IterableType) && !(type instanceof LambdaType) && !(type instanceof TupleType)) {
-				append("[1]");
+			if (!(type instanceof LambdaType)) {
+				if (!typedElement.isIsRequired()) {
+					append("[?]");
+				}
+				else { //if (!(type instanceof IterableType) && !(type instanceof LambdaType) && !(type instanceof TupleType)) {
+					append("[1]");
+				}
 			}
 		}
 	}

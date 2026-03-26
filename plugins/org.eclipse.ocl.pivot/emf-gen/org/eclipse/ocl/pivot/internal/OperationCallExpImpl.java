@@ -588,9 +588,6 @@ implements OperationCallExp {
 	@Override
 	public boolean validateArgumentTypeIsConformant(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
-		if ("iteration?.conformsTo(self, argument, parameter)".equals(toString())) {
-			getClass();		// XXX
-		}
 		final @NonNull String constraintName = "OperationCallExp::ArgumentTypeIsConformant";
 		try {
 			/**
@@ -637,7 +634,7 @@ implements OperationCallExp {
 						safe_ownedParameters_source = BOXED_ownedParameters;
 					}
 					if (safe_ownedParameters_source == null) {
-						throw new InvalidValueException("Null source for \'Collection(T).forAll($$0 | Lambda $$0() : Boolean) : Boolean\'");
+						throw new InvalidValueException("Null source for \'Collection(T).forAll($$0[?] | Lambda $$0[?]() : Boolean[?]) : Boolean[?]\'");
 					}
 					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
 					@Nullable Iterator<Object> ITERATOR_parameter_0 = safe_ownedParameters_source.iterator();
