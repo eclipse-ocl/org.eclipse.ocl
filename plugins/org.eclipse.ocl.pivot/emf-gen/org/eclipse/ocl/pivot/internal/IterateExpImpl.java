@@ -842,7 +842,7 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						throw new InvalidValueException("Null source for \'Collection(T).forAll($$0[?] | Lambda $$0[?]() : Boolean[?]) : Boolean[?]\'");
 					}
 					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-					@Nullable Iterator<Object> ITERATOR_parameter = safe_ownedParameters_source.iterator();
+					@NonNull Iterator<Object> ITERATOR_parameter = safe_ownedParameters_source.iterator();
 					/*@NonInvalid*/ @NonNull IntegerValue i = ValueUtil.ONE_VALUE;
 					/*@Thrown*/ @Nullable Boolean forAll;
 					while (true) {
@@ -858,7 +858,8 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							}
 							break;
 						}
-						/*@NonInvalid*/ @Nullable Parameter parameter = (@Nullable Parameter)ITERATOR_parameter.next();
+						@SuppressWarnings("null")
+						/*@NonInvalid*/ @NonNull Parameter parameter = (@NonNull Parameter)ITERATOR_parameter.next();
 						/**
 						 *
 						 * let argument : OCLExpression[1] = ownedBodies->at(i)

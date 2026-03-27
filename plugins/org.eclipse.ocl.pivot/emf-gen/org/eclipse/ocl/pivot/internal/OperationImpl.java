@@ -426,12 +426,12 @@ implements Operation {
 	{
 		/**
 		 *
-		 * let selfType : Type[?] = owningClass
+		 * let selfType : Class[?] = owningClass
 		 * in
 		 *   let parameterType : Type[?] = parameter.type
 		 *   in
 		 *     let
-		 *       nonLambdaParameter : Parameter[1] = if
+		 *       nonLambdaParameter : Parameter[?] = if
 		 *         parameterType.oclIsKindOf(LambdaType)
 		 *       then parameterType.oclAsType(LambdaType).ownedResult
 		 *       else parameter

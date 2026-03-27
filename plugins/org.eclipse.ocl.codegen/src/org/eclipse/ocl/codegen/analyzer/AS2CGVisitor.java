@@ -949,7 +949,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		Operation asOperation = NameUtil.getNameable(collectionType.getOwnedOperations(), "excluding");		// FIXME Promote QVTd's StandardLibraryHelper
 		cgOperationCallExp.setReferredOperation(asOperation);
 		OCLExpression asSource = callExp.getOwnedSource();
-		setAst(cgOperationCallExp, asSource.getTypeId(), "SAFE_" + callExp.getName() + "_sources"/*nameManagerContext.getSymbolName(callExp, "safe")*/);
+		setAst(cgOperationCallExp, asSource.getTypeId(), "safe_" + callExp.getName() + "_sources"/*nameManagerContext.getSymbolName(callExp, "safe")*/);
 		//		cgOperationCallExp.setAst(asSource);
 		cgOperationCallExp.setRequired(true);
 		cgOperationCallExp.setSource(cgSource);
@@ -1539,7 +1539,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		}
 		else {
 			String operationName = element.getReferredOperation().getName();
-			CGFinalVariable cgVariable = generateSafeVariable(cgSource, "SAFE_" + operationName + "_source");
+			CGFinalVariable cgVariable = generateSafeVariable(cgSource, "safe_" + operationName + "_source");
 			CGVariableExp cgVariableExp = generateSafeVariableExp(pSource, cgVariable);
 			CGValuedElement cgUnsafeExp = generateOperationCallExp(cgVariableExp, element);
 			return generateSafeNavigationGuard(element, cgVariable, cgUnsafeExp);
@@ -1553,7 +1553,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (!element.isIsSafe()) {
 			return generateOppositePropertyCallExp(cgSource, element);
 		}
-		CGFinalVariable cgVariable = generateSafeVariable(cgSource, "SAFE_" + element.getReferredProperty().getName() + "_source");
+		CGFinalVariable cgVariable = generateSafeVariable(cgSource, "safe_" + element.getReferredProperty().getName() + "_source");
 		CGVariableExp cgVariableExp = generateSafeVariableExp(asSource, cgVariable);
 		CGValuedElement cgUnsafeExp = generateOppositePropertyCallExp(cgVariableExp, element);
 		return generateSafeNavigationGuard(element, cgVariable, cgUnsafeExp);
@@ -1614,7 +1614,7 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 		if (!element.isIsSafe()) {
 			return generatePropertyCallExp(cgSource, element);
 		}
-		CGFinalVariable cgVariable = generateSafeVariable(cgSource, "SAFE_" + element.getReferredProperty().getName() + "_source");
+		CGFinalVariable cgVariable = generateSafeVariable(cgSource, "safe_" + element.getReferredProperty().getName() + "_source");
 		CGVariableExp cgVariableExp = generateSafeVariableExp(asSource, cgVariable);
 		CGValuedElement cgUnsafeExp = generatePropertyCallExp(cgVariableExp, element);
 		return generateSafeNavigationGuard(element, cgVariable, cgUnsafeExp);

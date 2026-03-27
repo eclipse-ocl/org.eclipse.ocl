@@ -745,7 +745,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			 *     else
 			 *       let result : Boolean[?] = name = 'closure' implies
 			 *         let
-			 *           resultElementType : Type[1] = type.oclAsType(CollectionType).elementType
+			 *           resultElementType : Type[?] = type.oclAsType(CollectionType).elementType
 			 *         in
 			 *           let iteratorType : Type[?] = ownedIterators->at(1).type
 			 *           in iteratorType?.conformsTo(resultElementType)
@@ -1559,7 +1559,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			 *         in
 			 *           sourceType.oclIsKindOf(CollectionType) implies
 			 *           let
-			 *             sourceElementType : Type[1] = sourceType.oclAsType(CollectionType).elementType
+			 *             sourceElementType : Type[?] = sourceType.oclAsType(CollectionType).elementType
 			 *           in
 			 *             self.ownedIterators->forAll(p |
 			 *               sourceElementType.conformsTo(p.type))
@@ -1729,7 +1729,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			 *         in
 			 *           sourceType.oclIsKindOf(MapType) implies
 			 *           let
-			 *             sourceKeyType : Type[1] = sourceType.oclAsType(MapType).keyType
+			 *             sourceKeyType : Type[?] = sourceType.oclAsType(MapType).keyType
 			 *           in
 			 *             self.ownedIterators->forAll(p |
 			 *               sourceKeyType.conformsTo(p.type))

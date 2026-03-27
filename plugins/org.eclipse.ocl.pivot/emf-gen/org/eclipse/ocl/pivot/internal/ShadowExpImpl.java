@@ -362,10 +362,10 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 			 *                   ->reject(opposite <> null and opposite.isComposite)
 			 *                 in
 			 *                   let
-			 *                     extraProperties : Set(NamedElement) = partProperties->excludingAll(classProperties)
+			 *                     extraProperties : Set(Property) = partProperties->excludingAll(classProperties)
 			 *                   in
 			 *                     let
-			 *                       missingProperties : Set(NamedElement) = requiredClassProperties->excludingAll(partProperties)
+			 *                       missingProperties : Set(Property) = requiredClassProperties->excludingAll(partProperties)
 			 *                     in
 			 *                       if extraProperties->notEmpty()
 			 *                       then
@@ -764,7 +764,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 						if (notEmpty) {
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_1 = executor.getStaticClassOf(extraProperties);
 							final @NonNull LibraryIteration IMPL_sortedBy_1 = (LibraryIteration)TYPE_sortedBy_1.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
-							final @NonNull Object ACC_sortedBy_1 = IMPL_sortedBy_1.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
+							final @NonNull Object ACC_sortedBy_1 = IMPL_sortedBy_1.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_Property, TypeId.STRING);
 							/**
 							 * Implementation of the iteration evaluation body.
 							 */
@@ -775,7 +775,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								 */
 								@Override
 								public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object extraProperties, final /*@NonInvalid*/ @Nullable Object _1_8) {
-									final /*@NonInvalid*/ @Nullable NamedElement CAST_null_0 = (NamedElement)_1_8;
+									final /*@NonInvalid*/ @Nullable Property CAST_null_0 = (Property)_1_8;
 									if (CAST_null_0 == null) {
 										throw new InvalidValueException("Null source for \'NamedElement::name\'");
 									}
@@ -783,7 +783,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									return name_0;
 								}
 							};
-							final @NonNull ExecutorSingleIterationManager MGR_sortedBy_1 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY0_sortedBy_2, extraProperties, ACC_sortedBy_1);
+							final @NonNull ExecutorSingleIterationManager MGR_sortedBy_1 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_Property, BODY0_sortedBy_2, extraProperties, ACC_sortedBy_1);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull OrderedSetValue sortedBy = (@NonNull OrderedSetValue)IMPL_sortedBy_1.evaluateIteration(MGR_sortedBy_1);
 							/*@NonInvalid*/ @NonNull String acc = PivotTables.STR_Unexpected_32_initializers_c;
@@ -795,7 +795,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									break;
 								}
 								@SuppressWarnings("null")
-								/*@NonInvalid*/ @NonNull NamedElement p_0 = (@NonNull NamedElement)ITERATOR_p_0.next();
+								/*@NonInvalid*/ @NonNull Property p_0 = (@NonNull Property)ITERATOR_p_0.next();
 								/**
 								 * acc + ' ' + p.name
 								 */
@@ -814,7 +814,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							if (notEmpty_0) {
 								final org.eclipse.ocl.pivot.@NonNull Class TYPE_sortedBy_0_0 = executor.getStaticClassOf(missingProperties);
 								final @NonNull LibraryIteration IMPL_sortedBy_0_0 = (LibraryIteration)TYPE_sortedBy_0_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__sortedBy);
-								final @NonNull Object ACC_sortedBy_0_0 = IMPL_sortedBy_0_0.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_NamedElement, TypeId.STRING);
+								final @NonNull Object ACC_sortedBy_0_0 = IMPL_sortedBy_0_0.createAccumulatorValue(executor, PivotTables.ORD_CLSSid_Property, TypeId.STRING);
 								/**
 								 * Implementation of the iteration evaluation body.
 								 */
@@ -825,7 +825,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									 */
 									@Override
 									public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object missingProperties, final /*@NonInvalid*/ @Nullable Object _1_9) {
-										final /*@NonInvalid*/ @Nullable NamedElement CAST_null_1 = (NamedElement)_1_9;
+										final /*@NonInvalid*/ @Nullable Property CAST_null_1 = (Property)_1_9;
 										if (CAST_null_1 == null) {
 											throw new InvalidValueException("Null source for \'NamedElement::name\'");
 										}
@@ -833,7 +833,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 										return name_2;
 									}
 								};
-								final @NonNull ExecutorSingleIterationManager MGR_sortedBy_0_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_NamedElement, BODY0_sortedBy_0_1, missingProperties, ACC_sortedBy_0_0);
+								final @NonNull ExecutorSingleIterationManager MGR_sortedBy_0_0 = new ExecutorSingleIterationManager(executor, PivotTables.ORD_CLSSid_Property, BODY0_sortedBy_0_1, missingProperties, ACC_sortedBy_0_0);
 								@SuppressWarnings("null")
 								final /*@Thrown*/ @NonNull OrderedSetValue sortedBy_0 = (@NonNull OrderedSetValue)IMPL_sortedBy_0_0.evaluateIteration(MGR_sortedBy_0_0);
 								/*@NonInvalid*/ @NonNull String acc_0 = PivotTables.STR_Missing_32_initializers_c;
@@ -845,7 +845,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 										break;
 									}
 									@SuppressWarnings("null")
-									/*@NonInvalid*/ @NonNull NamedElement p_1 = (@NonNull NamedElement)ITERATOR_p_1.next();
+									/*@NonInvalid*/ @NonNull Property p_1 = (@NonNull Property)ITERATOR_p_1.next();
 									/**
 									 * acc + ' ' + p.name
 									 */
