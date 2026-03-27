@@ -261,7 +261,7 @@ context LetExp
 /* The type of a Let expression is the type of the in expression. */
 inv TypeIsInType: type = ownedIn.type
 /* The nullity of a Let expression is the nullity of the in expression. */
-inv CompatibleNullityForIn: isRequired = ownedIn.isRequired
+inv CompatibleNullityForIn: isRequired implies ownedIn.isRequired
 
 context LetVariable
 /* Let variable has an initializer.*/
@@ -269,7 +269,7 @@ inv HasInitializer: ownedInit <> null
 /* The type of a Let variable initializer expression conforms to the type of the Let variable. */
 inv CompatibleTypeForInitializer: ownedInit <> null implies ownedInit.type?.conformsTo(type)
 /* The nullity of a Let variable initializer expression is the nullity of the Let variable. */
-inv CompatibleNullityForInitializer: ownedInit?.isRequired = isRequired
+inv CompatibleNullityForInitializer: isRequired implies ownedInit?.isRequired
 
 /* LiteralExp
 No additional well-formedness rules. */

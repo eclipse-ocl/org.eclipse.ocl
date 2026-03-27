@@ -71,6 +71,9 @@ org.eclipse.ocl.pivot/flat/operations=false
 # Trace maintenance of FlatClass properties 
 org.eclipse.ocl.pivot/flat/properties=false
 
+# Trace discovery of variable nullity by the FlowAnalysis 
+org.eclipse.ocl.pivot/flowAnalysis/variables=false
+
 # Trace maintenance of Model installation in a PivotMetamodelManager
 org.eclipse.ocl.pivot/install/model=false
 

@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.manager.FlowAnalysis;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -713,6 +714,7 @@ public class RoundTripTests extends XtextTestCase
 	}
 
 	public void testPivotRoundTrip() throws IOException, InterruptedException, ParserException {
+		FlowAnalysis.DISCOVERED_VARIABLES.setState(true);
 		URI uri = URI.createPlatformResourceURI("/org.eclipse.ocl.pivot/model/Pivot.ecore", true);
 		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
 		saveOptions.put(AS2Ecore.OPTION_INVARIANT_PREFIX, "validate");

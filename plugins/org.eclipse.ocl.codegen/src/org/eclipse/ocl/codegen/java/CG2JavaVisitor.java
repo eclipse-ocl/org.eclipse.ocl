@@ -1725,9 +1725,6 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 
 	@Override
 	public @NonNull Boolean visitCGEcorePropertyCallExp(@NonNull CGEcorePropertyCallExp cgPropertyCallExp) {
-		if (cgPropertyCallExp.toString().contains("ownedParameters")) {
-			getClass();			// XXX
-		}
 		return appendCGEcorePropertyCallExp(cgPropertyCallExp, null);
 	}
 

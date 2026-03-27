@@ -1127,6 +1127,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (flowAnalysis == null) {
 			flowAnalysis = createFlowAnalysis(contextExpression);
 			oclExpression2flowAnalysis2.put(contextExpression, flowAnalysis);
+			flowAnalysis.analyze();
 		}
 		return flowAnalysis;
 	}

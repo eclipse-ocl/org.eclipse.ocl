@@ -44,7 +44,7 @@ public class EcoreListDescriptor extends AbstractCollectionDescriptor implements
 
 	@Override
 	public void append(@NonNull JavaStream js, @Nullable Boolean isRequired) {
-		js.appendClassReference(isRequired, /*E*/List.class, false, ecoreElementTypeDescriptor);
+		js.appendClassReference(isRequired, /*E*/List.class, false, ecoreElementTypeDescriptor);			// @NonNull annotations are missing from Ecore and so omitted from template arguments
 	}
 
 	@Override

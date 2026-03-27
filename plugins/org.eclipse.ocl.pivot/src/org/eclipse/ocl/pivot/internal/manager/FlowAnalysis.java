@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
+import org.eclipse.ocl.pivot.LetVariable;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -48,12 +49,15 @@ import org.eclipse.ocl.pivot.VariableDeclaration;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
+import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotFlowAnalysisDeducerFromFalseVisitor;
 import org.eclipse.ocl.pivot.utilities.PivotFlowAnalysisDeducerFromNullVisitor;
 import org.eclipse.ocl.pivot.utilities.PivotFlowAnalysisDeducerFromTrueVisitor;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 /**
  * The (static) FlowAnalysis of some context OCLExpression exploits the hierarchy of the encompassing AS expression to
@@ -66,11 +70,16 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  *
  * An optimum implementation of this class might perform some very powerful/slow symbolic analyses. The current implementation
  * has useful but incomplete understanding of comparisons and Boolean operations. It lacks deep traversal of variables.
-
+ *
  * @since 1.3
  */
 public class FlowAnalysis
 {
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull TracingOption DISCOVERED_VARIABLES = new TracingOption(PivotPlugin.PLUGIN_ID, "flowAnalysis/variables");
+
 	/**
 	 * A deducer performs a reverse evaluation of an expression whose result is known and defined by the derived class.
 	 * Each term is visited returning true/false/null according to whether the term
@@ -640,9 +649,19 @@ public class FlowAnalysis
 	 * @since 1.7
 	 */
 	public FlowAnalysis(@NonNull EnvironmentFactory environmentFactory, @NonNull OCLExpression contextExpression) {
+//		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(contextExpression) + " " + contextExpression);
 		this.environmentFactory = environmentFactory;
 		this.contextExpression = contextExpression;
-		for (EObject eObject = contextExpression, eContainer = eObject.eContainer(); eContainer instanceof OCLExpression; eObject = eContainer, eContainer = eContainer.eContainer()) {
+		if (DISCOVERED_VARIABLES.isActive()) {
+			DISCOVERED_VARIABLES.println(NameUtil.debugSimpleName(this) + " " + contextExpression);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void analyze() {
+		for (EObject eObject = contextExpression, eContainer = eObject.eContainer(); (eContainer instanceof OCLExpression) || (eContainer instanceof LetVariable); eObject = eContainer, eContainer = eContainer.eContainer()) {
 			if (eContainer instanceof IfExp) {
 				IfExp ifExp = (IfExp)eContainer;
 				if (eObject == PivotUtil.getOwnedThen(ifExp)) {
@@ -838,6 +857,11 @@ public class FlowAnalysis
 			variable2nullOrNonNull2 = variable2nullOrNonNull = new HashMap<>();
 		}
 		Boolean oldNullOrNonNull = variable2nullOrNonNull2.put(variable, isNullOrNonNull);
+		if (DISCOVERED_VARIABLES.isActive()) {
+			DISCOVERED_VARIABLES.println(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(variable) + " " + variable + " " +
+							(oldNullOrNonNull == null ? "?" : isNullOrNonNull ? "isNull" : "isNonNull") + " => " +
+							(isNullOrNonNull ? "isNull" : "isNonNull"));
+		}
 		if (oldNullOrNonNull == null) {
 			return true;
 		}
