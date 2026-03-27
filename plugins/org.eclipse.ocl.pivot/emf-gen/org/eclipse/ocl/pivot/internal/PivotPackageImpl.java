@@ -10621,7 +10621,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "isRequired = ownedIn.isRequired" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isRequired implies ownedIn.isRequired" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLetExp__ValidateTypeIsInType__DiagnosticChain_Map(),
@@ -10642,7 +10642,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "ownedInit?.isRequired = isRequired" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "isRequired implies ownedInit?.isRequired" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getLetVariable__ValidateCompatibleTypeForInitializer__DiagnosticChain_Map(),
@@ -10733,7 +10733,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tlet selfType : Type = owningClass in\n\tlet parameterType : Type = parameter.type in\n\tlet nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in\n\tlet nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, selfType) endif in\n\tlet nullityConforms : Boolean = argument.isRequired or not nonLambdaParameter.isRequired in\n\tlet typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in\n\ttypeConforms and nullityConforms\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "\n\tlet selfType : Type = owningClass in\n\tif selfType <> null then\n\t\tlet nonNullSelfType : Type[1] = selfType in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in\n\t\tlet nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, nonNullSelfType) endif in\n\t\tlet nullityConforms : Boolean = argument.isRequired implies nonLambdaParameter.isRequired in\n\t\tlet typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in\n\t\ttypeConforms and nullityConforms\n\telse false endif\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperation__ValidateCompatibleReturn__DiagnosticChain_Map(),

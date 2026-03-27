@@ -543,7 +543,7 @@
     <ownedClasses xmi:id="zmGAi" name="LetExp" superClasses="#BFtK4">
       <ownedInvariants xmi:id="ahGlw" isCallable="true" name="CompatibleNullityForIn">
         <ownedComments body="The nullity of a Let expression is the nullity of the in expression."/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isRequired = ownedIn.isRequired"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isRequired implies ownedIn.isRequired"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="CZPsY" isCallable="true" name="TypeIsInType">
         <ownedComments body="The type of a Let expression is the type of the in expression."/>
@@ -558,7 +558,7 @@
     <ownedClasses xmi:id="o0zyX" name="LetVariable" superClasses="#t4j6T">
       <ownedInvariants xmi:id="MQwO9" isCallable="true" name="CompatibleNullityForInitializer">
         <ownedComments body="The nullity of a Let variable initializer expression is the nullity of the Let variable."/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedInit?.isRequired = isRequired"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="isRequired implies ownedInit?.isRequired"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="nDmP5" isCallable="true" name="CompatibleTypeForInitializer">
         <ownedComments body="The type of a Let variable initializer expression conforms to the type of the Let variable."/>
@@ -730,7 +730,7 @@
         <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="ownedPreconditions->isUnique(name)"/>
       </ownedInvariants>
       <ownedOperations xmi:id="VNk9Z" isRequired="true" name="conformsTo" type="pivot:BooleanType &_0;#XEMMs">
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let selfType : Type = owningClass in&#xA;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;let nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in&#xA;&#x9;let nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, selfType) endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not nonLambdaParameter.isRequired in&#xA;&#x9;let typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in&#xA;&#x9;typeConforms and nullityConforms&#xA;&#xA;"/>
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let selfType : Type = owningClass in&#xA;&#x9;if selfType &lt;> null then&#xA;&#x9;&#x9;let nonNullSelfType : Type[1] = selfType in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in&#xA;&#x9;&#x9;let nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, nonNullSelfType) endif in&#xA;&#x9;&#x9;let nullityConforms : Boolean = argument.isRequired implies nonLambdaParameter.isRequired in&#xA;&#x9;&#x9;let typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in&#xA;&#x9;&#x9;typeConforms and nullityConforms&#xA;&#x9;else false endif&#xA;&#xA;"/>
         <ownedParameters xmi:id="nk91+" isRequired="true" name="caller" type="#QJrde"/>
         <ownedParameters xmi:id="U8r5v" isRequired="true" name="argument" type="#BFtK4"/>
         <ownedParameters xmi:id="zGTB," isRequired="true" name="parameter" type="#as9eG"/>

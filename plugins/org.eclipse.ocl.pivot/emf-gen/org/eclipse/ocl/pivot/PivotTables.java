@@ -1952,11 +1952,11 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Constraint _IteratorVariable__HasNoInitializer = LIBRARY.createConstraint(Types._IteratorVariable, PivotPackage.Literals.ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP, "HasNoInitializer", "ownedInit = null");
 
-		public static final @NonNull Constraint _LetExp__CompatibleNullityForIn = LIBRARY.createConstraint(Types._LetExp, PivotPackage.Literals.LET_EXP___VALIDATE_COMPATIBLE_NULLITY_FOR_IN__DIAGNOSTICCHAIN_MAP, "CompatibleNullityForIn", "isRequired = ownedIn.isRequired");
+		public static final @NonNull Constraint _LetExp__CompatibleNullityForIn = LIBRARY.createConstraint(Types._LetExp, PivotPackage.Literals.LET_EXP___VALIDATE_COMPATIBLE_NULLITY_FOR_IN__DIAGNOSTICCHAIN_MAP, "CompatibleNullityForIn", "isRequired implies ownedIn.isRequired");
 		public static final @NonNull Constraint _LetExp__TypeIsInType = LIBRARY.createConstraint(Types._LetExp, PivotPackage.Literals.LET_EXP___VALIDATE_TYPE_IS_IN_TYPE__DIAGNOSTICCHAIN_MAP, "TypeIsInType", "type = ownedIn.type");
 		public static final @NonNull Constraint _LetExp__TypeIsNotInvalid = LIBRARY.createConstraint(Types._LetExp, PivotPackage.Literals.LET_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
 
-		public static final @NonNull Constraint _LetVariable__CompatibleNullityForInitializer = LIBRARY.createConstraint(Types._LetVariable, PivotPackage.Literals.LET_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleNullityForInitializer", "ownedInit?.isRequired = isRequired");
+		public static final @NonNull Constraint _LetVariable__CompatibleNullityForInitializer = LIBRARY.createConstraint(Types._LetVariable, PivotPackage.Literals.LET_VARIABLE___VALIDATE_COMPATIBLE_NULLITY_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleNullityForInitializer", "isRequired implies ownedInit?.isRequired");
 		public static final @NonNull Constraint _LetVariable__CompatibleTypeForInitializer = LIBRARY.createConstraint(Types._LetVariable, PivotPackage.Literals.LET_VARIABLE___VALIDATE_COMPATIBLE_TYPE_FOR_INITIALIZER__DIAGNOSTICCHAIN_MAP, "CompatibleTypeForInitializer", "ownedInit <> null implies ownedInit.type?.conformsTo(type)");
 		public static final @NonNull Constraint _LetVariable__HasInitializer = LIBRARY.createConstraint(Types._LetVariable, PivotPackage.Literals.LET_VARIABLE___VALIDATE_HAS_INITIALIZER__DIAGNOSTICCHAIN_MAP, "HasInitializer", "ownedInit <> null");
 

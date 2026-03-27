@@ -1691,7 +1691,7 @@
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LetExp" name="LetExp" eSuperTypes="#T-pivot-OCLExpression">
     <eOperations name="validateCompatibleNullityForIn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="isRequired = ownedIn.isRequired"/>
+        <details key="body" value="isRequired implies ownedIn.isRequired"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The nullity of a Let expression is the nullity of the in expression."/>
@@ -1749,7 +1749,7 @@
       eSuperTypes="#T-pivot-Variable">
     <eOperations name="validateCompatibleNullityForInitializer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="ownedInit?.isRequired = isRequired"/>
+        <details key="body" value="isRequired implies ownedInit?.isRequired"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The nullity of a Let variable initializer expression is the nullity of the Let variable."/>
@@ -2162,7 +2162,7 @@
     </eAnnotations>
     <eOperations name="conformsTo" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;let selfType : Type = owningClass in&#xA;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;let nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in&#xA;&#x9;let nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, selfType) endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not nonLambdaParameter.isRequired in&#xA;&#x9;let typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in&#xA;&#x9;typeConforms and nullityConforms&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;let selfType : Type = owningClass in&#xA;&#x9;if selfType &lt;> null then&#xA;&#x9;&#x9;let nonNullSelfType : Type[1] = selfType in&#xA;&#x9;&#x9;let parameterType : Type = parameter.type in&#xA;&#x9;&#x9;let nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in&#xA;&#x9;&#x9;let nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, nonNullSelfType) endif in&#xA;&#x9;&#x9;let nullityConforms : Boolean = argument.isRequired implies nonLambdaParameter.isRequired in&#xA;&#x9;&#x9;let typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in&#xA;&#x9;&#x9;typeConforms and nullityConforms&#xA;&#x9;else false endif&#xA;&#xA;"/>
       </eAnnotations>
       <eParameters name="caller" lowerBound="1" eType="#T-pivot-CallExp"/>
       <eParameters name="argument" lowerBound="1" eType="#T-pivot-OCLExpression"/>

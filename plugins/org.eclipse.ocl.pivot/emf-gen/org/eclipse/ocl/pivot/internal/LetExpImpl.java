@@ -236,7 +236,7 @@ implements LetExp {
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = isRequired = ownedIn.isRequired
+			 *       let result : Boolean[?] = isRequired implies ownedIn.isRequired
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -250,11 +250,22 @@ implements LetExp {
 			}
 			else {
 				final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
-				@SuppressWarnings("null")
-				final /*@NonInvalid*/ @NonNull OCLExpression ownedIn = this.getOwnedIn();
-				final /*@NonInvalid*/ boolean isRequired_0 = ownedIn.isIsRequired();
-				final /*@NonInvalid*/ boolean EQ_isRequired_isRequired_0 = isRequired == isRequired_0;
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, EQ_isRequired_isRequired_0, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ @Nullable Boolean result;
+				if (!isRequired) {
+					result = ValueUtil.TRUE_VALUE;
+				}
+				else {
+					@SuppressWarnings("null")
+					final /*@NonInvalid*/ @NonNull OCLExpression ownedIn = this.getOwnedIn();
+					final /*@NonInvalid*/ boolean isRequired_0 = ownedIn.isIsRequired();
+					if (isRequired_0) {
+						result = ValueUtil.TRUE_VALUE;
+					}
+					else {
+						result = ValueUtil.FALSE_VALUE;
+					}
+				}
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

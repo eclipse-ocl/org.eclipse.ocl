@@ -102,7 +102,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 			 *     if severity <= 0
 			 *     then true
 			 *     else
-			 *       let result : Boolean[1] = ownedInit?.isRequired = isRequired
+			 *       let result : Boolean[?] = isRequired implies ownedInit?.isRequired
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -115,27 +115,53 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 				IF_le = true;
 			}
 			else {
-				/*@Caught*/ @NonNull Object CAUGHT_EQ_safe_isRequired_source_isRequired_0;
+				/*@Caught*/ @Nullable Object CAUGHT_result;
 				try {
-					final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
-					final /*@NonInvalid*/ @NonNull Object EQ_ownedInit_null = ownedInit == null;
-					/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
-					if (EQ_ownedInit_null == Boolean.TRUE) {
-						safe_isRequired_source = null;
+					final /*@NonInvalid*/ boolean isRequired = this.isIsRequired();
+					final /*@Thrown*/ @Nullable Boolean result;
+					if (!isRequired) {
+						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						assert ownedInit != null;
-						final /*@Thrown*/ boolean isRequired = ownedInit.isIsRequired();
-						safe_isRequired_source = isRequired;
+						/*@Caught*/ @Nullable Object CAUGHT_safe_isRequired_source;
+						try {
+							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = this.getOwnedInit();
+							final /*@NonInvalid*/ @NonNull Object EQ_ownedInit_null = ownedInit == null;
+							/*@Thrown*/ @Nullable Boolean safe_isRequired_source;
+							if (EQ_ownedInit_null == Boolean.TRUE) {
+								safe_isRequired_source = null;
+							}
+							else {
+								assert ownedInit != null;
+								final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
+								safe_isRequired_source = isRequired_0;
+							}
+							CAUGHT_safe_isRequired_source = safe_isRequired_source;
+						}
+						catch (Exception e) {
+							CAUGHT_safe_isRequired_source = ValueUtil.createInvalidValue(e);
+						}
+						if (CAUGHT_safe_isRequired_source == ValueUtil.TRUE_VALUE) {
+							result = ValueUtil.TRUE_VALUE;
+						}
+						else {
+							if (CAUGHT_safe_isRequired_source instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_safe_isRequired_source;
+							}
+							if (CAUGHT_safe_isRequired_source == null) {
+								result = null;
+							}
+							else {
+								result = ValueUtil.FALSE_VALUE;
+							}
+						}
 					}
-					final /*@NonInvalid*/ boolean isRequired_0 = this.isIsRequired();
-					final /*@Thrown*/ boolean EQ_safe_isRequired_source_isRequired_0 = (safe_isRequired_source == Boolean.TRUE) == isRequired_0;
-					CAUGHT_EQ_safe_isRequired_source_isRequired_0 = EQ_safe_isRequired_source_isRequired_0;
+					CAUGHT_result = result;
 				}
 				catch (Exception e) {
-					CAUGHT_EQ_safe_isRequired_source_isRequired_0 = ValueUtil.createInvalidValue(e);
+					CAUGHT_result = ValueUtil.createInvalidValue(e);
 				}
-				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_EQ_safe_isRequired_source_isRequired_0, PivotTables.INT_0).booleanValue();
+				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, CAUGHT_result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
 			return IF_le;

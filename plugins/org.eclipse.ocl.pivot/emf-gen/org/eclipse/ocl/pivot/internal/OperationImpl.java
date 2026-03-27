@@ -428,99 +428,107 @@ implements Operation {
 		 *
 		 * let selfType : Class[?] = owningClass
 		 * in
-		 *   let parameterType : Type[?] = parameter.type
-		 *   in
-		 *     let
-		 *       nonLambdaParameter : Parameter[?] = if
-		 *         parameterType.oclIsKindOf(LambdaType)
-		 *       then parameterType.oclAsType(LambdaType).ownedResult
-		 *       else parameter
-		 *       endif
+		 *   if selfType <> null
+		 *   then
+		 *     let nonNullSelfType : Class[1] = selfType
 		 *     in
-		 *       let
-		 *         nonLambdaParameterType : Type[?] = if nonLambdaParameter.isTypeof
-		 *         then Class
-		 *         else nonLambdaParameter.type?.specializeIn(caller, selfType)
-		 *         endif
+		 *       let parameterType : Type[?] = parameter.type
 		 *       in
-		 *         let nullityConforms : Boolean[?] = argument.isRequired or not nonLambdaParameter.isRequired
+		 *         let
+		 *           nonLambdaParameter : Parameter[?] = if
+		 *             parameterType.oclIsKindOf(LambdaType)
+		 *           then parameterType.oclAsType(LambdaType).ownedResult
+		 *           else parameter
+		 *           endif
 		 *         in
 		 *           let
-		 *             typeConforms : Boolean[?] = argument.type?.conformsTo(nonLambdaParameterType)
-		 *           in typeConforms and nullityConforms
+		 *             nonLambdaParameterType : Type[?] = if nonLambdaParameter.isTypeof
+		 *             then Class
+		 *             else
+		 *               nonLambdaParameter.type?.specializeIn(caller, nonNullSelfType)
+		 *             endif
+		 *           in
+		 *             let nullityConforms : Boolean[?] = argument.isRequired implies nonLambdaParameter.isRequired
+		 *             in
+		 *               let
+		 *                 typeConforms : Boolean[?] = argument.type?.conformsTo(nonLambdaParameterType)
+		 *               in typeConforms and nullityConforms
+		 *   else false
+		 *   endif
 		 */
 		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
 		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
 		final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class selfType_1 = this.getOwningClass();
-		final /*@NonInvalid*/ @Nullable Type parameterType = parameter.getType();
-		/*@Caught*/ @NonNull Object CAUGHT_nonLambdaParameter;
-		try {
-			final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_LambdaType_0 = idResolver.getClass(PivotTables.CLSSid_LambdaType, null);
-			final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, parameterType, TYP_LambdaType_0).booleanValue();
-			/*@Thrown*/ @NonNull Parameter nonLambdaParameter;
-			if (oclIsKindOf) {
-				@SuppressWarnings("null")
-				final /*@Thrown*/ @NonNull LambdaType oclAsType = (@NonNull LambdaType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, parameterType, TYP_LambdaType_0);
-				@SuppressWarnings("null")
-				final /*@Thrown*/ @NonNull LambdaParameter ownedResult = oclAsType.getOwnedResult();
-				nonLambdaParameter = ownedResult;
-			}
-			else {
-				nonLambdaParameter = parameter;
-			}
-			CAUGHT_nonLambdaParameter = nonLambdaParameter;
-		}
-		catch (Exception e) {
-			CAUGHT_nonLambdaParameter = ValueUtil.createInvalidValue(e);
-		}
-		/*@Caught*/ @Nullable Object CAUGHT_nonLambdaParameterType;
-		try {
-			if (CAUGHT_nonLambdaParameter instanceof InvalidValueException) {
-				throw (InvalidValueException)CAUGHT_nonLambdaParameter;
-			}
-			final /*@Thrown*/ boolean isTypeof = ((Parameter)CAUGHT_nonLambdaParameter).isIsTypeof();
-			/*@Thrown*/ @Nullable Type nonLambdaParameterType;
-			if (isTypeof) {
-				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
-				nonLambdaParameterType = TYP_Class_0;
-			}
-			else {
-				final /*@Thrown*/ @Nullable Type type = ((TypedElement)CAUGHT_nonLambdaParameter).getType();
-				/*@Caught*/ @Nullable Object CAUGHT_type;
-				try {
-					CAUGHT_type = type;
-				}
-				catch (Exception e) {
-					CAUGHT_type = ValueUtil.createInvalidValue(e);
-				}
-				final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_type_null = CAUGHT_type == null;
-				/*@Thrown*/ @Nullable Type safe_specializeIn_source;
-				if (EQ_CAUGHT_type_null == Boolean.TRUE) {
-					safe_specializeIn_source = null;
+		final /*@NonInvalid*/ boolean NE_selfType_1_null = selfType_1 != null;
+		/*@Thrown*/ @Nullable Boolean IF_NE_selfType_1_null;
+		if (NE_selfType_1_null) {
+			final /*@NonInvalid*/ @Nullable Type parameterType = parameter.getType();
+			/*@Caught*/ @NonNull Object CAUGHT_nonLambdaParameter;
+			try {
+				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_LambdaType_0 = idResolver.getClass(PivotTables.CLSSid_LambdaType, null);
+				final /*@Thrown*/ boolean oclIsKindOf = OclAnyOclIsKindOfOperation.INSTANCE.evaluate(executor, parameterType, TYP_LambdaType_0).booleanValue();
+				/*@Thrown*/ @NonNull Parameter nonLambdaParameter;
+				if (oclIsKindOf) {
+					@SuppressWarnings("null")
+					final /*@Thrown*/ @NonNull LambdaType oclAsType = (@NonNull LambdaType)OclAnyOclAsTypeOperation.INSTANCE.evaluate(executor, parameterType, TYP_LambdaType_0);
+					@SuppressWarnings("null")
+					final /*@Thrown*/ @NonNull LambdaParameter ownedResult = oclAsType.getOwnedResult();
+					nonLambdaParameter = ownedResult;
 				}
 				else {
-					assert type != null;
-					@SuppressWarnings("null")
-					final /*@Thrown*/ @NonNull Type specializeIn = type.specializeIn(caller, selfType_1);
-					safe_specializeIn_source = specializeIn;
+					nonLambdaParameter = parameter;
 				}
-				nonLambdaParameterType = safe_specializeIn_source;
+				CAUGHT_nonLambdaParameter = nonLambdaParameter;
 			}
-			CAUGHT_nonLambdaParameterType = nonLambdaParameterType;
-		}
-		catch (Exception e) {
-			CAUGHT_nonLambdaParameterType = ValueUtil.createInvalidValue(e);
-		}
-		/*@Caught*/ @Nullable Object CAUGHT_nullityConforms;
-		try {
-			final /*@NonInvalid*/ boolean isRequired = argument.isIsRequired();
-			final /*@Thrown*/ @Nullable Boolean nullityConforms;
-			if (isRequired) {
-				nullityConforms = ValueUtil.TRUE_VALUE;
+			catch (Exception e) {
+				CAUGHT_nonLambdaParameter = ValueUtil.createInvalidValue(e);
 			}
-			else {
-				/*@Caught*/ @Nullable Object CAUGHT_not;
-				try {
+			/*@Caught*/ @Nullable Object CAUGHT_nonLambdaParameterType;
+			try {
+				if (CAUGHT_nonLambdaParameter instanceof InvalidValueException) {
+					throw (InvalidValueException)CAUGHT_nonLambdaParameter;
+				}
+				final /*@Thrown*/ boolean isTypeof = ((Parameter)CAUGHT_nonLambdaParameter).isIsTypeof();
+				/*@Thrown*/ @Nullable Type nonLambdaParameterType;
+				if (isTypeof) {
+					final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Class_0 = idResolver.getClass(PivotTables.CLSSid_Class, null);
+					nonLambdaParameterType = TYP_Class_0;
+				}
+				else {
+					final /*@Thrown*/ @Nullable Type type = ((TypedElement)CAUGHT_nonLambdaParameter).getType();
+					/*@Caught*/ @Nullable Object CAUGHT_type;
+					try {
+						CAUGHT_type = type;
+					}
+					catch (Exception e) {
+						CAUGHT_type = ValueUtil.createInvalidValue(e);
+					}
+					final /*@NonInvalid*/ @NonNull Object EQ_CAUGHT_type_null = CAUGHT_type == null;
+					/*@Thrown*/ @Nullable Type safe_specializeIn_source;
+					if (EQ_CAUGHT_type_null == Boolean.TRUE) {
+						safe_specializeIn_source = null;
+					}
+					else {
+						assert type != null;
+						@SuppressWarnings("null")
+						final /*@Thrown*/ @NonNull Type specializeIn = type.specializeIn(caller, selfType_1);
+						safe_specializeIn_source = specializeIn;
+					}
+					nonLambdaParameterType = safe_specializeIn_source;
+				}
+				CAUGHT_nonLambdaParameterType = nonLambdaParameterType;
+			}
+			catch (Exception e) {
+				CAUGHT_nonLambdaParameterType = ValueUtil.createInvalidValue(e);
+			}
+			/*@Caught*/ @Nullable Object CAUGHT_nullityConforms;
+			try {
+				final /*@NonInvalid*/ boolean isRequired = argument.isIsRequired();
+				final /*@Thrown*/ @Nullable Boolean nullityConforms;
+				if (!isRequired) {
+					nullityConforms = ValueUtil.TRUE_VALUE;
+				}
+				else {
 					/*@Caught*/ @NonNull Object CAUGHT_isRequired_0;
 					try {
 						if (CAUGHT_nonLambdaParameter instanceof InvalidValueException) {
@@ -532,96 +540,76 @@ implements Operation {
 					catch (Exception e) {
 						CAUGHT_isRequired_0 = ValueUtil.createInvalidValue(e);
 					}
-					if (CAUGHT_isRequired_0 instanceof InvalidValueException) {
-						throw (InvalidValueException)CAUGHT_isRequired_0;
-					}
-					final /*@Thrown*/ @Nullable Boolean not;
-					if (CAUGHT_isRequired_0 == ValueUtil.FALSE_VALUE) {
-						not = ValueUtil.TRUE_VALUE;
+					if (CAUGHT_isRequired_0 == ValueUtil.TRUE_VALUE) {
+						nullityConforms = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						if (CAUGHT_isRequired_0 == ValueUtil.TRUE_VALUE) {
-							not = ValueUtil.FALSE_VALUE;
+						if (CAUGHT_isRequired_0 instanceof InvalidValueException) {
+							throw (InvalidValueException)CAUGHT_isRequired_0;
 						}
-						else {
-							not = null;
-						}
-					}
-					CAUGHT_not = not;
-				}
-				catch (Exception e) {
-					CAUGHT_not = ValueUtil.createInvalidValue(e);
-				}
-				if (CAUGHT_not == ValueUtil.TRUE_VALUE) {
-					nullityConforms = ValueUtil.TRUE_VALUE;
-				}
-				else {
-					if (CAUGHT_not instanceof InvalidValueException) {
-						throw (InvalidValueException)CAUGHT_not;
-					}
-					if (CAUGHT_not == null) {
-						nullityConforms = null;
-					}
-					else {
 						nullityConforms = ValueUtil.FALSE_VALUE;
 					}
 				}
+				CAUGHT_nullityConforms = nullityConforms;
 			}
-			CAUGHT_nullityConforms = nullityConforms;
-		}
-		catch (Exception e) {
-			CAUGHT_nullityConforms = ValueUtil.createInvalidValue(e);
-		}
-		/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
-		try {
-			final /*@NonInvalid*/ @Nullable Type type_0 = argument.getType();
-			final /*@NonInvalid*/ @NonNull Object EQ_type_0_null = type_0 == null;
-			/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-			if (EQ_type_0_null == Boolean.TRUE) {
-				safe_conformsTo_source = null;
+			catch (Exception e) {
+				CAUGHT_nullityConforms = ValueUtil.createInvalidValue(e);
 			}
-			else {
-				if (type_0 == null) {
-					throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+			/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
+			try {
+				final /*@NonInvalid*/ @Nullable Type type_0 = argument.getType();
+				final /*@NonInvalid*/ @NonNull Object EQ_type_0_null = type_0 == null;
+				/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
+				if (EQ_type_0_null == Boolean.TRUE) {
+					safe_conformsTo_source = null;
 				}
-				if (CAUGHT_nonLambdaParameterType instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_nonLambdaParameterType;
+				else {
+					if (type_0 == null) {
+						throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+					}
+					if (CAUGHT_nonLambdaParameterType instanceof InvalidValueException) {
+						throw (InvalidValueException)CAUGHT_nonLambdaParameterType;
+					}
+					final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, CAUGHT_nonLambdaParameterType).booleanValue();
+					safe_conformsTo_source = conformsTo;
 				}
-				final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, CAUGHT_nonLambdaParameterType).booleanValue();
-				safe_conformsTo_source = conformsTo;
+				CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
 			}
-			CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
-		}
-		catch (Exception e) {
-			CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
-		}
-		final /*@Thrown*/ @Nullable Boolean and;
-		if (CAUGHT_safe_conformsTo_source == ValueUtil.FALSE_VALUE) {
-			and = ValueUtil.FALSE_VALUE;
-		}
-		else {
-			if (CAUGHT_nullityConforms == ValueUtil.FALSE_VALUE) {
+			catch (Exception e) {
+				CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
+			}
+			final /*@Thrown*/ @Nullable Boolean and;
+			if (CAUGHT_safe_conformsTo_source == ValueUtil.FALSE_VALUE) {
 				and = ValueUtil.FALSE_VALUE;
 			}
 			else {
-				if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_safe_conformsTo_source;
-				}
-				if (CAUGHT_nullityConforms instanceof InvalidValueException) {
-					throw (InvalidValueException)CAUGHT_nullityConforms;
-				}
-				if ((CAUGHT_safe_conformsTo_source == null) || (CAUGHT_nullityConforms == null)) {
-					and = null;
+				if (CAUGHT_nullityConforms == ValueUtil.FALSE_VALUE) {
+					and = ValueUtil.FALSE_VALUE;
 				}
 				else {
-					and = ValueUtil.TRUE_VALUE;
+					if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {
+						throw (InvalidValueException)CAUGHT_safe_conformsTo_source;
+					}
+					if (CAUGHT_nullityConforms instanceof InvalidValueException) {
+						throw (InvalidValueException)CAUGHT_nullityConforms;
+					}
+					if ((CAUGHT_safe_conformsTo_source == null) || (CAUGHT_nullityConforms == null)) {
+						and = null;
+					}
+					else {
+						and = ValueUtil.TRUE_VALUE;
+					}
 				}
 			}
+			IF_NE_selfType_1_null = and;
 		}
-		if (and == null) {
+		else {
+			IF_NE_selfType_1_null = ValueUtil.FALSE_VALUE;
+		}
+		if (IF_NE_selfType_1_null == null) {
 			throw new InvalidValueException("Null body for \'Operation::conformsTo(CallExp[1],OCLExpression[1],Parameter[1]) : Boolean[1]\'");
 		}
-		return and;
+		return IF_NE_selfType_1_null;
 	}
 
 	/**
