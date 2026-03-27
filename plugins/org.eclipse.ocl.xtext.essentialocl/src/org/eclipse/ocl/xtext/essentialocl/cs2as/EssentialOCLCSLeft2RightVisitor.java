@@ -610,7 +610,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * csInvocationExp.getNamedElement() must be invoked once, after the left-hand context has been established to enable the lokup to
 	 * proceed in a simple (perhaps trivial) fashion.
 	 */
-	protected @Nullable OCLExpression resolveBestInvocation(@Nullable OCLExpression sourceExp, @NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull Invocations invocations) {
+	protected @Nullable CallExp resolveBestInvocation(@Nullable OCLExpression sourceExp, @NonNull RoundBracketedClauseCS csRoundBracketedClause, @NonNull Invocations invocations) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		PathNameCS csPathName = csNameExp.getOwnedPathName();
 		if (csPathName == null) {
@@ -751,7 +751,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * Resolve an invocation such as source.name  or source-&gt;name
 	 * @param isSafe
 	 */
-	protected @NonNull OCLExpression resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, boolean isSafe, @NonNull NameExpCS csNameExp) {
+	protected @NonNull CallExp resolveExplicitSourceNavigation(@NonNull OCLExpression sourceExp, /*boolean isSafe,*/ @NonNull NameExpCS csNameExp) {
 		PathNameCS ownedPathName = ClassUtil.requireNonNull(csNameExp.getOwnedPathName());
 		ScopeFilter propertyScopeFilter = AbstractAttribution.NOT_STATIC_SCOPE_FILTER;
 		List<SquareBracketedClauseCS> csSquareBracketedClauses = csNameExp.getOwnedSquareBracketedClauses();
@@ -767,12 +767,12 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Property resolvedProperty = context.lookupProperty(csNameExp, ownedPathName, propertyScopeFilter);
 		if ((resolvedProperty != null) && !resolvedProperty.eIsProxy()) {
 			if (resolvedProperty.getType() instanceof Stereotype) {			// FIXME Bug 578010 - M2 properties need reification with correct types at M1
-				return resolvePropertyCallExp(sourceExp, csNameExp, isSafe, resolvedProperty);
+				return resolvePropertyCallExp(sourceExp, csNameExp, /*isSafe,*/ resolvedProperty);
 			}
 			Type resolvedSourceType = PivotUtil.getType(sourceExp);
 			Type propertySourceType = PivotUtil.getOwningClass(resolvedProperty);
 			if (standardLibrary.conformsTo(resolvedSourceType, propertySourceType)) {
-				return resolvePropertyCallExp(sourceExp, csNameExp, isSafe, resolvedProperty);
+				return resolvePropertyCallExp(sourceExp, csNameExp, /*isSafe,*/ resolvedProperty);
 			}
 			context.addError(csNameExp, EssentialOCLCS2ASMessages.PropertyCallExp_IncompatibleProperty, resolvedProperty);
 		}
@@ -807,9 +807,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 
 	/**
 	 * Return a non-null implicit collect() call if a sourceExp for a csElement requires an implicit collect.
-	 * The return call has no body or return type since they cannot be synthesised until the body is synthesised.
+	 * The return call has no body or return type since they cannot be synthesized until the body is synthesized.
 	 */
-	protected @Nullable IteratorExp resolveImplicitCollect(@NonNull OCLExpression sourceExp, @NonNull InfixExpCS csOperator) {
+	protected @Nullable IteratorExp resolveImplicitCollect(@NonNull OCLExpression sourceExp, @NonNull InfixExpCS csOperator) {		// XXX need excluding(null) if isSafe
 		Type elementType;
 		Type actualSourceType = sourceExp.getType();
 		boolean isNullFree;
@@ -859,7 +859,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	 * Resolve an invocation such as name() or source.name(...)  or source-&gt;name(...)
 	 * @param isSafe
 	 */
-	protected @NonNull OCLExpression resolveInvocation(@Nullable OCLExpression sourceExp, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
+	protected @NonNull CallExp resolveInvocation(@Nullable OCLExpression sourceExp, @NonNull RoundBracketedClauseCS csRoundBracketedClause) {
 		AbstractNameExpCS csNameExp = csRoundBracketedClause.getOwningNameExp();
 		PathNameCS csPathName = csNameExp.getOwnedPathName();
 		if (csPathName != null) {			// QVTr overrides to select a wider search
@@ -878,7 +878,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		Invocations invocations = getInvocations(sourceExp != null ? sourceExp.getType() : null,
 			sourceExp != null ? sourceExp.getTypeValue() : null, csRoundBracketedClause);
 		if (invocations != null) {
-			OCLExpression invocationExp = resolveBestInvocation(sourceExp, csRoundBracketedClause, invocations);
+			CallExp invocationExp = resolveBestInvocation(sourceExp, csRoundBracketedClause, invocations);
 			if (invocationExp != null) {
 				return invocationExp;
 			}
@@ -1601,7 +1601,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		helper.setOperationReturnType(callExp, operation);
 	}
 
-	protected @NonNull CallExp resolvePropertyCallExp(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp, boolean isSafe, @NonNull Property property) {
+	protected @NonNull CallExp resolvePropertyCallExp(@NonNull OCLExpression sourceExp, @NonNull NameExpCS csNameExp, /*boolean isSafe,*/ @NonNull Property property) {
 		NavigationCallExp callExp;
 		if (property.isIsImplicit()) {
 			callExp = refreshOppositePropertyCallExp(csNameExp, sourceExp, property);
@@ -1609,7 +1609,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		else {
 			callExp = refreshPropertyCallExp(csNameExp, sourceExp, property);
 		}
-		callExp.setIsSafe(isSafe);
+	//	callExp.setIsSafe(isSafe);
 		//		if (isInvalidType(property.getType())) {
 		//			EssentialOCLUtils.setHasError(csNameExp);
 		//		}
@@ -1619,9 +1619,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if (PivotUtil.isAggregate(returnType)) {
 			isRequired = true;							// Aggregates are never null; just empty
 		}
-		else if (isSafe) {
-			isRequired = sourceExp.isIsRequired() && property.isIsRequired();	// Safe navigation is non-null only if non-null source and non-null property
-		}
+	//	else if (isSafe) {
+	//		isRequired = sourceExp.isIsRequired() && property.isIsRequired();	// Safe navigation is non-null only if non-null source and non-null property
+	//	}
 		else {
 			isRequired = sourceExp.isIsRequired() && property.isIsRequired();
 		}
@@ -1692,7 +1692,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		else if (element instanceof Property) {
 			Property property = (Property) element;
 			OCLExpression sourceExp = createImplicitSourceVariableExp(csNameExp, property.getOwningClass());
-			return resolvePropertyCallExp(sourceExp, csNameExp, false, property);
+			return resolvePropertyCallExp(sourceExp, csNameExp, /*false,*/ property);
 		}
 		else if (element instanceof Operation) {
 			return context.addBadExpressionError(csNameExp, "No parameters for operation " + ((Operation)element).getName());
@@ -2044,7 +2044,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected OCLExpression doVisitNavigationOperatorCS(@NonNull InfixExpCS csOperator) {
-		if ("iteration?.ownedParameters?->at(1)".equals(csOperator.toString())) {
+		if ("self->closure(oclContents()->selectByKind(Element))"/*"iteration?.ownedParameters?->at(1)"*/.equals(csOperator.toString())) {
 			getClass();	// XXX
 		//	navigatingExp.toString();
 		}
@@ -2056,80 +2056,65 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				Type asType = sourceExp.getType();
 				Type actualSourceType = asType;// != null ? PivotUtil.getBehavioralType(asType) : null;
 				if (actualSourceType != null) {
+					assert !PivotUtil.isAggregate(actualSourceType) || sourceExp.isIsRequired() : "an aggregate cannot be not-isRequired";
 					ExpCS argument = csOperator.getArgument();
 					if (argument instanceof NameExpCS) {
 						NameExpCS csNameExp = (NameExpCS) argument;
+						//
+						//	Normalize the source for implicit oclAsSet or implicit collect
+						//
 						IteratorExp implicitCollectExp = null;
-						OCLExpression collectedSourceExp = sourceExp;
-						//
-						//	Condition the source for implicit set or implicit collect
-						//
+						OCLExpression normalizedSourceExp = sourceExp;
 						String navigationOperatorName = csOperator.getName();
-						boolean sourceIsAggregate = PivotUtil.isAggregate(actualSourceType);
-						if (sourceIsAggregate) {
-							if (PivotUtil.isObjectNavigationOperator(navigationOperatorName)) {
-								implicitCollectExp = resolveImplicitCollect(sourceExp, csOperator);
-								if (implicitCollectExp != null) {
-									@SuppressWarnings("null")@NonNull Variable iterator = implicitCollectExp.getOwnedIterators().get(0);
-									collectedSourceExp = createImplicitVariableExp(iterator);
-								}
-							}
-						}
-						else {
-							if (PivotUtil.isAggregateNavigationOperator(navigationOperatorName)) {
-								collectedSourceExp = resolveImplicitAsSet(sourceExp, actualSourceType, csOperator);
-							}
-						}
 						boolean isSafe = PivotUtil.isSafeNavigationOperator(navigationOperatorName);
-						Type sourceType = collectedSourceExp.getType();
-						csNameExp.setSourceType(sourceType);
-						csNameExp.setSourceTypeValue(collectedSourceExp.getTypeValue());
+						boolean sourceIsAggregate = PivotUtil.isAggregate(actualSourceType);
+						if (sourceIsAggregate && PivotUtil.isObjectNavigationOperator(navigationOperatorName)) {
+							// XXX if isSafe sourceExp = resolveSafeExclusion(sourceExp);
+							implicitCollectExp = resolveImplicitCollect(sourceExp, csOperator);
+							if (implicitCollectExp != null) {
+								@NonNull Variable iterator = PivotUtil.getOwnedIterator(implicitCollectExp, 0);
+								normalizedSourceExp = createImplicitVariableExp(iterator);
+							}
+						}
+						else if (!sourceIsAggregate && PivotUtil.isAggregateNavigationOperator(navigationOperatorName)) {
+							normalizedSourceExp = resolveImplicitAsSet(sourceExp, actualSourceType, csOperator);
+						}
+						Type normalizedSourceType = normalizedSourceExp.getType();
+						csNameExp.setSourceType(normalizedSourceType);
+						csNameExp.setSourceTypeValue(normalizedSourceExp.getTypeValue());
 						//
-						//	Resolve the inner call expression
+						//	Resolve the inner navigation call expression
 						//
-						OCLExpression callExp;
+						boolean normalizedSourceIsAggregate = PivotUtil.isAggregate(normalizedSourceType);
+						CallExp callExp = null;
 						RoundBracketedClauseCS csRoundBracketedClause = csNameExp.getOwnedRoundBracketedClause();
 						if (csRoundBracketedClause != null) {
-							callExp = resolveInvocation(collectedSourceExp, csRoundBracketedClause);
+							callExp = resolveInvocation(normalizedSourceExp, csRoundBracketedClause);
+							callExp.setIsSafe(isSafe);
+							if (!isSafe && !normalizedSourceIsAggregate) {
+								callExp.setIsRequired(false);
+							}
 						}
 						else if (argument instanceof NameExpCS) {
-							callExp = resolveExplicitSourceNavigation(collectedSourceExp, isSafe, (NameExpCS) argument);
-						}
-						else {
-							callExp = context.addBadExpressionError(argument, "bad navigation argument");
-						}
-						//
-						//	Complete the wrapping of the inner call expression in an outer implicit collect expression
-						//
-						if (callExp instanceof CallExp) {
-							//							((CallExp) callExp).setIsSafe(isSafe && (implicitCollectExp == null));
-							//							if (isSafe) {
-							//								callExp.setIsRequired(true);		// FIXME Why?
-							//							}
-							if (implicitCollectExp != null) {
-								implicitCollectExp.setOwnedBody(callExp);
-								resolveOperationReturnType(implicitCollectExp);
-								navigatingExp = implicitCollectExp;
-							}
-							else {
-								((CallExp) callExp).setIsSafe(isSafe);
-//								if (sourceIsAggregate) {
-//									assert callExp.isIsRequired();
-//								}
-//								else if (isSafe) {
-//									callExp.setIsRequired(false);
-//								}
-								if (isSafe && !sourceIsAggregate) {
-									callExp.setIsRequired(sourceIsAggregate);
-								}
-								navigatingExp = callExp;
+							callExp = resolveExplicitSourceNavigation(normalizedSourceExp, /*isSafe,*/ (NameExpCS) argument);
+							callExp.setIsSafe(isSafe);
+							if (!isSafe && !normalizedSourceIsAggregate) {
+								callExp.setIsRequired(false);
 							}
 						}
+						//
+						//	Complete the wrapping of the inner navigation call expression in an outer implicit collect expression
+						//
+						if (implicitCollectExp != null) {
+							implicitCollectExp.setOwnedBody(callExp);
+							resolveOperationReturnType(implicitCollectExp);
+							navigatingExp = implicitCollectExp;
+						}
 						else {
-							navigatingExp = callExp;		// Place holder for an error
+							navigatingExp = callExp;
 						}
 					}
-					else if (argument != null) {
+					if ((navigatingExp == null) && (argument != null)) {
 						navigatingExp = context.addBadExpressionError(argument, "bad navigation argument");
 					}
 				}

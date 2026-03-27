@@ -2323,6 +2323,13 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Variable getOwnedIterator(@NonNull  LoopExp loopExp, int index) {
+		return ClassUtil.requireNonNull(loopExp.getOwnedIterators().get(index));
+	}
+
+	/**
 	 * @since 1.4
 	 */
 	public static @NonNull Iterable<@NonNull Parameter> getOwnedIterators(@NonNull Iteration iteration) {
