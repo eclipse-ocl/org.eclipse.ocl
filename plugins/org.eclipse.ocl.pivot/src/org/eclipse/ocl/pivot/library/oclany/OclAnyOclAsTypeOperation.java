@@ -12,6 +12,8 @@ package org.eclipse.ocl.pivot.library.oclany;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -46,5 +48,11 @@ public class OclAnyOclAsTypeOperation extends AbstractUntypedBinaryOperation
 		else {
 			throw new InvalidValueException(PivotMessages.IncompatibleOclAsTypeSourceType, sourceType, argType);
 		}
+	}
+
+	@Override
+	public boolean resolveReturnNullity(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, boolean returnIsRequired) {
+		OCLExpression ownedSource = callExp.getOwnedSource();
+		return ownedSource != null ? ownedSource.isIsRequired() : false;			// ONly null can be !isRequired
 	}
 }

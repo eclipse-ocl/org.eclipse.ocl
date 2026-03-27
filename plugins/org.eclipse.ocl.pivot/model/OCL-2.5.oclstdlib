@@ -1267,7 +1267,7 @@ abstract type OclVoid : VoidType conformsTo OclAny => 'org.eclipse.ocl.pivot.Voi
 	operation xor(b : Boolean) : Boolean precedence=XOR => 'org.eclipse.ocl.pivot.library.logical.BooleanXorOperation';
 -- Ecore validation rejects a 0 upper bound
 	operation oclAsSet() : Set(OclSelf[0..1|1]) => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation';
-	operation oclAsType(TT)(type : typeof(TT)[1]) : TT invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation';
+	operation oclAsType(TT)(type : typeof(TT)[1]) : TT[?] invalidating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation';
 	operation oclIsInvalid() : Boolean[1] validating => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation';
 	operation oclIsKindOf(type : OclType[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation';
 	operation oclIsTypeOf(type : OclType[1]) : Boolean[1] => 'org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation';

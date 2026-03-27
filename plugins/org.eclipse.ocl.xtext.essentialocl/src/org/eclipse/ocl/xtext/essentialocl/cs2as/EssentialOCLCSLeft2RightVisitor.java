@@ -2044,7 +2044,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 	}
 
 	protected OCLExpression doVisitNavigationOperatorCS(@NonNull InfixExpCS csOperator) {
-		if ("self->closure(oclContents()->selectByKind(Element))"/*"iteration?.ownedParameters?->at(1)"*/.equals(csOperator.toString())) {
+		if ("ownedProperties->includes(self)"/*"container.oclAsType(Class).ownedProperties->includes(self)"*//*"self->closure(oclContents()->selectByKind(Element))"*//*"iteration?.ownedParameters?->at(1)"*/.equals(csOperator.toString())) {
 			getClass();	// XXX
 		//	navigatingExp.toString();
 		}
@@ -2097,6 +2097,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 						}
 						else if (argument instanceof NameExpCS) {
 							callExp = resolveExplicitSourceNavigation(normalizedSourceExp, /*isSafe,*/ (NameExpCS) argument);
+							assert !PivotUtil.isAggregate(callExp.getType()) || callExp.isIsRequired() : "an aggregate cannot be not-isRequired";
 							callExp.setIsSafe(isSafe);
 							if (!isSafe && !normalizedSourceIsAggregate) {
 								callExp.setIsRequired(false);
@@ -2125,7 +2126,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 		if (navigatingExp != null) {
 			if (PivotUtil.isAggregate(navigatingExp.getType())) {
-				assert navigatingExp.isIsRequired();
+			//	assert navigatingExp.isIsRequired();
 			}
 		}
 		if ("iteration?.ownedParameters".equals(csOperator.toString())) {
