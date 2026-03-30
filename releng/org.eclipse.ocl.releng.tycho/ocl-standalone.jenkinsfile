@@ -94,6 +94,7 @@ OCL_REPO=${env.OCL_REPO}
 							-f tests/org.eclipse.ocl.standalone.uml.tests/pom.xml \
 							--no-transfer-progress \
 							--show-version \
+							-Dorg.eclipse.equinox.p2.transport.ecf.retry=100 \
 							clean \
 							test \
 							-P${OCL_REPO} \

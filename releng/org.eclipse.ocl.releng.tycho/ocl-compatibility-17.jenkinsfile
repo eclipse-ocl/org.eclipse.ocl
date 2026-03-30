@@ -98,6 +98,7 @@ pipeline {
 											-f tests/org.eclipse.ocl.compatibility.tests/pom.xml \
 											--no-transfer-progress \
 											--show-version \
+											-Dorg.eclipse.equinox.p2.transport.ecf.retry=100 \
 											clean \
 											verify \
 											-P${targetPlatform} \

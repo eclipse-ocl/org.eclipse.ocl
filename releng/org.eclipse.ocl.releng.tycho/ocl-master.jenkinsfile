@@ -82,6 +82,7 @@ Replay a Stable / Milestone ocl-promoter build to promote a Release.
 							--no-transfer-progress \
 							-DBUILD_TYPE=${BUILD_TYPE} \
 							--show-version \
+							-Dorg.eclipse.equinox.p2.transport.ecf.retry=100 \
 							clean \
 							verify \
 							-P${BUILD_TYPE} \

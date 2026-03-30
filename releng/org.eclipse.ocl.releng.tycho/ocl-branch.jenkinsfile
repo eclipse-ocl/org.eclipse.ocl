@@ -64,6 +64,7 @@ pipeline {
 							-f releng/org.eclipse.ocl.releng.tycho/pom.xml \
 							--no-transfer-progress \
 							--show-version \
+							-Dorg.eclipse.equinox.p2.transport.ecf.retry=100 \
 							clean \
 							verify \
 							-P${BUILD_TYPE} \
