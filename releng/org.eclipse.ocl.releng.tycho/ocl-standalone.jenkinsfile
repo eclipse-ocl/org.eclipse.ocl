@@ -3,6 +3,10 @@ pipeline {
 		label 'ubuntu-latest'
 	}
 
+	triggers {
+		cron('H 5 * * 0')
+	}
+
 	options {
 		buildDiscarder(logRotator(numToKeepStr: '5'))
 		disableConcurrentBuilds()
@@ -108,7 +112,7 @@ OCL_REPO=${env.OCL_REPO}
 	
 	post {
 		failure {
-			mail to: 'ed@willink.me.uk', subject: "[MoDisco CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
 body: "Project: ${env.JOB_NAME}\n\
 Build Number: ${env.BUILD_NUMBER}\n\
 Build URL: <${env.BUILD_URL}>\n\
@@ -117,7 +121,7 @@ Console: <${env.BUILD_URL}console>"
 		}
 
 		fixed {
-			mail to: 'ed@willink.me.uk', subject: "[MoDisco CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
 body: "Project: ${env.JOB_NAME}\n\
 Build Number: ${env.BUILD_NUMBER}\n\
 Build URL: <${env.BUILD_URL}>\n\
