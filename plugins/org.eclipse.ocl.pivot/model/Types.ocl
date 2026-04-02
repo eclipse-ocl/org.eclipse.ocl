@@ -49,7 +49,7 @@ def: conformsTo(caller : CallExp[1], argument : OCLExpression[1], parameter : Pa
 		let parameterType : Type = parameter.type in
 		let nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in
 		let nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, nonNullSelfType) endif in
-		let nullityConforms : Boolean = argument.isRequired implies nonLambdaParameter.isRequired in
+		let nullityConforms : Boolean = nonLambdaParameter.isRequired implies argument.isRequired in
 		let typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in
 		typeConforms and nullityConforms
 	else false endif

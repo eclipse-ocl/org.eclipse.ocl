@@ -448,7 +448,7 @@ implements Operation {
 		 *               nonLambdaParameter.type?.specializeIn(caller, nonNullSelfType)
 		 *             endif
 		 *           in
-		 *             let nullityConforms : Boolean[?] = argument.isRequired implies nonLambdaParameter.isRequired
+		 *             let nullityConforms : Boolean[?] = nonLambdaParameter.isRequired implies argument.isRequired
 		 *             in
 		 *               let
 		 *                 typeConforms : Boolean[?] = argument.type?.conformsTo(nonLambdaParameterType)
@@ -523,29 +523,29 @@ implements Operation {
 			}
 			/*@Caught*/ @Nullable Object CAUGHT_nullityConforms;
 			try {
-				final /*@NonInvalid*/ boolean isRequired = argument.isIsRequired();
+				/*@Caught*/ @NonNull Object CAUGHT_isRequired;
+				try {
+					if (CAUGHT_nonLambdaParameter instanceof InvalidValueException) {
+						throw (InvalidValueException)CAUGHT_nonLambdaParameter;
+					}
+					final /*@Thrown*/ boolean isRequired = ((TypedElement)CAUGHT_nonLambdaParameter).isIsRequired();
+					CAUGHT_isRequired = isRequired;
+				}
+				catch (Exception e) {
+					CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
+				}
 				final /*@Thrown*/ @Nullable Boolean nullityConforms;
-				if (!isRequired) {
+				if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {
 					nullityConforms = ValueUtil.TRUE_VALUE;
 				}
 				else {
-					/*@Caught*/ @NonNull Object CAUGHT_isRequired_0;
-					try {
-						if (CAUGHT_nonLambdaParameter instanceof InvalidValueException) {
-							throw (InvalidValueException)CAUGHT_nonLambdaParameter;
-						}
-						final /*@Thrown*/ boolean isRequired_0 = ((TypedElement)CAUGHT_nonLambdaParameter).isIsRequired();
-						CAUGHT_isRequired_0 = isRequired_0;
-					}
-					catch (Exception e) {
-						CAUGHT_isRequired_0 = ValueUtil.createInvalidValue(e);
-					}
-					if (CAUGHT_isRequired_0 == ValueUtil.TRUE_VALUE) {
+					final /*@NonInvalid*/ boolean isRequired_0 = argument.isIsRequired();
+					if (isRequired_0) {
 						nullityConforms = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						if (CAUGHT_isRequired_0 instanceof InvalidValueException) {
-							throw (InvalidValueException)CAUGHT_isRequired_0;
+						if (CAUGHT_isRequired instanceof InvalidValueException) {
+							throw (InvalidValueException)CAUGHT_isRequired;
 						}
 						nullityConforms = ValueUtil.FALSE_VALUE;
 					}

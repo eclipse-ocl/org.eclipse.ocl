@@ -10733,7 +10733,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tlet selfType : Type = owningClass in\n\tif selfType <> null then\n\t\tlet nonNullSelfType : Type[1] = selfType in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in\n\t\tlet nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, nonNullSelfType) endif in\n\t\tlet nullityConforms : Boolean = argument.isRequired implies nonLambdaParameter.isRequired in\n\t\tlet typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in\n\t\ttypeConforms and nullityConforms\n\telse false endif\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "\n\tlet selfType : Type = owningClass in\n\tif selfType <> null then\n\t\tlet nonNullSelfType : Type[1] = selfType in\n\t\tlet parameterType : Type = parameter.type in\n\t\tlet nonLambdaParameter : Parameter = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult else parameter endif in\n\t\tlet nonLambdaParameterType : Type = if nonLambdaParameter.isTypeof then Class else nonLambdaParameter.type?.specializeIn(caller, nonNullSelfType) endif in\n\t\tlet nullityConforms : Boolean = nonLambdaParameter.isRequired implies argument.isRequired in\n\t\tlet typeConforms : Boolean = argument.type?.conformsTo(nonLambdaParameterType) in\n\t\ttypeConforms and nullityConforms\n\telse false endif\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOperation__ValidateCompatibleReturn__DiagnosticChain_Map(),
