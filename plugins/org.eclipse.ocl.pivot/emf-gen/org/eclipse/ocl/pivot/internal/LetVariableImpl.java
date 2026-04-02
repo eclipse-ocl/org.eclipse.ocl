@@ -92,6 +92,9 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 	@Override
 	public boolean validateCompatibleNullityForInitializer(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
+		if ("nonNullSelfType : Class[1] = selfType".equals(toString())) {
+			getClass();			// XXX
+		}
 		final @NonNull String constraintName = "LetVariable::CompatibleNullityForInitializer";
 		try {
 			/**
@@ -133,7 +136,7 @@ public class LetVariableImpl extends VariableImpl implements LetVariable
 							}
 							else {
 								assert ownedInit != null;
-								final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired();
+								final /*@Thrown*/ boolean isRequired_0 = ownedInit.isIsRequired() || ownedInit.isNonNull();
 								safe_isRequired_source = isRequired_0;
 							}
 							CAUGHT_safe_isRequired_source = safe_isRequired_source;

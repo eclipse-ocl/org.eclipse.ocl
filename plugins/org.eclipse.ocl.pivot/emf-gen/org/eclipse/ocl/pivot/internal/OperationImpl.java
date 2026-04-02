@@ -539,7 +539,7 @@ implements Operation {
 					nullityConforms = ValueUtil.TRUE_VALUE;
 				}
 				else {
-					final /*@NonInvalid*/ boolean isRequired_0 = argument.isIsRequired();
+					final /*@NonInvalid*/ boolean isRequired_0 = argument.isIsRequired() || argument.isNonNull();
 					if (isRequired_0) {
 						nullityConforms = ValueUtil.TRUE_VALUE;
 					}

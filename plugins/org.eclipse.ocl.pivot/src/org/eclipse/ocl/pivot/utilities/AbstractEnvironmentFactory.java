@@ -1118,6 +1118,9 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 	 */
 	@Override
 	public @NonNull FlowAnalysis getFlowAnalysis(@NonNull OCLExpression oclExpression) {
+		if ("selfType"/*"1_.opposite.<>(null).and(1_.opposite.isComposite)"*/.equals(oclExpression.toString())) {
+			getClass();		// XXX
+		}
 		OCLExpression contextExpression = FlowAnalysis.getControlExpression(oclExpression);
 		Map<@NonNull OCLExpression, @NonNull FlowAnalysis> oclExpression2flowAnalysis2 = oclExpression2flowAnalysis;
 		if (oclExpression2flowAnalysis2 == null) {

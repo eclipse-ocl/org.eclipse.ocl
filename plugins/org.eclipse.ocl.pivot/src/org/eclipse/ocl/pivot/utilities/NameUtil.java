@@ -40,12 +40,12 @@ public class NameUtil
 		}
 	}
 
-	public static final class NameableComparator implements Comparator<Nameable>
+	public static final class NameableComparator implements Comparator<@NonNull Nameable>
 	{
 		public static final @NonNull NameableComparator INSTANCE = new NameableComparator();
 
 		@Override
-		public int compare(Nameable o1, Nameable o2) {
+		public int compare(@NonNull Nameable o1, @NonNull Nameable o2) {
 			String n1 = NameUtil.getSafeName(o1);
 			String n2 = NameUtil.getSafeName(o2);
 			return ClassUtil.safeCompareTo(n1, n2);

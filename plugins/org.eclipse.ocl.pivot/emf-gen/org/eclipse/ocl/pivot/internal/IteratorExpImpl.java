@@ -474,6 +474,9 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 	@Override
 	public boolean validateBodyTypeIsConformant(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
+		if ("classProperties->reject(1_ : Property[1] | 1_.defaultValueString.<>(null))->reject(1_ : Property[1] | 1_.isVolatile.or(1_.isRequired.not()))->reject(1_ : Property[1] | 1_.type.oclIsKindOf(CollectionType))->reject(1_ : Property[1] | 1_.opposite.<>(null).and(1_.opposite.isComposite))".equals(toString())) {
+			getClass();		// XXX
+		}
 		final @NonNull String constraintName = "IteratorExp::BodyTypeIsConformant";
 		try {
 			/**

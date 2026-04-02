@@ -588,6 +588,9 @@ implements OperationCallExp {
 	@Override
 	public boolean validateArgumentTypeIsConformant(final DiagnosticChain diagnostics, final Map<Object, Object> context)
 	{
+		if ("self.ownedSource?.type.oclAsType(CollectionType)"/*"self.CompatibleBody(self.bodyExpression)"*/.equals(toString())) {
+			getClass();			// XXX
+		}
 		final @NonNull String constraintName = "OperationCallExp::ArgumentTypeIsConformant";
 		try {
 			/**

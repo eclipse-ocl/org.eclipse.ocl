@@ -11,6 +11,8 @@
 package org.eclipse.ocl.pivot.internal.manager;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.BooleanLiteralExp;
+import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionItem;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
@@ -29,7 +32,7 @@ import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
-import org.eclipse.ocl.pivot.LetVariable;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.NavigationCallExp;
@@ -43,6 +46,7 @@ import org.eclipse.ocl.pivot.ShadowExp;
 import org.eclipse.ocl.pivot.ShadowPart;
 import org.eclipse.ocl.pivot.StringLiteralExp;
 import org.eclipse.ocl.pivot.TypeExp;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.UnlimitedNaturalLiteralExp;
 import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableDeclaration;
@@ -73,6 +77,9 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
  *
  * @since 1.3
  */
+@Deprecated /* @deprecated The analysis relies on a backwards deduction and so like the impact analyzer has difficulties
+				with overloaded operations. It of course relies on independent reverse evaluation code. In contrast the
+				symbolic evaluation advocated by Bug 520440 / Issue 1864 can re-use a forward evaluation. */
 public class FlowAnalysis
 {
 	/**
@@ -114,6 +121,7 @@ public class FlowAnalysis
 		 * infinite recursion of nested analyses.
 		 */
 		protected boolean isAlreadyNonNull(@NonNull OCLExpression asExpression) {
+		//	if (asExpression.isNonNull()) {
 			if (asExpression.isIsRequired()) {
 				return true;
 			}
@@ -147,6 +155,34 @@ public class FlowAnalysis
 				return nullOrNonNull == Boolean.TRUE;
 			}
 			return false;
+		}
+
+		/**
+		 * @since 7.0
+		 */
+//		public int size() {
+//			return toBeDeduced.size();
+//		}
+
+		@Override
+		public @NonNull String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append(getClass().getSimpleName());
+			toString(s, "  ");
+			return s.toString();
+		}
+
+		private void toString(@NonNull StringBuilder s, @NonNull String indent) {
+		//	s.append(indent);
+		//	s.append(getClass().getSimpleName());
+			for (int i = 0; i < toBeDeduced.size(); i++) {
+				s.append("\n");
+				s.append(indent);
+				s.append(i < alreadyDeducedIndex ? Integer.toString(i) : "?");
+				s.append(": ");
+				s.append(toBeDeduced.get(i));
+			}
+			s.append(indent);
 		}
 
 		@Override
@@ -584,6 +620,9 @@ public class FlowAnalysis
 
 	/**
 	 * Return the ancestor of contextExpression that shares the same FlowAnalysis as contextExpression
+	 * 'same' has the same visible variables with the same nullity. i.e. any variable introduction/conditional breaks sameness.
+	 * The parent of a control expression imposes narrower value restrictions, such as the then/else expression of an if, or source/argument of and.
+	 * (The init expression of a let variable is a sub-problem that can/must be analyzed first.)
 	 */
 	public static @NonNull OCLExpression getControlExpression(@NonNull OCLExpression contextExpression) {
 		OCLExpression eObject = contextExpression;
@@ -596,32 +635,54 @@ public class FlowAnalysis
 				else if (eObject == PivotUtil.getOwnedElse(ifExp)) {
 					break;
 				}
+				else {
+					assert eObject == PivotUtil.getOwnedCondition(ifExp);
+				//	eObject = ifExp;
+				}
 			}
 			else if (eContainer instanceof LetExp) {
 				LetExp letExp = (LetExp)eContainer;
-				if (eObject == PivotUtil.getOwnedIn(letExp)) {
-					break;
-				}
+				assert eObject == PivotUtil.getOwnedIn(letExp);
+			//	eObject = letExp;
+			//	if (eObject == PivotUtil.getOwnedIn(letExp)) {
+			//		break;
+			//	}
+			//	else {
+			//		assert eObject == PivotUtil.getOwnedVariable(letExp);
+			//		eObject = letExp;
+			//	}
 			}
+		/*	else if (eContainer instanceof LetVariable) {
+				LetVariable letVariable = (LetVariable)eContainer;
+				LetExp letExp = (LetExp)letVariable.eContainer();
+				assert eObject == PivotUtil.getOwnedInit(letVariable);
+				eObject = letExp;
+			} */
 			else if (eContainer instanceof OperationCallExp) {
 				OperationCallExp operationCallExp = (OperationCallExp)eContainer;
 				OperationId operationId = PivotUtil.getReferredOperation(operationCallExp).getOperationId();
-				if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND)) {
-					if (eObject == PivotUtil.getOwnedSource(operationCallExp)) {
-						break;
-					}
-					else if (eObject == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
-						break;
-					}
+				if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND)
+				 || PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES)
+				 || PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_OR)
+				 || PivotUtil.isSameOperation(operationId, OperationId.OCLANY_EQUALS)
+				 || PivotUtil.isSameOperation(operationId, OperationId.OCLANY_NOT_EQUALS)) {
+					break;
 				}
-				else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES)) {
-					if (eObject == PivotUtil.getOwnedSource(operationCallExp)) {
-						break;
-					}
-					else if (eObject == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
-						break;
-					}
+				else {
+				//	eObject = operationCallExp;
 				}
+			}
+			else if (eContainer instanceof LoopExp) {
+				LoopExp loopExp = (LoopExp)eContainer;
+				if (eObject == PivotUtil.getOwnedSource(loopExp)) {
+					eObject = loopExp; 				// Only source has same visibility as parent
+				}
+				else {
+					break;
+				}
+			}
+			else {
+				eContainer.getClass();		// XXX
 			}
 		}
 		return eObject;
@@ -629,10 +690,22 @@ public class FlowAnalysis
 
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull OCLExpression contextExpression;
+	/**
+	 * The deducer that may find false-valued sub-expressions.
+	 */
 	private @Nullable AbstractDeducer deducerFromFalse = null;
+	/**
+	 * The deducer that may find non-null-valued sub-expressions.
+	 */
 	private @Nullable AbstractDeducer deducerFromNonNull = null;
+	/**
+	 * The deducer that may find null-valued sub-expressions.
+	 */
 	private @Nullable AbstractDeducer deducerFromNull = null;
-	private final @NonNull AbstractDeducer deducerFromTrue = createDeducerFromTrue();
+	/**
+	 * The deducer that may find true-valued sub-expressions.
+	 */
+	private @Nullable AbstractDeducer deducerFromTrue = null;
 
 	/*
 	 *	Map from the hashCode of a CallPath for some access for which the null (true), non-null (false) state
@@ -643,17 +716,20 @@ public class FlowAnalysis
 	/*
 	 *	Map from a simple VariableDeclaration for which the null (true), non-null (false) state is known.
 	 */
-	private @Nullable Map<@NonNull Object, @Nullable Boolean> variable2nullOrNonNull = null;
+	private @Nullable Map<@NonNull VariableDeclaration, @Nullable Boolean> variable2nullOrNonNull = null;
 
 	/**
 	 * @since 1.7
 	 */
 	public FlowAnalysis(@NonNull EnvironmentFactory environmentFactory, @NonNull OCLExpression contextExpression) {
-//		System.out.println("ctor " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(contextExpression) + " " + contextExpression);
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(contextExpression) + " " + contextExpression);
 		this.environmentFactory = environmentFactory;
 		this.contextExpression = contextExpression;
 		if (DISCOVERED_VARIABLES.isActive()) {
-			DISCOVERED_VARIABLES.println(NameUtil.debugSimpleName(this) + " " + contextExpression);
+			DISCOVERED_VARIABLES.println(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(contextExpression) + " " + contextExpression);
+		}
+		if ("1_.opposite.<>(null).and(1_.opposite.isComposite)"/*"classProperties->reject(1_ : Property[1] | 1_.defaultValueString.<>(null))->reject(1_ : Property[1] | 1_.isVolatile.or(1_.isRequired.not()))->reject(1_ : Property[1] | 1_.type.oclIsKindOf(CollectionType))->reject(1_ : Property[1] | 1_.opposite.<>(null).and(1_.opposite.isComposite))"*/.equals(contextExpression.toString())) {
+			getClass();		// XXX
 		}
 	}
 
@@ -661,7 +737,35 @@ public class FlowAnalysis
 	 * @since 7.0
 	 */
 	public void analyze() {
-		for (EObject eObject = contextExpression, eContainer = eObject.eContainer(); (eContainer instanceof OCLExpression) || (eContainer instanceof LetVariable); eObject = eContainer, eContainer = eContainer.eContainer()) {
+		if ("1_.opposite.<>(null).and(1_.opposite.isComposite)"/*"classProperties->reject(1_ : Property[1] | 1_.defaultValueString.<>(null))->reject(1_ : Property[1] | 1_.isVolatile.or(1_.isRequired.not()))->reject(1_ : Property[1] | 1_.type.oclIsKindOf(CollectionType))->reject(1_ : Property[1] | 1_.opposite.<>(null).and(1_.opposite.isComposite))"*/.equals(contextExpression.toString())) {
+			getClass();		// XXX
+		}
+		if (contextExpression.isIsRequired()) {
+			addNonNullExpression(contextExpression);
+		}
+		if (contextExpression instanceof BooleanLiteralExp) {				/// NUll => addNull
+			BooleanLiteralExp booleanLiteralExp = (BooleanLiteralExp)contextExpression;
+			if (booleanLiteralExp.isBooleanSymbol()) {
+				addTrueExpression(booleanLiteralExp);
+			}
+			else {
+				addFalseExpression(booleanLiteralExp);
+			}
+		}
+		else if (contextExpression instanceof OperationCallExp) {
+			OperationCallExp operationCallExp = (OperationCallExp)contextExpression;
+			OperationId operationId = PivotUtil.getReferredOperation(operationCallExp).getOperationId();
+			if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND)
+			 || PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES)
+			 || PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_OR)
+			 || PivotUtil.isSameOperation(operationId, OperationId.OCLANY_EQUALS)
+			 || PivotUtil.isSameOperation(operationId, OperationId.OCLANY_NOT_EQUALS)
+			 /*|| PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_OR)*/) {
+				environmentFactory.getFlowAnalysis(PivotUtil.getOwnedSource(operationCallExp));
+				environmentFactory.getFlowAnalysis(PivotUtil.getOwnedArgument(operationCallExp, 0));
+			}
+		}
+		for (EObject eObject = contextExpression, eContainer = eObject.eContainer(); eContainer instanceof TypedElement; eObject = eContainer, eContainer = eContainer.eContainer()) {		// OCLExpression || LetVariable
 			if (eContainer instanceof IfExp) {
 				IfExp ifExp = (IfExp)eContainer;
 				if (eObject == PivotUtil.getOwnedThen(ifExp)) {
@@ -675,57 +779,45 @@ public class FlowAnalysis
 				LetExp letExp = (LetExp)eContainer;
 				Variable letVariable = PivotUtil.getOwnedVariable(letExp);
 				OCLExpression initExpression = PivotUtil.getOwnedInit(letVariable);
-				FlowAnalysis variableAnalysis = environmentFactory.getFlowAnalysis(initExpression);
-				if (variableAnalysis.isNull(initExpression)) {
-					setVariable(letVariable, true);
-				}
-				else if (variableAnalysis.isNonNull(initExpression)) {
-					setVariable(letVariable, false);
+				if (initExpression != contextExpression) {
+					FlowAnalysis variableAnalysis = environmentFactory.getFlowAnalysis(initExpression);
+					if (variableAnalysis.isNull(initExpression)) {
+						setVariable(letVariable, true);
+					}
+					else if (variableAnalysis.isNonNull(initExpression)) {
+						setVariable(letVariable, false);
+					}
 				}
 			}
+		//	else if (eContainer instanceof LetVariable) {		// XXX
+		//		break;
+		//	}
 			else if (eContainer instanceof OperationCallExp) {
-				OperationCallExp operationCallExp = (OperationCallExp)eContainer;
-				OperationId operationId = PivotUtil.getReferredOperation(operationCallExp).getOperationId();
-				if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND)) {
-					if (eObject == PivotUtil.getOwnedSource(operationCallExp)) {
-						addTrueExpression(PivotUtil.getOwnedArgument(operationCallExp, 0));
-					}
-					else if (eObject == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
-						addTrueExpression(PivotUtil.getOwnedSource(operationCallExp));
-					}
+				analyzeOperationCallExp((OperationCallExp)eContainer, (OCLExpression) eObject);
+			}
+			else if (eContainer instanceof LoopExp) {
+				LoopExp loopExp = (LoopExp)eContainer;
+				if (eObject == PivotUtil.getOwnedSource(loopExp)) {
+					;	// Only source has same visibility as parent
 				}
-				else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES)) {
-					if (eObject == PivotUtil.getOwnedSource(operationCallExp)) {
-						addFalseExpression(PivotUtil.getOwnedArgument(operationCallExp, 0));
-					}
-					else if (eObject == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
-						addTrueExpression(PivotUtil.getOwnedSource(operationCallExp));
-					}
+				else {
+		//			break;
 				}
 			}
 		}
 		while (true) {
 			boolean gotOne = false;
-			while (deducerFromTrue.deduceNext()) {
+			while ((deducerFromTrue != null) && deducerFromTrue.deduceNext()) {
 				gotOne = true;
 			}
-			AbstractDeducer deducerFromFalse2 = deducerFromFalse;
-			if (deducerFromFalse2 != null) {
-				while (deducerFromFalse2.deduceNext()) {
-					gotOne = true;
-				}
+			while ((deducerFromFalse != null) && deducerFromFalse.deduceNext()) {
+				gotOne = true;
 			}
-			AbstractDeducer deducerFromNull2 = deducerFromNull;
-			if (deducerFromNull2 != null) {
-				while (deducerFromNull2.deduceNext()) {
-					gotOne = true;
-				}
+			while ((deducerFromNull != null) && deducerFromNull.deduceNext()) {
+				gotOne = true;
 			}
-			AbstractDeducer deducerFromNonNull2 = deducerFromNonNull;
-			if (deducerFromNonNull2 != null) {
-				while (deducerFromNonNull2.deduceNext()) {
-					gotOne = true;
-				}
+			while ((deducerFromNonNull != null) && deducerFromNonNull.deduceNext()) {
+				gotOne = true;
 			}
 			if (!gotOne) {
 				break;
@@ -733,28 +825,96 @@ public class FlowAnalysis
 		}
 	}
 
-	protected void addFalseExpression(@NonNull OCLExpression object) {
+	/**
+	 * @since 7.0
+	 */
+	protected void analyzeOperationCallExp(@NonNull OperationCallExp operationCallExp, @NonNull OCLExpression term) {
+		OperationId operationId = PivotUtil.getReferredOperation(operationCallExp).getOperationId();
+		if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_AND)) {
+			if (term == PivotUtil.getOwnedSource(operationCallExp)) {
+				addTrueExpression(PivotUtil.getOwnedArgument(operationCallExp, 0));
+			}
+			else if (term == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
+				addTrueExpression(PivotUtil.getOwnedSource(operationCallExp));
+			}
+		}
+		else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_IMPLIES)) {
+			if (term == PivotUtil.getOwnedSource(operationCallExp)) {
+				addFalseExpression(PivotUtil.getOwnedArgument(operationCallExp, 0));
+			}
+			else if (term == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
+				addTrueExpression(PivotUtil.getOwnedSource(operationCallExp));
+			}
+		}
+		else if (PivotUtil.isSameOperation(operationId, OperationId.BOOLEAN_OR)) {
+			if (term == PivotUtil.getOwnedSource(operationCallExp)) {
+				addFalseExpression(PivotUtil.getOwnedArgument(operationCallExp, 0));
+			}
+			else if (term == PivotUtil.getOwnedArgument(operationCallExp, 0)) {
+				addFalseExpression(PivotUtil.getOwnedSource(operationCallExp));
+			}
+		}
+		else if (PivotUtil.isSameOperation(operationId, OperationId.OCLANY_EQUALS)
+			  || PivotUtil.isSameOperation(operationId, OperationId.OCLANY_NOT_EQUALS)) {
+			OCLExpression ownedSource = PivotUtil.getOwnedSource(operationCallExp);
+			OCLExpression ownedArgument = PivotUtil.getOwnedArgument(operationCallExp, 0);
+			if (ownedSource.getType() instanceof BooleanType) {
+				addFalseExpression(ownedSource);			// XXX surely depends on == / <> left/right
+				addTrueExpression(ownedSource);
+				addFalseExpression(ownedArgument);
+				addTrueExpression(ownedArgument);
+			}
+			else {
+				addNonNullExpression(ownedSource);			// XXX surely depends on == / <> left/right
+				addNullExpression(ownedSource);
+				addNonNullExpression(ownedArgument);
+				addNullExpression(ownedArgument);
+			}
+		}
+	}
+
+	/**
+	 * Add anExpression that if deduced to be false-valued can assist with downstream deductions.
+	 */
+	protected void addFalseExpression(@NonNull OCLExpression anExpression) {
 		AbstractDeducer deducerFromFalse2 = deducerFromFalse;
 		if (deducerFromFalse2 == null) {
 			deducerFromFalse2 = deducerFromFalse = createDeducerFromFalse();
 		}
-		deducerFromFalse2.addToBeDeduced(object);
+		deducerFromFalse2.addToBeDeduced(anExpression);
 	}
 
-	protected void addNonNullExpression(@NonNull OCLExpression object) {
+	/**
+	 * Add anExpression that if deduced to be non-null-valued can assist with downstream deductions.
+	 */
+	protected void addNonNullExpression(@NonNull OCLExpression anExpression) {
 		AbstractDeducer deducerFromNonNull2 = deducerFromNonNull;
 		if (deducerFromNonNull2 == null) {
 			deducerFromNonNull2 = deducerFromNonNull = createDeducerFromNull(false);
 		}
-		deducerFromNonNull2.addToBeDeduced(object);
+		deducerFromNonNull2.addToBeDeduced(anExpression);
 	}
 
-	protected void addNullExpression(@NonNull OCLExpression object) {
+	/**
+	 * Add anExpression that if deduced to be null-valued can assist with downstream deductions.
+	 */
+	protected void addNullExpression(@NonNull OCLExpression anExpression) {
 		AbstractDeducer deducerFromNull2 = deducerFromNull;
 		if (deducerFromNull2 == null) {
 			deducerFromNull2 = deducerFromNull = createDeducerFromNull(true);
 		}
-		deducerFromNull2.addToBeDeduced(object);
+		deducerFromNull2.addToBeDeduced(anExpression);
+	}
+
+	/**
+	 * Add anExpression that if deduced to be true-valued can assist with downstream deductions.
+	 */
+	protected void addTrueExpression(@NonNull OCLExpression anExpression) {
+		AbstractDeducer deducerFromTrue2 = deducerFromTrue;
+		if (deducerFromTrue2 == null) {
+			deducerFromTrue2 = deducerFromTrue = createDeducerFromTrue();
+		}
+		deducerFromTrue2.addToBeDeduced(anExpression);
 	}
 
 	/**
@@ -776,10 +936,6 @@ public class FlowAnalysis
 	 */
 	protected @NonNull AbstractDeducer createDeducerFromTrue() {
 		return new PivotFlowAnalysisDeducerFromTrueVisitor(this);
-	}
-
-	protected void addTrueExpression(@NonNull OCLExpression object) {
-		deducerFromTrue.addToBeDeduced(object);
 	}
 
 	protected @Nullable Boolean getCallPath(@NonNull OCLExpression object) {
@@ -804,13 +960,13 @@ public class FlowAnalysis
 	}
 
 	protected @Nullable Boolean getVariable(@NonNull VariableDeclaration variable) {
-		Map<@NonNull Object, @Nullable Boolean> variable2nullOrNonNull2 = variable2nullOrNonNull;
+		Map<@NonNull VariableDeclaration, @Nullable Boolean> variable2nullOrNonNull2 = variable2nullOrNonNull;
 		return variable2nullOrNonNull2 != null ? variable2nullOrNonNull2.get(variable) : null;
 	}
 
 	public boolean isNonNull(@NonNull OCLExpression asExpression) {
 		try {
-			return deducerFromTrue.isAlreadyNonNull(asExpression);
+			return (deducerFromTrue != null) && deducerFromTrue.isAlreadyNonNull(asExpression);
 		}
 		catch (Throwable e) {
 			return false;
@@ -819,11 +975,15 @@ public class FlowAnalysis
 
 	public boolean isNull(@NonNull OCLExpression asExpression) {
 		try {
-			return deducerFromTrue.isAlreadyNull(asExpression);
+			return (deducerFromTrue != null) && deducerFromTrue.isAlreadyNull(asExpression);
 		}
 		catch (Throwable e) {
 			return false;
 		}
+	}
+
+	private @NonNull String isNullOrNonNullString(@Nullable Boolean isNullOrNonNull) {
+		return isNullOrNonNull == null ? "?" : isNullOrNonNull ? "isNull" : "isNonNull";
 	}
 
 	protected @Nullable Boolean setCallPath(@NonNull CallExp object, boolean isNull) {
@@ -852,19 +1012,70 @@ public class FlowAnalysis
 	}
 
 	protected boolean setVariable(@NonNull VariableDeclaration variable, boolean isNullOrNonNull) {
-		Map<@NonNull Object, @Nullable Boolean> variable2nullOrNonNull2 = variable2nullOrNonNull;
+		Map<@NonNull VariableDeclaration, @Nullable Boolean> variable2nullOrNonNull2 = variable2nullOrNonNull;
 		if (variable2nullOrNonNull2 == null) {
 			variable2nullOrNonNull2 = variable2nullOrNonNull = new HashMap<>();
 		}
 		Boolean oldNullOrNonNull = variable2nullOrNonNull2.put(variable, isNullOrNonNull);
 		if (DISCOVERED_VARIABLES.isActive()) {
-			DISCOVERED_VARIABLES.println(NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(variable) + " " + variable + " " +
-							(oldNullOrNonNull == null ? "?" : isNullOrNonNull ? "isNull" : "isNonNull") + " => " +
-							(isNullOrNonNull ? "isNull" : "isNonNull"));
+			DISCOVERED_VARIABLES.println(NameUtil.debugSimpleName(this) + " " +
+					(oldNullOrNonNull != null ? isNullOrNonNullString(oldNullOrNonNull) + " ": "") +
+					"=> " + isNullOrNonNullString(isNullOrNonNull) + " " +
+					NameUtil.debugSimpleName(variable) + " " + variable + " ");
 		}
 		if (oldNullOrNonNull == null) {
 			return true;
 		}
 		return oldNullOrNonNull.booleanValue() == isNullOrNonNull;
+	}
+
+	@Override
+	public @NonNull String toString() {
+		StringBuilder s = new StringBuilder();
+		toString(s);
+		return s.toString();
+	}
+
+	private void toString(@NonNull StringBuilder s) {
+//		s.append(indent);
+		s.append(NameUtil.debugSimpleName(this));
+		s.append(" ");
+		s.append(contextExpression);
+		Map<@NonNull VariableDeclaration, @Nullable Boolean> variable2nullOrNonNull2 = variable2nullOrNonNull;
+		if (variable2nullOrNonNull2 != null) {
+			Collection<@NonNull VariableDeclaration> keys = new ArrayList<>(variable2nullOrNonNull2.keySet());
+			if (keys.size() > 1) {
+				List<@NonNull VariableDeclaration> keyList = new ArrayList<>(keys);
+				Collections.sort(keyList, NameUtil.NAMEABLE_COMPARATOR);
+				keys = keyList;
+			}
+			for (@NonNull VariableDeclaration key : keys) {
+				s.append("\n  ");
+				s.append(key);
+				s.append(" <= ");
+				Boolean isNullOrNonNull = variable2nullOrNonNull2.get(key);
+				s.append(isNullOrNonNullString(isNullOrNonNull));
+			}
+		}
+		if (deducerFromTrue != null) {
+			s.append("\n  true <=");
+			assert deducerFromTrue != null;
+			deducerFromTrue.toString(s, "    ");
+		}
+		if (deducerFromFalse != null) {
+			s.append("\n  false <=");
+			assert deducerFromFalse != null;
+			deducerFromFalse.toString(s, "    ");
+		}
+		if (deducerFromNull != null) {
+			s.append("\n  null <=");
+			assert deducerFromNull != null;
+			deducerFromNull.toString(s, "    ");
+		}
+		if (deducerFromNonNull != null) {
+			s.append("\n  non-null <=");
+			assert deducerFromNonNull != null;
+			deducerFromNonNull.toString(s, "    ");
+		}
 	}
 }
