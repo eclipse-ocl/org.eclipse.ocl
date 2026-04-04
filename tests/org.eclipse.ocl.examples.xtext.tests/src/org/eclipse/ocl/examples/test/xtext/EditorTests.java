@@ -26,6 +26,7 @@ import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -66,6 +67,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.ide.IDE;
+import org.eclipse.ui.internal.ErrorEditorPart;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
@@ -128,8 +130,7 @@ public class EditorTests extends XtextTestCase
 		doTearDown(editor);
 	}
 
-	public XtextEditor doStartUp(@NonNull String editorId, @NonNull String testFile, @NonNull String testFileContent)
-			throws CoreException, PartInitException {
+	public XtextEditor doStartUp(@NonNull String editorId, @NonNull String testFile, @NonNull String testFileContent) throws Exception {
 		InputStream inputStream = new URIConverter.ReadableInputStream(testFileContent, "UTF-8");
 		FileEditorInput fileEditorInput = createFileEditorInput("test", testFile, inputStream);
 		XtextEditor editor = doTestEditor(editorId, fileEditorInput);
@@ -140,7 +141,7 @@ public class EditorTests extends XtextTestCase
 		return editor;
 	}
 
-	protected XtextEditor doTestEditor(@NonNull String editorId, @NonNull FileEditorInput fileEditorInput) throws PartInitException, CoreException {
+	protected XtextEditor doTestEditor(@NonNull String editorId, @NonNull FileEditorInput fileEditorInput) throws Exception {
 		Injector injector = null;
 		if (editorId == CompleteOCLUiModule.EDITOR_ID) {
 			injector = CompleteOCLActivator.getInstance().getInjector(CompleteOCLActivator.ORG_ECLIPSE_OCL_XTEXT_COMPLETEOCL_COMPLETEOCL);
@@ -161,9 +162,14 @@ public class EditorTests extends XtextTestCase
 		IWorkbench workbench = PlatformUI.getWorkbench();
 		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
 		IWorkbenchPage page = activeWorkbenchWindow.getActivePage();
-		XtextEditor editor = (XtextEditor) IDE.openEditor(page, fileEditorInput, editorId, true);
+		IEditorPart editor = IDE.openEditor(page, fileEditorInput, editorId, true);
+		if (editor instanceof ErrorEditorPart) {
+			IStatus error = ((ErrorEditorPart)editor).getError();
+			throw (Exception)error.getException();
+		}
 		TestUIUtil.wait(7500);
-		String languageName = editor.getLanguageName();
+		XtextEditor xtextEditor = (XtextEditor) editor;
+		String languageName = xtextEditor.getLanguageName();
 		assertEquals(editorId, languageName);
 		file.refreshLocal(IResource.DEPTH_INFINITE, null);
 		IMarker[] markers = file.findMarkers(null, true, IResource.DEPTH_INFINITE);
@@ -187,7 +193,7 @@ public class EditorTests extends XtextTestCase
 			}
 			fail("Markers" + s.toString());
 		}
-		return editor;
+		return (XtextEditor)editor;
 	}
 
 	private String doTestEditor(@NonNull String editorId, @NonNull URI testFile) throws CoreException, PartInitException {
