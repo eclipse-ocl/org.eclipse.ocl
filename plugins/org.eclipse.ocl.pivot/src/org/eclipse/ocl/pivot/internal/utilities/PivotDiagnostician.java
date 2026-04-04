@@ -15,6 +15,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -28,9 +29,12 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EValidatorRegistryImpl;
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.util.EObjectValidator;
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -40,6 +44,7 @@ import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.OCL;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
+import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor.InitWrapperCallBack;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
@@ -155,7 +160,37 @@ public abstract class PivotDiagnostician extends Diagnostician
 				}
 			}
 			if (ocl == null) {
-				ocl = OCL.newInstance();
+				if (eObject != null) {
+					Resource eResource = eObject.eResource();
+					if (eResource != null) {
+						ResourceSet resourceSet = eResource.getResourceSet();
+						if (resourceSet instanceof IEditingDomainProvider) {			// AdapterFactoryEditingDomainResourceSet
+							EditingDomain editingDomain = ((IEditingDomainProvider)resourceSet).getEditingDomain();
+							InitWrapperCallBack<OCL, CoreException> callBack = new InitWrapperCallBack<OCL, CoreException>()
+							{
+								protected @Nullable OCL ocl = null;
+
+								@Override
+								public OCL getResult() {
+									return ocl;
+								}
+
+								@Override
+								public @Nullable CoreException getThrowable() { return null; }//throwable; }
+
+								@Override
+								public void run() {
+									ocl = OCL.newInstance();
+								}
+							};
+							ThreadLocalExecutor.init(editingDomain, callBack);
+							ocl = callBack.getResult();
+						}
+					}
+				}
+				if (ocl == null) {
+					ocl = OCL.newInstance();
+				}
 			}
 			ThreadLocalExecutor.setUsesFinalizer();
 			context.put(WeakOCLReference.class, new WeakOCLReference(ocl));

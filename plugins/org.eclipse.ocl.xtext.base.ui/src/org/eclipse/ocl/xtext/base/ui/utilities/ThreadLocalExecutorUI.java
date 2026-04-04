@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.WeakHashMap;
 
+import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -24,9 +26,11 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IPartService;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -256,6 +260,25 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 			if (part instanceof IEditorPart) {
 				IEditorPart editorPart = (IEditorPart)part;
 				editorPart.getSite().getPage().closeEditor(editorPart, false);
+			}
+		}
+	}
+
+	@Override
+	public void localInit(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {
+		IWorkbench workbench = PlatformUI.getWorkbench();
+		IWorkbenchWindow activeWorkbenchWindow = workbench.getActiveWorkbenchWindow();
+		if (activeWorkbenchWindow != null) {
+			IWorkbenchPage activePage = activeWorkbenchWindow.getActivePage();
+			for (IEditorReference editorReference : activePage.getEditorReferences()) {
+				IEditorPart editor = editorReference.getEditor(false);
+				if (editor instanceof IEditingDomainProvider) {
+					EditingDomain pageEditingDomain = ((IEditingDomainProvider)editor).getEditingDomain();
+					if (pageEditingDomain == editingDomain) {
+						ThreadLocalExecutor initPartThread = getPartThread(editor);
+						localInit(initPartThread, callBack, NeedsInit.WRAP_WITH_PART_THREAD);
+					}
+				}
 			}
 		}
 	}

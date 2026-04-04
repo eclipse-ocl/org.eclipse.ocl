@@ -16,6 +16,7 @@ import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.evaluation.Executor;
@@ -50,13 +51,16 @@ public class ThreadLocalExecutor implements Nameable
 	 * @since 1.20
 	 */
 	public enum NeedsInit {
-		AS_IS,							// No action needed, EnvironmentFactory already available
-		ATTACH_FROM_PART_THREAD,		// EnvironmentFactory must be established from the activePart
-		WRAP_WITH_PART_THREAD			// EnvironmentFactory and activiePart must be established/override another partThread
+		/** No action needed, EnvironmentFactory already available */
+		AS_IS,
+		/** EnvironmentFactory must be established from the activePart */
+		ATTACH_FROM_PART_THREAD,
+		/** EnvironmentFactory and activePart must be established/override another partThread */
+		WRAP_WITH_PART_THREAD
 	}
 
 	/**
-	 * The InitWrapperCallBack defines the callback for use when an initialization neds to attach prefix and corresponding mpostfix functionality such
+	 * The InitWrapperCallBack defines the callback for use when an initialisation needs to attach prefix and corresponding mpostfix functionality such
 	 * as attach/detach to OCL-based functionality on a IWorkbenchPart/Thread. THe API support result/exception returns if the derivation requires them.
 	 *
 	 * @since 1.20
@@ -174,7 +178,13 @@ public class ThreadLocalExecutor implements Nameable
 	public static @NonNull Executor getExecutor() {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		return ClassUtil.nonNullState(threadLocalExecutor.localBasicGetExecutor());
-	} */
+	} 
+	 * @param callBack */
+
+	public static void init(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {
+		ThreadLocalExecutor threadLocalExecutor = get();
+		threadLocalExecutor.localInit(editingDomain, callBack);
+	}
 
 	private static @Nullable ThreadLocalExecutor readExtension() {
 		IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
@@ -442,6 +452,8 @@ public class ThreadLocalExecutor implements Nameable
 		//	debugState();
 		}
 	}
+
+	public void localInit(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {}
 
 	/**
 	 * @since 1.20
