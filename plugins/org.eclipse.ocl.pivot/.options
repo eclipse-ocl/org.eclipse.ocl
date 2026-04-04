@@ -46,7 +46,7 @@ org.eclipse.ocl.pivot/environmentFactory/threadLocal=false
 org.eclipse.ocl.pivot/evaluations=false
 
 # Trace maintenance of FinalAnalysis 
-org.eclipse.ocl.pivot/finalAnaysis=false
+org.eclipse.ocl.pivot/finalAnalysis=false
 
 # Trace maintenance of Model installation in a PivotMetamodelManager
 org.eclipse.ocl.pivot/install/model=false
