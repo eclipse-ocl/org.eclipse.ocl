@@ -43,11 +43,15 @@ import org.eclipse.debug.internal.ui.DebugUIPlugin;
 import org.eclipse.debug.internal.ui.IInternalDebugUIConstants;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.edit.ui.provider.DiagnosticDecorator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
 import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.intro.IIntroManager;
 import org.eclipse.ui.part.FileEditorInput;
@@ -62,9 +66,31 @@ public class TestUIUtil
 {
 	private static boolean testedEgitUiBundle = false;
 
+	public static void closeEditor(@NonNull IEditorPart editor) {
+		IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+		IWorkbenchPage page = workbenchWindow.getActivePage();
+		page.closeEditor(editor, false);
+	}
+
 	public static void closeIntro() {
 		IIntroManager introManager = PlatformUI.getWorkbench().getIntroManager();
 		introManager.closeIntro(introManager.getIntro());
+	}
+
+	public static void cancelLiveValidationJob() {
+		IJobManager jobManager = Job.getJobManager();
+		Job[] jobs = jobManager.find(null);
+		for (int i = jobs.length; --i >= 0; ) {
+			Job job = jobs[i];
+		//	String jobName = job.getName();
+		//	if ("Validation Job".equals(jobName)) {
+				String jobClassName = job.getClass().getName();
+				if (jobClassName.contains(DiagnosticDecorator.class.getName())
+				 && jobClassName.contains(DiagnosticDecorator.LiveValidator.class.getSimpleName())) {
+					job.cancel();
+				}
+		//	}
+		}
 	}
 
 	public static void cancelAndWaitForValidationJob() throws InterruptedException {

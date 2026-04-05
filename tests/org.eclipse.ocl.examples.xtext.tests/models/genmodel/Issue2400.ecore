@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="issue2400" nsURI="http://www.eclipse.org/ocl/issue/2400" nsPrefix="Model">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eSubpackages name="nested1" nsURI="http://www.eclipse.org/ocl/issue/2400/nested1"
+      nsPrefix="nested1">
+    <eSubpackages name="nested2" nsURI="http://www.eclipse.org/ocl/issue/2400/nested2"
+        nsPrefix="nested2">
+      <eSubpackages name="nested3" nsURI="http://www.eclipse.org/ocl/issue/2400/nested3"
+          nsPrefix="nested3">
+        <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+          <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+          <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+          <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+        </eAnnotations>
+        <eClassifiers xsi:type="ecore:EClass" name="Constrained">
+          <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+            <details key="constraints" value="DescriptionLength EICLength NameLength ShortNameLength"/>
+          </eAnnotations>
+          <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+            <details key="DescriptionLength" value="true"/>
+            <details key="EICLength" value="true"/>
+            <details key="NameLength" value="true"/>
+            <details key="ShortNameLength" value="true"/>
+          </eAnnotations>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="energyIdentCodeEic"
+              eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="mRID" lowerBound="1"
+              eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1"
+              eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+          <eStructuralFeatures xsi:type="ecore:EAttribute" name="shortName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+        </eClassifiers>
+      </eSubpackages>
+    </eSubpackages>
+  </eSubpackages>
+</ecore:EPackage>

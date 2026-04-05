@@ -794,7 +794,7 @@ public class PivotTestCase extends TestCase
 
 	/**
 	 * Execute the test as a Runnable on its own thread so that the thread terminates and the
-	 * release of resources by the finalizr is demonstrated.
+	 * release of resources by the finalizer is demonstrated.
 	 * @throws Throwable
 	 */
 	protected void doTestRunnable(@NonNull TestRunnable testRunnable) throws Throwable {
@@ -827,10 +827,10 @@ public class PivotTestCase extends TestCase
 					System.gc();
 					System.runFinalization();
 				}
-				if (testRunnable.throwable != null) {
-					throw testRunnable.throwable;
-				}
 			}
+		}
+		if (testRunnable.throwable != null) {
+			throw testRunnable.throwable;
 		}
 	}
 

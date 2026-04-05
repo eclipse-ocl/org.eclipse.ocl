@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/2026-RSL6/src" modelPluginID="2026-RSL6" modelName="Issue2400"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="21.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>Issue2400.ecore</foreignModel>
+  <genPackages prefix="Issue2400" disposableProviderFactory="true" ecorePackage="Issue2400.ecore#/">
+    <nestedGenPackages prefix="Nested1" disposableProviderFactory="true" ecorePackage="Issue2400.ecore#//nested1">
+      <nestedGenPackages prefix="Nested2" disposableProviderFactory="true" ecorePackage="Issue2400.ecore#//nested1/nested2">
+        <nestedGenPackages prefix="Nested3" disposableProviderFactory="true" ecorePackage="Issue2400.ecore#//nested1/nested2/nested3">
+          <genClasses ecoreClass="Issue2400.ecore#//nested1/nested2/nested3/Constrained">
+            <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Issue2400.ecore#//nested1/nested2/nested3/Constrained/description"/>
+            <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Issue2400.ecore#//nested1/nested2/nested3/Constrained/energyIdentCodeEic"/>
+            <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Issue2400.ecore#//nested1/nested2/nested3/Constrained/mRID"/>
+            <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Issue2400.ecore#//nested1/nested2/nested3/Constrained/name"/>
+            <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Issue2400.ecore#//nested1/nested2/nested3/Constrained/shortName"/>
+          </genClasses>
+        </nestedGenPackages>
+      </nestedGenPackages>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

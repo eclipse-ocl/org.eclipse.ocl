@@ -168,8 +168,8 @@ public abstract class PivotTestCaseWithAutoTearDown extends PivotTestCase
 	/**
 	 * Return the URI of the file within the testProject created with content from inputStream.
 	 */
-	protected @NonNull TestFile getTestFile(@NonNull String filePath, @NonNull OCL ocl, @NonNull URI sourceURI) throws IOException {
-		URIConverter uriConverter = ocl.getResourceSet().getURIConverter();
+	protected @NonNull TestFile getTestFile(@NonNull String filePath, @Nullable OCL ocl, @NonNull URI sourceURI) throws IOException {
+		URIConverter uriConverter = ocl != null ? ocl.getResourceSet().getURIConverter() : URIConverter.INSTANCE;
 		InputStream inputStream = ClassUtil.nonNullState(uriConverter.createInputStream(sourceURI));
 		return getTestProject().getOutputFile(filePath, inputStream);
 	}
