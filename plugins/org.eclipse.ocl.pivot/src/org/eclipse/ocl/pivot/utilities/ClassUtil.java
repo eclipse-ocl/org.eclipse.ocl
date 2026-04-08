@@ -219,6 +219,7 @@ public class ClassUtil
 					if (eRoot instanceof EPackage) {
 						String nsURI = ((EPackage)eRoot).getNsURI();
 						if ((nsURI != null) && nsURI.equals(uri.toString())) {
+							assert resource.getResourceSet() == null : "generated resources shold not be in an arbitrary ResourceSet"; // OOPS we used to do this.
 							return true;		// FIXME checking for a Java init() method is solider.
 						}
 					}

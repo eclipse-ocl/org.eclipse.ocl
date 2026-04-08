@@ -262,7 +262,14 @@ public interface ProjectManager extends Adapter
 		 */
 		@Nullable Collection<@NonNull IResourceDescriptor> getResourceDescriptors();
 
+		@Deprecated /* @deprecated running/target map determination in caller more efficient */
 		void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package);
+
+		/**
+		 * @since 6.23
+		 */
+		void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package2,
+				@NonNull Map<String, URI> runningEPackageNsURIToGenModelLocationMap, @NonNull Map<String, URI> targetEPackageNsURIToGenModelLocationMap);
 
 		void initializePlatformResourceMap();
 
@@ -499,6 +506,12 @@ public interface ProjectManager extends Adapter
 	}
 
 	void addResourceDescriptor(@NonNull IResourceDescriptor resourceDescriptor);
+
+	/**
+	 * Determine whether resource has EPackage.nsURIs that conflicts with nsURIs knbown to this ProjectMananger.
+	 * Returns null if ok, else a String identifying the conflict.
+	 */
+	@Nullable String assessResource(@NonNull Resource resource);
 
 	void configure(@NonNull ResourceSet resourceSet, @NonNull IResourceLoadStrategy instance, @Nullable IConflictHandler instance2);
 

@@ -144,11 +144,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/pivot/resource/BasicProjectManager.java" type="org.eclipse.ocl.pivot.resource.BasicProjectManager">
-        <filter comment="Bug 512402 workaround" id="576725006">
+    <resource path="src/org/eclipse/ocl/pivot/resource/AbstractProjectManager.java" type="org.eclipse.ocl.pivot.resource.AbstractProjectManager">
+        <filter id="576725006">
             <message_arguments>
                 <message_argument value="ProjectManager"/>
-                <message_argument value="BasicProjectManager"/>
+                <message_argument value="AbstractProjectManager"/>
             </message_arguments>
         </filter>
     </resource>

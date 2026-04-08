@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenRuntimeVersion;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.jdt.annotation.NonNull;
 
 /**
  * EMF_2_9 provides backwards compatible implementations of functionality first available in EMF 2.9.
@@ -48,8 +49,8 @@ public class EMF_2_9
 		 *
 		 * FIXME Bug 576593 need a tracking cache if targetPlatform true
 		 */
-		@SuppressWarnings("unchecked")
-		public static Map<String, URI> getEPackageNsURIToGenModelLocationMap(boolean targetPlatform) {
+		@SuppressWarnings({"unchecked", "null"})
+		public static @NonNull Map<String, URI> getEPackageNsURIToGenModelLocationMap(boolean targetPlatform) {
 			if (GenRuntimeVersion.get("2.14") == null) {			// less than Photon
 				targetPlatform = false;								// Bug 576986 22 tests fail on Oxygen using a target platform
 			}

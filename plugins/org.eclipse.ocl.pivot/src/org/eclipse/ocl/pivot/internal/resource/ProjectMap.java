@@ -235,7 +235,7 @@ public class ProjectMap extends StandaloneProjectMap implements IResourceChangeL
 					event.getDelta().accept(visitor);
 					if (pluginXMLdeltas != null) {
 						for (IResourceDelta delta : pluginXMLdeltas) {
-							int kind = delta.getKind();
+							@SuppressWarnings("unused") int kind = delta.getKind();
 						//	System.out.println("Delta " + kind + " for " + delta + ((kind & IResourceDelta.ADDED) != 0 ? " ADDED" : "") + ((kind & IResourceDelta.CHANGED) != 0 ? " CHANGED" : "") + ((kind & IResourceDelta.REMOVED) != 0 ? " REMOVED" : ""));
 							// FIXME Could process target platform project chnage here
 						}

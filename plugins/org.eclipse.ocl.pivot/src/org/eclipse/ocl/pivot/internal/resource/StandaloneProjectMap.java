@@ -59,6 +59,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.compatibility.EMF_2_9;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
+import org.eclipse.ocl.pivot.resource.AbstractProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor.IProjectDescriptorExtension;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
@@ -214,7 +215,7 @@ import org.xml.sax.helpers.DefaultHandler;
  * one or more IPackageDescriptors for in use IResourceDescriptors and IPackageDescriptors. The
  * IResourceLoadStatus is confugured with an IResourceLoadStrategy and an IConflictHandler.
  */
-public class StandaloneProjectMap implements ProjectManager
+public class StandaloneProjectMap extends AbstractProjectManager
 {
 	private static final String PLUGIN_ID = PivotPlugin.PLUGIN_ID;
 
@@ -2261,10 +2262,16 @@ public class StandaloneProjectMap implements ProjectManager
 
 		@Override
 		public void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package) {
+			Map<String, URI> runningEPackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
+			Map<String, URI> targetEPackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
+			initializeGenModelLocationMap(nsURI2package, runningEPackageNsURIToGenModelLocationMap, targetEPackageNsURIToGenModelLocationMap);
+		}
+
+		@Override
+		public void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package,
+				@NonNull Map<String, URI> runningEPackageNsURIToGenModelLocationMap, @NonNull Map<String, URI> targetEPackageNsURIToGenModelLocationMap) {
 			Collection<@NonNull IResourceDescriptor> resourceDescriptors = getResourceDescriptors();
 			if (resourceDescriptors != null) {
-				Map<String, URI> runningEPackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
-				Map<String, URI> targetEPackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
 				for (@NonNull IResourceDescriptor resourceDescriptor : resourceDescriptors) {
 					URI resolvedGenModelURI = getResolvedGenModelURI(resourceDescriptor);
 					for (IPackageDescriptor packageDescriptor : resourceDescriptor.getPackageDescriptors()) {
@@ -2757,8 +2764,10 @@ public class StandaloneProjectMap implements ProjectManager
 			nsURI2package = nsURI2package2;
 			Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors = getProjectDescriptors();
 			if (projectDescriptors != null) {
+				Map<String, URI> runningEPackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(false);
+				Map<String, URI> targetEPackageNsURIToGenModelLocationMap = EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
 				for (@NonNull IProjectDescriptor projectDescriptor : projectDescriptors.values()) {
-					projectDescriptor.initializeGenModelLocationMap(nsURI2package2);
+					projectDescriptor.initializeGenModelLocationMap(nsURI2package2, runningEPackageNsURIToGenModelLocationMap, targetEPackageNsURIToGenModelLocationMap);
 				}
 			}
 		}
@@ -2772,8 +2781,8 @@ public class StandaloneProjectMap implements ProjectManager
 	 */
 	public synchronized void initializePackageRegistry(@Nullable ResourceSet resourceSet) {
 		getProjectDescriptors();
-		for (IProjectDescriptor projectDescriptor : project2descriptor.values()) {
-			Collection<IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
+		for (@NonNull IProjectDescriptor projectDescriptor : project2descriptor.values()) {
+			Collection<@NonNull IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
 			if (resourceDescriptors != null) {
 				for (IResourceDescriptor resourceDescriptor : resourceDescriptors) {
 					assert resourceDescriptor != null;
@@ -3043,6 +3052,7 @@ public class StandaloneProjectMap implements ProjectManager
 			uri2resource.clear();
 			uri2resource = null;
 		}
+		// XXX need to reset EMF_2_9.EcorePlugin.getEPackageNsURIToGenModelLocationMap(true);
 	}
 
 	protected void scanClassPath(@NonNull Map<@NonNull String, @NonNull IProjectDescriptor> projectDescriptors, @NonNull SAXParser saxParser) {

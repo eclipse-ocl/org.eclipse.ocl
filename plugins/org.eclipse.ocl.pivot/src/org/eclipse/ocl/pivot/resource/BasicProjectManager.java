@@ -15,7 +15,6 @@ import java.util.List;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -29,7 +28,7 @@ import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
  * all clients. The default provides very lightweight functionality that contributes no external projects
  * to a user application and incurs no classpath analysis costs to do so.
  */
-public class BasicProjectManager extends AdapterImpl implements ProjectManager
+public class BasicProjectManager extends AbstractProjectManager
 {
 	public static @NonNull ProjectManager createDefaultProjectManager() {
 		return EMFPlugin.IS_ECLIPSE_RUNNING ? new ProjectMap(false) : new StandaloneProjectMap(false);
