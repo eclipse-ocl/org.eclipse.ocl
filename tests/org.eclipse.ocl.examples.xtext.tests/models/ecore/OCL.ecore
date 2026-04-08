@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ocl" nsURI="http://www.eclipse.org/ocl/1.1.0/OCL" nsPrefix="ocl">
-  <eSubpackages name="types" nsURI="http://www.eclipse.org/ocl/1.1.0/OCL/Types" nsPrefix="ocl.types">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ocl" nsURI="http://www.eclipse.org/ocl/test/1.1.0/OCL" nsPrefix="ocl">
+  <eSubpackages name="types" nsURI="http://www.eclipse.org/ocl/test/1.1.0/OCL/Types"
+      nsPrefix="ocl.types">
     <eClassifiers xsi:type="ecore:EClass" name="AnyType">
       <eTypeParameters name="O"/>
       <eGenericSuperTypes eClassifier="#//utilities/PredefinedType">
@@ -362,7 +363,7 @@
       </eGenericSuperTypes>
     </eClassifiers>
   </eSubpackages>
-  <eSubpackages name="utilities" nsURI="http://www.eclipse.org/ocl/1.1.0/OCL/Utilities"
+  <eSubpackages name="utilities" nsURI="http://www.eclipse.org/ocl/test/1.1.0/OCL/Utilities"
       nsPrefix="ocl.util">
     <eClassifiers xsi:type="ecore:EClass" name="ASTNode" abstract="true" interface="true">
       <eStructuralFeatures xsi:type="ecore:EAttribute" name="startPosition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
@@ -719,7 +720,7 @@
       </eOperations>
     </eClassifiers>
   </eSubpackages>
-  <eSubpackages name="expressions" nsURI="http://www.eclipse.org/ocl/1.1.0/OCL/Expressions"
+  <eSubpackages name="expressions" nsURI="http://www.eclipse.org/ocl/test/1.1.0/OCL/Expressions"
       nsPrefix="ocl.expr">
     <eClassifiers xsi:type="ecore:EClass" name="AssociationClassCallExp">
       <eTypeParameters name="C"/>

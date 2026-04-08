@@ -103,5 +103,5 @@
       <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILES/Ecore.profile.uml#_0"/>
     </profileApplication>
   </uml:Profile>
-  <Ecore:EPackage xmi:id="_g7qLYGEKEeu3-bh5n6XVFQ" base_Package="_9qywsGEHEeu3-bh5n6XVFQ" packageName="validationproblem" nsPrefix="ValidationProblem" nsURI="http://www.papyrus.com/ValidationProblem/1" basePackage="com.validationproblem.profile" prefix="ValidationProblem"/>
+  <Ecore:EPackage xmi:id="_g7qLYGEKEeu3-bh5n6XVFQ" base_Package="_9qywsGEHEeu3-bh5n6XVFQ" packageName="validationproblem" nsPrefix="ValidationProblem" nsURI="http://www.eclipse.org/ocl/Bug570894/ValidationProblem/1" basePackage="com.validationproblem.profile" prefix="ValidationProblem"/>
 </xmi:XMI>

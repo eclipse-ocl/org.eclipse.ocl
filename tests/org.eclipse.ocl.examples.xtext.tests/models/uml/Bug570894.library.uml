@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ValidationProblem="http://www.papyrus.com/ValidationProblem/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:standard="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
+<xmi:XMI xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:ValidationProblem="http://www.eclipse.org/ocl/Bug570894/ValidationProblem/1" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:standard="http://www.eclipse.org/uml2/5.0.0/UML/Profile/Standard" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML">
   <uml:Model xmi:id="_lRq_wGakEeuaDpe9qBEE2w" name="Library">
     <packageImport xmi:type="uml:PackageImport" xmi:id="_lSb0wGakEeuaDpe9qBEE2w">
       <importedPackage xmi:type="uml:Model" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#_0"/>
@@ -13,7 +13,7 @@
     </profileApplication>
     <profileApplication xmi:type="uml:ProfileApplication" xmi:id="_FnjFcGamEeuPDLMPMyCPEg">
       <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_FnpzIGamEeuPDLMPMyCPEg" source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <references xmi:type="ecore:EPackage" href="http://www.papyrus.com/ValidationProblem/1#/"/>
+        <references xmi:type="ecore:EPackage" href="http://www.eclipse.org/ocl/Bug570894/ValidationProblem/1#/"/>
       </eAnnotations>
       <appliedProfile xmi:type="uml:Profile" href="pathmap://VALIDATIONPROBLEM_PROFILE/ValidationProblem.profile.uml#_9qywsGEHEeu3-bh5n6XVFQ"/>
     </profileApplication>

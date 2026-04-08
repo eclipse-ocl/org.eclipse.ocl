@@ -497,6 +497,37 @@ public class PivotTestCase extends TestCase
 		EnvironmentFactory globalEnvironmentFactory = GlobalEnvironmentFactory.basicGetInstance();
 		return globalEnvironmentFactory != null ? (StandaloneProjectMap)globalEnvironmentFactory.getProjectManager() : null; //projectMap;
 	}
+	
+	/**
+	 * Adjust the nsURI spelling so that the conflicting nsURI detection by AbstractProjectManager.assessResource is not triggered.
+	 */
+	public static void bowdlerize(@NonNull Resource ecoreResource) {
+		URI uri = ecoreResource.getURI();
+	//	uri.appendFileExtension("$$$");
+	//	ecoreResource.setURI(uri);
+		int anonEPackageCount = 0;
+		for (EObject eObject : ecoreResource.getContents()) {
+			if (eObject instanceof EPackage) {
+				anonEPackageCount = bowdlerize((EPackage)eObject, anonEPackageCount);
+			}
+		}
+	}
+
+	private static int bowdlerize(@NonNull EPackage ePackage, int anonEPackageCount) {
+		String nsURI = ePackage.getNsURI();
+		if (nsURI == null) {
+			nsURI = "$$$" + anonEPackageCount++;
+		}
+		else {
+			nsURI = "$$$" + nsURI;
+		}
+		ePackage.setNsURI(nsURI);
+		for (EPackage eSubPackage : ePackage.getESubpackages()) {
+			assert eSubPackage != null;
+			anonEPackageCount = bowdlerize(eSubPackage, anonEPackageCount);
+		}
+		return anonEPackageCount;
+	}
 
 	public static void closeTestLog() {
 		if (testLog != null) {

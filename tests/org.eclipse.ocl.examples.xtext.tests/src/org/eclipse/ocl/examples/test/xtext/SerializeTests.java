@@ -82,9 +82,20 @@ public class SerializeTests extends XtextTestCase
 		default void initializeResourceSet(@NonNull ResourceSet resourceSet) {
 			return;
 		}
+		default boolean needsBowdlerization() {
+			return false;
+		}
 	}
 
 	public static final @NonNull SerializeTestHelper DEFAULT_HELPER = new SerializeTestHelper() {};
+
+	public static final @NonNull SerializeTestHelper BOWDLERIZING_HELPER = new SerializeTestHelper()
+	{
+		@Override
+		public boolean needsBowdlerization() {
+			return true;
+		}
+	};
 
 	public static final @NonNull SerializeTestHelper FULL_SERIALIZATION_HELPER = new SerializeTestHelper()
 	{
@@ -96,7 +107,6 @@ public class SerializeTests extends XtextTestCase
 				}
 			}
 		}
-
 	};
 
 	public static final @NonNull SerializeTestHelper NO_VALIDATION = new SerializeTestHelper()
@@ -132,6 +142,7 @@ public class SerializeTests extends XtextTestCase
 	//	ResourceSetInitializer resourceSetInitializer = options != null ? (ResourceSetInitializer)options.get(ResourceSetInitializer.class) : null;
 	//	ResourceSet resourceSet9 = new ResourceSetImpl();
 	//	getProjectMap().initializeResourceSet(resourceSet9);
+		boolean needsBowdlerization = testHelper.needsBowdlerization();
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String outputName = stem + ".serialized.oclinecore";
 		URI outputURI = getTestFileURI(outputName);
@@ -142,6 +153,9 @@ public class SerializeTests extends XtextTestCase
 		ResourceSet resourceSet1 = ocl1.getResourceSet();
 		testHelper.initializeResourceSet(resourceSet1);
 		Resource ecoreResource = loadEcore(resourceSet1, inputURI);
+		if (needsBowdlerization) {
+			bowdlerize(ecoreResource);
+		}
 		//
 		//	Ecore to Pivot
 		//
@@ -210,6 +224,9 @@ public class SerializeTests extends XtextTestCase
 			//
 			//		TestUtil.TestUtil.assertSameModel(asResource, pivotResource2);
 			Resource referenceResource = loadEcore(resourceSet2, referenceURI);
+			if (needsBowdlerization) {
+				bowdlerize(referenceResource);
+			}
 			testHelper.assertSameModel(referenceResource, ecoreResource2);
 			testHelper.extraXtextResourceValidate(xtextResource2);
 			return;
@@ -413,7 +430,7 @@ public class SerializeTests extends XtextTestCase
 		String testFile =
 				"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 						"<ecore:EPackage xmi:version=\"2.0\" xmlns:xmi=\"http://www.omg.org/XMI\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"\n" +
-						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"company\" nsURI=\"http://www.eclipse.org/ocl/test/Pivot/Company.ecore\"\n" +
+						"    xmlns:ecore=\"http://www.eclipse.org/emf/2002/Ecore\" name=\"company\" nsURI=\"http://www.eclipse.org/ocl/test/Bug404493/Company.ecore\"\n" +
 						"    nsPrefix=\"co\">\n" +
 						"  <eAnnotations source=\"http://www.eclipse.org/emf/2002/Ecore\">\n" +
 						"    <details key=\"invocationDelegates\" value=\"http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot\"/>\n" +
@@ -611,7 +628,7 @@ public class SerializeTests extends XtextTestCase
 		//		DocumentAttribution.WORK.setState(true);
 		//		CS2ASConversion.CONTINUATION.setState(true);
 		//		Abstract2Moniker.TRACE_MONIKERS.setState(true);
-		doSerialize(getTestModelURI("models/ecore/Company.ecore"), getTestModelURI("models/ecore/Company.reference.ecore"), DEFAULT_HELPER);
+		doSerialize(getTestModelURI("models/ecore/Company.ecore"), getTestModelURI("models/ecore/Company.reference.ecore"), BOWDLERIZING_HELPER);
 	}
 
 	public void testSerialize_ConstraintMessages() throws Exception {
@@ -691,6 +708,10 @@ public class SerializeTests extends XtextTestCase
 			public void assertSameModel(@NonNull Resource expectedResource, @NonNull Resource actualResource) {
 				return;		// Changes from Pivot to Ecore types
 			}
+			@Override
+			public boolean needsBowdlerization() {
+				return true;
+			}
 		});		// FIXME URIs don't quite compare
 	}
 
@@ -705,6 +726,10 @@ public class SerializeTests extends XtextTestCase
 			@Override
 			public void initializeResourceSet(@NonNull ResourceSet resourceSet) {
 				getProjectMap().configureLoadFirst(resourceSet, EcorePackage.eNS_URI);
+			}
+			@Override
+			public boolean needsBowdlerization() {
+				return true;
 			}
 		});		// FIXME URIs don't quite compare
 	}
@@ -721,6 +746,10 @@ public class SerializeTests extends XtextTestCase
 			public void initializeResourceSet(@NonNull ResourceSet resourceSet) {
 				getProjectMap().configureLoadFirst(resourceSet, EcorePackage.eNS_URI);
 			}
+			@Override
+			public boolean needsBowdlerization() {
+				return true;
+			}
 		});		// FIXME URIs don't quite compare
 		//		doSerialize(ocl, "OCLinEcoreCST");
 	}
@@ -730,7 +759,7 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_OCLCST() throws Exception {
-		doSerialize(getTestModelURI("models/ecore/OCLCST.ecore"), DEFAULT_HELPER);
+		doSerialize(getTestModelURI("models/ecore/OCLCST.ecore"), BOWDLERIZING_HELPER);
 	}
 
 	public void testSerialize_QVT() throws Exception {
@@ -785,7 +814,7 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void testSerialize_XMLNamespace() throws Exception {
-		doSerialize(getTestModelURI("models/ecore/XMLNamespace.ecore"), DEFAULT_HELPER);
+		doSerialize(getTestModelURI("models/ecore/XMLNamespace.ecore"), BOWDLERIZING_HELPER);
 	}
 
 	public void test_StateMachines_uml_Serialize() throws Exception {
