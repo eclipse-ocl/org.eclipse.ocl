@@ -1155,6 +1155,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	public void update(@NonNull Resource resource, @NonNull Collection<@NonNull EObject> ecoreContents) {
+		System.out.println("\nUpdate " + NameUtil.debugSimpleName(resource) + " " + resource.getURI());
 		ASResource asResource = (ASResource)resource;		// FIXME change signature
 		asResource.resetLUSSIDs();			// Hopefully reset already, not wanted till save. See Bug 579052.
 		allConverters.clear();

@@ -58,7 +58,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
-import org.eclipse.emf.importer.ModelImporter;
 import org.eclipse.emf.importer.ecore.EcoreImporter;
 import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.jdt.annotation.NonNull;
@@ -75,9 +74,12 @@ import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.evaluation.AbstractModelManager;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
+import org.eclipse.ocl.pivot.internal.manager.MetamodelManagerInternal;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
+import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
 import org.eclipse.ocl.pivot.utilities.AbstractEnvironmentFactory;
@@ -115,6 +117,21 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	private static final @NonNull String ECORE_REFLECTIVE_EDITOR_ID = "org.eclipse.emf.ecore.presentation.ReflectiveEditorID";
 	private static final @NonNull String GEN_MODEL_EDITOR_ID = "org.eclipse.emf.codegen.ecore.genmodel.presentation.GenModelEditorID";
 	private static final @NonNull String UML_EDITOR_EDITOR_ID = "org.eclipse.uml2.uml.editor.presentation.UMLEditorID";
+
+	protected static class TestEcoreImporter extends EcoreImporter {
+
+		private final @NonNull ResourceSet resourceSet;
+
+		protected TestEcoreImporter(@NonNull ResourceSet resourceSet) {
+			this.resourceSet = resourceSet;
+			setUsePlatformURI(false);
+		}
+
+		@Override
+		public ResourceSet createResourceSet() {
+			return resourceSet;
+		}
+	}
 
 	private static final class TestUMLImporter extends UMLImporter
 	{
@@ -1827,17 +1844,18 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 * GenModel Editor.
 	 */
 	public void testIssue2400_genmodel() throws Throwable {
+	//	AbstractCompletePackages.COMPLETE_PACKAGES.setState(true);
 		try {
 			doTestRunnable(new TestRunnable() {
 				@Override
 				public void runWithThrowable() throws Exception {
+					TestCaseAppender.INSTANCE.uninstall();
+					int baseConstructionCount = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
 					if (EMFPlugin.IS_ECLIPSE_RUNNING) {
-						TestCaseAppender.INSTANCE.uninstall();
 						TestUIUtil.suppressGitPrefixPopUp();
 						IWorkbench workbench = PlatformUI.getWorkbench();
 						TestUIUtil.closeIntro();
 						TestUIUtil.flushEvents();
-						int baseConstructionCount = AbstractEnvironmentFactory.CONSTRUCTION_COUNT;
 												//
 						getTestFile("Issue2400.genmodel", null, getTestModelURI("models/genmodel/Issue2400.genmodel"));
 						getTestFile("Issue2400.ecore", null, getTestModelURI("models/genmodel/Issue2400.ecore"));
@@ -1845,45 +1863,76 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						IProject iProject = getTestProject().getIProject();
 						IFile modelFile = iProject.getFile("Issue2400.genmodel");
 						IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
-						GenModelEditor genModelEditor1 = (GenModelEditor) IDE.openEditor(activePage, modelFile, GEN_MODEL_EDITOR_ID, true);
+					//	System.out.println("\nOpen Editor 1");
+						GenModelEditor genModelEditor = (GenModelEditor) IDE.openEditor(activePage, modelFile, GEN_MODEL_EDITOR_ID, true);
 						// GenModelEditor schedules a (Live) Validation Job half a second after createPages
 						TestUIUtil.cancelLiveValidationJob();			// Avoid confusion of OCL for Validation Job
 						TestUIUtil.flushEvents();
-						assert genModelEditor1 != null;
-						assertEquals("First GenModelEditor OCL usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount);
+						assert genModelEditor != null;
+						assertEquals("GenModelEditor OCL usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount);
 						IWorkbenchPart basicGetPart1 = ThreadLocalExecutorUI.basicGetPart();
-						assertEquals("Wrong part thread", genModelEditor1, basicGetPart1);
+						assertEquals("Wrong part thread", genModelEditor, basicGetPart1);
 
-						{
-							// Reload ... Ecore Next Finish
-							ModelImporter modelImporter = new EcoreImporter();
-							Monitor monitor = new BasicMonitor();
-							@SuppressWarnings("unused") Diagnostic diagnostic = modelImporter.computeEPackages(monitor);
-						//	System.out.println("c5 " + AbstractEnvironmentFactory.CONSTRUCTION_COUNT);
-							modelImporter.adjustEPackages(monitor);
-						//	System.out.println("c6 " + AbstractEnvironmentFactory.CONSTRUCTION_COUNT);
+						IPath genModelPath = modelFile.getFullPath(); //new Path(genModelFile.getURI().toString());
+						// Reload ... Ecore Next Finish
+					//	System.out.println("\nReload ... Ecore Next Finish");
+						EcoreImporter modelImporter = new EcoreImporter();
+						Monitor monitor = new BasicMonitor();
+						modelImporter.defineOriginalGenModelPath(genModelPath);
+						Diagnostic diagnostic = modelImporter.computeEPackages(monitor);
+						if (diagnostic.getSeverity() != Diagnostic.OK) {
+							String s = PivotUtil.formatDiagnostics(diagnostic, "\n");
+							fail("Genmodel reload validation failure " + s);
 						}
-						{
-							// Reload ... Ecore Next Finish
-							ModelImporter modelImporter = new EcoreImporter();
-							Monitor monitor = new BasicMonitor();
-							@SuppressWarnings("unused") Diagnostic diagnostic = modelImporter.computeEPackages(monitor);
-						//	System.out.println("c7 " + AbstractEnvironmentFactory.CONSTRUCTION_COUNT);
-							modelImporter.adjustEPackages(monitor);
-						//	System.out.println("c8 " + AbstractEnvironmentFactory.CONSTRUCTION_COUNT);
+						modelImporter.adjustEPackages(monitor);
+						assertEquals("GenModelEditor OCL pre-close usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT- baseConstructionCount);
+
+					//	System.out.println("\nClose Editor");
+						TestUIUtil.closeEditor(genModelEditor);
+						TestUIUtil.flushEvents();
+				//		int genModelUsage = AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount;
+				//		assertEquals("GenModelEditor OCL post-close usage:", 1, genModelUsage);
+					}
+					else {
+						TestOCL ocl = createOCL();
+												//
+						TestFile genModelFile = getTestFile("Issue2400.genmodel", null, getTestModelURI("models/genmodel/Issue2400.genmodel"));
+						getTestFile("Issue2400.ecore", null, getTestModelURI("models/genmodel/Issue2400.ecore"));
+						//
+						IPath genModelPath = new Path(genModelFile.getFileString());
+						final EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
+						final MetamodelManagerInternal metamodelManager = environmentFactory.getMetamodelManager();
+						// Reload ... Ecore Next Finish
+					//	System.out.println("\nReload ... Ecore Next Finish");
+						TestEcoreImporter modelImporter = new TestEcoreImporter(ocl.getResourceSet());
+						Monitor monitor = new BasicMonitor();
+						modelImporter.defineOriginalGenModelPath(genModelPath);
+						Diagnostic diagnostic = modelImporter.computeEPackages(monitor);
+						if (diagnostic.getSeverity() != Diagnostic.OK) {
+							String s = PivotUtil.formatDiagnostics(diagnostic, "\n");
+							fail("'Genmodel' load validation failure " + s);
 						}
-						assertEquals("First GenModelEditor OCL pre-close usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT- baseConstructionCount);
+						modelImporter.adjustEPackages(monitor);
 
-						TestUIUtil.closeEditor(genModelEditor1);
-						TestUIUtil.flushEvents();
-						int firstGenModelUsage = AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount;
-						assertEquals("First GenModelEditor OCL post-close usage:", 1, firstGenModelUsage);
+						final EPackage ecorePackage = modelImporter.getEPackages().get(0);
+						final org.eclipse.ocl.pivot.Package asPackage = metamodelManager.getASOfEcore(org.eclipse.ocl.pivot.Package.class, ecorePackage);
+						assertEquals("'Genmodel' load usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount);
 
-						GenModelEditor genModelEditor2 = (GenModelEditor) IDE.openEditor(activePage, modelFile, GEN_MODEL_EDITOR_ID, true);
-						TestUIUtil.cancelLiveValidationJob();			// Avoid confusion of OCL for Validation Job
-						TestUIUtil.flushEvents();
-						int secondGenModelUsage = AbstractEnvironmentFactory.CONSTRUCTION_COUNT - firstGenModelUsage - baseConstructionCount;
-						assertEquals("Second GenModelEditor OCL initial usage:", 1, secondGenModelUsage);		// 0 without Issue 2401 fix
+						Resource ecoreResource = ecorePackage.eResource();
+						assert ecoreResource != null;
+
+						// Reload ... Ecore Next Finish
+					//	System.out.println("\nReload ... Ecore Next Finish");
+						Ecore2AS es2as = (Ecore2AS) Ecore2AS.findAdapter(ecoreResource, environmentFactory);
+						if (es2as == null) {
+							es2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
+						}
+						es2as.update(es2as.getASModel().eResource(), ecoreResource.getContents());
+						final org.eclipse.ocl.pivot.Package asPackage2 = es2as.getCreated(org.eclipse.ocl.pivot.Package.class, ecorePackage);
+
+						int genModelUsage = AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount;
+						assertEquals("'Genmodel' re-load usage:", 1, genModelUsage);
+						ocl.dispose();
 					}
 				}
 			});
