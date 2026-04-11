@@ -95,9 +95,10 @@ public abstract class CompleteOCLLoader
 	}
 
 	public boolean loadMetamodels() {
+		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		for (Resource resource : ocl.getResourceSet().getResources()) {
 			assert resource != null;
-			External2AS ecore2as = Ecore2AS.findAdapter(resource, ocl.getEnvironmentFactory());
+			External2AS ecore2as = Ecore2AS.findAdapter(resource, environmentFactory);
 			if (ecore2as == null) {			// Pivot has its own validation
 				for (TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
 					EObject eObject = tit.next();
@@ -111,7 +112,7 @@ public abstract class CompleteOCLLoader
 				}
  			}
 		}
-		Set<Resource> mmResources = new HashSet<Resource>();
+		Set<Resource> mmResources = new HashSet<>();
 		for (@NonNull EPackage mmPackage : mmPackages) {
 			Resource mmResource = EcoreUtil.getRootContainer(mmPackage).eResource();
 			if (mmResource != null) {
@@ -121,9 +122,9 @@ public abstract class CompleteOCLLoader
 		for (Resource mmResource : mmResources) {
 			assert mmResource != null;
 			try {
-				Element pivotModel = ocl.getEnvironmentFactory().loadResource(mmResource, null);
+				Element pivotModel = environmentFactory.loadResource(mmResource, null);
 				if (pivotModel != null) {
-					List<org.eclipse.emf.ecore.resource.Resource.Diagnostic> errors = pivotModel.eResource().getErrors();
+					List<org.eclipse.emf.ecore.resource.Resource.@NonNull Diagnostic> errors = pivotModel.eResource().getErrors();
 					assert errors != null;
 					String message = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
 					if (message != null) {
@@ -148,7 +149,8 @@ public abstract class CompleteOCLLoader
 		//
 		ResourceSet resourceSet = ocl.getEnvironmentFactory().getResourceSet();
 		ValidationRegistryAdapter localValidationRegistry = ValidationRegistryAdapter.getAdapter(resourceSet);
-		PivotEObjectValidator extraEValidator = new PivotEObjectValidator(oclModels);
+		@SuppressWarnings("null") List<Model> oclModels2 = oclModels;
+		PivotEObjectValidator extraEValidator = new PivotEObjectValidator(oclModels2);
 		for (EPackage mmPackage : mmPackages) {
 			localValidationRegistry.add(mmPackage, extraEValidator);
 		}
@@ -237,14 +239,14 @@ public abstract class CompleteOCLLoader
 			message2 = "An " + resource.getClass().getName() + " loaded rather than the required BaseCSResource.";
 		}
 		if ((xtextResource != null) && (message2 == null)) {
-			List<Resource.@NonNull Diagnostic> errors = xtextResource.getErrors();
-			assert errors != null;
-			message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+			@SuppressWarnings("null") List<Resource.Diagnostic> errors1 = xtextResource.getErrors();
+			assert errors1 != null;
+			message2 = PivotUtil.formatResourceDiagnostics(errors1, "", "\n");
 			if (message2 == null) {
 				Resource asResource = xtextResource.getASResource();
-				errors = asResource.getErrors();
-				assert errors != null;
-				message2 = PivotUtil.formatResourceDiagnostics(errors, "", "\n");
+				@SuppressWarnings("null") List<Resource.Diagnostic> errors2 = asResource.getErrors();
+				assert errors2 != null;
+				message2 = PivotUtil.formatResourceDiagnostics(errors2, "", "\n");
 				if (message2 == null) {
 					return asResource;
 				}
