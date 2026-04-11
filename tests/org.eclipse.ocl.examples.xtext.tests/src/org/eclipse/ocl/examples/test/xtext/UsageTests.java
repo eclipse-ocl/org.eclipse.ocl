@@ -57,6 +57,7 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 import org.eclipse.emf.ecore.presentation.EcoreEditor;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.ConfigurationException;
@@ -70,6 +71,7 @@ import org.eclipse.ocl.examples.pivot.tests.PivotTestSuite;
 import org.eclipse.ocl.examples.pivot.tests.TestOCL;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
+import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUIUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -1907,27 +1909,20 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 						introManager.closeIntro(introManager.getIntro());
 						TestUIUtil.flushEvents();
 
-						String testProjectName = "Open_Pivot";
-						ResourceSet resourceSet1 = new ResourceSetImpl();
-						Resource resource = resourceSet1.getResource(URI.createURI(PivotPackage.eNS_URI, true), true);
-						ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-						resource.setURI(URI.createPlatformResourceURI(testProjectName + "/" + "Pivot.oclas", true));
-						resource.save(outputStream, XMIUtil.createSaveOptions());
-
-						IWorkspace workspace = ResourcesPlugin.getWorkspace();
-						IProject project = workspace.getRoot().getProject(testProjectName);
-						if (!project.exists()) {
-							project.create(null);
-						}
-						project.open(null);
+						ResourceSet pathedResourceSet = new ResourceSetImpl();
+						getTestProjectManager().initializeResourceSet(pathedResourceSet);
+						TestProject testProject = getTestProject();
+						URIConverter pathedURIConverter = pathedResourceSet.getURIConverter();
+						URI modelsURI = URI.createPlatformResourceURI("org.eclipse.ocl.pivot/model-gen/Pivot.oclas", false);
+						testProject.copyFile(pathedURIConverter, null, modelsURI);
+						IProject project = testProject.getIProject();
 						IFile file = project.getFile("Pivot.oclas");
-						file.create(new ByteArrayInputStream(outputStream.toByteArray()), true, null);
-
+						
 						IWorkbenchPage activePage = workbench.getActiveWorkbenchWindow().getActivePage();
 						EcoreEditor openEditor = (EcoreEditor) IDE.openEditor(activePage, file, "org.eclipse.emf.ecore.presentation.ReflectiveEditorID", true);
 						TestUIUtil.flushEvents();
 						ResourceSet resourceSet = openEditor.getEditingDomain().getResourceSet();
-						EList<Resource> resources = resourceSet.getResources();
+						EList<@NonNull Resource> resources = resourceSet.getResources();
 						assertEquals(1, resources.size());
 						Resource resource2 = ClassUtil.nonNullState(resources.get(0));
 						assertNoResourceErrors("Load", resource2);
