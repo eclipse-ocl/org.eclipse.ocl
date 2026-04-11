@@ -45,8 +45,8 @@ pipeline {
 			steps {
 				script {
 					env.BUILD_TYPE = params.BUILD_TYPE
-					echo "${params.BUILD_TYPE} ${params.JAVADOC} ${params.SIGNING}"
-					currentBuild.description = "${params.BUILD_TYPE} ${params.JAVADOC} ${params.SIGNING}"
+					echo "${params.BUILD_TYPE}"
+					currentBuild.description = "${params.BUILD_TYPE}"
 				}
 			}
 		}
@@ -69,9 +69,12 @@ pipeline {
 							verify \
 							-P${BUILD_TYPE} \
 							 --global-toolchains toolchains.xml
+						cp -pr releng/org.eclipse.ocl.releng.build-site/target/repository repository
 						"""
 				}
-				archiveArtifacts allowEmptyArchive: true, artifacts: 'releng/org.eclipse.ocl.releng.build-site/target/repository/**/*'
+				archiveArtifacts allowEmptyArchive: true, artifacts: 'repository/**/*'
+//				archiveArtifacts allowEmptyArchive: true, artifacts: '**/*'
+//				archiveArtifacts allowEmptyArchive: true, artifacts: 'releng/org.eclipse.ocl.releng.build-site/target/repository/**/*'
 				archiveArtifacts allowEmptyArchive: true, artifacts: 'tests/*/target/**/surefire-reports/**/TEST-*.xml'
 			}
 		}
@@ -84,7 +87,7 @@ body: "Project: ${env.JOB_NAME}\n\
 Build Number: ${env.BUILD_NUMBER}\n\
 Build URL: <${env.BUILD_URL}>\n\
 Console: <${env.BUILD_URL}console>"
-			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
+			archiveArtifacts allowEmptyArchive: true, artifacts: '**/*'
 		}
 
 		fixed {

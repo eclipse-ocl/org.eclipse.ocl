@@ -30,7 +30,7 @@ pipeline {
 The repo to be tested:
 <ul>
 <li> masterLatest - the most recent master build
-<li> branchTestsLatest - the most recent ocl-branch-tests build
+<li> branchTestsLatest - the most recent ocl-branch build
 <li> release - the most recent OCL release
 <li> reload -- to reload the parameter definitions from GIT and bypass testing
 </ul>				'''

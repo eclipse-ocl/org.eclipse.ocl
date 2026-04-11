@@ -49,7 +49,7 @@
 The repo to be tested:
 &lt;ul&gt;
 &lt;li&gt; - the most recent master build
-&lt;li&gt; - the most recent ocl-branch-tests build
+&lt;li&gt; - the most recent ocl-branch build
 &lt;li&gt; - the most recent OCL release
 &lt;/ul&gt;				</description>
           <choices class="java.util.Arrays$ArrayList">
