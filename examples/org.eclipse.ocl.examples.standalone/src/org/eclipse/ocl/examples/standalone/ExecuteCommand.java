@@ -284,6 +284,11 @@ public class ExecuteCommand extends StandaloneCommand
 			}
 			return true;
 		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + (exporter != null ? exporter.getClass().getName() : "null");
+		}
 	}
 
 	/**
@@ -321,6 +326,11 @@ public class ExecuteCommand extends StandaloneCommand
 		public boolean isSingleton() {
 			return false;
 		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + queries;
+		}
 	}
 
 	/**
@@ -355,6 +365,11 @@ public class ExecuteCommand extends StandaloneCommand
 
 		public @Nullable EObject getSelf() {
 			return self;
+		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + self;
 		}
 	}
 

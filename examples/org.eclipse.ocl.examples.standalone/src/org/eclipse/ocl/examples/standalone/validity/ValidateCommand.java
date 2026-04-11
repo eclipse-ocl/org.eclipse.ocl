@@ -139,6 +139,11 @@ public class ValidateCommand extends StandaloneCommand
 		public @Nullable String getModelFileName() {
 			return fileName;
 		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + fileName;
+		}
 	}
 
 
@@ -321,6 +326,11 @@ public class ValidateCommand extends StandaloneCommand
 				}
 			}
 			return okLocators;
+		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + (doJava ? " doJava" : "") + (doOCL ? " doOCL" : "") + (doUML ? " doUML" : "");
 		}
 	}
 

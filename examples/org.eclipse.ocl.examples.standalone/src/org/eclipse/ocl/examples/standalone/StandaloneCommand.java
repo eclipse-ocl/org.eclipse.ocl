@@ -208,6 +208,11 @@ public abstract class StandaloneCommand
 		public File getOutputFile() {
 			return outputFile;
 		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + outputFile;
+		}
 	}
 
 	public static class BooleanToken extends CommandToken
@@ -231,6 +236,11 @@ public abstract class StandaloneCommand
 
 		public boolean isPresent() {
 			return isPresent;
+		}
+
+		@Override
+		public String toString() {
+			return super.toString() + "=" + isPresent;
 		}
 	}
 

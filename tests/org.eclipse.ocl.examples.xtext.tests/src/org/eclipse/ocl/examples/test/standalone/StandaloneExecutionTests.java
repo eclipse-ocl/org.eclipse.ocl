@@ -673,16 +673,23 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 
 	@Test
 	public void testStandaloneExecution_validate_unknownExporter() throws Exception {
-		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
-			"-model", String.valueOf(inputModelURI),
-			"-rules", String.valueOf(inputOCLURI),
-			"-output", getTextLogFileName(),
-			"-exporter", "anotherExporterAttribute"};
-		StandaloneApplication standaloneApplication = new StandaloneApplication();
-		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
-		assertEquals(StandaloneResponse.FAIL, applicationResponse);
-		assertNoLogFile(getTextLogFileName());
-		standaloneApplication.stop();
+		Iterable<Appender> savedAppenders = TestCaseLogger.INSTANCE.install();
+		try {
+			@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
+				"-model", String.valueOf(inputModelURI),
+				"-rules", String.valueOf(inputOCLURI),
+				"-output", getTextLogFileName(),
+				"-exporter", "anotherExporterAttribute"};
+			StandaloneApplication standaloneApplication = new StandaloneApplication();
+			StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
+			assertEquals(StandaloneResponse.FAIL, applicationResponse);
+			assertNoLogFile(getTextLogFileName());
+			String logMessage = TestCaseLogger.INSTANCE.get();
+			assertTrue(logMessage.contains("Unrecognized 'exporter' anotherExporterAttribute"));
+			standaloneApplication.stop();
+		} finally {
+			TestCaseLogger.INSTANCE.uninstall(savedAppenders);
+		}
 	}
 
 	@Test
