@@ -101,6 +101,7 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Rule;
 import org.junit.rules.TestName;
+import org.osgi.framework.Bundle;
 
 import junit.framework.TestCase;
 
@@ -226,6 +227,16 @@ public class PivotTestCase extends TestCase
 			assertValidationDiagnostics("AS2Ecore invalid", ecoreResource, asValidationMessages);
 		}
 		return ecoreResource;
+	}
+
+	protected static void assertBadBundlesAreNotOnClasspath(@NonNull String @NonNull [] badBundles) {
+		if (EMFPlugin.IS_ECLIPSE_RUNNING) {
+			// Diagnose auto-generated test projects that contribute conflicting registrations causing confusing failures.
+			for (String badBundle : badBundles) {
+				Bundle bundle = Platform.getBundle(badBundle);
+				assertNull("Auto-generated " + badBundle + " bundle is on classpath; close it.", bundle);
+			}
+		}
 	}
 
 	@Deprecated /* @deprecated provide resource argument */
@@ -497,7 +508,7 @@ public class PivotTestCase extends TestCase
 		EnvironmentFactory globalEnvironmentFactory = GlobalEnvironmentFactory.basicGetInstance();
 		return globalEnvironmentFactory != null ? (StandaloneProjectMap)globalEnvironmentFactory.getProjectManager() : null; //projectMap;
 	}
-	
+
 	/**
 	 * Adjust the nsURI spelling so that the conflicting nsURI detection by AbstractProjectManager.assessResource is not triggered.
 	 */

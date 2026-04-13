@@ -1896,6 +1896,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	public void testSysML_QUDV() throws Throwable {
+		assertBadBundlesAreNotOnClasspath(new @NonNull String[]{"__OCL_UsageTests__testSysML_QUDV"});
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {

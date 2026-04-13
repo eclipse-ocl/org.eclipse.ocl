@@ -333,6 +333,7 @@ public class DelegatesTest extends PivotTestCaseWithAutoTearDown
 	//
 	@Override
 	protected void setUp() throws Exception {
+		assertBadBundlesAreNotOnClasspath(new @NonNull String[]{"__OCL_UsageTests__testCodegenCompany"});
 	//	TEST_START.setState(true);
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
