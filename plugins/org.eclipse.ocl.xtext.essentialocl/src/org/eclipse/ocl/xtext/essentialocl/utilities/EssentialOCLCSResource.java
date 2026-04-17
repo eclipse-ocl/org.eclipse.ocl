@@ -66,6 +66,7 @@ import org.eclipse.ocl.xtext.base.utilities.CSI2ASMapping;
 import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.base.utilities.ExtendedParserContext;
 import org.eclipse.ocl.xtext.basecs.ElementCS;
+import org.eclipse.ocl.xtext.basecs.ImportCS;
 import org.eclipse.ocl.xtext.basecs.PathElementCS;
 import org.eclipse.ocl.xtext.basecs.PathElementWithURICS;
 import org.eclipse.ocl.xtext.basecs.PathNameCS;
@@ -319,12 +320,13 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override			// FIXME Bug 380232 workaround
 	protected Diagnostic createDiagnostic(Triple<EObject, EReference, INode> triple, DiagnosticMessage message) {
+		Diagnostic diagnostic;
 		EObject first = triple.getFirst();
 		if (first instanceof PathElementWithURICS) {
-			return new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
+			diagnostic = new ImportDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData());
 		}
 		else {
-			return new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
+			diagnostic = new XtextLinkingDiagnostic(triple.getThird(), message.getMessage(), message.getIssueCode(), message.getIssueData())
 			{
 				@Override
 				public int getColumn() {
@@ -337,6 +339,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 				}
 			};
 		}
+		return diagnostic;
 	}
 
 	@Override
@@ -529,6 +532,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		while ((csElement instanceof PathElementCS) || (csElement instanceof PathNameCS)) {
 			csElement = csElement.getParent();
 		}
+		if (csElement instanceof ImportCS) {
+			return false;
+		}
 		while (csElement instanceof ExpCS) {
 			if (((ExpCS) csElement).isHasError()) {
 				return true;
@@ -719,6 +725,9 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 	protected void setHasError(ElementCS csElement) {
 		while ((csElement instanceof PathElementCS) || (csElement instanceof PathNameCS)) {
 			csElement = csElement.getParent();
+		}
+		if (csElement instanceof ImportCS) {
+			return;
 		}
 		while (csElement instanceof ExpCS) {
 			((ExpCS) csElement).setHasError(true);

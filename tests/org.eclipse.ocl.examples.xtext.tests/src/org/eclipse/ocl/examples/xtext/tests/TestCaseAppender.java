@@ -34,13 +34,25 @@ public final class TestCaseAppender extends ConsoleAppender
 
 	@Override
 	public void append(LoggingEvent event) {
+		appendInternal (event);
+	}
+
+	private void appendInternal(LoggingEvent event) {
 		if (event.getLevel().isGreaterOrEqual(Level.INFO)) {
 			String renderedMessage = event.getRenderedMessage();
 			ThrowableInformation throwableInformation = event.getThrowableInformation();
 			Throwable throwable = throwableInformation != null ? throwableInformation.getThrowable() : null;
 			throw new Error(renderedMessage, throwable);
 		}
-//		super.append(event);
+		//			super.append(event);
+	}
+
+	@Override
+	public synchronized void doAppend(LoggingEvent event) {
+		if (!closed) {
+			appendInternal (event);
+		}
+		super.doAppend(event);
 	}
 
 	public void install() {

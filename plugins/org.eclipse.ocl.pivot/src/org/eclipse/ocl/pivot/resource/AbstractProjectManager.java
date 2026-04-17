@@ -24,7 +24,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * BasicProjectManager provides a default implementation of the ProjectManager API that should be used by
  * all clients. The default provides very lightweight functionality that contributes no external projects
  * to a user application and incurs no classpath analysis costs to do so.
- * 
+ *
  * @since 6.23
  */
 public abstract class AbstractProjectManager extends AdapterImpl implements ProjectManager
@@ -34,7 +34,7 @@ public abstract class AbstractProjectManager extends AdapterImpl implements Proj
 	}
 
 	protected @Nullable StringBuilder assessEPackage(@NonNull Resource assessedResource, @NonNull EPackage ePackage, @Nullable StringBuilder s) {
-		if (ClassUtil.isRegistered(assessedResource)) {			// A registetred resourtce is ok; ?? what if registered after a casual dynam ic resource used ??
+		if (ClassUtil.isRegistered(assessedResource)) {			// A registered resource is ok; ?? what if registered after a casual dynamic resource used ??
 			return null;
 		}
 		String nsURI = ePackage.getNsURI();
@@ -55,7 +55,7 @@ public abstract class AbstractProjectManager extends AdapterImpl implements Proj
 				}
 				else {
 					knownResourceURI = resourceDescriptor.getGenModelURI();
-					URI knownProjectURI = resourceDescriptor.getGenModelURI().trimSegments(1);
+					URI knownProjectURI = knownResourceURI.trimSegments(1);
 					hasConflict = !knownProjectURI.equals(assessedProjectURI);
 				}
 				if (hasConflict) {

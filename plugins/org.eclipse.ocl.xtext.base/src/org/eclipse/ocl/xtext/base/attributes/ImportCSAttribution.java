@@ -51,7 +51,7 @@ public class ImportCSAttribution extends AbstractAttribution implements Unresolv
 		private Element importedElement = null;
 		private Throwable throwable = null;
 
-		public ScopeView computeLookup(ImportCS targetElement, EnvironmentView environmentView, ScopeView scopeView) {
+		public ScopeView computeLookup(@NonNull ImportCS targetElement, @NonNull EnvironmentView environmentView, @NonNull ScopeView scopeView) {
 			String name = environmentView.getName();
 			if (name != null) {				// Looking for a specific name
 				importModel(targetElement, environmentView);

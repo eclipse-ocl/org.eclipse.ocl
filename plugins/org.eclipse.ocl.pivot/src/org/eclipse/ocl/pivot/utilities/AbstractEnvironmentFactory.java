@@ -230,7 +230,7 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		if (assessmentConflict != null) {
 			logger.error(assessmentConflict);
 		}
-		if ((resource != null) && ClassUtil.isRegistered(resource)) {					// XXX Issue 2404 Diagnose EPackage.nsURI clash wrt ProjectMap.nsURI2package
+		if (ClassUtil.isRegistered(resource)) {					// XXX Issue 2404 Diagnose EPackage.nsURI clash wrt ProjectMap.nsURI2package
 			ResourceSet externalResourceSet2 = getResourceSet();
 			projectManager.useGeneratedResource(resource, externalResourceSet2);
 		}

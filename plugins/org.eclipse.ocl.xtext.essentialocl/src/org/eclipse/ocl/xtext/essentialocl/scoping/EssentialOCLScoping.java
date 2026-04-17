@@ -100,6 +100,9 @@ public class EssentialOCLScoping
 			if (csContext == null) {
 				csContext = (ElementCS) pathName.eContainer();
 			}
+			if (csContext instanceof ImportCS) {
+				return ImportCSAttribution.INSTANCE.getMessage(csContext, linkText);			// FIXME return a messageTemplate
+			}
 			assert csContext != null;
 			String messageTemplate;
 			String typeText = null;
@@ -166,9 +169,6 @@ public class EssentialOCLScoping
 			else if (csContext instanceof ExpCS) {
 				navigationArgument = (ExpCS)csContext;
 				messageTemplate = PivotMessagesInternal.UnresolvedProperty_ERROR_;
-			}
-			else if (csContext instanceof ImportCS) {
-				return ImportCSAttribution.INSTANCE.getMessage(csContext, linkText);			// FIXME return a messageTemplate
 			}
 			else if (csContext instanceof ModelElementRefCS) {
 				messageTemplate = "Unresolved ModelElement ''{0}''";
@@ -249,7 +249,7 @@ public class EssentialOCLScoping
 					if (sourceType != null) {
 					//	sourceType = PivotUtil.getBehavioralType(sourceType);
 						OperatorExpCS csParent = navigationArgument != null ? navigationArgument.getLocalParent() : null;
-						if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(((InfixExpCS)csParent).getName())) {
+						if (!PivotUtil.isAggregate(sourceType) && NavigationUtil.isNavigationInfixExp(csParent) && (csParent != null) && PivotUtil.isAggregateNavigationOperator(csParent.getName())) {
 							typeText = "Set(" + sourceType.toString() + ")";
 						}
 						else {
