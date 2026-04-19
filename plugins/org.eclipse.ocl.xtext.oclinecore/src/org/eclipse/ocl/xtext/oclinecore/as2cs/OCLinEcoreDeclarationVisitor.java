@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion.Predicate;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.xtext.base.as2cs.AS2CSConversion;
 import org.eclipse.ocl.xtext.base.utilities.BaseCSResource;
 import org.eclipse.ocl.xtext.basecs.DetailCS;
@@ -63,7 +64,7 @@ public class OCLinEcoreDeclarationVisitor extends EssentialOCLDeclarationVisitor
 		if (PivotConstants.SYSML_ANNOTATION_SOURCE.equals(object.getName())) {
 			SysMLCS csElement = context.refreshElement(SysMLCS.class, OCLinEcoreCSPackage.Literals.SYS_MLCS, object);
 			//			context.refreshList(csElement.getOwnedAnnotation(), context.visitDeclarations(AnnotationCS.class, object.getOwnedAnnotation(), null));
-			context.refreshList(csElement.getOwnedDetails(), context.visitDeclarations(DetailCS.class, object.getOwnedDetails(), null));
+			PivotUtil.refreshList(csElement.getOwnedDetails(), true, context.visitDeclarations(DetailCS.class, object.getOwnedDetails(), null));
 			return csElement;
 		}
 		else {
@@ -89,7 +90,7 @@ public class OCLinEcoreDeclarationVisitor extends EssentialOCLDeclarationVisitor
 	@Override
 	public ElementCS visitModel(@NonNull Model object) {
 		TopLevelCS csElement = context.refreshElement(TopLevelCS.class, OCLinEcoreCSPackage.Literals.TOP_LEVEL_CS, object);
-		context.refreshList(csElement.getOwnedPackages(), context.visitDeclarations(PackageCS.class, object.getOwnedPackages(), nonImplicitPackageFilter ));
+		PivotUtil.refreshList(csElement.getOwnedPackages(), true, context.visitDeclarations(PackageCS.class, object.getOwnedPackages(), nonImplicitPackageFilter ));
 		context.visitDeclarations(ImportCS.class, object.getOwnedImports(), null);
 		return csElement;
 	}

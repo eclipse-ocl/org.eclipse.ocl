@@ -86,7 +86,7 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 					}
 				}
 			}
-			context.refreshList(csTemplateBinding.getOwnedSubstitutions(), csParameterSubstitutions);
+			PivotUtil.refreshList(csTemplateBinding.getOwnedSubstitutions(), true, csParameterSubstitutions);
 		}
 //		if (scopePackage == objectPackage) {
 			return csRef;

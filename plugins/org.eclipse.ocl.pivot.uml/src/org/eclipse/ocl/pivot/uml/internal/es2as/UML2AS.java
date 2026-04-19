@@ -897,7 +897,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 			for (org.eclipse.ocl.pivot.@NonNull Class pivotType : type2properties.keySet()) {
 				List<@NonNull Property> asProperties = type2properties.get(pivotType);
 				Collections.sort(asProperties, NameUtil.NAMEABLE_COMPARATOR);
-				refreshList(PivotUtilInternal.getOwnedPropertiesList(pivotType), asProperties);
+				PivotUtil.refreshList(PivotUtilInternal.getOwnedPropertiesList(pivotType), true, asProperties);
 			}
 		}
 
@@ -1276,7 +1276,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 				error("Bad UML content : " + eObject.eClass().getName());
 			}
 		}
-		PivotUtilInternal.refreshList(pivotModel2.getOwnedPackages(), rootPackages);
+		PivotUtil.refreshList(pivotModel2.getOwnedPackages(), true, rootPackages);
 		return pivotModel2;
 	}
 

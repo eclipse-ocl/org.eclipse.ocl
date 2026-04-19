@@ -75,6 +75,7 @@ import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2ASDeclarationSwitch;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.uml2.common.util.UML2Util;
@@ -845,7 +846,7 @@ public class UML2ASDeclarationSwitch extends UMLSwitch<Object>
 				}
 			}
 		}
-		converter.refreshList(pivotElement.getOwnedClasses(), asClasses);
+		PivotUtil.refreshList(pivotElement.getOwnedClasses(), true, asClasses);
 		if (umlConstraints != null) {
 			doSwitchAll(pivotElement.getOwnedConstraints(), umlConstraints, null);
 		}

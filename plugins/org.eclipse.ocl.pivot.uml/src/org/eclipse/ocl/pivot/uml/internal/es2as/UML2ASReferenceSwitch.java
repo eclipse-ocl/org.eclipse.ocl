@@ -130,7 +130,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			org.eclipse.ocl.pivot.Class oclElementType = standardLibrary.getOclElementType();
 			asSuperClasses.add(oclElementType);
 		}
-		converter.refreshList(asClass.getSuperClasses(), asSuperClasses);
+		PivotUtil.refreshList(asClass.getSuperClasses(), false, asSuperClasses);
 		return asClass;
 	}
 

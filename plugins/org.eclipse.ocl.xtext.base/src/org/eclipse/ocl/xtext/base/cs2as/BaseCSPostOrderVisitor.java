@@ -76,6 +76,7 @@ import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 
 public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Continuation<?>, @NonNull CS2ASConversion>
 {
+	@Deprecated /* @deprecated not used */
 	public static class ListCompletion<CST extends ModelElementCS, P extends NamedElement> extends MultipleContinuation<CST>
 	{
 		protected final @NonNull Class<P> pivotClass;
@@ -116,6 +117,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 		return null;
 	}
 
+	@Deprecated /* @deprecated not used */
 	protected <@NonNull CST extends ModelElementCS, P extends NamedElement> BasicContinuation<?> refreshList(@NonNull NamedElement pivotParent, @NonNull EStructuralFeature pivotFeature,
 			final @NonNull Class<P> pivotClass, final @NonNull List<P> pivotElements, @NonNull List<CST> csElements) {
 		if (csElements.isEmpty()) {
@@ -149,7 +151,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 						references.add(element);
 					}
 				}
-				helper.refreshList(pivotElement.getReferences(), references);
+				PivotUtil.refreshList(pivotElement.getReferences(), false, references);
 			}
 			else {
 				pivotElement.getReferences().clear();
@@ -300,7 +302,7 @@ public class BaseCSPostOrderVisitor extends AbstractExtendingBaseCSVisitor<Conti
 				pivotOpposite = null;
 			}
 			pivotElement.setOpposite(pivotOpposite);
-			helper.refreshList(pivotElement.getKeys(), csReference.getReferredKeys());
+			PivotUtil.refreshList(pivotElement.getKeys(), false, csReference.getReferredKeys());
 			//			BasicContinuation<?> continuation = visitTypedElementCS(csReference);
 			//			assert continuation == null;
 			List<ImplicitOppositeCS> csOwnedImplicitOpposites = csReference.getOwnedImplicitOpposites();

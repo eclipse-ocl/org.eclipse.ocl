@@ -1197,9 +1197,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				}
 			}
 		}
-		helper.refreshList(expression.getOwnedIterators(), pivotIterators);
+		PivotUtil.refreshList(expression.getOwnedIterators(), true, pivotIterators);
 		if (hasCoIterator) {
-			helper.refreshList(expression.getOwnedCoIterators(), pivotCoIterators);
+			PivotUtil.refreshList(expression.getOwnedCoIterators(), true, pivotCoIterators);
 		}
 		else {
 			expression.getOwnedCoIterators().clear();
@@ -1277,7 +1277,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		if ((csArgumentCount != parametersCount) && (operation != standardLibrary.basicGetOclInvalidOperation())) {
 			context.addError(csNameExp, PivotMessagesInternal.MismatchedArgumentCount_ERROR_, csArgumentCount, parametersCount);
 		}
-		helper.refreshList(expression.getOwnedArguments(), pivotArguments);
+		PivotUtil.refreshList(expression.getOwnedArguments(), true, pivotArguments);
 	}
 
 	protected void resolveOperationCall(@NonNull OperationCallExp expression, @NonNull OperatorExpCS csOperator) {
@@ -1795,7 +1795,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			if (csArgument != null) {
 				OCLExpression argument = context.visitLeft2Right(OCLExpression.class, csArgument);
 				List<? extends OCLExpression> newElements = argument != null ? Collections.singletonList(argument) : Collections.<OCLExpression>emptyList();
-				helper.refreshList(expression.getOwnedArguments(), newElements);
+				PivotUtil.refreshList(expression.getOwnedArguments(), true, newElements);
 				Type sourceType = source != null ? PivotUtilInternal.getType(source) : null;
 				Type argumentType = argument != null ? PivotUtilInternal.getType(argument) : null;
 				if ((sourceType != null) && (argumentType != null)) {

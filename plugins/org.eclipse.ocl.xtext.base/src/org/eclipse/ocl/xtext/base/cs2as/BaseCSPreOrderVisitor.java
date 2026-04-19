@@ -324,7 +324,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 						asExtends.add(asExtend);
 					}
 				}
-				PivotUtilInternal.refreshList(pivotElement.getConstrainingClasses(), asExtends);
+				PivotUtil.refreshList(pivotElement.getConstrainingClasses(), false, asExtends);
 			}
 			return null;
 		}

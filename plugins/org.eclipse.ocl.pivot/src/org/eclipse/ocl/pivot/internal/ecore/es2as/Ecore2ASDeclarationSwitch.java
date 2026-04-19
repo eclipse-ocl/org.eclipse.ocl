@@ -508,7 +508,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				newList.add(pivotObject);
 			}
 		}
-		PivotUtilInternal.refreshList(pivotElement.getOwnedClasses(), newList);
+		PivotUtil.refreshList(pivotElement.getOwnedClasses(), true, newList);
 		return pivotElement;
 	}
 
@@ -875,7 +875,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			T pivotObject = (T) doSwitch(eObject);
 			newList.add(pivotObject);
 		}
-		PivotUtilInternal.refreshList(pivotObjects, newList);
+		PivotUtil.refreshList(pivotObjects, true, newList);
 	}
 
 	public <T extends Element> void doSwitchAll(List<? extends EObject> eObjects) {
@@ -996,7 +996,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		if (newInvariants != null) {
-			converter.refreshList(oldInvariants, newInvariants);
+			PivotUtil.refreshList(oldInvariants, true, newInvariants);
 		}
 		else {
 			oldInvariants.clear();

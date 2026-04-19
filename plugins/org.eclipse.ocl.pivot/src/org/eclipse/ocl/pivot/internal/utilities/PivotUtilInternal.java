@@ -13,6 +13,7 @@
 package org.eclipse.ocl.pivot.internal.utilities;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -27,6 +28,8 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionLiteralExp;
@@ -93,6 +96,9 @@ import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
 public class PivotUtilInternal //extends PivotUtil
 {
+	@SuppressWarnings("serial")
+	public static class ContainmentArrayList<T> extends ArrayList<T> {}
+
 	private static final Logger logger = Logger.getLogger(PivotUtilInternal.class);
 	public static boolean noDebug = true;
 	private static long startTime = System.currentTimeMillis();
@@ -710,6 +716,23 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
+	 * Return true if list is EcoreELIst.isContainment().
+	 */
+	@Deprecated /* Use known caller context rather than this unreliable tacky deduction */
+	public static <T extends EObject> boolean isContainmentEList(@NonNull List<? super T> list) {
+		if (list instanceof ContainmentArrayList) {
+			return true;
+		}
+		if (list instanceof EObjectContainmentEList) {
+			return true;
+		}
+		if (list.getClass().getName().equals(ResourceImpl.class.getName()+"$ContentsEList")) {
+			return true;
+		};
+		return false;
+	}
+
+	/**
 	 * Return true if completeClass conforms to elementType but not to oclVoidType.
 	 *
 	 * @since 1.14
@@ -850,70 +873,26 @@ public class PivotUtilInternal //extends PivotUtil
 		return true;
 	}
 
+	@Deprecated /* @deprecated not used */
 	public static <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
-		if (oldElements == null) {
-			return;			// Never happens but avoids need for null validation in caller
-		}
-		if (newElements == null) {
-			if (oldElements.size() > 0) {
-				oldElements.clear();
-			}
-			return;
-		}
-		for (int k = newElements.size(); k-- > 0; ) {
-			T newElement = newElements.get(k);
-			if ((newElement != null) && newElement.eIsProxy()) {
-				oldElements.remove(newElement);			// Lose oldContent before adding possible 'duplicates'
-			}
-		}
-		for (int k = oldElements.size(); k-- > 0; ) {
-			Object oldElement = oldElements.get(k);
-			if (!newElements.contains(oldElement)) {
-				if (oldElement instanceof Namespace) {
-					((Namespace)oldElement).eraseContents();
-				}
-				oldElements.remove(k);			// Lose oldContent before adding possible 'duplicates'
-			}
-		}
-		boolean hasDuplicates = false;
-		int newMax = newElements.size();
-		for (int i = 0; i < newMax; i++) {					// Invariant: lists are equal up to index i
-			T newElement = newElements.get(i);
-			int oldMax = oldElements.size();
-			boolean reused = false;;
-			for (int j = i; j < oldMax; j++) {
-				Object oldElement = oldElements.get(j);
-				if (oldElement == newElement) {
-					if (j != i) {
-						oldElements.remove(j);
-						oldElements.add(i, newElement);
-					}
-					reused = true;
-					break;
-				}
-			}
-			if (!reused) {
-				if (i < oldMax) {
-					oldElements.add(i, newElement);
-				}
-				else {
-					if (!oldElements.add(newElement)) {
-						hasDuplicates = true;
-					}
-				}
-			}
-			assert hasDuplicates || (newElements.get(i) == oldElements.get(i));
-		}
-		for (int k = oldElements.size(); k > newMax; ) {
-			oldElements.remove(--k);
-		}
-		assert hasDuplicates || (newElements.size() == oldElements.size());
+		PivotUtil.refreshList(oldElements, newElements);
 	}
 
+	@Deprecated /* @deprecated not used */
 	public static <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, @Nullable Collection<? extends T> newElements) {
 		if (oldElements == null) {
 			return;			// Never happens but avoids need for null validation in caller
 		}
+		boolean isContainment = isContainmentEList(oldElements);
+	//	assert isContainment;
+		refreshSet(oldElements, isContainment, newElements);
+	}
+
+	public static <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, boolean isContainment, @Nullable Collection<? extends T> newElements) {
+		if (oldElements == null) {
+			return;			// Never happens but avoids need for null validation in caller
+		}
+		assert isContainment == PivotUtilInternal.isContainmentEList(oldElements);	// XXX debugging
 		if (newElements == null) {
 			oldElements.clear();
 			return;
@@ -921,7 +900,7 @@ public class PivotUtilInternal //extends PivotUtil
 		for (int i = oldElements.size(); i-- > 0;) {	// Remove any oldElements not in newElements
 			Object oldElement = oldElements.get(i);
 			if (!newElements.contains(oldElement)) {
-				if (oldElement instanceof Namespace) {
+				if (isContainment && (oldElement instanceof Namespace)) {
 					((Namespace)oldElement).eraseContents();
 				}
 				oldElements.remove(i);

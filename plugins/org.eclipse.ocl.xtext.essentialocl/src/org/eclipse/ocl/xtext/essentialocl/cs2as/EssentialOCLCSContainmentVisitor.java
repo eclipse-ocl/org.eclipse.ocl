@@ -267,7 +267,7 @@ public class EssentialOCLCSContainmentVisitor extends AbstractEssentialOCLCSCont
 				parts.add(asMessagePart);
 				parts.add(asStatusPart);
 			}
-			helper.refreshList(asTupleLiteralExp.getOwnedParts(), parts);
+			PivotUtil.refreshList(asTupleLiteralExp.getOwnedParts(), true, parts);
 		}
 		return null;
 	}

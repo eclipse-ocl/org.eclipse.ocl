@@ -343,7 +343,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		}
 		pivotElement.setBehavioralClass(behavioralClass);
 		org.eclipse.ocl.pivot.Class asSuperClass = behavioralClass != null ? behavioralClass : context.getStandardLibrary().getOclElementType();
-		helper.refreshList(pivotElement.getSuperClasses(), Collections.singletonList(asSuperClass));
+		PivotUtil.refreshList(pivotElement.getSuperClasses(), false, Collections.singletonList(asSuperClass));
 		return null;
 	}
 
@@ -503,7 +503,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				}
 				newImports.add(pivotElement);
 			}
-			helper.refreshList(root.getOwnedImports(), newImports);
+			PivotUtil.refreshList(root.getOwnedImports(), true, newImports);
 		}
 		else {
 			root.getOwnedImports().clear();
@@ -577,7 +577,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 				newPivotTemplateParameters.add(pivotTemplateParameter);
 			}
 		}
-		PivotUtilInternal.refreshList(pivotElement.getOwnedParameters(), newPivotTemplateParameters);
+		PivotUtil.refreshList(pivotElement.getOwnedParameters(), true, newPivotTemplateParameters);
 		return null;
 	}
 

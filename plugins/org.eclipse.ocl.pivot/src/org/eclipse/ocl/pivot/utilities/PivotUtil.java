@@ -36,7 +36,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
@@ -116,8 +115,6 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.NamespaceImpl;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.PivotExecutorManager;
 import org.eclipse.ocl.pivot.internal.resource.EnvironmentFactoryAdapter;
@@ -2127,10 +2124,24 @@ public class PivotUtil
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated /* @deprecated not used */
 	public static <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
 		if (oldElements == null) {
 			return;			// Never happens but avoids need for null validation in caller
 		}
+		boolean isContainment = PivotUtilInternal.isContainmentEList(oldElements);
+	//	assert isContainment;
+		refreshList(oldElements, isContainment, newElements);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, boolean isContainment, @Nullable List<? extends T> newElements) {
+		if (oldElements == null) {
+			return;			// Never happens but avoids need for null validation in caller
+		}
+		assert isContainment == PivotUtilInternal.isContainmentEList(oldElements);	// XXX debugging
 		if (newElements == null) {
 			if (oldElements.size() > 0) {
 				oldElements.clear();
@@ -2139,18 +2150,14 @@ public class PivotUtil
 		}
 		for (int k = newElements.size(); k-- > 0; ) {
 			T newElement = newElements.get(k);
-			if (newElement != null) {
-				EObject newElementContainer = newElement.eContainer();
-				assert !(newElementContainer instanceof EObjectContainmentEList) || (newElementContainer == ((EObjectContainmentEList<?>)oldElements).getNotifier()) : "Child stealing attempted";
-				if (newElement.eIsProxy()) {
-					oldElements.remove(newElement);			// Lose oldContent before adding possible 'duplicates'
-				}
+			if ((newElement != null) && newElement.eIsProxy()) {
+				oldElements.remove(newElement);			// Lose oldContent before adding possible 'duplicates'
 			}
 		}
 		for (int k = oldElements.size(); k-- > 0; ) {
 			Object oldElement = oldElements.get(k);
 			if (!newElements.contains(oldElement)) {
-				if (oldElement instanceof Namespace) {
+				if (isContainment && (oldElement instanceof Namespace)) {
 					((Namespace)oldElement).eraseContents();
 				}
 				oldElements.remove(k);			// Lose oldContent before adding possible 'duplicates'

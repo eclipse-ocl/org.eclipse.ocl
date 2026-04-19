@@ -183,7 +183,7 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 				}
 			}
 			if (pivotElement instanceof PrimitiveType) {
-				PivotUtilInternal.refreshList(((PrimitiveType)pivotElement).getCoercions(), coercions);
+				PivotUtil.refreshList(((PrimitiveType)pivotElement).getCoercions(), false, coercions);
 			}
 		}
 		return null;

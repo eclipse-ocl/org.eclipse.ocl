@@ -996,8 +996,16 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 		}
 	}
 
+	@Deprecated
 	public <T extends Element> void refreshList(@NonNull Class<T> pivotClass, List<T> pivotElements, /*@NonNull*/ List<? extends PivotableElementCS> csElements) {
 		assert csElements != null;
+		boolean isContainment = PivotUtilInternal.isContainmentEList(pivotElements);
+		refreshList(pivotClass, pivotElements, isContainment, csElements);
+	}
+
+	public <T extends Element> void refreshList(@NonNull Class<T> pivotClass, List<T> pivotElements, boolean isContainment, /*@NonNull*/ List<? extends PivotableElementCS> csElements) {
+		assert csElements != null;
+		assert isContainment == PivotUtilInternal.isContainmentEList(pivotElements);	// XXX debugging
 		if (!pivotElements.isEmpty() ||!csElements.isEmpty()) {
 			List<T> newPivotElements = new ArrayList<>();
 			for (PivotableElementCS csElement : csElements) {
@@ -1009,7 +1017,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 					newPivotElements.add(pivotElement);
 				}
 			}
-			PivotUtilInternal.refreshList(pivotElements, newPivotElements);
+			PivotUtil.refreshList(pivotElements, isContainment, newPivotElements);
 		}
 	}
 
@@ -1040,12 +1048,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public <T extends Element> void refreshPivotList(@NonNull Class<T> pivotClass, /*@NonNull*/ List<? super T> pivotElements,
 			/*@NonNull*/ Iterable<? extends ModelElementCS> csElements) {
 		assert pivotElements != null;
+		assert PivotUtilInternal.isContainmentEList(pivotElements);	// XXX debugging
 		assert csElements != null;
 		if (pivotElements.isEmpty() && Iterables.isEmpty(csElements)) {
 			return;
 		}
 		List<T> newPivotElements = getNewPivotElements(pivotClass, csElements);
-		PivotUtilInternal.refreshList(pivotElements, newPivotElements);
+		PivotUtil.refreshList(pivotElements, true, newPivotElements);
 	}
 
 	public Type refreshRequiredType(@NonNull TypedElement pivotElement, @NonNull TypedElementCS csTypedElement) {

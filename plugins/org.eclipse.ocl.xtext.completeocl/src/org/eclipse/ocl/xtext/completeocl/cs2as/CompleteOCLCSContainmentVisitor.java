@@ -175,8 +175,8 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		org.eclipse.ocl.pivot.Class contextClass = context.refreshModelElement(org.eclipse.ocl.pivot.Class.class, PivotPackage.Literals.CLASS, csElement);
 		contextClass.setName(modelClass.getName());
 		context.refreshPivotList(Constraint.class, contextClass.getOwnedInvariants(), allInvariants);
-		helper.refreshList(contextClass.getOwnedOperations(), contextOperations);
-		helper.refreshList(contextClass.getOwnedProperties(), contextProperties);
+		PivotUtil.refreshList(contextClass.getOwnedOperations(), true, contextOperations);
+		PivotUtil.refreshList(contextClass.getOwnedProperties(), true, contextProperties);
 		context.refreshComments(contextClass, csElement);
 		for (@NonNull ContextDeclCS contextDecl : contextDecls) {
 			if (contextDecl instanceof ClassifierContextDeclCS) {
@@ -237,7 +237,7 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 		org.eclipse.ocl.pivot.Package contextPackage = context.refreshModelElement(org.eclipse.ocl.pivot.Package.class, PivotPackage.Literals.PACKAGE, csElement);
 		contextPackage.setName(modelPackage.getName());
 		contextPackage.setURI(modelPackage.getURI());
-		helper.refreshList(contextPackage.getOwnedClasses(), contextClasses);
+		PivotUtil.refreshList(contextPackage.getOwnedClasses(), true, contextClasses);
 		context.refreshComments(contextPackage, csElement);
 		for (int i = 1; i < packageDecls.size(); i++) {
 			csElement = packageDecls.get(i);
@@ -383,10 +383,10 @@ public class CompleteOCLCSContainmentVisitor extends AbstractCompleteOCLCSContai
 			assert childContextPackages != null;
 			Collections.sort(childContextPackages, NameUtil.NAMEABLE_COMPARATOR);
 			if (contextPackage != null) {
-				helper.refreshList(contextPackage.getOwnedPackages(), childContextPackages);
+				PivotUtil.refreshList(contextPackage.getOwnedPackages(), true, childContextPackages);
 			}
 			else {
-				helper.refreshList(contextRoot.getOwnedPackages(), childContextPackages);
+				PivotUtil.refreshList(contextRoot.getOwnedPackages(), true, childContextPackages);
 			}
 		}
 		context.refreshPivotList(Import.class, contextRoot.getOwnedImports(), csElement.getOwnedImports());

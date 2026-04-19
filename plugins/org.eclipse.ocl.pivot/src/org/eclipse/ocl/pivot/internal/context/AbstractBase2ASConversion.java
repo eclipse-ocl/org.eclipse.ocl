@@ -167,7 +167,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			specificationVariable.setRepresentedParameter(operationParameterVariable);
 			newSpecificationVariables.add(specificationVariable);
 		}
-		refreshList(oldSpecificationVariables, newSpecificationVariables);
+		PivotUtil.refreshList(oldSpecificationVariables, true, newSpecificationVariables);
 	}
 
 	@Override
@@ -192,7 +192,7 @@ public abstract class AbstractBase2ASConversion extends AbstractConversion imple
 			//		    param.setRepresentedParameter(parameter);
 			newSpecificationVariables.add(specificationVariable);
 		}
-		refreshList(oldSpecificationVariables, newSpecificationVariables);
+		PivotUtil.refreshList(oldSpecificationVariables, true, newSpecificationVariables);
 	}
 
 	public void setPropertyContext(@NonNull ExpressionInOCL pivotSpecification, @NonNull Property contextProperty) {

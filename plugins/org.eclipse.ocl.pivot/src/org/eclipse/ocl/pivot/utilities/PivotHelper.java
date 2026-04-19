@@ -559,8 +559,9 @@ public class PivotHelper
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated /* @deprecated not used */
 	public <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
-		PivotUtilInternal.refreshList(oldElements, newElements);
+		PivotUtil.refreshList(oldElements, newElements);
 	}
 
 	/**

@@ -422,7 +422,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		for (@NonNull ConstraintCS csInvariant : csInvariants) {
 			csInvariant.setStereotype(PivotConstants.INVARIANT_NAME);
 		}
-		refreshList(csElement.getOwnedConstraints(), csInvariants);
+		PivotUtil.refreshList(csElement.getOwnedConstraints(), true, csInvariants);
 		TemplateSignature ownedTemplateSignature = object.getOwnedSignature();
 		if (ownedTemplateSignature != null) {
 			csElement.setOwnedSignature(visitDeclaration(TemplateSignatureCS.class, ownedTemplateSignature));
@@ -460,7 +460,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			name = replacementNameForNull;
 		}
 		csElement.setName(name);
-		refreshList(csElement.getOwnedAnnotations(), visitDeclarations(AnnotationCS.class, object.getOwnedAnnotations(), null));
+		PivotUtil.refreshList(csElement.getOwnedAnnotations(), true, visitDeclarations(AnnotationCS.class, object.getOwnedAnnotations(), null));
 		return csElement;
 	}
 
@@ -701,7 +701,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		Resource asResource = converter.getASResource(csResource);
 		if (asResource != null) {
 			List<@NonNull PackageCS> list = visitDeclarations(PackageCS.class, asResource.getContents(), null);
-			refreshList(csResource.getContents(), list);
+			PivotUtil.refreshList(csResource.getContents(), true, list);
 			if (importedNamespaces != null) {
 				defaultDeclarationVisitor.postProcess(csResource, importedNamespaces);
 			}

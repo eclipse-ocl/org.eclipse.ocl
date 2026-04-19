@@ -201,7 +201,7 @@ public class UML2ASUseSwitch extends UMLSwitch<Object>
 				org.eclipse.ocl.pivot.Class oclElementType = standardLibrary.getOclElementType();
 				newSuperTypes.add(oclElementType);
 			}
-			PivotUtilInternal.refreshList(pivotElement.getSuperClasses(), newSuperTypes);
+			PivotUtil.refreshList(pivotElement.getSuperClasses(), false, newSuperTypes);
 		}
 		return pivotElement;
 	}

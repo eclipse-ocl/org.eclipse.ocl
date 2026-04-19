@@ -427,7 +427,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 					eAnnotation.setSource(PivotConstantsInternal.DUPLICATES_ANNOTATION_SOURCE);
 					eClass.getEAnnotations().add(eAnnotation);
 				}
-				context.refreshList(eAnnotation.getContents(), eDuplicates);
+				PivotUtil.refreshList(eAnnotation.getContents(), true, eDuplicates);
 			}
 		}
 		return eClass;

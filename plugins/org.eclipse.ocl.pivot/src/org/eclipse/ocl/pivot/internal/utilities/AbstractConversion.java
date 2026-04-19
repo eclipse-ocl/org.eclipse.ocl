@@ -21,13 +21,14 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.internal.complete.CompleteEnvironmentInternal;
 import org.eclipse.ocl.pivot.internal.complete.StandardLibraryInternal;
 import org.eclipse.ocl.pivot.internal.manager.PivotMetamodelManager;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 public abstract class AbstractConversion
 {
 	public static interface Predicate<T extends EObject>
 	{
 		boolean filter(@NonNull T element);
-	}	
+	}
 
 	protected static <T> @Nullable T basicGet(@NonNull EObject eObject, @NonNull EAttribute eFeature, @NonNull Class<T> resultClass) {
 		if (!eObject.eIsSet(eFeature)) {
@@ -58,7 +59,7 @@ public abstract class AbstractConversion
 				return false;
 		return true;
 	}
-	
+
 	protected final @NonNull EnvironmentFactoryInternal environmentFactory;
 	protected final @NonNull PivotMetamodelManager metamodelManager;
 	protected final @NonNull CompleteEnvironmentInternal completeEnvironment;
@@ -70,11 +71,11 @@ public abstract class AbstractConversion
 		this.completeEnvironment = environmentFactory.getCompleteEnvironment();
 		this.standardLibrary = completeEnvironment.getOwnedStandardLibrary();
 	}
-	
+
 	public @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return environmentFactory;
 	}
-	
+
 	public @NonNull PivotMetamodelManager getMetamodelManager() {
 		return metamodelManager;
 	}
@@ -83,10 +84,12 @@ public abstract class AbstractConversion
 		return standardLibrary;
 	}
 
+	@Deprecated /* @deprecated not used */
 	public <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
-		PivotUtilInternal.refreshList(oldElements, newElements);
+		PivotUtil.refreshList(oldElements, newElements);
 	}
 
+	@Deprecated /* @deprecated not used */
 	protected <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, @Nullable Collection<? extends T> newElements) {
 		PivotUtilInternal.refreshSet(oldElements, newElements);
 	}
