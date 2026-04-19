@@ -3051,7 +3051,7 @@
         <details key="body" value="self&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type."/>
+        <details key="documentation" value="*&#xA;Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type.&#xA;"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="isClass" eType="#T-pivot-Class"/>

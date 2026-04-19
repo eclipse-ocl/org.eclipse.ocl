@@ -28,7 +28,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resoluti
  org.eclipse.xtext;bundle-version="[2.18.0,3.0.0)";visibility:=reexport,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.xtext.util,
- org.antlr.runtime,
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
  org.eclipse.ocl.pivot;bundle-version="[1.3.0,2.0.0)";visibility:=reexport
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.ocl.xtext.base.utilities.BasePlugin$Implementation

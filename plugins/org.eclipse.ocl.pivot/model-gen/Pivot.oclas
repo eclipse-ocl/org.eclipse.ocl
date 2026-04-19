@@ -1221,7 +1221,7 @@
       <ownedComments body="A Type constrains the values represented by a TypedElement."/>
       <ownedOperations xmi:id="xDNE5" isRequired="false" name="flattenedType" type="#rrwsa">
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self&#xA;&#xA;"/>
-        <ownedComments body="Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type."/>
+        <ownedComments body="*&#xA;Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type.&#xA;"/>
       </ownedOperations>
       <ownedOperations xmi:id="i,Kw4" isRequired="false" name="isClass" type="#pDcbe"/>
       <ownedOperations xmi:id="5WLf+" isRequired="false" name="isTemplateParameter" type="#Afray"/>
