@@ -44,6 +44,7 @@ import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
 import org.eclipse.ocl.pivot.Model;
+import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.OCLExpression;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OperationCallExp;
@@ -868,6 +869,9 @@ public class PivotUtilInternal //extends PivotUtil
 		for (int k = oldElements.size(); k-- > 0; ) {
 			Object oldElement = oldElements.get(k);
 			if (!newElements.contains(oldElement)) {
+				if (oldElement instanceof Namespace) {
+					((Namespace)oldElement).eraseContents();
+				}
 				oldElements.remove(k);			// Lose oldContent before adding possible 'duplicates'
 			}
 		}
@@ -917,6 +921,9 @@ public class PivotUtilInternal //extends PivotUtil
 		for (int i = oldElements.size(); i-- > 0;) {	// Remove any oldElements not in newElements
 			Object oldElement = oldElements.get(i);
 			if (!newElements.contains(oldElement)) {
+				if (oldElement instanceof Namespace) {
+					((Namespace)oldElement).eraseContents();
+				}
 				oldElements.remove(i);
 			}
 		}

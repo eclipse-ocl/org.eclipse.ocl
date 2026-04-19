@@ -2150,8 +2150,8 @@ public class PivotUtil
 		for (int k = oldElements.size(); k-- > 0; ) {
 			Object oldElement = oldElements.get(k);
 			if (!newElements.contains(oldElement)) {
-				if (oldElement instanceof NamespaceImpl) {
-					((NamespaceImpl)oldElement).eraseContents();
+				if (oldElement instanceof Namespace) {
+					((Namespace)oldElement).eraseContents();
 				}
 				oldElements.remove(k);			// Lose oldContent before adding possible 'duplicates'
 			}
