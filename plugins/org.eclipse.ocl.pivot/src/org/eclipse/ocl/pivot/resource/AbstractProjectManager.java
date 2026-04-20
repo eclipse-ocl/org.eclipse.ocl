@@ -57,6 +57,20 @@ public abstract class AbstractProjectManager extends AdapterImpl implements Proj
 					knownResourceURI = resourceDescriptor.getGenModelURI();
 					URI knownProjectURI = knownResourceURI.trimSegments(1);
 					hasConflict = !knownProjectURI.equals(assessedProjectURI);
+					if (hasConflict && knownProjectURI.isPlatformPlugin()) {
+						// Project may be in half-baked shape, with genmodel  normalized by scanClassPath
+						StringBuilder b = new StringBuilder();
+						for (int i = 0; i < knownProjectURI.segmentCount(); i++) {
+							if (i > 1) {
+								b.append("/");
+							}
+							if (i > 0) {
+								b.append(knownProjectURI.segment(i));
+							}
+						}
+						URI knownProjectURI2 = URI.createPlatformResourceURI(b.toString(), true);
+						hasConflict = !knownProjectURI2.equals(assessedProjectURI);
+					}
 				}
 				if (hasConflict) {
 					if (s == null) {
