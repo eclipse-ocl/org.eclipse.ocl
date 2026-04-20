@@ -70,15 +70,28 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 	 * Return and if necessary create a ValidationRegistryAdapter adapting this notifier, which may be an EObject or REsource or ResourceSet.
 	 */
 	public static @NonNull ValidationRegistryAdapter getAdapter(@NonNull Notifier notifier) {
-		Resource resource = notifier instanceof EObject ? ((EObject)notifier).eResource() : notifier instanceof Resource ? (Resource)notifier : null;
-		ResourceSet resourceSet = resource != null ? resource.getResourceSet() : (ResourceSet)notifier;
-		if (resourceSet == null) {
-			if (!(resource instanceof ImmutableResource)) {
-				logger.error("No ResourceSet available for ValidationRegistryAdapter.getAdapter()");
-			}
-			return new ValidationRegistryAdapter();
+		ResourceSet resourceSet = null;
+		if (notifier instanceof ResourceSet)  {
+			resourceSet = (ResourceSet)notifier;
 		}
-		return getAdapter(resourceSet);
+		else if (notifier instanceof Resource)  {
+			resourceSet = ((Resource)notifier).getResourceSet();
+		}
+		else if (notifier instanceof EObject){
+			Resource resource = ((EObject)notifier).eResource();
+			if (resource != null) {
+				resourceSet = resource.getResourceSet();
+			}
+			if (resourceSet == null) {
+				if (!(resource instanceof ImmutableResource)) {
+					logger.error("No ResourceSet available for ValidationRegistryAdapter.getAdapter()");
+				}
+			}
+		}
+		else {
+			throw new IllegalStateException("Unsupported Notifier : " + notifier.getClass().getName());
+		}
+		return resourceSet != null ? getAdapter(resourceSet) : new ValidationRegistryAdapter();
 	}
 
 	public static EValidator.@NonNull Registry getFallbackGlobalValidationRegistry() {
