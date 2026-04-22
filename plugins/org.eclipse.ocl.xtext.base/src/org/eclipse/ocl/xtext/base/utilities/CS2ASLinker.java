@@ -57,7 +57,7 @@ public class CS2ASLinker extends LazyLinker
 				//				System.out.println("Starting to refreshPivotMappings for " + eResource.getURI());
 				BaseCSResource csResource = (BaseCSResource) eResource;
 				try {
-					EnvironmentFactory environmentFactory = csResource.getEnvironmentFactory();
+					EnvironmentFactory environmentFactory = csResource.getParserContext().getEnvironmentFactory();
 					CS2AS cs2as = csResource.getCS2AS(environmentFactory);
 					ParserContext parserContext = ElementUtil.basicGetParserContext(model);
 					if (parserContext != null) {
