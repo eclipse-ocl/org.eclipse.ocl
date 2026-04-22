@@ -22,9 +22,20 @@ import org.eclipse.ocl.pivot.utilities.ParserContext;
 /**
  * CSResource defines the Xtext-independent extended interface for a Concrete Syntax resource.
  * The derived BaseCSResource provides a richer interface with Xtext parsing dependencies.
+ * @since 1.24
  */
 public interface CSResource extends Resource
 {
+	/**
+	 * EnvironmentFactoryProvider revises the richer BaseCSResource to avoid casts.
+	 *
+	 * @since 1.24
+	 */
+	public interface EnvironmentFactoryProvider
+	{
+		@NonNull EnvironmentFactory getEnvironmentFactory();
+	}
+
 	/**
 	 * @since 1.1
 	 */

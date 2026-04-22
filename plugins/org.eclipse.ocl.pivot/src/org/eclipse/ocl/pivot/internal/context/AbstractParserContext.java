@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotUtilInternal;
 import org.eclipse.ocl.pivot.resource.CSResource;
+import org.eclipse.ocl.pivot.resource.CSResource.EnvironmentFactoryProvider;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
@@ -56,17 +57,18 @@ import org.eclipse.ocl.pivot.utilities.StringUtil;
  */
 public abstract class AbstractParserContext implements ParserContext
 {
-	private static final class ParsingResourceSet extends ResourceSetImpl
+	private final class ParsingResourceSet extends ResourceSetImpl implements EnvironmentFactoryProvider
 	{
-		private final Resource.Factory.@NonNull Registry resourceFactoryRegistry;
-
-		protected ParsingResourceSet(Resource.Factory.@NonNull Registry resourceFactoryRegistry) {
-			this.resourceFactoryRegistry = resourceFactoryRegistry;
+		@Override
+		public Registry getResourceFactoryRegistry() {
+			Resource.Factory.Registry resourceFactoryRegistry = environmentFactory.getResourceSet().getResourceFactoryRegistry();
+			assert resourceFactoryRegistry != null;
+			return resourceFactoryRegistry;
 		}
 
 		@Override
-		public Registry getResourceFactoryRegistry() {
-			return resourceFactoryRegistry;
+		public @NonNull EnvironmentFactory getEnvironmentFactory() {
+			return environmentFactory;
 		}
 	}
 
@@ -99,9 +101,7 @@ public abstract class AbstractParserContext implements ParserContext
 		try {
 			ResourceSet parsingResourceSet2 = parsingResourceSet;
 			if (parsingResourceSet2 == null) {
-				Resource.Factory.Registry resourceFactoryRegistry = environmentFactory.getResourceSet().getResourceFactoryRegistry();
-				assert resourceFactoryRegistry != null;
-				this.parsingResourceSet = parsingResourceSet2 = new ParsingResourceSet(resourceFactoryRegistry);
+				this.parsingResourceSet = parsingResourceSet2 = new ParsingResourceSet();
 			}
 			Resource resource = parsingResourceSet2.createResource(uri);
 			if (resource == null) {

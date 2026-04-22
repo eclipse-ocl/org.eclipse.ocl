@@ -1832,6 +1832,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 */
 	public void testIssue2400_genmodel() throws Throwable {
 	//	AbstractCompletePackages.COMPLETE_PACKAGES.setState(true);
+		ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		try {
 			doTestRunnable(new TestRunnable() {
 				@Override

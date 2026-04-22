@@ -189,9 +189,9 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 		s.append("\n\tinitPartThread = " + String.valueOf(initPartThread));
 		s.append("\n\tactivatedPartThread = " + String.valueOf(activatedPartThread));
 		s.append("\n\tactivePartThread = " + String.valueOf(activePartThread));
-		for (Entry<@NonNull IWorkbenchPart, @NonNull ThreadLocalExecutorPart> entry : part2partThread.entrySet()) {
+		for (Entry<@NonNull IWorkbenchPart, @NonNull ThreadLocalExecutor> entry : part2partThread.entrySet()) {
 			IWorkbenchPart part = entry.getKey();
-			ThreadLocalExecutorPart partThread = entry.getValue();
+			ThreadLocalExecutor partThread = entry.getValue();
 			s.append("\n\t" + NameUtil.debugSimpleName(part) + " => " + partThread.toString());
 		}
 	} */
@@ -214,14 +214,50 @@ public class ThreadLocalExecutorUI extends ThreadLocalExecutor implements IPartL
 	@Override
 	protected @NonNull String getThreadName() {
 		StringBuilder s = new StringBuilder();
-		if (activatedPartThread != null) {
-			s.append(activatedPartThread.getName());
+		s.append("[");
+		ThreadLocalExecutor closingPartThread2 = closingPartThread;
+		if ((closingPartThread2 != null) && (closingPartThread2 != activatedPartThread)) {
+			assert activatedPartThread != null;
+			s.append("closing:");
+			s.append(closingPartThread2.getName());
+		}
+		ThreadLocalExecutor activePartThread2 = activePartThread;
+		if ((activePartThread2 != null) && (activePartThread2 != activatedPartThread)){
+			assert activatedPartThread != null;
+			s.append("active:");
+			s.append(activePartThread2.getName());
+		}
+	/*	ThreadLocalExecutor initPartThread2 = initPartThread;
+		if ((initPartThread2 != null) && (initPartThread2 != activatedPartThread)) {
+			assert activatedPartThread != null;
+			s.append("init:");
+			s.append(initPartThread2.getName());
+		} */
+		if (s.length() > 1) {
+			ThreadLocalExecutor activatedPartThread2 = activatedPartThread;
+			if (activatedPartThread2 != null) {
+				s.append("activated:");
+				s.append(activatedPartThread2.getName());
+			}
+		//	if (activatedPartThread != null) {
+		//		s.append(activatedPartThread.getName());
+		//	}
+		//	else {
+		//		if (s.length() > 1) {
+		//			s.append("on:");
+		//		}
+		//		s.append(Thread.currentThread().getName());
+		//	}
 		}
 		else {
-			s.append("[");
-			s.append(Thread.currentThread().getName());
-			s.append("]");
+			if (activatedPartThread != null) {
+				return activatedPartThread.getName();
+			}
+			else {
+				s.append(Thread.currentThread().getName());
+			}
 		}
+		s.append("]");
 		return s.toString();
 	}
 

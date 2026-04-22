@@ -192,7 +192,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 					ocl = OCL.newInstance();
 				}
 			}
-			ThreadLocalExecutor.setUsesFinalizer();			// XXX not on a worker thread
+			ThreadLocalExecutor.setUsesFinalizer();			// XXX not on a worker thread ?? part threads may also use fiunalizer ??
 			context.put(WeakOCLReference.class, new WeakOCLReference(ocl));
 		}
 		return ocl;

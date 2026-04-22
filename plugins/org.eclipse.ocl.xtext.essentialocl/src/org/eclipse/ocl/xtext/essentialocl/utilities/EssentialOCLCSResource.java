@@ -519,7 +519,14 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 
 	@Override
 	public final @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
-		return PivotUtilInternal.getEnvironmentFactory(getResourceSet());
+		EnvironmentFactory environmentFactory = null;
+		if (resourceSet instanceof EnvironmentFactoryProvider) {
+			environmentFactory = ((EnvironmentFactoryProvider)resourceSet).getEnvironmentFactory();
+		}
+		if (environmentFactory == null) {
+			environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+		}
+		return (EnvironmentFactoryInternal)environmentFactory;
 	/*	EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
 		if (environmentFactory == null) {
 			ResourceSet csResourceSet = ClassUtil.nonNullState(getResourceSet());			// Resource might have a ProjectMap adapting its ResourceSet
@@ -547,7 +554,7 @@ public class EssentialOCLCSResource extends LazyLinkingResource implements BaseC
 		else {
 			environmentFactory2parserContext2 = environmentFactory2parserContext = new WeakHashMap<>();
 		}
-		EnvironmentFactoryInternal environmentFactory = PivotUtilInternal.getEnvironmentFactory(resourceSet);
+		EnvironmentFactoryInternal environmentFactory = getEnvironmentFactory();
 		ParserContext parserContext = new DefaultParserContext(environmentFactory, getURI());		// FIXME use a derived ExtendedParserContext
 		environmentFactory2parserContext2.put(environmentFactory, parserContext);
 		return parserContext;
