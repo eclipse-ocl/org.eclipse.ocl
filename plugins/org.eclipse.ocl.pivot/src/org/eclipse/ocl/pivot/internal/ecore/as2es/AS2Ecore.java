@@ -440,6 +440,9 @@ public class AS2Ecore extends AbstractConversion
 		}
 	}
 
+	/**
+	 * @since 1.24
+	 */
 	protected @NonNull InverseConversion createInverseConversion(@NonNull XMLResource ecoreResource) {
 		return new InverseConversion(ecoreResource);
 	}

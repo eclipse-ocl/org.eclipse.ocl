@@ -45,20 +45,20 @@ public interface CSResource extends Resource
 
 	/**
 	 * The file extension for OCL Concrete Syntax resources.
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	@NonNull String FILE_EXTENSION = PivotConstants.OCL_CS_FILE_EXTENSION;
 
 	/**
 	 * Create the CS2AS converter for the cs2asResourceMap conversions using metamodelManager.
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	@NonNull ICS2AS createCS2AS(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource);
 
 	/**
 	 * Dispose of this CSResource and its conversion facilities. This frees up resources after conversion to AS but loses the
 	 * required source visibility for debugging.
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	default void dispose() {}
 
@@ -76,7 +76,7 @@ public interface CSResource extends Resource
 	/**
 	 * Return the CS to AS conversion manager for use with environmentFactory.
 	 *
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	default @NonNull ICS2AS getCS2AS(@NonNull EnvironmentFactory environmentFactory) {
 		throw new UnsupportedOperationException();
@@ -100,7 +100,7 @@ public interface CSResource extends Resource
 
 	/**
 	 * Return true if this CSResource is derived from an ASResource.
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	@Deprecated /* @deprecated only for BaseCSResource */
 	default boolean isDerived() {
@@ -109,7 +109,7 @@ public interface CSResource extends Resource
 
 	/**
 	 * Set whether this CSResource is derived from an ASResource.
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	@Deprecated /* @deprecated only for BaseCSResource */
 	default void setDerived(boolean isDerived) {}

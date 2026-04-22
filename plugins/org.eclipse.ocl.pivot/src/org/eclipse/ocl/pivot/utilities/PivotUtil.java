@@ -2086,7 +2086,7 @@ public class PivotUtil
 	/**
 	 * Return true if the testNameSuffix system property has been set to indicate tests are
 	 * running under the supervision of the tycho-surefire-plugin..
-	 * @since 7.0
+	 * @since 1.24
 	 */
 	public static boolean isTychoSurefire() {
 		String testNameSuffix = System.getProperty("testNameSuffix", "");
@@ -2094,7 +2094,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 7.0
+	 * @since 1.24
 	 */
 	public static boolean isValidIdentifier(@Nullable String value) {
 		if (value == null) {
@@ -2122,7 +2122,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 7.0
+	 * @since 1.24
 	 */
 	@Deprecated /* @deprecated not used */
 	public static <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
@@ -2135,7 +2135,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 7.0
+	 * @since 1.24
 	 */
 	public static <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, boolean isContainment, @Nullable List<? extends T> newElements) {
 		if (oldElements == null) {
@@ -2199,7 +2199,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 7.0
+	 * @since 1.24
 	 */
 	public static void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
 		String oldName = pivotNamedElement.getName();
@@ -2209,7 +2209,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 7.0
+	 * @since 1.24
 	 */
 	public static void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
 		String oldNsURI = pivotPackage.getURI();
@@ -2219,7 +2219,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 7.0
+	 * @since 1.24
 	 */
 	public static <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, @Nullable Collection<? extends T> newElements) {
 		if (oldElements == null) {

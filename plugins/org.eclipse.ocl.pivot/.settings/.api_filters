@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
-    <resource path="emf-gen/org/eclipse/ocl/pivot/Element.java" type="org.eclipse.ocl.pivot.Element">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Namespace.java" type="org.eclipse.ocl.pivot.Namespace">
         <filter id="404000815">
             <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.Element"/>
-                <message_argument value="getESNotifier()"/>
+                <message_argument value="org.eclipse.ocl.pivot.Namespace"/>
+                <message_argument value="eraseContents()"/>
             </message_arguments>
         </filter>
     </resource>
@@ -44,75 +44,11 @@
             </message_arguments>
         </filter>
     </resource>
-<<<<<<< Upstream, based on origin/master
-    <resource path="src/org/eclipse/ocl/pivot/internal/resource/StandaloneProjectMap.java" type="org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="ProjectManager"/>
-                <message_argument value="StandaloneProjectMap"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AS2Moniker.java" type="org.eclipse.ocl.pivot.internal.utilities.AS2Moniker">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="PivotConstantsInternal"/>
-                <message_argument value="AS2Moniker"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/internal/utilities/AbstractTechnology.java" type="org.eclipse.ocl.pivot.internal.utilities.AbstractTechnology">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="Technology"/>
-                <message_argument value="AbstractTechnology"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/library/logical/BooleanAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation">
-        <filter id="337682486">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.logical.BooleanAllInstancesOperation"/>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/library/oclinvalid/OclInvalidAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation">
-        <filter id="337682486">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.oclinvalid.OclInvalidAllInstancesOperation"/>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation$LibrarySimpleUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibrarySimpleOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/library/oclvoid/OclVoidAllInstancesOperation.java" type="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation">
-        <filter id="337682486">
-            <message_arguments>
-                <message_argument value="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAllInstancesOperation"/>
-                <message_argument value="org.eclipse.ocl.pivot.library.LibraryUntypedOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation$LibrarySimpleUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation,org.eclipse.ocl.pivot.library.LibraryUntypedUnaryOperation$LibraryUntypedUnaryOperationExtension,org.eclipse.ocl.pivot.library.LibrarySimpleOperation,org.eclipse.ocl.pivot.library.LibrarySimpleUnaryOperation"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/resource/AbstractProjectManager.java" type="org.eclipse.ocl.pivot.resource.AbstractProjectManager">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ProjectManager"/>
-                <message_argument value="AbstractProjectManager"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/ocl/pivot/utilities/AS2MonikerVisitor.java" type="org.eclipse.ocl.pivot.utilities.AS2MonikerVisitor">
-        <filter comment="Bug 512402 workaround" id="576725006">
-            <message_arguments>
-                <message_argument value="PivotConstantsInternal"/>
-                <message_argument value="AS2MonikerVisitor"/>
-=======
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
         <filter id="404000815">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal"/>
                 <message_argument value="isDisposing()"/>
->>>>>>> 4948d31 [583347] Add isDisposing(), trap disposed ToStringVisitor
             </message_arguments>
         </filter>
     </resource>
@@ -159,6 +95,14 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.resource.CSResource"/>
                 <message_argument value="setDerived(boolean)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/ocl/pivot/resource/ProjectManager.java" type="org.eclipse.ocl.pivot.resource.ProjectManager$IProjectDescriptor">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor"/>
+                <message_argument value="initializeGenModelLocationMap(Map&lt;URI,ProjectManager.IPackageDescriptor&gt;, Map&lt;String,URI&gt;, Map&lt;String,URI&gt;)"/>
             </message_arguments>
         </filter>
     </resource>

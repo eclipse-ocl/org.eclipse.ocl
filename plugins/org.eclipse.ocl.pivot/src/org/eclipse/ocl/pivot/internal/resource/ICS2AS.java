@@ -14,7 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.resource.ASResource;
 
 /**
- * @since 1.22
+ * @since 1.24
  */
 public interface ICS2AS
 {

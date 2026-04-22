@@ -178,9 +178,12 @@ public class ThreadLocalExecutor implements Nameable
 	public static @NonNull Executor getExecutor() {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		return ClassUtil.nonNullState(threadLocalExecutor.localBasicGetExecutor());
-	} 
+	}
 	 * @param callBack */
 
+	/**
+	 * @since 1.24
+	 */
 	public static void init(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {
 		ThreadLocalExecutor threadLocalExecutor = get();
 		threadLocalExecutor.localInit(editingDomain, callBack);
@@ -453,6 +456,9 @@ public class ThreadLocalExecutor implements Nameable
 		}
 	}
 
+	/**
+	 * @since 1.24
+	 */
 	public void localInit(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {}
 
 	/**

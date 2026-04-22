@@ -98,6 +98,9 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 
 public class PivotUtilInternal //extends PivotUtil
 {
+	/**
+	 * @since 1.24
+	 */
 	@SuppressWarnings("serial")
 	public static class ContainmentArrayList<T> extends ArrayList<T> {}
 
@@ -107,7 +110,7 @@ public class PivotUtilInternal //extends PivotUtil
 	 * If DEBUG_DEPRECATIONS is set active debugDeprecation() returns false causing debugged deprecations
 	 * to fail their assertions.
 	 *
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	public static final TracingOption DEBUG_DEPRECATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "debug/deprecation"); //$NON-NLS-1$
 
@@ -132,7 +135,7 @@ public class PivotUtilInternal //extends PivotUtil
 	}
 
 	/**
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	public static boolean debugDeprecation(String string) {
 		System.out.println("Deprecated method in use: " + string);
@@ -746,6 +749,7 @@ public class PivotUtilInternal //extends PivotUtil
 
 	/**
 	 * Return true if list is EcoreELIst.isContainment().
+	 * @since 1.24
 	 */
 	@Deprecated /* Use known caller context rather than this unreliable tacky deduction */
 	public static <T extends EObject> boolean isContainmentEList(@NonNull List<? super T> list) {
@@ -917,6 +921,9 @@ public class PivotUtilInternal //extends PivotUtil
 		refreshSet(oldElements, isContainment, newElements);
 	}
 
+	/**
+	 * @since 1.24
+	 */
 	public static <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, boolean isContainment, @Nullable Collection<? extends T> newElements) {
 		if (oldElements == null) {
 			return;			// Never happens but avoids need for null validation in caller

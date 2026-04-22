@@ -169,7 +169,7 @@ public interface EnvironmentFactoryInternal extends EnvironmentFactory
 	@NonNull Technology getTechnology();
 
 	/**
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	default boolean isDisposing() { return false; }
 

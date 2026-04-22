@@ -266,7 +266,7 @@ public interface ProjectManager extends Adapter
 		void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package);
 
 		/**
-		 * @since 6.23
+		 * @since 1.24
 		 */
 		void initializeGenModelLocationMap(@NonNull Map<@NonNull URI, @NonNull IPackageDescriptor> nsURI2package2,
 				@NonNull Map<String, URI> runningEPackageNsURIToGenModelLocationMap, @NonNull Map<String, URI> targetEPackageNsURIToGenModelLocationMap);
@@ -510,6 +510,7 @@ public interface ProjectManager extends Adapter
 	/**
 	 * Determine whether resource has EPackage.nsURIs that conflicts with nsURIs knbown to this ProjectMananger.
 	 * Returns null if ok, else a String identifying the conflict.
+	 * @since 1.24
 	 */
 	@Nullable String assessResource(@NonNull Resource resource);
 

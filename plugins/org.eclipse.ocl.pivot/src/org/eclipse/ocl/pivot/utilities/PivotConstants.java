@@ -60,7 +60,7 @@ public interface PivotConstants
 	static final @NonNull String DOT_OCL_AS_FILE_EXTENSION = "." + OCL_AS_FILE_EXTENSION;
 
 	/**
-	 * @since 1.22
+	 * @since 1.24
 	 */
 	static final @NonNull String OCL_CS_FILE_EXTENSION = "oclcs";
 

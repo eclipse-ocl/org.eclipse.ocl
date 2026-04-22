@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
  * all clients. The default provides very lightweight functionality that contributes no external projects
  * to a user application and incurs no classpath analysis costs to do so.
  *
- * @since 6.23
+ * @since 1.24
  */
 public abstract class AbstractProjectManager extends AdapterImpl implements ProjectManager
 {
