@@ -1280,13 +1280,8 @@
     <ownedClasses xmi:id="rrwsa" isAbstract="true" name="Type" superClasses="#0kVqz">
       <ownedComments body="A Type constrains the values represented by a TypedElement."/>
       <ownedOperations xmi:id="xDNE5" isRequired="false" name="flattenedType" type="#rrwsa">
-<<<<<<< ewillink/2285rework4
-        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self&#xA;&#xA;"/>
-        <ownedComments body="*&#xA;Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type.&#xA;"/>
-=======
         <bodyExpression xsi:type="pivot:ExpressionInOCL" body="self"/>
         <ownedComments body="&#xA;Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type.&#xA;"/>
->>>>>>> 7535f60 [583353] Regen Pivot, OCLstdlib
       </ownedOperations>
       <ownedOperations xmi:id="i,Kw4" isRequired="false" name="isClass" type="#pDcbe"/>
       <ownedOperations xmi:id="5WLf+" isRequired="false" name="isTemplateParameter" type="#Afray"/>

@@ -3231,11 +3231,7 @@
         <details key="body" value="self"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-<<<<<<< ewillink/2285rework4
-        <details key="documentation" value="*&#xA;Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type.&#xA;"/>
-=======
         <details key="documentation" value="&#xA;Return the type to be used as the element type when this is flattened. For most types this is self.&#xA;For a CollectionType, it is the transitive element type.&#xA;"/>
->>>>>>> 7535f60 [583353] Regen Pivot, OCLstdlib
       </eAnnotations>
     </eOperations>
     <eOperations name="isClass" eType="#T-pivot-Class"/>

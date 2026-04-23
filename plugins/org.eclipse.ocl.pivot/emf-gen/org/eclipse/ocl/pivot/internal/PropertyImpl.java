@@ -612,8 +612,6 @@ implements Property {
 	 */
 	@Override
 	public void setOpposite(Property newOpposite) {
-		assert (eResource() == null) || (eResource().getResourceSet() != null) : "ResourceSet required (? use sibling Model)";		// eResource() null during built-in construction
-		assert (newOpposite == null) || (newOpposite.eResource() == null) || (newOpposite.eResource().getResourceSet() != null) : "ResourceSet required (? use sibling Model)";		// eResource() null during built-in construction
 		Property oldOpposite = opposite;
 		opposite = newOpposite;
 		if (eNotificationRequired())
