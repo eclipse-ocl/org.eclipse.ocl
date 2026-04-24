@@ -1854,32 +1854,35 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 					//	System.out.println("\nOpen Editor 1");
 						GenModelEditor genModelEditor = (GenModelEditor) IDE.openEditor(activePage, modelFile, GEN_MODEL_EDITOR_ID, true);
 						// GenModelEditor schedules a (Live) Validation Job half a second after createPages
-						TestUIUtil.cancelLiveValidationJob();			// Avoid confusion of OCL for Validation Job
-						TestUIUtil.flushEvents();
-						assert genModelEditor != null;
-						assertEquals("GenModelEditor OCL usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount);
-						IWorkbenchPart basicGetPart1 = ThreadLocalExecutorUI.basicGetPart();
-						assertEquals("Wrong part thread", genModelEditor, basicGetPart1);
+						try {
+							TestUIUtil.cancelLiveValidationJob();			// Avoid confusion of OCL for Validation Job
+							TestUIUtil.flushEvents();
+							assert genModelEditor != null;
+							assertEquals("GenModelEditor OCL usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount);
+							IWorkbenchPart basicGetPart1 = ThreadLocalExecutorUI.basicGetPart();
+							assertEquals("Wrong part thread", genModelEditor, basicGetPart1);
 
-						IPath genModelPath = modelFile.getFullPath(); //new Path(genModelFile.getURI().toString());
-						// Reload ... Ecore Next Finish
-					//	System.out.println("\nReload ... Ecore Next Finish");
-						EcoreImporter modelImporter = new EcoreImporter();
-						Monitor monitor = new BasicMonitor();
-						modelImporter.defineOriginalGenModelPath(genModelPath);
-						Diagnostic diagnostic = modelImporter.computeEPackages(monitor);
-						if (diagnostic.getSeverity() != Diagnostic.OK) {
-							String s = PivotUtil.formatDiagnostics(diagnostic, "\n");
-							fail("Genmodel reload validation failure " + s);
+							IPath genModelPath = modelFile.getFullPath(); //new Path(genModelFile.getURI().toString());
+							// Reload ... Ecore Next Finish
+						//	System.out.println("\nReload ... Ecore Next Finish");
+							EcoreImporter modelImporter = new EcoreImporter();
+							Monitor monitor = new BasicMonitor();
+							modelImporter.defineOriginalGenModelPath(genModelPath);
+							Diagnostic diagnostic = modelImporter.computeEPackages(monitor);
+							if (diagnostic.getSeverity() != Diagnostic.OK) {
+								String s = PivotUtil.formatDiagnostics(diagnostic, "\n");
+								fail("Genmodel reload validation failure " + s);
+							}
+							modelImporter.adjustEPackages(monitor);
+							assertEquals("GenModelEditor OCL pre-close usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT- baseConstructionCount);
 						}
-						modelImporter.adjustEPackages(monitor);
-						assertEquals("GenModelEditor OCL pre-close usage:", 1, AbstractEnvironmentFactory.CONSTRUCTION_COUNT- baseConstructionCount);
-
-					//	System.out.println("\nClose Editor");
-						TestUIUtil.closeEditor(genModelEditor);
-						TestUIUtil.flushEvents();
-				//		int genModelUsage = AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount;
-				//		assertEquals("GenModelEditor OCL post-close usage:", 1, genModelUsage);
+						finally {
+						//	System.out.println("\nClose Editor");
+							TestUIUtil.closeEditor(genModelEditor);
+							TestUIUtil.flushEvents();
+					//		int genModelUsage = AbstractEnvironmentFactory.CONSTRUCTION_COUNT - baseConstructionCount;
+					//		assertEquals("GenModelEditor OCL post-close usage:", 1, genModelUsage);
+						}
 					}
 					else {
 						TestOCL ocl = createOCL();
