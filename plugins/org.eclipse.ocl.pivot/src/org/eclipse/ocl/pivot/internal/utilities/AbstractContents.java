@@ -67,7 +67,7 @@ import org.eclipse.ocl.pivot.values.Unlimited;
 public abstract class AbstractContents extends PivotUtil
 {
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static abstract class AbstractMetamodelContents extends AbstractContents
 	{

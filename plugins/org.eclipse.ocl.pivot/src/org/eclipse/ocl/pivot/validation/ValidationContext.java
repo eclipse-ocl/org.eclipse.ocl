@@ -39,7 +39,7 @@ public class ValidationContext extends HashMap<Object,Object>
 	 * Return the current EnvironmentFactory preferably from the cached validationContext entry, else falling back on PivotUtilInternal.basicGetEnvironmentFactory(Notifier).
 	 * Returns null if no EnvironmentFactory available.
 	 *
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(Map<Object, Object> validationContext, @Nullable Object object) {
 		if (validationContext != null) {

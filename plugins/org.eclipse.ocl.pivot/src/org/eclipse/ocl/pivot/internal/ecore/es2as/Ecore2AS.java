@@ -108,7 +108,7 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactoryInternal environmentFactory) {
 		return new Ecore2AS(resource, environmentFactory);

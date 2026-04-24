@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/CompleteModel.java" type="org.eclipse.ocl.pivot.CompleteModel">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.CompleteModel"/>
+                <message_argument value="getAllCompleteInvariants(Type)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/Element.java" type="org.eclipse.ocl.pivot.Element">
         <filter id="404000815">
             <message_arguments>
@@ -14,11 +22,25 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/Namespace.java" type="org.eclipse.ocl.pivot.Namespace">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.Namespace"/>
+                <message_argument value="eraseContents()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/model/OCLmetamodel.java" type="org.eclipse.ocl.pivot.model.OCLmetamodel">
         <filter id="338886760">
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.model.OCLmetamodel.LibraryContents"/>
                 <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.model.OCLmetamodel.LibraryContents"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.24.0"/>
             </message_arguments>
         </filter>
     </resource>
@@ -199,6 +221,12 @@
                 <message_argument value="org.eclipse.ocl.pivot_1.23.0"/>
             </message_arguments>
         </filter>
+        <filter id="338886760">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.utilities.AliasAdapter.Creator"/>
+                <message_argument value="org.eclipse.ocl.pivot_1.24.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/ocl/pivot/internal/utilities/EnvironmentFactoryInternal.java" type="org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal">
         <filter id="404000815">
@@ -316,6 +344,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/ocl/pivot/resource/ProjectManager.java" type="org.eclipse.ocl.pivot.resource.ProjectManager$IProjectDescriptor">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor"/>
+                <message_argument value="initializeGenModelLocationMap(Map&lt;URI,ProjectManager.IPackageDescriptor&gt;, Map&lt;String,URI&gt;, Map&lt;String,URI&gt;)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/ocl/pivot/utilities/EnvironmentFactory.java" type="org.eclipse.ocl.pivot.utilities.EnvironmentFactory">
         <filter id="403804204">
             <message_arguments>
@@ -333,6 +369,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
                 <message_argument value="activate()"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.utilities.EnvironmentFactory"/>
+                <message_argument value="addExtraResourceSet(ResourceSet)"/>
             </message_arguments>
         </filter>
     </resource>

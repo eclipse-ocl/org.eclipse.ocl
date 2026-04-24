@@ -147,7 +147,7 @@ public class PivotUtil
 	/**
 	 * Set false to allow debug messages to be emitted to System.err.
 	 *
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static boolean noDebug = true;
 
@@ -927,7 +927,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static void debugPrintln(@Nullable Object string) {
 		if (!noDebug) {
@@ -936,7 +936,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static void debugReset() {
 		startTime = System.currentTimeMillis();

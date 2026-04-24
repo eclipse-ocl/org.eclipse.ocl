@@ -148,7 +148,7 @@ public abstract class PivotObjectImpl extends EObjectImpl implements PivotObject
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public void resetESObject() {
 		assert !(this instanceof Model) : "no ESObject for Model";

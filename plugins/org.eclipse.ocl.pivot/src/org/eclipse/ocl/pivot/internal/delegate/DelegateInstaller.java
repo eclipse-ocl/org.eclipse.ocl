@@ -93,7 +93,7 @@ public class DelegateInstaller
 	public static final @NonNull String OPTION_OMIT_SETTING_DELEGATES = "omitSettingDelegates";
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public static final @NonNull String CONSTRAINTS_KEY = "constraints";
 
@@ -353,7 +353,7 @@ public class DelegateInstaller
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public @Nullable EStringToStringMapEntryImpl createConstraintDelegateDetail(@NonNull EModelElement eModelElement, @NonNull Constraint pivotConstraint, @Nullable URI ecoreURI) {
 		LanguageExpression specification = pivotConstraint.getOwnedSpecification();

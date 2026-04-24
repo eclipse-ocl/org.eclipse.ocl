@@ -561,7 +561,7 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 * This should be invoked before unload to ensure that the full AS context is available.
 	 * If invoked too late, already unloaded AS is liable to be reloaded causing confusion.
 	 *
-	 * @since 1.23
+	 * @since 1.24
 	 */
 	public void preUnload(@NonNull EnvironmentFactoryInternal environmentFactory) {
 		assert resourceSet != null: "ResourceSet required";			// XXX
