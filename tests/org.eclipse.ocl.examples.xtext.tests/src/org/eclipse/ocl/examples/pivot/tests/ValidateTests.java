@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.EObjectValidator;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.internal.options.CommonOptions;
+import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.pivot.Element;
@@ -47,6 +48,7 @@ import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.delegate.ValidationBehavior;
 import org.eclipse.ocl.pivot.internal.evaluation.AbstractExecutor;
 import org.eclipse.ocl.pivot.internal.library.executor.ExecutorManager;
+import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.EnvironmentFactoryInternal;
@@ -73,6 +75,7 @@ import org.eclipse.ocl.xtext.base.utilities.ElementUtil;
 import org.eclipse.ocl.xtext.basecs.ModelElementCS;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader;
 import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader.CompleteOCLLoaderWithLog;
+import org.eclipse.ocl.xtext.completeocl.validation.CompleteOCLEObjectValidator;
 import org.eclipse.ocl.xtext.oclinecore.validation.OCLinEcoreEObjectValidator;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -616,10 +619,6 @@ public class ValidateTests extends AbstractValidateTests
 		assertNoValidationErrors("Validating", ClassUtil.nonNullState(resource));
 	}
 
-	/**
-	 * Suppress failing test pending fix by:
-	 * [583269] environmentFactory always has its own externalResourceSet
-	 *
 	public void testValidate_Validate_completeocl() throws IOException, InterruptedException {
 		TestCaseAppender.INSTANCE.uninstall();
 		TestCaseLogger.INSTANCE.install();
@@ -798,7 +797,7 @@ public class ValidateTests extends AbstractValidateTests
 			ocl2.activate();
 			ocl2.dispose();
 		}
-	} */
+	}
 
 	public void testValidate_Validate_completeocl_loadresource() throws IOException, InterruptedException {
 		OCL ocl = createOCL();
