@@ -316,7 +316,16 @@ public class LoadTests extends AbstractLoadTests
 		URI ecoreURI = getTestFileURI(ecoreName);
 		Map<String,Object> options = new HashMap<String,Object>();
 		options.put(PivotConstants.PRIMITIVE_TYPES_URI_PREFIX, "models/ecore/primitives.ecore#//");
-		XMLResource ecoreResource = AS2Ecore.createResource((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), asResource, ecoreURI, options);
+		AS2Ecore converter = new AS2Ecore((EnvironmentFactoryInternal) ocl.getEnvironmentFactory(), ecoreURI, options)
+		{
+			@Override
+			protected @NonNull InverseConversion createInverseConversion(@NonNull XMLResource ecoreResource) {
+				bowdlerize(ecoreResource);
+				return super.createInverseConversion(ecoreResource);
+			}
+
+		};
+		XMLResource ecoreResource = converter.convertResource(asResource, ecoreURI);
 		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
 		ocl.dispose();
 	}
@@ -338,7 +347,7 @@ public class LoadTests extends AbstractLoadTests
 				bowdlerize(ecoreResource);
 				return super.createInverseConversion(ecoreResource);
 			}
-			
+
 		};
 		XMLResource ecoreResource = converter.convertResource(asResource, ecoreURI);
 		ecoreResource.save(XMIUtil.createSaveOptions(ecoreResource));
