@@ -180,7 +180,7 @@ public abstract class PivotDiagnostician extends Diagnostician
 
 								@Override
 								public void run() {
-									ocl = OCL.newInstance();
+									ocl = OCL.newInstance(editingDomain.getResourceSet());
 								}
 							};
 							ThreadLocalExecutor.init(editingDomain, callBack);

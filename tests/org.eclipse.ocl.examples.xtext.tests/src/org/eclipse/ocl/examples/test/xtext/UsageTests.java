@@ -119,9 +119,9 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	private static final @NonNull String GEN_MODEL_EDITOR_ID = "org.eclipse.emf.codegen.ecore.genmodel.presentation.GenModelEditorID";
 	private static final @NonNull String UML_EDITOR_EDITOR_ID = "org.eclipse.uml2.uml.editor.presentation.UMLEditorID";
 
-	protected static class TestEcoreImporter extends EcoreImporter {
-
-		private final @NonNull ResourceSet resourceSet;
+	protected static class TestEcoreImporter extends EcoreImporter
+	{
+		private @NonNull ResourceSet resourceSet;
 
 		protected TestEcoreImporter(@NonNull ResourceSet resourceSet) {
 			this.resourceSet = resourceSet;
@@ -1832,7 +1832,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	 */
 	public void testIssue2400_genmodel() throws Throwable {
 	//	AbstractCompletePackages.COMPLETE_PACKAGES.setState(true);
-		ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
 		try {
 			doTestRunnable(new TestRunnable() {
 				@Override
@@ -1865,7 +1865,25 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 							IPath genModelPath = modelFile.getFullPath(); //new Path(genModelFile.getURI().toString());
 							// Reload ... Ecore Next Finish
 						//	System.out.println("\nReload ... Ecore Next Finish");
-							EcoreImporter modelImporter = new EcoreImporter();
+							EcoreImporter modelImporter = new EcoreImporter()
+							{
+								private @Nullable ResourceSet resourceSet = null;
+
+								@Override
+								public ResourceSet createResourceSet() {
+									if (resourceSet == null) {
+										EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
+										if (environmentFactory != null) {
+											resourceSet = environmentFactory.getResourceSet();
+										}
+										else {
+											resourceSet = super.createResourceSet();
+										}
+									//	System.out.println("createResourceSet " + NameUtil.debugSimpleName(resourceSet2));
+									}
+									return resourceSet;
+								}
+							};
 							Monitor monitor = new BasicMonitor();
 							modelImporter.defineOriginalGenModelPath(genModelPath);
 							Diagnostic diagnostic = modelImporter.computeEPackages(monitor);
