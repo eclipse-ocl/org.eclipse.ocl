@@ -40,7 +40,7 @@ import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.osgi.framework.Bundle;
 
 /**
- * @since 1.24
+ * @since 7.0
  */
 public abstract class JavaFileUtil
 {

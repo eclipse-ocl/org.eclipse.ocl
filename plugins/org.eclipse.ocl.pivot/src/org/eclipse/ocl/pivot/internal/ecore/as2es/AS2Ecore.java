@@ -76,7 +76,7 @@ public class AS2Ecore extends AbstractConversion
 		private final @NonNull Map<@NonNull EObject, @NonNull Element> inverseCreateMap = new HashMap<>();
 
 		/**
-		 * @since 1.24
+		 * @since 7.0
 		 */
 		protected InverseConversion() {
 			super(AS2Ecore.this.environmentFactory);
@@ -365,7 +365,7 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public AS2Ecore(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull Resource asResource, @NonNull URI ecoreURI, @Nullable Map<@NonNull String, @Nullable Object> options) {
 		this(environmentFactory, ecoreURI, options);
@@ -431,7 +431,7 @@ public class AS2Ecore extends AbstractConversion
 
 	/**
 	 * @param ecoreResource2
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	protected @NonNull InverseConversion createInverseConversion(@NonNull XMLResource ecoreResource) {
 		return new InverseConversion();
@@ -450,7 +450,7 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	/**
-	 * @since 1.23
+	 * @since 7.0
 	 */
 	public <T extends EObject> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull Element pivotElement) {
 		EObject eObject = createMap.get(pivotElement);
@@ -478,7 +478,7 @@ public class AS2Ecore extends AbstractConversion
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public @NonNull XMLResource getEcoreResource() {
 		assert ecoreResource != null;

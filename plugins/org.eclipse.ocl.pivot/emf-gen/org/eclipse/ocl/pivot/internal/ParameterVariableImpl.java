@@ -179,7 +179,7 @@ public class ParameterVariableImpl extends VariableImpl implements ParameterVari
 	/**
 	 * Overridden to delegate to the represented parameter/type.
 	 *
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	@Override
 	public @Nullable EObject getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {

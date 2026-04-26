@@ -140,14 +140,14 @@ public class PivotUtil
 	/**
 	 * Prefix to be emitted by errPrintln. Initially null, set non-null at the start of some context such as a test. Set
 	 * null again once emitted as a prefix.
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @Nullable String contextLine = "No-context";	// Typically unused init to suppress first blank line
 
 	/**
 	 * Set false to allow debug messages to be emitted to System.err.
 	 *
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static boolean noDebug = true;
 
@@ -229,7 +229,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @Nullable Namespace basicGetContainingNamespace(@NonNull EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
@@ -241,7 +241,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @Nullable TemplateableElement basicGetContainingTemplateableElement(@NonNull EObject element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
@@ -311,7 +311,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @Nullable Operation basicGetReferredOperation(@NonNull CallExp callExp) {
 		if (callExp instanceof LoopExp) {
@@ -326,7 +326,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @Nullable ResourceSet basicGetResourceSet(@Nullable Object object) {
 		if (object instanceof EObject) {
@@ -600,7 +600,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static <T extends NamedElement> @NonNull T createNamedElement(@NonNull T asNamedElement) {
 		@SuppressWarnings("unchecked") T asClone = (T)PivotFactory.eINSTANCE.create(asNamedElement.eClass());
@@ -967,7 +967,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static void debugPrintln(@Nullable Object string) {
 		if (!noDebug) {
@@ -976,7 +976,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static void debugReset() {
 		startTime = System.currentTimeMillis();
@@ -1001,7 +1001,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static void errPrintln(@Nullable String string) {
 		if (contextLine != null) {
@@ -1096,7 +1096,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull Type getActual(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
 		return Objects.requireNonNull(templateParameterSubstitution.getActual());
@@ -1239,7 +1239,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClasses(@NonNull TemplateParameter asTemplateParameter) {
 		return ClassUtil.nullFree(asTemplateParameter.getConstrainingClasses());
@@ -1303,7 +1303,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull TemplateableElement getContainingTemplateableElement(@NonNull EObject element) {
 		return Objects.requireNonNull(basicGetContainingTemplateableElement(element));
@@ -1423,7 +1423,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull TemplateParameter getFormal(@NonNull TemplateParameterSubstitution templateParameterSubstitution) {
 		return Objects.requireNonNull(templateParameterSubstitution.getFormal());
@@ -1832,7 +1832,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull Iterable<@NonNull TemplateParameterSubstitution> getOwnedSubstitutions(@NonNull TemplateableElement asTemplateableElement) {
 		return PivotUtilInternal.getOwnedSubstitutions(asTemplateableElement);
@@ -2202,7 +2202,7 @@ public class PivotUtil
 	/**
 	 * Return true if the testNameSuffix system property has been set to indicate tests are
 	 * running under the supervision of the tycho-surefire-plugin..
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static boolean isTychoSurefire() {
 		String testNameSuffix = System.getProperty("testNameSuffix", "");
@@ -2210,7 +2210,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static boolean isValidIdentifier(@Nullable String value) {
 		if (value == null) {
@@ -2238,7 +2238,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	@Deprecated /* @deprecated not used */
 	public static <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, @Nullable List<? extends T> newElements) {
@@ -2251,7 +2251,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static <T extends EObject> void refreshList(@Nullable List<? super T> oldElements, boolean isContainment, @Nullable List<? extends T> newElements) {
 		if (oldElements == null) {
@@ -2315,7 +2315,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static void refreshName(@NonNull NamedElement pivotNamedElement, @Nullable String newName) {
 		String oldName = pivotNamedElement.getName();
@@ -2325,7 +2325,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static void refreshNsURI(org.eclipse.ocl.pivot.@NonNull Package pivotPackage, String newNsURI) {
 		String oldNsURI = pivotPackage.getURI();
@@ -2335,7 +2335,7 @@ public class PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, @Nullable Collection<? extends T> newElements) {
 		if (oldElements == null) {

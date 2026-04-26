@@ -102,7 +102,7 @@ import com.google.common.collect.Iterables;
 public class PivotUtilInternal extends PivotUtil
 {
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	@SuppressWarnings("serial")
 	public static class ContainmentArrayList<T> extends ArrayList<T> {}
@@ -113,7 +113,7 @@ public class PivotUtilInternal extends PivotUtil
 	 * If DEBUG_DEPRECATIONS is set active debugDeprecation() returns false causing debugged deprecations
 	 * to fail their assertions.
 	 *
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static final TracingOption DEBUG_DEPRECATIONS = new TracingOption(PivotPlugin.PLUGIN_ID, "debug/deprecation"); //$NON-NLS-1$
 
@@ -127,7 +127,7 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static boolean assertIsNormalizedType(/*@NonNull*/ Type asType) {
 		if (!((asType instanceof NormalizedTemplateParameter) || !(asType instanceof TemplateParameter) || !(asType.getESObject() instanceof ETypeParameter) || !((ETypeParameter)asType.getESObject()).getEBounds().isEmpty())) {
@@ -138,7 +138,7 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @Nullable EnvironmentFactoryInternal basicGetEnvironmentFactory(@Nullable Object object) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
@@ -164,15 +164,11 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-<<<<<<< ewillink/2285rework4
-	 * @since 1.24
-=======
 	 * Emit string to System.out and return false if DEBUG_DEPRECATIONS active.
 	 * This method is typically invoked as assert PivotUtilInternal.debugDeprecation("className.methodName"); so
 	 * that with -ea compilation an assertion failure occurs without imposing any costs when -ea not in use.
 	 *
-	 * @since 1.23
->>>>>>> 67b3dde [576375] Phase out EnvironmentFactoryAdapter use new AbstractEnvironmentFactory externalResourceSet
+	 * @since 7.0
 	 */
 	public static boolean debugDeprecation(String string) {
 		System.out.println("Deprecated method in use: " + string);
@@ -267,21 +263,21 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClassesList(@NonNull TemplateParameter asTemplateParameter) {
 		return ClassUtil.nullFree(asTemplateParameter.getConstrainingClasses());
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory() {
 		return Objects.requireNonNull(ThreadLocalExecutor.basicGetEnvironmentFactory());
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull EnvironmentFactoryInternal getEnvironmentFactory(@Nullable Notifier notifier) {
 		EnvironmentFactoryInternal environmentFactory = ThreadLocalExecutor.basicGetEnvironmentFactory();
@@ -639,7 +635,7 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull List<@NonNull TemplateParameterSubstitution> getOwnedSubstitutionsList(@NonNull TemplateableElement asTemplateableElement) {
 		List<@NonNull TemplateParameterSubstitution> asTemplateParameterSubstitutions = new ArrayList<>();
@@ -792,7 +788,7 @@ public class PivotUtilInternal extends PivotUtil
 
 	/**
 	 * Return true if list is EcoreELIst.isContainment().
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	@Deprecated /* Use known caller context rather than this unreliable tacky deduction */
 	public static <T extends EObject> boolean isContainmentEList(@NonNull List<? super T> list) {
@@ -897,7 +893,7 @@ public class PivotUtilInternal extends PivotUtil
 	/**
 	 * Return true if the testNameSuffix system property has been set to indicate tests are
 	 * running under the supervision of the maven-surefire-plugin..
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static boolean isMavenSurefire() {
 		String testNameSuffix = System.getProperty("testNameSuffix", "");
@@ -937,7 +933,7 @@ public class PivotUtilInternal extends PivotUtil
 	/**
 	 * Return true if the testNameSuffix system property has been set to indicate tests are
 	 * running under the supervision of the tycho-surefire-plugin..
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static boolean isTychoSurefire() {
 		String testNameSuffix = System.getProperty("testNameSuffix", "");
@@ -985,7 +981,7 @@ public class PivotUtilInternal extends PivotUtil
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static <T extends EObject> void refreshSet(@Nullable List<? super T> oldElements, boolean isContainment, @Nullable Collection<? extends T> newElements) {
 		if (oldElements == null) {

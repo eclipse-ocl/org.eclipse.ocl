@@ -340,7 +340,7 @@ public class PrecedenceImpl
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	@Override
 	public @NonNull URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {			// XXX enums are missing from oclstdlib.ecore

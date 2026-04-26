@@ -192,7 +192,7 @@ public class ThreadLocalExecutor implements Nameable
 	 * @param callBack */
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static void init(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {
 		ThreadLocalExecutor threadLocalExecutor = get();
@@ -202,7 +202,7 @@ public class ThreadLocalExecutor implements Nameable
 	/**
 	 * Register execution of a finalizer that may release some resource that may also need finalization.
 	 *
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static int incrementFinalizerReleases() {
 		int count = finalizerReleases.incrementAndGet();
@@ -264,7 +264,7 @@ public class ThreadLocalExecutor implements Nameable
 	/**
 	 * Restart the finalizer-has-released count. Returns the pre-rest value.
 	 *
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static synchronized int resetFinalizerReleases() {
 		int count = finalizerReleases.get();
@@ -506,7 +506,7 @@ public class ThreadLocalExecutor implements Nameable
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public void localInit(@NonNull EditingDomain editingDomain, @NonNull InitWrapperCallBack<?, ?> callBack) {}
 

@@ -418,7 +418,7 @@ public class XMIUtil
 		}
 	}
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull Map<Object, Object> createSaveOptions(@NonNull Resource aResource) {
 		Class<?> resourceClass = aResource.getClass();

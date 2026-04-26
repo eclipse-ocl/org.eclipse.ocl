@@ -56,7 +56,7 @@ public interface Namespace extends NamedElement {
 
 	/**
 	 * Eliminate all transitive contents of this partial namespace. Other partial namespaces are unaffected.
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	default void eraseContents() {}
 } // Namespace

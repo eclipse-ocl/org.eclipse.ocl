@@ -36,7 +36,7 @@ import org.eclipse.jdt.annotation.Nullable;
  * FIXME This class confuses two cases.
  * Reloading neds to verride loadClass as this class does.
  * Additional path loading should use findClass to preserve the parent loader.
- * @since 1.24
+ * @since 7.0
  */
 public class ExplicitClassLoader extends ClassLoader
 {

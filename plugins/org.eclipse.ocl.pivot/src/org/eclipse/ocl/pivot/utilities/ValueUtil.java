@@ -1160,7 +1160,7 @@ public abstract class ValueUtil
 	 * Creates an IntegerValue/RElaValue/UnlimitedNaturalValue representation for aValue.
 	 * @param aValue the string representation of a number
 	 * @return the numeric representation
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static @NonNull NumberValue numberValueOf(@NonNull String aValue) {
 		if (aValue.contains("*")) {

@@ -47,7 +47,7 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 	 * A DelegatingEValidator instance displaces a global EValidator.Registry.INSTANCE to redirect validations for
 	 * EPackages associated with ResourceSets with local ValidationRegistryAdapters to use the local adapter.
 	 *
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	protected static class DelegatingEValidator implements EValidator
 	{
@@ -285,7 +285,7 @@ public class ValidationRegistryAdapter extends EValidatorRegistryImpl implements
 	 *
 	 * For a null eValidator, retract the previous registration.
 	 *
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public void putWithGlobalDelegation(@NonNull EPackage ePackage, @Nullable EValidator eValidator) {
 		ResourceSet resourceSet = getTarget();

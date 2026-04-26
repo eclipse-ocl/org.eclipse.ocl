@@ -32,7 +32,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 public interface Attribution
 {
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static class AttributionRegistry extends HashMap<@NonNull EClassifier, @NonNull Attribution>
 	{
@@ -91,7 +91,7 @@ public interface Attribution
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	public static class AttributionRegistryInstaller
 	{

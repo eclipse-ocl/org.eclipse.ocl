@@ -72,7 +72,7 @@ public class SortedByIteration extends AbstractIteration
 		}
 
 		/**
-		 * @since 1.24
+		 * @since 7.0
 		 */
 		@Override
 		public int compare(@NonNull Integer x1, @NonNull Integer x2) {

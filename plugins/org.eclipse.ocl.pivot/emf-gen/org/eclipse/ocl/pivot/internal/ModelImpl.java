@@ -516,7 +516,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	@Override
 	public @NonNull URI getReloadableURI(@NonNull EnvironmentFactoryInternal environmentFactory) {
@@ -524,7 +524,7 @@ public class ModelImpl extends NamespaceImpl implements Model
 	}
 
 	/**
-	 * @since 1.24
+	 * @since 7.0
 	 */
 	@Override
 	public @NonNull Element getReloadableEObject(@NonNull EnvironmentFactoryInternal environmentFactory) {
