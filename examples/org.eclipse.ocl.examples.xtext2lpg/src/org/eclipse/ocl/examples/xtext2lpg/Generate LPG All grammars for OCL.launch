@@ -12,7 +12,7 @@
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher"/>
     <stringAttribute key="org.eclipse.jdt.launching.MODULE_NAME" value="org.eclipse.ocl.examples.xtext2lpg"/>
-    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="src/org/eclipse/ocl/examples/xtext2lpg/GenerateAllLPGs.mwe2&#13;&#10;--param lpgExe=&quot;${workspace_loc:/org.eclipse.ocl.examples.build}/lpgexe/lpg-${target.os}_${target.arch}&quot;&#13;&#10;--param lpgIncs=&quot;${workspace_loc:/lpg.generator/templates/java};${workspace_loc:/lpg.generator/include/java};&quot;"/>
+    <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="src/org/eclipse/ocl/examples/xtext2lpg/GenerateAllLPGs.mwe2&#13;&#10;--param lpgExe=&quot;${workspace_loc:/org.eclipse.ocl.build}/lpgexe/lpg-${target.os}_${target.arch}&quot;&#13;&#10;--param lpgIncs=&quot;${workspace_loc:/lpg.generator/templates/java};${workspace_loc:/lpg.generator/include/java};&quot;"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.ocl.examples.xtext2lpg"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-ea"/>
 </launchConfiguration>

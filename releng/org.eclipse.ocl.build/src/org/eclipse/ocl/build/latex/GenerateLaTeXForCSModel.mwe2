@@ -1,0 +1,50 @@
+/*******************************************************************************
+ * Copyright (c) 2014 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *   E.D.Willink - initial API and implementation
+ *
+ * Run As->MWE2 Workflow to regenerate the pivot model.
+ *******************************************************************************/
+module GenerateLaTeXForCSModel
+
+import org.eclipse.ocl.build.latex.*
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+var sourceName
+var targetName = "org.eclipse.ocl.build"
+var modelFile
+var grammarFile
+var cs2asFile = ""
+var cs2csFile = ""
+var latexFileName
+var labelPrefix = ""
+
+/**
+ *	Generate the LaTeX documentation for the OCLstdlib Model, by converting oclstdlib.oclstdlib to ocl-standard-library.tex.
+ */
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = StandaloneSetup { resourceSet = resourceSet
+    	platformUri = ".."
+    }
+    bean = GenModelSetup { resourceSet = resourceSet }
+    component = GenerateLaTeXForCSModelXtend { resourceSet = resourceSet
+    	projectName = "${sourceName}"
+    	modelFile = "${modelFile}"
+    	grammarFile = "${grammarFile}"
+    	cs2asFile = "${cs2asFile}"
+    	cs2csFile = "${cs2csFile}"
+    	latexFolder = "/${targetName}/latex-gen"
+    	latexFileName = "${latexFileName}"
+    	labelPrefix = "${labelPrefix}"
+    }
+}
+

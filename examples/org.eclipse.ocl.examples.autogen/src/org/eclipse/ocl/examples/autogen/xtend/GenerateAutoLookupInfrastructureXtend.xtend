@@ -27,14 +27,14 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory
 import org.eclipse.ocl.pivot.CollectionType
 import org.eclipse.ocl.pivot.utilities.OCL
-import org.eclipse.ocl.examples.build.utilities.GenPackageHelper
+import org.eclipse.ocl.build.utilities.GenPackageHelper
 import org.eclipse.ocl.examples.autogen.lookup.LookupCodeGenerator
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup
 import org.eclipse.ocl.pivot.model.OCLstdlib
 import java.util.Set
 import org.eclipse.ocl.examples.autogen.lookup.LookupCGUtil
-import org.eclipse.ocl.examples.build.xtend.GenerateVisitorsXtend
-import org.eclipse.ocl.examples.build.xtend.MergeWriter
+import org.eclipse.ocl.build.xtend.GenerateVisitorsXtend
+import org.eclipse.ocl.build.xtend.MergeWriter
 import org.eclipse.emf.mwe.core.WorkflowContext
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor
 

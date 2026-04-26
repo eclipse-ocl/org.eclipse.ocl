@@ -1,0 +1,145 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2011 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *
+ * Run As->MWE2 Workflow to regenerate the editor.
+ * If it fails with a stack dump, open the Xtext file and do
+ * a dummy edit. Generally there is an error in the source file.
+ *******************************************************************************/
+module GenerateOCLstdlibEditor
+
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
+import org.eclipse.xtext.xtext.generator.ui.codemining.CodeMiningFragment
+
+var oclstdlibProjectName = "org.eclipse.ocl.xtext.oclstdlib"
+var oclstdlibRuntimeProject = "../../plugins/${oclstdlibProjectName}"
+
+var rootPath = "../../plugins"
+
+/**
+ *	Generate the OCL Standard Library Editor.
+ */
+Workflow {
+    bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
+		scanClassPath = true
+		platformUri = ".."
+		registerGeneratedEPackage = "org.eclipse.ocl.xtext.essentialoclcs.EssentialOCLCSPackage"
+		registerGeneratedEPackage = "org.eclipse.ocl.xtext.oclstdlibcs.OCLstdlibCSPackage"
+		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.base/model/BaseCS.genmodel"
+		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.essentialocl/model/EssentialOCLCS.genmodel"
+		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.oclstdlib/model/OCLstdlibCS.genmodel"
+	}
+	
+	component = XtextGenerator {
+		standaloneSetup = XtextGeneratorStandaloneSetup {
+			scanClasspath = false
+		}
+		configuration = org.eclipse.ocl.build.fragments.MyDefaultGeneratorModule {
+			project = org.eclipse.ocl.build.fragments.MyStandardProjectConfig {
+				activatorName = "OCLstdlibActivator"
+				baseName = "${oclstdlibProjectName}"
+				rootPath = rootPath
+				runtimeTest = {
+					enabled = false
+				}
+				eclipsePlugin = {
+					enabled = true
+				}
+				eclipsePluginTest = {
+					enabled = false
+				}
+				genericIde = {
+					enabled = true
+					name = "${oclstdlibProjectName}.ui"
+				}
+				createEclipseMetaData = true
+			}
+			code = {
+				preferXtendStubs = false
+				lineDelimiter = "\n"
+				encoding = "UTF-8"
+				fileHeader =
+"/*******************************************************************************
+ * Copyright (c) 2011, \${year} Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *******************************************************************************/"
+			}
+		}
+		language = org.eclipse.ocl.build.fragments.MyStandardLanguage {
+			name = "${oclstdlibProjectName}.OCLstdlib"
+			fileExtensions = "oclstdlib"
+			grammarUri = "platform:/resource/${oclstdlibProjectName}/src/org/eclipse/ocl/xtext/oclstdlib/OCLstdlib.xtext"
+			generator = null
+			serializer = org.eclipse.ocl.build.fragments.DeclarativeSerializerFragmentXtend {
+				generateStub = true
+			}
+			validator = {
+				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+				generateDeprecationValidation = false
+			}
+		/*	fragment = CodeMiningFragment {
+				generateStub = true
+				generateXtendStub = false
+			} */
+			parserGenerator = parser.antlr.XtextAntlrGeneratorFragment2 {
+				options = parser.antlr.AntlrOptions {
+					backtrack = true
+					classSplitting = true
+				}
+			}
+			formatter = org.eclipse.ocl.build.fragments.DeclarativeFormatterFragmentXtend {
+				generateStub = true
+			}
+			// EssentialOCL bindings 
+			fragment = org.eclipse.ocl.build.fragments.EssentialOCLFragment {}
+			// Support Markup and Hover text 
+			fragment = org.eclipse.ocl.build.fragments.MarkupHoverFragment {}
+			// *.xtextbin support on Xtext 2.3		
+			fragment = org.eclipse.ocl.build.fragments.CompatibilityFragment {}
+		}
+	}
+	component = org.eclipse.ocl.build.xtend.GenerateGrammarXtend {
+		javaFolder = "${oclstdlibRuntimeProject}/src-gen"
+		javaPackageName = "${oclstdlibProjectName}"
+		grammarFileStem = "OCLstdlib"
+	}
+	component = org.eclipse.ocl.build.utilities.InjectCompatibilityAbstractInternalAntlrParser {
+		fileName = "${oclstdlibRuntimeProject}/src-gen/org/eclipse/ocl/xtext/oclstdlib/parser/antlr/internal/InternalOCLstdlibParser.java"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${oclstdlibRuntimeProject}/META-INF"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${oclstdlibRuntimeProject}/emf-gen"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${oclstdlibRuntimeProject}/src"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${oclstdlibRuntimeProject}/src-gen"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${oclstdlibRuntimeProject}.ui/META-INF"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${oclstdlibRuntimeProject}.ui/src"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${oclstdlibRuntimeProject}.ui/src-gen"
+	}
+}

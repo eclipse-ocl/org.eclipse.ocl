@@ -1,0 +1,75 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2013 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *     Adolfo Sanchez-Barbudo Herrera (University of York) - bug397429"
+ * 
+ * Run As->MWE2 Workflow to regenerate the Xtest CS models.
+ *******************************************************************************/
+module GenerateCSModels
+
+import org.eclipse.ocl.build.*
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.ocl.build.xtend.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.emf.ecore.resource.impl.*
+
+/**
+ *	Generate the Concrete Syntax Models used by the Xtext editors.
+ */
+Workflow {
+	bean = ResourceSetImpl : resourceSet {}
+    bean = StandaloneSetup { resourceSet = resourceSet
+    	platformUri = ".."
+    	scanClassPath = true
+    }
+    bean = EcoreGenModelSetup { resourceSet = resourceSet }
+//    bean = UMLGenModelSetup { resourceSet = resourceSet }		// So long as pivot.merged.genmodel is UML-based
+    component = GenerateModel { resourceSet = resourceSet skipOnErrors = true
+    	genModel = "/org.eclipse.ocl.xtext.markup/model/Markup.genmodel"
+    }
+    component = @SubGenerateCSModel { resourceSet = resourceSet
+    	projectName = "org.eclipse.ocl.xtext.base"
+    	genModelFile = "model/BaseCS.genmodel"
+    }
+    component = @SubGenerateCSModel { resourceSet = resourceSet
+    	projectName = "org.eclipse.ocl.xtext.essentialocl"
+    	genModelFile = "model/EssentialOCLCS.genmodel"
+    	superProjectName = "org.eclipse.ocl.xtext.base"
+    	superGenModelFile = "model/BaseCS.genmodel"
+    	baseProjectName = "org.eclipse.ocl.xtext.base"
+    	baseGenModelFile = "model/BaseCS.genmodel"
+    }
+    component = @SubGenerateCSModel { resourceSet = resourceSet
+    	projectName = "org.eclipse.ocl.xtext.oclstdlib"
+    	genModelFile = "model/OCLstdlibCS.genmodel"
+    	superProjectName = "org.eclipse.ocl.xtext.essentialocl"
+    	superGenModelFile = "model/EssentialOCLCS.genmodel"
+    	baseProjectName = "org.eclipse.ocl.xtext.base"
+    	baseGenModelFile = "model/BaseCS.genmodel"
+    }
+    
+    component = @SubGenerateCSModel { resourceSet = resourceSet
+    	projectName = "org.eclipse.ocl.xtext.oclinecore"
+    	genModelFile = "model/OCLinEcoreCS.genmodel"
+    	superProjectName = "org.eclipse.ocl.xtext.essentialocl"
+    	superGenModelFile = "model/EssentialOCLCS.genmodel"
+    	baseProjectName = "org.eclipse.ocl.xtext.base"
+    	baseGenModelFile = "model/BaseCS.genmodel"
+    }
+    
+    component = @SubGenerateCSModel { resourceSet = resourceSet
+    	projectName = "org.eclipse.ocl.xtext.completeocl"
+    	genModelFile = "model/CompleteOCLCS.genmodel"
+    	superProjectName = "org.eclipse.ocl.xtext.essentialocl"
+    	superGenModelFile = "model/EssentialOCLCS.genmodel"
+    	baseProjectName = "org.eclipse.ocl.xtext.base"
+    	baseGenModelFile = "model/BaseCS.genmodel"
+    }
+}

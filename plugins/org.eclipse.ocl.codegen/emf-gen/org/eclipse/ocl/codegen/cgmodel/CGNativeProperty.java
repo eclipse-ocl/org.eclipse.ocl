@@ -30,7 +30,7 @@ public interface CGNativeProperty extends CGProperty {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Nul$19
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$Nul$19
 	void setNonNull();
 
 	/**
@@ -38,6 +38,6 @@ public interface CGNativeProperty extends CGProperty {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$Set$5
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$Set$5
 	void setSettable();
 } // CGNativeProperty

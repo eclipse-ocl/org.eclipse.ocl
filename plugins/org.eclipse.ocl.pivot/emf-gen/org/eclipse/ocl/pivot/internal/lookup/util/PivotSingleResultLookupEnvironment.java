@@ -10,7 +10,7 @@
  *
  * This code is auto-generated
  * from: org.eclipse.ocl.pivot/model/Pivot.genmodel
- * template: org.eclipse.ocl.examples.build.xtend.GenerateAutoLookupInfrastructureXtend
+ * template: org.eclipse.ocl.build.xtend.GenerateAutoLookupInfrastructureXtend
  *
  * Only the copyright statement is editable.
  *******************************************************************************/

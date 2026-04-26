@@ -722,7 +722,7 @@ public class Class
   protected final String TEXT_702 = " getEMap()" + NL + "\t{" + NL + "\t\t";
   protected final String TEXT_703 = " container = eContainer();" + NL + "\t\treturn container == null ? null : (";
   protected final String TEXT_704 = ")container.eGet(eContainmentFeature());" + NL + "\t}" + NL;
-  protected final String TEXT_705 = NL + "\t/**" + NL + "\t * Accept a visit from a visitor and return the result of a call to the derived type-specific visitXXX in the visitor." + NL + "\t * @generated" + NL + "\t */" + NL + "\t// Generated from org.eclipse.ocl.examples.build/templates/model/Class/insert.javajetinc" + NL + "\tpublic <R> R accept(";
+  protected final String TEXT_705 = NL + "\t/**" + NL + "\t * Accept a visit from a visitor and return the result of a call to the derived type-specific visitXXX in the visitor." + NL + "\t * @generated" + NL + "\t */" + NL + "\t// Generated from org.eclipse.ocl.build/templates/model/Class/insert.javajetinc" + NL + "\tpublic <R> R accept(";
   protected final String TEXT_706 = "<R> visitor);";
   protected final String TEXT_707 = NL + "\t/**" + NL + "\t * {@inheritDoc}" + NL + "\t * @generated" + NL + "\t */";
   protected final String TEXT_708 = NL + "\tpublic <R> R accept(";

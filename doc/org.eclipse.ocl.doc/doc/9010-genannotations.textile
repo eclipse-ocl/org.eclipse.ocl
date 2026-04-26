@@ -107,13 +107,13 @@ The support for copy and paste is in @templates/model/Class/insert.javajetinc@ w
 
 h3. Implementation Details
 
-h4. @org.eclipse.ocl.examples.build@
+h4. @org.eclipse.ocl.build@
 
-The @org.eclipse.ocl.examples.build@ plugin hosts the build-time functionality that does not need to bloat the distribution.
+The @org.eclipse.ocl.build@ plugin hosts the build-time functionality that does not need to bloat the distribution.
 
 Modified JET templates are in the @templates@ folder which @.jetproperties@ prefixes to the template path. The @.project@ has an @org.eclipse.emf.codegen.jet.IJETNature@ nature and builder so that the custom JET templates are automatically built to the @jet-gen@ source folder. The @.project@ similarly has has an @org.eclipse.xtext.ui.shared.xtextNature@ nature and builder so that the Xtend templates are automatically built to the @xtend-gen@ source folder. Both these generated source folders are excluded from source control, since they are 100% auto-generated and they do not form part of the distribution.
 
-Custom JET templates are declared by OCLBuildGenModelGeneratorAdapterFactory which creates a OCLBuildGenClassGeneratorAdapter that replaces the normal reference to @org.eclipse.emf.codegen.ecore.templates.model.Class@ by @org.eclipse.ocl.examples.build.templates.model.Class@.
+Custom JET templates are declared by OCLBuildGenModelGeneratorAdapterFactory which creates a OCLBuildGenClassGeneratorAdapter that replaces the normal reference to @org.eclipse.emf.codegen.ecore.templates.model.Class@ by @org.eclipse.ocl.build.templates.model.Class@.
 
 The custom build functionality is installed by the @GenModelSetup@ workflow component,
 

@@ -10,7 +10,7 @@
  *******************************************************************************
  * This code is 100% auto-generated
  * from: E:\GIT\org.eclipse.ocl\plugins..\..\plugins\org.eclipse.ocl.xtext.oclstdlib\src-gen\org\eclipse\ocl\xtext\oclstdlib\OCLstdlib.xtextbin
- * by: org.eclipse.ocl.examples.build.xtend.generateGrammar.xtend
+ * by: org.eclipse.ocl.build.xtend.generateGrammar.xtend
  *
  * Do not edit it.
  *******************************************************************************/

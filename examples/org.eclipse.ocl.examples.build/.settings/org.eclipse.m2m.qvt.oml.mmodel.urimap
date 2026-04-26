@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="ASCII"?>
-<uriMap:MappingContainer xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:uriMap="http:///www.eclipse.org/m2m/qvt/oml/MModelUriMap/1.0.0">
-  <mapping sourceURI="local://www.eclipse.org/ocl/2012/UML2EcoreMapping" targetURI="platform:/resource/org.eclipse.ocl.examples.build/model/UML2EcoreMapping.ecore"/>
-  <mapping sourceURI="local://www.eclipse.org/ocl/2012/UML2EcoreControl" targetURI="platform:/resource/org.eclipse.ocl.examples.build/model/UML2EcoreControl.ecore"/>
-</uriMap:MappingContainer>

@@ -37,7 +37,7 @@ public interface CGElement extends EObject {
 	 * Accept a visit from a visitor and return the result of a call to the derived type-specific visitXXX in the visitor.
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build/templates/model/Class/insert.javajetinc
+	// Generated from org.eclipse.ocl.build/templates/model/Class/insert.javajetinc
 	public <R> R accept(@NonNull CGModelVisitor<R> visitor);
 
 	/**
@@ -45,7 +45,7 @@ public interface CGElement extends EObject {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGElementModelSpec$1
+	// Generated from org.eclipse.ocl.build.modelspecs.CGElementModelSpec$1
 	@NonNull Iterable<@NonNull ? extends CGElement> getChildren();
 
 	/**
@@ -53,7 +53,7 @@ public interface CGElement extends EObject {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGElementModelSpec$2
+	// Generated from org.eclipse.ocl.build.modelspecs.CGElementModelSpec$2
 	@Nullable CGElement getParent();
 
 	/**
@@ -64,7 +64,7 @@ public interface CGElement extends EObject {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$2
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$2
 	@Nullable AbstractPlace getPlace(@NonNull Map<@Nullable CGElement, @NonNull AbstractPlace> element2place);
 
 	/**
@@ -72,7 +72,7 @@ public interface CGElement extends EObject {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$10
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$10
 	boolean isContext();
 
 	/**
@@ -80,6 +80,6 @@ public interface CGElement extends EObject {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGValuedElementModelSpec$22
+	// Generated from org.eclipse.ocl.build.modelspecs.CGValuedElementModelSpec$22
 	boolean rewriteAs(@NonNull CGValuedElement oldValue, @NonNull CGValuedElement newValue);
 } // CGElement

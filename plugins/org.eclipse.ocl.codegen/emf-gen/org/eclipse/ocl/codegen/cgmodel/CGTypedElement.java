@@ -88,6 +88,6 @@ public interface CGTypedElement extends CGNamedElement {
 	 *
 	 * @generated
 	 */
-	// Generated from org.eclipse.ocl.examples.build.modelspecs.CGTypedElementModelSpec$1
+	// Generated from org.eclipse.ocl.build.modelspecs.CGTypedElementModelSpec$1
 	@Nullable TypeId getASTypeId();
 } // CGTypedElement

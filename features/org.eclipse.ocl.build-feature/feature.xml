@@ -35,7 +35,7 @@
    </url>
 
    <!--plugin
-         id="org.eclipse.ocl.examples.build"
+         id="org.eclipse.ocl.build"
          download-size="0"
          install-size="0"
          version="0.0.0"

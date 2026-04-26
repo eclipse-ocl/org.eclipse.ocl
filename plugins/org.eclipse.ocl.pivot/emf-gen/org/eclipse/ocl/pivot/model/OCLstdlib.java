@@ -10,8 +10,8 @@
  *******************************************************************************
  * This code is 100% auto-generated
  * from: /org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib
- * by: org.eclipse.ocl.examples.build.xtend.generateOCLstdlib.xtend
- * and: org.eclipse.ocl.examples.build.GenerateOCLstdlibModel.mwe2
+ * by: org.eclipse.ocl.build.xtend.generateOCLstdlib.xtend
+ * and: org.eclipse.ocl.build.GenerateOCLstdlibModel.mwe2
  *
  * Do not edit it.
  *******************************************************************************/

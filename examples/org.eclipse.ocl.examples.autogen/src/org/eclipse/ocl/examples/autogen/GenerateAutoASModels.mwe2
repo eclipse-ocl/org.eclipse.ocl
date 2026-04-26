@@ -13,9 +13,9 @@
  *******************************************************************************/
 module GenerateAutoCSModels
 
-import org.eclipse.ocl.examples.build.*
-import org.eclipse.ocl.examples.build.utilities.*
-import org.eclipse.ocl.examples.build.xtend.*
+import org.eclipse.ocl.build.*
+import org.eclipse.ocl.build.utilities.*
+import org.eclipse.ocl.build.xtend.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.emf.ecore.resource.impl.*

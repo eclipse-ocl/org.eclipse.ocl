@@ -3,7 +3,7 @@ and https://bugs.eclipse.org/bugs/show_bug.cgi?id=522565
 and https://bugs.eclipse.org/bugs/show_bug.cgi?id=543870
 and https://bugs.eclipse.org/bugs/show_bug.cgi?id=570012
 
-NB. The tweaks here provide an enhanced EMF genmodel capability when /org.eclipse.ocl.examples.build/templates
+NB. The tweaks here provide an enhanced EMF genmodel capability when /org.eclipse.ocl.build/templates
 is in use as a genmodel templateDirectory. The JET is compiled so dynamicTemplates are not required, however
 the builder doesn't understand the dependencies so deleting the generated *.java may make an obscure problem go away.
 

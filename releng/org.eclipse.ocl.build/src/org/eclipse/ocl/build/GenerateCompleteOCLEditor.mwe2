@@ -1,0 +1,142 @@
+/*******************************************************************************
+ * Copyright (c) 2010, 2011 Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ * 
+ * Run As->MWE2 Workflow to regenerate the editor.
+ * If it fails with a stack dump, open the Xtext file and do
+ * a dummy edit. Generally there is an error in the source file.
+ *******************************************************************************/
+module GenerateCompleteOCLEditor
+
+import org.eclipse.xtext.xtext.generator.*
+import org.eclipse.xtext.xtext.generator.model.project.*
+import org.eclipse.xtext.xtext.generator.ui.codemining.CodeMiningFragment
+
+var completeOCLprojectName = "org.eclipse.ocl.xtext.completeocl"
+var completeOCLruntimeProject = "../../plugins/${completeOCLprojectName}"
+
+var rootPath = "../../plugins"
+
+/**
+ *	Generate the CompleteOCL Editor.
+ */
+Workflow {
+    bean = org.eclipse.emf.mwe.utils.StandaloneSetup {
+		scanClassPath = true
+		platformUri = ".."
+		registerGeneratedEPackage = "org.eclipse.ocl.xtext.completeoclcs.CompleteOCLCSPackage"
+		registerGenModelFile = "platform:/resource/org.eclipse.ocl.xtext.completeocl/model/CompleteOCLCS.genmodel"
+	}
+	
+	component = XtextGenerator {
+		standaloneSetup = XtextGeneratorStandaloneSetup {
+			scanClasspath = false
+		}
+		configuration = org.eclipse.ocl.build.fragments.MyDefaultGeneratorModule {
+			project = org.eclipse.ocl.build.fragments.MyStandardProjectConfig {
+				activatorName = "CompleteOCLActivator"
+				baseName = "${completeOCLprojectName}"
+				rootPath = rootPath
+				runtimeTest = {
+					enabled = false
+				}
+				eclipsePlugin = {
+					enabled = true
+				}
+				eclipsePluginTest = {
+					enabled = false
+				}
+				genericIde = {
+					enabled = true
+					name = "${completeOCLprojectName}.ui"
+				}
+				createEclipseMetaData = true
+			}
+			code = {
+				preferXtendStubs = false
+				lineDelimiter = "\n"
+				encoding = "UTF-8"
+				fileHeader =
+"/*******************************************************************************
+ * Copyright (c) 2011, \${year} Willink Transformations and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *     E.D.Willink - initial API and implementation
+ *******************************************************************************/"
+			}
+		}
+		language = org.eclipse.ocl.build.fragments.MyStandardLanguage {
+			name = "${completeOCLprojectName}.CompleteOCL"
+			fileExtensions = "ocl"
+			grammarUri = "platform:/resource/${completeOCLprojectName}/src/org/eclipse/ocl/xtext/completeocl/CompleteOCL.xtext"
+			generator = null
+			serializer = org.eclipse.ocl.build.fragments.DeclarativeSerializerFragmentXtend {
+				generateStub = true
+			}
+			validator = {
+				// composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+				generateDeprecationValidation = false
+			}
+		/*	fragment = CodeMiningFragment {
+				generateStub = true
+				generateXtendStub = false
+			} */
+			parserGenerator = parser.antlr.XtextAntlrGeneratorFragment2 {
+				options = parser.antlr.AntlrOptions {
+					backtrack = true
+					classSplitting = true
+				}
+			}
+			formatter = org.eclipse.ocl.build.fragments.DeclarativeFormatterFragmentXtend {
+				generateStub = true
+			}
+			// EssentialOCL bindings 
+			fragment = org.eclipse.ocl.build.fragments.EssentialOCLFragment {}
+			// Support Markup and Hover text 
+			fragment = org.eclipse.ocl.build.fragments.MarkupHoverFragment {}
+			// *.xtextbin support on Xtext 2.3		
+			fragment = org.eclipse.ocl.build.fragments.CompatibilityFragment {}
+		}
+	}
+	component = org.eclipse.ocl.build.xtend.GenerateGrammarXtend {
+		javaFolder = "${completeOCLruntimeProject}/src-gen"
+		javaPackageName = "${completeOCLprojectName}"
+		grammarFileStem = "CompleteOCL"
+	}
+	component = org.eclipse.ocl.build.utilities.InjectCompatibilityAbstractInternalAntlrParser {
+		fileName = "${completeOCLruntimeProject}/src-gen/org/eclipse/ocl/xtext/completeocl/parser/antlr/internal/InternalCompleteOCLParser.java"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/META-INF"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/emf-gen"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/src"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}/src-gen"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}.ui/META-INF"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}.ui/src"
+	}
+	component = org.eclipse.ocl.build.utilities.ConvertToUnixLineEndings {
+		directory = "${completeOCLruntimeProject}.ui/src-gen"
+	}
+}

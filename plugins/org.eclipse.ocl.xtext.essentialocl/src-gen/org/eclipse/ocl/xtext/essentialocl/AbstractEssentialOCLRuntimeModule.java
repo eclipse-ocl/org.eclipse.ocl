@@ -115,17 +115,17 @@ public abstract class AbstractEssentialOCLRuntimeModule extends DefaultRuntimeMo
 		return EssentialOCLGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends INodeModelFormatter> bindINodeModelFormatter() {
 		return DeclarativeFormatter.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends ISerializer> bindISerializer() {
 		return DeclarativeSerializer.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.DeclarativeSerializerFragment
+	// contributed by org.eclipse.ocl.build.fragments.DeclarativeSerializerFragment
 	public Class<? extends SerializationMetaData.Provider> bindSerializationMetaData$Provider() {
 		return EssentialOCLSerializationMetaData.Provider.class;
 	}
@@ -213,72 +213,72 @@ public abstract class AbstractEssentialOCLRuntimeModule extends DefaultRuntimeMo
 		binder.bind(IResourceDescriptions.class).annotatedWith(Names.named(ResourceDescriptionsProvider.PERSISTED_DESCRIPTIONS)).to(ResourceSetBasedResourceDescriptions.class);
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends ICrossReferenceSerializer> bindICrossReferenceSerializer() {
 		return BaseCrossReferenceSerializer.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IDiagnosticConverter> bindIDiagnosticConverter() {
 		return PivotDiagnosticConverter.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
 		return BaseFragmentProvider.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IHiddenTokenSequencer> bindIHiddenTokenSequencer() {
 		return BaseHiddenTokenSequencer.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends ILinker> bindILinker() {
 		return CS2ASLinker.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends ILinkingDiagnosticMessageProvider> bindILinkingDiagnosticMessageProvider() {
 		return BaseLinkingDiagnosticMessageProvider.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends ILinkingService> bindILinkingService() {
 		return BaseLinkingService.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IQualifiedNameConverter> bindIQualifiedNameConverter() {
 		return BaseQualifiedNameConverter.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
 		return BaseQualifiedNameProvider.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IResourceServiceProvider> bindIResourceServiceProvider() {
 		return PivotResourceServiceProvider.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IResourceValidator> bindIResourceValidator() {
 		return PivotResourceValidator.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends IValueConverterService> bindIValueConverterService() {
 		return BaseValueConverterService.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.EssentialOCLFragment
+	// contributed by org.eclipse.ocl.build.fragments.EssentialOCLFragment
 	public Class<? extends XtextResource> bindXtextResource() {
 		return EssentialOCLCSResource.class;
 	}
 
-	// contributed by org.eclipse.ocl.examples.build.fragments.CompatibilityFragment
+	// contributed by org.eclipse.ocl.build.fragments.CompatibilityFragment
 	public Class<? extends GrammarProvider> bindGrammarProvider() {
 		return EssentialOCLGrammarResource.GrammarProvider.class;
 	}

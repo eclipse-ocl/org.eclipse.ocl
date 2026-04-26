@@ -3,7 +3,7 @@ h1. Building the OCL Project
 
 This section contains some details on the way in which the OCL project is built. This should only be of interest to users creating extension of the project.
 
-The interactive build facilities may be found in the org.eclipse.ocl.examples.build plugin. The "Generate OCL All" launch invokes all the sub-generators for models and editors.
+The interactive build facilities may be found in the org.eclipse.ocl.build plugin. The "Generate OCL All" launch invokes all the sub-generators for models and editors.
 
 The documentation build uses the "OCL Documentation" Ant external launch; see org.eclipse.ocl.doc/libs/Readme.txt for prerequisites. The build populates the help/html/manual folders whose content should be committted to GIT to ensure that the regular build uses the updated documentation. Publishing ocl.pdf is an option that can be selected when performing a final Jenkins reklease build.
 

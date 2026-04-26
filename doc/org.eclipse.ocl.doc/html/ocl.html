@@ -22402,9 +22402,9 @@ org.eclipse.ocl.pivot.internal.resource.<br>
 					<code class="code">/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib</code>.
 				</p>
 <p>If you want to use an alternate library examine the code for the standard installation above, and if you want to compile your library examine the 
-					<code class="code">/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/GenerateOCLstdlibModel.mwe2</code> launcher for the
+					<code class="code">/org.eclipse.ocl.build/src/org/eclipse/ocl/build/GenerateOCLstdlibModel.mwe2</code> launcher for the
 
-					<code class="code">/org.eclipse.ocl.examples.build/src/org/eclipse/ocl/examples/build/xtend/GenerateOCLstdlibXtend.xtend</code> Xtend template.
+					<code class="code">/org.eclipse.ocl.build/src/org/eclipse/ocl/build/xtend/GenerateOCLstdlibXtend.xtend</code> Xtend template.
 				</p>
 <p>Note that the library is extensible and importable so you may import your own library that in turn imports the standard library.</p>
 <p>If you neglect to install an OCL Standard Library, you get the error &ldquo;No OCL Standard Library content available&rdquo;. If you provide a custom library that fails to meet the miinimal requirements of defining the basic library types (e.g. Boolean, Set, Tuple) and methods (e.g. OclAny::&ldquo;=&rdquo;) you get an error such as &ldquo;No 'Boolean' type in the OCL Standard Library&rdquo;.</p>
@@ -23875,7 +23875,7 @@ org.eclipse.xtext<br>
 </div>
 </div>
 <p>This section contains some details on the way in which the OCL project is built. This should only be of interest to users creating extension of the project.</p>
-<p>The interactive build facilities may be found in the org.eclipse.ocl.examples.build plugin. The &ldquo;Generate OCL All&rdquo; launch invokes all the sub-generators for models and editors.</p>
+<p>The interactive build facilities may be found in the org.eclipse.ocl.build plugin. The &ldquo;Generate OCL All&rdquo; launch invokes all the sub-generators for models and editors.</p>
 <p>The documentation build uses the &ldquo;OCL Documentation&rdquo; Ant external launch; see org.eclipse.ocl.doc/libs/Readme.txt for prerequisites. The build populates the help/html/manual folders whose content should be committted to GIT to ensure that the regular build uses the updated documentation. Publishing ocl.pdf is an option that can be selected when performing a final Jenkins reklease build.</p>
 <p>The Javadoc build uses the &ldquo;Run OCL Javadoc using Ant directly&rdquo; Ant external launch. The build populates the javadoc folder which should not be committted to GIT. Generating and publishing the javadoc is an option that can be selected when performing a final Jenkins release build.</p>
 <p>The distribution build facilities uses the Maven pom.xml in the org.eclipse.ocl.releng.tycho plugin. The &ldquo;Build OCL Distribution - Nightly&rdquo; replicates the Jenkins build locally differing only the absence of the final signing. The build populates the org.eclipse.ocl.releng.build-site plugin</p>
@@ -24165,20 +24165,20 @@ org.eclipse.xtext<br>
 </div>
 </div>
 </div>
-<div class="section" title="org.eclipse.ocl.examples.build">
+<div class="section" title="org.eclipse.ocl.build">
 <div class="titlepage">
 <div>
 <div>
 <h4 class="title">
-<a name="org.eclipse.ocl.examples.build"></a>
-						<code class="code">org.eclipse.ocl.examples.build</code>
+<a name="org.eclipse.ocl.build"></a>
+						<code class="code">org.eclipse.ocl.build</code>
 					
 </h4>
 </div>
 </div>
 </div>
 <p>The 
-						<code class="code">org.eclipse.ocl.examples.build</code> plugin hosts the build-time functionality that does not need to bloat the distribution.
+						<code class="code">org.eclipse.ocl.build</code> plugin hosts the build-time functionality that does not need to bloat the distribution.
 					</p>
 <p>Modified JET templates are in the 
 						<code class="code">templates</code> folder which 
@@ -24192,7 +24192,7 @@ org.eclipse.xtext<br>
 					</p>
 <p>Custom JET templates are declared by OCLBuildGenModelGeneratorAdapterFactory which creates a OCLBuildGenClassGeneratorAdapter that replaces the normal reference to 
 						<code class="code">org.eclipse.emf.codegen.ecore.templates.model.Class</code> by 
-						<code class="code">org.eclipse.ocl.examples.build.templates.model.Class</code>.
+						<code class="code">org.eclipse.ocl.build.templates.model.Class</code>.
 					</p>
 <p>The custom build functionality is installed by the 
 						<code class="code">GenModelSetup</code> workflow component,

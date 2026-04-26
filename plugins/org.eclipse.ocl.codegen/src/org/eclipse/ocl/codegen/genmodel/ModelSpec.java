@@ -28,7 +28,7 @@ import org.eclipse.ocl.codegen.java.ImportUtils;
  * is maintained automatically whenever a class instance is constructed. Multiple ModelSpec instances for the same class are
  * permitted.
  * <p>
- * Code is generated when {@link org.eclipse.ocl.examples.build.templates.model.Class} invokes
+ * Code is generated when {@link org.eclipse.ocl.build.templates.model.Class} invokes
  * {@link #generate(GenClass, boolean)} for a genClass and there are one or more ModelSpecs for that genClass.
  * <p>
  * The derived ModelSpec instance must implement {@link #generate(StringBuilder, GenModel, boolean)} to add its

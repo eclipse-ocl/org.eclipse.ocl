@@ -36,7 +36,7 @@ import org.eclipse.ocl.examples.xtext2lpg.XBNF.TerminalRule;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.TypedRule;
 import org.eclipse.ocl.examples.xtext2lpg.XBNF.UntypedRule;
 
-//import org.eclipse.ocl.examples.build.acceleo.GenerateXBNF2LPG;
+//import org.eclipse.ocl.build.acceleo.GenerateXBNF2LPG;
 
 public abstract class GenerateLPGUtils extends GenerateLPG
 {
