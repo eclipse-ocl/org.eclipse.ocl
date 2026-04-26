@@ -28,22 +28,22 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
-import org.eclipse.ocl.examples.emf.validation.validity.export.HTMLExporter;
-import org.eclipse.ocl.examples.emf.validation.validity.export.ModelExporter;
-import org.eclipse.ocl.examples.emf.validation.validity.export.TextExporter;
+import org.eclipse.ocl.emf.validation.validity.RootNode;
+import org.eclipse.ocl.emf.validation.validity.export.HTMLExporter;
+import org.eclipse.ocl.emf.validation.validity.export.ModelExporter;
+import org.eclipse.ocl.emf.validation.validity.export.TextExporter;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCase;
 import org.eclipse.ocl.examples.standalone.StandaloneApplication;
 import org.eclipse.ocl.examples.standalone.StandaloneCommand;
 import org.eclipse.ocl.examples.standalone.StandaloneResponse;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
-import org.eclipse.ocl.examples.validity.locator.AbstractPivotConstraintLocator;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
 import org.eclipse.ocl.examples.xtext.tests.TestUtil;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.validity.locator.AbstractPivotConstraintLocator;
 import org.junit.Test;
 
 public class StandaloneExecutionTests extends StandaloneTestCase

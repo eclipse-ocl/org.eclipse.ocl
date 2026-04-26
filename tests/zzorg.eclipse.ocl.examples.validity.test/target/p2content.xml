@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<units size='2'>
+  <unit id='org.eclipse.ocl.examples.validity.test' version='7.0.0.v20260426-0746' generation='2'>
+    <update id='org.eclipse.ocl.examples.validity.test' range='[0.0.0,7.0.0.v20260426-0746)' severity='0'/>
+    <properties size='9'>
+      <property name='df_LT.pluginName' value='OCL&apos;s EMF Validation Debug Tests'/>
+      <property name='df_LT.providerName' value='Eclipse OCL'/>
+      <property name='org.eclipse.equinox.p2.name' value='%pluginName'/>
+      <property name='org.eclipse.equinox.p2.provider' value='%providerName'/>
+      <property name='org.eclipse.equinox.p2.bundle.localization' value='plugin'/>
+      <property name='maven-groupId' value='org.eclipse.ocl'/>
+      <property name='maven-artifactId' value='org.eclipse.ocl.examples.validity.test'/>
+      <property name='maven-version' value='7.0.0-SNAPSHOT'/>
+      <property name='maven-type' value='eclipse-plugin'/>
+    </properties>
+    <provides size='12'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ocl.examples.validity.test' version='7.0.0.v20260426-0746'/>
+      <provided namespace='osgi.bundle' name='org.eclipse.ocl.examples.validity.test' version='7.0.0.v20260426-0746'/>
+      <provided namespace='java.package' name='org.eclipse.ocl.examples.validity.test' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.ocl.examples.validity.test.ecoreTest' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.ocl.examples.validity.test.ecoreTest.impl' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.ocl.examples.validity.test.ecoreTest.util' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.ocl.examples.validity.test.ecoreTest2' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.ocl.examples.validity.test.ecoreTest2.impl' version='0.0.0'/>
+      <provided namespace='java.package' name='org.eclipse.ocl.examples.validity.test.ecoreTest2.util' version='0.0.0'/>
+      <provided namespace='osgi.identity' name='org.eclipse.ocl.examples.validity.test' version='7.0.0.v20260426-0746'>
+        <properties size='1'>
+          <property name='type' value='osgi.bundle'/>
+        </properties>
+      </provided>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='bundle' version='1.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+    </provides>
+    <requires size='8'>
+      <required namespace='osgi.bundle' name='org.eclipse.core.runtime' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ocl.examples.emf.validation.validity' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ocl.examples.emf.validation.validity.ui' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.junit' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ocl.xtext.completeocl.ui' range='0.0.0'/>
+      <required namespace='osgi.bundle' name='org.eclipse.ocl.examples.validity' range='0.0.0'/>
+      <required namespace='java.package' name='org.xml.sax' range='0.0.0'/>
+      <requiredProperties namespace='osgi.ee' match='(&amp;(osgi.ee=JavaSE)(version=1.8))'>
+        <description>
+          org.eclipse.ocl.examples.validity.test
+        </description>
+      </requiredProperties>
+    </requires>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.eclipse.ocl.examples.validity.test' version='7.0.0.v20260426-0746'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.eclipse.ocl.examples.validity.test;singleton:=true&#xA;Bundle-Version: 7.0.0.v20260426-0746&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+  <unit id='org.eclipse.ocl.examples.validity.test.source' version='7.0.0.v20260426-0746' singleton='false'>
+    <update id='org.eclipse.ocl.examples.validity.test.source' range='[0.0.0,7.0.0.v20260426-0746)' severity='0'/>
+    <properties size='10'>
+      <property name='df_LT.bundleVendor' value='Eclipse OCL'/>
+      <property name='df_LT.bundleName' value='OCL&apos;s EMF Validation Debug Tests Source'/>
+      <property name='org.eclipse.equinox.p2.name' value='%bundleName'/>
+      <property name='org.eclipse.equinox.p2.provider' value='%bundleVendor'/>
+      <property name='org.eclipse.equinox.p2.bundle.localization' value='OSGI-INF/l10n/bundle-src'/>
+      <property name='maven-groupId' value='org.eclipse.ocl'/>
+      <property name='maven-artifactId' value='org.eclipse.ocl.examples.validity.test'/>
+      <property name='maven-version' value='7.0.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='sources'/>
+      <property name='maven-type' value='java-source'/>
+    </properties>
+    <provides size='5'>
+      <provided namespace='org.eclipse.equinox.p2.iu' name='org.eclipse.ocl.examples.validity.test.source' version='7.0.0.v20260426-0746'/>
+      <provided namespace='osgi.bundle' name='org.eclipse.ocl.examples.validity.test.source' version='7.0.0.v20260426-0746'/>
+      <provided namespace='osgi.identity' name='org.eclipse.ocl.examples.validity.test.source' version='7.0.0.v20260426-0746'>
+        <properties size='1'>
+          <property name='type' value='osgi.bundle'/>
+        </properties>
+      </provided>
+      <provided namespace='org.eclipse.equinox.p2.eclipse.type' name='source' version='1.0.0'/>
+      <provided namespace='org.eclipse.equinox.p2.localization' name='df_LT' version='1.0.0'/>
+    </provides>
+    <artifacts size='1'>
+      <artifact classifier='osgi.bundle' id='org.eclipse.ocl.examples.validity.test.source' version='7.0.0.v20260426-0746'/>
+    </artifacts>
+    <touchpoint id='org.eclipse.equinox.p2.osgi' version='1.0.0'/>
+    <touchpointData size='1'>
+      <instructions size='1'>
+        <instruction key='manifest'>
+          Bundle-SymbolicName: org.eclipse.ocl.examples.validity.test.source&#xA;Bundle-Version: 7.0.0.v20260426-0746&#xA;
+        </instruction>
+      </instructions>
+    </touchpointData>
+  </unit>
+</units>

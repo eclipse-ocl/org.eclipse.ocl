@@ -52,6 +52,6 @@ plug-ins are partitioned thus:
 * @org.eclipse.ocl.pivot@:  the neutral Pivot model, interfaces, Standard Library and evaluator.
 * @org.eclipse.ocl.codegen@:  the OCL to Java code generator.
 * @org.eclipse.ocl.debug...@:  the extensible debugger.
-* @org.eclipse.ocl.examples.validity@:  the Validation View.
+* @org.eclipse.ocl.validity@:  the Validation View.
 * @org.eclipse.ocl.xtext...@:  Xtext editors.
 

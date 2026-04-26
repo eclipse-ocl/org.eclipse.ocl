@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validity:RootNode xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:validity="http://www.eclipse.org/emf/validation/2013/Validity"
-    xsi:schemaLocation="http://www.eclipse.org/emf/validation/2013/Validity java://org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage">
+    xsi:schemaLocation="http://www.eclipse.org/emf/validation/2013/Validity java://org.eclipse.ocl.emf.validation.validity.ValidityPackage">
   <resultSets>
     <results resultValidatableNode="//@validatableNodes.0/@children.0" severity="INFO"/>
     <results resultValidatableNode="//@validatableNodes.0/@children.1" severity="OK"/>

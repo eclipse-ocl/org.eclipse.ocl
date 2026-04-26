@@ -12,7 +12,7 @@ package org.eclipse.ocl.examples.test.standalone;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.emf.validation.validity.export.IValidityExporter;
+import org.eclipse.ocl.emf.validation.validity.export.IValidityExporter;
 import org.eclipse.ocl.examples.pivot.tests.PivotTestCaseWithAutoTearDown;
 import org.eclipse.ocl.examples.xtext.tests.TestCaseAppender;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;

@@ -1,0 +1,32 @@
+==== GENERAL INFORMATION ====
+Output file name: /E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/target/classes/org/eclipse/ocl/examples/validity/test/testTEXTExport_LoggingMetricsWithFailureSeverity.txt
+Author: ed
+
+
+==== RESOURCES USED ====
+Model checked: 
+				file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest.ecore
+				file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest2.ecore
+				file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/validityModelTest.ecoretest
+
+
+==== METRICS ====
+Total number of evaluated constraints: 5
+- Number of Success: 1
+- Number of Infos: 1
+- Number of Warnings: 1
+- Number of Errors: 1
+- Number of Failures: 1
+
+
+==== LOGS ====
+- Informations:
+			 Resource: file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecore.ocl
+			 Invariant: eattribute_constraint
+			 Expression:  inv eattribute_constraint : Tuple{ status: Boolean = false, severity: Integer = -1, message : String = 'eattribute_constraint: Number of attributes: ' + self.oclContainer()?.oclContents()?->size().toString() }.status
+			 Severity: INFO
+			 Message: null diagnostic message
+				-------------
+- Warnings:
+- Errors:
+- Failures:

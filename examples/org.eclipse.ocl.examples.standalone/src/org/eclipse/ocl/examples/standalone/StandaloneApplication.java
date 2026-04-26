@@ -27,7 +27,7 @@ import org.eclipse.equinox.app.IApplication;
 import org.eclipse.equinox.app.IApplicationContext;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.emf.validation.validity.export.ValidityExporterRegistry;
+import org.eclipse.ocl.emf.validation.validity.export.ValidityExporterRegistry;
 import org.eclipse.ocl.examples.standalone.StandaloneCommand.CommandToken;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.OCL;

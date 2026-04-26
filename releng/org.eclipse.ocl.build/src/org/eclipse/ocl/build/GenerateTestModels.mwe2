@@ -24,7 +24,7 @@ Workflow {
     //	Models with no script of their own.
     //
 	component = GenerateModel { resourceSet = testResourceSet skipOnErrors = true clearResourceSet=false
-    	genModel = "/org.eclipse.ocl.examples.emf.validation.validity/model/Validity.genmodel"
+    	genModel = "/org.eclipse.ocl.emf.validation.validity/model/Validity.genmodel"
     }
     //
     //	The JUnit test models

@@ -1,0 +1,76 @@
+<html>
+	<head></head>
+	<body>
+		<h1>1. GENERAL INFORMATION</h1>
+		<table border="1">
+			<tr>
+				<td><b>Output file name: </b></td>
+				<td>/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/target/classes/org/eclipse/ocl/examples/validity/test/testHTMLExport_ProducesOneLogHeading.html</td>
+			</tr>
+			<tr>
+				<td><b>Author: </b></td>
+				<td>ed</td>
+			</tr>
+		</table>
+
+
+		<h1>2. RESOURCES USED</h1>
+			<h2>2.1. Model checked</h2>
+			<ul>
+				<li>file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest.ecore</li>
+				<li>file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest2.ecore</li>
+				<li>file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/validityModelTest.ecoretest</li>
+			</ul>
+<br/>
+		<h1>3. METRICS</h1>
+		<table border="1">
+			<tr>
+				<td><b>Total number of evaluated constraints: </b></td>
+				<td>1</td>
+			</tr>
+			<tr>
+				<td><b>Number of Success: </b></td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td><b>Number of Infos: </b></td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td><b>Number of Warnings: </b></td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td><b>Number of Errors: </b></td>
+				<td>0</td>
+			</tr>
+			<tr>
+				<td><b>Number of Failures: </b></td>
+				<td>1</td>
+			</tr>
+		</table>
+		<h1>4. LOGS</h1>
+		<h2>4.1. Failures</h2>
+		<table border="1">
+			<tr>
+				<td><b>Resource</b></td>
+				<td><b>Invariant</b></td>
+				<td><b>Expression</b></td>
+				<td><b>Severity</b></td>
+				<td><b>Message</b></td>
+			</tr>
+			<tr>
+			<td> Resource: ecore.ocl</td>
+				<td>eclass_constraint</td>
+				<td style="white-space:pre">
+	inv eclass_constraint : Tuple{
+		status: Boolean = true,
+		severity: Integer = -1,
+		message : String = 'eclass_constraint: Number of eClasses: ' + self.ePackage?.oclContents()?->size().toString()
+	}.status</td>
+				<td>FATAL</td>
+				<td>null diagnostic message</td>
+			</tr>
+		</table>
+</body>
+</html>

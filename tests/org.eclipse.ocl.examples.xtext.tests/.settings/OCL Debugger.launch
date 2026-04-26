@@ -350,12 +350,12 @@
         <mapEntry key="org.eclipse.ocl.debug.vm/vmEvent" value="true"/>
         <mapEntry key="org.eclipse.ocl.debug.vm/vmRequest" value="true"/>
         <mapEntry key="org.eclipse.ocl.debug.vm/vmResponse" value="true"/>
-        <mapEntry key="org.eclipse.ocl.examples.emf.validation.validity/analyze/resource" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.emf.validation.validity/build/type" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.emf.validation.validity/create/constraining" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.emf.validation.validity/create/result" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.emf.validation.validity/create/validatable" value="false"/>
-        <mapEntry key="org.eclipse.ocl.examples.emf.validation.validity/locate/resource" value="false"/>
+        <mapEntry key="org.eclipse.ocl.emf.validation.validity/analyze/resource" value="false"/>
+        <mapEntry key="org.eclipse.ocl.emf.validation.validity/build/type" value="false"/>
+        <mapEntry key="org.eclipse.ocl.emf.validation.validity/create/constraining" value="false"/>
+        <mapEntry key="org.eclipse.ocl.emf.validation.validity/create/result" value="false"/>
+        <mapEntry key="org.eclipse.ocl.emf.validation.validity/create/validatable" value="false"/>
+        <mapEntry key="org.eclipse.ocl.emf.validation.validity/locate/resource" value="false"/>
         <mapEntry key="org.eclipse.ocl.examples.xtext.tests/test/start" value="false"/>
         <mapEntry key="org.eclipse.ocl.pivot/completeClasses" value="false"/>
         <mapEntry key="org.eclipse.ocl.pivot/completePackages" value="false"/>

@@ -1,0 +1,62 @@
+==== GENERAL INFORMATION ====
+Output file name: /E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/target/classes/org/eclipse/ocl/examples/validity/test/testTEXTExport_Statistics.txt
+Author: ed
+
+
+==== RESOURCES USED ====
+Model checked: 
+				file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest.ecore
+				file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest2.ecore
+				file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/validityModelTest.ecoretest
+
+
+==== METRICS ====
+Total number of evaluated constraints: 163
+- Number of Success: 155
+- Number of Infos: 2
+- Number of Warnings: 2
+- Number of Errors: 2
+- Number of Failures: 2
+
+
+==== LOGS ====
+- Informations:
+			 Resource: file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest.ocl
+			 Invariant: eclass2_constraint
+			 Expression:  inv eclass2_constraint : Tuple{ status: Boolean = false, severity: Integer = 0, message : String = 'ecoreTest: eclass2_constraint '+self.toString() }.status
+			 Severity: INFO
+			 Message: null diagnostic message
+				-------------
+			 Resource: file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecore.ocl
+			 Invariant: eattribute_constraint
+			 Expression:  inv eattribute_constraint : Tuple{ status: Boolean = false, severity: Integer = -1, message : String = 'eattribute_constraint: Number of attributes: ' + self.oclContainer()?.oclContents()?->size().toString() }.status
+			 Severity: INFO
+			 Message: null diagnostic message
+				-------------
+- Warnings:
+- Errors:
+			 Resource: file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecoreTest.ocl
+			 Invariant: eclass1_constraint
+			 Expression:  inv eclass1_constraint : Tuple{ status: Boolean = false, severity: Integer = 0, message : String = 'ecoreTest: eclass1_constraint '+self.toString() }.status
+			 Severity: ERROR
+			 Message: null diagnostic message
+				-------------
+			 Resource: file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecore.ocl
+			 Invariant: epackage_constraint_2
+			 Expression:  inv epackage_constraint_2 : Tuple{ status: Boolean = false, severity: Integer = 0, message : String = 'epackage_constraint_2: Number of eClasses: ' + self.oclContents()->size().toString() }.status
+			 Severity: ERROR
+			 Message: null diagnostic message
+				-------------
+- Failures:
+			 Resource: file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecore.ocl
+			 Invariant: epackage_constraint
+			 Expression:  inv epackage_constraint : Tuple{ status: Boolean = false, severity: Integer = 0, message : String = 'epackage_constraint: Number of eClasses: ' + self.oclContents()->size().toString() }.status
+			 Severity: FATAL
+			 Message: null diagnostic message
+				-------------
+			 Resource: file:/E:/GIT/org.eclipse.ocl/tests/org.eclipse.ocl.examples.validity.test/model/ecore.ocl
+			 Invariant: eclass_constraint
+			 Expression:  inv eclass_constraint : Tuple{ status: Boolean = true, severity: Integer = -1, message : String = 'eclass_constraint: Number of eClasses: ' + self.ePackage?.oclContents()?->size().toString() }.status
+			 Severity: FATAL
+			 Message: null diagnostic message
+				-------------

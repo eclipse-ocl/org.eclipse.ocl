@@ -33,7 +33,7 @@ bc..
 	%E%\org.eclipse.equinox.registry_3.10.200.v20210503-1606.jar;
 	%E%\org.eclipse.ocl_3.16.100.v20210609-1442.jar;
 	%E%\org.eclipse.ocl.common_1.8.700.v20210609-1442.jar;
-	%E%\org.eclipse.ocl.examples.emf.validation.validity_2.15.0.v20210609-1442.jar;
+	%E%\org.eclipse.ocl.emf.validation.validity_2.15.0.v20210609-1442.jar;
 	%E%\org.eclipse.ocl.examples.standalone_2.7.400.v20210609-1442.jar;
 	%E%\org.eclipse.ocl.pivot_1.15.0.v20210609-1442.jar;
 	%E%\org.eclipse.ocl.uml_5.15.0.v20210609-1442.jar;

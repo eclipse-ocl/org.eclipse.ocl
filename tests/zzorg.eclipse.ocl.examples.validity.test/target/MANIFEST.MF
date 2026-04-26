@@ -1,0 +1,29 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: org.eclipse.ocl.examples.validity.test;singleton:=t
+ rue
+Bundle-Version: 7.0.0.v20260426-0746
+Bundle-ClassPath: .
+Bundle-Vendor: %providerName
+Bundle-Localization: plugin
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.core.runtime,org.eclipse.ocl.examples.emf.va
+ lidation.validity,org.eclipse.ocl.examples.emf.validation.validity.ui,o
+ rg.junit,org.eclipse.ocl.xtext.completeocl.ui,org.eclipse.ocl.examples.
+ validity
+Bundle-ActivationPolicy: lazy
+Import-Package: org.xml.sax
+Export-Package: org.eclipse.ocl.examples.validity.test,org.eclipse.ocl.e
+ xamples.validity.test.ecoreTest;x-internal:=true,org.eclipse.ocl.exampl
+ es.validity.test.ecoreTest.impl;x-internal:=true,org.eclipse.ocl.exampl
+ es.validity.test.ecoreTest.util;x-internal:=true,org.eclipse.ocl.exampl
+ es.validity.test.ecoreTest2;x-internal:=true,org.eclipse.ocl.examples.v
+ alidity.test.ecoreTest2.impl;x-internal:=true,org.eclipse.ocl.examples.
+ validity.test.ecoreTest2.util;x-internal:=true
+Automatic-Module-Name: org.eclipse.ocl.examples.validity.test
+Eclipse-SourceReferences: scm:git:https://github.com/eclipse-ocl/org.ecl
+ ipse.ocl;path="tests/org.eclipse.ocl.examples.validity.test";commitId=0
+ 283bd7c121156eac4ed2f7680bcd7a9a02490b8
+Bundle-License: Eclipse Public License v2.0
+
