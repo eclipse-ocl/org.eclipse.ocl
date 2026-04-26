@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<!--
+    Copyright (c) 2023 Willink Transformations and others.
+   
+    This program and the accompanying materials
+    are made available under the terms of the Eclipse Public License 2.0
+    which accompanies this distribution, and is available at
+    https://www.eclipse.org/legal/epl-2.0/
+   
+    SPDX-License-Identifier: EPL-2.0
+   
+    Contributors:
+        E.D.Willink - initial API and implementation
+ -->
+
+<plugin>
+	<extension point="org.eclipse.core.resources.markers" id="OCLBreakpointMarker">
+       <super type="org.eclipse.debug.core.lineBreakpointMarker"/>
+       <persistent value="true"/>
+       <attribute name="org.eclipse.ocl.debug.unitUri"/>
+       <attribute name="org.eclipse.ocl.debug.runToLine"/>
+    </extension>
+   
+    <extension point="org.eclipse.debug.core.breakpoints">
+       <breakpoint id="org.eclipse.ocl.debug.core.OCLBreakpoint"
+             class="org.eclipse.ocl.debug.core.OCLLineBreakpoint"
+             markerType="org.eclipse.ocl.debug.OCLBreakpointMarker"
+             name="%MF_OCLBreakpoints"/>
+    </extension>
+    
+   <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+      <launchConfigurationType id="org.eclipse.ocl.debug.launching.OCLLaunchConfigurationDelegate"
+            delegate="org.eclipse.ocl.debug.launching.OCLLaunchConfigurationDelegate"
+            modes="run"
+            name="%MF_OCLExpression"/>
+   </extension>
+
+    <extension point="org.eclipse.debug.core.sourceLocators">
+        <sourceLocator id="org.eclipse.ocl.debug.srclookup.OCLSourceLookupDirector"
+        	name="%MF_SourceLookupDirector"
+			class="org.eclipse.ocl.debug.srclookup.OCLSourceLookupDirector"/>
+    </extension>
+    
+    <extension point="org.eclipse.debug.core.sourcePathComputers">
+       <sourcePathComputer id="org.eclipse.ocl.debug.srclookup.OCLSourcePathComputer"
+			class="org.eclipse.ocl.debug.srclookup.OCLSourcePathComputer"/>
+    </extension>
+
+    <!--extension point="org.eclipse.debug.core.watchExpressionDelegates">
+       <watchExpressionDelegate
+         	debugModel="org.eclipse.ocl.debug"
+         	delegateClass="org.eclipse.ocl.debug.core.OCLWatchExpressionDelegate"/>
+    </extension-->   
+
+</plugin>

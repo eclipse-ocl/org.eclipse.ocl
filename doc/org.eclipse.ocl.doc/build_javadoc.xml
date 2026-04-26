@@ -119,10 +119,10 @@
 				<pathelement location=".\..\..\plugins\org.eclipse.ocl.ecore\src"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.codegen\emf-gen"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.codegen\src"/>
-				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.debug\src"/>
-				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.debug.ui\src"/>
-				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.debug.vm\src"/>
-				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.debug.vm.ui\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.debug\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.debug.ui\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.debug.vm\src"/>
+				<pathelement location=".\..\..\examples\org.eclipse.ocl.debug.vm.ui\src"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.emf.validation.validity\emf-gen"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.emf.validation.validity\src"/>
 				<pathelement location=".\..\..\examples\org.eclipse.ocl.examples.emf.validation.validity.ui\src"/>
