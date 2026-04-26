@@ -8,10 +8,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-Localization: plugin
 Require-Bundle: org.eclipse.ocl.ecore.tests,
  org.eclipse.ocl.uml.tests,
- org.eclipse.ocl.examples.xtext.tests,
+ org.eclipse.ocl.xtext.tests,
  org.eclipse.ocl.examples.project.royalandloyal,
  org.eclipse.ocl.examples.project.completeocltutorial,
- org.eclipse.ocl.examples.tests,
  org.eclipse.ocl.examples.impactanalyzer.tests
 Bundle-Vendor: %providerName
 Export-Package: org.eclipse.ocl.compatibility.tests;x-internal:=true

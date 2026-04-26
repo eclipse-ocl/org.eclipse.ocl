@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.xtext.essentialocl" version="2">
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/essentialocl/parser/antlr/EssentialOCLParser.java" type="org.eclipse.ocl.xtext.essentialocl.parser.antlr.EssentialOCLParser">
+    <resource path="src-gen/org/eclipse/ocl/xtext/essentialocl/parser/antlr/EssentialOCLParser.java" type="org.eclipse.ocl.xtext.essentialocl.parser.antlr.EssentialOCLParser">
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="InternalEssentialOCLParser"/>
@@ -9,7 +9,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/essentialocl/serializer/AbstractEssentialOCLSemanticSequencer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.AbstractEssentialOCLSemanticSequencer">
+    <resource path="src-gen/org/eclipse/ocl/xtext/essentialocl/serializer/AbstractEssentialOCLSemanticSequencer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.AbstractEssentialOCLSemanticSequencer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="AbstractDelegatingSemanticSequencer"/>
@@ -17,7 +17,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/essentialocl/serializer/AbstractEssentialOCLSyntacticSequencer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.AbstractEssentialOCLSyntacticSequencer">
+    <resource path="src-gen/org/eclipse/ocl/xtext/essentialocl/serializer/AbstractEssentialOCLSyntacticSequencer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.AbstractEssentialOCLSyntacticSequencer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="AbstractSyntacticSequencer"/>
@@ -46,7 +46,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/examples/xtext/essentialocl/EssentialOCLRuntimeModule.java" type="org.eclipse.ocl.xtext.essentialocl.EssentialOCLRuntimeModule$RetokenizingEssentialOCLParser">
+    <resource path="src/org/eclipse/ocl/xtext/essentialocl/EssentialOCLRuntimeModule.java" type="org.eclipse.ocl.xtext.essentialocl.EssentialOCLRuntimeModule$RetokenizingEssentialOCLParser">
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="InternalEssentialOCLParser"/>
@@ -55,7 +55,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/examples/xtext/essentialocl/serializer/EssentialOCLCrossReferenceSerializer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.EssentialOCLCrossReferenceSerializer">
+    <resource path="src/org/eclipse/ocl/xtext/essentialocl/serializer/EssentialOCLCrossReferenceSerializer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.EssentialOCLCrossReferenceSerializer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="CrossReferenceSerializer"/>
@@ -70,7 +70,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/examples/xtext/essentialocl/serializer/EssentialOCLCrossReferenceSerializer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.EssentialOCLCrossReferenceSerializer$AcceptorHelper">
+    <resource path="src/org/eclipse/ocl/xtext/essentialocl/serializer/EssentialOCLCrossReferenceSerializer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.EssentialOCLCrossReferenceSerializer$AcceptorHelper">
         <filter id="627060751">
             <message_arguments>
                 <message_argument value="Acceptor"/>
@@ -86,7 +86,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/examples/xtext/essentialocl/serializer/EssentialOCLHiddenTokenSequencer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.EssentialOCLHiddenTokenSequencer">
+    <resource path="src/org/eclipse/ocl/xtext/essentialocl/serializer/EssentialOCLHiddenTokenSequencer.java" type="org.eclipse.ocl.xtext.essentialocl.serializer.EssentialOCLHiddenTokenSequencer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="HiddenTokenSequencer"/>

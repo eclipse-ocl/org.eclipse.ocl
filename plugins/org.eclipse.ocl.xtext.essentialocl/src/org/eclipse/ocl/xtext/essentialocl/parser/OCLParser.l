@@ -1,5 +1,5 @@
 
-Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLParser.g:
+Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLParser.g:
 
     ACTION-BLOCK=("C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParser.java","/.","./")
 
@@ -16,7 +16,7 @@ Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.
     EXPORT-TERMINALS=("C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParserexp.java","","")
     EXTENDS-PARSETABLE  FACTORY="new "  FILE-PREFIX="OCLParser"  NOFIRST
     NOFOLLOW  NOGLR  NOGOTO-DEFAULT
-    GRM-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLParser.g"
+    GRM-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLParser.g"
 
     IMP-FILE="C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParserimp.java"
     IMPORT-TERMINALS="OCLLexer.gi"  INCLUDE-DIRECTORY=".;../lpg"  LALR=1  LEGACY
@@ -33,15 +33,15 @@ Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.
     TRACE=CONFLICTS  NOVARIABLES  NOVERBOSE  NOVISITOR  VISITOR-TYPE="Visitor"
     WARNINGS  NOXREF
 
-C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCL.gi:92:4:92:6:2781:2783: Warning: The macro "$Id" is undefined. No substitution made
-C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCL.gi:92:68:92:68:2845:2845: Warning: The macro "$" is undefined. No substitution made
-C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCLLexer.gi:161:9:161:27:3948:3966: Informative: The terminal SINGLE_LINE_COMMENT is useless.
-C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCLLexer.gi:162:9:162:26:3970:3987: Informative: The terminal MULTI_LINE_COMMENT is useless.
-C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLParser.g:115:9:115:23:3198:3212: Warning: The nonterminal reservedKeyword is useless.
-C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCL.gi:292:5:292:21:8655:8671: Warning: The nonterminal reservedKeywordCS is useless.
+C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/EssentialOCL.gi:92:4:92:6:2781:2783: Warning: The macro "$Id" is undefined. No substitution made
+C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/EssentialOCL.gi:92:68:92:68:2845:2845: Warning: The macro "$" is undefined. No substitution made
+C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/EssentialOCLLexer.gi:161:9:161:27:3948:3966: Informative: The terminal SINGLE_LINE_COMMENT is useless.
+C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/EssentialOCLLexer.gi:162:9:162:26:3970:3987: Informative: The terminal MULTI_LINE_COMMENT is useless.
+C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLParser.g:115:9:115:23:3198:3212: Warning: The nonterminal reservedKeyword is useless.
+C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/EssentialOCL.gi:292:5:292:21:8655:8671: Warning: The nonterminal reservedKeywordCS is useless.
 
 
-C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLParser.g:32:9:32:12:883:886: Informative: Grammar is  LALR(1).
+C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLParser.g:32:9:32:12:883:886: Informative: Grammar is  LALR(1).
 
 Number of Terminals: 79
 Number of Nonterminals: 80

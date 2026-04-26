@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.xtext.markup" version="2">
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/markup/parser/antlr/MarkupParser.java" type="org.eclipse.ocl.xtext.markup.parser.antlr.MarkupParser">
+    <resource path="src-gen/org/eclipse/ocl/xtext/markup/parser/antlr/MarkupParser.java" type="org.eclipse.ocl.xtext.markup.parser.antlr.MarkupParser">
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="InternalMarkupParser"/>
@@ -9,7 +9,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/markup/serializer/AbstractMarkupSemanticSequencer.java" type="org.eclipse.ocl.xtext.markup.serializer.AbstractMarkupSemanticSequencer">
+    <resource path="src-gen/org/eclipse/ocl/xtext/markup/serializer/AbstractMarkupSemanticSequencer.java" type="org.eclipse.ocl.xtext.markup.serializer.AbstractMarkupSemanticSequencer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="AbstractDelegatingSemanticSequencer"/>
@@ -17,7 +17,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/markup/serializer/AbstractMarkupSyntacticSequencer.java" type="org.eclipse.ocl.xtext.markup.serializer.AbstractMarkupSyntacticSequencer">
+    <resource path="src-gen/org/eclipse/ocl/xtext/markup/serializer/AbstractMarkupSyntacticSequencer.java" type="org.eclipse.ocl.xtext.markup.serializer.AbstractMarkupSyntacticSequencer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="AbstractSyntacticSequencer"/>

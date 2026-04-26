@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.xtext.oclstdlib" version="2">
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/oclstdlib/parser/antlr/OCLstdlibParser.java" type="org.eclipse.ocl.xtext.oclstdlib.parser.antlr.OCLstdlibParser">
+    <resource path="src-gen/org/eclipse/ocl/xtext/oclstdlib/parser/antlr/OCLstdlibParser.java" type="org.eclipse.ocl.xtext.oclstdlib.parser.antlr.OCLstdlibParser">
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="InternalOCLstdlibParser"/>
@@ -9,7 +9,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/oclstdlib/serializer/AbstractOCLstdlibSyntacticSequencer.java" type="org.eclipse.ocl.xtext.oclstdlib.serializer.AbstractOCLstdlibSyntacticSequencer">
+    <resource path="src-gen/org/eclipse/ocl/xtext/oclstdlib/serializer/AbstractOCLstdlibSyntacticSequencer.java" type="org.eclipse.ocl.xtext.oclstdlib.serializer.AbstractOCLstdlibSyntacticSequencer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="AbstractSyntacticSequencer"/>
@@ -108,7 +108,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/ocl/examples/xtext/oclstdlib/ResourceSetClasspathTypeProviderFactory.java" type="org.eclipse.ocl.xtext.oclstdlib.ResourceSetClasspathTypeProviderFactory">
+    <resource path="src/org/eclipse/ocl/xtext/oclstdlib/ResourceSetClasspathTypeProviderFactory.java" type="org.eclipse.ocl.xtext.oclstdlib.ResourceSetClasspathTypeProviderFactory">
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="ClasspathTypeProvider"/>

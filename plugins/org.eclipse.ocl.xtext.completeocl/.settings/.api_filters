@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.xtext.completeocl" version="2">
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/completeocl/parser/antlr/CompleteOCLParser.java" type="org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLParser">
+    <resource path="src-gen/org/eclipse/ocl/xtext/completeocl/parser/antlr/CompleteOCLParser.java" type="org.eclipse.ocl.xtext.completeocl.parser.antlr.CompleteOCLParser">
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="InternalCompleteOCLParser"/>
@@ -9,7 +9,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/completeocl/serializer/AbstractCompleteOCLSyntacticSequencer.java" type="org.eclipse.ocl.xtext.completeocl.serializer.AbstractCompleteOCLSyntacticSequencer">
+    <resource path="src-gen/org/eclipse/ocl/xtext/completeocl/serializer/AbstractCompleteOCLSyntacticSequencer.java" type="org.eclipse.ocl.xtext.completeocl.serializer.AbstractCompleteOCLSyntacticSequencer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="AbstractSyntacticSequencer"/>

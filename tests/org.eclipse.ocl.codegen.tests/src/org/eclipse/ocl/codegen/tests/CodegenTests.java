@@ -10,6 +10,6 @@
  *******************************************************************************/
 package org.eclipse.ocl.codegen.tests;
 
-public class CodegenTests extends org.eclipse.ocl.examples.test.xtext.AllEvaluationTests
+public class CodegenTests extends org.eclipse.ocl.xtext.tests.xtext.AllEvaluationTests
 {
 }

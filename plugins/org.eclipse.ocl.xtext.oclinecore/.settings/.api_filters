@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.xtext.oclinecore" version="2">
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/oclinecore/parser/antlr/OCLinEcoreParser.java" type="org.eclipse.ocl.xtext.oclinecore.parser.antlr.OCLinEcoreParser">
+    <resource path="src-gen/org/eclipse/ocl/xtext/oclinecore/parser/antlr/OCLinEcoreParser.java" type="org.eclipse.ocl.xtext.oclinecore.parser.antlr.OCLinEcoreParser">
         <filter id="643842064">
             <message_arguments>
                 <message_argument value="InternalOCLinEcoreParser"/>
@@ -9,7 +9,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src-gen/org/eclipse/ocl/examples/xtext/oclinecore/serializer/AbstractOCLinEcoreSyntacticSequencer.java" type="org.eclipse.ocl.xtext.oclinecore.serializer.AbstractOCLinEcoreSyntacticSequencer">
+    <resource path="src-gen/org/eclipse/ocl/xtext/oclinecore/serializer/AbstractOCLinEcoreSyntacticSequencer.java" type="org.eclipse.ocl.xtext.oclinecore.serializer.AbstractOCLinEcoreSyntacticSequencer">
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="AbstractSyntacticSequencer"/>

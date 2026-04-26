@@ -1,0 +1,24 @@
+Signature-Version: 1.0
+Created-By: 11.0.24 (Eclipse Adoptium)
+SHA-256-Digest-Manifest: DFvQyuCWegh7UnTWO9IZCBtE01R9anlCAlYEMTlD7no=
+SHA-256-Digest-Manifest-Main-Attributes: qfQhc8S3qZKfu02/Ma0hw0DqMTT0I41
+ LT3cGvXU2HSg=
+
+Name: about.html
+SHA-256-Digest: ncO+WCNUIJ0JLCOl/ot53yopwTqvvtVu0qSgblesdYo=
+
+Name: plugin.xml
+SHA-256-Digest: dxPbLqa9V6hXqVUAV9ryAVmpIpkUeTflqiNsvrVfi60=
+
+Name: plugin.properties
+SHA-256-Digest: 5z68+zziBizLh6mChYYxnbfkj2KtN3uK3vZUvSrdnBc=
+
+Name: .api_description
+SHA-256-Digest: nOrv/Abofvp87Oz3tdSsgMn1+wFetAdEGllS43y9/t4=
+
+Name: .options
+SHA-256-Digest: uJNvUiNxr9mmFxWm7Ma69MLGD0xQdsA7SMaKFjphfrs=
+
+Name: jdimodel.jar
+SHA-256-Digest: LurwTuuboKRfcWhHlVrNrW3VbNo/jRiKHvYX0FVHKN4=
+

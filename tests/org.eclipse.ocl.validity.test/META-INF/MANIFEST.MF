@@ -12,14 +12,9 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ocl.emf.validation.validity.ui,
  org.junit,
  org.eclipse.ocl.xtext.completeocl.ui,
- org.eclipse.ocl.validity
+ org.eclipse.ocl.validity,
+ org.eclipse.ocl.xtext.tests
 Bundle-ActivationPolicy: lazy
 Import-Package: org.xml.sax
-Export-Package: org.eclipse.ocl.validity.test.ecoreTest;x-internal:=true,
- org.eclipse.ocl.validity.test.ecoreTest.impl;x-internal:=true,
- org.eclipse.ocl.validity.test.ecoreTest.util;x-internal:=true,
- org.eclipse.ocl.validity.test.ecoreTest2;x-internal:=true,
- org.eclipse.ocl.validity.test.ecoreTest2.impl;x-internal:=true,
- org.eclipse.ocl.validity.test.ecoreTest2.util;x-internal:=true,
- org.eclipse.ocl.validity.test
+Export-Package: org.eclipse.ocl.validity.test
 Automatic-Module-Name: org.eclipse.ocl.validity.test

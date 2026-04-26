@@ -35,7 +35,7 @@
                 ./
 
     $BeginAction
-    /.$Header: /home/data/cvs/modeling/org.eclipse.mdt/org.eclipse.ocl/examples/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/lpg/btParserTemplateF.gi,v 1.2 2011/01/24 21:31:47 ewillink Exp $case $rule_number: {
+    /.$Header: /home/data/cvs/modeling/org.eclipse.mdt/org.eclipse.ocl/examples/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/lpg/btParserTemplateF.gi,v 1.2 2011/01/24 21:31:47 ewillink Exp $case $rule_number: {
                    //#line $next_line "$input_file$"./
 
     $EndAction
@@ -50,15 +50,15 @@
     $EndJava /.$EndAction./
 
     $NoAction
-    /.$Header: /home/data/cvs/modeling/org.eclipse.mdt/org.eclipse.ocl/examples/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/lpg/btParserTemplateF.gi,v 1.2 2011/01/24 21:31:47 ewillink Exp $case $rule_number:
+    /.$Header: /home/data/cvs/modeling/org.eclipse.mdt/org.eclipse.ocl/examples/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/lpg/btParserTemplateF.gi,v 1.2 2011/01/24 21:31:47 ewillink Exp $case $rule_number:
                     break;./
 
     $BadAction
-    /.$Header: /home/data/cvs/modeling/org.eclipse.mdt/org.eclipse.ocl/examples/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/lpg/btParserTemplateF.gi,v 1.2 2011/01/24 21:31:47 ewillink Exp $case $rule_number:
+    /.$Header: /home/data/cvs/modeling/org.eclipse.mdt/org.eclipse.ocl/examples/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/lpg/btParserTemplateF.gi,v 1.2 2011/01/24 21:31:47 ewillink Exp $case $rule_number:
                     throw new Error("No action specified for rule " + $rule_number);./
 
     $NullAction
-    /.$Header: /home/data/cvs/modeling/org.eclipse.mdt/org.eclipse.ocl/examples/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/lpg/btParserTemplateF.gi,v 1.2 2011/01/24 21:31:47 ewillink Exp $case $rule_number:
+    /.$Header: /home/data/cvs/modeling/org.eclipse.mdt/org.eclipse.ocl/examples/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/lpg/btParserTemplateF.gi,v 1.2 2011/01/24 21:31:47 ewillink Exp $case $rule_number:
                     setResult(null);
                     break;./
 

@@ -1,0 +1,35 @@
+-------------------------------------------------------------------------------
+Test set: org.eclipse.ocl.examples.test.AllExamplesTests
+-------------------------------------------------------------------------------
+Tests run: 31, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 11.889 s - in org.eclipse.ocl.examples.test.AllExamplesTests
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_LoggingMetricsWithNoSeverity <tycho>  Time elapsed: 3.518 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_LoggingMetricsWithWarningSeverity <tycho>  Time elapsed: 0.113 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_LoggingMetricsWithInformationSeverity <tycho>  Time elapsed: 0.093 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_ProducesOneLogHeading <tycho>  Time elapsed: 0.109 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_ModelsValidatedSuccessfully <tycho>  Time elapsed: 0.088 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_LoggingMetricsWithErrorSeverity <tycho>  Time elapsed: 0.078 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_LoggingMetricsWithFailureSeverity <tycho>  Time elapsed: 0.08 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_LogContent <tycho>  Time elapsed: 0.082 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_ProducesAllLogHeadings <tycho>  Time elapsed: 0.071 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_LogInfoDiagnosticMessage <tycho>  Time elapsed: 0.074 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_LogNullDiagnosticMessage <tycho>  Time elapsed: 0.067 s
+org.eclipse.ocl.examples.validity.test.HTMLExportOCLValidationResultTests.testHTMLExport_Statistics <tycho>  Time elapsed: 0.077 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_ModelsValidatedSuccessfully <tycho>  Time elapsed: 0.073 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_LoggingMetricsWithNoSeverity <tycho>  Time elapsed: 0.101 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_LoggingMetricsWithErrorSeverity <tycho>  Time elapsed: 0.07 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_ProducesAllLogHeadings <tycho>  Time elapsed: 0.072 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_LoggingMetricsWithWarningSeverity <tycho>  Time elapsed: 0.072 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_LogInfoDiagnosticMessage <tycho>  Time elapsed: 0.067 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_LogNullDiagnosticMessage <tycho>  Time elapsed: 0.064 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_LoggingMetricsWithInformationSeverity <tycho>  Time elapsed: 0.063 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_LoggingMetricsWithFailureSeverity <tycho>  Time elapsed: 0.071 s
+org.eclipse.ocl.examples.validity.test.TextExportOCLValidationResultTests.testTEXTExport_Statistics <tycho>  Time elapsed: 0.072 s
+org.eclipse.ocl.examples.validity.test.ValidityManagerTests.testValidityManagerGetConstrainingNodeResults <tycho>  Time elapsed: 0.066 s
+org.eclipse.ocl.examples.validity.test.ValidityManagerTests.testValidityManagerGetValidatableNodeResults <tycho>  Time elapsed: 0.061 s
+org.eclipse.ocl.examples.validity.test.ValidityManagerTests.testValidityManagerGetConstrainingNode <tycho>  Time elapsed: 0.058 s
+org.eclipse.ocl.examples.validity.test.ValidityManagerTests.testValidityManagerSetInput <tycho>  Time elapsed: 0.087 s
+org.eclipse.ocl.examples.validity.test.ValidityModelTests.testValidityModelInitializationConstraints <tycho>  Time elapsed: 0.06 s
+org.eclipse.ocl.examples.validity.test.ValidityModelTests.testValidityModelCreateResultSet <tycho>  Time elapsed: 0.058 s
+org.eclipse.ocl.examples.validity.test.ValidityModelTests.testValidityModel_AllResourcesArePresent <tycho>  Time elapsed: 0.062 s
+org.eclipse.ocl.examples.validity.test.ValidityModelTests.testValidityModelInitialization_RootValidatableNodesArePresent <tycho>  Time elapsed: 0.056 s
+org.eclipse.ocl.examples.validity.test.ValidityModelTests.testValidityModelInitializationModelElements <tycho>  Time elapsed: 0.06 s

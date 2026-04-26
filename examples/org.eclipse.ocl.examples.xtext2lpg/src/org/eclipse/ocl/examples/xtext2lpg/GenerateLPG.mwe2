@@ -19,7 +19,7 @@ import org.eclipse.emf.ecore.resource.impl.*
 var projectName = "org.eclipse.ocl.examples.xtext2lpg"
 var projectURI = "platform:/resource/${projectName}"
 var syntaxName // e.g. "OCLinEcore"
-var grammarPath // e.g. "platform:/resource/org.eclipse.ocl.xtext.oclinecore/src/org/eclipse/ocl/examples/xtext/oclinecore/OCLinEcore.xtext"
+var grammarPath // e.g. "platform:/resource/org.eclipse.ocl.xtext.oclinecore/src/org/eclipse/ocl/xtext/oclinecore/OCLinEcore.xtext"
 var grammar.XBNF = "platform:/resource/${projectName}/lpg-gen/${syntaxName}.xtext.XBNF"
 var normalized.XBNF = "platform:/resource/${projectName}/lpg-gen/${syntaxName}.normal.XBNF"
 var inlined.XBNF = "platform:/resource/${projectName}/lpg-gen/${syntaxName}.inline.XBNF"
@@ -55,21 +55,21 @@ org.eclipse.emf.mwe2.runtime.workflow.Workflow {
 //    }
     component = QVToTransformationExecutor {
     	resourceSet = resourceSet
-    	uri = "${projectURI}/src/org/eclipse/ocl/examples/xtext2lpg/xtext2xbnf.qvto"
+    	uri = "${projectURI}/src/org/eclipse/ocl/xtext2lpg/xtext2xbnf.qvto"
     	in = "${grammarPath}"
     	out = "${grammar.XBNF}"
     	validate = true
     }
     component = QVToTransformationExecutor {
     	resourceSet = resourceSet
-    	uri = "${projectURI}/src/org/eclipse/ocl/examples/xtext2lpg/normalize.qvto"
+    	uri = "${projectURI}/src/org/eclipse/ocl/xtext2lpg/normalize.qvto"
     	in = "${grammar.XBNF}"
     	out = "${normalized.XBNF}"
     	validate = true
     }
     component = QVToTransformationExecutor {
     	resourceSet = resourceSet
-    	uri = "${projectURI}/src/org/eclipse/ocl/examples/xtext2lpg/inline.qvto"
+    	uri = "${projectURI}/src/org/eclipse/ocl/xtext2lpg/inline.qvto"
     	in = "${normalized.XBNF}"
     	out = "${inlined.XBNF}"
     	validate = true

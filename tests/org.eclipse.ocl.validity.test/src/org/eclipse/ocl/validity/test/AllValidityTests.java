@@ -13,6 +13,11 @@ package org.eclipse.ocl.validity.test;
 
 import java.util.Arrays;
 
+import org.eclipse.ocl.xtext.texts.validity.HTMLExportOCLValidationResultTests;
+import org.eclipse.ocl.xtext.texts.validity.TextExportOCLValidationResultTests;
+import org.eclipse.ocl.xtext.texts.validity.ValidityManagerTests;
+import org.eclipse.ocl.xtext.texts.validity.ValidityModelTests;
+
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

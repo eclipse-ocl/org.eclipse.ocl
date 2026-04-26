@@ -1,0 +1,4 @@
+# Debugging options for the org.eclipse.ocl.pivot plug-in
+
+# Turn on display of test name at start of each test
+org.eclipse.ocl.xtext.tests/test/start=false

@@ -1,0 +1,24 @@
+!SESSION 2026-04-26 08:49:04.007 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=21.0.5
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_GB
+Framework arguments:  -application org.eclipse.tycho.surefire.osgibooter.uitest -testproperties E:\GIT\org.eclipse.ocl\tests\org.eclipse.ocl.examples.tests\target\surefire.properties
+Command-line arguments:  -data E:\GIT\org.eclipse.ocl\tests\org.eclipse.ocl.examples.tests\target\work\data -application org.eclipse.tycho.surefire.osgibooter.uitest -testproperties E:\GIT\org.eclipse.ocl\tests\org.eclipse.ocl.examples.tests\target\surefire.properties
+
+!ENTRY org.eclipse.jdt.launching.macosx 4 0 2026-04-26 08:49:05.747
+!MESSAGE FrameworkEvent ERROR
+!STACK 0
+org.osgi.framework.BundleException: Could not resolve module: org.eclipse.jdt.launching.macosx [113]
+  Unresolved requirement: Require-Capability: eclipse.platform; filter:="(osgi.os=macosx)"
+
+	at org.eclipse.osgi.container.Module.start(Module.java:495)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel$2.run(ModuleContainer.java:2110)
+	at org.eclipse.osgi.internal.framework.EquinoxContainerAdaptor$1$1.execute(EquinoxContainerAdaptor.java:146)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2101)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.incStartLevel(ModuleContainer.java:2041)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.doContainerStartLevel(ModuleContainer.java:2003)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1915)
+	at org.eclipse.osgi.container.ModuleContainer$ContainerStartLevel.dispatchEvent(ModuleContainer.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.EventManager$EventThread.run(EventManager.java:341)

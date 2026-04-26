@@ -1,35 +1,35 @@
 
-Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexer.gi:
+Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexer.gi:
 
-    ACTION-BLOCK=("C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexer.java","/.","./")
+    ACTION-BLOCK=("C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexer.java","/.","./")
 
     AST-DIRECTORY=""  AST-TYPE="Ast"  NOATTRIBUTES  NOAUTOMATIC-AST  NOBACKTRACK
     BYTE  CONFLICTS
-    DAT-DIRECTORY="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/"
+    DAT-DIRECTORY="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/"
 
-    DAT-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexerdcl.data"
+    DAT-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexerdcl.data"
 
-    DCL-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexerdcl.java"
+    DCL-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexerdcl.java"
     NODEBUG
-    DEF-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexerdef.java"
+    DEF-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexerdef.java"
     NOEDIT  NOERROR-MAPS  ESCAPE='$'
     EXPORT-TERMINALS=("C:\Development\HartLibrary\Workspace3.5.1\org.eclipse.ocl.xtext.essentialocl\src\org\eclipse\ocl\examples\xtext\essentialocl\parser\OCLParsersym.java","TK_","")
     EXTENDS-PARSETABLE  FACTORY="new "  FILE-PREFIX="OCLKWLexer"  NOFIRST
     NOFOLLOW  NOGLR  NOGOTO-DEFAULT
-    GRM-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexer.gi"
+    GRM-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexer.gi"
 
-    IMP-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexerimp.java"
+    IMP-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexerimp.java"
     INCLUDE-DIRECTORY=".;../lpg"  LEGACY  NOLIST  MARGIN=4  MAX-CASES=1024
     NAMES=OPTIMIZED  NONT-CHECK  OR_MARKER='|'
-    OUT-DIRECTORY="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/"
+    OUT-DIRECTORY="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/"
     PACKAGE="org.eclipse.ocl.xtext.essentialocl.parser"  NOPARENT-SAVE
     PARSETABLE-INTERFACES="lpg.runtime.ParseTable"  PREFIX="Char_"  PRIORITY
     PROGRAMMING_LANGUAGE=JAVA
-    PRS-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexerprs.java"
+    PRS-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexerprs.java"
     NOQUIET  READ-REDUCE  REMAP-TERMINALS  NOSCOPES  NOSERIALIZE
     NOSHIFT-DEFAULT  SINGLE-PRODUCTIONS  SLR  NOSOFT-KEYWORDS  NOSTATES
     SUFFIX=""
-    SYM-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/OCLKWLexersym.java"
+    SYM-FILE="C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/OCLKWLexersym.java"
     TAB-FILE="OCLKWLexer.t"  TABLE  TEMPLATE="../lpg/KeywordTemplateF.gi"
     TRACE=CONFLICTS  NOVARIABLES  NOVERBOSE  NOVISITOR  VISITOR-TYPE="Visitor"
     WARNINGS  NOXREF
@@ -57,7 +57,7 @@ Options in effect for C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.
 ../lpg/KWLexerMapF.gi:6:55:6:55:176:176: Informative: The terminal Z is useless.
 
 
-C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/examples/xtext/essentialocl/parser/EssentialOCLKWLexer.gi:115:9:115:15:2399:2405: Informative: Grammar is  SLR(1).
+C:/Development/HartLibrary/Workspace3.5.1/org.eclipse.ocl.xtext.essentialocl/src/org/eclipse/ocl/xtext/essentialocl/parser/EssentialOCLKWLexer.gi:115:9:115:15:2399:2405: Informative: Grammar is  SLR(1).
 
 Number of Terminals: 56
 Number of Nonterminals: 1

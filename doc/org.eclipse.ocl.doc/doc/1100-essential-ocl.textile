@@ -19,7 +19,7 @@ h4. Grammar Implementation
 
 The grammar used by the Xtext editors may be found at:
 
-/src/org/eclipse/ocl/examples/xtext/essentialocl/EssentialOCL.xtext
+/src/org/eclipse/ocl/xtext/essentialocl/EssentialOCL.xtext
 
 in the org.eclipse.ocl.xtext.essentialocl plugin.
 

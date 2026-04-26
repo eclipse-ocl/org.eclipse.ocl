@@ -24,7 +24,7 @@
       <package
             uri="http://eclipse.org/ocl/debug/test/ecoreTest"
             class="org.eclipse.ocl.validity.test.ecoreTest.EcoreTestPackage"
-            genModel="model/ecoreTest.genmodel"/>
+            genModel="models/validity/ecoreTest.genmodel"/>
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
@@ -32,6 +32,6 @@
       <package
             uri="http://eclipse.org/ocl/debug/test/ecoreTest2"
             class="org.eclipse.ocl.validity.test.ecoreTest2.EcoreTest2Package"
-            genModel="model/ecoreTest.genmodel"/>
+            genModel="models/validity/ecoreTest.genmodel"/>
    </extension>
 </plugin>

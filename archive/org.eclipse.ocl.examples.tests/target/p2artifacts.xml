@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?artifactRepository version='1.1.0'?>
+<artifacts size='2'>
+  <artifact classifier='osgi.bundle' id='org.eclipse.ocl.examples.tests' version='7.0.0.v20260426-0746'>
+    <properties size='6'>
+      <property name='artifact.size' value='7048'/>
+      <property name='download.size' value='7048'/>
+      <property name='maven-groupId' value='org.eclipse.ocl'/>
+      <property name='maven-artifactId' value='org.eclipse.ocl.examples.tests'/>
+      <property name='maven-version' value='7.0.0-SNAPSHOT'/>
+      <property name='maven-type' value='eclipse-test-plugin'/>
+    </properties>
+  </artifact>
+  <artifact classifier='osgi.bundle' id='org.eclipse.ocl.examples.tests.source' version='7.0.0.v20260426-0746'>
+    <properties size='7'>
+      <property name='artifact.size' value='5559'/>
+      <property name='download.size' value='5559'/>
+      <property name='maven-groupId' value='org.eclipse.ocl'/>
+      <property name='maven-artifactId' value='org.eclipse.ocl.examples.tests'/>
+      <property name='maven-version' value='7.0.0-SNAPSHOT'/>
+      <property name='maven-classifier' value='sources'/>
+      <property name='maven-type' value='java-source'/>
+    </properties>
+  </artifact>
+</artifacts>
