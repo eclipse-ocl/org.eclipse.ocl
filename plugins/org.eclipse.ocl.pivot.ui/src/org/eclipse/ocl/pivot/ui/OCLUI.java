@@ -80,7 +80,7 @@ public class OCLUI
 	}
 
 	/**
-	 * this method comes from the org.eclipse.ocl.examples.xtext.console.OCLConsolePage written by
+	 * this method comes from the org.eclipse.ocl.xtext.console.OCLConsolePage written by
 	 *
 	 * @param contextObject
 	 * @return the metamodelManager

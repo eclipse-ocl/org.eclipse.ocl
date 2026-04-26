@@ -135,7 +135,7 @@ org.eclipse.ocl.common.ui
         org.eclipse.ocl.xtext.completeocl.ui
         org.eclipse.ocl.xtext.oclinecore.ui
         org.eclipse.ocl.xtext.oclstdlib.ui
-        org.eclipse.ocl.examples.xtext.console
+        org.eclipse.ocl.xtext.console
           org.eclipse.ocl.pivot.ui
 p. 
 
