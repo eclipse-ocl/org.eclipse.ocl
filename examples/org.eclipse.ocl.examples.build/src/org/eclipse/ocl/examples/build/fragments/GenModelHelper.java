@@ -31,7 +31,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
-public class GenModelHelper		// Trimmed from org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper
+public class GenModelHelper		// Trimmed from org.eclipse.ocl.codegen.generator.AbstractGenModelHelper
 {
 	private @NonNull ResourceSet resourceSet;
 

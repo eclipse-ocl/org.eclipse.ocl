@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.codegen.genmodel.OCLGenModelUtil;
 
 /**
  * Initializes the Ecore-based genmodel support for GenerateModel.mwe2. This includes registration of the

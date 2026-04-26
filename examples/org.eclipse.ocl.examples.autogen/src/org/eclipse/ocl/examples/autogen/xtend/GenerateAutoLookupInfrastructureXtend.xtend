@@ -16,8 +16,8 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenClassifier
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage
 import org.eclipse.emf.ecore.EPackage
 import org.eclipse.emf.mwe.core.issues.Issues
-import org.eclipse.ocl.examples.codegen.generator.AbstractGenModelHelper
-import org.eclipse.ocl.examples.codegen.generator.GenModelHelper
+import org.eclipse.ocl.codegen.generator.AbstractGenModelHelper
+import org.eclipse.ocl.codegen.generator.GenModelHelper
 import org.eclipse.ocl.pivot.Class
 import org.eclipse.ocl.pivot.Operation
 import org.eclipse.ocl.pivot.Type

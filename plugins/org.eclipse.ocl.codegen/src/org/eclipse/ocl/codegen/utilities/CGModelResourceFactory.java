@@ -1,0 +1,30 @@
+/*******************************************************************************
+ * Copyright (c) 2013, 2018 CEA LIST and others.
+ * All rights reserved.   This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v2.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v20.html
+ * 
+ * Contributors:
+ *   E.D.Willink(CEA LIST) - Initial API and implementation
+ *******************************************************************************/
+package org.eclipse.ocl.codegen.utilities;
+
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.codegen.analyzer.CG2StringVisitor;
+
+/**
+ * The <b>Resource Factory</b> associated with the package.
+ */
+public interface CGModelResourceFactory extends Resource.Factory
+{
+	@Override
+	@NonNull CGModelResource createResource(URI uri);
+
+    /**
+	 * Create a visitor to provide a debug representation of one or more elements in the resource. 
+	 */
+	@NonNull CG2StringVisitor createToStringVisitor();
+}

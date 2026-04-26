@@ -11,10 +11,10 @@
 package org.eclipse.ocl.examples.autogen.java;
 
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
-import org.eclipse.ocl.examples.codegen.java.JavaGlobalContext;
+import org.eclipse.ocl.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.codegen.java.JavaConstants;
+import org.eclipse.ocl.codegen.java.JavaGlobalContext;
 
 public class AutoGlobalContext<@NonNull CG extends AutoCodeGenerator> extends JavaGlobalContext<CG> {
 

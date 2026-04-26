@@ -13,9 +13,9 @@ package org.eclipse.ocl.examples.build.modelspecs;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGElement;
-import org.eclipse.ocl.examples.codegen.genmodel.MethodSpec;
-import org.eclipse.ocl.examples.codegen.genmodel.ModelSpec;
+import org.eclipse.ocl.codegen.cgmodel.CGElement;
+import org.eclipse.ocl.codegen.genmodel.MethodSpec;
+import org.eclipse.ocl.codegen.genmodel.ModelSpec;
 
 /**
  * CGElementModelSpec supports generation of the CGElement.getChildren()/getParent() method hierarchy.

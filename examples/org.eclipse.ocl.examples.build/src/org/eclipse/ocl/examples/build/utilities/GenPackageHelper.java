@@ -15,7 +15,7 @@ import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
 import org.eclipse.emf.codegen.ecore.genmodel.GenPackage;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil;
+import org.eclipse.ocl.codegen.genmodel.OCLGenModelUtil;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 /**

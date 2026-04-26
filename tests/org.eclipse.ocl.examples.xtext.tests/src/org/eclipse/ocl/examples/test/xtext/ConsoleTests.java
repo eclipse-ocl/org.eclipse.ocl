@@ -25,7 +25,7 @@ import org.eclipse.debug.internal.ui.sourcelookup.SourceLookupFacility;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.debug.core.OCLDebugTarget;
 import org.eclipse.ocl.examples.debug.launching.OCLLaunchConstants;
 import org.eclipse.ocl.examples.debug.vm.VMVirtualMachine;

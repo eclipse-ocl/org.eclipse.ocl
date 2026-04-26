@@ -15,11 +15,11 @@ import java.util.List;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.codegen.cgmodel.CGClass;
+import org.eclipse.ocl.codegen.cgmodel.CGPackage;
+import org.eclipse.ocl.codegen.cgmodel.CGValuedElement;
+import org.eclipse.ocl.codegen.java.JavaConstants;
 import org.eclipse.ocl.examples.autogen.java.AutoVisitorsCG2JavaVisitor;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGClass;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGPackage;
-import org.eclipse.ocl.examples.codegen.cgmodel.CGValuedElement;
-import org.eclipse.ocl.examples.codegen.java.JavaConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 

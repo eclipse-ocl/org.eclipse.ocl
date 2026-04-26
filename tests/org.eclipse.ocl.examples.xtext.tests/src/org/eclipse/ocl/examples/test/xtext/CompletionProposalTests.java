@@ -24,7 +24,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
-import org.eclipse.ocl.examples.codegen.utilities.CGUtil;
+import org.eclipse.ocl.codegen.utilities.CGUtil;
 import org.eclipse.ocl.examples.xtext.tests.TestFile;
 import org.eclipse.ocl.examples.xtext.tests.TestFileSystemHelper;
 import org.eclipse.ocl.examples.xtext.tests.TestProject;
