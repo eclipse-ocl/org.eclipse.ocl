@@ -33,6 +33,9 @@ public abstract class AbstractReflectiveInheritanceType extends ReflectiveInheri
 		return this;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FlatClass getFlatClass(@NonNull StandardLibrary standardLibrary) {
 		return this;

@@ -39,21 +39,33 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FragmentIterable getAllProperSuperFragments() {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FragmentIterable getAllSuperFragments() {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public int getDepth() {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FlatClass getFlatClass( @NonNull StandardLibrary standardLibrary) {
 		//		return standardLibrary.getInheritance(this);
@@ -61,30 +73,48 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 	}
 
 //	@Override
+	/**
+	 * @since 7.0
+	 */
 	public @NonNull FragmentIterable getFragments() {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @Nullable Operation basicGetOperation(@NonNull OperationId id) {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @Nullable Property basicGetProperty(@NonNull String name) {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getPivotClass() {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FlatFragment getSelfFragment() {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FragmentIterable getSuperFragments(int depth) {
 		throw new UnsupportedOperationException();
@@ -165,11 +195,17 @@ public abstract class AbstractExecutorType extends AbstractInheritance implement
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @Nullable FlatFragment getFragment(@NonNull FlatClass that) {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public @NonNull FlatFragment getFragment(int fragmentNumber) {
 		throw new UnsupportedOperationException();
