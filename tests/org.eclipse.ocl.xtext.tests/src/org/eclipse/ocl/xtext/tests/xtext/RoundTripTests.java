@@ -67,6 +67,7 @@ import org.eclipse.xtext.util.EmfFormatter;
 public class RoundTripTests extends XtextTestCase
 {
 	private static final @NonNull String AS2ES_VALIDATION_ERRORS = "AS2ES_VALIDATION_ERRORS";
+	private static final @NonNull String NEEDS_BOWDLERIZATION = "NEEDS_BOWDLERIZATION";
 
 	public @NonNull Resource createEcoreFromPivot(@NonNull EnvironmentFactoryInternal environmentFactory, @NonNull ASResource asResource, @NonNull URI ecoreURI) throws IOException {
 		Resource ecoreResource = AS2Ecore.createResource(environmentFactory, asResource, ecoreURI, null);
@@ -194,6 +195,7 @@ public class RoundTripTests extends XtextTestCase
 		ocl.dispose();
 	}
 	protected void doRoundTripFromEcore(@NonNull EnvironmentFactoryInternal environmentFactory, URI inputURI, URI referenceURI, Map<@NonNull String, @Nullable Object> saveOptions) throws IOException, InterruptedException, ParserException {
+		boolean needsBowdlerization = (saveOptions != null) && (saveOptions.get(NEEDS_BOWDLERIZATION) == Boolean.TRUE);
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String pivotName = stem + ".ecore.oclas";
 		String outputName = stem + ".regenerated.ecore";
@@ -226,7 +228,18 @@ public class RoundTripTests extends XtextTestCase
 		asResource.setSaveable(wasSaveable);
 		@NonNull String @NonNull[] validationDiagnostics = saveOptions != null ? (@NonNull String @NonNull[])saveOptions.get(AS2ES_VALIDATION_ERRORS) : NO_MESSAGES;
 		assertValidationDiagnostics("Ecore2AS invalid", asResource, validationDiagnostics);
-		XMLResource outputResource = AS2Ecore.createResource(environmentFactory, asResource, outputURI, saveOptions);
+//		XMLResource outputResource = AS2Ecore.createResource(environmentFactory, asResource, outputURI, saveOptions);
+		AS2Ecore converter = new AS2Ecore(environmentFactory, asResource, outputURI, saveOptions)
+		{
+			@Override
+			protected void addContents(@NonNull List<@NonNull EObject> results) {
+				super.addContents(results);
+				if (needsBowdlerization) {
+					bowdlerize(ecoreResource);
+				}
+			}
+		};
+		XMLResource outputResource = converter.getEcoreResource();
 		assertNoResourceErrors("Ecore2AS failed", outputResource);
 		OutputStream outputStream = resourceSet.getURIConverter().createOutputStream(outputURI);
 		outputResource.save(outputStream, XMIUtil.createSaveOptions(outputResource));
@@ -250,6 +263,9 @@ public class RoundTripTests extends XtextTestCase
 			ResourceSetImpl resourceSet2 = new ResourceSetImpl();
 			StandaloneProjectMap.getAdapter(resourceSet).initializeResourceSet(resourceSet2);
 			Resource referenceResource = ClassUtil.requireNonNull(resourceSet2.getResource(referenceURI, true));
+			if (needsBowdlerization) {
+				bowdlerize(referenceResource);
+			}
 			TestUtil.assertSameModel(referenceResource, outputResource);
 			unloadResourceSet(resourceSet2);
 		}
@@ -686,7 +702,9 @@ public class RoundTripTests extends XtextTestCase
 		OCLInternal ocl = OCLInternal.newInstance(getProjectMap(), null);
 		EnvironmentFactoryInternal environmentFactory = ocl.getEnvironmentFactory();
 		getProjectMap().configureLoadFirst(environmentFactory.getResourceSet(), EcorePackage.eNS_URI);
-		doRoundTripFromEcore(environmentFactory, uri, uri, null); //null);				// FIXME Compare is not quite right
+		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
+		saveOptions.put(NEEDS_BOWDLERIZATION, Boolean.TRUE);
+		doRoundTripFromEcore(environmentFactory, uri, uri, saveOptions); //null);				// FIXME Compare is not quite right
 		ocl.dispose();
 	}
 
@@ -695,6 +713,7 @@ public class RoundTripTests extends XtextTestCase
 		Map<@NonNull String, @Nullable Object> saveOptions = new HashMap<>();
 		saveOptions.put(AS2Ecore.OPTION_INVARIANT_PREFIX, "validate");
 		saveOptions.put(AS2Ecore.OPTION_GENERATE_STRUCTURAL_XMI_IDS, Boolean.TRUE);
+		saveOptions.put(NEEDS_BOWDLERIZATION, Boolean.TRUE);
 		doRoundTripFromEcore(uri, uri, saveOptions);
 	}
 
