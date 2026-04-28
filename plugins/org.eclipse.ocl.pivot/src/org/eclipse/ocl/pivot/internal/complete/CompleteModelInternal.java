@@ -29,11 +29,6 @@ public interface CompleteModelInternal extends CompleteModel
 	/**
 	 * @since 7.0
 	 */
-	@Nullable CompletePackage basicGetCompletePackageForPackageURI(@NonNull String packageURI);
-
-	/**
-	 * @since 7.0
-	 */
 	@Deprecated /* drop 'Shared' */
 	@Nullable CompleteClass basicGetSharedCompleteClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
 	void didAddClass(org.eclipse.ocl.pivot.@NonNull Class partialClass, @NonNull CompleteClassInternal completeClass);

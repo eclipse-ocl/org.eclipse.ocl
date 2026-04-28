@@ -491,7 +491,7 @@ public abstract class PartialStandardLibraryImpl extends StandardLibraryImpl imp
 			Annotation semanticsAnnotation = PivotUtil.createSemanticsAnnotation(semantics);
 			asPackage.getOwnedAnnotations().add(semanticsAnnotation);
 		}
-		asPackage.getPackageId();
+		asPackage.getPackageId();			// XXX
 		return asPackage;
 	}
 
