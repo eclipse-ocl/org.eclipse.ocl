@@ -10,112 +10,47 @@
  *   E.D.Willink (CEA List) - Bug 424057 - UML 2.5 CG *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.ecore.es2as;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.EMap;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EClassifier;
-import org.eclipse.emf.ecore.EDataType;
-import org.eclipse.emf.ecore.EEnum;
-import org.eclipse.emf.ecore.EFactory;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.EParameter;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.XMIException;
-import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
-import org.eclipse.ocl.pivot.AnyType;
-import org.eclipse.ocl.pivot.CollectionType;
-import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.Import;
 import org.eclipse.ocl.pivot.Model;
-import org.eclipse.ocl.pivot.Namespace;
-import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
-import org.eclipse.ocl.pivot.PivotFactory;
-import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.TemplateParameter;
-import org.eclipse.ocl.pivot.Type;
-import org.eclipse.ocl.pivot.WildcardType;
-import org.eclipse.ocl.pivot.ids.TypeId;
-import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
-import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker;
-import org.eclipse.ocl.pivot.internal.ecore.Ecore2Moniker.MonikerAliasAdapter;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
-import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap.DelegatedSinglePackageResource;
 import org.eclipse.ocl.pivot.internal.utilities.External2AS;
-import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
-import org.eclipse.ocl.pivot.library.LibraryConstants;
-import org.eclipse.ocl.pivot.messages.PivotMessages;
-import org.eclipse.ocl.pivot.model.OCLmetamodel;
-import org.eclipse.ocl.pivot.model.OCLstdlib;
-import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.ProjectManager;
-import org.eclipse.ocl.pivot.resource.ProjectManager.IPackageDescriptor;
-import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
-import org.eclipse.ocl.pivot.resource.ProjectManager.IResourceDescriptor;
 import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-import org.eclipse.ocl.pivot.utilities.MetamodelManager;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
-import org.eclipse.ocl.pivot.utilities.ParserException;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
-import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
-import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
- * Manage conversio  of a *.ecore model to a *.ecore.oclas.
+ * Manage conversion/mapping of a *.ecore model to a *.ecore.oclas.
  *
- * FIXME This class has evolved to partially support loading OCLstdlib.ecore for direct use by Model2TablesGenerator. However
- * Iterations are not modelled so for now Model2TablesGenerator must continue to rely on a previously load by GenerateOCLstdlibXtend
+ * @since 7.0
  */
-public class Ecore2AS extends AbstractExternal2AS
+public abstract class Ecore2AS extends AbstractExternal2AS
 {
 	/**
 	 * @since 1.3
 	 */
 	public static final @NonNull TracingOption NOT_OPTIONAL = new TracingOption(PivotPlugin.PLUGIN_ID, "ecore2as/notOptional");
-
-	/**
-	 * @since 7.0
-	 */
-	public static @Nullable Ecore2AS basicGetAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
-		External2AS adapter = External2AS.findAdapter(resource, environmentFactory);
-		Ecore2AS castAdapter = (Ecore2AS)adapter;
-		return castAdapter;
-	}
 
 	/**
 	 * @since 7.0
@@ -140,63 +75,9 @@ public class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
-		return new Ecore2AS(resource, environmentFactory);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
-		Ecore2AS adapter = (Ecore2AS)External2AS.findAdapter(resource, environmentFactory);
-		if (adapter == null) {
-			adapter = createExternal2AS(resource, environmentFactory);
-		}
-		return adapter;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @Nullable List<@NonNull ETypeParameter> getAllETypeParameters(@Nullable List<@NonNull ETypeParameter> allETypeParameters, @Nullable EObject eObject) {
-	//	EObject eContainer = eObject.eContainer();
-		if (eObject instanceof EPackage) {
-			// EPackage has no self / ancestral template parameters
-		}
-		else if (eObject instanceof EClassifier) {
-			EClassifier eClassifier = (EClassifier)eObject;
-			allETypeParameters = getAllETypeParameters(allETypeParameters, eClassifier.eContainer());
-			for (ETypeParameter eTypeParameter : eClassifier.getETypeParameters()) {
-				if (allETypeParameters == null) {
-					allETypeParameters = new ArrayList<>();
-				}
-				assert eTypeParameter != null;
-				allETypeParameters.add(eTypeParameter);
-			}
-		}
-		else if (eObject instanceof EOperation) {
-			EOperation eOperation = (EOperation)eObject;
-			allETypeParameters = getAllETypeParameters(allETypeParameters, eOperation.eContainer());
-			for (ETypeParameter eTypeParameter : eOperation.getETypeParameters()) {
-				if (allETypeParameters == null) {
-					allETypeParameters = new ArrayList<>();
-				}
-				assert eTypeParameter != null;
-				allETypeParameters.add(eTypeParameter);
-			}
-		}
-		else if ((eObject instanceof EParameter) || (eObject instanceof EStructuralFeature) || (eObject instanceof ETypeParameter)) {
-			assert eObject != null;
-			allETypeParameters = getAllETypeParameters(allETypeParameters, eObject.eContainer());
-		}
-		else if (eObject instanceof EGenericType) {
-			assert eObject != null;
-			allETypeParameters = getAllETypeParameters(allETypeParameters, eObject.eContainer());
-		}
-		else {
-			assert false;
-		}
-		return allETypeParameters;
+	public static @NonNull ExternalEcore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
+	//	return ExternalEcore2AS.getAdapter(resource, environmentFactory);
+		return (ExternalEcore2AS)External2AS.getAdapter(resource, environmentFactory);
 	}
 
 	/**
@@ -239,30 +120,6 @@ public class Ecore2AS extends AbstractExternal2AS
 	}
 
 	/**
-	 * Convert an (annotated) Ecore resource to a Pivot Model.
-	 * @param alias
-	 *
-	 * @param ecoreResource the annotated Ecore resource
-	 *
-	 * @return the Pivot root package
-	 * @since 7.0
-	 */
-	public static @NonNull Model importFromEcore(@NonNull EnvironmentFactory environmentFactory, String alias, @NonNull Resource ecoreResource) {
-		Ecore2AS conversion = getAdapter(ecoreResource, environmentFactory);
-		return conversion.getASModel();
-	}
-
-	public static boolean isEcore(@NonNull Resource resource) {
-		List<@NonNull EObject> contents = resource.getContents();
-		for (EObject content : contents) {
-			if (content instanceof EPackage) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	/**
 	 * @since 1.18
 	 */
 	public static boolean isNullFree(@NonNull ENamedElement eObject) {
@@ -283,156 +140,25 @@ public class Ecore2AS extends AbstractExternal2AS
 		return isNullFree;
 	}
 
-	public static @Nullable Ecore2AS loadFromEcore(@NonNull ASResource ecoreASResource, @NonNull URI ecoreURI) {
-		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(ecoreASResource.getResourceSet());
-		ResourceSet resourceSet = environmentFactory.getResourceSet();
-		Resource ecoreResource = resourceSet.getResource(ecoreURI, true);
-		if (ecoreResource == null) {
-			return null;
-		}
-		Ecore2AS conversion = getAdapter(ecoreResource, environmentFactory);
-		conversion.loadImports(ecoreResource);
-		//		if (asMetamodels != null) {
-		//
-		//		}
-		conversion.pivotModel = PivotUtil.createModel(ecoreURI.toString());
-		//		conversion.installImports();
-		conversion.update(ecoreASResource, ClassUtil.requireNonNull(ecoreResource.getContents()));
-
-		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
-		if (ecoreAdapter != null) {
-			Map<@NonNull EObject, @Nullable String> ecoreAliasMap = ecoreAdapter.getAliasMap();
-			MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(ecoreASResource);
-			Map<@NonNull EObject, @Nullable String> pivotAliasMap = pivotAdapter.getAliasMap();
-			for (EObject eObject : ecoreAliasMap.keySet()) {
-				String alias = ecoreAliasMap.get(eObject);
-				Element element = conversion.newCreateMap.get(eObject);
-				assert element != null;
-				pivotAliasMap.put(element, alias);
-			}
-		}
-		environmentFactory.getMetamodelManager().installResource(ecoreASResource);
-		conversion.installImports();
-		return conversion;
-	}
-
-	/**
-	 * Convert an (annotated) Ecore object to a pivot element.
-	 *
-	 * @param eObject the annotated Ecore object
-	 *
-	 * @return the pivot element
-	 * @since 7.0
-	 */
-	public static Element importFromEcore(@NonNull EnvironmentFactory environmentFactory, String alias, @NonNull EObject eObject) {
-		Resource ecoreResource = ClassUtil.requireNonNull(eObject.eResource());
-		Ecore2AS conversion = getAdapter(ecoreResource, environmentFactory);
-		@SuppressWarnings("unused")
-		Model pivotModel = conversion.getASModel();
-		return conversion.newCreateMap.get(eObject);
-	}
-
-	/**
-	 * Mapping of source Ecore elements to their resulting pivot element in a previous conversion.
-	 */
-	private Map<@NonNull String, @NonNull Element> oldIdMap = null;
-
-	/**
-	 * Mapping of source Ecore eModelElements and eGenericTypes to their resulting pivot element in the current conversion.
-	 */
-	private Map<@NonNull EObject, @NonNull Element> newCreateMap = null;
-
-	/**
-	 * Set of all Ecore objects requiring resolution prior to the reference pass.
-	 */
-	private Set<@NonNull ETypeParameter> eTypeParameters = null;
-
-	/**
-	 * Set of all Ecore objects requiring further work during the reference pass.
-	 */
-	private Set<@NonNull EObject> referencers = null;
-
-	/**
-	 * Set of all converters used during session.
-	 */
-	private Set<@NonNull Ecore2AS> allConverters = new HashSet<>();
-
-	/**
-	 * List of all EDataTypes that might need special case mapping via the ecore2asMap. Non-null during declaration pass.
-	 */
-	private @Nullable List<@NonNull EDataType> eDataTypes = null;
-
-	/**
-	 * List of all generic types. Non-null during declaration pass.
-	 */
-	private @Nullable List<@NonNull EGenericType> genericTypes = null;
-
-	private List<Resource.@NonNull Diagnostic> errors = null;
-
 	protected final @NonNull Resource ecoreResource;
 
-	protected Model pivotModel = null;						// Set by importResource
-	private @NonNull Map</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap = new HashMap<>();
-
-	/**
-	 * The loadableURI of the ecoreResource, which may differ from ecoreResource.getURI() when
-	 * ecoreResource is an installed package whose nsURI may not be globally registered. The accessible
-	 * URI is used for the AS URI to ensure that the saved serialized XMI is loadable using the source
-	 * *.ecore's rather than the missing nsURI regisyrations.
-	 */
-	private URI ecoreURI = null;
-
-	/**
-	 * All imported EPackages identified by AS_METAMODEL_ANNOTATION_SOURCE annotations.
-	 */
-	private Set<@NonNull EPackage> eMetamodels = null;
-
-	/**
-	 * All imported EObjects identified as IMPORT_ANNOTATION_SOURCE annotations.
-	 */
-	private Set<EObject> importedEObjects = null;
-
 	/**
 	 * @since 7.0
 	 */
-	public Ecore2AS(@NonNull Resource ecoreResource, @NonNull EnvironmentFactory environmentFactory) {
+	protected Ecore2AS(@NonNull Resource ecoreResource, @NonNull EnvironmentFactory environmentFactory) {
 		super(environmentFactory);
 		this.ecoreResource = ecoreResource;
 		this.environmentFactory.addExternal2AS(this);
-		assert !(ecoreResource instanceof DelegatedSinglePackageResource);			// XXX
-		assert !ecoreResource.getClass().getName().contains("UMLResource");			// XXX
-	}
-
-	/**
-	 * @since 1.23
-	 */
-	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
-		@SuppressWarnings("unused")
-		Element oldElement = newCreateMap.put(eObject, pivotElement);
 	}
 
 	@Override
 	public void addGenericType(@NonNull EGenericType eObject) {
-		assert genericTypes != null;
-		genericTypes.add(eObject);
+		throw new IllegalStateException();
 	}
 
 	@Override
 	public void addMapping(@NonNull EObject eObject, @NonNull Element pivotElement) {
-		if (pivotElement instanceof PivotObjectImpl) {
-			((PivotObjectImpl)pivotElement).setESObject(eObject);
-		}
-		Element pivotElement1 = pivotElement;
-		if (eObject instanceof EDataType) {
-			assert eDataTypes != null;
-			eDataTypes.add((EDataType) eObject);
-		}
-		addCreated(eObject, pivotElement1);
-	}
-
-	@Override
-	protected Model basicGetPivotModel() {
-		return pivotModel;
+		throw new IllegalStateException();
 	}
 
 	/**
@@ -446,121 +172,13 @@ public class Ecore2AS extends AbstractExternal2AS
 		return false;
 	}
 
-	protected @NonNull URI createPivotURI() {
-		if (ecoreURI != null) {
-			return PivotUtil.getASURI(ecoreURI.trimFragment());
-		}
-		URI uri = ecoreResource.getURI();
-		if (uri == null) {
-			throw new IllegalStateException("Missing resource URI");
-		}
-		return PivotUtil.getASURI(uri);
-	}
-
 	@Override
 	public void error(@NonNull XMIException e) {
-		if (errors == null) {
-			errors = new ArrayList<>();
-		}
-		errors.add(e);
-	}
-
-	public <T extends Element> T getASElement(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		if (pivotModel == null) {
-			getASModel();
-		}
-		Element element = newCreateMap.get(eObject);
-		if (element == null) {
-			Resource resource = eObject.eResource();
-			if ((resource != ecoreResource) && (resource != null)) {
-				Ecore2AS converter = getAdapter(resource, environmentFactory);
-				if (allConverters.add(converter)) {
-					converter.getASModel();
-					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
-						addCreated(entry.getKey(), entry.getValue());
-					}
-				}
-			}
-			element = newCreateMap.get(eObject);
-		}
-		if (element == null) {
-			error("Unresolved " + eObject);
-		}
-		else if (!requiredClass.isAssignableFrom(element.getClass())) {
-			throw new ClassCastException(element.getClass().getName() + " is not assignable to " + requiredClass.getName());
-		}
-		@SuppressWarnings("unchecked")
-		T castElement = (T) element;
-		return castElement;
+		throw new IllegalStateException();
 	}
 
 	@Override
-	public @NonNull Model getASModel() {
-		Model pivotModel2 = pivotModel;
-		if ((pivotModel2 == null) || pivotModel2.eIsProxy()) {
-//			PivotUtil.debugPrintln("getASModel: " + ecoreResource.getURI());
-			loadImports(ecoreResource);
-			pivotModel2 = pivotModel = importObjects(ClassUtil.requireNonNull(ecoreResource.getContents()), createPivotURI());
-			ASResource asResource = (ASResource) pivotModel.eResource();
-			boolean wasUpdating = asResource.setUpdating(true);
-			installImports();
-			asResource.setUpdating(wasUpdating);
-		}
-		return pivotModel2;
-	}
-
-	public @Nullable <T extends Element> T getASOfEcore(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		if ((pivotModel == null) || pivotModel.eIsProxy()) {
-			getASModel();
-		}
-		assert eDataTypes == null;
-		Element element = newCreateMap.get(eObject);
-		if (element == null) {
-			Resource eObjectResource = eObject.eResource();
-			URI eObjectResourceURI = eObjectResource.getURI();
-			Resource nonDelegatedResource = ecoreResource instanceof DelegatedSinglePackageResource ? ((DelegatedSinglePackageResource)ecoreResource).getResource() : ecoreResource;
-			if ((eObjectResource != nonDelegatedResource) || (eObjectResourceURI != nonDelegatedResource.getURI())) {
-				throw new IllegalStateException(StringUtil.bind(PivotMessages.ConflictingResource, eObjectResourceURI));
-			}
-			return null;
-		}
-		assert !element.eIsProxy();
-		if (!requiredClass.isAssignableFrom(element.getClass())) {
-			throw new ClassCastException(element.getClass().getName() + " is not assignable to " + requiredClass.getName());
-		}
-		@SuppressWarnings("unchecked")
-		T castElement = (T) element;
-		return castElement;
-	}
-
-	public Type getASType(@NonNull EObject eObject) {
-		Element pivotElement = newCreateMap.get(eObject);
-		if (pivotElement == null) {
-			Resource resource = eObject.eResource();
-			if ((resource != ecoreResource) && (resource != null)) {
-				Ecore2AS converter = getAdapter(resource, environmentFactory);
-				if (allConverters.add(converter)) {
-					converter.getASModel();
-					//					allEClassifiers.addAll(converter.allEClassifiers);
-					//					allNames.addAll(converter.allNames);
-					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
-						addCreated(entry.getKey(), entry.getValue());
-					}
-				}
-			}
-			pivotElement = newCreateMap.get(eObject);
-		}
-		if (pivotElement == null) {
-			error("Unresolved " + eObject);
-		}
-		else if (!(pivotElement instanceof Type)) {
-			error("Incompatible " + eObject);
-		}
-		else {
-			return (Type) pivotElement;
-		}
-		return null;
-	}
+	public abstract @NonNull Model getASModel();
 
 	/**
 	 * Return the baseURI of ecoreResource against which its imports should be resolved.
@@ -586,38 +204,8 @@ public class Ecore2AS extends AbstractExternal2AS
 		}
 	}
 
-	public @Nullable Element getCreated(@NonNull EObject eObject) {
-		assert eDataTypes == null;
-		return newCreateMap.get(eObject);
-	}
-
-	@Override
-	public @Nullable <T extends Element> T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
-		assert eDataTypes == null;
-		return getASOfEcore(requiredClass, eObject);
-	}
-
-	@Override
-	public @Nullable Map<@NonNull EObject, @NonNull Element> getCreatedMap() {
-		assert eDataTypes == null;
-		return newCreateMap;
-	}
-
 	public @Nullable Resource getEcoreResource() {
 		return ecoreResource;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public @Nullable Type getNormalizedType(@Nullable Type asType) {
-		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
-			EObject eObject = asType.getESObject();
-			if ((eObject instanceof ETypeParameter) && ((ETypeParameter)eObject).getEBounds().isEmpty()) {
-				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), (TemplateParameter)asType);
-			}
-		}
-		return asType;
 	}
 
 	@Override
@@ -630,789 +218,23 @@ public class Ecore2AS extends AbstractExternal2AS
 		return ClassUtil.requireNonNull(ecoreResource.getURI());
 	}
 
-	public @NonNull Model importObjects(@NonNull Collection<@NonNull EObject> ecoreContents, @NonNull URI pivotURI) {
-		EPackage libraryEPackage = isLibrary(ecoreContents);
-		if (libraryEPackage != null) {			 // when generating OCLstdlib
-			newCreateMap = new HashMap<>();
-			AnyType asAnyType = standardLibrary.basicGetOclAnyType();
-			org.eclipse.ocl.pivot.Package asLibrary = asAnyType != null ? asAnyType.getOwningPackage() : null;
-			if (asLibrary != null) {
-				addCreated(libraryEPackage, asLibrary);
-				List<org.eclipse.ocl.pivot.Class> ownedTypes = asLibrary.getOwnedClasses();
-				//			int prefix = LibraryConstants.ECORE_STDLIB_PREFIX.length();
-				for (@SuppressWarnings("null")@NonNull EClassifier eClassifier : libraryEPackage.getEClassifiers()) {
-					String name = environmentFactory.getTechnology().getOriginalName(eClassifier); //.substring(prefix);
-					Type asType = NameUtil.getNameable(ownedTypes, name);
-					if (asType != null) {
-						addCreated(eClassifier, asType);
-					}
-				}
-				return PivotUtil.getContainingModel(asLibrary);
-			}
-		}
-		MetamodelManager metamodelManager = environmentFactory.getMetamodelManager();
-		@NonNull ASResource asResource = metamodelManager.getResource(pivotURI, ASResource.ECORE_CONTENT_TYPE);
-		asResource.setSaveable(false);
-		//		try {
-		if (standardLibrary.getLibraryResource() == null) {
-			if (libraryEPackage != null) {
-				metamodelManager.installResource(asResource);
-			}
-			else if (isPivot(ecoreContents)) {
-				String nsURI = ((EPackage)ecoreContents.iterator().next()).getNsURI();
-				if (nsURI != null) {
-				//	Resource libraryResource = standardLibrary.loadLibraryResource(LibraryConstants.STDLIB_URI); -- bad doubly-defines library types
-					String stdlibASUri = LibraryConstants.STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
-					OCLstdlib library = OCLstdlib.create(stdlibASUri, LibraryConstants.STDLIB_URI);
-					metamodelManager.installResource(library);
-				}
-			}
-		}
-		URI uri = ecoreURI != null ? ecoreURI : ecoreResource.getURI();
-		Model pivotModel2 = null;
-		if (asResource.getContents().size() > 0) {
-			EObject eObject = asResource.getContents().get(0);
-			if (eObject instanceof Model) {
-				pivotModel2 = (Model) eObject;
-			}
-		}
-		if (pivotModel2 == null) {
-			pivotModel2 = pivotModel = PivotUtil.createModel(uri.toString());
-		}
-		pivotModel = pivotModel2;
-		//			installImports();
-		newCreateMap = synthesizeCreateMap(asResource);
-		if (newCreateMap == null) {
-			update(asResource, ecoreContents);
-		}
-		List<Diagnostic> errors2 = errors;
-		if (errors2 != null) {
-			asResource.getErrors().addAll(ClassUtil.nullFree(errors2));
-		}
-		return pivotModel2;
-	}
-
-	private @Nullable Map<@NonNull EObject, @NonNull Element> synthesizeCreateMap(@NonNull ASResource asResource) {
-		Model pivotModel2 = pivotModel;
-		assert pivotModel2 != null;
-		if (asResource instanceof OCLmetamodel) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
-			Map<@NonNull EObject, @NonNull Element> createMap = new HashMap<>();
-			for (TreeIterator<EObject> tit = pivotModel2.eAllContents(); tit.hasNext(); ) {
-				EObject eObject = tit.next();
-				if (eObject instanceof Element) {
-					Element asElement = (Element)eObject;
-					EObject esObject = asElement.getESObject();
-					if (esObject != null) {
-						createMap.put(esObject, asElement);
-					}
-				}
-			}
-			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.BOOLEAN), standardLibrary.getBooleanType());
-			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.INTEGER), standardLibrary.getIntegerType());
-			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.REAL), standardLibrary.getRealType());
-			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.STRING), standardLibrary.getStringType());
-			createMap.put(ClassUtil.requireNonNull(PivotPackage.Literals.UNLIMITED_NATURAL), standardLibrary.getUnlimitedNaturalType());
-			return createMap;
-		}
-		else if (asResource instanceof OCLstdlib) {					// FIXME polymorphize as a cached derived ASResourceImpl capability
-			Map<@NonNull EObject, @NonNull Element> createMap = new HashMap<>();
-			for (EObject eObject : new TreeIterable(pivotModel2, false)) {
-				if (eObject instanceof Element) {
-					Element asElement = (Element)eObject;
-					EObject esObject = asElement.getESObject();
-					if (esObject != null) {
-						createMap.put(esObject, asElement);
-					}
-				}
-			}
-			return createMap;
-		}
-		else {
-			return null;
-		}
-	}
-
-	public void initializeEcore2ASMap() {
-		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
-		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
-		org.eclipse.ocl.pivot.Class realType = standardLibrary.getRealType();
-		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
-		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN_OBJECT, booleanType);
-		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN, booleanType);
-		ecore2asMap.put(EcorePackage.Literals.EBIG_INTEGER, integerType);
-		ecore2asMap.put(EcorePackage.Literals.EBIG_DECIMAL, realType);
-		ecore2asMap.put(EcorePackage.Literals.ESTRING, stringType);
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	public void initializeLibrary() {
-		if (standardLibrary.basicGetOclAnyType() != null) {
-			return;
-		}
-		List<org.eclipse.ocl.pivot.@NonNull Class> asClasses = null;
-		boolean needsLibrary = true;
-		for (EObject eRoot : ecoreResource.getContents()) {		// All one EPackage
-			if (eRoot instanceof EPackage) {
-				EPackage ePackage = (EPackage)eRoot;
-				boolean hasOclAny = ePackage.getEClassifier(TypeId.OCL_ANY_NAME) != null;
-				boolean hasBoolean = ePackage.getEClassifier(TypeId.BOOLEAN_NAME) instanceof EDataType;
-				if (hasOclAny) {
-					needsLibrary = false;
-				}
-				if (hasOclAny || hasBoolean) {
-					for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-						Element asClass = newCreateMap.get(eClassifier);
-						assert asClass != null;
-						if (asClasses == null) {
-							asClasses = new ArrayList<>();
-						}
-						asClasses.add((org.eclipse.ocl.pivot.Class)asClass);
-					}
-				}
-			}
-		}
-		if (needsLibrary && (asClasses != null)) {
-			Set<@NonNull String> installNames = new HashSet<>();
-			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
-				String className = asClass.getName();
-				assert className != null;		// non-null name such as UML Association shouldn't happen here
-				if (className != null) {
-					installNames.add(className);
-				}
-			}
-			for (org.eclipse.ocl.pivot.Class asClass : OCLstdlib.getDefaultPackage().getOwnedClasses()) {		// FIXME use contribution
-				assert asClass != null;
-				if (!installNames.contains(asClass.getName())) {
-					asClasses.add(asClass);
-				}
-			}
-			standardLibrary.defineLibraryTypes(asClasses);
-		}
-	}
-
-	protected void installImports() {
-		URI baseURI = getBaseURI(ecoreResource);
-		List<Import> allImports = pivotModel.getOwnedImports();
-		for (EObject eContent : ecoreResource.getContents()) {
-			if (eContent instanceof EModelElement) {
-				EAnnotation importAnnotation = ((EModelElement)eContent).getEAnnotation(PivotConstants.IMPORT_ANNOTATION_SOURCE);
-				if (importAnnotation != null) {
-					EMap<String, String> details = importAnnotation.getDetails();
-					for (String key : details.keySet()) {
-						String value = details.get(key);
-						if (value == null) {
-							value = key;
-							key = "";
-						}
-						URI uri = URI.createURI(value);
-						if (baseURI != null) {
-							uri = uri.resolve(baseURI);
-						}
-						try {
-							assert uri != null;
-							Element importedObject = environmentFactory.getMetamodelManager().loadResource(uri, null, ecoreResource.getResourceSet());
-							if (importedObject instanceof Namespace) {
-								Import anImport = PivotFactory.eINSTANCE.createImport();
-								anImport.setName(key);
-								anImport.setImportedNamespace((Namespace) importedObject);
-								allImports.add(anImport);
-							}
-						} catch (ParserException e) {
-							error(ClassUtil.requireNonNull(e.getMessage()));
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * Return the first EPackage element of ecoreContents that has an ASLibrary annotation.
-	 */
-	protected @Nullable EPackage isLibrary(@NonNull Collection<@NonNull EObject> ecoreContents) {
-		if (ecoreContents.size() != 1) {
-			return null;
-		}
-		EObject ecoreRoot = ecoreContents.iterator().next();
-		if (!(ecoreRoot instanceof EPackage)) {
-			return null;
-		}
-		EPackage ecorePackage = (EPackage)ecoreRoot;
-		return isLibrary(ecorePackage) ? ecorePackage : null;
-	}
-
-	protected boolean isPivot(@NonNull Collection<@NonNull EObject> ecoreContents) {
-		if (ecoreContents.size() != 1) {
-			return false;
-		}
-		EObject ecoreRoot = ecoreContents.iterator().next();
-		if (!(ecoreRoot instanceof EPackage)) {
-			return false;
-		}
-		EPackage ecorePackage = (EPackage) ecoreRoot;
-		if (ClassUtil.basicGetMetamodelAnnotation(ecorePackage) != null) {
-			return true;
-		}
-		// FIXME Following code should be redundant
-		if (ecorePackage.getEClassifier(PivotPackage.Literals.ENUMERATION_LITERAL.getName()) == null) {
-			return false;
-		}
-		if (ecorePackage.getEClassifier(PivotPackage.Literals.EXPRESSION_IN_OCL.getName()) == null) {
-			return false;
-		}
-		if (ecorePackage.getEClassifier(PivotPackage.Literals.OPERATION_CALL_EXP.getName()) == null) {
-			return false;
-		}
-		if (ecorePackage.getEClassifier(PivotPackage.Literals.TEMPLATE_ARGUMENT.getName()) == null) {
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Load all transitively referenced *.ecore files and identify any EPackages identified
-	 * as OCL AS Metamodels.
-	 */
-	protected void loadImports(@NonNull Resource ecoreResource) {
-		URI baseURI = getBaseURI(ecoreResource);
-		for (EObject eContent : ecoreResource.getContents()) {
-			if (eContent instanceof EPackage) {
-				loadImports((EPackage)eContent, baseURI);
-			}
-		}
-		if ((eMetamodels != null) && (standardLibrary.getLibraryResource() == null)) {
-			String nsURI = eMetamodels.iterator().next().getNsURI();
-			if (nsURI != null) {
-				OCLstdlib library = OCLstdlib.getDefault(); //create(stdlibASUri, "ocl", "ocl", nsURI);
-				environmentFactory.getMetamodelManager().installResource(library);
-			}
-		}
-	}
-	protected void loadImports(@NonNull EPackage ePackage, @Nullable URI baseURI) {
-		if (ClassUtil.basicGetMetamodelAnnotation(ePackage) != null) {
-			if (eMetamodels == null) {
-				eMetamodels = new HashSet<>();
-			}
-			eMetamodels.add(ePackage);
-		}
-		EAnnotation importAnnotation = ePackage.getEAnnotation(PivotConstants.IMPORT_ANNOTATION_SOURCE);
-		if (importAnnotation != null) {
-			for (Map.Entry<String, String> detail : importAnnotation.getDetails()) {
-				String key = detail.getKey();
-				String value = detail.getValue();
-				if (value == null) {
-					value = key;
-					key = "";
-				}
-				URI uri = URI.createURI(value);
-				uri = resolveImportURI(uri, ePackage, baseURI);
-				assert uri != null;
-				ResourceSet resourceSet = environmentFactory.getResourceSet();
-				EObject importedEObject = null;
-				String fragment = uri.fragment();
-				if (fragment == null) {
-					importedEObject = resourceSet.getPackageRegistry().getEPackage(uri.toString());
-				}
-				else {
-					importedEObject = resourceSet.getEObject(uri, true);
-				}
-				if (importedEObject != null) {
-					if (importedEObjects == null) {
-						importedEObjects = new HashSet<>();
-					}
-					if (importedEObjects.add(importedEObject) && (importedEObject instanceof EPackage)) {
-						Resource importedResource = importedEObject.eResource();
-						if (importedResource != null) {
-							URI baseURI2 = getBaseURI(importedResource);
-							loadImports((EPackage)importedEObject, baseURI2);
-						}
-					}
-				}
-			}
-		}
-		for (EPackage eSubPackage : ePackage.getESubpackages()) {
-			if (eSubPackage != null) {
-				loadImports(eSubPackage, baseURI);
-			}
-		}
-	}
-
-	private @NonNull URI resolveImportURI(@NonNull URI uri, @NonNull EPackage ePackage, @Nullable URI baseURI) {
-		if (baseURI == null) {
-			return uri;
-		}
-		ProjectManager projectManager = environmentFactory.getProjectManager();
-		if (!(projectManager instanceof StandaloneProjectMap)) {
-			return uri;
-		}
-		StandaloneProjectMap projectMap = (StandaloneProjectMap)projectManager;
-		uri = uri.resolve(baseURI);
-		if (uri.isPlatformPlugin() && Objects.equals(ePackage.getNsURI(), String.valueOf(ePackage.eResource().getURI())) && (uri.segmentCount() >= 1)) {
-			@NonNull String projectName = uri.segment(1);
-			IProjectDescriptor projectDescriptor = projectMap.getProjectDescriptor(projectName);
-			if (projectDescriptor != null) {
-				Collection<IResourceDescriptor> resourceDescriptors = projectDescriptor.getResourceDescriptors();
-				if (resourceDescriptors != null) {
-					for (IResourceDescriptor resourceDescriptor : resourceDescriptors) {
-						if (Objects.equals(uri.trimFragment(), resourceDescriptor.getPlatformPluginURI())) {
-							Iterable<@NonNull IPackageDescriptor> packageDescriptors = projectDescriptor.getPackageDescriptors();
-							if (packageDescriptors != null) {
-								for (IPackageDescriptor packageDescriptor : packageDescriptors) {
-									uri = packageDescriptor.getNsURI();
-									break;
-								}
-							}
-
-							break;
-						}
-					}
-				}
-			}
-		}
-		return uri;
-	}
-
 	@Override
 	public void queueETypeParameter(@NonNull ETypeParameter eTypeParameter) {
-		eTypeParameters.add(eTypeParameter);
+		throw new IllegalStateException();
 	}
 
 	@Override
 	public void queueReference(@NonNull EObject eObject) {
-		referencers.add(eObject);
+		throw new IllegalStateException();
 	}
 
-	@Override
-	public <@NonNull T extends Element> T refreshElement(@NonNull Class<@NonNull T> pivotClass, EClass pivotEClass, @NonNull EModelElement eModelElement) {
-		EObject pivotElement = null;
-		if (oldIdMap != null) {
-			String id = ((XMLResource)eModelElement.eResource()).getID(eModelElement);
-			if (id != null) {
-				pivotElement = oldIdMap.get(id);
-				if ((pivotElement != null) && (pivotElement.eClass() != pivotEClass)) {
-					pivotElement = null;
-				}
-			}
-		}
-		if (pivotElement == null) {
-			EFactory eFactoryInstance = pivotEClass.getEPackage().getEFactoryInstance();
-			pivotElement = eFactoryInstance.create(pivotEClass);
-		}
-		if (!pivotClass.isAssignableFrom(pivotElement.getClass())) {
-			throw new ClassCastException();
-		}
-		@SuppressWarnings("unchecked")
-		T castElement = (T) pivotElement;
-	/*	Element oldElement = */ addCreated(eModelElement, castElement);			// XXX redundant wrt later addMapping (see testLoad_Names_oclcs)
-	//	assert oldElement == null;
-		return castElement;
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	protected void resolveAliases(@NonNull Resource asResource) {
-		MonikerAliasAdapter ecoreAdapter = MonikerAliasAdapter.findAdapter(ecoreResource);
-		if (ecoreAdapter != null) {
-			Map<EObject, String> ecoreAliasMap = ecoreAdapter.getAliasMap();
-			MonikerAliasAdapter pivotAdapter = MonikerAliasAdapter.getAdapter(asResource);
-			Map<EObject, String> pivotAliasMap = pivotAdapter.getAliasMap();
-			for (EObject eObject : ecoreAliasMap.keySet()) {
-				String alias = ecoreAliasMap.get(eObject);
-				Element element = newCreateMap.get(eObject);
-				pivotAliasMap.put(element, alias);
-			}
-		}
-	}
-
-	protected Type resolveDataType(@NonNull EDataType eClassifier) {
-		Type pivotType = ecore2asMap.get(eClassifier);
-		if (pivotType == null) {
-			pivotType = getASType(eClassifier);
-		}
-		return pivotType;
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	protected void resolveDataTypeMappings() {
-		ecore2asMap = new HashMap<>();
-		initializeEcore2ASMap();
-		assert eDataTypes != null;
-		for (@NonNull EDataType eDataType : eDataTypes) {
-			Type pivotType = ecore2asMap.get(eDataType);
-			if (pivotType != null) {  		// If eObject is a known synonym such as EString
-				addCreated(eDataType, pivotType);	// remap to the library type
-			}
-		}
-		eDataTypes = null;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected void resolveDeclarations(@NonNull ASResource asResource, @NonNull Iterable<@NonNull EObject> ecoreContents) {
-		Ecore2ASDeclarationSwitch declarationPass = new Ecore2ASDeclarationSwitch(this);
-		List<org.eclipse.ocl.pivot.Package> newPackages = new ArrayList<>();
-		for (EObject eObject : ecoreContents) {
-			EClass eClass = eObject.eClass();
-			if (eClass.getEPackage() != EcorePackage.eINSTANCE) {
-				error("Non Ecore " + eClass.getName() + " for Ecore2AS.update");
-			}
-			else {
-				Object pivotElement = declarationPass.doInPackageSwitch(eObject);
-				if (pivotElement instanceof org.eclipse.ocl.pivot.Package) {
-					newPackages.add((org.eclipse.ocl.pivot.Package) pivotElement);
-				}
-				else {
-					error("Bad ecore content");
-				}
-			}
-		}
-		PivotUtil.refreshList(pivotModel.getOwnedPackages(), true, newPackages);
-		PivotUtil.refreshList(asResource.getContents(), true, Collections.singletonList(ClassUtil.requireNonNull(pivotModel)));
-		((CompleteModelImpl)completeModel).installCompleteClasses(asResource);					// XXX ?? do we need this so soon only to be trashed later ??
-	}																						// XXX ?? getOclAnyType first to resolve stdlib in timely fashion ??
-
-	/**
-	 * @since 1.7
-	 */
-	protected Type resolveGenericType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
-	//	List<@NonNull ETypeParameter> allETypeParameters = getAllETypeParameters(null, eGenericType);
-		List<@NonNull EGenericType> eTypeArguments = ClassUtil.nullFree(eGenericType.getETypeArguments());
-		assert !eGenericType.getETypeArguments().isEmpty();
-		EClassifier eClassifier = eGenericType.getEClassifier();
-		List<ETypeParameter> eTypeParameters = eClassifier.getETypeParameters();
-		assert eTypeParameters.size() == eTypeArguments.size();
-		Type unspecializedPivotType = getASType(eClassifier);
-		if (unspecializedPivotType == null) {
-			return null;
-		}
-		List<@NonNull Type> templateArguments = new ArrayList<>();
-		for (@NonNull EGenericType eTypeArgument : eTypeArguments) {
-			if (eTypeArgument.getETypeParameter() != null) {
-				getClass();		// XXX
-			}
-			Type typeArgument = resolveType(resolvedSpecializations, eTypeArgument);
-			if (typeArgument != null) {
-				typeArgument = getNormalizedType(typeArgument);
-				templateArguments.add(typeArgument);
-			}
-		}
-		org.eclipse.ocl.pivot.Class unspecializedPivotClass = unspecializedPivotType.isClass();
-		assert unspecializedPivotClass != null;			// FIXME
-		if (unspecializedPivotClass instanceof CollectionType) {
-			CollectionType genericType = (CollectionType)unspecializedPivotClass;
-			assert genericType == PivotUtil.getGenericElement(genericType);
-			@Nullable List<@NonNull TemplateParameter> asTemplateParameters = genericType.basicGetOwnedTemplateParameters();
-			if (asTemplateParameters == null) {
-				throw new IllegalArgumentException("Missing template signature for template type " + genericType.getName());
-			}
-			int templateParametersSize = asTemplateParameters.size();
-			if (templateParametersSize != 1) {
-				throw new IllegalArgumentException("Incorrect template binding count for template type " + genericType.getName());
-			}
-			if (templateArguments.size() != templateParametersSize) {
-				throw new IllegalArgumentException("Incorrect template binding for template type " + genericType.getName());
-			}
-			Type elementType = templateArguments.get(0);
-			if (elementType == asTemplateParameters.get(0)) {
-				return genericType;
-			}
-		//	CompleteClassInternal libraryCompleteClass = metamodelManager.getCompleteClass(elementType);
-		//	org.eclipse.ocl.pivot.Class elementClass = libraryCompleteClass.getPrimaryClass();
-
-			EMap<String, String> eDetails = basicGetCollectionDetails(eGenericType);
-			boolean isNullFree = getCollectionIsNullFreeDetail(eDetails);
-			IntegerValue lowerValue = getCollectionLowerValueDetail(eDetails);
-			UnlimitedNaturalValue upperValue = getCollectionUpperValueDetail(eDetails);
-
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
-			return standardLibrary.getCollectionType(typeArguments);
-		}
-		else {
-			unspecializedPivotClass = (org.eclipse.ocl.pivot.Class)standardLibrary.getPrimaryType(unspecializedPivotClass);			// Side effect ensures OCLmetamodel loaded
-			return standardLibrary.getSpecializedType(unspecializedPivotClass, templateArguments);
-		}
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	protected void resolveIds(@NonNull Iterable<@NonNull EObject> ecoreContents) {
-		oldIdMap = new HashMap<>();
-		for (@NonNull EObject ecoreContent : ecoreContents) {
-			Resource resource = ecoreContent.eResource();
-			if (resource instanceof XMLResource) {
-				XMLResource xmlResource = (XMLResource) resource;
-				String id = xmlResource.getID(ecoreContent);
-				if (id != null) {
-					Element element = newCreateMap.get(ecoreContent);
-					if (element != null) {
-						oldIdMap.put(id, element);
-					}
-				}
-				for (TreeIterator<EObject> tit = ecoreContent.eAllContents(); tit.hasNext(); ) {
-					EObject eObject = tit.next();
-					id = xmlResource.getID(eObject);
-					if (id != null) {
-						Element element = newCreateMap.get(eObject);
-						if (element != null) {
-							oldIdMap.put(id, element);
-						}
-					}
-				}
-			}
-		}
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	protected void resolveETypeParameters() {
-		if (eTypeParameters != null) {
-			for (@NonNull ETypeParameter eTypeParameter : eTypeParameters) {
-				TemplateParameter asTemplateParameter = getCreated(TemplateParameter.class, eTypeParameter);
-				if (asTemplateParameter != null) {
-					List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtil.getConstrainingClassesList(asTemplateParameter);
-					for (EObject eBound : eTypeParameter.getEBounds()) {
-						if ((eBound != null) && checkProxy(eBound)) {
-							org.eclipse.ocl.pivot.Class asConstrainingClass = getASElement(org.eclipse.ocl.pivot.Class.class, eBound);
-							asConstrainingClasses.add(asConstrainingClass);
-						}
-					}
-				}
-			}
-			eTypeParameters = null;
-		}
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	protected void resolveReferences() {
-		Ecore2ASReferenceSwitch referencePass = new Ecore2ASReferenceSwitch(this);
-		Set<@NonNull EObject> theReferencers = referencers;
-		while (theReferencers != null) {
-			Set<@NonNull EObject> moreReferencers = null;
-			for (EObject eObject : theReferencers) {
-				Object asElement = referencePass.doInPackageSwitch(eObject);
-				if (asElement == referencePass) {
-					if (moreReferencers == null) {
-						moreReferencers = new HashSet<>();
-					}
-					moreReferencers.add(eObject);
-				}
-			}
-			if ((moreReferencers == null) || (moreReferencers.size() < theReferencers.size())) {		// Avoid infinite loop
-				theReferencers = moreReferencers;
-			}
-		}
-		referencers = null;
-	}
-
-	protected Type resolveSimpleType(@NonNull EClassifier eClassifier) {
-		return getASType(eClassifier);
-	}
-
-	/**
-	 * @since 1.17
-	 */
-	protected void resolveSpecializations() {
-		Map<@NonNull String, @NonNull Type> resolvedSpecializations = new HashMap<>();
-		assert genericTypes != null;
-		for (@NonNull EGenericType eGenericType : genericTypes) {
-			Type pivotType = resolveType(resolvedSpecializations, eGenericType);
-			if (pivotType != null) {
-				addCreated(eGenericType, pivotType);
-			}
-		}
-		genericTypes = null;
-	}
-
-	/**
-	 * Ensure that each loaded EDataType has an OclAny / OclEnumeration superclass.
-	 *
-	 * @since 1.17
-	 */
-	protected void resolveSuperDataTypes() {
-		org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
-		org.eclipse.ocl.pivot.Class oclEnumerationType = standardLibrary.getOclEnumerationType();
-		assert eDataTypes != null;
-		for (@NonNull EDataType eDataType : eDataTypes) {
-			org.eclipse.ocl.pivot.Class pivotElement = (org.eclipse.ocl.pivot.Class)newCreateMap.get(eDataType);
-			assert pivotElement != null;
-			org.eclipse.ocl.pivot.Class behavioralClass = null;
-			org.eclipse.ocl.pivot.Class superClass = null;
-			if ((pivotElement instanceof DataType) && !(pivotElement instanceof PrimitiveType)) {
-				Class<?> instanceClass = eDataType.getInstanceClass();
-				if (instanceClass != null) {
-					try {
-						behavioralClass = standardLibrary.basicGetBehavioralClass(instanceClass);
-						if (behavioralClass != null) {
-							String behavioralName = behavioralClass.getName();
-							if ((behavioralName == null) || behavioralName.equals(pivotElement.getName())) {
-								behavioralClass = null;
-							}
-							else {
-								((DataType)pivotElement).setBehavioralClass(behavioralClass);
-								superClass = behavioralClass;
-							}
-						}
-					} catch (Exception e) {
-					}
-				}
-			}
-			if (superClass == null) {
-				superClass = eDataType instanceof EEnum ? oclEnumerationType : oclAnyType;
-			}
-			PivotUtil.refreshList(pivotElement.getSuperClasses(), false, Collections.singletonList(superClass));
-		}
-	}
-
-	protected Type resolveType(@NonNull Map<String, Type> resolvedSpecializations, @NonNull EGenericType eGenericType) {
-		Type pivotType = getCreated(Type.class, eGenericType);
-		if (pivotType != null) {
-			ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
-			if ((eTypeParameter != null) && eTypeParameter.getEBounds().isEmpty()) {
-				return Orphanage.getNormalizedTemplateParameter(environmentFactory.getOrphanage(), (TemplateParameter)pivotType);
-			}
-			return pivotType;
-		}
-		EClassifier eClassifier = eGenericType.getEClassifier();
-		ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
-		List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
-		if (eTypeParameter != null) {
-			pivotType = resolveTypeParameter(eGenericType);
-		}
-		else if (eClassifier == null) {
-			pivotType = resolveWildcardType(eGenericType);
-		}
-		else if (!eTypeArguments.isEmpty()) {
-			String ecoreMoniker = Ecore2Moniker.toString(eGenericType);
-			pivotType = resolvedSpecializations.get(ecoreMoniker);
-			if (pivotType == null) {
-				pivotType = resolveGenericType(resolvedSpecializations, eGenericType);
-				pivotType = getNormalizedType(pivotType);
-				resolvedSpecializations.put(ecoreMoniker, pivotType);
-			}
-		}
-		else if (eClassifier instanceof EDataType) {
-			assert eGenericType.getETypeArguments().isEmpty();
-			pivotType = resolveDataType((EDataType) eClassifier);
-		}
-		else {
-			assert eGenericType.getETypeArguments().isEmpty();
-			pivotType = resolveSimpleType(eClassifier);
-		}
-		if (pivotType != null) {
-			addCreated(eGenericType, pivotType);
-		}
-		return pivotType;
-	}
-
-	protected Type resolveTypeParameter(@NonNull EGenericType eGenericType) {
-		EClassifier eClassifier = eGenericType.getEClassifier();
-		ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
-		List<EGenericType> eTypeArguments = eGenericType.getETypeArguments();
-		assert eClassifier == null;
-		assert eTypeArguments.isEmpty();
-		Type pivotType = null;
-		if (eTypeParameter != null) {
-			pivotType = getCreated(Type.class, eTypeParameter);
-		}
-		return pivotType;
-	}
-
-	protected Type resolveWildcardType(@NonNull EGenericType eGenericType) {
-		assert eGenericType.getETypeArguments().isEmpty();
-		assert eGenericType.getEClassifier() == null;
-		EClassifier eClassifier = eGenericType.getERawType();
-		assert eClassifier == EcorePackage.Literals.EJAVA_OBJECT;
-		/*			WildcardTypeRefCS csTypeRef = BaseCSFactory.eINSTANCE.createWildcardTypeRefCS();
-			setOriginalMapping(csTypeRef, eObject);
-//			csTypeRef.setExtends(doSwitchAll(eGenericType.getExtends()));
-//			csTypeRef.setSuper(doSwitchAll(eGenericType.getSuper()));
-			return csTypeRef; */
-		WildcardType wildcardType = Orphanage.getOrphanWildcardType(environmentFactory.getOrphanage());// PivotFactory.eINSTANCE.createWildcardType();
-		return wildcardType;		// FIXME bounds
-		/*		org.eclipse.ocl.pivot.Class pivotElement = PivotFactory.eINSTANCE.createClass();
-		String name = PivotConstants.WILDCARD_NAME;
-		EStructuralFeature eFeature = eGenericType.eContainmentFeature();
-		if ((eFeature != null) && eFeature.isMany()) {
-			EObject eContainer = eGenericType.eContainer();
-			List<?> list = (List<?>)eContainer.eGet(eGenericType.eContainingFeature());
-			int index = list.indexOf(eGenericType);
-			if (index != 0) {
-				name += index;
-			}
-		}
-		pivotElement.setName(name);
-		return pivotElement; */
-	}
-
-	/**
-	 * Define the loadableURI to be used to form the AS URI that is then used as part of the serialized XMI.
-	 */
-	@Override
-	public void setEcoreURI(@NonNull URI ecoreURI) {
-		this.ecoreURI = ecoreURI;
-	}
-
+	@SuppressWarnings("null")
 	@Override
 	public String toString() {
-		return String.valueOf(ecoreResource.getURI());
+		return String.valueOf(ecoreResource != null ? ecoreResource.getURI() : null);
 	}
 
 	public void update(@NonNull Resource resource, @NonNull Collection<@NonNull EObject> ecoreContents) {
-	//	System.out.println("\nUpdate " + NameUtil.debugSimpleName(resource) + " " + resource.getURI());
-		ASResource asResource = (ASResource)resource;		// FIXME change signature
-		asResource.resetLUSSIDs();			// Hopefully reset already, not wanted till save. See Bug 579052.
-		allConverters.clear();
-		newCreateMap = new HashMap<>();
-		eTypeParameters = new HashSet<>();
-		referencers = new HashSet<>();
-		genericTypes = new ArrayList<>();
-		eDataTypes = new ArrayList<>();
-		@SuppressWarnings("unused") boolean wasUpdating = asResource.setUpdating(true);
-		/*
-		 * Establish the declarations.
-		 */
-		resolveDeclarations(asResource, ecoreContents);
-		/*
-		 * Register any local declarations that establish novel library content..
-		 */
-		initializeLibrary();
-		/*
-		 * Insert the OclAny/OclEnumeration superclasses after local overrides have been declared,
-		 * but before Primitive synonyms are remapped.
-		 */
-		resolveSuperDataTypes();
-		/*
-		 * Add any aliases
-		 */
-		resolveAliases(asResource);
-		environmentFactory.getMetamodelManager().installResource(asResource);
-		/*
-		 * Remap known Ecore EDataTypes after custom pivot types have had a chance to be declared.
-		 */
-		resolveDataTypeMappings();
-		/*
-		 * Declare the specializations.
-		 */
-		resolveSpecializations();
-		/*
-		 * Resolve ETypeParameters once (specialized) types known.
-		 */
-		resolveETypeParameters();
-		/*
-		 * Resolve references.
-		 */
-		resolveReferences();
-		resolveIds(ecoreContents);
-		assert asResource.basicGetLUSSIDs() == null;			// Confirming Bug 579025
+		throw new IllegalStateException();
 	}
 }

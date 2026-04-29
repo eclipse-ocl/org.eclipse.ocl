@@ -47,7 +47,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.context.ClassContext;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.ExternalEcore2AS;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.messages.PivotMessagesInternal;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactoryRegistry;
@@ -922,7 +922,7 @@ public class TestOCL extends OCLInternal
 
 	@SuppressWarnings("null")
 	public void loadEPackage(@NonNull String alias, /*@NonNull*/ EPackage ePackage) {
-		Element ecoreElement = Ecore2AS.importFromEcore(environmentFactory, alias, ePackage);
+		Element ecoreElement = ExternalEcore2AS.importFromEcore(environmentFactory, alias, ePackage);
 		environmentFactory.getCompleteModel().addGlobalNamespace(alias, (Namespace) ecoreElement);
 	}
 

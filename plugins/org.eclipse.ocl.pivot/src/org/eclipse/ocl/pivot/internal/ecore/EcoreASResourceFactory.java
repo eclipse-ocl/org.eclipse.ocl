@@ -20,6 +20,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.ExternalEcore2AS;
 import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.AbstractASResourceFactory;
@@ -71,7 +72,7 @@ public final class EcoreASResourceFactory extends AbstractASResourceFactory
 	 */
 	@Override
 	public @NonNull Ecore2AS createExternal2AS(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
-		return new Ecore2AS(resource, environmentFactory);
+		return new ExternalEcore2AS(resource, environmentFactory);
 	}
 
 	@Override

@@ -75,7 +75,7 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 {
-	protected final @NonNull Ecore2AS converter;
+	protected final @NonNull ExternalEcore2AS converter;
 	/**
 	 * @since 7.0
 	 */
@@ -83,7 +83,10 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 	private /*@LazyNonNull*/ Property oclInvalidProperty = null;
 
-	public Ecore2ASReferenceSwitch(@NonNull Ecore2AS converter) {
+	/**
+	 * @since 7.0
+	 */
+	public Ecore2ASReferenceSwitch(@NonNull ExternalEcore2AS converter) {
 		this.converter = converter;
 		this.environmentFactory = converter.getEnvironmentFactory();
 		this.standardLibrary = environmentFactory.getStandardLibrary();

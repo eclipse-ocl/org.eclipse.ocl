@@ -15,7 +15,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
-import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.ExternalEcore2AS;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.model.OCLmetamodel;
@@ -33,7 +33,7 @@ public class EcoreASResourceImpl extends ASResourceImpl
 	@Override
 	public void load(Map<?, ?> options) throws IOException {
 		@NonNull URI ecoreURI = uri.trimFileExtension();
-		Ecore2AS.loadFromEcore(this, ecoreURI);
+		ExternalEcore2AS.loadFromEcore(this, ecoreURI);
 		super.load(options);
 	}
 }

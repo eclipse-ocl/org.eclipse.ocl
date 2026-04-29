@@ -26,6 +26,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
@@ -2940,6 +2941,14 @@ public class PivotUtil implements PivotConstants
 			}
 		}
 		return hasImplicits;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static boolean isLibrary(@NonNull EPackage ePackage) {
+		EAnnotation asLibraryAnnotation = ePackage.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
+		return asLibraryAnnotation != null;
 	}
 
 	/**

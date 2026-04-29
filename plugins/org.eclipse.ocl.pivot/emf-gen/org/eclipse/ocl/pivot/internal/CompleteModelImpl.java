@@ -709,7 +709,7 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 		CompletePackage old1 = package2completePackage.put(asPackage, completePackage);
 		assert (old1 == null) || (old1 == completePackage);
 	//	System.out.println("didAddPackage2 " + NameUtil.debugSimpleName(asPackage) + " " + asPackage);	// XXX
-		assert !"oclstdlib".equals(asPackage.getName());
+		// Why not ?? obsolete assertion from separate Tables/Metamodel ??	assert !"oclstdlib".equals(asPackage.getName());
 		if (packageURI != null) {
 			completePackage.didAddPackageURI(packageURI);
 			assert Iterables.contains(completePackage.getPackageURIs(), packageURI);
@@ -1698,8 +1698,8 @@ public class CompleteModelImpl extends NamedElementImpl implements CompleteModel
 			assert asPackage != null;
 		}
 		else {
-			String name = ClassUtil.requireNonNull(asLibrary.getName());
-			asPackage = OCLmetamodel.create(standardLibrary2, name, asLibrary.getNsPrefix(), PivotPackage.eNS_URI);
+			String name = PivotUtil.getName(asLibrary);
+			asPackage = OCLmetamodel.create(standardLibrary2, name, asLibrary.getNsPrefix(), PivotPackage.eNS_URI);			// XXX no longer dynamic creation
 			asModel = (Model)asPackage.eContainer();
 		}
 		Resource asResource = asModel.eResource();
