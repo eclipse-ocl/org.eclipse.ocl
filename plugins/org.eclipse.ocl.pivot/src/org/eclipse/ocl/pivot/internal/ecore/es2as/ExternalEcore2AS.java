@@ -123,8 +123,8 @@ public class ExternalEcore2AS extends Ecore2AS
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull ExternalEcore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
-		return (ExternalEcore2AS)External2AS.getAdapter(resource, environmentFactory);
+	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
+		return (Ecore2AS) External2AS.getAdapter(resource, environmentFactory);
 	}
 
 	/**
@@ -181,7 +181,7 @@ public class ExternalEcore2AS extends Ecore2AS
 	 * @since 7.0
 	 */
 	public static @NonNull Model importFromEcore(@NonNull EnvironmentFactory environmentFactory, String alias, @NonNull Resource ecoreResource) {
-		ExternalEcore2AS conversion = getAdapter(ecoreResource, environmentFactory);
+		Ecore2AS conversion = getAdapter(ecoreResource, environmentFactory);
 		return conversion.getASModel();
 	}
 
@@ -202,7 +202,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		if (ecoreResource == null) {
 			return null;
 		}
-		ExternalEcore2AS conversion = getAdapter(ecoreResource, environmentFactory);
+		ExternalEcore2AS conversion = (ExternalEcore2AS)getAdapter(ecoreResource, environmentFactory);
 		conversion.loadImports(ecoreResource);
 		//		if (asMetamodels != null) {
 		//
@@ -238,10 +238,8 @@ public class ExternalEcore2AS extends Ecore2AS
 	 */
 	public static Element importFromEcore(@NonNull EnvironmentFactory environmentFactory, String alias, @NonNull EObject eObject) {
 		Resource ecoreResource = ClassUtil.requireNonNull(eObject.eResource());
-		ExternalEcore2AS conversion = getAdapter(ecoreResource, environmentFactory);
-		@SuppressWarnings("unused")
-		Model pivotModel = conversion.getASModel();
-		return conversion.newCreateMap.get(eObject);
+		Ecore2AS conversion = getAdapter(ecoreResource, environmentFactory);
+		return conversion.getASModel();
 	}
 
 	/**
@@ -267,7 +265,7 @@ public class ExternalEcore2AS extends Ecore2AS
 	/**
 	 * Set of all converters used during session.
 	 */
-	private Set<@NonNull ExternalEcore2AS> allConverters = new HashSet<>();
+	private Set<@NonNull Ecore2AS> allConverters = new HashSet<>();
 
 	/**
 	 * List of all EDataTypes that might need special case mapping via the ecore2asMap. Non-null during declaration pass.
@@ -288,7 +286,7 @@ public class ExternalEcore2AS extends Ecore2AS
 	 * The loadableURI of the ecoreResource, which may differ from ecoreResource.getURI() when
 	 * ecoreResource is an installed package whose nsURI may not be globally registered. The accessible
 	 * URI is used for the AS URI to ensure that the saved serialized XMI is loadable using the source
-	 * *.ecore's rather than the missing nsURI regisyrations.
+	 * *.ecore's rather than the missing nsURI registrations.
 	 */
 	private URI ecoreURI = null;
 
@@ -370,7 +368,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		if (element == null) {
 			Resource resource = eObject.eResource();
 			if ((resource != ecoreResource) && (resource != null)) {
-				ExternalEcore2AS converter = getAdapter(resource, environmentFactory);
+				ExternalEcore2AS converter = (ExternalEcore2AS) getAdapter(resource, environmentFactory);
 				if (allConverters.add(converter)) {
 					converter.getASModel();
 					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
@@ -435,13 +433,16 @@ public class ExternalEcore2AS extends Ecore2AS
 		if (pivotElement == null) {
 			Resource resource = eObject.eResource();
 			if ((resource != ecoreResource) && (resource != null)) {
-				ExternalEcore2AS converter = getAdapter(resource, environmentFactory);
+				Ecore2AS converter = getAdapter(resource, environmentFactory);
 				if (allConverters.add(converter)) {
 					converter.getASModel();
 					//					allEClassifiers.addAll(converter.allEClassifiers);
 					//					allNames.addAll(converter.allNames);
-					for (Map.Entry<@NonNull EObject, @NonNull Element> entry : converter.newCreateMap.entrySet()) {
-						addCreated(entry.getKey(), entry.getValue());
+					Map<@NonNull EObject, @NonNull Element> createdMap = converter.getCreatedMap();
+					if (createdMap != null) {
+						for (Map.Entry<@NonNull EObject, @NonNull Element> entry : createdMap.entrySet()) {
+							addCreated(entry.getKey(), entry.getValue());
+						}
 					}
 				}
 			}

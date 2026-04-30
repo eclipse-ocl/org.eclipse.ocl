@@ -75,9 +75,9 @@ public abstract class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull ExternalEcore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
+	public static @NonNull Ecore2AS getAdapter(@NonNull Resource resource, @NonNull EnvironmentFactory environmentFactory) {
 	//	return ExternalEcore2AS.getAdapter(resource, environmentFactory);
-		return (ExternalEcore2AS)External2AS.getAdapter(resource, environmentFactory);
+		return (Ecore2AS)External2AS.getAdapter(resource, environmentFactory);
 	}
 
 	/**
