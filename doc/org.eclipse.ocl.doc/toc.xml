@@ -581,8 +581,7 @@
 <topic href="help/PivotStandaloneApplication.html#InstallationandInvocation" label="Installation and Invocation"></topic>
 <topic href="help/PivotStandaloneApplication.html#Helpcommand" label="Help command"></topic>
 <topic href="help/PivotStandaloneApplication.html#Executecommand" label="Execute command">
-<topic href="help/PivotStandaloneApplication.html#queryoclquery" label="">
-<topic href="help/PivotStandaloneApplication.html#N15972" label="-query ocl-query"></topic>
+<topic href="help/PivotStandaloneApplication.html#queryoclquery" label="-query ocl-query"></topic>
 <topic href="help/PivotStandaloneApplication.html#selfselfuri" label="-self self-uri"></topic>
 <topic href="help/PivotStandaloneApplication.html#outputfilename" label="-output file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#exporternonetextmodel" label="-exporter none|text|model"></topic>
@@ -592,15 +591,12 @@
 <topic href="help/PivotStandaloneApplication.html#hideQuery" label="-hideQuery"></topic>
 <topic href="help/PivotStandaloneApplication.html#hideResult" label="-hideResult"></topic>
 </topic>
-</topic>
 <topic href="help/PivotStandaloneApplication.html#Validatecommand" label="Validate command">
-<topic href="help/PivotStandaloneApplication.html#modelfilename" label="">
-<topic href="help/PivotStandaloneApplication.html#N15A2B" label="-model file-name"></topic>
+<topic href="help/PivotStandaloneApplication.html#modelfilename" label="-model file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#rulesfilename" label="-rules file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#outputfilename2" label="-output file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#exporterhtmlmodeltext" label="-exporter html|model|text"></topic>
 <topic href="help/PivotStandaloneApplication.html#usingalljavaocluml" label="-using all|java|ocl|uml"></topic>
-</topic>
 </topic>
 </topic>
 <topic href="help/PivotStandalone.html" label="Pivot Standalone API Configuration">
