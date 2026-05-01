@@ -1,0 +1,980 @@
+27edcfcd06 (origin/ewillink/2399, ewillink/2399, back3bad) [#2399] Suspending till symbolic evaluation available
+	wrt 82+112 sa
+2866db0dfe wip
+e731903aab regen pivot
+	wrt 96+306/827 sa wrt 96+306/827
+457b038c3f wip FlowAnalysis tracing
+f42225e37a wip
+65e873a393 wip
+c24bff19ee wip
+77cfdbd131 wip
+	17+90 sa
+ec418cb550 Clearer nullity toString
+	1+48 sa wrt 1+48 sa
+2f1ae88412 regen wip conformsTo
+e11312f39d wip conformsTo
+66c25d9cbc [cg] Better CGisEqual value names
+8d559f6324 CS EBoolean regen
+8be344af3b [cg] Fix null body return, cast caught call argument
+	30+161 sa
+05cf6d74bd Tweaked regen
+30d7b8c615 EBOOLEAN/EBOOLEAN_OBJECT
+	wrt 26+159
+b54b42e51b Tweaked regen
+	30+158 sa
+22a0a7067a Fixup bad BoxingAnalyzer
+	0+0/828 sa
+fc9dff6315 CG CG regen, ok, console clean
+	0+0/828 sa
+7b5e29475d Hide diagnosis of non-conforming null return
+b50a47a151 wip discourage isRequired
+5a8a8a1c93 wip discourage isRequired
+fec918dd5e Avoid use of 'redundant' isRequired
+f1ee729d9d Ensure constants are isRequired()
+7f80f39fc0 (zztry2400) all CG ok
+f355c4d978 wip
+d61231adee wip compatibility tests
+0e696717f6 [releng] Fix git.eclipse.org/r/ocl typo
+002bb29876 [oomph] Provide old Javas
+d7e59b9aee wip
+	0+0/859 pu
+a13b7e15ef wip null in or/and
+c8464e7fe7 wip cg regen
+7ebcf49ca9 wip cg
+190886bbb1 Exploit Operation/PropertyCallExp.isREquired
+6a32fe3461 Tidy Fixup Determine needsCompleteStandardLibrary early
+63a5950679 Diagnose/avoid conflicting aut-generated registrations
+872c7bd076 0+10 Fixup Determine needsCompleteStandardLibrary early
+545071f46a wip
+c59d281f23 wip
+25a6ba6176 Fix executor construction
+	0+0/828 sa
+86b139e8f6 Fix ExecutorManager dispose
+0cf6553b9e Fixup Determine needsCompleteStandardLibrary early
+13cd929287 Revert "bad CollectionTypeManager StandardLibrary"
+76a319b2f8 Revert "Pass StandardLibrary to all type managers"
+0837ee52e7 Determine needsCompleteStandardLibrary early
+1c19ac1171 Use PivotUtil.getExecutor always
+fb7cd96d41 Pass StandardLibrary to all type managers
+c34816b1c0 bad CollectionTypeManager StandardLibrary
+13de3dcd2e wip
+c78007c5a1 Fixup Introduce rational AbstractStandardLibrary for DelegateStandardLibrary
+	0+0/859 pu
+3b4e6933df wip
+fea586ed52 DEmote AbstractFlatClass functionality to CompleteFlatClass
+2e01bf2c68 wip
+aa5c2b7065 wip ReflectiveEcoreFlatClass
+507ca28bf3 Ensure validation starts with a CompleteStandardLibrary if necessary
+0c4e1c14e9 Introduce rational AbstractStandardLibrary for DelegateStandardLibrary
+e24a55db9e (back3a) Simplify EcoreFlatClass to exploit Ecore2AS
+429a507aa8 Fixup Avoid redundant finalStartIndex
+c2454c198e Avoid redundant finalStartIndex
+41713b13c6 Fix GrammarResource comments
+	0+0/828 sa
+1f6f9d1311 Fold PartialOperation, bestOperation etc
+9a49094c01 step
+9919fa4cdc step
+86198f89e7 Regen avoiding problematic 0 upper bound
+64f8dee6a0 Avoid problematic 0 upper bound
+8e0407b9f5 Promote CreateStrategy to StandardLibrary
+5a0aff9ba2 Pass StandardLibrary rather than EnvironmentFactory
+ab9e81bf44 2026 dates
+9921d406d2 2026 Genmodel copyrights
+	0+0/859 pu
+779b1fc44c [releng] 2026 Regen All
+8b5b67918b Fixup localized model regen
+6ea0dc0026 Fixup non-nullity derived gen
+00246f73fd Fixup wildcard LUSSIds
+5cf880a800 QVTd 2+1
+b30097e320 Fix CG'd wildcard
+c50d85cd14 Fixup Introduce LambdaTypeArguments
+c0001ee777 0+1 Fix NAVIGATION xmi:id
+20293ba543 [#2288] 0+1 Rationalize WildcardId, eliminate Ecore2Moniker
+	0+1/828 sa 0+1/859 pu testBug570802 UOE
+1591cfe3c0 wip Wildcard id
+a5fdaeaeea Fix Ecore2AS Wildcard ownership
+228e7b72b0 Add Wildcards.ecore test
+ace0b5694b Tidy
+aed90aef20 2+0 CS2AS wildcards
+f7ff6c33ae [#2288] 0+3 Introduce TemplateableElement.ownedWildcards
+932132e3e8 0+3 Ensure primary type used in orphans
+8b78abba02 Rationalize getSpecializedReferredPropertyOwningType return type
+775a222c3d Use UnlimitedNatural consistently for upper()
+3e2683a2c4 (try347) QVTd 0+1
+	0+0/832 sa
+4167701fcc Simplify ASSaver, QVTd 3+1
+6cdf99c2a8 testConsole_Bug507406 instrumentation
+51f9ebf827 Simplify ASSaver
+e7e72cad76 Simplify ASSaver
+a1210a3ed3 QVTd 3+1
+8eddb0c63f QVTd 5+0 - addOrphanClass ok when frozen
+09c45ca459 testConsole_Bug507406 instrumentation
+96cf162176 QVTd 8+37
+2581041f34 wip QVTD needs formalTemplateParameter normalization
+9edf4e1b12 QVTd 18+36
+51c00a6cc7 regen ok, tests ok
+	0+0/863 pu
+55d22fd240 regen oclstdlib ok, pivot bad
+511059cade Introduce SaverStandardLibraryImpl. tests ok, regen bad
+bd072402c2 Add TypeManager load
+612008601b regen all
+e47f2ab30b testConsole_Bug507406 instrumentation
+aef6beaeab Consistent lazy StandardLibrary TypeManagers
+1205acfb9b Restrict ASSaver to save
+c1ddb91a4b Introduce LambdaTypeArguments
+680481b22a Rationalize getLambdaTypeManager, basicGetOrphanage
+2c3dcb9ccc testConsole_Bug507406 instrumentation
+96f588b4f3 Move Orphanage to StandardLibrary
+	0+0/832 sa
+1c27dcc8ac (ewillink/parametertypeof) Use ParameterTypeId and isTypeOf
+be195d085f Introduce ParameterTypeId to capture isTypeOf
+710618c1c3 Eliminate getMetaclassName
+ed4c39e7b1 Use ExtraParameters to code template/iterator/accumulator count
+4830b0a8a6 Use getIterationOrOperationImplementation
+249194a789 Eliminate CompleteStandardLibraryImpl.libraryResource
+07c81d12a8 all ocl ok, less OCLmetamodel, fuller xxxTables
+	0+0/832 sa 0+0/863 pu wrt 0+0/831 sa
+11c3fa9170 0+2 Add Precedences to xxxTables
+2d2443a57d 0+1 Add Precedences, SelfType to xxxTables
+26d029bcc1 0+2 (0+1 fixed) using Library in xxxTables
+a71bdc0827 0+1 fudge no-EOperation proxy
+bc0472b65e 0+2 add constraints to xxxTables
+a27d218e96 wip Constraints in Tables
+a7ff958d8c wip Constraints in Tables
+26e33883c0 0+17 Avoid bad opposite literals in xxxTables
+44df85f8ff 0+5 wip BuiltInEcore2AS
+	0+7/832																					?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+ed96dac4f8 0+6 wip BuiltInEcore2AS
+	0+8/832																					?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+Fixing bad Ecore2AS casts 0+8
+a4529eee53 wip BuiltInEcore2AS
+53ee9ffb54 wip BuiltInEcore2AS
+407f5912aa Add CompletePackageIdRegistryReader.Descriptor
+08c31306da wip phase out OCLmetamodel
+2463e41e8a (origin/ewillink/flatops, ewillink/templateindexes) [releng] URL tweak
+	0+2/832 sa testEdit_Paste_473249, testEdit_StaleReference_ecore wrt 0+0/831 sa			?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+927570cf49 Support distant superClasses in xxxTables
+6763574e99 Provide eClassifierID2asClass table
+44ec110a3f Reference EOperation literal in xxxTables, tidy
+6890ccbb16 Support null-free in generated Tables
+ac861b3d1f Ensure that orphan NormalizedTemplateParameter are owned
+668a38754d Use BuiltInASResourceImpl to inhibit doUnload corruption
+b1d328403d Debug instrumentation
+	0+2/832 sa testEdit_Paste_473249, testEdit_StaleReference_ecore wrt 0+0/831 sa			?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+1823462c42 Normalize Model.externalURI to avoid OS spelling issues
+47b355b078 Avoid CompeteXXX expansion during dispose preload
+20576df7c5 Tidy up getCompletePackage refactoring
+031214bc09 [#2388] Avoid UI activation in standalone usage.
+bb29dd8999 Refactor eliminating TemplateBinding, TemplateSignature,  simplifying TemplateParameterSubstitution as TemplateArgument
+88ada8c8a6 Use CompletePackageIdRegistry aspects to guide suppression of metamodel loading
+07a47dac27 Tidy getCompletePackage
+e94c5abf89 (endofgetCompletePackage3) Fix line endings for test files
+3bd7d63046 Ensure ETypeParameter converted before use
+[b3a1c5492a [#2381] Add org.osgi.util.tracker.Spoof for EMF 2.43]
+[661e812dbc [releng] Migrate tycho-eclipse-run, Set large retry attempts https://gitlab.eclipse.org/eclipsefdn/helpdesk/-/issues/6715]
+fc1ecfc2a8 Avoid need for IdResolver while constructing Tuple in Tables
+	0+2/832 sa 0+2/863 pu testEdit_Paste_473249, testEdit_StaleReference_ecore wrt 0+0/831 sa 0+0/862 pu	?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+5f7195c5de Eliminate wait after deleting old test project
+4a6fbc6884 wip ok refactoring getCompletePackage
+3a8c9cafea wip ok refactoring getCompletePackage
+8391a6f40a Refactor initCompletePackage
+bd0067d06e Refactor installCompleteClasses
+360145c8dd Eliminate unused getCompleteURI, getMetamodelId
+3a72b46b4a Tidy PivotUtil deprecations/basicGet
+e45cb6567f (try2285b) Avoid premature initialization of Operation TemplateParameter references
+80f0d5e5e7 ok use getCompletePackage3
+3a76f1d661 wip 1
+da8a48aa8f better qvtd
+Fixing refreshList
+	0+0/832 sa, 0+0/863 pu
+Trim debug
+8af8dae451 ocl ok wip basicGetSharedCompletePackage
+	0+2/832 sa wrt 0+0/831 sa, 0+0/862 pu
+64f3046a90 ocl 0+2 wip basicGetSharedCompletePackage
+512a7eef69 wip basicGetSharedCompletePackage
+21b984b8af Eliminate CompleteClassInternal, tidy
+eb2fdebe4c fix
+62f81db1b8 debugging correct CompletePackage, need xxxTables tempalate parameters fix
+2984c315b2 wip getCompletePackage
+70ad0ce475 Fix xxxTables template parameters
+fcfc3197a6 wip remove semantics EAnnotations
+65e24bb0ee wip remove semantics EAnnotations
+4003903bd5 wip remove semantics EAnnotations
+1c50b23a5f wip remove semantics EAnnotations
+a292371275 wip remove semantics EAnnotations
+4070550aa8 wip remove semantics EAnnotations
+dcc280c70d wip remove semantics EAnnotations
+7943e2e5e7 tidy
+	0+2/832 sa testEdit_Paste_473249, testEdit_StaleReference_ecore			?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+97ce41d58b tidy
+0e2cbfd698 tidy
+822b4b7925 tidy
+f2a731ccb8 Tidy $metamode$ decl
+fa99023edc tidy
+f41e568688 later getCompletePackage for QVTd
+	0+2/832 sa testEdit_Paste_473249, testEdit_StaleReference_ecore wrt 0+0/831 sa			?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+f51a01f635 ok remove ASResourceFactory.registerMetaPackages
+dceda9c4c3 ok trimong registerMetaPackages
+7b6570d149 OCL ok, QVTd 0+2
+dee3edd2a0 QVTd 0+1 OCL bad
+c6f6460cfb step
+985be9f6f5 QVTd 0+1 less registerMetaPackages
+05171abe34 tidy debug
+6be3c79524 QVTd 2+0 Tidy CompleteModel.add/removePartialModel
+0fa28163d3 Migrate installImplicitOppositeProperty to StandardLibrary
+d037853346 Migrate installOppositeProperty/getEquivalent to StandardLibrary
+ea221c71ea wip $$ additions
+	0+2/863 pu testEdit_Paste_473249, testEdit_StaleReference_ecore				?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+24490a7bbc QVTd 66+1 allow Library Class 'conflicts'
+9d18a8fb92 QVTd 77+1 stronger dispose
+710f11bc82 QVTd 77+3 partialModels.clear()
+a5d5c70b65 QVTd 2+51
+c695121c2a ocl ok wip QVTd
+6276d20bb5 ocl ok: Use BuiltInModel to arbitrate orphan ownership
+	0+2/832 sa testEdit_Paste_473249, testEdit_StaleReference_ecore wrt 0+0/862 pu wrt 0+0/862 pu		?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+31d917f30d Use BuiltInModel to arbitrate orphan ownership
+eaf3cedb82 Better getPrimaryPackage
+8c9e701e50 ocl ok
+61af29e1f5 Support iterators in xxxTables
+91f23423e0 wip revert bad LUSSIDs for QVTd
+9b7968c57a QVTd 1+5
+0685316585 Revert bad fix
+	0+2/863 pu testEdit_Paste_473249, testEdit_StaleReference_ecore			?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+393643440a fix step
+0424cb7f66 step
+afdf82c053 step
+ee2f52b0f8 step
+7b72c4a30d QVTd 10+5
+41a192920f wip
+db01fb8ba4 QVTd 20+2 Avoid double library definition
+25a6bfca5e QVTd 21+2
+6c4d3134de Tidy
+1ba1bc1009 all ok
+	0+2/832 sa testEdit_Paste_473249, testEdit_StaleReference_ecore wrt 0+0/831 sa				?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+7df7d9aa95 wip tidy
+bad1a7b5cf Refactor getLocal as getMember
+9ce3c0e3b9 Trivial regen
+0ca131d826 all ok
+	wrt 0+0/831 sa 0+8/862 pu
+5a572a4548 0+2 wip resolve primary properties need disambiguators
+da0eb70747 wip resolve primary properties
+a91f6c95b5 wip rationalize getPrimaryProperty
+a5144f4511 Tidy model
+0523f4dadf Tidy, remove duplicate properties
+77c43b518a Tidy
+	0+3/863 pu test_dynamic_dispatch_411154(message typo), testEdit_Paste_473249, testEdit_StaleReference_ecore		?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+2a6919d402 Fix opposite property name
+65b6a06097 Correct xxxTables Resource uri spelling
+ce5ba4cf6e qvt 37+4 wip
+8aced90791 qvt wip
+d8623c35bd Replace orphan packages by JavaTypeManager
+64102a24f6 Promote JavaTypeId from codegen to pivot
+81b0ca89df Tidy
+233534958a gatherMetaExtensions eliminated
+72ec188734 ocl ui ok Exclude local orphans from allInstances
+	0+2/832 sa - testEdit_Paste_473249, testEdit_StaleReference_ecore					?? -2 testEdit_Paste_473249, testEdit_StaleReference_ecore
+5a1c5c4bae Fix bad comparator						(0+2 sa testLoad_Fruit_ocl,testLoad_Fruit_oclcs with Fixing refreshList)
+6063b6a739 CG ok, use EcoreFlatProperty
+58895ba8fb 0+2 Clarify Extension testing
+dfa0c6b10c 1+2 Revert EAnnotationLabelGenerator tweak
+b8f055e037 1+4 Use Namespace.eraseContents()
+	0+8/863 pu
+7493178b5d 0+6
+	0+8/863 sa wrt 0+8/862 pu
+b3fcaaf86c 3+5
+3645fa73c4 4+8
+0e395bdc66 7+8 wip
+cda7bbb399 3+4 tidy
+de6c6b2783 3+4 using ElementExtension
+edbda48ede 3+8 Detect refreshList child stealing
+	3+8/832 sa wrt 3+8/831 sa				4+6/832 sa with Fixing refreshList
+891dc74f15 3+6
+91023a7c58 3+8
+2049cb586c ok detect stereotype properties
+1081394bee wip step
+	0+0/832 sa
+6236c46dc4 step
+15e7e3a395 step
+9e9f16587b Tidy UML2AS
+2306b3cbec wip QVTd complete properties
+===== fixing
+ddce9ce392 Improve xxxTables freeze
+	1(0-fixed)+0/832 sa UOE testEdit_Paste_operation_394057 wrt 0+0/831						???
+cadd4be116 Improve xxxTables freeze
+19fe25ddc2 Delay RESOURCE population till contents constructed
+8e75340b87 Add Tables MODEL/RESOURCE
+ef4f0de6ce wip debugging QVTd conflicts
+e217fdbe11 Regen with revert null source error message
+a8dd75a05d Revert null source error message
+26e74c09a0 Restore lost tests
+	1(?0-fixed)+0/863 pu UOE testEdit_Paste_operation_394057 wrt 1+0/862 CNFE testSysML_QUDV
+92e596d8c4 Prefer CompletePackageId when looking up metatype
+5038faab96 tidy
+69e6020bbc Redirect non-existent projects to plugins
+886b07aa98 Fixup Eliminate CompleteModelInternal
+328fc005ef Ensure uri2resource setup when  dynamic resource added
+d443ff7f0f Fix QVTruntimeLibrary
+b850a112d7 Tidy
+c7b1b904b8 Eliminate CompleteModelInternal
+	1(0-fixed)+0/832 sa UOE testEdit_Paste_operation_394057 wrt 0+0/831						???
+229699086c Clarify getXxxImplementation
+f86a51be5f Split off GenPackageManager
+cb82cb42c3 Migrate FlowAnalysis to AbstractEnvironmentFactory
+4e6a179ec8 Migrate Globals to CompleteModel, FinalAnalysis, Locking to AbstractEnvironmentFactory
+512b001548 Migrate PrecedenceManager to AbstractEnvironmentFactory
+	0+0/832 sa, 1+0/863 pu UOE testEdit_Paste_473249 wrt 0+0/831 sa 0+0/862 CNFE testSysML_QUDV
+faf6c30335 wip migrate MetamodelManager signatures
+48221e5d73 wip migrate from MetamodelManager to CompleteModel/CompleteStandardLibrary
+986f65d203 Trivialize CompleteEnvironment
+
+6496893546 Eliminate CompleteEnvironmentInternal
+	1+0/832 sa testEdit_Paste_473249 wrt 0+0/831 sa
+524e89c565 Phasing out CompleteModelIntermal
+d6f6178088 Eliminate EnvironmentFactoryInternal
+	1+0/832 sa UOE testEdit_Paste_473249 wrt 0+0/831
+336bc28bee ok tidy oppositeProperty installation
+	1+0/863 pu UOE testEdit_Paste_473249 wrt 0+0/862
+e9f598220e Clarify implicit opposite installation
+1e2698732e Tidy null guard error messages
+8159dbc567 Stablize generation order
+604cdebc8e QVTd 7+31 QVT is not AS metamodel
+d34f9106d3 Tidy ASResourceFactoryRegistry.registerMetaPackages
+	1+0/832 sa testEdit_Paste_473249 wrt 0+0/831 sa
+3191c61635 Add ASResourceFactoryRegistry.registerMetaPackages
+885f6fefd5 Fix bad local package nsPrefix/nsURI
+	0+0/832 sa wrt 0+0/831 sa
+																	BAD >> Fixing - avoid Orphanage eraseContents >> fixes testEdit_Paste_operation_394057
+2fc80d600f Ensure CGLibrary's String has an instanceClassName
+	0+0/832 sa wrt 0+0/831 sa
+71bc64e240 Specify all OCLstdlib instanceClassNames
+fb91990b2c CG Lib regen all ok
+f72db45f30 wip CGLibrary
+2ea14f9092 extra
+562a87c3fe steps
+10f752e3f0 all ok init flat operations
+8cf5f3d92b Use postInit for deferred operation return type initialization.
+8ff5ee4676 All ok after regen
+	0+0/832 sa wrt 0+0/831 sa
+67c008d662 wip regen all
+e5770fd761 Correct test output URI
+bd63d39173 Put Equivalent packages in orphanage
+	2+2 just RoundtripTests
+c75ecab292 Put Equivalent packages in orphanage
+	2+3 just RoundtripTests
+76b3e0f272 Correct test output URI
+	2+3 just RoundtripTests
+82eb3f3fe3 0+1
+	0+1/832 sa testOCLEcoreRoundTrip
+7c0f1fb046 wip UsageTests ok
+4dd85f8cc1 Populate classpath from GenModel usedGenPackages
+88cb939120 0+8 tidy need UMLTables
+	0+8/832 sa
+8143af367c Improve/simplify xxxTables qualification
+a7ae4fe5ba wip Tables
+a94111f44e wip
+aaa61e4526 0+9 Regen Pivot - need UMLTables
+	wrt 0+9/831 sa
+d7c171b920 Fix regen OCLstdlib for Collection(TupleType)
+fbbe048b72 wip
+e460728fce wip
+1ae59d056b wip
+	0+9/832 sa
+5efe173bcb Eliminate duplicate templateParameterId
+ee5d697453 bad gen
+0da4fcb7b3 wip
+a4e88f471f debugging - need more accurate xxxTables properties
+01309e1746 Improve null/blank visibility
+429386ec04 (try897) ocl all ok
+	0+0/832 sa wrt0+0/863 pu  1+0/862 pu
+76b55581b1 non-plugin ok, 0+1 plugin
+1933a49394 step
+26d1e68ad3 tidy
+dbb52fda02 trimmed ImportTests to 0+1
+	0+0/812 sa wrt 0+0/811 sa
+51d56ad25a all ok non-plugin
+5769d94a57 0+2 plugin Fixup ExecutableExtensionFactoryOverload
+46088c1855 0+1
+ac7d30c0a4 step
+2196788401 1+1
+f582b96183 1+1
+569a6b8944 1+1
+2e623fba1f 0+1
+	1+0/832 sa wrt  testLoad_Bug535712_ocl
+8c9857e46c wip complete_package_id extension point
+b50d3bb93e wip complete_package_id extension point
+	huge wrt huge
+6cbc228ad8 wip
+86307d0d6a Improve extension point documentation.
+ec8faa5271 Add IdiomsExecutableExtensionFactoryOverload, MarkupExecutableExtensionFactoryOverload
+72c90d42f9 Use injector for PivotResourceValidator construction
+d3a089d628 Tidy
+1e9f48715a Tidy, lose redundant AbstractEnvironmentFactory ctor argument
+ed95cf4290 0+5 plugin Fix EnvironmentFactory re-use by Validation
+e60d8e1df4 all ok Fix EnvironmentFactory re-use by Validation
+127875f000 all ok Fix plugin use of ProjectMap
+a6b229d08f wip need correct ProjectMap ctor
+95b4a33f45 0+1 plugin tests
+	0+1/863 pu testConsole_Bug516285
+73bb7c1f23 3+20 plugin
+e12b4c6318 [#2224] Stronger cast for oclAsType CG
+b1fca62e97 Fix OCLstdlib/Pivot regen
+ff8d85303b 0+0 Fix CG testing
+	0+0/832 sa, 3+20/863 pu wrt 4+20/862
+e9c6676539 0+0 Improving testValidate_Validate_completeocl_loadresource
+17321bffa2 Debugging testValidate_Validate_completeocl_loadresource
+d78581164b 0+1 Elimimate refreshNamedElement
+5eba16ea4c 0+1 Fix UML init, callable 'complete' constraint
+	0+1/832 sa wrt 0+1/831 testValidate_Validate_completeocl_loadresource
+904998df49 0+2 use getCompleteClass rather than basicGetCompleteClass
+
+
+
+0439a6feeb (origin/ewillink/2285) 0+2 use getCompleteClass rather than basicGetCompleteClass
+	0+2/832 sa wrt 0+2/831 testPivotRoundTrip testValidate_Validate_completeocl_loadresource
+95c42c622f 0+2 asserting partial class contained by complete class
+503e2fa238 0+2 Use CompletePackageID consistently
+2bdf07decd 0+2 Tidy getCompleteClass -> getCompletePackage
+cad21406f4 0+2 getCompleteClass simplification
+f90344e052 0+2 Remove premature fillInStackTrace
+b4dd07ec75 Tidy / typo
+7f7af4bc98 [releng] Adjust to EMF 2.43
+aea4bdb519 1+2 Use distinct METAMODEL_COMPLEMENT_URI semantics
+	2+2/832 sa wrt 1+2/831 diff testIssue2400_genmodel
+d67f4fb2a1 1+3 Migrating getCompleteClass from MetaModelManager
+d2d7d9f1ac 1+3 More eager getCompleteClass
+c914925b1c 0+2 Fix IdResolver.visitRootPackageId
+26b0bc1840 0+3
+784c100db6 Fixup 0+4 Fixing bad UML profile names issue
+746bbc2a0d Fixup 0+5 Fixing bad UML profile names issue
+48904bdf1c Fixup 0+6 Fixing bad UML profile names issue
+40bc8ba076 0+7 Ensure allInstances packages are imported
+64fd217606 0+8 Fixing bad UML profile names issue
+757cd1c36c 1+4 Fix usage of unreferenced $uml$ metamodel
+	2+4/832 sa wrt 1+4/831 diff testIssue2400_genmodel
+577c630a3e 1+5 Fix AS-only PackageId
+b53b928c82 1+15 Fix StandaloneProjectMap leakage
+042820b152 [unrelated] Simplify oclBadProperty debugging
+005e171bb8 1+16 minimal 190 GenModel reads
+511156e109 1+16
+354c3998ba 1+13... Ensure EcorePlugin.ExtensionProcessor.process(null) before RegistryReader use - test_StateMachines_uml_Serialize out of memory
+e69f1c1b9f 0+12 ... out of memory typos
+fc674f5c63 0+12 ... out of memory
+e1976304a0 0+17 ... out of memory
+c34510a569 1+16 fewer GenModel reads +1 LeakTest
+	2+16/832 sa wrt 1+16/831 diff testIssue2400_genmodel
+c88f19e9f3 1+15 more
+7788f1446b 1+15 preparing to defer genmodel read
+0f2fd2c623 Deferring setEcoreModel to caller
+b812c9d9a4 1+15 wip lazy genmodel read
+6bbff61de5 [#2382] 1+15 Tidy
+124de0aefc more/tidy
+81fa6467b4 [#2382] Use EcorePlugin.ExtensionProcessor to read plugin.xml
+35298f13df [#2382] 1+15 Fix missing Sirius dependencies
+6363f76280 wip Sirius dependencies
+d2efff2f70 [#2382] 2+15 Accommodate EcorePlugin.ExtensionProcessor re-registrations.
+	3+15/832 wrt 2=15/830
+6038b186f9 [#2382] Accommodate EcorePlugin.ExtensionProcessor re-registrations.
+dc362cda4c debugging trimmed fail
+602c85d59a 1+15 Use Technology.registerMetaPackages
+d46c3a486e ElementId toString
+85264390f5 1+16 Discontinue parsing after I/O errors
+157dfd6382 1+16 Fix registration of sub-packages
+2c17f4e752 1+17 Fix PrimitiveType overlays
+22a3205648 1+21 / 1+23 Migrating PivotMetamodelManager libraries support
+b8b10e6d81 1+29 ok wip
+81c9b1b061 ok wip
+	2+29 sa wrt 1+29 diff testIssue2400_genmodel
+da299acc91 3+32
+038d5f0ab8 3+75
+be45f3a408 48+119
+bf70adf6ea 47+120
+0dcd7b47bf 51+127 PartialModels listens to AS ResourceSet/Resource for new Model
+233c8c3e38 52+126 PartialModels listens to AS ResourceSet/Resource for new Model
+d43f530166 extra test
+	sa 54+121 wrt 51+121
+974ed1ffab debug
+7918209698 debug
+70a54e0539 wip CompletePackageId
+73bf3ab18a 52+125
+d7509ef48a 67+139
+be399780b1 80+145
+635c1a6412 160+132
+81f45d5938 wip
+036bb6cf53 Tidy complete model names
+	sa 17+10 wrt 16+10 sa (diff is new test)
+a82c533622 wip
+e7248b3bcb wip regen
+a791df9365 16+9 Fix Primitive CompletePackage
+a9623179aa 8+21 migrate completeURI2packageURIs
+f4672aeffd 3+57 Fold CompleteURIs into CompleteModel
+56a29595e2 3+57
+3022e11cdd 3+65 fix root PackageId
+718157c368 2+48 wip semantics PackageId
+aec8a5c324 wip semantics PackageId
+	huge
+f63ce66a61 Define/use root Package semantics
+	45+63 sa wrt 45+63 sa
+a6d8b81f6a wip
+707275d5dc [#2378] Eliminate redirection to template in ExplicitNavigationProperty
+64fa5db1ee [#2380] Rescue Map collectBy tests in comments
+045f860884 wip tighter **Tables signatures
+cf52890f89 wip ok OclElement inheritance
+	0+0 sa, pu
+3869c90942 Tidy AS_LIBRARY/AS_METAMODEL
+0ecb5e3f13 wip need AS_LIBRARY/METAMODEL Annotations
+214b6c62b4 Improve EcoreIdResolver roots
+ecdf1dcdea cg:6+0 Fix EcoreExecutorManager.createIdResolver roots
+d679aab9e0 Fix [#2379] No. Fix complete class for specialized class; cg 7+8
+e0bf788afd ok, but cg 7+8
+f4c24b9ce8 [#2379] Use unspecialized class for implicit opposite
+	0+1 sa testOCLEcoreRoundTrip
+dc25ca9ff2 UnmodifiableEList
+02c21ec02d cg 7+8 Fix specialized operations/properties for CG StandardLibrary
+9b48129505 Fix TupleType for CG StandardLibrary
+e2668720e2 Fix DataType for CG StandardLibrary
+c8d9ac3692 Fixes non-cg ok, 17+9 cg
+ead7a83db1 Deleting Executor classes
+578070983f Fixup ClassImpl remove debug
+4a4b5b99d2 All ok. Fudge ambiguities to accommodate lack of FlatProperty.isRedefinitiionOf
+	0+0 pu
+6408c2995c 0+1 Fix Ecore FlatClass creation
+e5903ec3dc 0+2 Fixup Eliminate Property.getFlatClass
+	0+2 sa  test_umlValidation_Bug452621 testValidate_OCL_2_5_oclas
+685e68761a Trivial
+5572e47b68 Eliminate Property.getFlatClass
+1d5e23d34f Drop idResolver
+9046c06c7a Eliminate unused getFlatClass
+21ee1f9e95 Suppress oclstdlib,uml validation
+	0+2 sa  test_umlValidation_Bug452621 testValidate_OCL_2_5_oclas
+a372a9b989 API filters
+f114239c07 Trivial
+1a43ce3e72 'FlatClass' / Inheritance spellings
+652f85034a Add GenerateLookupModel to all
+a9fbabbb83 Ensure Class/Package fully qualified
+40741282f7 standardLibraryPackage spelling
+681b3884c5 Trivial typo
+	0+3 sa  test_umlValidation_Bug452621 testValidate_OCL_2_5_oclas testConsole_Bug507406
+7791189b73 Add extra Bag intersection test
+fb559a4c44 Trivial typo
+53df89c4f0 'FlatClass' / Inheritance spellings
+e098b1399b Trivia
+ceea162d21 standardLibraryPackage spelling
+189c707edb Trivia
+b93c995000 Avoid PartialProperties test
+5f8624cc9e Trivia
+4fefdaf575 0+3
+	0+3 sa wrt 0+3 sa test_umlValidation_Bug452621 test_umlValidation_Bug458326 testValidate_OCL_2_5_oclas
+8785b05900 more
+9689e01e02 wip
+81c8545428 Fix FlatClass/Fragment errors
+f31c943212 Regen Tables etc add support
+	huge wrt huge
+5646e0e25e wip regen
+3870e4815c Update Tables gen to avoid Executor types
+2b7848a9e1 Avoid bad OclAny to Object inheritance
+1d887fd7a1 Add FlatModel (without FlatClass)
+5e97019c83 Use StandardLibrary for disambiguation
+560906cd84 Add FlatModel,AbstractFlatModel
+a3a64e74f8 Fold AbstractFragment into FlatFragment
+	0+0 pu wrt 0+0 pu
+b47b1b0339 Refactoring InheritanceFragment to FlatFragment
+939b3462b6 more refactoring
+cd11046a9d refactoring getInheritance to getFlatClass
+56c8728895 Refactor CompleteInheritance to FlatClass
+242a863dcd Exploit StandardLibrary inheritance
+245473512f Refactoring ExecutorStandardLibrary to PartialStandardLibraryImpl
+ed7a47c617 Refactor StandardLibraryInternal to CompleteStandardLibrary
+c737676f42 (try777) Identify AS semantics with AS_LIBRARY/METAMODEL Annotations
+	0+0 sa wrt 0+0 sa
+b3f9479b56 Use EAnnotations to suppress ocl::/pivot:: qualification
+fc75387979 [#2374] Remove gratuitous association implicit ends.
+90965bc02c [#1145] Avoid cheap/bad rediscovery of ConstrainedProperty expression
+68ffda325c [#2285] Resolve more deprecations
+	0+0 pu wrt 0+0 pu
+aa0061e96f [#2371] CGed gather/search tests pass
+ff49f9f192 [#2371] non-CGed gather/search tests pass
+2c42e3cd1d [#2371] Declare gather/search iterations
+c64ad615fe [#2371] Support for Declare gather/search iterations
+923c5df5ad [#2285] Rationalize TemplateParameterIdImpl/configureResource access/deprecations
+	0+0 sa
+0151375f96 [#2040] Eliminate PropertyContextDeclCS.ownedDerivedInvariants
+ef675cbecb [#2285] Resolve numerous simple deprecations
+8c5a4d5c3a [#2285] Prune dead Stereotype Property code
+d8ef93b6b8 (origin/ewillink/2176, ewillink/2176) [unrelated] Add oclIsUndefined flow analysis
+	0+0 pu
+32375fde51 [#2285] Eliminate AS2XMIid, AS2XMIidVisitor etc
+54cae8e1f3 [#2285] Ensure OCLmetamodel loaded for DataType specialization
+8d9b55325e [tests] Synthesize org.eclipse.jdt.core.prefs to specify 1.8 compatibility
+e410d16d83 [#2176] Closure body need not be null-free, remove gratuitous [?] declarations
+f461500d55 [#2285] Fix orphan CompleteClass conformsTo
+5956324f05 [unrelated] Add UNSPECIFIED_VALUE support
+e97a903b8c [#2176] Fix nullity parsing, Skip import of importing model.
+b02fb47c4e [tests] Fix isFreeOfBadReferences diagnostic
+	25+10 sa wrt 25+10 sa
+30f2117786 [#1517] Support nested AS collection bounds/nullity in Ecore
+7a1063d53e [#2176] self is normally required, fix safe at() return nullity
+	0+4 pu wrt 0+4 pu
+0923df0a8e [#2285] Eliminate EssentialOCLReferenceVisitor scope
+7e51420f12 [unrelated] Avoid repeated LUSSID assignment
+5a95731085 [#2176] Change nullity default to may-be-null
+	0+6 sa wrt 0+6 sa
+d1148ad4f4 [#2285] Use StandardLibrary for conformsTo,getCommonType etc
+a8a3381e2f [#2285] Tidy IdManager, AbstractIdResolver
+f97d1358d1 [tests] Stabilize child diagnostic order.
+d80a60f66c [unrelated] Support default Collection as CollectionType
+96c25a9567 [#2176] Fix AS2CS of Tuple part nullity
+	0+0 pu
+146b5f4064 [#2285] Migrate CompleteClass.conformsTo to StandardLibrary
+3a70167a20 [#2285] Unify getPivotType, getLibraryType
+4146ad4e53 [#2285] Share functionality via abstract StandardLibrary
+69fdf9c4b5 [#2176] Regen for nullable closure
+ab89b53f67 [#2360] Add LambdaParameterCS
+35b903581f [#2285] Eliminate TypedElementCS.isOptional, fix Tuple part nullity serialization
+a185658256 [#2176] PartId rather than TuplePartId
+646a101b80 [#2362] Introduce LambdaParameter
+fb4ff64f80 [#2360] Multiple IterateExp ownedBodies, Single ownedAccumulator
+d0374f324d [#2176] Add TemplateParameterSubstitution.actualIsRequired
+	0+0 sa
+0537400acf [releng] Avoid duplicate registration diagnostic
+5f89f72be8 [#2285] Rationalize templated type specialization
+063b3743f6 [#2285] Migrate getLambdaType/getTupleType to StandardLibrary
+138b4dd2fd [#2285] Migrating getCollectionType to StandardLibrary
+bf00090d15 [#2369] Refactor getDynamic/Static Type to Class avoiding excess eClass usage
+fda1269227 [#2285] Migrating MapType to StandardLibrary/MapTypeManager
+e75c163d29 [#2368] Avoid MapType/MapEntryType elementId conflict.
+d882e6939f [#2367] Add Orphanage.assertIsValid
+13bd58c88b [#2285] Migrating getMapEntryType to StandardLibrary
+	0+0 pu, sa
+9afb0268e8 [#2285] Merge AbstractASSaver,ASSaverNew as ASSaver
+417f88df08 [#2285] Eliminate ASSaver, ASSaverLocateVisitor, ASSaverResolveVisitor
+10663a22e8 [#2285] Resolve some deprecations and warnings
+068e3a3fce [#2285] Unify PivotHelper / PivotUtil / AbstractContents
+	0+0 pu
+bbfe8ddebf [#2285] Resolve CG Library regen bit rot
+d493e0c77e [#2285] Eliminate Null Visitors
+3d0437b927 [unrelated] Correct usage of ConvertToUnixLineEndings
+3ce97cbca1 [#2285] Eliminate WeakOCLReference, PivotDiagnostician.getEnvironmentFactory
+	0+0 sa     ?? =>	0+1 pu testIssue2400_genmodel
+b9eaa3362a [#2285] Remove unhelpful @noimplement
+c4f185bb0a [#2285] Fix @Overrides
+bad43baece [#2285] Fold PivotUtilInternal
+	0+0 pu
+b0015ea7e0 [#2285] Resolve PivotUtilInternal deprecations
+ada57b97ff [#2285] Resolve ClassUtil deprecations and regenerate all
+f239d92cdb [#2285] Tidy EPackage registration
+77da96d54f [#2285] Eliminate GlobalEnvironmentFactory and OCLDelegateDomain.ocl
+04f005a4cb [#2285] Tidy deprecations
+9429e02a8d [#2285] Eliminate the dead WeakHashMapOf...WeakReference usage
+802aaec6c2 [#2285] Tidy CSResource/BaseCSResource
+6f0df01a4c [#2285] Eliminate EnvironmentFactoryAdapter, OCLAdapter
+84f0f6c789 [#2285] Fold IPackageDescriptorExtension
+3b2046b053 [#2285] Finish folding CSResourceExtension, tidy
+	0+0 sa
+6e2ac61a33 [#2285] Finish folding ASResourceFactoryExtension
+a3d29036a4 [#2285] Fold ModelManagerExtension, tidy
+b932fdb381 [#2285] Fold IdResolverExtension, tidy
+68dfec46b6 [#2285] Fold IterationManagerExtension, tidy
+d313cc74f6 [#2285] Fold StandardLibraryExtension
+f77e997788 [#2285] Fold MetamodelManagerExtension, MetamodelManagerInternal
+	0+0 pu
+3b3b0387f2 [#2285] Fold EnvironmentFactoryInternal
+	0+0 sa
+1f3924652f [#2285] Fold EnvironmentFactoryInternalExtension
+8a53f2f7f7 [#2285] Fold EnvironmentFactoryExtension, EnvironmentFactoryExtension2
+d4881b9ca0 [#2285] Tidy Executor, fold EvaluationVisitorExtension, EvaluationEnvironmentExtension
+1f20539d02 [unrelated] Fix bad LookupVisitor regeneration
+3b8a158a8d [#2285] Regenerate All
+a8de9643f4 [unrelated] Fix bad LookupVisitor regeneration
+cd9a6e853a [#2285] Eliminate Fold Iteration/Operation/Property Extension
+2d6adab949 [#2285] Eliminate Fold ExecutorInternalExtension into ExecutorInternal
+5780a09060 [#2285] Eliminate Fold ExecutorExtension into Executor
+6e8cf1e141 [#2285] Eliminate deprecated Evaluator API
+06cdfa958d [#2285] Archive org.eclipse.ocl.examples.tests, org.eclipse.ocl.validity.tests
+32b00d3944 [#2285] Refactor org.eclipse.ocl.examples.xtext.tests to org.eclipse.ocl.xtext.tests (and tidy)
+05b4af0497 [#2285] Refactor org.eclipse.ocl.examples.*.validity.* to org.eclipse.ocl.*.validity.*
+2fa17f0f22 [#2285] Refactor org.eclipse.ocl.examples.debug.* to org.eclipse.ocl.debug.*
+c4afae4fb1 [#2285] Refactor org.eclipse.ocl.examples.xtext.console to org.eclipse.ocl.xtext.console
+00adeb0602 [#2285] Refactor org.eclipse.ocl.examples.build to org.eclipse.ocl.build
+57a544e1e2 [#2285] Refactor org.eclipse.ocl.examples.codegen to org.eclipse.ocl.codegen
+00009a69f2 [#2285] Migrate @since tags from 1.23 to 7.0
+	wrt 0+0 pu
+efcee44a68 [#2285] Major Pivot version change to 7.0.0
+c089f7b92c [releng] Avoid too-complicated Objects.requireNonNull usage
+	0+0 pu,sa
+merged 1836a221e2 [#2362] Use NormalizedTemplateParameter and TemplateParameterSubstitutionVisitor throughout
+1541b6f260 [#2362] Use NormalizedTemplateParameter and TemplateParameterSubstitutionVisitor in parsers
+d07d877f5a [#2362] Introduce NormalizedTemplateParameter
+9f41a3e3d6 [#2362] Add CS2ASContest, reVisit/newVisit for Left2RightVisitor
+	0+0 pu
+d2341ee853 [#2362] Give AS2EcoreTypeRefVisitor access to asScope
+Fixup: [unrelated] Test live OCL stdlib - fixes testLoad_OCL_2_5_oclstdlib
+	?0+1 pu testIssue2400_genmodel, 0+0 sa
+e809d698c6 [unrelated] Test live OCL stdlib
+	?0+1 pu,sa testLoad_OCL_2_5_oclstdlib wrt 0+0 pu, sa
+4f49375c7e [unrelated] Fix load of LibClassCS instanceClassNames
+9911f07494 [unrelated] Fix oclTypes return type
+	0+0 pu
+ff3e41b99f [ocl2025] Refactor to expose AbstractLoadTests and re-instate OMG UML 2.5 model tests
+2d31c30215 [#2364] Workaround uml#123 classpath bug.
+6519c503d4 [#2361] Temporarily tolerate 'wrong' closure body type
+27f0290d97 [#2361] Add second closure template parameter
+9f39bb49cb [#1176] Add Iteration body type validation
+b317b59623 [#2190] Preserve the behavioralClass of PrimitiveTypes
+	0+0 pu
+7d71ac7322 [releng] Refresh residual tycho.scmUrl declarations
+	wrt 0+0 pu
+c77c78a5a9 [releng] Refresh OOMPH URLs
+5d687ec352 [CG] Invalid operation source propagates
+bdc9647b3e [#2358] API fixes
+	?0+1 pu testIssue2400_genmodel
+e92ae49199 [#2358] AccumulatorVariable implements DelegatedValue
+170c65091c [#2358] Collection/Map ValueIterator/CoValue implement DelegatedValue
+9fb48926e4 [#2358] Use AbstractEvaluatorIterableIterationManager and ColllectionValueIterator consistently.
+5b7e4fc978 [unrelated] Diagnose stale EPackageRegistryImpl entries hazard
+	0+0 pu
+8bd85ac738 [unrelated] Fix EnvironmentFactory leaks
+9a86f582f6 [576375] Eliminate EnvironmentFactoryAdapter usage
+	?0+1 pu, 0+0 sa wrt 0+0 pu
+4733d21af1 [582722] Ensure ValidityView uses loaded CompleteOCL
+a4add7efde [583353] Use the EAnnotation.detail as the Constraint.esObject
+	?0+1 pu testIssue2400_genmodel, 0+0 sa
+2393b2f3f3 [583353] Define Constraint.esObject in Pivot MM
+1d72b99d41 [583353] Use EAnnotationConverter to localize/polymorphize EAnnotation conversion
+7ab4332cf1 [releng] 2025 copyrights
+9a753e57e6 [releng] Regen All
+	0+0 pu 
+7ead69a42e [releng] 2025 genmodel copyrights
+	0+1 pu testIssue2400_genmodel sa wrt 0+0 pu, 
+0199338b4f [583353] Additional load from XMI testing
+832d87f2b3 [583353] getReloadableEObject may return null when Complete model inadequate
+766a3fbd0f [583353] Ensure Property.esObject set in library
+d7d7cea761 [583353] Diagnose attempted re-use of AS by CS2AS
+a2dfa99271 [583353] OCLCSResourceSave delegates for getCS2AS
+	0+1 testIssue2400_genmodel wrt 0+0 pu
+71789e0f13 [583353] Fix derived library regen
+b07d6d409a [583353] Avoid gratuitous empty ASResource during CSResource save
+3d81e20d81 [583353] Fix direct model import
+d3dcdb56b7 [583353] Fix missing completeocltutorial test sources
+c8b8045c2b [583353] Eliminate auto delegate installation by reload.
+cdac767a4f [583353] Serialize parameter/return reference to containing constraint/operation
+d6edb92952 [583353] Use PathElementCS.name/role
+ceb0e3f86b [583353] Add PathElementCS.name/role
+cb5f28c8cd [583353] Accommodate proxy resolution in DelegatedSinglePackageResource
+bc55802e28 [583269] environmentFactory always has its own externalResourceSet			==> fixes testValidate_Validate_completeocl
+	0+0 pu
+	==== fixes testValidate_Validate_completeocl
+	0+1 testIssue2400_genmodel wrt 0+0 pu
+8f95b5f5cb [583269] Accommodate empty complete ocl bodies
+e43660cd7c [583269] Test Complete OCL respect for configured ResourceSets
+--- fixes
+40fe374058 [583353] Add missing AS resource diagnosis
+	introduces batch of ripple errors post testIssue2400_genmodel
+b7b8d6bb35 [583353] Rationalize preUnload/unloaded/eResolveProxy
+56911d701c [583353] Resolve non-AS proxies in the externalResourceSet
+bf996ea597 [583353] refine CS2AS to support reload from directly loaded CS
+04bc846f91 [583353] Use createExternal2AS to allow consistent UML2AS
+833ae8157d [583353] Ensure AS2Ecore sets Constraint.esObject
+001c7cf953 [583353] PivotableElementCS.pivot is volatile and null when a proxy
+240a6a52e9 [583353] Fix UML2AS Behavior.setESObject
+	0+1 pu wrt 0+1 pu - testValidate_Validate_completeocl suspect
+d27310d235 [unrelated] BasicProjectManager initializeResourceSet uses initializeURIResourceMap
+53562051e7 [583353] Ensure that unspecialized TemplateBinding/ParameterSubstitution have a pivot
+caf6e09a16 [582722] Cache environmentFactory in basicGetEnvironmentFactory for validationContext
+4d5bcab36b [583353] ecore consistency assertions
+6d245ece91 [583176] Support EnvironmentFactory re-use by worker thread
+	0+1 pu - testValidate_Validate_completeocl suspect
+9f56e0465a [583353] Guilemetted display for proxies in ToStringVisitor
+93d4f5e6de [releng] Add -Declipse.e4.inject.javax.warning=false
+	wrt 0+1 pu - testValidate_Validate_completeocl suspect
+4cb24f0bcd [unrelated] Unify PivotUtil/PivotUtilInternal errPrintln
+bdc8444cde [583353] Ensure ReadOnly/ImmutableResource are ASonly.
+16e2673dd5 [#2353] Preserve element order for repeated key values in Sequences.
+	0+1 pu - testValidate_Validate_completeocl suspect
+90bc6f2f89 [583353] Correct CSI2AS element removal
+da77aa07c8 [583353] Tidy createCS2AS
+910a069227 [releng] Remove duplicate org.eclipse.ocl.oclcs contentTypeIdentifier
+	0+1 pu - testValidate_Validate_completeocl suspect
+f8e4b966cc [576375] Eliminate EnvironmentFactoryAdapter usage
+78558ea75b [583176] Improved EnvironmentFactory discovery / passing
+5039f336d2 [583353] Promote JavaClassCS/JavaImplementationCS models to ocl.xtext.base
+	0+1 pu - testValidate_Validate_completeocl suspect
+7084e3d948 [583353] Regenerate CS, editors
+	- bad JavaClassCS refactoring
+1ca373da79 [583353] Promote JavaClassCS/JavaImplementationCS ocl.xtext.base
+	0+1 pu - testValidate_Validate_completeocl suspect
+11dee7f30a [583353] Rationalize AS2Ecore and its InvereConversion
+	0+1 sa wrt sa 0+1 - testValidate_Validate_completeocl suspect
+============== suppress baseline
+1ed3d0bf2f [583566] Fix indented comment round-tripping
+	0+1 sa wrt 0+1 sa
+ab74fe0e01 [583353] Migrate getReloadableEObjectOrURI from PivotObjectImpl to ElementImpl
+	0+1 sa
+7535f605e2 [583353] Regen Pivot, OCLstdlib
+	0+1 sa with manual fudge of PivotTables - testValidate_Validate_completeocl suspect
+83e73ec114 [583353] Add invariants with comments to generated metamodel
+abc2f3104c [583353] Fix Pivot, OCLstdlib Model regen
+	0+2 sa wrt 0+2 sa
+f71c51b2ee [583353] JavaClassScope is no longer an Adapter
+b400a49bd4 [583353] Use External2AS rather than Ecore2AS / UML2AS
+4b2edc9fce [583353] Use $null$ as replacement for null name.
+1d16abedb1 [583043] more ValidateTests
+8e9080caad [583176] Use URI rather than Resource to locate ES2AS
+a2f667d795 [583269] Use installDocuments and check severities
+	ok pu
+22411ebdfc [583176] Add isDisposing assertion
+4e8ad735c0 [583353] preUnload during dispose and add unload
+0f69eae2ee [583353] More load/save testing
+760e43667f [583176] Adjust environmentFactory = null timing
+fabf495008 [583353] Add assertions
+ca1efe6220 [unrelated] Additional test support/better diagnosticss
+4e0e3a41de [583353] Rationalize eResolveProxy to use resolveProxy
+ed591027b6 [583176] use PivotUtilInternal.getEnvironmentFactory
+7f62b60b50 [583353] Support serializing / loading hierarchical CS import
+	ok pu,sa post fixes
+d39c8f2d61 [583353] add assertions
+29cc8f1b9e [583353] Refactor to support registration removal
+1d4aa1ed96 [583353] Reload to resolve a CS proxy
+dafa24dfff [583269] Avoid using the direct AS variant of a Dynamic Complete OCL delegate constraint
+222517c8cb [583353] Add EOperation to test EClass
+d15519e1ea [unrelated] Correct derived abstract visitor package path
+ce95779a20 [583353] Use distinct Load and Save CS resource support
+d18a77e6b8 [583353] add getReloadableEObjectOrURI
+2f763bd9f7 [583353] add preUnload to ASResource
+61df3d586a [583353] Add missing createCS2AS
+3e1d63db7b [583353] Replace PROXIES option by RESOLVE_PROXY/SET_PROXY
+0c16cacc60 [583269] RE-enable testValidate_Simple_oclinecore test
+a6aae907ed [583269] Use EnvironmentFactory.loadCompleteOCLResource with ConflictingResource detection
+67b3ddefff [576375] Phase out EnvironmentFactoryAdapter use new AbstractEnvironmentFactory externalResourceSet
+	ok pu,sa post fixes
+af05d6b2dc [583353] accommodate proxies
+018c406a75 [583176] pass EnvironmentFactory to worker thread
+6ec2daa270 [583269] Install Complete OCL constraints as Ecore delegates
+1edad2540c [583269] UMLASResourceFactory supports getASElement for an EPackage
+de3b2034d2 [583269] Avoid duplicate composed EValidators
+	ok pu
+7697bb30d5 [583269] Eliminate use of OCLDelegateDomain's EnvironmentFactory
+42464ddcb5 [583269] Add EnvironmentFactory.extraResourceSets / canValidate
+2fa7dabd65 [583176] Better EnvironmentFactory access foundation
+8f17782424 [583353] Remove UML2AS/Ecore2AS/AS2Ecore$InverseConversion irregularities
+	ok pu
+42a823c7a3 [583353] Add ASResource isASonly
+9701be7f76 [unrelated] Improve formatting of multi-line logs
+977102005f [583353] Provide a name for null AS names
+6ef2297b0f [583269] Add and use CompleteModel.getAllCompleteInvariants
+f9efe4b459 [583509] Use Attribution.REGISTRY directly
+621f2e2fcd [583353] Add missing setESObject calls
+	ok sa
+87eb806f59 [583353] Diagnose attempt to use unsupported CompleteClass.esObject
+8603fda12f [583353] eliminate UnstableXMIIDDiagnostics prior to re-assignErrors
+5edefdf8a5 [583353] diagnose eGet IAE
+3d60c7cc15 [583353] Better undefined variable diagnosis
+7764a7c607 [583353] Simplify addClassLoader
+98b966014b [583353] Use a private ResourceSet to parse CS Resources
+364e93e45d [583353] Per-ResourceSet ParserContext
+7c4bd25196 [unrelated] Include Parameter class in toString
+9636a63169 [unrelated] Avoid spaces in qualified labels
+582d94834d [583269] Prefer OCL delegate annotations with the required key
+	ok pu,sa,cg
+78e43ef2b2 [unrelated] Migrate isMavenSurefire()/isTychoSurefire() to PivotUtilInternal
+e00e470d11 [583269] Revise delegate initialization to add dynamic and avoid duplication
+15b8c43c40 [583269] Rename OCL_DELEGATE_URI_PIVOT_COMPLETE_OCL to OCL_DELEGATE_URI_PIVOT_DYNAMIC
+40abcdcf73 [583269] Fold Global DelegateFactory derivations into superclass
+c55a6aa5a5 [unrelated] Replace AliasAdapter by MonikerAliasAdapter
+71c93ea019 [583353] Enforce non-AS URI Model externalURI
+48a7a72cd5 [583353] Restrict alias serialization to known aliases
+11a4101aa7 [unrelated] Resolve isTypeOrphanage deprecation
+0539a48500 [583353] Maintain Precedence, MetaClassNameCS and JavaClass in CS2AS
+fdd511c79b [583353] Migrate dynamic classpath/loading support
+	ok pu
+ee630fc81d [583566] Regen editors
+0ca49a87e3 [583566] Better Complete OCL serialization
+db4390ac02 [583566] Ensure that ClasspathURIHandler is installed
+b500bc6547 [unrelated] Whitespace, @Override, @since fixes
+6e9fadef53 [unrelated] Avoid Pivot model corruption.
+ec78437d7f [unrelated] Avoid redirecting dynamic projects to plugins
+a7ed983c73 [unrelated] Eliminate spurious EPackage features
+	ok pu
+521476b47e [unrelated] Test enhancements
+829b5dc9e8 [583260] Share the pseudo Resource-EPackage-EClass for Annotation Validation
+43b28ff0ff [582053] Avoid proxy trouble in ES2AS
+46138c12b3 [unrelated] Support load of XMI BigNumber serialization
+8567271971 [releng] Eliminate obsolete -XX:MaxPermSize
+22321f1f47 [releng] Fix tooltips within the OCL menu, mark Validate obsolete.
+2a4fa4a56d [583043] Provide consistent OCL_Validate dialog headings
+d36604e93d [583269] wip CompleteOCLValidationDelegate
+	zz comment reword
+dc5e582b4e [583353] Tidy, detachRedundantThreadLocal(), getASResource deprecation
+d858e91138 [583353] Trim ParserContext passing
+	ok sa
+21c8725211 [releng] Workaround platform issue 1495
+219f3d78de [583353] Trim debug, remove Attribution Registry clear
+9bb458399b [583353] Enforce doStandaloneSetup before setUp
+460829e3c7 [583353] Use AttributionRegistryInstaller to assist debugging
+7d381ac35a [583353] Use AbstractPivotTestCase and TestHelper
+	ok pu
+0d20d8125a (ewillink/2285reworkinge) [583353] Fix ResourceSet container notifications
+a8efe7a886 [583353] Rationalize StandaloneSetup for getInjector
+2b40cde962 [583353] Promote QVTruntimeUtil to PivotUtil
+b1fd962086 [583353] Tidy, ConsoleTests, DebuggerTests, EditorTests
+1705bfb061 [583509] Avoid/diagnose Attribution.REGISTRY conflicting init
+8a602adb5a [583353] Fix many EnvironmentFactory leaks
+0e150e8926 [583353] Clarify CSResource / BaseCSResource API
+	0+1pu fixed
+2c0917c559 [583353] Fix EnvironmentFactory creation during findCS2AS
+99d3be9019 [583353] Pass EnvironmentFactory to getCS2AS
+c3013d5597 (ewillink/2285reworkingd) [583353] Fold ASResourceFactory extensions into base interface
+5fc5c1d06f [583353] Fold CSResource extensions into base interface
+3619abf7e9 [583353] Fix NPE crash on no ownedBody
+b015c94281 [583353] Fix comment
+b38011cb40 [583353] Add directly loaded/saved CS support
+	ok
+3779471d50 [583353] CSResource.parserContext may be null if directly loaded
+4948d31368 [583347] Add isDisposing(), trap disposed ToStringVisitor
+458fb98306 [583353] Add ICS2AS, createCS2AS
+9557768951 [583353] Avoid internal resource corruptions during load tests, improve test crash resilience
+a8f6e43106 [583353] Proxify esObject in preUnload
+b58ca53c40 (ewillink/2285reworkingc) [583353] Delay nulling environmentFactory till after detach
+47943d0f89 [583353] non-String isASURI preferred.
+99c4977013 [583353] isASURI consistently support fragments
+89b2453423 [583353] Add PROXIES tracing option
+688fd1e725 [583353] Instrument/check PivotObjectImpl.esObject
+8264503f4f [583353] Add ICSI2ASMapping.getCSElement
+e50d9b07d0 [583197] Clarify test constraint names
+1de63ecf3f [576375] Use main EnvironmentFactory for worker thread
+6229f67524 [583176] Use shared ORPHAN_INSTANCE for installed EPackages
+	ok
+d2d2018b01 [583043] Tidy load failure messages
+66dc051c8e (ewillink/2285reworkingb) [583043] Preserve expanded across re-select and show/hide
+a77c61f11b [583043] Improve exception hovertext
+8cdf6f899d [583043] Eliminate pin/lock selection
+fed8079cd3 [583043] Use welcome nodes to provide usage clues.
+2a5c99696a [583043] Enhance 'refresh' to update to current selection.
+d678027013 (ewillink/2285reworkinga) [583043] Preserve expandedElements across show/hide or selection 'change'
+1e9e999ce6 [583043] Ensure parent of invisible node visible
+a7437ef27e [583043] Add ignoreConstraintlessValidatableNodes
+e711f7f86c [583043] Ensure constraint-less nodes are potentially validatable
+ba7adda9e2 [583043] Change Validity View default to show everything.
+f64801cb6a [583043] Use Resources and EnvironmentFactory from main part-thread.
+0eece9c1e1 [583086] Respect pre-existing ResourceSet content
+0e6f93e658 [535490] Eliminate source of cloned EMF library example
+fc7bfafc57 [releng] Add copy comment to local-toolchains.xml
+=================================================
+a89b0f867a (ewillink/2285reworkbase) [releng] Add 2025 profiles/targets
+c971c179f9 [releng] Refresh OOMPH URLs
+07a3655f46 [releng] #2354 Make tycho-version profile dependent
+35274acaad [releng] Migrate codegen and other builds/launches to Tycho 3.0.5 Java 21
+429c2f70de [ocl#2354] Make additional org.eclipse.emf.codegen.ecore.templates.model invisible
+df1f940ed0 [releng] Avoid Java 21 StringTemplate ambiguity
+3034e0b6c5 [releng] Avoid Java 21 conflicting inherited default method
+edc3d0201c [releng] Use Java 21, Maven 3.9.0, Tycho 3.0.5
+02695ea0ed [releng] Refresh OOMPH to use GitHub repos
+f8ef48fa2f [releng] Get hamcrest from Orbit rather than platform
+2c385ffa78 [releng] wip re-instating stanadlone Ecore/UML as Java 8 verification
+e4dc038335 [releng] Additional compatibility test targets
+93ef03653c [releng] Migrate GIT repo to GitHub
+d70094c547 (tag: 6.22.0) [releng] Refresh OOMPH setup for 6.22.0 2024-09
+6eee311ed6 [releng] +0.1.0 for 6.23.0
+735188606b [releng] Refresh copyrights
+
+
+zztestValidate_Simple_oclinecore
