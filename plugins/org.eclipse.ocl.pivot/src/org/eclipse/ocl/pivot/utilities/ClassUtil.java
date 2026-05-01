@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.utilities;
 
+import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -27,6 +28,7 @@ import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.impl.EPackageImpl;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
@@ -192,6 +194,18 @@ public class ClassUtil
 	}
 
 	/**
+	 * Return true if packageClass is the Package for a derived EPackageImpl for a generated Resource.
+	 */
+	private static boolean isReflectiveGeneratedGuard(@NonNull Class<?> packageClass) {
+		for (Field field : packageClass.getFields()) {
+			if ("eINSTANCE".equals(field.getName())) {	// Explicit search avoids NoSuchFieldException
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Return anObject cast to aClass if type-safe or null otherwise.
 	 * @param anObject for which cast required
 	 * @param aClass the type to which cast required
@@ -217,10 +231,12 @@ public class ClassUtil
 			if (uri != null) {
 				for (EObject eRoot : resource.getContents()) {		// ?? only ever one - multi-EPackages are flattened by GenModel Ecore2Java
 					if (eRoot instanceof EPackage) {
-						String nsURI = ((EPackage)eRoot).getNsURI();
-						if ((nsURI != null) && nsURI.equals(uri.toString())) {
-							assert resource.getResourceSet() == null : "generated resources shold not be in an arbitrary ResourceSet"; // OOPS we used to do this.
-							return true;		// FIXME checking for a Java init() method is solider.
+						Class<?> packageClass = eRoot.getClass();
+						boolean isGeneratedGuard = packageClass != EPackageImpl.class;
+						assert isGeneratedGuard == isReflectiveGeneratedGuard(packageClass) : "Inconsistent generated guard " + isGeneratedGuard + " for " + uri;		// XXX Issue 2412 debugging
+						if (isGeneratedGuard) {
+							assert resource.getResourceSet() == null : "generated resources should not be in an arbitrary ResourceSet"; // OOPS we used to do this.
+							return true;
 						}
 					}
 				}
