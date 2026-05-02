@@ -1653,7 +1653,6 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 		@Override
 		public @NonNull IResourceLoadStatus getResourceLoadStatus(@Nullable ResourceSet resourceSet) {
-			assert hasEcoreModel;
 			IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.get(resourceSet);
 			if (resourceLoadStatus == null) {
 				synchronized (resourceSet2resourceLoadStatus) {
