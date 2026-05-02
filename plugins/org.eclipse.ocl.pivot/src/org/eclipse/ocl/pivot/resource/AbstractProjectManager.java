@@ -47,7 +47,7 @@ public abstract class AbstractProjectManager extends AdapterImpl implements Proj
 				IResourceDescriptor resourceDescriptor = packageDescriptor.getResourceDescriptor();
 				boolean hasConflict;
 				URI knownResourceURI;
-				if (resourceDescriptor.hasEcoreModel()) {
+				if (resourceDescriptor.hasGenModel()) {
 					knownResourceURI = resourceDescriptor.getLocationURI();
 					URI knownPlatformPluginProjectURI = resourceDescriptor.getPlatformPluginURI().trimSegments(1);
 					URI knownPlatformResourceProjectURI = resourceDescriptor.getPlatformResourceURI().trimSegments(1);

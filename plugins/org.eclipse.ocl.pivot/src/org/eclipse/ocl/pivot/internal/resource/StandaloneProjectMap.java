@@ -900,7 +900,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				try {
 					recursiveLoadInProgress = true;
 					IResourceDescriptor resourceDescriptor2 = getResourceDescriptor();
-					if (resourceDescriptor2.hasEcoreModel()) {
+					if (resourceDescriptor2.hasGenModel()) {
 						URI platformResourceURI = resourceDescriptor2.getPlatformResourceURI();
 						ResourceSet resourceSet = this.resourceSet != null ? this.resourceSet : new ResourceSetImpl();
 						resourceSet.createResource(platformResourceURI);  // Calls back to addedResource()
@@ -1516,7 +1516,10 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		 */
 		protected final @NonNull List<@NonNull IPackageDescriptor> packageDescriptors = new ArrayList<>();
 
-		private boolean hasEcoreModel = false;
+		/**
+		 * True if the genModelURI has been read for the resource.
+		 */
+		private boolean hasGenModel = false;
 
 		/**
 		 * The IResourceLoadStatus for each ResourceSet (null is the global 'ResourceSet' 'containing' all Java'd packages).
@@ -1581,7 +1584,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 		@Override
 		public void configure(@Nullable ResourceSet resourceSet, @NonNull IResourceLoadStrategy resourceLoadStrategy, @Nullable IConflictHandler conflictHandler) {
-			if (hasEcoreModel) {
+			if (hasGenModel) {
 				IResourceLoadStatus resourceLoadStatus = getResourceLoadStatus(resourceSet);
 				resourceLoadStrategy.configure(resourceLoadStatus, conflictHandler);
 			}
@@ -1653,7 +1656,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 
 		@Override
 		public @NonNull IResourceLoadStatus getResourceLoadStatus(@Nullable ResourceSet resourceSet) {
-			assert hasEcoreModel;
+			assert hasGenModel;
 			IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.get(resourceSet);
 			if (resourceLoadStatus == null) {
 				synchronized (resourceSet2resourceLoadStatus) {
@@ -1668,12 +1671,12 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		}
 
 		@Override
-		public boolean hasEcoreModel() {
-			return hasEcoreModel;
+		public boolean hasGenModel() {
+			return hasGenModel;
 		}
 
 		@Override
-		public void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor) {
+		public void setGenModelContext(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor) {
 			int size = genModelRelativeEcorePackageUris.size();
 			if (size > 0) {
 				@NonNull String firstGenModelRelativeEcorePackageUri = genModelRelativeEcorePackageUris.get(0);
@@ -1691,12 +1694,12 @@ public class StandaloneProjectMap extends AbstractProjectManager
 				locationURI = relativeEcoreModelURI.resolve(projectLocationURI);
 				projectDescriptor.getProjectManager().addResourceDescriptor(this);
 			}
-			hasEcoreModel = true;
+			hasGenModel = true;
 		}
 
 		@Override
 		public void unload(@NonNull ResourceSet resourceSet) {
-			if (hasEcoreModel()) {
+			if (hasGenModel()) {
 				synchronized (resourceSet2resourceLoadStatus) {
 					IResourceLoadStatus resourceLoadStatus = resourceSet2resourceLoadStatus.remove(resourceSet);
 					if (resourceLoadStatus != null) {
@@ -2067,7 +2070,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 		public void endDocument() throws SAXException {
 			super.endDocument();
 			try {
-				resourceDescriptor.setEcoreModel(ecorePackages, nsURI2packageDescriptor);
+				resourceDescriptor.setGenModelContext(ecorePackages, nsURI2packageDescriptor);
 			}
 			catch (Exception e) {
 				logger.warn("Failed to read " + genModelURI, e);
@@ -2786,7 +2789,7 @@ public class StandaloneProjectMap extends AbstractProjectManager
 			if (resourceDescriptors != null) {
 				for (IResourceDescriptor resourceDescriptor : resourceDescriptors) {
 					assert resourceDescriptor != null;
-					if (resourceDescriptor.hasEcoreModel()) {
+					if (resourceDescriptor.hasGenModel()) {
 						IResourceLoadStatus resourceLoadStatus = resourceDescriptor.getResourceLoadStatus(resourceSet);
 						resourceLoadStatus.setConflictHandler(MapToFirstConflictHandlerWithLog.INSTANCE);
 					}

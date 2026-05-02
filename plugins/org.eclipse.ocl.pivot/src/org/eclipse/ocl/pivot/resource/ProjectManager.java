@@ -332,16 +332,25 @@ public interface ProjectManager extends Adapter
 		 */
 		@NonNull IResourceLoadStatus getResourceLoadStatus(@Nullable ResourceSet resourceSet);
 
-		/**
-		 * Return true if setEcoreModel has defined the Ecore Model context.
-		 */
-		boolean hasEcoreModel();
+		@Deprecated /*deprecated use hasGenModel() */
+		default boolean hasEcoreModel() { return hasGenModel(); }
 
 		/**
-		 * Set the Ecore Model context of the resource from a list of URIs of the Ecore Packages relative to the
-		 * genModelURI, and a map of the package namespace URI to package descriptor.
+		 * Return true if setGenModelContext has defined the Model context following the read of a genmodel.
 		 */
-		void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor);
+		boolean hasGenModel();
+
+		@Deprecated /*deprecated use setGenModel() */
+		default void setEcoreModel(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor) {
+			setGenModelContext(genModelRelativeEcorePackageUris, nsURI2packageDescriptor);
+		}
+
+		/**
+		 * Following the successful read of a genmodel, set the Model context of the resource
+		 * from a list of URIs of the Ecore Packages relative to the genModelURI, and a map of the
+		 * package namespace URI to package descriptor.
+		 */
+		void setGenModelContext(@NonNull List<@NonNull String> genModelRelativeEcorePackageUris, @NonNull Map<@NonNull String, @NonNull IPackageDescriptor> nsURI2packageDescriptor);		// FIXME rename as setGenModel
 
 		/**
 		 * Unload the package registry to force a reload.
