@@ -27,6 +27,7 @@ import org.eclipse.jdt.annotation.NonNull;
  *   <li>{@link org.eclipse.ocl.examples.emf.validation.validity.ResultSet#getRoot <em>Root</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.emf.validation.validity.ResultSet#getResults <em>Results</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.emf.validation.validity.ResultSet#getTimestamp <em>Timestamp</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.emf.validation.validity.ResultSet#getName <em>Name</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage#getResultSet()
@@ -105,5 +106,16 @@ public interface ResultSet extends EObject {
 	 * @generated
 	 */
 	void setTimestamp(String value);
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage#getResultSet_Name()
+	 * @model required="true" transient="true" changeable="false" volatile="true"
+	 * @generated
+	 */
+	String getName();
 
 } // ResultSet

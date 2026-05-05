@@ -12,6 +12,8 @@ package org.eclipse.ocl.examples.emf.validation.validity.impl;
 
 import java.util.Collection;
 
+import java.util.Iterator;
+import java.util.List;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -24,7 +26,22 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.Result;
 import org.eclipse.ocl.examples.emf.validation.validity.ResultSet;
 import org.eclipse.ocl.examples.emf.validation.validity.RootNode;
+import org.eclipse.ocl.examples.emf.validation.validity.Severity;
 import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
+import org.eclipse.ocl.examples.emf.validation.validity.ValidityTables;
+import org.eclipse.ocl.pivot.evaluation.Executor;
+import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
+import org.eclipse.ocl.pivot.ids.IdResolver;
+import org.eclipse.ocl.pivot.library.collection.CollectionCountOperation;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation;
+import org.eclipse.ocl.pivot.library.string.StringConcatOperation;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
+import org.eclipse.ocl.pivot.values.BagValue;
+import org.eclipse.ocl.pivot.values.BagValue.Accumulator;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.SetValue;
 
 
 /**
@@ -38,6 +55,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage;
  *   <li>{@link org.eclipse.ocl.examples.emf.validation.validity.impl.ResultSetImpl#getRoot <em>Root</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.emf.validation.validity.impl.ResultSetImpl#getResults <em>Results</em>}</li>
  *   <li>{@link org.eclipse.ocl.examples.emf.validation.validity.impl.ResultSetImpl#getTimestamp <em>Timestamp</em>}</li>
+ *   <li>{@link org.eclipse.ocl.examples.emf.validation.validity.impl.ResultSetImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -50,7 +68,7 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	 * @generated
 	 * @ordered
 	 */
-	public static final int RESULT_SET_FEATURE_COUNT = 3;
+	public static final int RESULT_SET_FEATURE_COUNT = 4;
 
 	/**
 	 * The cached value of the '{@link #getResults() <em>Results</em>}' containment reference list.
@@ -81,6 +99,16 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	 * @ordered
 	 */
 	protected String timestamp = TIMESTAMP_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -181,6 +209,67 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
+	public String getName() {
+		/**
+		 *
+		 * let severities : Bag(validity::Severity) = results.severity
+		 * in
+		 *   severities->count(Severity::ERROR)
+		 *   .toString() + ' errors ' +
+		 *   severities->count(Severity::WARNING)
+		 *   .toString() + ' warnings ' +
+		 *   severities->count(Severity::INFO)
+		 *   .toString() + ' infos ' +
+		 *   severities->count(Severity::OK)
+		 *   .toString() + ' oks'
+		 */
+		final /*@NonInvalid*/ @NonNull Executor executor = PivotUtil.getExecutor(this);
+		final /*@NonInvalid*/ @NonNull IdResolver idResolver = executor.getIdResolver();
+		final /*@NonInvalid*/ @NonNull List<Result> results = this.getResults();
+		final /*@NonInvalid*/ @NonNull SetValue BOXED_results = idResolver.createSetOfAll(ValidityTables.SET_CLSSid_Result, results);
+		/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createBagAccumulatorValue(ValidityTables.BAG_ENUMid_Severity);
+		@NonNull Iterator<Object> ITERATOR__1 = BOXED_results.iterator();
+		/*@NonInvalid*/ @NonNull BagValue severities;
+		while (true) {
+			if (!ITERATOR__1.hasNext()) {
+				severities = accumulator;
+				break;
+			}
+			@SuppressWarnings("null")
+			/*@NonInvalid*/ @NonNull Result _1 = (@NonNull Result)ITERATOR__1.next();
+			/**
+			 * severity
+			 */
+			@SuppressWarnings("null")
+			final /*@NonInvalid*/ @NonNull Severity severity = _1.getSeverity();
+			final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_severity = ValidityTables.ENUMid_Severity.getEnumerationLiteralId(ClassUtil.nonNullState(severity.getName()));
+			//
+			accumulator.add(BOXED_severity);
+		}
+		final /*@NonInvalid*/ @NonNull IntegerValue count = CollectionCountOperation.INSTANCE.evaluate(severities, ValidityTables.ELITid_ERROR);
+		final /*@NonInvalid*/ @NonNull String toString = OclAnyToStringOperation.INSTANCE.evaluate(count);
+		final /*@NonInvalid*/ @NonNull String sum = StringConcatOperation.INSTANCE.evaluate(toString, ValidityTables.STR__32_errors_32);
+		final /*@NonInvalid*/ @NonNull IntegerValue count_0 = CollectionCountOperation.INSTANCE.evaluate(severities, ValidityTables.ELITid_WARNING);
+		final /*@NonInvalid*/ @NonNull String toString_0 = OclAnyToStringOperation.INSTANCE.evaluate(count_0);
+		final /*@NonInvalid*/ @NonNull String sum_0 = StringConcatOperation.INSTANCE.evaluate(sum, toString_0);
+		final /*@NonInvalid*/ @NonNull String sum_1 = StringConcatOperation.INSTANCE.evaluate(sum_0, ValidityTables.STR__32_warnings_32);
+		final /*@NonInvalid*/ @NonNull IntegerValue count_1 = CollectionCountOperation.INSTANCE.evaluate(severities, ValidityTables.ELITid_INFO);
+		final /*@NonInvalid*/ @NonNull String toString_1 = OclAnyToStringOperation.INSTANCE.evaluate(count_1);
+		final /*@NonInvalid*/ @NonNull String sum_2 = StringConcatOperation.INSTANCE.evaluate(sum_1, toString_1);
+		final /*@NonInvalid*/ @NonNull String sum_3 = StringConcatOperation.INSTANCE.evaluate(sum_2, ValidityTables.STR__32_infos_32);
+		final /*@NonInvalid*/ @NonNull IntegerValue count_2 = CollectionCountOperation.INSTANCE.evaluate(severities, ValidityTables.ELITid_OK);
+		final /*@NonInvalid*/ @NonNull String toString_2 = OclAnyToStringOperation.INSTANCE.evaluate(count_2);
+		final /*@NonInvalid*/ @NonNull String sum_4 = StringConcatOperation.INSTANCE.evaluate(sum_3, toString_2);
+		final /*@NonInvalid*/ @NonNull String sum_5 = StringConcatOperation.INSTANCE.evaluate(sum_4, ValidityTables.STR__32_oks);
+		return sum_5;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
@@ -239,6 +328,8 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 				return getResults();
 			case 2:
 				return getTimestamp();
+			case 3:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -301,6 +392,8 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 				return results != null && !results.isEmpty();
 			case 2:
 				return TIMESTAMP_EDEFAULT == null ? timestamp != null : !TIMESTAMP_EDEFAULT.equals(timestamp);
+			case 3:
+				return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
 		}
 		return super.eIsSet(featureID);
 	}

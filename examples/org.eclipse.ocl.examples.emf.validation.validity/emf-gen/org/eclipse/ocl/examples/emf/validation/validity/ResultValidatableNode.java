@@ -42,7 +42,7 @@ public interface ResultValidatableNode extends ValidatableNode {
 	 * @see #setResultConstrainingNode(ResultConstrainingNode)
 	 * @see org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage#getResultValidatableNode_ResultConstrainingNode()
 	 * @see org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode#getResultValidatableNode
-	 * @model opposite="resultValidatableNode" required="true" ordered="false"
+	 * @model opposite="resultValidatableNode" required="true"
 	 * @generated
 	 */
 	ResultConstrainingNode getResultConstrainingNode();

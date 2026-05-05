@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EReference;
  * <!-- end-user-doc -->
  * @see org.eclipse.ocl.examples.emf.validation.validity.ValidityFactory
  * @model kind="package"
+ *        annotation="http://www.eclipse.org/emf/2002/Ecore"
  * @generated
  */
 public interface ValidityPackage extends EPackage {
@@ -316,6 +317,17 @@ public interface ValidityPackage extends EPackage {
 	EAttribute getResult_Exception();
 
 	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.emf.validation.validity.Result#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.examples.emf.validation.validity.Result#getName()
+	 * @see #getResult()
+	 * @generated
+	 */
+	EAttribute getResult_Name();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.emf.validation.validity.ResultConstrainingNode <em>Result Constraining Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -378,6 +390,17 @@ public interface ValidityPackage extends EPackage {
 	 * @generated
 	 */
 	EAttribute getResultSet_Timestamp();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.examples.emf.validation.validity.ResultSet#getName <em>Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see org.eclipse.ocl.examples.emf.validation.validity.ResultSet#getName()
+	 * @see #getResultSet()
+	 * @generated
+	 */
+	EAttribute getResultSet_Name();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.examples.emf.validation.validity.ResultValidatableNode <em>Result Validatable Node</em>}'.
@@ -798,6 +821,14 @@ public interface ValidityPackage extends EPackage {
 		EAttribute RESULT__EXCEPTION = eINSTANCE.getResult_Exception();
 
 		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESULT__NAME = eINSTANCE.getResult_Name();
+
+		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.emf.validation.validity.impl.ResultConstrainingNodeImpl <em>Result Constraining Node</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -848,6 +879,14 @@ public interface ValidityPackage extends EPackage {
 		 * @generated
 		 */
 		EAttribute RESULT_SET__TIMESTAMP = eINSTANCE.getResultSet_Timestamp();
+
+		/**
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute RESULT_SET__NAME = eINSTANCE.getResultSet_Name();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.examples.emf.validation.validity.impl.ResultValidatableNodeImpl <em>Result Validatable Node</em>}' class.
