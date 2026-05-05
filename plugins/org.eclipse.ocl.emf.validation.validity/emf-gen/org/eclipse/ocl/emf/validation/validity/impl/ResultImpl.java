@@ -25,6 +25,11 @@ import org.eclipse.ocl.emf.validation.validity.ResultValidatableNode;
 import org.eclipse.ocl.emf.validation.validity.Severity;
 import org.eclipse.ocl.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.emf.validation.validity.ValidityPackage;
+import org.eclipse.ocl.emf.validation.validity.ValidityTables;
+import org.eclipse.ocl.pivot.ids.EnumerationLiteralId;
+import org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation;
+import org.eclipse.ocl.pivot.library.string.StringConcatOperation;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 
 /**
@@ -43,6 +48,7 @@ import org.eclipse.ocl.emf.validation.validity.ValidityPackage;
  *   <li>{@link org.eclipse.ocl.emf.validation.validity.impl.ResultImpl#getLeafConstrainingNode <em>Leaf Constraining Node</em>}</li>
  *   <li>{@link org.eclipse.ocl.emf.validation.validity.impl.ResultImpl#getResultConstrainingNode <em>Result Constraining Node</em>}</li>
  *   <li>{@link org.eclipse.ocl.emf.validation.validity.impl.ResultImpl#getException <em>Exception</em>}</li>
+ *   <li>{@link org.eclipse.ocl.emf.validation.validity.impl.ResultImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -55,7 +61,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * @generated
 	 * @ordered
 	 */
-	public static final int RESULT_FEATURE_COUNT = 8;
+	public static final int RESULT_FEATURE_COUNT = 9;
 
 	/**
 	 * The number of operations of the '<em>Result</em>' class.
@@ -135,6 +141,16 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * @ordered
 	 */
 	protected Throwable exception = EXCEPTION_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected static final String NAME_EDEFAULT = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -249,6 +265,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	public void setSeverityGen(Severity newSeverity) {
 		severity = newSeverity == null ? SEVERITY_EDEFAULT : newSeverity;
 	}
+	@Override
 	public void setSeverity(Severity newSeverity) {
 		if (newSeverity != severity || newSeverity == SEVERITY_EDEFAULT) {
 			setSeverityGen(newSeverity);
@@ -284,6 +301,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	public ValidatableNode getValidatableNode() {
 		return getResultValidatableNode().getParent();
 	}
@@ -293,6 +311,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	@SuppressWarnings("null")
 	public @NonNull LeafConstrainingNode getLeafConstrainingNode() {
 		return (LeafConstrainingNode) getResultConstrainingNode().getParent();
@@ -303,6 +322,7 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	 * <!-- end-user-doc -->
 	 * @generated NOT
 	 */
+	@Override
 	@SuppressWarnings("null")
 	public @NonNull ResultConstrainingNode getResultConstrainingNode() {
 		return getResultValidatableNode().getResultConstrainingNode();
@@ -326,6 +346,35 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	@Override
 	public void setException(Throwable newException) {
 		exception = newException;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String getName() {
+		/**
+		 * severity.toString() + ' : ' + validatableNode.label + ' : ' + leafConstrainingNode.label
+		 */
+		@SuppressWarnings("null")
+		final /*@NonInvalid*/ @NonNull Severity severity = this.getSeverity();
+		final /*@NonInvalid*/ @NonNull EnumerationLiteralId BOXED_severity = ValidityTables.ENUMid_Severity.getEnumerationLiteralId(ClassUtil.requireNonNull(severity.getName()));
+		final /*@NonInvalid*/ @NonNull String toString = OclAnyToStringOperation.INSTANCE.evaluate(BOXED_severity);
+		final /*@NonInvalid*/ @NonNull String sum = StringConcatOperation.INSTANCE.evaluate(toString, ValidityTables.STR__32_c_32);
+		@SuppressWarnings("null")
+		final /*@NonInvalid*/ @NonNull ValidatableNode validatableNode = this.getValidatableNode();
+		@SuppressWarnings("null")
+		final /*@NonInvalid*/ @NonNull String label = validatableNode.getLabel();
+		final /*@NonInvalid*/ @NonNull String sum_0 = StringConcatOperation.INSTANCE.evaluate(sum, label);
+		final /*@NonInvalid*/ @NonNull String sum_1 = StringConcatOperation.INSTANCE.evaluate(sum_0, ValidityTables.STR__32_c_32);
+		@SuppressWarnings("null")
+		final /*@NonInvalid*/ @NonNull LeafConstrainingNode leafConstrainingNode = this.getLeafConstrainingNode();
+		@SuppressWarnings("null")
+		final /*@NonInvalid*/ @NonNull String label_0 = leafConstrainingNode.getLabel();
+		final /*@NonInvalid*/ @NonNull String sum_2 = StringConcatOperation.INSTANCE.evaluate(sum_1, label_0);
+		return sum_2;
 	}
 
 	/**
@@ -397,6 +446,8 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 				return getResultConstrainingNode();
 			case 7:
 				return getException();
+			case 8:
+				return getName();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -479,6 +530,8 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 				return getResultConstrainingNode() != null;
 			case 7:
 				return EXCEPTION_EDEFAULT == null ? exception != null : !EXCEPTION_EDEFAULT.equals(exception);
+			case 8:
+				return NAME_EDEFAULT == null ? getName() != null : !NAME_EDEFAULT.equals(getName());
 		}
 		return super.eIsSet(featureID);
 	}

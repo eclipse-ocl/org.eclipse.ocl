@@ -475,6 +475,16 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	 * @generated
 	 */
 	@Override
+	public EAttribute getResult_Name() {
+		return (EAttribute)resultEClass.getEStructuralFeatures().get(8);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getResultConstrainingNode() {
 		return resultConstrainingNodeEClass;
 	}
@@ -527,6 +537,16 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 	@Override
 	public EAttribute getResultSet_Timestamp() {
 		return (EAttribute)resultSetEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getResultSet_Name() {
+		return (EAttribute)resultSetEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -776,6 +796,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		createEReference(resultEClass, 5);
 		createEReference(resultEClass, 6);
 		createEAttribute(resultEClass, 7);
+		createEAttribute(resultEClass, 8);
 
 		resultConstrainingNodeEClass = createEClass(4);
 		createEReference(resultConstrainingNodeEClass, 8);
@@ -784,6 +805,7 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		createEReference(resultSetEClass, 0);
 		createEReference(resultSetEClass, 1);
 		createEAttribute(resultSetEClass, 2);
+		createEAttribute(resultSetEClass, 3);
 
 		resultValidatableNodeEClass = createEClass(6);
 		createEReference(resultValidatableNodeEClass, 8);
@@ -881,17 +903,19 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 		initEReference(getResult_LeafConstrainingNode(), this.getLeafConstrainingNode(), null, "leafConstrainingNode", null, 1, 1, Result.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEReference(getResult_ResultConstrainingNode(), this.getResultConstrainingNode(), null, "resultConstrainingNode", null, 1, 1, Result.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 		initEAttribute(getResult_Exception(), this.getThrowable(), "exception", null, 0, 1, Result.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getResult_Name(), ecorePackage.getEString(), "name", null, 1, 1, Result.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(resultConstrainingNodeEClass, ResultConstrainingNode.class, "ResultConstrainingNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getResultConstrainingNode_ResultValidatableNode(), this.getResultValidatableNode(), this.getResultValidatableNode_ResultConstrainingNode(), "resultValidatableNode", null, 1, 1, ResultConstrainingNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getResultConstrainingNode_ResultValidatableNode(), this.getResultValidatableNode(), this.getResultValidatableNode_ResultConstrainingNode(), "resultValidatableNode", null, 1, 1, ResultConstrainingNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(resultSetEClass, ResultSet.class, "ResultSet", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getResultSet_Root(), this.getRootNode(), this.getRootNode_ResultSets(), "root", null, 1, 1, ResultSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getResultSet_Results(), this.getResult(), this.getResult_ResultSet(), "results", null, 0, -1, ResultSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEAttribute(getResultSet_Timestamp(), ecorePackage.getEString(), "timestamp", null, 0, 1, ResultSet.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getResultSet_Name(), ecorePackage.getEString(), "name", null, 1, 1, ResultSet.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(resultValidatableNodeEClass, ResultValidatableNode.class, "ResultValidatableNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getResultValidatableNode_ResultConstrainingNode(), this.getResultConstrainingNode(), this.getResultConstrainingNode_ResultValidatableNode(), "resultConstrainingNode", null, 1, 1, ResultValidatableNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getResultValidatableNode_ResultConstrainingNode(), this.getResultConstrainingNode(), this.getResultConstrainingNode_ResultValidatableNode(), "resultConstrainingNode", null, 1, 1, ResultValidatableNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(rootNodeEClass, RootNode.class, "RootNode", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getRootNode_ResultSets(), this.getResultSet(), this.getResultSet_Root(), "resultSets", null, 0, -1, RootNode.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
@@ -926,6 +950,25 @@ public class ValidityPackageImpl extends EPackageImpl implements ValidityPackage
 
 		// Create resource
 		createResource(eNS_URI);
+
+		// Create annotations
+		// http://www.eclipse.org/emf/2002/Ecore
+		createEcoreAnnotations();
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEcoreAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore";
+		addAnnotation
+		  (this,
+		   source,
+		   new String[] {
+		   });
 	}
 
 } //ValidationPackageImpl

@@ -41,6 +41,13 @@
             genModel="model/Validity.genmodel"/>
    </extension>
 
+   <extension point="org.eclipse.ocl.pivot.complete_package_id">
+      <!-- @generated Validity -->
+      <mapping
+         packageURI="http://www.eclipse.org/emf/validation/2013/Validity"
+         class="org.eclipse.ocl.emf.validation.validity.ValidityTables$Descriptor"/>
+   </extension>
+
    <extension point="org.eclipse.ocl.emf.validation.validity.validity_exporter">
        <exporter type="html" name="HTML Export"
              class="org.eclipse.ocl.emf.validation.validity.export.HTMLExporter"/>

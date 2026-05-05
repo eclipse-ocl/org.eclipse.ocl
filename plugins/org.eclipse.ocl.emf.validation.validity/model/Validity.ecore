@@ -2,6 +2,14 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="validity" nsURI="http://www.eclipse.org/emf/validation/2013/Validity"
     nsPrefix="validity">
+  <eAnnotations source="http://www.eclipse.org/OCL/Import">
+    <details key="ecore" value="http://www.eclipse.org/emf/2002/Ecore"/>
+  </eAnnotations>
+  <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore">
+    <details key="invocationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="settingDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+    <details key="validationDelegates" value="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"/>
+  </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="AbstractNode" abstract="true">
     <eOperations name="getParent" eType="#//AbstractNode"/>
     <eOperations name="getChildren" upperBound="-1" eType="#//AbstractNode"/>
@@ -13,7 +21,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="visible" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" changeable="false"
         defaultValueLiteral="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" lowerBound="1" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="label" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         defaultValueLiteral=""/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="worstResult" eType="#//Result"
         transient="true" derived="true" resolveProxies="false"/>
@@ -31,7 +39,7 @@
         eType="#//ConstraintLocator" transient="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraintResource" eType="#//Resource"
         changeable="false" volatile="true" transient="true" derived="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraintString" eType="ecore:EDataType ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EString"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraintString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Result">
@@ -53,10 +61,16 @@
         lowerBound="1" eType="#//ResultConstrainingNode" changeable="false" volatile="true"
         transient="true" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exception" eType="#//Throwable"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" volatile="true" transient="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="derivation" value="severity.toString() + ' : ' + validatableNode.label + ' : ' + leafConstrainingNode.label"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ResultConstrainingNode" eSuperTypes="#//ConstrainingNode">
     <eStructuralFeatures xsi:type="ecore:EReference" name="resultValidatableNode"
-        ordered="false" lowerBound="1" eType="#//ResultValidatableNode" eOpposite="#//ResultValidatableNode/resultConstrainingNode"/>
+        lowerBound="1" eType="#//ResultValidatableNode" eOpposite="#//ResultValidatableNode/resultConstrainingNode"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ResultSet">
     <eStructuralFeatures xsi:type="ecore:EReference" name="root" lowerBound="1" eType="#//RootNode"
@@ -64,10 +78,16 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="results" ordered="false"
         upperBound="-1" eType="#//Result" containment="true" eOpposite="#//Result/resultSet"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="timestamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" volatile="true" transient="true">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="derivation" value="let severities = results.severity&#xA;&#x9;&#x9;&#x9;&#x9;in severities->count(Severity::ERROR).toString() + ' errors ' +&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;severities->count(Severity::WARNING).toString() + ' warnings ' +&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;severities->count(Severity::INFO).toString() + ' infos ' +&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;severities->count(Severity::OK).toString() + ' oks'"/>
+      </eAnnotations>
+    </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ResultValidatableNode" eSuperTypes="#//ValidatableNode">
     <eStructuralFeatures xsi:type="ecore:EReference" name="resultConstrainingNode"
-        ordered="false" lowerBound="1" eType="#//ResultConstrainingNode" eOpposite="#//ResultConstrainingNode/resultValidatableNode"/>
+        lowerBound="1" eType="#//ResultConstrainingNode" eOpposite="#//ResultConstrainingNode/resultValidatableNode"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RootNode">
     <eStructuralFeatures xsi:type="ecore:EReference" name="resultSets" ordered="false"
@@ -91,7 +111,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="children" ordered="false"
         upperBound="-1" eType="#//ValidatableNode" containment="true" eOpposite="#//ValidatableNode/parent"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="constrainedObject" lowerBound="1"
-        eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="ConstraintLocator" instanceClassName="org.eclipse.ocl.emf.validation.validity.locator.ConstraintLocator"
       serializable="false"/>

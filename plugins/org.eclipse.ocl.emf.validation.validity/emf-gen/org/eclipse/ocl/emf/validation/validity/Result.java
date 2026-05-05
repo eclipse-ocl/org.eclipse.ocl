@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.ocl.emf.validation.validity.Result#getLeafConstrainingNode <em>Leaf Constraining Node</em>}</li>
  *   <li>{@link org.eclipse.ocl.emf.validation.validity.Result#getResultConstrainingNode <em>Result Constraining Node</em>}</li>
  *   <li>{@link org.eclipse.ocl.emf.validation.validity.Result#getException <em>Exception</em>}</li>
+ *   <li>{@link org.eclipse.ocl.emf.validation.validity.Result#getName <em>Name</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.emf.validation.validity.ValidityPackage#getResult()
@@ -216,5 +217,20 @@ public interface Result extends EObject {
 	 * @generated
 	 */
 	void setException(Throwable value);
+
+	/**
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see org.eclipse.ocl.emf.validation.validity.ValidityPackage#getResult_Name()
+	 * @model required="true" transient="true" changeable="false" volatile="true"
+	 * @generated
+	 */
+	String getName();
 
 } // Result
