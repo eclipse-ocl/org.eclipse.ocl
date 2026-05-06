@@ -49,6 +49,8 @@
    </extension>
 
    <extension point="org.eclipse.ocl.emf.validation.validity.validity_exporter">
+       <exporter type="csv" name="CSV Export"
+             class="org.eclipse.ocl.emf.validation.validity.export.CSVExporter"/>
        <exporter type="html" name="HTML Export"
              class="org.eclipse.ocl.emf.validation.validity.export.HTMLExporter"/>
        <exporter type="model" name="Model Export"

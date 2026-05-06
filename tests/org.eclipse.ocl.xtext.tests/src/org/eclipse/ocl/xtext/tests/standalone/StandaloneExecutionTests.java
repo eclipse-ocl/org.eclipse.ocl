@@ -30,6 +30,8 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.emf.validation.validity.RootNode;
+import org.eclipse.ocl.emf.validation.validity.Severity;
+import org.eclipse.ocl.emf.validation.validity.export.CSVExporter;
 import org.eclipse.ocl.emf.validation.validity.export.HTMLExporter;
 import org.eclipse.ocl.emf.validation.validity.export.ModelExporter;
 import org.eclipse.ocl.emf.validation.validity.export.TextExporter;
@@ -114,6 +116,115 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			}
 		}
 		return contents;
+	}
+
+	private @Nullable String csvReadCell(BufferedReader r) throws IOException {
+		r.mark(2);
+		int c = r.read();
+		if (c == ',') {
+			r.reset();
+			return "";
+		}
+		else if (c == '\n') {
+			return "";
+		}
+		else if (c == -1) {
+			return null;
+		}
+		StringBuilder s = new StringBuilder();
+		boolean isEscapeOrClose = false;
+		while (true) {
+			c = r.read();
+			if (isEscapeOrClose) {					// Escaped "
+				if ((c == ',') || (c == '\n') || (c == -1)) {
+					break;
+				}
+				assert c == '"';
+				s.append((char)c);
+				isEscapeOrClose = false;
+			}
+			else if (c == '"') {
+				isEscapeOrClose = true;
+				r.mark(2);
+			}
+			else {
+				s.append((char)c);
+			}
+		}
+		assert isEscapeOrClose;
+		r.reset();
+		return s.toString();
+	}
+
+	private @Nullable List<@NonNull String> csvReadRow(BufferedReader r) throws IOException {
+		List<@NonNull String> row = null;
+		String cell;
+		while ((cell = csvReadCell(r)) != null) {
+			if (row == null) {
+				row = new ArrayList<>();
+			}
+			row.add(cell);
+			int c = r.read();
+			if (c == -1) {
+				break;
+			}
+			if (c == '\n') {
+				break;
+			}
+			assert c == ',';
+		}
+		return row;
+	}
+
+	private @Nullable List<@NonNull List<@NonNull String>> csvReadTable(BufferedReader r) throws IOException {
+		List<@NonNull List<@NonNull String>> table = null;
+		List<@NonNull String> row;
+		while ((row = csvReadRow(r)) != null) {
+			if (table == null) {
+				table = new ArrayList<>();
+			}
+			table.add(row);
+		}
+		return table;
+	}
+
+	private @NonNull List<@NonNull List<@NonNull String>> checkValidateCSVFile(@NonNull String logFileName, int oks, int infos, int warnings, int errors, int fails) throws IOException {
+		File file = new File(logFileName);
+		assertTrue(file.exists());
+		BufferedReader r = new BufferedReader(new FileReader(file));
+		List<@NonNull List<@NonNull String>> table = csvReadTable(r);
+		assert table != null;
+		r.close();
+		int oksMetric = 0;
+		int infosMetric = 0;
+		int warningsMetric = 0;
+		int errorsMetric = 0;
+		int failsMetric = 0;
+		for (int j = 1; j < table.size(); j++) {
+			List<@NonNull String> row = table.get(j);
+			String severity = row.get(2);
+			if (Severity.OK.getName().equals(severity)) {
+				oksMetric++;
+			}
+			else if (Severity.INFO.getName().equals(severity)) {
+				infosMetric++;
+			}
+			else if (Severity.WARNING.getName().equals(severity)) {
+				warningsMetric++;
+			}
+			else if (Severity.ERROR.getName().equals(severity)) {
+				errorsMetric++;
+			}
+			else if (Severity.FATAL.getName().equals(severity)) {
+				failsMetric++;
+			}
+		}
+		assertEquals(oks, oksMetric);
+		assertEquals(infos, infosMetric);
+		assertEquals(warnings, warningsMetric);
+		assertEquals(errors, errorsMetric);
+		assertEquals(fails, failsMetric);
+		return table;
 	}
 
 	private @NonNull List<@NonNull String> checkValidateLogFile(@NonNull String logFileName, int oks, int infos, int warnings, int errors, int fails) throws IOException {
@@ -619,6 +730,21 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			standaloneApplication.stop();
 			TestCaseLogger.INSTANCE.uninstall(savedAppenders);
 		}
+	}
+
+	@Test
+	public void testStandaloneExecution_validate_csvExportedFile() throws Exception {
+		String csvLogFileName = getCSVLogFileName();
+		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
+			"-model", String.valueOf(inputModelURI),
+			"-rules", String.valueOf(inputOCLURI),
+			"-output", csvLogFileName,
+			"-exporter", CSVExporter.EXPORTER_TYPE};
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
+		assertEquals(StandaloneResponse.OK, applicationResponse);
+		checkValidateCSVFile(csvLogFileName, 36+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 1, 1, 1, 0);
+		standaloneApplication.stop();
 	}
 
 	@Test

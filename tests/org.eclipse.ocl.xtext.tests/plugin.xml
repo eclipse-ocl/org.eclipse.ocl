@@ -81,6 +81,7 @@ The actual constraints are lazily loaded by the first validation run that uses t
             class="org.eclipse.ocl.xtext.tests.ecoreTest2.EcoreTest2Package"
             genModel="models/validity/ecoreTest.genmodel"/-->
    </extension>
+
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated Dummy -->
       <package

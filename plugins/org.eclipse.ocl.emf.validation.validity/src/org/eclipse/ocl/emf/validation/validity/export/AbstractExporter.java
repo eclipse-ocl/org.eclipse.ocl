@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.emf.validation.validity.export;
 
@@ -48,18 +48,19 @@ public abstract class AbstractExporter implements IValidityExporter
 	/**
 	 * Returns a stream containing the initial contents to be given to new
 	 * exported validation results file resource instances.
-	 * 
+	 *
 	 * @param s
 	 * 							The contents to be appended
 	 * @param rootNode
 	 * 							The validation result model
 	 * @param exportedFileName
 	 * 							The target file name or null if not known and not to be reported
-	 * 
-	 * @throws IOException 
+	 *
+	 * @throws IOException
 	 */
 	protected abstract void createContents(@NonNull Appendable s, @NonNull RootNode rootNode, @Nullable String exportedFileName) throws IOException;
 
+	@Override
 	public @NonNull String export(@NonNull RootNode rootNode, @Nullable String exportedFileName) {
 		StringBuilder s = new StringBuilder();
 		try {
@@ -68,6 +69,7 @@ public abstract class AbstractExporter implements IValidityExporter
 		return s.toString();
 	}
 
+	@Override
 	public void export(@NonNull Appendable s, @NonNull RootNode rootNode, @Nullable String exportedFileName) throws IOException {
 		populateMaps(rootNode);
 		createContents(s, rootNode, exportedFileName);
@@ -93,8 +95,7 @@ public abstract class AbstractExporter implements IValidityExporter
 			message.append("null diagnostic message");
 		} else if (diagnostic instanceof Diagnostic) {
 			boolean isFirst = true;
-			List<Diagnostic> diagnosticChildren = ((Diagnostic) diagnostic)
-					.getChildren();
+			List<Diagnostic> diagnosticChildren = ((Diagnostic) diagnostic).getChildren();
 			if (diagnosticChildren != null && !diagnosticChildren.isEmpty()) {
 				for (Diagnostic child : diagnosticChildren) {
 					if (isFirst) {
@@ -105,7 +106,7 @@ public abstract class AbstractExporter implements IValidityExporter
 					}
 				}
 			} else {
-				message.append(((Diagnostic) diagnostic).getMessage());
+				//	return null; // message.append(((Diagnostic) diagnostic).getMessage());
 			}
 			return message.toString();
 		} else {
