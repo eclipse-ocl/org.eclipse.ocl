@@ -6,7 +6,7 @@
  * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *   Obeo - initial API and implementation 
+ *   Obeo - initial API and implementation
  *******************************************************************************/
 package org.eclipse.ocl.examples.emf.validation.validity.export;
 
@@ -26,11 +26,12 @@ public class ValidityExporterRegistry
 	public static final @NonNull ValidityExporterRegistry INSTANCE = new ValidityExporterRegistry();
 
 	public static void initialize(@NonNull ValidityExporterRegistry registry) {
+		registry.addExporter(CSVExporter.INSTANCE);
 		registry.addExporter(HTMLExporter.INSTANCE);
 		registry.addExporter(ModelExporter.INSTANCE);
 		registry.addExporter(TextExporter.INSTANCE);
 	}
-	
+
 	/** List of extensions created from the extension point contributions. */
 	private final Map<String, IValidityExporterDescriptor> EXTENSIONS = new HashMap<String, IValidityExporterDescriptor>();
 
@@ -43,7 +44,7 @@ public class ValidityExporterRegistry
 
 	/**
 	 * Adds an extension to the registry.
-	 * 
+	 *
 	 * @param exporter
 	 */
 	public void addExporter(@NonNull IValidityExporterDescriptor exporter) {
@@ -65,7 +66,7 @@ public class ValidityExporterRegistry
 
 	/**
 	 * Returns a copy of the registered extensions list.
-	 * 
+	 *
 	 * @return A copy of the registered extensions list.
 	 */
 	public Collection<IValidityExporterDescriptor> getRegisteredExtensions() {
@@ -74,7 +75,7 @@ public class ValidityExporterRegistry
 
 	/**
 	 * Removes a phantom from the registry.
-	 * 
+	 *
 	 * @param exporterType
 	 */
 	public void removeExtension(@NonNull String exporterType) {

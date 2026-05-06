@@ -67,4 +67,12 @@ The actual constraints are lazily loaded by the first validation run that uses t
       </document>
    </extension>
 
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- A generated_package entry is required to ensure this plugin is recognised by the ExtensionProcessor -->
+      <package
+            uri="http://eclipse.org/ocl/test/dummy-entry-to-estabish-genmodel-mapping"
+            class="org.eclipse.ocl.examples.xtext.tests.bug477283.a.Bug477283APackage"
+            genModel="models/genmodel/Bug477283A.genmodel"/>
+   </extension>
+
 </plugin>

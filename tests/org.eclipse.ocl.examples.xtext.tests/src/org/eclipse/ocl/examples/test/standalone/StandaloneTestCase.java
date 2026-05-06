@@ -24,6 +24,11 @@ public class StandaloneTestCase extends PivotTestCaseWithAutoTearDown
 	protected final @NonNull URI inputOCLURI2 = getTestModelURI("models/standalone/eclipse_ocl_rule_2.ocl"); //$NON-NLS-1$
 	protected final @NonNull URI textInputOCLURI = getTestModelURI("models/standalone/ocl_rules.txt");//$NON-NLS-1$
 
+	protected @NonNull String getCSVLogFileName() {
+		String logFileName = "log_" + getTestName() + ".csv";
+		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
+	}
+
 	protected @NonNull String getHTMLLogFileName() {
 		String logFileName = "log_" + getTestName() + ".html";
 		return ClassUtil.nonNullState(getTestFileURI(logFileName).toFileString()).replace("\\",  "/");
