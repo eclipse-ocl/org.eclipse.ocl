@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EGenericType;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
@@ -63,7 +64,6 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
-import org.eclipse.ocl.pivot.values.NumberValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
 /**
@@ -319,7 +319,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						Type pivotType;
 						if (type != null) {
 							pivotType = type;
-							if (((NumberValue)upperValue).equals(ValueUtil.ONE_VALUE)) {
+							if (upperValue.equals(ValueUtil.ONE_VALUE)) {
 								isRequired = lowerValue.equals(ValueUtil.ONE_VALUE);
 							}
 							else {
@@ -384,11 +384,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		if (pivotElement == null) {
 			return oclInvalidProperty;
 		}
-		boolean isRequired;
-		Type pivotType;
+		boolean isRequired = false;
+		Type pivotType = null;
 		EGenericType eType = eTypedElement.getEGenericType();
 		if (eType != null) {
-			EClassifier eClassifier = eType.getEClassifier();
+			assert !eType.eIsProxy();								// eGenericType can not be a proxy
+			EClassifier eClassifier = eType.getEClassifier();		// testStandaloneExecution_validate_BadEcore_filePath has a proxy
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
 			if ((lower == 0) && (upper == -1) && converter.isEcoreOnlyEntryClass(eClassifier)) {
@@ -400,52 +401,52 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				pivotType = getEcoreOnlyEntryClassMapType((EClass)eClassifier);
 			}
 			else {
-				pivotType = converter.getASType(eType);
-				assert pivotType != null;
-				if (upper == 1) {
-					if (lower == 0) {
-						if (converter.cannotBeOptional(eTypedElement)) {
-							lower = 1;
-							Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
-						}
-						else {
-							if (eClassifier instanceof EDataType) {
-								Class<?> instanceClass = ((EDataType)eClassifier).getInstanceClass();
-								if ((instanceClass == Boolean.class) && (pivotType.getESObject() == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
-									pivotType = standardLibrary.getBooleanType();		// Correct Ecore's BooleanObject but not UML's BooleanObject
+				pivotType = converter.getASType(eType);			// May be null for proxy
+				if (pivotType != null) {
+					if (upper == 1) {
+						if (lower == 0) {
+							if (converter.cannotBeOptional(eTypedElement)) {
+								lower = 1;
+								Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
+							}
+							else {
+								if (eClassifier instanceof EDataType) {
+									Class<?> instanceClass = eClassifier.getInstanceClass();
+									if ((instanceClass == Boolean.class) && (pivotType.getESObject() == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
+										pivotType = standardLibrary.getBooleanType();		// Correct Ecore's BooleanObject but not UML's BooleanObject
+									}
 								}
 							}
 						}
-					}
-					isRequired = lower == 1;
-				}
-				else {
-					isRequired = true;
-					if (converter.isEntryClass(eClassifier)) {
-						Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
-						Property keyProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "key"));
-						Property valueProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "value"));
-						if (keyProperty.getType() == null) {
-							return oclInvalidProperty;			// Retry later once type defined
-						}
-						if (valueProperty.getType() == null) {
-							return oclInvalidProperty;			// Retry later once type defined
-						}
-						pivotType = metamodelManager.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
+						isRequired = lower == 1;
 					}
 					else {
-						boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
-						boolean isOrdered = eTypedElement.isOrdered();
-						boolean isUnique = eTypedElement.isUnique();
-						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
-						UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-						pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+						isRequired = true;
+						if (converter.isEntryClass(eClassifier)) {
+							Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
+							Property keyProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "key"));
+							Property valueProperty = ClassUtil.nonNullState(NameUtil.getNameable(ownedProperties, "value"));
+							if (keyProperty.getType() == null) {
+								return oclInvalidProperty;			// Retry later once type defined
+							}
+							if (valueProperty.getType() == null) {
+								return oclInvalidProperty;			// Retry later once type defined
+							}
+							pivotType = metamodelManager.getMapType((org.eclipse.ocl.pivot.Class)pivotType);
+						}
+						else {
+							boolean isNullFree = Ecore2AS.isNullFree((ENamedElement)eTypedElement);
+							boolean isOrdered = eTypedElement.isOrdered();
+							boolean isUnique = eTypedElement.isUnique();
+							IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
+							UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
+							pivotType = metamodelManager.getCollectionType(isOrdered, isUnique, pivotType, isNullFree, lowerValue, upperValue);
+						}
 					}
 				}
 			}
 		}
-		else {
-			isRequired = false;
+		if (pivotType == null) {
 			pivotType = standardLibrary.getOclVoidType();
 		}
 		pivotElement.setType(pivotType);

@@ -349,7 +349,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 				StandardLibraryInternal standardLibrary = metamodelManager.getStandardLibrary();
 				PrimitiveType behavioralClass = standardLibrary.getBehavioralClass(instanceClass);
 				if (behavioralClass == null) {
-					instanceClass.getDeclaredMethod("compareTo", instanceClass);
+					instanceClass.getDeclaredMethod("compareTo", instanceClass);		// inline to avoid exception
 				}
 			} catch (Exception e) {
 			}
