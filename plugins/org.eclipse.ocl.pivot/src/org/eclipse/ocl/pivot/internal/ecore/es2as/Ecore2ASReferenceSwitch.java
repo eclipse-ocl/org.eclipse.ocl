@@ -375,11 +375,12 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 		if (pivotElement == null) {
 			return getOclInvalidProperty();
 		}
-		boolean isRequired;
-		Type pivotType;
+		boolean isRequired = false;
+		Type pivotType = null;
 		EGenericType eType = eTypedElement.getEGenericType();
 		if (eType != null) {
-			EClassifier eClassifier = eType.getEClassifier();
+			assert !eType.eIsProxy();								// eGenericType can not be a proxy
+			EClassifier eClassifier = eType.getEClassifier();		// testStandaloneExecution_validate_BadEcore_filePath has a proxy
 			int lower = eTypedElement.getLowerBound();
 			int upper = eTypedElement.getUpperBound();
 			if ((lower == 0) && (upper == -1) && converter.isEcoreOnlyEntryClass(eClassifier)) {
@@ -403,69 +404,70 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				pivotType =  standardLibrary.getMapEntryType(entryClass);
 			}
 			else {
-				pivotType = converter.getASType(eType);
-				pivotType = converter.getNormalizedType(pivotType);
-				assert pivotType != null;
-				if (upper == 1) {
-					if (lower == 0) {
-						if (converter.cannotBeOptional(eTypedElement)) {
-							lower = 1;
-							Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
-						}
-						else {
-							if (eClassifier instanceof EDataType) {
-								Class<?> instanceClass = eClassifier.getInstanceClass();
-								if ((instanceClass == Boolean.class) && (pivotType.getESObject() == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
-									pivotType = standardLibrary.getBooleanType();		// Correct Ecore's BooleanObject but not UML's BooleanObject
+				pivotType = converter.getASType(eType);			// May be null for proxy
+				if (pivotType != null) {
+					pivotType = converter.getNormalizedType(pivotType);
+					assert pivotType != null;
+					if (upper == 1) {
+						if (lower == 0) {
+							if (converter.cannotBeOptional(eTypedElement)) {
+								lower = 1;
+								Ecore2AS.NOT_OPTIONAL.println(NameUtil.qualifiedNameFor(eTypedElement) + " converted to not-optional");
+							}
+							else {
+								if (eClassifier instanceof EDataType) {
+									Class<?> instanceClass = eClassifier.getInstanceClass();
+									if ((instanceClass == Boolean.class) && (pivotType.getESObject() == EcorePackage.Literals.EBOOLEAN_OBJECT)) {
+										pivotType = standardLibrary.getBooleanType();		// Correct Ecore's BooleanObject but not UML's BooleanObject
+									}
 								}
 							}
 						}
-					}
-					isRequired = lower == 1;
-				}
-				else {
-					isRequired = true;
-					if (converter.isEntryClass(eClassifier) && (lower == 0) && (upper != -1)) {
-						Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
-						Property keyProperty1 = NameUtil.getNameable(ownedProperties, "key");
-						Property valueProperty1 = NameUtil.getNameable(ownedProperties, "value");
-						Property keyProperty2 = ClassUtil.requireNonNull(keyProperty1);
-						Property valueProperty2 = ClassUtil.requireNonNull(valueProperty1);
-						if (keyProperty2.getType() == null) {
-							return getOclInvalidProperty();			// Retry later once type defined
-						}
-						if (valueProperty2.getType() == null) {
-							return getOclInvalidProperty();			// Retry later once type defined
-						}
-						pivotType = standardLibrary.getMapEntryType((org.eclipse.ocl.pivot.Class)pivotType);
+						isRequired = lower == 1;
 					}
 					else {
-						boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
-						boolean isOrdered = eTypedElement.isOrdered();
-						boolean isUnique = eTypedElement.isUnique();
-						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
-						UnlimitedNaturalValue upperValue;
-						if (upper == -1) {
-							upperValue = ValueUtil.UNLIMITED_VALUE;
-						}
-						else if (upper == -2) {
-							upperValue = ValueUtil.UNSPECIFIED_VALUE;
+						isRequired = true;
+						if (converter.isEntryClass(eClassifier) && (lower == 0) && (upper != -1)) {
+							Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties((org.eclipse.ocl.pivot.Class)pivotType);
+							Property keyProperty1 = NameUtil.getNameable(ownedProperties, "key");
+							Property valueProperty1 = NameUtil.getNameable(ownedProperties, "value");
+							Property keyProperty2 = ClassUtil.requireNonNull(keyProperty1);
+							Property valueProperty2 = ClassUtil.requireNonNull(valueProperty1);
+							if (keyProperty2.getType() == null) {
+								return getOclInvalidProperty();			// Retry later once type defined
+							}
+							if (valueProperty2.getType() == null) {
+								return getOclInvalidProperty();			// Retry later once type defined
+							}
+							pivotType = standardLibrary.getMapEntryType((org.eclipse.ocl.pivot.Class)pivotType);
 						}
 						else {
-							upperValue = (UnlimitedNaturalValue)ValueUtil.integerValueOf(upper);
-						}
+							boolean isNullFree = Ecore2AS.isNullFree(eTypedElement);
+							boolean isOrdered = eTypedElement.isOrdered();
+							boolean isUnique = eTypedElement.isUnique();
+							IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
+							UnlimitedNaturalValue upperValue;
+							if (upper == -1) {
+								upperValue = ValueUtil.UNLIMITED_VALUE;
+							}
+							else if (upper == -2) {
+								upperValue = ValueUtil.UNSPECIFIED_VALUE;
+							}
+							else {
+								upperValue = (UnlimitedNaturalValue)ValueUtil.integerValueOf(upper);
+							}
 
-						pivotType = converter.getNormalizedType(pivotType);
-						assert pivotType != null;
-						CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-						CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, pivotType, isNullFree, lowerValue, upperValue);
-						pivotType = standardLibrary.getCollectionType(typeArguments);
+							pivotType = converter.getNormalizedType(pivotType);
+							assert pivotType != null;
+							CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
+							CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, pivotType, isNullFree, lowerValue, upperValue);
+							pivotType = standardLibrary.getCollectionType(typeArguments);
+						}
 					}
 				}
 			}
 		}
-		else {
-			isRequired = false;
+		if (pivotType == null) {
 			pivotType = standardLibrary.getOclVoidType();
 		}
 	//	pivotType =pivotType
