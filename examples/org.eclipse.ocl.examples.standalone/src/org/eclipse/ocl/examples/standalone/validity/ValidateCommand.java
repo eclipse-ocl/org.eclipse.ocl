@@ -421,7 +421,7 @@ public class ValidateCommand extends StandaloneCommand
 	public ValidateCommand(@NonNull StandaloneApplication standaloneApplication) {
 		super(standaloneApplication, "validate", StandaloneMessages.ValidateCommand_Help);
 		modelToken.setIsRequired();
-		rulesToken.setIsRequired();
+//		rulesToken.setIsRequired();
 		addToken(modelToken);
 		addToken(rulesToken);
 		addToken(outputToken);
