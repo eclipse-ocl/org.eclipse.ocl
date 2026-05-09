@@ -479,7 +479,9 @@ public class ValidityModel
 			return null;
 		}
 		else {
-			rootNode.getResultSets().add(resultSet);
+			List<ResultSet> resultSets = rootNode.getResultSets();
+			resultSets.clear();				// #2423 just one ResultSet always
+			resultSets.add(resultSet);
 			return resultSet;
 		}
 	}
