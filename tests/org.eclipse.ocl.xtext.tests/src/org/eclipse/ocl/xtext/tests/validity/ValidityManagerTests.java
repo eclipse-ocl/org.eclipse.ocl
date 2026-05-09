@@ -26,6 +26,7 @@ import org.eclipse.ocl.emf.validation.validity.ValidatableNode;
 import org.eclipse.ocl.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.xtext.tests.ecoreTest.Eclass1;
+import org.eclipse.ocl.xtext.tests.standalone.StandaloneExecutionTests;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -91,7 +92,7 @@ public class ValidityManagerTests extends AbstractValidityTestCase
 		ValidatableNode rootValidatableNode = getValidatableNodeByLabel(rootNode.getValidatableNodes(), VALIDATABLE_ECORETEST2);
 		List<Result> validatableNodeResults = validityManager.getValidatableNodeResults(rootValidatableNode);
 
-		assertEquals((Integer) 31, (Integer) validatableNodeResults.size());
+		assertEquals(31, + 3*StandaloneExecutionTests.EModelElement_CONSTRAINTS, validatableNodeResults.size());
 
 		assertNotNull(getResultFromResultValidatableNode(validatableNodeResults, CONSTRAINABLE_EPACKAGE_CONSTRAINT));
 

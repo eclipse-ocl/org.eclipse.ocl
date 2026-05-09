@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Appender;
 import org.eclipse.emf.common.util.URI;
@@ -77,7 +78,9 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		}
 	}
 
-	protected static int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry()  != null? 3 : 0;
+	public static final int EModelElement_CONSTRAINTS = 8;
+
+	protected static int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry()  != null ? 3 : 0;
 
 	protected static void assertNoLogFile(@NonNull String logFileName) {
 		File file = new File(logFileName);
@@ -629,7 +632,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 		assertEquals(StandaloneResponse.OK, applicationResponse);
-		checkValidateLogFile(textLogFileName, 36+EXTRA_EAnnotationValidator_SUCCESSES, 1, 1, 1, 0);
+		checkValidateLogFile(textLogFileName, 36+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 1, 1, 1, 0);
 		standaloneApplication.stop();
 	}
 
@@ -651,7 +654,9 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		Resource newResource = resourceSet.getResource(newFileURI, true);
 		EObject eObject = newResource.getContents().get(0);
 		assertTrue(eObject instanceof RootNode);
-		String referenceName = newFileURI.trimFileExtension().appendFileExtension(PivotEAnnotationValidator.getEAnnotationValidatorRegistry() != null ? "referenceWithEAnnotationValidators" : "reference").appendFileExtension("validity").lastSegment();
+		Map<String, Object> eAnnotationValidatorRegistry = PivotEAnnotationValidator.getEAnnotationValidatorRegistry();
+		final String refFileExtension = eAnnotationValidatorRegistry != null ? "referenceWithEAnnotationValidators" : "reference";
+		String referenceName = newFileURI.trimFileExtension().appendFileExtension(refFileExtension).appendFileExtension("validity").lastSegment();
 		Resource refResource = resourceSet.getResource(getTestModelURI("models/standalone/" + referenceName), true);
 		refResource.setURI(newFileURI);
 		TestUtil.assertSameModel(refResource, newResource);
@@ -729,7 +734,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 				"-exporter", TextExporter.EXPORTER_TYPE};
 			StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 			assertEquals(StandaloneResponse.OK, applicationResponse);
-			checkValidateLogFile(textLogFileName, 30+EXTRA_EAnnotationValidator_SUCCESSES, 0, 0, 0, 0);
+			checkValidateLogFile(textLogFileName, 30+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 0, 0, 0, 0);
 			String logMessage = TestCaseLogger.INSTANCE.get();
 			assertTrue(logMessage.contains("does not exist"));
 			assertTrue(logMessage.contains("ignored"));
@@ -789,7 +794,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 		assertEquals(StandaloneResponse.OK, applicationResponse);
-		checkValidateLogFile(textLogFileName, 42+EXTRA_EAnnotationValidator_SUCCESSES, 2, 2, 2, 0);
+		checkValidateLogFile(textLogFileName, 42+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 2, 2, 2, 0);
 		standaloneApplication.stop();
 	}
 

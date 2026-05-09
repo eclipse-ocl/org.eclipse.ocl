@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <validity:RootNode xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:validity="http://www.eclipse.org/emf/validation/2013/Validity"
-    xsi:schemaLocation="http://www.eclipse.org/emf/validation/2013/Validity java://org.eclipse.ocl.emf.validation.validity.ValidityPackage">
+    xsi:schemaLocation="http://www.eclipse.org/emf/validation/2013/Validity java://org.eclipse.ocl.examples.emf.validation.validity.ValidityPackage">
   <resultSets>
     <results resultValidatableNode="//@validatableNodes.0/@children.0" severity="INFO"/>
     <results resultValidatableNode="//@validatableNodes.0/@children.1" severity="OK"/>
@@ -11,66 +11,114 @@
     <results resultValidatableNode="//@validatableNodes.0/@children.6" severity="OK"/>
     <results resultValidatableNode="//@validatableNodes.0/@children.7" severity="OK"/>
     <results resultValidatableNode="//@validatableNodes.0/@children.8" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.0" severity="WARNING"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.1" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.2" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.3" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.4" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.5" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.6" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.7" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.8" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.9" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.10" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.11" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.12" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.13" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.0" severity="ERROR"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.1" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.2" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.3" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.4" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.5" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.6" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.7" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.8" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.9" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.10/@children.0" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.10/@children.1" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.10/@children.2" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.11/@children.0" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.11/@children.1" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.10/@children.0" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.10/@children.1" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.11/@children.0" severity="OK"/>
-    <results resultValidatableNode="//@validatableNodes.0/@children.11/@children.1" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.9" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.10" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.11" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.12" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.13" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.14" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.15" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.16" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.0" severity="WARNING"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.1" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.2" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.3" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.4" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.5" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.6" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.7" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.8" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.9" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.10" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.11" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.12" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.13" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.14" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.15" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.16" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.17" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.18" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.19" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.20" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.21" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.0" severity="ERROR"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.1" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.2" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.3" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.4" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.5" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.6" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.7" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.8" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.9" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.10" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.11" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.12" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.13" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.14" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.15" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.16" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.17" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.18/@children.0" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.18/@children.1" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.18/@children.2" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.0" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.1" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.2" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.3" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.4" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.5" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.6" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.7" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.8" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.9" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.0" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.1" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.2" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.3" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.4" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.5" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.6" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.7" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.8" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.18/@children.9" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.0" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.1" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.2" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.3" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.4" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.5" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.6" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.7" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.8" severity="OK"/>
+    <results resultValidatableNode="//@validatableNodes.0/@children.19/@children.9" severity="OK"/>
   </resultSets>
   <constrainingNodes label="eclipse_ocl_rule.ocl">
     <children label="ecore">
       <children label="EAttribute">
         <children xsi:type="validity:LeafConstrainingNode" label="attributes_num">
-          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.0"/>
+          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.0"/>
         </children>
         <children xsi:type="validity:LeafConstrainingNode" label="attributes_ok_num">
-          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.1"/>
+          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.1"/>
         </children>
       </children>
       <children label="EAttribute">
         <children xsi:type="validity:LeafConstrainingNode" label="attributes_ok_num_1">
-          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.2"/>
+          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.2"/>
         </children>
       </children>
       <children label="EClass">
         <children xsi:type="validity:LeafConstrainingNode" label="class_num">
-          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.0"/>
+          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.0"/>
         </children>
         <children xsi:type="validity:LeafConstrainingNode" label="class_ok_num">
-          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.1"/>
+          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.1"/>
         </children>
       </children>
       <children label="EClass">
         <children xsi:type="validity:LeafConstrainingNode" label="class_ok_num_1">
-          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.2"/>
+          <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.2"/>
         </children>
       </children>
       <children label="EPackage">
@@ -92,20 +140,20 @@
     <children label="EAnnotation">
       <children xsi:type="validity:LeafConstrainingNode" label="WellFormed">
         <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
-            resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.11/@children.0"/>
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.10/@children.0"/>
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.11/@children.0"/>
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.0"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.0"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.0"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="WellFormedSourceURI">
         <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
-            resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.11/@children.1"/>
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.10/@children.1"/>
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.11/@children.1"/>
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.1"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.1"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.1"/>
       </children>
     </children>
     <children label="EAttribute">
       <children xsi:type="validity:LeafConstrainingNode" label="ConsistentTransient">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.3"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.3"/>
       </children>
     </children>
     <children label="EBigDecimal">
@@ -137,36 +185,36 @@
     </children>
     <children label="EClass">
       <children xsi:type="validity:LeafConstrainingNode" label="AtMostOneID">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.3"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.3"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="ConsistentSuperTypes">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.4"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.4"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="DisjointFeatureAndOperationSignatures">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.5"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.5"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="InterfaceIsAbstract">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.6"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.6"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="NoCircularSuperTypes">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.7"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.7"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="UniqueFeatureNames">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.8"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.8"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="UniqueOperationSignatures">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.9"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.9"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="WellFormedMapEntryClass">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.10"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.10"/>
       </children>
     </children>
     <children label="EClassifier">
       <children xsi:type="validity:LeafConstrainingNode" label="UniqueTypeParameterNames">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.11"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.11"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="WellFormedInstanceTypeName">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.12"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.12"/>
       </children>
     </children>
     <children label="EDate">
@@ -205,13 +253,13 @@
     </children>
     <children label="EGenericType">
       <children xsi:type="validity:LeafConstrainingNode" label="ConsistentArguments">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::EBoolean" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.10/@children.0"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::EBoolean" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.18/@children.0"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="ConsistentBounds">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::EBoolean" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.10/@children.1"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::EBoolean" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.18/@children.1"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="ConsistentType">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::EBoolean" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.10/@children.2"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::EBoolean" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.18/@children.2"/>
       </children>
     </children>
     <children label="EInt">
@@ -238,11 +286,85 @@
     <children label="EMap">
       <children xsi:type="validity:LeafConstrainingNode" label="&lt;datatype>"/>
     </children>
+    <children label="EModelElement">
+      <children xsi:type="validity:LeafConstrainingNode" label="EveryBidirectionalReferenceIsPaired">
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.3"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.13"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.4"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.2"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.2"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.2"/>
+      </children>
+      <children xsi:type="validity:LeafConstrainingNode" label="EveryDataValueConforms">
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.4"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.14"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.5"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.3"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.3"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.3"/>
+      </children>
+      <children xsi:type="validity:LeafConstrainingNode" label="EveryKeyUnique">
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.5"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.15"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.6"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.4"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.4"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.4"/>
+      </children>
+      <children xsi:type="validity:LeafConstrainingNode" label="EveryMapEntryUnique">
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.6"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.16"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.7"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.5"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.5"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.5"/>
+      </children>
+      <children xsi:type="validity:LeafConstrainingNode" label="EveryMultiplicityConforms">
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.7"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.17"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.8"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.6"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.6"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.6"/>
+      </children>
+      <children xsi:type="validity:LeafConstrainingNode" label="EveryProxyResolves">
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.8"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.18"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.9"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.7"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.7"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.7"/>
+      </children>
+      <children xsi:type="validity:LeafConstrainingNode" label="EveryReferenceIsContained">
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.9"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.19"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.10"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.8"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.8"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.8"/>
+      </children>
+      <children xsi:type="validity:LeafConstrainingNode" label="UniqueID">
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.10"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.20"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.11"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived::http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"
+            resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.19/@children.9"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/Ecore" resultValidatableNode="//@validatableNodes.0/@children.18/@children.9"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::http://www.eclipse.org/emf/2002/GenModel" resultValidatableNode="//@validatableNodes.0/@children.19/@children.9"/>
+      </children>
+    </children>
     <children label="ENamedElement">
       <children xsi:type="validity:LeafConstrainingNode" label="WellFormedName">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.3"/>
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.9/@children.13"/>
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.4"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.11"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass" resultValidatableNode="//@validatableNodes.0/@children.17/@children.21"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.12"/>
       </children>
     </children>
     <children label="EOperation">
@@ -252,19 +374,19 @@
     </children>
     <children label="EPackage">
       <children xsi:type="validity:LeafConstrainingNode" label="UniqueClassifierNames">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.4"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.12"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="UniqueNsURIs">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.5"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.13"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="UniqueSubpackageNames">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.6"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.14"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="WellFormedNsPrefix">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.7"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.15"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="WellFormedNsURI">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.8"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad in EcoreTestFile.ecore" resultValidatableNode="//@validatableNodes.0/@children.16"/>
       </children>
     </children>
     <children label="EReference">
@@ -291,7 +413,7 @@
     </children>
     <children label="EStructuralFeature">
       <children xsi:type="validity:LeafConstrainingNode" label="ValidDefaultValueLiteral">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.5"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.13"/>
       </children>
     </children>
     <children label="ETreeIterator">
@@ -299,16 +421,16 @@
     </children>
     <children label="ETypedElement">
       <children xsi:type="validity:LeafConstrainingNode" label="ConsistentBounds">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.6"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.14"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="ValidLowerBound">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.7"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.15"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="ValidType">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.8"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.16"/>
       </children>
       <children xsi:type="validity:LeafConstrainingNode" label="ValidUpperBound">
-        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.9/@children.14/@children.9"/>
+        <children xsi:type="validity:ResultConstrainingNode" label="Bad::BadClass::uncachedDerived" resultValidatableNode="//@validatableNodes.0/@children.17/@children.22/@children.17"/>
       </children>
     </children>
   </constrainingNodes>
@@ -316,12 +438,20 @@
     <children xsi:type="validity:ResultValidatableNode" label="eclipse_ocl_rule.ocl::ecore::EPackage::package_num" resultConstrainingNode="//@constrainingNodes.0/@children.0/@children.4/@children.0/@children.0"/>
     <children xsi:type="validity:ResultValidatableNode" label="eclipse_ocl_rule.ocl::ecore::EPackage::package_ok_num" resultConstrainingNode="//@constrainingNodes.0/@children.0/@children.4/@children.1/@children.0"/>
     <children xsi:type="validity:ResultValidatableNode" label="eclipse_ocl_rule.ocl::ecore::EPackage::package_ok_num_1" resultConstrainingNode="//@constrainingNodes.0/@children.0/@children.5/@children.0/@children.0"/>
-    <children xsi:type="validity:ResultValidatableNode" label="ecore::ENamedElement::WellFormedName" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.0"/>
-    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::UniqueClassifierNames" resultConstrainingNode="//@constrainingNodes.1/@children.35/@children.0/@children.0"/>
-    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::UniqueNsURIs" resultConstrainingNode="//@constrainingNodes.1/@children.35/@children.1/@children.0"/>
-    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::UniqueSubpackageNames" resultConstrainingNode="//@constrainingNodes.1/@children.35/@children.2/@children.0"/>
-    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::WellFormedNsPrefix" resultConstrainingNode="//@constrainingNodes.1/@children.35/@children.3/@children.0"/>
-    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::WellFormedNsURI" resultConstrainingNode="//@constrainingNodes.1/@children.35/@children.4/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryBidirectionalReferenceIsPaired" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryDataValueConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.1/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryKeyUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.2/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMapEntryUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.3/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMultiplicityConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.4/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryProxyResolves" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.5/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryReferenceIsContained" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.6/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::UniqueID" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.7/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::ENamedElement::WellFormedName" resultConstrainingNode="//@constrainingNodes.1/@children.34/@children.0/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::UniqueClassifierNames" resultConstrainingNode="//@constrainingNodes.1/@children.36/@children.0/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::UniqueNsURIs" resultConstrainingNode="//@constrainingNodes.1/@children.36/@children.1/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::UniqueSubpackageNames" resultConstrainingNode="//@constrainingNodes.1/@children.36/@children.2/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::WellFormedNsPrefix" resultConstrainingNode="//@constrainingNodes.1/@children.36/@children.3/@children.0"/>
+    <children xsi:type="validity:ResultValidatableNode" label="ecore::EPackage::WellFormedNsURI" resultConstrainingNode="//@constrainingNodes.1/@children.36/@children.4/@children.0"/>
     <children label="BadClass">
       <children xsi:type="validity:ResultValidatableNode" label="eclipse_ocl_rule.ocl::ecore::EClass::class_num" resultConstrainingNode="//@constrainingNodes.0/@children.0/@children.2/@children.0/@children.0"/>
       <children xsi:type="validity:ResultValidatableNode" label="eclipse_ocl_rule.ocl::ecore::EClass::class_ok_num" resultConstrainingNode="//@constrainingNodes.0/@children.0/@children.2/@children.1/@children.0"/>
@@ -336,18 +466,34 @@
       <children xsi:type="validity:ResultValidatableNode" label="ecore::EClass::WellFormedMapEntryClass" resultConstrainingNode="//@constrainingNodes.1/@children.11/@children.7/@children.0"/>
       <children xsi:type="validity:ResultValidatableNode" label="ecore::EClassifier::UniqueTypeParameterNames" resultConstrainingNode="//@constrainingNodes.1/@children.12/@children.0/@children.0"/>
       <children xsi:type="validity:ResultValidatableNode" label="ecore::EClassifier::WellFormedInstanceTypeName" resultConstrainingNode="//@constrainingNodes.1/@children.12/@children.1/@children.0"/>
-      <children xsi:type="validity:ResultValidatableNode" label="ecore::ENamedElement::WellFormedName" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryBidirectionalReferenceIsPaired" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryDataValueConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.1/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryKeyUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.2/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMapEntryUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.3/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMultiplicityConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.4/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryProxyResolves" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.5/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryReferenceIsContained" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.6/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::UniqueID" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.7/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::ENamedElement::WellFormedName" resultConstrainingNode="//@constrainingNodes.1/@children.34/@children.0/@children.1"/>
       <children label="uncachedDerived">
         <children xsi:type="validity:ResultValidatableNode" label="eclipse_ocl_rule.ocl::ecore::EAttribute::attributes_num" resultConstrainingNode="//@constrainingNodes.0/@children.0/@children.0/@children.0/@children.0"/>
         <children xsi:type="validity:ResultValidatableNode" label="eclipse_ocl_rule.ocl::ecore::EAttribute::attributes_ok_num" resultConstrainingNode="//@constrainingNodes.0/@children.0/@children.0/@children.1/@children.0"/>
         <children xsi:type="validity:ResultValidatableNode" label="eclipse_ocl_rule.ocl::ecore::EAttribute::attributes_ok_num_1" resultConstrainingNode="//@constrainingNodes.0/@children.0/@children.1/@children.0/@children.0"/>
         <children xsi:type="validity:ResultValidatableNode" label="ecore::EAttribute::ConsistentTransient" resultConstrainingNode="//@constrainingNodes.1/@children.1/@children.0/@children.0"/>
-        <children xsi:type="validity:ResultValidatableNode" label="ecore::ENamedElement::WellFormedName" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.2"/>
-        <children xsi:type="validity:ResultValidatableNode" label="ecore::EStructuralFeature::ValidDefaultValueLiteral" resultConstrainingNode="//@constrainingNodes.1/@children.42/@children.0/@children.0"/>
-        <children xsi:type="validity:ResultValidatableNode" label="ecore::ETypedElement::ConsistentBounds" resultConstrainingNode="//@constrainingNodes.1/@children.44/@children.0/@children.0"/>
-        <children xsi:type="validity:ResultValidatableNode" label="ecore::ETypedElement::ValidLowerBound" resultConstrainingNode="//@constrainingNodes.1/@children.44/@children.1/@children.0"/>
-        <children xsi:type="validity:ResultValidatableNode" label="ecore::ETypedElement::ValidType" resultConstrainingNode="//@constrainingNodes.1/@children.44/@children.2/@children.0"/>
-        <children xsi:type="validity:ResultValidatableNode" label="ecore::ETypedElement::ValidUpperBound" resultConstrainingNode="//@constrainingNodes.1/@children.44/@children.3/@children.0"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryBidirectionalReferenceIsPaired" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryDataValueConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.1/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryKeyUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.2/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMapEntryUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.3/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMultiplicityConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.4/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryProxyResolves" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.5/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryReferenceIsContained" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.6/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::UniqueID" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.7/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::ENamedElement::WellFormedName" resultConstrainingNode="//@constrainingNodes.1/@children.34/@children.0/@children.2"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::EStructuralFeature::ValidDefaultValueLiteral" resultConstrainingNode="//@constrainingNodes.1/@children.43/@children.0/@children.0"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::ETypedElement::ConsistentBounds" resultConstrainingNode="//@constrainingNodes.1/@children.45/@children.0/@children.0"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::ETypedElement::ValidLowerBound" resultConstrainingNode="//@constrainingNodes.1/@children.45/@children.1/@children.0"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::ETypedElement::ValidType" resultConstrainingNode="//@constrainingNodes.1/@children.45/@children.2/@children.0"/>
+        <children xsi:type="validity:ResultValidatableNode" label="ecore::ETypedElement::ValidUpperBound" resultConstrainingNode="//@constrainingNodes.1/@children.45/@children.3/@children.0"/>
         <children label="EBoolean">
           <children xsi:type="validity:ResultValidatableNode" label="ecore::EGenericType::ConsistentArguments" resultConstrainingNode="//@constrainingNodes.1/@children.24/@children.0/@children.0"/>
           <children xsi:type="validity:ResultValidatableNode" label="ecore::EGenericType::ConsistentBounds" resultConstrainingNode="//@constrainingNodes.1/@children.24/@children.1/@children.0"/>
@@ -357,6 +503,14 @@
         <children label="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <children xsi:type="validity:ResultValidatableNode" label="ecore::EAnnotation::WellFormed" resultConstrainingNode="//@constrainingNodes.1/@children.0/@children.0/@children.0"/>
           <children xsi:type="validity:ResultValidatableNode" label="ecore::EAnnotation::WellFormedSourceURI" resultConstrainingNode="//@constrainingNodes.1/@children.0/@children.1/@children.0"/>
+          <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryBidirectionalReferenceIsPaired" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.3"/>
+          <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryDataValueConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.1/@children.3"/>
+          <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryKeyUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.2/@children.3"/>
+          <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMapEntryUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.3/@children.3"/>
+          <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMultiplicityConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.4/@children.3"/>
+          <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryProxyResolves" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.5/@children.3"/>
+          <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryReferenceIsContained" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.6/@children.3"/>
+          <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::UniqueID" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.7/@children.3"/>
           <constrainedObject href="EcoreTestFile.ecore#//BadClass/uncachedDerived/%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%2FOCL%2FPivot%"/>
         </children>
         <constrainedObject href="EcoreTestFile.ecore#//BadClass/uncachedDerived"/>
@@ -366,11 +520,27 @@
     <children label="http://www.eclipse.org/emf/2002/Ecore">
       <children xsi:type="validity:ResultValidatableNode" label="ecore::EAnnotation::WellFormed" resultConstrainingNode="//@constrainingNodes.1/@children.0/@children.0/@children.1"/>
       <children xsi:type="validity:ResultValidatableNode" label="ecore::EAnnotation::WellFormedSourceURI" resultConstrainingNode="//@constrainingNodes.1/@children.0/@children.1/@children.1"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryBidirectionalReferenceIsPaired" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.4"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryDataValueConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.1/@children.4"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryKeyUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.2/@children.4"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMapEntryUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.3/@children.4"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMultiplicityConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.4/@children.4"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryProxyResolves" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.5/@children.4"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryReferenceIsContained" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.6/@children.4"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::UniqueID" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.7/@children.4"/>
       <constrainedObject href="EcoreTestFile.ecore#//%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FEcore%"/>
     </children>
     <children label="http://www.eclipse.org/emf/2002/GenModel">
       <children xsi:type="validity:ResultValidatableNode" label="ecore::EAnnotation::WellFormed" resultConstrainingNode="//@constrainingNodes.1/@children.0/@children.0/@children.2"/>
       <children xsi:type="validity:ResultValidatableNode" label="ecore::EAnnotation::WellFormedSourceURI" resultConstrainingNode="//@constrainingNodes.1/@children.0/@children.1/@children.2"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryBidirectionalReferenceIsPaired" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.0/@children.5"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryDataValueConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.1/@children.5"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryKeyUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.2/@children.5"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMapEntryUnique" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.3/@children.5"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryMultiplicityConforms" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.4/@children.5"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryProxyResolves" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.5/@children.5"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::EveryReferenceIsContained" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.6/@children.5"/>
+      <children xsi:type="validity:ResultValidatableNode" label="ecore::EModelElement::UniqueID" resultConstrainingNode="//@constrainingNodes.1/@children.33/@children.7/@children.5"/>
       <constrainedObject href="EcoreTestFile.ecore#//%http:%2F%2Fwww.eclipse.org%2Femf%2F2002%2FGenModel%"/>
     </children>
     <constrainedObject href="EcoreTestFile.ecore#/"/>

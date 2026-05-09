@@ -46,6 +46,7 @@ import org.eclipse.ocl.xtext.completeocl.utilities.CompleteOCLLoader.CompleteOCL
 import org.eclipse.ocl.xtext.tests.ecoreTest.EcoreTestPackage;
 import org.eclipse.ocl.xtext.tests.ecoreTest2.EcoreTest2Package;
 import org.eclipse.ocl.xtext.tests.pivot.tests.AbstractPivotTestCase;
+import org.eclipse.ocl.xtext.tests.standalone.StandaloneExecutionTests;
 
 /**
  * Abstract shared functionality for testing.
@@ -78,7 +79,7 @@ public abstract class AbstractValidityTestCase extends AbstractPivotTestCase
 	protected static final @NonNull String ECORE_MODEL_NAME2 = "models/validity/validityModelTest.ecoretest";
 	protected static final @NonNull String ECORE_MODEL_NAME3 = "models/validity/ecoreTest2.ecore";
 
-	protected static final Integer EXPECTED_SUCCESSES = 155; //145; //147; //145;
+	protected static final Integer EXPECTED_SUCCESSES = 155 + 18*StandaloneExecutionTests.EModelElement_CONSTRAINTS; //145; //147; //145;
 	protected static final Integer EXPECTED_INFOS = 2;
 	protected static final Integer EXPECTED_WARNINGS = 2;
 	protected static final Integer EXPECTED_ERRORS = 2;

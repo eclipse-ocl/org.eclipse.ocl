@@ -36,6 +36,7 @@ import org.eclipse.ocl.xtext.completeoclcs.CompleteOCLDocumentCS;
 import org.eclipse.ocl.xtext.completeoclcs.PackageDeclarationCS;
 import org.eclipse.ocl.xtext.tests.ecoreTest.EClass2;
 import org.eclipse.ocl.xtext.tests.ecoreTest.impl.Eclass1Impl;
+import org.eclipse.ocl.xtext.tests.standalone.StandaloneExecutionTests;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -162,16 +163,16 @@ public class ValidityModelTests extends AbstractValidityTestCase
 		assertHasResultValidatableNodeByLabel(containedValidatableNode2, CONSTRAINABLE_ECLASS2_CONSTRAINT);
 
 		final ValidatableNode _ecoreTest2 = assertHasValidatableNodeByLabel(rootNode, VALIDATABLE_ECORETEST2, EPackage.class);
-		assertHasValidatableNodes(_ecoreTest2, 9/*3*/);
+		assertHasValidatableNodes(_ecoreTest2, 9 + StandaloneExecutionTests.EModelElement_CONSTRAINTS/*3*/);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2, CONSTRAINABLE_EPACKAGE_CONSTRAINT_2);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2, CONSTRAINABLE_EPACKAGE_CONSTRAINT);
 
 		final ValidatableNode _ecoreTest2__Eclass5 = assertHasValidatableNodeByLabel(_ecoreTest2, VALIDATABLE_E_CLASS5, EClass.class);
-		assertHasValidatableNodes(_ecoreTest2__Eclass5, 13/*2*/);
+		assertHasValidatableNodes(_ecoreTest2__Eclass5, 13 + StandaloneExecutionTests.EModelElement_CONSTRAINTS/*2*/);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2__Eclass5, CONSTRAINABLE_ECLASS_CONSTRAINT);
 
 		final ValidatableNode _ecoreTest2__Eclass5__eAttribute5 = assertHasValidatableNodeByLabel(_ecoreTest2__Eclass5, TITLE_E_ATTRIBUTE5_E_STRING, EAttribute.class);
-		assertHasValidatableNodes(_ecoreTest2__Eclass5__eAttribute5, 9/*1*/);
+		assertHasValidatableNodes(_ecoreTest2__Eclass5__eAttribute5, 9 + StandaloneExecutionTests.EModelElement_CONSTRAINTS/*1*/);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2__Eclass5__eAttribute5, CONSTRAINABLE_EATTRIBUTE_CONSTRAINT);
 
 	}
@@ -192,7 +193,7 @@ public class ValidityModelTests extends AbstractValidityTestCase
 		assertHasResultValidatableNodeByLabel(containedValidatableNode2, CONSTRAINABLE_ECLASS2_CONSTRAINT);
 
 		final ValidatableNode _ecoreTest2 = assertHasValidatableNodeByLabel(rootNode, VALIDATABLE_ECORETEST2, EPackage.class);
-		assertHasValidatableNodes(_ecoreTest2, 9/*3*/);
+		assertHasValidatableNodes(_ecoreTest2, 9 + StandaloneExecutionTests.EModelElement_CONSTRAINTS/*3*/);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2, CONSTRAINABLE_EPACKAGE_CONSTRAINT_2);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2, CONSTRAINABLE_EPACKAGE_CONSTRAINT);
 
@@ -200,7 +201,7 @@ public class ValidityModelTests extends AbstractValidityTestCase
 		assertHasResultValidatableNodeByLabel(_ecoreTest2__Eclass5, CONSTRAINABLE_ECLASS_CONSTRAINT);
 
 		final ValidatableNode _ecoreTest2__Eclass5__eAttribute5 = assertHasValidatableNodeByLabel(_ecoreTest2__Eclass5, TITLE_E_ATTRIBUTE5_E_STRING, EAttribute.class);
-		assertHasValidatableNodes(_ecoreTest2__Eclass5__eAttribute5, 9/*1*/);
+		assertHasValidatableNodes(_ecoreTest2__Eclass5__eAttribute5, 9 + StandaloneExecutionTests.EModelElement_CONSTRAINTS/*1*/);
 		assertHasResultValidatableNodeByLabel(_ecoreTest2__Eclass5__eAttribute5, CONSTRAINABLE_EATTRIBUTE_CONSTRAINT);
 	}
 
@@ -221,7 +222,7 @@ public class ValidityModelTests extends AbstractValidityTestCase
 		// Tests that we have all the RootConstrainingNode ecoreTest and ecore.
 		assertHasConstrainingNodes(rootNode, 3/*4*//*3*//*2*/);
 		final ConstrainingNode _ecore = assertHasConstrainingNodeByLabel(rootNode, CONSTRAINABLE_ECORE, EPackage.class);
-		assertHasConstrainingNodes(_ecore, 45/*3*/);
+		assertHasConstrainingNodes(_ecore, 46/*3*/);
 		final ConstrainingNode _ecore__EClass = assertHasConstrainingNodeByLabel(_ecore, "EClass", EClass.class);
 		assertHasConstrainingNodes(_ecore__EClass, 8);
 		final ConstrainingNode _ecore__EPackage = assertHasConstrainingNodeByLabel(_ecore, "EPackage", EClass.class);
