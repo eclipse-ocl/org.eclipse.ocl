@@ -182,6 +182,26 @@ The @-hideResult@ token suppresses all @results/result@ elements from the XML ou
 
 If both @-hideASResult@ and @-hideResult@ are specified, the evaluation is suppressed so the results indicate just the success or failure of query parsing.
 
+h3. Exists command
+
+The @exists@ command tests whether a given file name exists.
+This can be helpful to debug the compatibility of the current directory and/or workspace that are used for non-absolute names.
+
+A default execution such as
+
+bc.. 
+ocl exists -file "NoSuchFile.xml"
+p. 
+just returns a textual serialization of the result to the console.
+
+bc.. 
+"NoSuchFile.xml" does not exist
+p. 
+
+h4. -file file-name
+
+The required @-file@ token specifies a file name whose existence is to be tested.
+
 h3. Validate command
 
 The @validate@ command supports validation of a model using OCL constraints defined in one or more OCL files.
@@ -200,15 +220,15 @@ The required @-model@ token specifies the file name in which the model to be val
 
 h4. -rules file-name
 
-The required @-rules@ token specifies one or more OCL documents that define constraints to be validated. A text file enumerating many OCL document files may also be specified.
+The optional @-rules@ token specifies zero or more OCL documents that define additional constraints to be validated. A text file enumerating many OCL document files may also be specified.  When @-rules@ is omitted only the standard EMF validation rules are used.
 
 h4. -output file-name
 
 The optional @-output@ token redirects the command output to the specified file name. If omitted the output is directed to the console.
 
-h4. -exporter html|model|text
+h4. -exporter csv|html|model|text
 
-The optional @-exporter@ token specifies whether there should be textual or HTML or XML output. The textual output is used as the default.
+The optional @-exporter@ token specifies the form of output. The default textual or HTML output provide an overview identifying the models and validation verdict counts. The CSV and model output provide a detailed output identifying every validation attempt. The CSV output is bloated but verbose in the expectation that a user will hide/sort/count columns to suit their requirements. THe model output may be viewed using the Samp,e Reflective Ecore Editor or consumed by a custom tool.
 
 h4. -using all|java|ocl|uml
 

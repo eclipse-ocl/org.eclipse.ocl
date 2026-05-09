@@ -362,6 +362,51 @@ Result:&nbsp;5<br>
 					</p>
 </div>
 </div>
+<div class="section" title="Exists command">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="Existscommand"></a>Exists command</h3>
+</div>
+</div>
+</div>
+<p>The 
+					<code class="code">exists</code> command tests whether a given file name exists.
+					This can be helpful to debug the compatibility of the current directory and/or workspace that are used for non-absolute names.
+				</p>
+<p>A default execution such as</p>
+<div class="literallayout">
+<p>
+<code class="code">ocl&nbsp;exists&nbsp;-file&nbsp;"NoSuchFile.xml"<br>
+
+</code>
+</p>
+</div>
+<p>
+					just returns a textual serialization of the result to the console.</p>
+<div class="literallayout">
+<p>
+<code class="code">"NoSuchFile.xml"&nbsp;does&nbsp;not&nbsp;exist<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<div class="section" title="-file file-name">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="filefilename"></a>-file file-name</h4>
+</div>
+</div>
+</div>
+<p>The required 
+						<code class="code">-file</code> token specifies a file name whose existence is to be tested.
+					</p>
+</div>
+</div>
 <div class="section" title="Validate command">
 <div class="titlepage">
 <div>
@@ -409,8 +454,9 @@ Result:&nbsp;5<br>
 </div>
 </div>
 </div>
-<p>The required 
-						<code class="code">-rules</code> token specifies one or more OCL documents that define constraints to be validated. A text file enumerating many OCL document files may also be specified.
+<p>The optional 
+						<code class="code">-rules</code> token specifies zero or more OCL documents that define additional constraints to be validated. A text file enumerating many OCL document files may also be specified.  When 
+						<code class="code">-rules</code> is omitted only the standard EMF validation rules are used.
 					</p>
 </div>
 <div class="section" title="-output file-name">
@@ -426,17 +472,17 @@ Result:&nbsp;5<br>
 						<code class="code">-output</code> token redirects the command output to the specified file name. If omitted the output is directed to the console.
 					</p>
 </div>
-<div class="section" title="-exporter html|model|text">
+<div class="section" title="-exporter csv|html|model|text">
 <div class="titlepage">
 <div>
 <div>
 <h4 class="title">
-<a name="exporterhtmlmodeltext"></a>-exporter html|model|text</h4>
+<a name="exportercsvhtmlmodeltext"></a>-exporter csv|html|model|text</h4>
 </div>
 </div>
 </div>
 <p>The optional 
-						<code class="code">-exporter</code> token specifies whether there should be textual or HTML or XML output. The textual output is used as the default.
+						<code class="code">-exporter</code> token specifies the form of output. The default textual or HTML output provide an overview identifying the models and validation verdict counts. The CSV and model output provide a detailed output identifying every validation attempt. The CSV output is bloated but verbose in the expectation that a user will hide/sort/count columns to suit their requirements. THe model output may be viewed using the Samp,e Reflective Ecore Editor or consumed by a custom tool.
 					</p>
 </div>
 <div class="section" title="-using all|java|ocl|uml">

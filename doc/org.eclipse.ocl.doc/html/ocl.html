@@ -5782,8 +5782,11 @@ in&nbsp;test.substring(start,finish)<br>
 			
 </p>
 <p>The left-hand pane titled Model Elements provides a tree view of the Resources in a ResourceSet in a similar fashion to the Sample Ecore Editor. However an additional child element (in blue italics) is added for each constraint applicable to its parent element. Checkboxes enable or disable the element from re-validations and JUnit-like status icons show the status of the most recent validation. Hovertext provides further detail.</p>
+<p>When using dynamic models, both models and metamodels are present in the ResourceSet. Validation of the metamodels is not usually required, so metamodels are disabled by default. This may be changed using the 
+				<span class="bold"><strong>Select the metamodels</strong></span> toggle in the Model Elements context menu.
+			</p>
 <p>The right-hand pane titled Metamodel Constraints provides a tree view of the model hierarchies that contribute constraints. An additional child element is added for each model element to which the constraint applies.</p>
-<p>The displays track the mouse selection in other views. Whenever the mouse selection can be resolved to an EObject, that EObject&rsquo;s ResourceSet populates the left hand pane and constraints affecting the left hand pane populate the right hand pane. Tracking the mouse selection is quite expensive, and probably irritating. It can be inhibited by pinning the view to the current selection.</p>
+<p>The displays track the mouse selection in other views. Whenever the mouse selection can be resolved to an EObject, that EObject&rsquo;s ResourceSet populates the left hand pane and constraints affecting the left hand pane populate the right hand pane. Tracking the mouse selection is quite expensive, and probably irritating. It can be inhibited by clicking the Pin button. Once pinned the refresh / reload button updates on demand.</p>
 <p>There is generally much too much detail if all elements and constraints are considered and so the view provides many facilities to facilitate focusing on the interesting combinations.</p>
 <div class="section" title="View Tool Bar">
 <div class="titlepage">
@@ -5893,6 +5896,17 @@ in&nbsp;test.substring(start,finish)<br>
 <p>The floppy disk icon supports export of the validation results.</p>
 <p>The available export formats are extensible through the org.eclipse.ocl.examples.emf.validation.validity.validity_exporter extension point.</p>
 <p>The default exporters support</p>
+<div class="section" title="csv">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="csv"></a>csv</h5>
+</div>
+</div>
+</div>
+<p>A CSV file with a row for each validation attempt. The file is suitable for use if familiar manual tools where columns can be hidden/sorted/counted as required.</p>
+</div>
 <div class="section" title="html">
 <div class="titlepage">
 <div>
@@ -6075,6 +6089,17 @@ in&nbsp;test.substring(start,finish)<br>
 </div>
 </div>
 <p>The context menu in the model elements tree offers the following facilities in addition to those also available in the toolbar.</p>
+<div class="section" title="Select/Deselect the metamodels of validatable models">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="SelectDeselectthemetamodelsofvalidatablemodels"></a>Select/Deselect the metamodels of validatable models</h5>
+</div>
+</div>
+</div>
+<p>When dynamic Resources are in use the ResourceSet contains both models and metamodels. Validating metamodels is usually unnecessary, so the metamodels are disabled by default. The menu entry toggles between enabled and disabled.</p>
+</div>
 <div class="section" title="Validate Selection">
 <div class="titlepage">
 <div>
@@ -6268,6 +6293,17 @@ in&nbsp;test.substring(start,finish)<br>
 </div>
 </div>
 <p>The context menu in the metamodel constraints tree offers the following facilities in addition to those also available in the toolbar.</p>
+<div class="section" title="Select/Deselect multiple same-named constraints">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="SelectDeselectmultiplesamenamedconstraints"></a>Select/Deselect multiple same-named constraints</h5>
+</div>
+</div>
+</div>
+<p>Use of Ecore genmodel to provide a Java version of a metamodel may result in more than one variant of a constraint; one reified as Java and another from OCL embedded in an EAnnotation. Validating both ariants is usually undesitable and so multiple constraints with the same name are disabled by default. This may be changed by toggling the menua entry.</p>
+</div>
 <div class="section" title="Validate Selection">
 <div class="titlepage">
 <div>
@@ -18492,7 +18528,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">EcoreEnvironmentFactory.INSTANCE</code> is most practical.
 				</p>
 <p>The Ecore binding for OCL provides the following capabilities, reflecting the subset of Ecore&rsquo;s modeling constructs with respect to UML:</p>
-<table id="N14AD8">
+<table id="N14AF0">
 <tr>
 						
 <th>Capability</th>
@@ -18717,7 +18753,7 @@ System.out.println(ocl.evaluate(myBook,&nbsp;query));<br>
 					<code class="code">EPackage</code> names corresponding to UML models.  A custom package registry may be provided by the client if necessary.
 				</p>
 <p>The UML binding for OCL provides the following capabilities:</p>
-<table id="N14C8D">
+<table id="N14CA5">
 <tr>
 						
 <th>Capability</th>
@@ -19027,7 +19063,7 @@ for&nbsp;(Choice&nbsp;next&nbsp;:&nbsp;choices)&nbsp;{<br>
 					<code class="code">Choice</code> s is supported for the
 					following tokens, which may be used by a client as auto-assist triggers:
 				</p>
-<table id="N14E8C">
+<table id="N14EA4">
 <tr>
 						
 <th>Token</th>
@@ -22202,6 +22238,51 @@ Result:&nbsp;5<br>
 					</p>
 </div>
 </div>
+<div class="section" title="Exists command">
+<div class="titlepage">
+<div>
+<div>
+<h3 class="title">
+<a name="Existscommand"></a>Exists command</h3>
+</div>
+</div>
+</div>
+<p>The 
+					<code class="code">exists</code> command tests whether a given file name exists.
+					This can be helpful to debug the compatibility of the current directory and/or workspace that are used for non-absolute names.
+				</p>
+<p>A default execution such as</p>
+<div class="literallayout">
+<p>
+<code class="code">ocl&nbsp;exists&nbsp;-file&nbsp;"NoSuchFile.xml"<br>
+
+</code>
+</p>
+</div>
+<p>
+					just returns a textual serialization of the result to the console.</p>
+<div class="literallayout">
+<p>
+<code class="code">"NoSuchFile.xml"&nbsp;does&nbsp;not&nbsp;exist<br>
+
+</code>
+</p>
+</div>
+<p></p>
+<div class="section" title="-file file-name">
+<div class="titlepage">
+<div>
+<div>
+<h4 class="title">
+<a name="filefilename"></a>-file file-name</h4>
+</div>
+</div>
+</div>
+<p>The required 
+						<code class="code">-file</code> token specifies a file name whose existence is to be tested.
+					</p>
+</div>
+</div>
 <div class="section" title="Validate command">
 <div class="titlepage">
 <div>
@@ -22249,8 +22330,9 @@ Result:&nbsp;5<br>
 </div>
 </div>
 </div>
-<p>The required 
-						<code class="code">-rules</code> token specifies one or more OCL documents that define constraints to be validated. A text file enumerating many OCL document files may also be specified.
+<p>The optional 
+						<code class="code">-rules</code> token specifies zero or more OCL documents that define additional constraints to be validated. A text file enumerating many OCL document files may also be specified.  When 
+						<code class="code">-rules</code> is omitted only the standard EMF validation rules are used.
 					</p>
 </div>
 <div class="section" title="-output file-name">
@@ -22266,17 +22348,17 @@ Result:&nbsp;5<br>
 						<code class="code">-output</code> token redirects the command output to the specified file name. If omitted the output is directed to the console.
 					</p>
 </div>
-<div class="section" title="-exporter html|model|text">
+<div class="section" title="-exporter csv|html|model|text">
 <div class="titlepage">
 <div>
 <div>
 <h4 class="title">
-<a name="exporterhtmlmodeltext"></a>-exporter html|model|text</h4>
+<a name="exportercsvhtmlmodeltext"></a>-exporter csv|html|model|text</h4>
 </div>
 </div>
 </div>
 <p>The optional 
-						<code class="code">-exporter</code> token specifies whether there should be textual or HTML or XML output. The textual output is used as the default.
+						<code class="code">-exporter</code> token specifies the form of output. The default textual or HTML output provide an overview identifying the models and validation verdict counts. The CSV and model output provide a detailed output identifying every validation attempt. The CSV output is bloated but verbose in the expectation that a user will hide/sort/count columns to suit their requirements. THe model output may be viewed using the Samp,e Reflective Ecore Editor or consumed by a custom tool.
 					</p>
 </div>
 <div class="section" title="-using all|java|ocl|uml">
@@ -23124,7 +23206,7 @@ org.eclipse.xtext<br>
 </li>
 </ul>
 </div>
-<table id="N15D7A">
+<table id="N15DB6">
 <tr>
 						
 <th>OCL</th>

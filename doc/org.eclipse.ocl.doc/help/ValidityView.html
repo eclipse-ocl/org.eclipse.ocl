@@ -53,8 +53,11 @@
 			
 </p>
 <p>The left-hand pane titled Model Elements provides a tree view of the Resources in a ResourceSet in a similar fashion to the Sample Ecore Editor. However an additional child element (in blue italics) is added for each constraint applicable to its parent element. Checkboxes enable or disable the element from re-validations and JUnit-like status icons show the status of the most recent validation. Hovertext provides further detail.</p>
+<p>When using dynamic models, both models and metamodels are present in the ResourceSet. Validation of the metamodels is not usually required, so metamodels are disabled by default. This may be changed using the 
+				<span class="bold"><strong>Select the metamodels</strong></span> toggle in the Model Elements context menu.
+			</p>
 <p>The right-hand pane titled Metamodel Constraints provides a tree view of the model hierarchies that contribute constraints. An additional child element is added for each model element to which the constraint applies.</p>
-<p>The displays track the mouse selection in other views. Whenever the mouse selection can be resolved to an EObject, that EObject&rsquo;s ResourceSet populates the left hand pane and constraints affecting the left hand pane populate the right hand pane. Tracking the mouse selection is quite expensive, and probably irritating. It can be inhibited by pinning the view to the current selection.</p>
+<p>The displays track the mouse selection in other views. Whenever the mouse selection can be resolved to an EObject, that EObject&rsquo;s ResourceSet populates the left hand pane and constraints affecting the left hand pane populate the right hand pane. Tracking the mouse selection is quite expensive, and probably irritating. It can be inhibited by clicking the Pin button. Once pinned the refresh / reload button updates on demand.</p>
 <p>There is generally much too much detail if all elements and constraints are considered and so the view provides many facilities to facilitate focusing on the interesting combinations.</p>
 <div class="section" title="View Tool Bar">
 <div class="titlepage">
@@ -164,6 +167,17 @@
 <p>The floppy disk icon supports export of the validation results.</p>
 <p>The available export formats are extensible through the org.eclipse.ocl.examples.emf.validation.validity.validity_exporter extension point.</p>
 <p>The default exporters support</p>
+<div class="section" title="csv">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="csv"></a>csv</h5>
+</div>
+</div>
+</div>
+<p>A CSV file with a row for each validation attempt. The file is suitable for use if familiar manual tools where columns can be hidden/sorted/counted as required.</p>
+</div>
 <div class="section" title="html">
 <div class="titlepage">
 <div>
@@ -346,6 +360,17 @@
 </div>
 </div>
 <p>The context menu in the model elements tree offers the following facilities in addition to those also available in the toolbar.</p>
+<div class="section" title="Select/Deselect the metamodels of validatable models">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="SelectDeselectthemetamodelsofvalidatablemodels"></a>Select/Deselect the metamodels of validatable models</h5>
+</div>
+</div>
+</div>
+<p>When dynamic Resources are in use the ResourceSet contains both models and metamodels. Validating metamodels is usually unnecessary, so the metamodels are disabled by default. The menu entry toggles between enabled and disabled.</p>
+</div>
 <div class="section" title="Validate Selection">
 <div class="titlepage">
 <div>
@@ -539,6 +564,17 @@
 </div>
 </div>
 <p>The context menu in the metamodel constraints tree offers the following facilities in addition to those also available in the toolbar.</p>
+<div class="section" title="Select/Deselect multiple same-named constraints">
+<div class="titlepage">
+<div>
+<div>
+<h5 class="title">
+<a name="SelectDeselectmultiplesamenamedconstraints"></a>Select/Deselect multiple same-named constraints</h5>
+</div>
+</div>
+</div>
+<p>Use of Ecore genmodel to provide a Java version of a metamodel may result in more than one variant of a constraint; one reified as Java and another from OCL embedded in an EAnnotation. Validating both ariants is usually undesitable and so multiple constraints with the same name are disabled by default. This may be changed by toggling the menua entry.</p>
+</div>
 <div class="section" title="Validate Selection">
 <div class="titlepage">
 <div>
