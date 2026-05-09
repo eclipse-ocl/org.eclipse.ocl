@@ -90,7 +90,7 @@ public class ValidityManagerTests extends AbstractValidityTestCase
 		ValidatableNode rootValidatableNode = getValidatableNodeByLabel(rootNode.getValidatableNodes(), VALIDATABLE_ECORETEST2);
 		List<Result> validatableNodeResults = validityManager.getValidatableNodeResults(rootValidatableNode);
 
-		assertEquals((Integer) 31, (Integer) validatableNodeResults.size());
+		assertEquals((Integer) 55, (Integer) validatableNodeResults.size());
 
 		assertNotNull(getResultFromResultValidatableNode(validatableNodeResults, CONSTRAINABLE_EPACKAGE_CONSTRAINT));
 

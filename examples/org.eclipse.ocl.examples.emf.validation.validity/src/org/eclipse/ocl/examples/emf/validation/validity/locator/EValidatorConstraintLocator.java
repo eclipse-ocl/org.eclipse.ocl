@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.EValidator.Registry;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -43,6 +44,10 @@ import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
 import org.eclipse.ocl.pivot.validation.ComposedEValidator;
 import org.eclipse.ocl.pivot.validation.ValidationRegistryAdapter;
 
+/**
+ * An EValidatorConstraintLocator identifies the validateXXX methods in a Java class implementing an EClass as constraints
+ * for instances of the EClass.
+ */
 public class EValidatorConstraintLocator extends AbstractConstraintLocator
 {
 	public static @NonNull EValidatorConstraintLocator INSTANCE = new EValidatorConstraintLocator();
@@ -113,7 +118,10 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 				eClassifiers.add(eClassifier);
 			}
 		}
-		for (Method method : eValidator.getClass().getDeclaredMethods()) {
+		final Class<? extends @NonNull EValidator> eValidatorClass = eValidator.getClass();
+	//	final Method[] declaredMethods = eValidatorClass.getDeclaredMethods();
+		final Method[] methods = eValidatorClass.getMethods();			// Pick up inherited EObjectValidator methods for EcoreValidator
+		for (Method method : methods) {
 			if (monitor.isCanceled()) {
 				return null;
 			}
@@ -141,6 +149,13 @@ public class EValidatorConstraintLocator extends AbstractConstraintLocator
 							}
 							if (constraintName != null) {
 								map = createLeafConstrainingNode(map, validityModel, eClassifier, method, constraintName);
+							}
+						}
+						else if ((eClassifier == EcorePackage.Literals.EOBJECT) && (name.startsWith("validate_"))) {
+							String constraintName = name.substring("validate_".length());
+							if (!"EveryDefaultConstraint".equals(constraintName)			// Ignore the convenience aggregate of seven EObject constraints
+							 && !"NoCircularContainment".equals(constraintName)) {			// Ignore the strucural check
+								map = createLeafConstrainingNode(map, validityModel, EcorePackage.Literals.EMODEL_ELEMENT, method, constraintName);		// Allocate to EModelElement which is inherited
 							}
 						}
 					}

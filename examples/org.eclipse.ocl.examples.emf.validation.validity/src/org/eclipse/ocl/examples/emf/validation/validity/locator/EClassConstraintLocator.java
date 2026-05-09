@@ -38,6 +38,10 @@ import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.plugin.ValidityPlugin;
 
+/**
+ * An EClassConstraintLocator identifies the invariants (vadate-style EOperations) of an EClass as constraints
+ * for instances of the EClass.
+ */
 public class EClassConstraintLocator extends AbstractConstraintLocator
 {
 	public static @NonNull EClassConstraintLocator INSTANCE = new EClassConstraintLocator();

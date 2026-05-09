@@ -29,10 +29,15 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.emf.validation.validity.LeafConstrainingNode;
 import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 
+/**
+ * An EClassifierConstraintLocator identifies nothing for an EClassifier as constraints
+ * for instances of the EClassifier.
+ */
 public class EClassifierConstraintLocator extends AbstractConstraintLocator
 {
 	public static @NonNull EClassifierConstraintLocator INSTANCE = new EClassifierConstraintLocator();
-	
+
+	@Override
 	public @Nullable Map<@NonNull EObject, @NonNull List<@NonNull LeafConstrainingNode>> getConstraints(@NonNull ValidityModel validityModel,
 			@NonNull EPackage ePackage, @NonNull Set<@NonNull Resource> resources, @NonNull Monitor monitor) {
 /*		EClassifier eClassifier = (EClassifier) eObject;
@@ -66,17 +71,18 @@ public class EClassifierConstraintLocator extends AbstractConstraintLocator
 					}
 					constraints.add(constraint);
 				}
-			}				
+			}
 		}
 		return constraints; */
 		return null;
-	}		
+	}
 
 	@Override
 	public @NonNull ConstraintLocator getInstance() {
 		return INSTANCE;
 	}
 
+	@Override
 	public @NonNull String getName() {
 		return "EClassifier invariants";
 	}
