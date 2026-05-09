@@ -177,6 +177,7 @@
 <topic href="help/ValidityView.html#Run" label="Run"></topic>
 <topic href="help/ValidityView.html#Filter" label="Filter"></topic>
 <topic href="help/ValidityView.html#Save" label="Save">
+<topic href="help/ValidityView.html#csv" label="csv"></topic>
 <topic href="help/ValidityView.html#html" label="html"></topic>
 <topic href="help/ValidityView.html#model" label="model"></topic>
 <topic href="help/ValidityView.html#text" label="text"></topic>
@@ -193,6 +194,7 @@
 <topic href="help/ValidityView.html#TextFilter" label="Text Filter"></topic>
 <topic href="help/ValidityView.html#ModelElementstree" label="Model Elements tree"></topic>
 <topic href="help/ValidityView.html#ModelElementsContextMenu" label="Model Elements Context Menu">
+<topic href="help/ValidityView.html#SelectDeselectthemetamodelsofvalidatablemodels" label="Select/Deselect the metamodels of validatable models"></topic>
 <topic href="help/ValidityView.html#ValidateSelection" label="Validate Selection"></topic>
 <topic href="help/ValidityView.html#DebugSingleEnabledSelection" label="Debug Single Enabled Selection"></topic>
 <topic href="help/ValidityView.html#ShowinEditor" label="Show in Editor"></topic>
@@ -209,6 +211,7 @@
 <topic href="help/ValidityView.html#TextFilter2" label="Text Filter"></topic>
 <topic href="help/ValidityView.html#MetamodelConstraintstree" label="Metamodel Constraints tree"></topic>
 <topic href="help/ValidityView.html#MetamodelConstraintsContextMenu" label="Metamodel Constraints Context Menu">
+<topic href="help/ValidityView.html#SelectDeselectmultiplesamenamedconstraints" label="Select/Deselect multiple same-named constraints"></topic>
 <topic href="help/ValidityView.html#ValidateSelection2" label="Validate Selection"></topic>
 <topic href="help/ValidityView.html#DebugSingleEnabledSelection2" label="Debug Single Enabled Selection"></topic>
 <topic href="help/ValidityView.html#ShowinEditor2" label="Show in Editor"></topic>
@@ -591,11 +594,14 @@
 <topic href="help/PivotStandaloneApplication.html#hideQuery" label="-hideQuery"></topic>
 <topic href="help/PivotStandaloneApplication.html#hideResult" label="-hideResult"></topic>
 </topic>
+<topic href="help/PivotStandaloneApplication.html#Existscommand" label="Exists command">
+<topic href="help/PivotStandaloneApplication.html#filefilename" label="-file file-name"></topic>
+</topic>
 <topic href="help/PivotStandaloneApplication.html#Validatecommand" label="Validate command">
 <topic href="help/PivotStandaloneApplication.html#modelfilename" label="-model file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#rulesfilename" label="-rules file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#outputfilename2" label="-output file-name"></topic>
-<topic href="help/PivotStandaloneApplication.html#exporterhtmlmodeltext" label="-exporter html|model|text"></topic>
+<topic href="help/PivotStandaloneApplication.html#exportercsvhtmlmodeltext" label="-exporter csv|html|model|text"></topic>
 <topic href="help/PivotStandaloneApplication.html#usingalljavaocluml" label="-using all|java|ocl|uml"></topic>
 </topic>
 </topic>

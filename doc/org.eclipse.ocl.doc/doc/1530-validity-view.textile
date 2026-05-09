@@ -14,9 +14,11 @@ The *Validity View* may be shown by invoking *OCL->Show Validity View* from the 
 
 The left-hand pane titled Model Elements provides a tree view of the Resources in a ResourceSet in a similar fashion to the Sample Ecore Editor. However an additional child element (in blue italics) is added for each constraint applicable to its parent element. Checkboxes enable or disable the element from re-validations and JUnit-like status icons show the status of the most recent validation. Hovertext provides further detail.
 
+When using dynamic models, both models and metamodels are present in the ResourceSet. Validation of the metamodels is not usually required, so metamodels are disabled by default. This may be changed using the *Select the metamodels* toggle in the Model Elements context menu.
+
 The right-hand pane titled Metamodel Constraints provides a tree view of the model hierarchies that contribute constraints. An additional child element is added for each model element to which the constraint applies.
 
-The displays track the mouse selection in other views. Whenever the mouse selection can be resolved to an EObject, that EObject's ResourceSet populates the left hand pane and constraints affecting the left hand pane populate the right hand pane. Tracking the mouse selection is quite expensive, and probably irritating. It can be inhibited by pinning the view to the current selection.
+The displays track the mouse selection in other views. Whenever the mouse selection can be resolved to an EObject, that EObject's ResourceSet populates the left hand pane and constraints affecting the left hand pane populate the right hand pane. Tracking the mouse selection is quite expensive, and probably irritating. It can be inhibited by clicking the Pin button. Once pinned the refresh / reload button updates on demand.
 
 There is generally much too much detail if all elements and constraints are considered and so the view provides many facilities to facilitate focusing on the interesting combinations.
 
@@ -63,6 +65,10 @@ The floppy disk icon supports export of the validation results.
 The available export formats are extensible through the org.eclipse.ocl.emf.validation.validity.validity_exporter extension point.
 
 The default exporters support
+
+h5. csv
+
+A CSV file with a row for each validation attempt. The file is suitable for use if familiar manual tools where columns can be hidden/sorted/counted as required.
 
 h5. html
 
@@ -137,6 +143,10 @@ Double-clicking a leaf Constraint in the left-hand pane makes the corresponding 
 h4. Model Elements Context Menu
 
 The context menu in the model elements tree offers the following facilities in addition to those also available in the toolbar.
+
+h5. Select/Deselect the metamodels of validatable models
+
+When dynamic Resources are in use the ResourceSet contains both models and metamodels. Validating metamodels is usually unnecessary, so the metamodels are disabled by default. The menu entry toggles between enabled and disabled.
 
 h5. Validate Selection
 
@@ -217,6 +227,10 @@ Double-clicking a leaf Model Element in the right-hand pane makes the correspond
 h4. Metamodel Constraints Context Menu
 
 The context menu in the metamodel constraints tree offers the following facilities in addition to those also available in the toolbar.
+
+h5. Select/Deselect multiple same-named constraints
+
+Use of Ecore genmodel to provide a Java version of a metamodel may result in more than one variant of a constraint; one reified as Java and another from OCL embedded in an EAnnotation. Validating both ariants is usually undesitable and so multiple constraints with the same name are disabled by default. This may be changed by toggling the menua entry.
 
 h5. Validate Selection
 
