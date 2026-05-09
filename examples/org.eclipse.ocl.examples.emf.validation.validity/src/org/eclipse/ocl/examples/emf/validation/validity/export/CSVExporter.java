@@ -78,7 +78,7 @@ public class CSVExporter extends AbstractExporter
 //		text.append(",");
 		appendQuoted(text, "Exception");
 		text.append("\n");
-		for (ResultSet resultSet : rootNode.getResultSets()) {
+		for (ResultSet resultSet : rootNode.getResultSets()) {			// #2423 there should only be one.
 			for (Result result : resultSet.getResults()) {
 				ValidatableNode validatableNode = result.getValidatableNode();
 				EObject constrainedObject = validatableNode.getConstrainedObject();
