@@ -80,6 +80,9 @@ public final class StandaloneMessages
 	public static String ExecuteCommand_Query_Help;
 	public static String ExecuteCommand_Self_Help;
 
+	public static String ExistsCommand_File_Help;
+	public static String ExistsCommand_Help;
+
 	public static String HelpCommand_Bad;
 	public static String HelpCommand_Help;
 	public static String HelpText_Optional;

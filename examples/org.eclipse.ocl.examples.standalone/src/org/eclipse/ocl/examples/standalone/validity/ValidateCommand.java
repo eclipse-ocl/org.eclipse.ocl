@@ -25,10 +25,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -127,11 +123,11 @@ public class ValidateCommand extends StandaloneCommand
 
 		@Override
 		public boolean analyze(@Nullable String string) {
-			URI uri = URI.createURI(string);
-			fileName = uri.isFile() ? uri.toFileString() : string;
-			boolean exists = standaloneApplication.getURIConverter().exists(uri, null);
+			URI modelURI = getModelUri(string);
+			fileName = string;
+			boolean exists = standaloneApplication.getURIConverter().exists(modelURI, null);
 			if (!exists) {
-				logger.error(StandaloneMessages.OCLArgumentAnalyzer_ModelFile + uri + StandaloneMessages.OCLArgumentAnalyzer_NotExist);
+				logger.error(StandaloneMessages.OCLArgumentAnalyzer_ModelFile + modelURI + StandaloneMessages.OCLArgumentAnalyzer_NotExist);
 				return false;
 			}
 			return true;
@@ -364,49 +360,6 @@ public class ValidateCommand extends StandaloneCommand
 		}
 	}
 
-	/**
-	 * Gets an URI from a file Path.
-	 *
-	 * @param filePath
-	 *            the file path.
-	 * @return an URI from the path.
-	 */
-	private static URI getFileUri(@NonNull String fileName) {
-		final URI fileUri;
-		File file;
-		try {
-			file = new File(fileName).getCanonicalFile();		// FIXME is this necessary
-			IPath filePath = new Path(file.getAbsolutePath());
-			if (isRelativePath(filePath)) {
-				fileUri = URI.createPlatformResourceURI(filePath.toString(), true);
-			} else {
-				fileUri = URI.createFileURI(filePath.toString());
-			}
-			return fileUri;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
-
-	/**
-	 * Checks if the path is relative or absolute.
-	 *
-	 * @param path
-	 *            a file path.
-	 * @return true if the path is relative, false otherwise.
-	 */
-	private static boolean isRelativePath(IPath path) {
-		if (ResourcesPlugin.getPlugin() != null) {
-			IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(path);
-			return resource != null && resource.exists();
-		}
-		else {
-			return false;
-		}
-	}
-
 	public static boolean isWindows() {
 		String os = System.getProperty("os.name");
 		return (os != null) && os.startsWith("Windows");
@@ -434,10 +387,7 @@ public class ValidateCommand extends StandaloneCommand
 		standaloneApplication.doCompleteOCLSetup();
 		String modelFileName = modelToken.getModelFileName();
 		List<String> oclFileNames = rulesToken.getOCLFileNames();
-		URI modelURI = URI.createURI(modelFileName, true);
-		if (!modelURI.isPlatform()) {
-			modelURI = getFileUri(modelFileName);
-		}
+		URI modelURI = getModelUri(modelFileName);
 		// Load model resource
 		Resource modelResource = standaloneApplication.loadModelFile(modelURI);
 		if (modelResource == null) {
@@ -563,10 +513,7 @@ public class ValidateCommand extends StandaloneCommand
 		};
 
 		for (String oclFileName : oclFileNames) {
-			URI oclURI = URI.createURI(oclFileName, true);
-			if (!oclURI.isPlatform()) {
-				oclURI = getFileUri(oclFileName);
-			}
+			URI oclURI = getModelUri(oclFileName);
 			if (allOk && oclURI == null) {
 				logger.error(MessageFormat.format(StandaloneMessages.OCLValidatorApplication_OclUriProblem, oclFileName));
 				allOk = false;

@@ -21,14 +21,17 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Appender;
+import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.codegen.utilities.CGUtil;
 import org.eclipse.ocl.emf.validation.validity.RootNode;
 import org.eclipse.ocl.emf.validation.validity.Severity;
 import org.eclipse.ocl.emf.validation.validity.export.CSVExporter;
@@ -39,8 +42,10 @@ import org.eclipse.ocl.examples.standalone.StandaloneApplication;
 import org.eclipse.ocl.examples.standalone.StandaloneCommand;
 import org.eclipse.ocl.examples.standalone.StandaloneResponse;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
+import org.eclipse.ocl.pivot.internal.resource.ProjectMap;
 import org.eclipse.ocl.pivot.internal.validation.PivotEAnnotationValidator;
 import org.eclipse.ocl.pivot.resource.ASResource;
+import org.eclipse.ocl.pivot.resource.ProjectManager.IProjectDescriptor;
 import org.eclipse.ocl.validity.locator.AbstractPivotConstraintLocator;
 import org.eclipse.ocl.xtext.tests.TestCaseLogger;
 import org.eclipse.ocl.xtext.tests.TestFile;
@@ -48,6 +53,8 @@ import org.eclipse.ocl.xtext.tests.TestProject;
 import org.eclipse.ocl.xtext.tests.TestUtil;
 import org.eclipse.ocl.xtext.tests.pivot.tests.PivotTestCase;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 public class StandaloneExecutionTests extends StandaloneTestCase
 {
@@ -82,7 +89,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 
 	public static final int EModelElement_CONSTRAINTS = 8;
 
-	protected static int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry()  != null ? 3 : 0;
+	protected static int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry() != null ? 3 : 0;
 
 	protected static void assertNoLogFile(@NonNull String logFileName) {
 		File file = new File(logFileName);
@@ -246,6 +253,37 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		assertEquals("- Number of Errors: " + errors, lines.get(metricsLine + 5));
 		assertEquals("- Number of Failures: " + fails, lines.get(metricsLine + 6));
 		return lines;
+	}
+
+	private @NonNull StandaloneResponse doExists(@NonNull StandaloneApplication standaloneApplication, String fileString, @NonNull StandaloneResponse expectedResponse) throws IOException {
+		StringWriter outputStream = new StringWriter();
+		Appendable savedDefaultOutputStream = StandaloneCommand.setDefaultOutputStream(outputStream);
+		assert fileString != null;
+		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"exists",
+			"-file", fileString};
+		StandaloneResponse actualResponse = standaloneApplication.execute(arguments);
+		assertEquals(expectedResponse, actualResponse);
+		String logMessage = outputStream.toString();
+		assertTrue(logMessage.contains(expectedResponse == StandaloneResponse.OK ? "exists" : "does not exist"));
+		StandaloneCommand.setDefaultOutputStream(savedDefaultOutputStream);
+		return actualResponse;
+	}
+
+	private void doValidate_BadEcore(@NonNull StandaloneApplication standaloneApplication, String fileString) throws IOException {
+		assert fileString != null;
+		String textLogFileName = getTextLogFileName();
+		@NonNull String @NonNull [] arguments = new @NonNull String @NonNull []{"validate",
+			"-model", fileString,
+			"-using", "all",
+			"-output", textLogFileName,
+			"-exporter", "text"};
+		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
+		assertEquals(StandaloneResponse.OK, applicationResponse);
+		checkValidateLogFile(textLogFileName, 19+20*EModelElement_CONSTRAINTS, 0, 0, 4, 0);
+				// Bad ids
+				// Bad proxy
+				// Bad opposite
+				// Bad name
 	}
 
 	@Override
@@ -639,6 +677,84 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 	}
 
 	@Test
+	public void testStandaloneExecution_exists_FilePath() throws Exception {
+		String relativeFileName = "models/standalone/BadEcore.ecore";
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		String fileString;
+		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
+			URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/" + relativeFileName, true);
+			URIConverter uriConverter = standaloneApplication.getURIConverter();
+			URI fileURI = uriConverter.normalize(inputURI);
+			fileString = "file:/" + fileURI.toFileString();
+		}
+		else {
+			ProjectMap projectMap = (ProjectMap)standaloneApplication.getEnvironmentFactory().getProjectManager();
+			IProjectDescriptor projectDescriptor = projectMap.getProjectDescriptor(PivotTestCase.PLUGIN_ID);
+			assert projectDescriptor != null;
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
+			String projectPath = bundle.getLocation();
+			URI uri;
+			if (!CGUtil.isTychoSurefire()) {														// FIXME Move to utility function
+				String expectedPrefix = "reference:";
+				assert projectPath.startsWith(expectedPrefix);
+				projectPath = projectPath.substring(expectedPrefix.length()) + relativeFileName;
+				uri = URI.createURI(projectPath);
+			}
+			else {
+				String expectedPrefix = "initial@reference:file:";
+				assert projectPath.startsWith(expectedPrefix);
+				projectPath = projectPath.substring(expectedPrefix.length());
+				projectPath = new File(projectPath).getCanonicalPath() + "/tests/" + PivotTestCase.PLUGIN_ID + "/" + relativeFileName;
+				uri = URI.createFileURI(projectPath);
+			}
+			assert uri.isFile();
+			fileString = uri.toString();
+			assert fileString != null;
+		}
+		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_exists_NoSuchFile() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		String fileString = "NoSuchFile.xml";
+		doExists(standaloneApplication, fileString, StandaloneResponse.FAIL);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_exists_OSPath() throws Exception {
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		URI fileURI = standaloneApplication.getURIConverter().normalize(inputURI);
+		String fileString = fileURI.isFile() ? fileURI.toFileString() : fileURI.toString();
+		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_exists_PlatformPath() throws Exception {
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		String fileString = inputURI.toString();
+		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_exists_RelativePath() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		TestProject testProject = getTestProject();
+		String fileString = testProject.getName() + "/.project";
+		if (CGUtil.isTychoSurefire()) {
+			fileString = "target/work/data/" + fileString;
+		}
+		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
+		doExists(standaloneApplication, fileString + "2", StandaloneResponse.FAIL);
+	}
+
+	@Test
 	public void testStandaloneExecution_help() throws Exception {
 		StringWriter outputStream = new StringWriter();
 		Appendable savedDefaultOutputStream = StandaloneCommand.setDefaultOutputStream(outputStream);
@@ -651,6 +767,39 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		assert s.contains(StandaloneMessages.HelpCommand_Help);
 		assert s.contains(StandaloneMessages.ValidateCommand_Help);
 		StandaloneCommand.setDefaultOutputStream(savedDefaultOutputStream);
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_validate_BadEcore_OSpath() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		URIConverter uriConverter = standaloneApplication.getURIConverter();
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		TestProject testProject = getTestProject();
+		TestFile testFile = testProject.copyFile(uriConverter, null, inputURI);
+		String fileString = testFile.getFile().toString();
+		doValidate_BadEcore(standaloneApplication, fileString);		// e.g. E:/...
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_validate_BadEcore_filePath() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		URIConverter uriConverter = standaloneApplication.getURIConverter();
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		TestProject testProject = getTestProject();
+		TestFile testFile = testProject.copyFile(uriConverter, null, inputURI);
+		String fileString = "file:/" + testFile.getFile().toString();
+		doValidate_BadEcore(standaloneApplication, fileString);		// e.g. file:/E:/...
+		standaloneApplication.stop();
+	}
+
+	@Test
+	public void testStandaloneExecution_validate_BadEcore_PlatformPath() throws Exception {
+		StandaloneApplication standaloneApplication = new StandaloneApplication();
+		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
+		String fileString = inputURI.toString();
+		doValidate_BadEcore(standaloneApplication, fileString);		// e.g. platform:/plugin/...
 		standaloneApplication.stop();
 	}
 
