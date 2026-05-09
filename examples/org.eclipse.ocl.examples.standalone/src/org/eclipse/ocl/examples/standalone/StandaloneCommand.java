@@ -21,6 +21,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.examples.standalone.messages.StandaloneMessages;
@@ -38,7 +43,7 @@ public abstract class StandaloneCommand
 	 * Redirect the default stdout clutter for test purposes.
 	 */
 	public static @NonNull Appendable setDefaultOutputStream(@NonNull Appendable defaultOutputStream) {
-		Appendable savedDefaultOutputStream = defaultOutputStream;
+		Appendable savedDefaultOutputStream = DEFAULT_OUTPUT_STREAM;
 		DEFAULT_OUTPUT_STREAM = defaultOutputStream;
 		return savedDefaultOutputStream;
 	}
@@ -263,6 +268,52 @@ public abstract class StandaloneCommand
 		@Override
 		public boolean isSingleton() {
 			return true;
+		}
+	}
+
+	/**
+	 * Return a URI suitable for creaing a Resource from a file Path.
+	 *
+	 * @param filePath
+	 *            the file path.
+	 * @return an URI from the path.
+	 */
+	protected static URI getModelUri(@NonNull String fileName) {
+		URI fileUri;
+		try {
+			fileUri = URI.createURI(fileName, true);
+			if (!fileUri.isPlatform() && !fileUri.isFile()) {
+				File file = new File(fileName).getCanonicalFile();		// FIXME is this necessary
+				IPath filePath = new Path(file.getAbsolutePath());
+				if (isRelativePath(filePath)) {
+					fileUri = URI.createPlatformResourceURI(filePath.toString(), true);
+				} else {
+					fileUri = URI.createFileURI(filePath.toString());
+				}
+			}
+		//	System.out.println("getModelUri '" + fileName + "' => '" + fileUri + "'");
+			return fileUri;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	/**
+	 * Checks if the path is relative or absolute.
+	 *
+	 * @param path
+	 *            a file path.
+	 * @return true if the path is relative, false otherwise.
+	 */
+	private static boolean isRelativePath(IPath path) {
+		if (ResourcesPlugin.getPlugin() != null) {
+			IResource resource = ResourcesPlugin.getWorkspace().getRoot().findMember(path);
+			return resource != null && resource.exists();
+		}
+		else {
+			return false;
 		}
 	}
 
