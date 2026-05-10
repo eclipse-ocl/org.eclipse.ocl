@@ -19,11 +19,11 @@ import org.eclipse.ocl.examples.emf.validation.validity.ui.view.ValidityView;
 public final class DisableAllUnusedNodesAction extends AbstractFilterAction
 {
 	private @NonNull UnusedNodesVisibilityFilter filter = new UnusedNodesVisibilityFilter();
-	
+
 	public DisableAllUnusedNodesAction(@NonNull ValidityView validityView, boolean isValidatableFilterAction) {
 		super(ValidityUIMessages.ValidityView_Action_ShowHideUnusedNodes_Title,
 				IAction.AS_CHECK_BOX, validityView, isValidatableFilterAction);
-		setChecked(true);
+		setChecked(false);
 	}
 
 	public void refreshChecked() {

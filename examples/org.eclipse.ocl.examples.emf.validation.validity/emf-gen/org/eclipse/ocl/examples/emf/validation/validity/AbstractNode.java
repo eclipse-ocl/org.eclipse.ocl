@@ -184,13 +184,13 @@ public interface AbstractNode extends EObject {
 
 	/**
 	 * Update the grayed status of this node and all its descendants, returning &gt;0 if this node and its children are consistently enabled,
-	 * &lt;0 is consistently disbaled and 0 otherwise.
+	 * &lt;0 is consistently disabled and 0 otherwise.
 	 */
 	int refreshGrayed();
 
 	/**
-	 * Update the visible status of this node and all its descendants by comuting the AND of the visibilityFilters at each node.
-	 * Return strue if this  node visible.
+	 * Update the visible status of this node and all its descendants by computing the AND of the visibilityFilters at each node.
+	 * Returns true if this  node visible.
 	 */
 	boolean refreshVisibleChildren(@NonNull Iterable<@NonNull IVisibilityFilter> visibilityFilters);
 } // AbstractNode

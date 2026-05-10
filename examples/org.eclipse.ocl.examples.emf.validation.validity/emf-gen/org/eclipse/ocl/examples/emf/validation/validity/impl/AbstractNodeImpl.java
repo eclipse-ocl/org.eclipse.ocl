@@ -405,7 +405,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	public int refreshGrayed() {
 		boolean isEnabled = enabled;
 		boolean isDisabled = !isEnabled;
-		for (AbstractNode child : visibleChildren) {
+		for (AbstractNode child : visibleChildren) {			// XXX all children ??
 			int childStatus = child.refreshGrayed();
 			if (childStatus >= 0) {
 				isEnabled = true;
@@ -446,7 +446,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 				return false;
 			}
 		}
-		@NonNull AbstractNode @NonNull [] array = list.toArray(new @NonNull AbstractNode @NonNull [list.size()]);
+		@NonNull AbstractNode @NonNull [] array = list.toArray(new @NonNull AbstractNode @NonNull [list.size()]);		// XXX optimize empty list
 		this.visibleChildren = array;
 		this.visible = true;
 		return true;
