@@ -36,10 +36,10 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 	private Action enableSuccessNodesAction;
 	private Action enableInfoNodesAction;
 	private Action enableFatalNodesAction;
-	
+
 	/** Menu manager for this action. */
 	private MenuManager menuManager = new MenuManager();
-	
+
 	public FilterValidationResultAction(@NonNull ValidityView validityView) {
 		super(ValidityUIMessages.ValidityView_Action_FilterResult_Title);
 		this.validityView = validityView;
@@ -55,7 +55,7 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 		this.enableInfoNodesAction = createInfoNodesFilterAction();
 		this.enableSuccessNodesAction = createSuccessNodesFilterAction();
 	}
-	
+
 	private Action createFatalNodesFilterAction() {
 		String text = MessageFormat.format(
 				ValidityUIMessages.ValidityView_Action_ShowNodesByKind_Title,
@@ -63,7 +63,7 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 		String toolTipText = ValidityUIMessages.ValidityView_Action_ShowFailedElementsNodes_ToolTipText;
 		return new SwitchFilterAction(text, toolTipText, Severity.FATAL);
 	}
-	
+
 	private Action createErrorNodesFilterAction() {
 		String kind = ValidityUIMessages.ValidityView_Action_ShowNodesByKind_Kind_Error;
 		String text = MessageFormat.format(
@@ -72,7 +72,7 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 				ValidityUIMessages.ValidityView_Action_ShowNodesByKind_ToolTipText, kind);
 		return new SwitchFilterAction(text, toolTipText, Severity.ERROR);
 	}
-	
+
 	private Action createWarningNodesFilterAction() {
 		String kind = ValidityUIMessages.ValidityView_Action_ShowNodesByKind_Kind_Warning;
 		String text = MessageFormat.format(
@@ -81,7 +81,7 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 				ValidityUIMessages.ValidityView_Action_ShowNodesByKind_ToolTipText, kind);
 		return new SwitchFilterAction(text, toolTipText, Severity.WARNING);
 	}
-	
+
 	private Action createInfoNodesFilterAction() {
 		String kind = ValidityUIMessages.ValidityView_Action_ShowNodesByKind_Kind_Info;
 		String text = MessageFormat.format(
@@ -90,7 +90,7 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 				ValidityUIMessages.ValidityView_Action_ShowNodesByKind_ToolTipText, kind);
 		return new SwitchFilterAction(text, toolTipText, Severity.INFO);
 	}
-	
+
 	private Action createSuccessNodesFilterAction() {
 		String kind = ValidityUIMessages.ValidityView_Action_ShowNodesByKind_Kind_OK;
 		String text = MessageFormat.format(
@@ -99,29 +99,31 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 				ValidityUIMessages.ValidityView_Action_ShowNodesByKind_ToolTipText, kind);
 		return new SwitchFilterAction(text, toolTipText, Severity.OK);
 	}
-	
+
 	private class SwitchFilterAction extends Action {
 		private final @NonNull Severity severity;
-		
+
 		public SwitchFilterAction(String text, String toolTipText, @NonNull Severity acceptedSeverity) {
 			super(text, IAction.AS_CHECK_BOX);
 			setToolTipText(toolTipText);
 			this.severity = acceptedSeverity;
+			setChecked(true);
 		}
-		
+
 		@Override
 		public void run() {
 			if (this.isChecked()) {
-				validityView.addFilteredSeverity(severity);
-			} else {
 				validityView.removeFilteredSeverity(severity);
+			} else {
+				validityView.addFilteredSeverity(severity);
 			}
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.action.IMenuCreator#dispose()
 	 */
+	@Override
 	public void dispose() {
 		menuManager.dispose();
 	}
@@ -129,6 +131,7 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Control)
 	 */
+	@Override
 	public Menu getMenu(Control parent) {
 		// Creates the menu if needed, or removes all elements except for the save action
 		if (menuManager.getMenu() == null) {
@@ -149,16 +152,17 @@ public final class FilterValidationResultAction extends Action implements IMenuC
 	/* (non-Javadoc)
 	 * @see org.eclipse.jface.action.IMenuCreator#getMenu(org.eclipse.swt.widgets.Menu)
 	 */
+	@Override
 	public Menu getMenu(Menu parent) {
 		if (menuManager.getMenu() != null) {
 			return menuManager.getMenu();
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Adds the given action to this action's menu.
-	 * 
+	 *
 	 * @param action
 	 *			{@link Action} to add to this action's menu.
 	 */
