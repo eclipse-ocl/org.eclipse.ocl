@@ -23,6 +23,7 @@ import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.TreeIterator;
@@ -52,11 +53,13 @@ import org.eclipse.ocl.emf.validation.validity.ValidityFactory;
 import org.eclipse.ocl.emf.validation.validity.locator.ConstraintLocator;
 import org.eclipse.ocl.emf.validation.validity.utilities.IVisibilityFilter;
 import org.eclipse.ocl.emf.validation.validity.utilities.SeveritiesVisibilityFilter;
+import org.eclipse.ocl.emf.validation.validity.utilities.ValidityUtils;
 import org.eclipse.ocl.pivot.labels.ILabelGenerator;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 
 public class ValidityModel
 {
@@ -475,7 +478,7 @@ public class ValidityModel
 	public /*synchronized*/ @Nullable ResultSet createResultSet(@Nullable IProgressMonitor monitor) {
 		ResultSet resultSet = createResultSet();
 		List<@NonNull Result> results = ClassUtil.nullFree(resultSet.getResults());
-		if (!createResults(results, ClassUtil.nullFree(rootNode.getValidatableNodes()), monitor)) {
+		if (!createResults(results, ValidityUtils.getValidatableNodes(rootNode), monitor)) {
 			return null;
 		}
 		else {
@@ -522,7 +525,7 @@ public class ValidityModel
 
 					ResultConstrainingNode resultConstrainingNode = resultValidatableNode.getResultConstrainingNode();
 
-					if (!constraint.isEnabled() || !resultConstrainingNode.isEnabled()) {
+					if (/*!constraint.isEnabled() ||*/ !resultConstrainingNode.isEnabled()) {
 						result.setSeverity(Severity.UNKNOWN);
 					} else {				// XXX Why else ???
 						results.add(result);
@@ -595,6 +598,58 @@ public class ValidityModel
 	 */
 	protected @NonNull ValidatableNode createValidatableNode() {
 		return ValidityFactory.eINSTANCE.createValidatableNode();
+	}
+
+	/**
+	 * Disable all validatable nodes that form part of a Resource that defines the instantiations of another Resource.
+	 */
+	private void deselectMetamodels() {
+		Iterable<@NonNull RootValidatableNode> rootValidatableNodes = ValidityUtils.getValidatableNodes(rootNode);
+		Set<@NonNull Resource> metaModelResources = new UniqueList<>();
+		for (@NonNull RootValidatableNode rootValidatableNode : rootValidatableNodes) {
+			gatherMetaModelResources(metaModelResources, rootValidatableNode);
+		}
+		Set<@NonNull RootConstrainingNode> rootConstrainingNodes = new UniqueList<>();
+		for (@NonNull RootValidatableNode rootValidatableNode : rootValidatableNodes) {
+			EObject constrainedObject = rootValidatableNode.getConstrainedObject();
+			Resource modelResource = constrainedObject.eResource();
+			assert modelResource != null;
+			if (metaModelResources.contains(modelResource)) {
+				disableAll(rootConstrainingNodes, rootValidatableNode);
+				rootValidatableNode.getConstrainedObject();
+			}
+		}
+		for (@NonNull RootConstrainingNode rootConstrainingNode : rootConstrainingNodes) {
+			disableAll(null, rootConstrainingNode);
+		}
+	}
+
+	private void disableAll(@Nullable Set<@NonNull RootConstrainingNode> rootConstrainingNodes, @NonNull AbstractNode node) {
+		node.setEnabled(false);
+		if (node instanceof ResultValidatableNode) {
+			ResultConstrainingNode resultConstrainingNode = ValidityUtils.getResultConstrainingNode((ResultValidatableNode)node);
+			RootConstrainingNode rootConstrainingNode = ValidityUtils.getRootConstrainingNode(resultConstrainingNode);
+			if (rootConstrainingNodes != null) {
+				rootConstrainingNodes.add(rootConstrainingNode);
+			}
+		}
+		for (@NonNull AbstractNode childNode : ValidityUtils.getChildren(node)) {
+			disableAll(rootConstrainingNodes, childNode);
+		}
+	}
+
+	private void gatherMetaModelResources(@NonNull Set<@NonNull Resource> metaModelResources, @NonNull ValidatableNode node) {
+		EObject constrainedObject = node.getConstrainedObject();
+		if (constrainedObject != null) {
+			EClass eClass = constrainedObject.eClass();
+			assert eClass != null;
+			Resource metaModelResource = eClass.eResource();
+			assert metaModelResource != null;
+			metaModelResources.add(metaModelResource);
+		}
+		for (@NonNull ValidatableNode childNode : ValidityUtils.getChildren(node)) {
+			gatherMetaModelResources(metaModelResources, childNode);
+		}
 	}
 
 	/**
@@ -771,6 +826,7 @@ public class ValidityModel
 		//		System.out.format(Thread.currentThread().getName() + " %3.3f sort ValidatableNodes\n", (System.currentTimeMillis() - start) * 0.001);
 		@SuppressWarnings("null")EList<@NonNull RootValidatableNode> validatableNodes = rootNode.getValidatableNodes();
 		sortNodes(validatableNodes, natureComparator);
+		deselectMetamodels();
 		monitor.worked(WORK_FOR_SORT_VALIDATABLE_NODES);
 	}
 
@@ -921,12 +977,14 @@ public class ValidityModel
 	 * @param nodes
 	 *            the list of nodes needing to be sorted.
 	 */
+	@Deprecated
 	protected <@NonNull T extends AbstractNode> void sortEList(@NonNull EList<T> nodes, @NonNull Comparator<@NonNull AbstractNode> comparator) {
-		List<T> sortedList = new ArrayList<>(nodes);
-		Collections.sort(sortedList, comparator);
-		for (int i = 0; i < sortedList.size(); i++) {
-			nodes.move(i, sortedList.get(i));
-		}
+		ECollections.sort(nodes, comparator);
+	//	List<T> sortedList = new ArrayList<>(nodes);
+	//	Collections.sort(sortedList, comparator);
+	//	for (int i = 0; i < sortedList.size(); i++) {
+	//		nodes.move(i, sortedList.get(i));
+	//	}
 	}
 
 	/**
@@ -936,7 +994,7 @@ public class ValidityModel
 	 *            the list of nodes needing to be sorted.
 	 */
 	protected <@NonNull T extends AbstractNode> void sortNodes(@NonNull EList<T> nodes, @NonNull Comparator<@NonNull AbstractNode> comparator) {
-		sortEList(nodes, comparator);
+		ECollections.sort(nodes, comparator);
 		for (@NonNull AbstractNode node : nodes) {
 			sortNodes(ClassUtil.nullFree(node.getChildren()), comparator);
 		}

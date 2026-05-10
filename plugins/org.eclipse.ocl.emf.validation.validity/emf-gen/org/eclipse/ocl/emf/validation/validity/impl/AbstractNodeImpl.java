@@ -406,7 +406,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	@Override
 	public int countVisibleChildren() {
 		int allChildren = 1;
-		for (AbstractNode child : visibleChildren) {
+		for (AbstractNode child : visibleChildren) {			// XXX all children ??
 			allChildren += child.countVisibleChildren();
 		}
 		return allChildren;
@@ -472,7 +472,7 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 				return false;
 			}
 		}
-		@NonNull AbstractNode @NonNull [] array = list.toArray(new @NonNull AbstractNode @NonNull [list.size()]);
+		@NonNull AbstractNode @NonNull [] array = list.toArray(new @NonNull AbstractNode @NonNull [list.size()]);		// XXX optimize empty list
 		this.visibleChildren = array;
 		this.visible = true;
 		return true;

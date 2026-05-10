@@ -189,8 +189,8 @@ public interface AbstractNode extends EObject {
 	int refreshGrayed();
 
 	/**
-	 * Update the visible status of this node and all its descendants by comuting the AND of the visibilityFilters at each node.
-	 * Return strue if this  node visible.
+	 * Update the visible status of this node and all its descendants by computing the AND of the visibilityFilters at each node.
+	 * Returns true if this  node visible.
 	 */
 	boolean refreshVisibleChildren(@NonNull Iterable<@NonNull IVisibilityFilter> visibilityFilters);
 } // AbstractNode

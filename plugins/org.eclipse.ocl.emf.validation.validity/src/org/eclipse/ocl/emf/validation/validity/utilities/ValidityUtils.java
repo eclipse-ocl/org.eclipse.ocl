@@ -16,13 +16,34 @@ import java.util.List;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.emf.validation.validity.ConstrainingNode;
 import org.eclipse.ocl.emf.validation.validity.ResultConstrainingNode;
 import org.eclipse.ocl.emf.validation.validity.ResultValidatableNode;
+import org.eclipse.ocl.emf.validation.validity.RootConstrainingNode;
+import org.eclipse.ocl.emf.validation.validity.RootNode;
+import org.eclipse.ocl.emf.validation.validity.RootValidatableNode;
 import org.eclipse.ocl.emf.validation.validity.ValidatableNode;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
 
 public class ValidityUtils
 {
+	public static @NonNull List<@NonNull ? extends AbstractNode> getChildren(@NonNull AbstractNode node) {
+		return ClassUtil.nullFree(node.getChildren());
+	}
+
+	public static @NonNull List<@NonNull ConstrainingNode> getChildren(@NonNull ConstrainingNode node) {
+		return ClassUtil.nullFree(node.getChildren());
+	}
+
+	public static @NonNull List<@NonNull ValidatableNode> getChildren(@NonNull ValidatableNode node) {
+		return ClassUtil.nullFree(node.getChildren());
+	}
+
+	public static Iterable<@NonNull RootConstrainingNode> getConstrainingNodes(@NonNull RootNode rootNode) {
+		return ClassUtil.nullFree(rootNode.getConstrainingNodes());
+	}
+
 	/**
 	 * Return all enabled result constraining nodes at and below constrainingNode.
 	 */
@@ -34,7 +55,7 @@ public class ValidityUtils
 				resultConstrainingNodes.add(resultConstrainingNode);
 			}
 		}
-		for (TreeIterator<EObject> tit = constrainingNode.eAllContents(); tit.hasNext(); ) {
+		for (TreeIterator<@NonNull EObject> tit = constrainingNode.eAllContents(); tit.hasNext(); ) {
 			Object eObject = tit.next();
 			if (eObject instanceof ResultConstrainingNode) {
 				ResultConstrainingNode resultConstrainingNode = (ResultConstrainingNode) eObject;
@@ -57,7 +78,7 @@ public class ValidityUtils
 				resultValidatableNodes.add(resultValidatableNode);
 			}
 		}
-		for (TreeIterator<EObject> tit = validatableNode.eAllContents(); tit.hasNext(); ) {
+		for (TreeIterator<@NonNull EObject> tit = validatableNode.eAllContents(); tit.hasNext(); ) {
 			Object eObject = tit.next();
 			if (eObject instanceof ResultValidatableNode) {
 				ResultValidatableNode resultValidatableNode = (ResultValidatableNode) eObject;
@@ -67,5 +88,21 @@ public class ValidityUtils
 			}
 		}
 		return resultValidatableNodes;
+	}
+
+	public static @NonNull ResultConstrainingNode getResultConstrainingNode(@NonNull ResultValidatableNode node) {
+		return ClassUtil.requireNonNull(node.getResultConstrainingNode());
+	}
+
+	public static @NonNull List<@NonNull RootValidatableNode> getValidatableNodes(@NonNull RootNode rootNode) {
+		return ClassUtil.nullFree(rootNode.getValidatableNodes());
+	}
+
+	public static @NonNull RootConstrainingNode getRootConstrainingNode(@NonNull ConstrainingNode constrainingNode) {
+		for (ConstrainingNode node = constrainingNode; node != null; node = node.getParent()) {
+			if (node instanceof RootConstrainingNode)
+				return (RootConstrainingNode)node;
+		}
+		throw new IllegalStateException();
 	}
 }
