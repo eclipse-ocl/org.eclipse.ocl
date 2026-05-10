@@ -10,50 +10,52 @@
  *******************************************************************************/
 package org.eclipse.ocl.emf.validation.validity.utilities;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.emf.validation.validity.Result;
 import org.eclipse.ocl.emf.validation.validity.Severity;
 
+/**
+ * A SeveritiesVisibilityFilter is used to filter the validatable of constrainable node view
+ * to show only nodes whose severity matches one of the chosen severities.
+ */
 public class SeveritiesVisibilityFilter implements IVisibilityFilter
 {
-	private @NonNull Set<Severity> acceptedSeverities = new HashSet<Severity>();
+	private int rejectedSeverities = 0;
+
+	/**
+	 * Add severity from the set of severities to be filtered out.
+	 */
+	public void addFilteredSeverity(@NonNull Severity severity) {
+		rejectedSeverities |= 1 << severity.getValue();
+	//	System.out.println("addFilteredSeverity " + NameUtil.debugSimpleName(this) + " " + Integer.toHexString(rejectedSeverities));
+	}
 
 	@Override
-	public boolean isVisible(@NonNull AbstractNode element) {
-		// if we haven't activated any filtering, then all should be displayed
-		if (acceptedSeverities.isEmpty()) {
-			return true;
-		}
-		if (element instanceof AbstractNode) {
-			return isAcceptedNode((AbstractNode) element);
-		}
-		return false;
-	}
-	
-	public void addFilteredSeverity(Severity severity) {
-		acceptedSeverities.add(severity);
-	}
-	
-	public boolean removeFilteredSeverity(Severity severity) {
-		acceptedSeverities.remove(severity);
-		return acceptedSeverities.size() > 0;
-	}
-	
-	private boolean isAcceptedNode(AbstractNode node) {
+	public boolean isVisible(@NonNull AbstractNode node) {
 		Result worstResultForNode = node.getWorstResult();
-		if (worstResultForNode != null && acceptedSeverities.contains(worstResultForNode.getSeverity())) {
-			return true;
-		} else {
-			for (AbstractNode child : node.getChildren()) {
-				if (isAcceptedNode(child)) {
-					return true;
-				}
+		if (worstResultForNode != null) {
+			int severityMask = 1 << worstResultForNode.getSeverity().getValue();
+			if ((rejectedSeverities & severityMask) == 0) {
+				return true;
+			}
+		}
+		for (AbstractNode child : node.getChildren()) {
+			assert child != null;
+			if (isVisible(child)) {
+				return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Remove severity from the set of severities to be filtered out.
+	 * Returns true if no severities remain to be removed.
+	 */
+	public boolean removeFilteredSeverity(@NonNull Severity severity) {
+		rejectedSeverities &= ~(1 << severity.getValue());
+	//	System.out.println("removeFilteredSeverity " + NameUtil.debugSimpleName(this) + " " + Integer.toHexString(rejectedSeverities));
+		return rejectedSeverities == 0;
 	}
 }
