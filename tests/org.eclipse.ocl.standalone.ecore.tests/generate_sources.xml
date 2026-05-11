@@ -1,0 +1,58 @@
+<project default="local.target" basedir=".">
+
+	<property name="rawRepositoryPath" value="${ant.file}" />
+ 
+	<!-- = = = = = = = = = = = = = = = = =
+          macrodef: replace_win_slashes          
+         = = = = = = = = = = = = = = = = = -->
+	<macrodef name="replace_win_slashes">
+		<attribute name="property.to.process" default="default" />
+		<attribute name="output.property" default="default" />
+		<sequential>
+			<echo message="@{property.to.process}" file="some.tmp.file" />
+			<loadfile property="@{output.property}" srcFile="some.tmp.file">
+				<filterchain>
+					<tokenfilter>
+						<replaceregex pattern="\\" replace="/" flags="g" />
+					</tokenfilter>
+				</filterchain>
+			</loadfile>
+			<delete file="some.tmp.file" />
+		</sequential>
+	</macrodef>
+ 
+	<!--replace_win_slashes property.to.process="${rawRepositoryPath}" output.property="repositoryPath" /-->
+ 
+	<!--echo message="repositoryPath = ${repositoryPath}" /-->	
+	
+	
+	
+	<target name="local">
+		<!--attribute name="property.to.process" default="default" /-->
+		<!--attribute name="output.property" default="default" /-->
+		<!--sequential>
+			<echo message="@{property.to.process}" file="some.tmp.file" />
+			<loadfile property="@{output.property}" srcFile="some.tmp.file">
+				<filterchain>
+					<tokenfilter>
+						<replaceregex pattern="\\" replace="/" flags="g" />
+					</tokenfilter>
+				</filterchain>
+			</loadfile>
+			<delete file="some.tmp.file" />
+		</sequential-->
+      <copy file="targetPlatforms/templateLocal.target" toFile="targetPlatforms/local.target" overwrite="true">
+        <filterset>
+          <filter token="repository" value="file:/${repositoryPath}/../../../"/>
+        </filterset>
+      </copy>
+    </target>
+	
+	<target name="local.target">
+		<echo message="rawRepositoryPath = ${rawRepositoryPath}" />	
+		<replace_win_slashes property.to.process="${rawRepositoryPath}" output.property="repositoryPath" />
+		<echo message="repositoryPath = ${repositoryPath}" />	
+		<!--antcall target="replace_win_slashes"/-->
+		<antcall target="local"/>
+	</target>
+</project>

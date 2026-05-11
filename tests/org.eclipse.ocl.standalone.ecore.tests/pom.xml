@@ -273,5 +273,15 @@
         <targetRelease>releaseLatest</targetRelease>
       </properties>
     </profile>
+    <profile>
+      <id>local</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>local</targetRelease>
+      </properties>
+    </profile>
   </profiles>
 </project>
