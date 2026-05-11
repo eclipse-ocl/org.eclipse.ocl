@@ -27,15 +27,8 @@ pipeline {
 			name: 'OCL_REPO',
 			choices: ['nightlyLatest', 'milestoneLatest', 'releaseLatest', 'branchLatest', 'reload'],
 			description: '''
-The repo to be tested:
-<ul>
-<li> nightlyLatest - the most recent nightly download
-<li> milestoneLatest - the most recent milestone download
-<li> releaseLatest - the most recent release download
-<li> branchLatest - the most recent ocl-branch build download
-<li> reload -- to reload the parameter definitions from GIT and bypass testing
-</ul>				'''
-		)
+The repo to be tested or reload -- to reload the parameter definitions from GIT and bypass testing
+'''		)
 		
 		string(
 			name: 'BRANCH_NAME',
@@ -63,6 +56,17 @@ OCL_REPO=${env.OCL_REPO}
 			}
 		}
 		//
+		//	Fetch the build under test
+		//
+		stage('Copy Artifacts') {
+			when {
+				expression { return params.OCL_REPO != 'reload' && currentBuild.getPreviousBuild() != null }
+			}
+			steps {
+				copyArtifacts(projectName: 'ocl-master', filter: 'releng/org.eclipse.ocl.releng.build-site/target/repository/**/*')
+			}
+		}
+		//
 		//	Do the standalone Ecore test.
 		//
 		stage('Test-Ecore') {
@@ -73,12 +77,17 @@ OCL_REPO=${env.OCL_REPO}
 				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 					sh '''
 						mvn	\
+							-f tests/org.eclipse.ocl.standalone.ecore.tests/pomGenerateLocalTarget.xml \
+							--no-transfer-progress \
+							--show-version \
+							generate-sources
+						mvn	\
 							-f tests/org.eclipse.ocl.standalone.ecore.tests/pom.xml \
 							--no-transfer-progress \
 							--show-version \
 							clean \
 							test \
-							-P${OCL_REPO} \
+							-Plocal \
 							--global-toolchains toolchains.xml
 						'''
 				}
@@ -96,13 +105,18 @@ OCL_REPO=${env.OCL_REPO}
 				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
 					sh '''
 						mvn	\
+							-f tests/org.eclipse.ocl.standalone.uml.tests/pomGenerateLocalTarget.xml \
+							--no-transfer-progress \
+							--show-version \
+							generate-sources
+						mvn	\
 							-f tests/org.eclipse.ocl.standalone.uml.tests/pom.xml \
 							--no-transfer-progress \
 							--show-version \
 							-Dorg.eclipse.equinox.p2.transport.ecf.retry=100 \
 							clean \
 							test \
-							-P${OCL_REPO} \
+							-Plocal \
 							--global-toolchains toolchains.xml
 						'''
 				}
