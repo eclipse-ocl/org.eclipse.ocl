@@ -88,10 +88,10 @@ pipeline {
 						set -x
 						LOGIN="genie.ocl@projects-storage.eclipse.org"
 						BUILDS="/home/data/httpd/download.eclipse.org/modeling/mdt/ocl/builds"
-						ssh $LOGIN "cd $BUILDS; rm -rf ocl-branch/next; mkdir -p ocl-branch/next"
-						scp -r p2repo.zip $LOGIN:$BUILDS/ocl-branch/next/
-						ssh $LOGIN "cd $BUILDS/ocl-branch/next; unzip -ou p2repo.zip -d ."
-						ssh $LOGIN "cd $BUILDS/ocl-branch; mv latest prev; mv next latest; rm -rf prev latest/p2repo.zip"
+						ssh $LOGIN "cd $BUILDS; rm -rf archive/ocl-branch/next; mkdir -p archive/ocl-branch/next"
+						scp -r p2repo.zip $LOGIN:$BUILDS/archive/ocl-branch/next/
+						ssh $LOGIN "cd $BUILDS/archive/ocl-branch/next; unzip -ou p2repo.zip -d ."
+						ssh $LOGIN "cd $BUILDS/archive/ocl-branch; mv latest prev; mv next latest; rm -rf prev latest/p2repo.zip"
 					'''
 				}
 			}

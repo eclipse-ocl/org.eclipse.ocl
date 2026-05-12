@@ -32,7 +32,7 @@
     <unit id="org.eclipse.ocl.tests" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml.tests" version="0.0.0"/>
-    <repository location="https://download.eclipse.org/modeling/mdt/ocl/builds/ocl-branch/latest"/>
+    <repository location="https://download.eclipse.org/modeling/mdt/ocl/builds/archive/ocl-branch/latest"/>
   </location>
 </locations>
 </target>
