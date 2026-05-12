@@ -1,5 +1,5 @@
-<project default="local.target" basedir=".">
-	<property name="rawRepositoryPath" value="file:${ant.file}/../../../releng/org.eclipse.ocl.releng.build-site/target/repository" />
+<project default="local.target" basedir="../../releng/org.eclipse.ocl.releng.build-site">
+	<property name="rawRepositoryPath" value="file:/${basedir}/target/repository" />
 	
 	<target name="local.target">
 		<echo message="${rawRepositoryPath}" file="normalizingPropertiesFile" />
@@ -12,7 +12,7 @@
 		</loadfile>
 		<delete file="normalizingPropertiesFile" />
 		<echo message="normalizedRepositoryPath = ${normalizedRepositoryPath}" />	
-		<copy file="targetPlatforms/templateLocal.target" toFile="targetPlatforms/local.target" overwrite="true">
+		<copy file="../../tests/org.eclipse.ocl.standalone.ecore.tests/targetPlatforms/templateLocal.target" toFile="../../tests/org.eclipse.ocl.standalone.ecore.tests/targetPlatforms/local.target" overwrite="true">
 			<filterset>
 				<filter token="repository" value="${normalizedRepositoryPath}"/>
 			</filterset>

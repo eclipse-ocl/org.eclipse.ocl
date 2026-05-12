@@ -32,7 +32,7 @@
     <unit id="org.eclipse.ocl.tests" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml" version="0.0.0"/>
     <unit id="org.eclipse.ocl.uml.tests" version="0.0.0"/>
-    <repository location="file:/C:/Users/ed/OOMPH-OCL-2025-12ws/.git/org.eclipse.ocl/tests/org.eclipse.ocl.standalone.uml.tests/generate_sources.xml/../../../releng/org.eclipse.ocl.releng.build-site/target/repository"/>
+    <repository location="file:/C:/Users/ed/OOMPH-OCL-2025-12ws/.git/org.eclipse.ocl/releng/org.eclipse.ocl.releng.build-site/target/repository"/>
   </location>
 </locations>
 </target>
