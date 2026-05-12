@@ -311,7 +311,12 @@
               <artifactId>org.eclipse.jdt.compiler.apt</artifactId>
               <version>${cbi-jdt-apt-version}</version>
             </dependency-->
-          </dependencies>
+		<dependency>
+          <groupId>commons-codec</groupId>
+          <artifactId>commons-codec</artifactId>
+          <version>1.22.0</version>
+          <type>jar</type>
+        </dependency>          </dependencies>
           <!--configuration>
             <encoding>${java-source-encoding}</encoding>
             <source>${source-java-version}</source>

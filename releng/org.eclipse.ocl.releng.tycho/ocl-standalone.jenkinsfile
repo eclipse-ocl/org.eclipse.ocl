@@ -25,13 +25,14 @@ pipeline {
 	parameters {
 		choice(
 			name: 'OCL_REPO',
-			choices: ['masterLatest', 'branchTestsLatest', 'release', 'reload'],
+			choices: ['nightlyLatest', 'milestoneLatest', 'releaseLatest', 'branchLatest', 'reload'],
 			description: '''
 The repo to be tested:
 <ul>
-<li> masterLatest - the most recent master build
-<li> branchTestsLatest - the most recent ocl-branch build
-<li> release - the most recent OCL release
+<li> nightlyLatest - the most recent nightly download
+<li> milestoneLatest - the most recent milestone download
+<li> releaseLatest - the most recent release download
+<li> branchLatest - the most recent ocl-branch build download
 <li> reload -- to reload the parameter definitions from GIT and bypass testing
 </ul>				'''
 		)

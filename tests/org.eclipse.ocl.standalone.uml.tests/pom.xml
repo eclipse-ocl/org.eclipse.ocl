@@ -220,33 +220,43 @@
   </build>
   <profiles>
     <profile>
-      <id>branchTestsLatest</id>
+      <id>branchLatest</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
         <buildType></buildType>
-        <targetRelease>branchTestsLatest</targetRelease>
+        <targetRelease>branchLatest</targetRelease>
       </properties>
     </profile>
     <profile>
-      <id>masterLatest</id>
+      <id>milestoneLatest</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
         <buildType></buildType>
-        <targetRelease>masterLatest</targetRelease>
+        <targetRelease>milestoneLatest</targetRelease>
       </properties>
     </profile>
     <profile>
-      <id>release</id>
+      <id>nightlyLatest</id>
       <activation>
         <activeByDefault>false</activeByDefault>
       </activation>
       <properties>
         <buildType></buildType>
-        <targetRelease>release</targetRelease>
+        <targetRelease>nightlyLatest</targetRelease>
+      </properties>
+    </profile>
+    <profile>
+      <id>releaseLatest</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <targetRelease>releaseLatest</targetRelease>
       </properties>
     </profile>
   </profiles>
