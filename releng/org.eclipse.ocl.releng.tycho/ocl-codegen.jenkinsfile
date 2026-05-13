@@ -23,11 +23,20 @@ pipeline {
 	}
 	
 	parameters {
-		booleanParam(
-			name: 'RELOAD',
-			defaultValue: false,
-			description: 'reload the parameter definitions from GIT and bypass testing.'
+		choice(
+			name: 'OCL_REPO',
+			choices: ['nightlyLatest', 'milestoneLatest', 'releaseLatest', 'branchLatest', 'reload'],
+			description: '''
+The repo to be tested:
+<ul>
+<li> nightlyLatest - the most recent nightly download
+<li> milestoneLatest - the most recent milestone download
+<li> releaseLatest - the most recent release download
+<li> branchLatest - the most recent ocl-branch build download
+<li> reload -- to reload the parameter definitions from GIT and bypass testing
+</ul>				'''
 		)
+		
 		
 		string(
 			name: 'BRANCH_NAME',
@@ -44,8 +53,8 @@ pipeline {
 			steps {
 				script {
 					env.BRANCH_NAME = params.BRANCH_NAME
-					echo "${params.BRANCH_NAME}: ${params.RELOAD}"
-					currentBuild.description = "${params.BRANCH_NAME}: ${params.RELOAD}"
+					echo "${params.BRANCH_NAME}: ${params.OCL_REPO}"
+					currentBuild.description = "${params.BRANCH_NAME}: ${params.OCL_REPO}"
 				}
 			}
 		}
@@ -54,7 +63,7 @@ pipeline {
 		//
 		stage('Test') {
 			when {
-				expression { return params.RELOAD == false && currentBuild.getPreviousBuild() != null }
+				expression { return params.OCL_REPO != 'reload' && currentBuild.getPreviousBuild() != null }
 			}
 			steps {
 				wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {
@@ -65,7 +74,7 @@ pipeline {
 							--show-version \
 							clean \
 							verify \
-							-PmasterLatest \
+							-P${OCL_REPO} \
 							--global-toolchains toolchains.xml
 						"""
 				}
@@ -76,28 +85,18 @@ pipeline {
 
 	post {
 		failure {
-			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME}\n\
-Build Number: ${env.BUILD_NUMBER}\n\
-Build URL: <${env.BUILD_URL}>\n\
-Console: <${env.BUILD_URL}console>"
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}",
+				mimeType: 'text/plain', body: "<${env.BUILD_URL}console>"
 			archiveArtifacts allowEmptyArchive: true, artifacts: '**'
 		}
 
 		fixed {
-			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME}\n\
-Build Number: ${env.BUILD_NUMBER}\n\
-Build URL: <${env.BUILD_URL}>\n\
-Console: <${env.BUILD_URL}console>"
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}",
+				mimeType: 'text/plain', body: "<${env.BUILD_URL}console>"
 		}
 
 		always {
-			junit allowEmptyResults: params.RELOAD == true || currentBuild.getPreviousBuild() == null, testResults: 'tests/org.eclipse.ocl.codegen.tests/target/surefire-reports/**/*.xml'		
+			junit allowEmptyResults: params.OCL_REPO == 'reload' || currentBuild.getPreviousBuild() == null, testResults: 'tests/org.eclipse.ocl.codegen.tests/target/surefire-reports/**/*.xml'		
 		}
-
-//		cleanup {
-//			deleteDir()
-//		}
 	}
 }
