@@ -11,6 +11,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.examples.emf.validation.validity.manager;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -27,6 +28,7 @@ import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.Monitor;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -76,13 +78,31 @@ public class ValidityModel
 			WORK_FOR_LOCATE_CONSTRAINTS + WORK_FOR_CREATE_RESULTS +
 			WORK_FOR_SORT_CONSTRAINING_NODES + WORK_FOR_SORT_VALIDATABLE_NODES;
 
-	private static @NonNull Comparator<@NonNull AbstractNode> labelComparator = new Comparator<@NonNull AbstractNode>()
+	private static @NonNull Comparator<@NonNull ConstrainingNode> constrainingNodeComparator = new Comparator<@NonNull ConstrainingNode>()
 	{
 		@Override
-		public int compare(@NonNull AbstractNode o1, @NonNull AbstractNode o2) {
+		public int compare(@NonNull ConstrainingNode o1, @NonNull ConstrainingNode o2) {
 			String l1 = o1.getLabel();
 			String l2 = o2.getLabel();
-			return l1.compareTo(l2);
+			int diff = l1.compareTo(l2);
+			if (diff != 0) {
+				return diff;
+			}
+			Object c1 = o1.getConstrainingObject();
+			Object c2 = o2.getConstrainingObject();
+			if (c1 instanceof Method) {
+				return -1;
+			}
+			if (c2 instanceof Method) {
+				return 1;
+			}
+			if (c2 instanceof EAnnotation) {
+				return -1;
+			}
+			if (c1 instanceof EAnnotation) {
+				return 1;
+			}
+			return diff;
 		}
 	};
 
@@ -813,17 +833,20 @@ public class ValidityModel
 		}
 		monitor.setTaskName("Sorting Constraints");
 		//		System.out.format(Thread.currentThread().getName() + " %3.3f sort ConstrainingNodes\n", (System.currentTimeMillis() - start) * 0.001);
-		@SuppressWarnings("null")EList<@NonNull RootConstrainingNode> constrainingNodes = rootNode.getConstrainingNodes();
-		sortNodes(constrainingNodes, labelComparator);
+		EList<@NonNull RootConstrainingNode> constrainingNodes = ClassUtil.nullFree(rootNode.getConstrainingNodes());
+		sortNodes(constrainingNodes, constrainingNodeComparator);
 		monitor.worked(WORK_FOR_SORT_CONSTRAINING_NODES);
 		if (monitor.isCanceled()) {
 			return;
 		}
 		monitor.setTaskName("Sorting Model Elements");
 		//		System.out.format(Thread.currentThread().getName() + " %3.3f sort ValidatableNodes\n", (System.currentTimeMillis() - start) * 0.001);
-		@SuppressWarnings("null")EList<@NonNull RootValidatableNode> validatableNodes = rootNode.getValidatableNodes();
+		EList<@NonNull RootValidatableNode> validatableNodes = ClassUtil.nullFree(rootNode.getValidatableNodes());
 		sortNodes(validatableNodes, natureComparator);
 		deselectMetamodels();
+		for (@NonNull ConstrainingNode constrainingNode : constrainingNodes) {
+			pruneDuplicates(constrainingNode);
+		}
 		monitor.worked(WORK_FOR_SORT_VALIDATABLE_NODES);
 	}
 
@@ -911,6 +934,18 @@ public class ValidityModel
 		}
 	}
 
+	private void pruneDuplicates(@NonNull ConstrainingNode node) {
+		String previousLabel = null;
+		for (@NonNull ConstrainingNode childNode : ValidityUtils.getChildren(node)) {
+			String label = childNode.getLabel();
+			if ((childNode.getConstrainingObject() != null) && (label != null) && label.equals(previousLabel)) {
+				disableAll(null, childNode);
+			}
+			pruneDuplicates(childNode);
+			previousLabel = label;
+		}
+	}
+
 	public void refreshModel(@Nullable List<@NonNull AbstractNode> grayedValidatableNodes,
 			@Nullable List<@NonNull AbstractNode> grayedConstrainingNodes) {
 		RootNode rootNode = validityManager.getRootNode();
@@ -989,10 +1024,12 @@ public class ValidityModel
 	 * @param nodes
 	 *            the list of nodes needing to be sorted.
 	 */
-	protected <@NonNull T extends AbstractNode> void sortNodes(@NonNull EList<T> nodes, @NonNull Comparator<@NonNull AbstractNode> comparator) {
+	protected <@NonNull T extends AbstractNode> void sortNodes(@NonNull EList<? extends T> nodes, @NonNull Comparator<T> comparator) {
 		ECollections.sort(nodes, comparator);
-		for (@NonNull AbstractNode node : nodes) {
-			sortNodes(ClassUtil.nullFree(node.getChildren()), comparator);
+		for (@NonNull T node : nodes) {
+			@SuppressWarnings("unchecked")
+			EList<@NonNull ? extends T> childNodes = (EList<@NonNull ? extends @NonNull T>) ClassUtil.nullFree(node.getChildren());
+			sortNodes(childNodes, comparator);
 		}
 	}
 }
