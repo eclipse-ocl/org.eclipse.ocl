@@ -91,16 +91,14 @@ public class ValidityModel
 			Object c1 = o1.getConstrainingObject();
 			Object c2 = o2.getConstrainingObject();
 			if (c1 instanceof Method) {
-				return -1;
+				if (c2 instanceof EAnnotation) {
+					return -1;
+				}
 			}
-			if (c2 instanceof Method) {
-				return 1;
-			}
-			if (c2 instanceof EAnnotation) {
-				return -1;
-			}
-			if (c1 instanceof EAnnotation) {
-				return 1;
+			else if (c2 instanceof Method) {
+				if (c1 instanceof EAnnotation) {
+					return 1;
+				}
 			}
 			return diff;
 		}
@@ -618,9 +616,9 @@ public class ValidityModel
 	}
 
 	/**
-	 * Disable all validatable nodes that form part of a Resource that defines the instantiations of another Resource.
+	 * Disable/Enable all validatable nodes that form part of a Resource that defines the instantiations of another Resource.
 	 */
-	private void deselectMetamodels() {
+	public void deselectMetamodels(boolean isEnabled) {
 		Iterable<@NonNull RootValidatableNode> rootValidatableNodes = ValidityUtils.getValidatableNodes(rootNode);
 		Set<@NonNull Resource> metaModelResources = new UniqueList<>();
 		for (@NonNull RootValidatableNode rootValidatableNode : rootValidatableNodes) {
@@ -632,17 +630,36 @@ public class ValidityModel
 			Resource modelResource = constrainedObject.eResource();
 			assert modelResource != null;
 			if (metaModelResources.contains(modelResource)) {
-				disableAll(rootConstrainingNodes, rootValidatableNode);
+				disableAll(rootConstrainingNodes, rootValidatableNode, isEnabled);
 				rootValidatableNode.getConstrainedObject();
 			}
 		}
 		for (@NonNull RootConstrainingNode rootConstrainingNode : rootConstrainingNodes) {
-			disableAll(null, rootConstrainingNode);
+			disableAll(null, rootConstrainingNode, isEnabled);
 		}
 	}
 
-	private void disableAll(@Nullable Set<@NonNull RootConstrainingNode> rootConstrainingNodes, @NonNull AbstractNode node) {
-		node.setEnabled(false);
+	public void deselectMultipleConstraints(boolean isEnabled) {
+		Iterable<@NonNull RootConstrainingNode> constrainingNodes = ValidityUtils.getConstrainingNodes(rootNode);
+		for (@NonNull ConstrainingNode constrainingNode : constrainingNodes) {
+			deselectMultipleConstraints(constrainingNode, isEnabled);
+		}
+	}
+
+	private void deselectMultipleConstraints(@NonNull ConstrainingNode node, boolean isEnabled) {
+		String previousLabel = null;
+		for (@NonNull ConstrainingNode childNode : ValidityUtils.getChildren(node)) {
+			String label = childNode.getLabel();
+			if ((childNode.getConstrainingObject() != null) && (label != null) && label.equals(previousLabel)) {
+				disableAll(null, childNode, isEnabled);
+			}
+			deselectMultipleConstraints(childNode, isEnabled);
+			previousLabel = label;
+		}
+	}
+
+	private void disableAll(@Nullable Set<@NonNull RootConstrainingNode> rootConstrainingNodes, @NonNull AbstractNode node,  boolean isEnabled) {
+		node.setEnabled(isEnabled);
 		if (node instanceof ResultValidatableNode) {
 			ResultConstrainingNode resultConstrainingNode = ValidityUtils.getResultConstrainingNode((ResultValidatableNode)node);
 			RootConstrainingNode rootConstrainingNode = ValidityUtils.getRootConstrainingNode(resultConstrainingNode);
@@ -651,7 +668,7 @@ public class ValidityModel
 			}
 		}
 		for (@NonNull AbstractNode childNode : ValidityUtils.getChildren(node)) {
-			disableAll(rootConstrainingNodes, childNode);
+			disableAll(rootConstrainingNodes, childNode, isEnabled);
 		}
 	}
 
@@ -843,10 +860,6 @@ public class ValidityModel
 		//		System.out.format(Thread.currentThread().getName() + " %3.3f sort ValidatableNodes\n", (System.currentTimeMillis() - start) * 0.001);
 		EList<@NonNull RootValidatableNode> validatableNodes = ClassUtil.nullFree(rootNode.getValidatableNodes());
 		sortNodes(validatableNodes, natureComparator);
-		deselectMetamodels();
-		for (@NonNull ConstrainingNode constrainingNode : constrainingNodes) {
-			pruneDuplicates(constrainingNode);
-		}
 		monitor.worked(WORK_FOR_SORT_VALIDATABLE_NODES);
 	}
 
@@ -931,18 +944,6 @@ public class ValidityModel
 			return allConstraints;
 		} finally {
 			monitorStep.done();
-		}
-	}
-
-	private void pruneDuplicates(@NonNull ConstrainingNode node) {
-		String previousLabel = null;
-		for (@NonNull ConstrainingNode childNode : ValidityUtils.getChildren(node)) {
-			String label = childNode.getLabel();
-			if ((childNode.getConstrainingObject() != null) && (label != null) && label.equals(previousLabel)) {
-				disableAll(null, childNode);
-			}
-			pruneDuplicates(childNode);
-			previousLabel = label;
 		}
 	}
 

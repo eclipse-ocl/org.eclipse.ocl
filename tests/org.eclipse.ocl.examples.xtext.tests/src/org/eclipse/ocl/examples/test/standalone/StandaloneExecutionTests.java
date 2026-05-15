@@ -88,7 +88,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 
 	protected static final int EModelElement_CONSTRAINTS = 8;
 
-	protected static final int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry()  != null? 3 : 0;
+	protected static final int EXTRA_EAnnotationValidator_SUCCESSES = PivotEAnnotationValidator.getEAnnotationValidatorRegistry()  != null ? 3 : 0;
 
 	protected static void assertNoLogFile(@NonNull String logFileName) {
 		File file = new File(logFileName);

@@ -67,6 +67,8 @@ import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.CollapseAllNodesAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.DebugValidityAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.DisableAllUnusedNodesAction;
+import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.DisableMetamodelsAction;
+import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.DisableMultipleConstraintsAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.EnableDisableAllNodesAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ExpandAllNodesAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ExportValidationResultAction;
@@ -301,6 +303,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private Action enableAllValidatableNodesAction;
 	private Action disableAllValidatableNodesAction;
 	private DisableAllUnusedNodesAction disableAllUnusedValidatableNodesAction;
+	private DisableMetamodelsAction disableMetamodelsAction;
 
 	/**Constraining Tool Bar.*/
 	private Action expandAllConstrainingNodesAction;
@@ -308,6 +311,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private Action enableAllConstrainingNodesAction;
 	private Action disableAllConstrainingNodesAction;
 	private DisableAllUnusedNodesAction disableAllUnusedConstrainingNodesAction;
+	private DisableMultipleConstraintsAction disableMultipleConstraintsAction;
 
 	/** Double Click action handlers.*/
 	private Action constrainingNodesDoubleClickAction;
@@ -625,6 +629,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(disableAllConstrainingNodesAction);
 		manager.add(new Separator());
 		manager.add(disableAllUnusedConstrainingNodesAction);
+	//	manager.add(disableMultipleConstraintsAction);
 
 		manager.update(true);
 	}
@@ -638,6 +643,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(disableAllConstrainingNodesAction);
 		manager.add(new Separator());
 		manager.add(disableAllUnusedConstrainingNodesAction);
+		manager.add(disableMultipleConstraintsAction);
 
 		// Other plug-ins can contribute there actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -672,6 +678,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(disableAllValidatableNodesAction);
 		manager.add(new Separator());
 		manager.add(disableAllUnusedValidatableNodesAction);
+	//	manager.add(disableMetamodelsAction);
 
 		manager.update(true);
 	}
@@ -685,6 +692,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(disableAllValidatableNodesAction);
 		manager.add(new Separator());
 		manager.add(disableAllUnusedValidatableNodesAction);
+		manager.add(disableMetamodelsAction);
 
 		// Other plug-ins can contribute their actions here
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
@@ -777,6 +785,8 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	}
 
 	protected void initializeFilters() {
+		disableMetamodelsAction.refreshChecked();
+		disableMultipleConstraintsAction.refreshChecked();
 		disableAllUnusedConstrainingNodesAction.refreshChecked();
 		disableAllUnusedValidatableNodesAction.refreshChecked();
 	}
@@ -805,6 +815,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		enableAllValidatableNodesAction = new EnableDisableAllNodesAction(this, true, true);
 		disableAllValidatableNodesAction = new EnableDisableAllNodesAction(this, false, true);
 		disableAllUnusedValidatableNodesAction = new DisableAllUnusedNodesAction(this, true);
+		disableMetamodelsAction = new DisableMetamodelsAction(this);
 
 		/* Constraining Tool bar actions*/
 		expandAllConstrainingNodesAction = new ExpandAllNodesAction(this, false, true);
@@ -812,6 +823,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		enableAllConstrainingNodesAction = new EnableDisableAllNodesAction(this, true, false);
 		disableAllConstrainingNodesAction = new EnableDisableAllNodesAction(this, false, false);
 		disableAllUnusedConstrainingNodesAction = new DisableAllUnusedNodesAction(this, false);
+		disableMultipleConstraintsAction = new DisableMultipleConstraintsAction(this);
 
 		/*Double Click actions*/
 		constrainingNodesDoubleClickAction = new Action() {
