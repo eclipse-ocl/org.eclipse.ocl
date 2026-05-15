@@ -102,6 +102,18 @@ public class ValidityUIMessages
 	public static String ValidityView_Action_ShowNodesByKind_ToolTipText;
 	public static String ValidityView_Action_ShowFailedElementsNodes_ToolTipText;
 
+	public static String ValidityView_Action_DeselectMetamodels_Title;
+	public static String ValidityView_Action_DeselectMetamodels_ToolTipText;
+	public static String ValidityView_Action_SelectMetamodels_ToolTipText;
+	public static String ValidityView_Action_DeselectMetamodels_ImageLocation;
+	public static String ValidityView_Action_SelectMetamodels_ImageLocation;
+
+	public static String ValidityView_Action_DeselectMultipleConstraints_Title;
+	public static String ValidityView_Action_DeselectMultipleConstraints_ToolTipText;
+	public static String ValidityView_Action_SelectMultipleConstraints_ToolTipText;
+	public static String ValidityView_Action_DeselectMultipleConstraints_ImageLocation;
+	public static String ValidityView_Action_SelectMultipleConstraints_ImageLocation;
+
 	// Export Validation Results
 	public static String ExportValidationResultsDialog_title;
 	public static String ExportValidationResultsDialog_fileNameLabel;
