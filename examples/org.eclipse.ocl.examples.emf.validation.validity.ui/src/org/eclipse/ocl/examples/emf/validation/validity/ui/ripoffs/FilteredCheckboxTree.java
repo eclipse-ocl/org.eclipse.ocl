@@ -26,6 +26,8 @@ import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Item;
@@ -69,6 +71,8 @@ public class FilteredCheckboxTree extends FilteredTree {
 			List<FilteredCheckboxTreeItem> children = new ArrayList<FilteredCheckboxTreeItem>();
 
 			public FilteredCheckboxTreeItem(Object data, String state, Map<Object, FilteredCheckboxTreeItem> itemCache, FilteredCheckboxTreeItem parent) {
+			//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " " + state + " " + NameUtil.debugSimpleName(data) + " " + data);
+				assert data instanceof AbstractNode;
 				this.data = data;
 				this.state = state;
 				itemCache.put(data, this);
@@ -307,16 +311,21 @@ public class FilteredCheckboxTree extends FilteredTree {
 		 * Saves the checked state of an item and all its children
 		 */
 		private void saveCheckedState(FilteredCheckboxTreeItem parent, TreeItem parentItem) {
+		//	System.out.println("saveCheckedState " + NameUtil.debugSimpleName(parent) + " " + NameUtil.debugSimpleName(parentItem));
 			TreeItem[] items = parentItem.getItems();
 			for (int i = 0; i < items.length; i++) {
 				TreeItem item = items[i];
-				if (!itemCache.containsKey(item.getData())) {
-					new FilteredCheckboxTreeItem(item.getData(), getItemState(item), itemCache, parent);
+				Object data = item.getData();
+			//	System.out.println("\t" + NameUtil.debugSimpleName(item) + " " + NameUtil.debugSimpleName(data));
+				if (data != null) {		// 'row' head has null data
+					if (!itemCache.containsKey(data)) {
+						new FilteredCheckboxTreeItem(data, getItemState(item), itemCache, parent);
+					}
+					FilteredCheckboxTreeItem filteredCheckboxTreeItem = itemCache.get(data);
+					assert filteredCheckboxTreeItem != null;
+					filteredCheckboxTreeItem.state = getItemState(item);
+					saveCheckedState(filteredCheckboxTreeItem, item);
 				}
-				FilteredCheckboxTreeItem filteredCheckboxTreeItem = itemCache.get(item.getData());
-				assert filteredCheckboxTreeItem != null;
-				filteredCheckboxTreeItem.state = getItemState(item);
-				saveCheckedState(filteredCheckboxTreeItem, item);
 			}
 		}
 
