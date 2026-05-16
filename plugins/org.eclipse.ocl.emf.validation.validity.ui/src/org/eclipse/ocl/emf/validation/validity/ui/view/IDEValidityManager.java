@@ -93,6 +93,7 @@ public class IDEValidityManager extends ValidityManager
 			assert monitor != null;
 			IStatus status = runValidation(selectedNodes, monitor);
 			validityView.redraw();
+			ranValidation(this);
 			return status;
 		}
 	}
@@ -196,6 +197,12 @@ public class IDEValidityManager extends ValidityManager
 		for (@NonNull AbstractNode node : nodes) {
 			node.eAdapters().add(nodeAdapter);
 			installAdapters(ClassUtil.nullFree(node.getChildren()));
+		}
+	}
+
+	private void ranValidation(@NonNull ValidityViewJob validityViewJob) {
+		synchronized (validityJobs) {
+			validityJobs.remove(validityViewJob);
 		}
 	}
 
