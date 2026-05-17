@@ -43,6 +43,15 @@ public class RootConstrainingNodeImpl extends ConstrainingNodeImpl implements Ro
 	public static final int ROOT_CONSTRAINING_NODE_FEATURE_COUNT = ConstrainingNodeImpl.CONSTRAINING_NODE_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Root Constraining Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROOT_CONSTRAINING_NODE_OPERATION_COUNT = ConstrainingNodeImpl.CONSTRAINING_NODE_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

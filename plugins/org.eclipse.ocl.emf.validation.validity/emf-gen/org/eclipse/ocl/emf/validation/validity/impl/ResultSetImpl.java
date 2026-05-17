@@ -53,6 +53,15 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 	public static final int RESULT_SET_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Result Set</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int RESULT_SET_OPERATION_COUNT = 0;
+
+	/**
 	 * The cached value of the '{@link #getResults() <em>Results</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -42,6 +42,14 @@ public class LeafConstrainingNodeImpl extends ConstrainingNodeImpl implements Le
 	 */
 	public static final int LEAF_CONSTRAINING_NODE_FEATURE_COUNT = ConstrainingNodeImpl.CONSTRAINING_NODE_FEATURE_COUNT + 3;
 	/**
+	 * The number of operations of the '<em>Leaf Constraining Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int LEAF_CONSTRAINING_NODE_OPERATION_COUNT = ConstrainingNodeImpl.CONSTRAINING_NODE_OPERATION_COUNT + 0;
+	/**
 	 * The default value of the '{@link #getConstraintLocator() <em>Constraint Locator</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

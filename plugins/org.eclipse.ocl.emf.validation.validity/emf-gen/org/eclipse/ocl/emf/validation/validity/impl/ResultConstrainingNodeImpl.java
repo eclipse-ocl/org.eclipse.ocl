@@ -40,6 +40,14 @@ public class ResultConstrainingNodeImpl extends ConstrainingNodeImpl implements 
 	 */
 	public static final int RESULT_CONSTRAINING_NODE_FEATURE_COUNT = ConstrainingNodeImpl.CONSTRAINING_NODE_FEATURE_COUNT + 1;
 	/**
+	 * The number of operations of the '<em>Result Constraining Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int RESULT_CONSTRAINING_NODE_OPERATION_COUNT = ConstrainingNodeImpl.CONSTRAINING_NODE_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getResultValidatableNode() <em>Result Validatable Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

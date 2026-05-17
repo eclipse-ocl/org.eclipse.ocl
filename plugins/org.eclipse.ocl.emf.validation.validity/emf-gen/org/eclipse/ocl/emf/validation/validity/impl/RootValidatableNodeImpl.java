@@ -42,6 +42,15 @@ public class RootValidatableNodeImpl extends ValidatableNodeImpl implements Root
 	public static final int ROOT_VALIDATABLE_NODE_FEATURE_COUNT = ValidatableNodeImpl.VALIDATABLE_NODE_FEATURE_COUNT + 1;
 
 	/**
+	 * The number of operations of the '<em>Root Validatable Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROOT_VALIDATABLE_NODE_OPERATION_COUNT = ValidatableNodeImpl.VALIDATABLE_NODE_OPERATION_COUNT + 0;
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

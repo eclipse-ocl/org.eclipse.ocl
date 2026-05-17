@@ -58,6 +58,15 @@ public class ResultImpl extends MinimalEObjectImpl.Container implements Result {
 	public static final int RESULT_FEATURE_COUNT = 8;
 
 	/**
+	 * The number of operations of the '<em>Result</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int RESULT_OPERATION_COUNT = 0;
+
+	/**
 	 * The cached value of the '{@link #getResultValidatableNode() <em>Result Validatable Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

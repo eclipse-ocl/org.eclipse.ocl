@@ -34,7 +34,7 @@
    </extension>
 
    <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated Validation -->
+      <!-- @generated Validity -->
       <package
             uri="http://www.eclipse.org/emf/validation/2013/Validity"
             class="org.eclipse.ocl.emf.validation.validity.ValidityPackage"
@@ -49,13 +49,5 @@
        <exporter type="text" name="Text Export"
              class="org.eclipse.ocl.emf.validation.validity.export.TextExporter"/>
     </extension>
-
-   <extension point="org.eclipse.emf.ecore.generated_package">
-      <!-- @generated Validity -->
-      <package
-            uri="http://www.eclipse.org/emf/validation/2013/Validity"
-            class="org.eclipse.ocl.emf.validation.validity.ValidityPackage"
-            genModel="model/Validity.genmodel"/>
-   </extension>
 
 </plugin>

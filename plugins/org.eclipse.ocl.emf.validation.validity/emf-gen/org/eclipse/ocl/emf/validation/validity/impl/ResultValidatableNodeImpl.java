@@ -40,6 +40,14 @@ public class ResultValidatableNodeImpl extends ValidatableNodeImpl implements Re
 	 */
 	public static final int RESULT_VALIDATABLE_NODE_FEATURE_COUNT = ValidatableNodeImpl.VALIDATABLE_NODE_FEATURE_COUNT + 1;
 	/**
+	 * The number of operations of the '<em>Result Validatable Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int RESULT_VALIDATABLE_NODE_OPERATION_COUNT = ValidatableNodeImpl.VALIDATABLE_NODE_OPERATION_COUNT + 0;
+	/**
 	 * The cached value of the '{@link #getResultConstrainingNode() <em>Result Constraining Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -49,6 +49,15 @@ public class ConstrainingNodeImpl extends AbstractNodeImpl implements Constraini
 	public static final int CONSTRAINING_NODE_FEATURE_COUNT = AbstractNodeImpl.ABSTRACT_NODE_FEATURE_COUNT + 3;
 
 	/**
+	 * The number of operations of the '<em>Constraining Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int CONSTRAINING_NODE_OPERATION_COUNT = AbstractNodeImpl.ABSTRACT_NODE_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -130,6 +131,26 @@ public interface ValidityPackage extends EPackage {
 	 * @generated
 	 */
 	EReference getAbstractNode_WorstResult();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.emf.validation.validity.AbstractNode#getParent() <em>Get Parent</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Parent</em>' operation.
+	 * @see org.eclipse.ocl.emf.validation.validity.AbstractNode#getParent()
+	 * @generated
+	 */
+	EOperation getAbstractNode__GetParent();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.emf.validation.validity.AbstractNode#getChildren() <em>Get Children</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Get Children</em>' operation.
+	 * @see org.eclipse.ocl.emf.validation.validity.AbstractNode#getChildren()
+	 * @generated
+	 */
+	EOperation getAbstractNode__GetChildren();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.emf.validation.validity.ConstrainingNode <em>Constraining Node</em>}'.
@@ -654,6 +675,22 @@ public interface ValidityPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ABSTRACT_NODE__WORST_RESULT = eINSTANCE.getAbstractNode_WorstResult();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Parent</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ABSTRACT_NODE___GET_PARENT = eINSTANCE.getAbstractNode__GetParent();
+
+		/**
+		 * The meta object literal for the '<em><b>Get Children</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ABSTRACT_NODE___GET_CHILDREN = eINSTANCE.getAbstractNode__GetChildren();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.emf.validation.validity.impl.ConstrainingNodeImpl <em>Constraining Node</em>}' class.

@@ -7,7 +7,7 @@
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" testSuiteClass="org.eclipse.ocl.emf.validation.validity.validity.tests.ValidityAllTests"
     booleanFlagsReservedBits="8" importerID="org.eclipse.emf.importer.ecore" suppressNotification="true"
     complianceLevel="8.0" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore"
-    importOrganizing="true">
+    operationReflection="true" importOrganizing="true" pluginKey="Validity">
   <genAnnotations source="http://www.eclipse.org/OCL/GenModel">
     <details key="Use Delegates" value="false"/>
     <details key="Use Null Annotations" value="true"/>

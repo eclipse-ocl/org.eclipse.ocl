@@ -51,6 +51,15 @@ public class ValidatableNodeImpl extends AbstractNodeImpl implements Validatable
 	public static final int VALIDATABLE_NODE_FEATURE_COUNT = AbstractNodeImpl.ABSTRACT_NODE_FEATURE_COUNT + 3;
 
 	/**
+	 * The number of operations of the '<em>Validatable Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int VALIDATABLE_NODE_OPERATION_COUNT = AbstractNodeImpl.ABSTRACT_NODE_OPERATION_COUNT + 0;
+
+	/**
 	 * The cached value of the '{@link #getChildren() <em>Children</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

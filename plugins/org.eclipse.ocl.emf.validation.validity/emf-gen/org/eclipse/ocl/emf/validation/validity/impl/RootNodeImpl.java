@@ -54,6 +54,15 @@ public class RootNodeImpl extends MinimalEObjectImpl.Container implements RootNo
 	public static final int ROOT_NODE_FEATURE_COUNT = 3;
 
 	/**
+	 * The number of operations of the '<em>Root Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ROOT_NODE_OPERATION_COUNT = 0;
+
+	/**
 	 * The cached value of the '{@link #getResultSets() <em>Result Sets</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

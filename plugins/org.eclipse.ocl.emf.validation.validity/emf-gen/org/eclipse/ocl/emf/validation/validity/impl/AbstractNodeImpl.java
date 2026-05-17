@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.emf.validation.validity.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,6 +50,15 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 	 * @ordered
 	 */
 	public static final int ABSTRACT_NODE_FEATURE_COUNT = 5;
+
+	/**
+	 * The number of operations of the '<em>Abstract Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ABSTRACT_NODE_OPERATION_COUNT = 2;
 
 	/**
 	 * The default value of the '{@link #isEnabled() <em>Enabled</em>}' attribute.
@@ -360,6 +370,22 @@ public abstract class AbstractNodeImpl extends MinimalEObjectImpl.Container impl
 				return worstResult != null;
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException {
+		switch (operationID) {
+			case 0:
+				return getParent();
+			case 1:
+				return getChildren();
+		}
+		return super.eInvoke(operationID, arguments);
 	}
 
 	/**
