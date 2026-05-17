@@ -300,7 +300,7 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 		js.append("throw new ");
 		js.appendClassReference(null, InvalidValueException.class);
 		js.append("(");
-		js.appendString("Null " + cgGuardExp.getMessage());
+		js.appendString(cgGuardExp.getMessage());
 		js.append(");\n");
 	}
 
@@ -2973,6 +2973,10 @@ public abstract class CG2JavaVisitor<@NonNull CG extends JavaCodeGenerator> exte
 				js.append(";\n");
 				js.popIndentation();
 				js.append("}\n");
+				js.appendDeclaration(cgThrowExp);
+				js.append(" = ");
+				js.appendReferenceTo(cgSource);
+				js.append(";\n");
 			}
 		}
 		return true;

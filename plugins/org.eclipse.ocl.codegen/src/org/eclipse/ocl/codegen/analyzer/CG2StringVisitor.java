@@ -60,6 +60,7 @@ import org.eclipse.ocl.codegen.cgmodel.CGOperationCallExp;
 import org.eclipse.ocl.codegen.cgmodel.CGOppositePropertyCallExp;
 import org.eclipse.ocl.codegen.cgmodel.CGPackage;
 import org.eclipse.ocl.codegen.cgmodel.CGParameter;
+import org.eclipse.ocl.codegen.cgmodel.CGProperty;
 import org.eclipse.ocl.codegen.cgmodel.CGPropertyCallExp;
 import org.eclipse.ocl.codegen.cgmodel.CGShadowExp;
 import org.eclipse.ocl.codegen.cgmodel.CGShadowPart;
@@ -207,7 +208,12 @@ public class CG2StringVisitor extends AbstractExtendingCGModelVisitor<@Nullable 
 		else {
 			safeVisit(cgTypedElement.getTypeId());
 			boolean isRequired = cgTypedElement.basicIsRequired();
-			if (cgTypedElement instanceof CGValuedElement) {			// FIXME use CGVariable isNonNull too
+			if ((cgTypedElement instanceof CGOperation) || (cgTypedElement instanceof CGProperty)) {
+				if (!isRequired) {
+					append("[?]");
+				}
+			}
+			else if (cgTypedElement instanceof CGValuedElement) {			// FIXME use CGVariable isNonNull too
 				boolean isNonNull = ((CGValuedElement)cgTypedElement).isNonNull();
 				//	assert isNonNull == isRequired;
 				if (!isNonNull) {			// FIXME use CGVariable isNonNull too

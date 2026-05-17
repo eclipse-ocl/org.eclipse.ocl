@@ -1387,10 +1387,10 @@ public class EvaluateCollectionOperationsTest4 extends PivotTestSuite
 		// null collection
 		//		ocl.assertQueryInvalid(null, "null->notEmpty()");
 		ocl.assertQueryFalse(null, "null->notEmpty()");
-		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->notEmpty()", "'Collection' rather than 'OclVoid' value required", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = null in b->notEmpty()", "'Collection' rather than 'OclVoid' value required", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "let s : Set(Integer) = null in s->notEmpty()", "'Collection' rather than 'OclVoid' value required", InvalidValueException.class);
-		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = null in o->notEmpty()", "'Collection' rather than 'OclVoid' value required", InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "let s : Sequence(Integer) = null in s->notEmpty()", StringUtil.bind(PivotMessages.TypedValueRequired, "Collection", "OclVoid"), InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "let b : Bag(Integer) = null in b->notEmpty()", StringUtil.bind(PivotMessages.TypedValueRequired, "Collection", "OclVoid"), InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "let s : Set(Integer) = null in s->notEmpty()", StringUtil.bind(PivotMessages.TypedValueRequired, "Collection", "OclVoid"), InvalidValueException.class);
+		ocl.assertQueryInvalid(null, "let o : OrderedSet(Integer) = null in o->notEmpty()", StringUtil.bind(PivotMessages.TypedValueRequired, "Collection", "OclVoid"), InvalidValueException.class);
 		// null collection element
 		ocl.assertQueryTrue(null, "Sequence{null}->notEmpty()");
 		ocl.assertQueryTrue(null, "Bag{null}->notEmpty()");

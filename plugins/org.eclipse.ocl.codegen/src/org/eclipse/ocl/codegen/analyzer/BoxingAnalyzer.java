@@ -83,8 +83,10 @@ import org.eclipse.ocl.pivot.ids.PropertyId;
 import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.iterator.IterateIteration;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 
 /**
@@ -238,9 +240,19 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		if ((cgChild == null) || cgChild.isNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
 			return cgChild;
 		}
-		if (cgChild.toString().contains("specializeIn")) {
-			getClass();		// XXX
+		CGGuardExp cgGuardExp = CGModelFactory.eINSTANCE.createCGGuardExp();
+		cgGuardExp.setMessage(message);
+		cgGuardExp.setSafe(isSafe);
+		CGUtil.wrap(cgGuardExp, cgChild);
+		return cgGuardExp;
+	}
+
+	private @Nullable CGValuedElement rewriteAsGuarded(@Nullable CGValuedElement cgChild, boolean isSafe,
+			/*@NonNull*/ String messageTemplate, Object... bindings) {
+		if ((cgChild == null) || cgChild.isNonNull() /*|| (cgParent instanceof CGGuardExp)*/) {
+			return cgChild;
 		}
+		String message = StringUtil.bind(messageTemplate, bindings);
 		CGGuardExp cgGuardExp = CGModelFactory.eINSTANCE.createCGGuardExp();
 		cgGuardExp.setMessage(message);
 		cgGuardExp.setSafe(isSafe);
@@ -319,11 +331,11 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGBuiltInIterationCallExp(@NonNull CGBuiltInIterationCallExp cgElement) {
 		super.visitCGBuiltInIterationCallExp(cgElement);
 		Iteration referredIteration = cgElement.getReferredIteration();
-		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + referredIteration + "'"));
+		rewriteAsBoxed(rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), PivotMessages.NullNavigation, "source", referredIteration));
 		Parameter asParameter = referredIteration.getOwnedParameters().get(0);
 		CGValuedElement cgBody = cgElement.getBodies().get(0);
 		if (PivotUtil.isNonLambdaTypeRequired(asParameter)) {
-			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, "body for '" + referredIteration + "'"));
+			rewriteAsBoxed(rewriteAsGuarded(cgBody, false, PivotMessages.NullNavigation, "body", referredIteration));
 		}
 		else {
 			rewriteAsBoxed(cgBody);
@@ -335,7 +347,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGCachedOperationCallExp(@NonNull CGCachedOperationCallExp cgElement) {
 		super.visitCGCachedOperationCallExp(cgElement);
 		CGValuedElement cgSource = cgElement.getSource();
-		rewriteAsGuarded(cgSource, isSafe(cgElement), "source for '" + cgElement.getReferredOperation() + "'");
+		rewriteAsGuarded(cgSource, isSafe(cgElement), PivotMessages.NullNavigation, "source", cgElement.getReferredOperation());
 		rewriteAsBoxed(cgSource);
 		List<CGValuedElement> cgArguments = cgElement.getArguments();
 		int iMax = cgArguments.size();
@@ -359,7 +371,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGEcoreOperationCallExp(@NonNull CGEcoreOperationCallExp cgElement) {
 		super.visitCGEcoreOperationCallExp(cgElement);
 		CGValuedElement cgSource = cgElement.getSource();
-		rewriteAsGuarded(cgSource, isSafe(cgElement), "source for '" + cgElement.getReferredOperation() + "'");
+		rewriteAsGuarded(cgSource, isSafe(cgElement), PivotMessages.NullNavigation, "source", cgElement.getReferredOperation());
 		EOperation eOperation = cgElement.getEOperation();
 		List<EParameter> eParameters = eOperation.getEParameters();
 		rewriteAsEcore(cgSource, eOperation.getEContainingClass());
@@ -427,7 +439,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGIfExp(@NonNull CGIfExp cgElement) {
 		super.visitCGIfExp(cgElement);
-		rewriteAsGuarded(cgElement.getCondition(), false, "if condition");
+		rewriteAsGuarded(cgElement.getCondition(), false, "Null if condition");
 		CGValuedElement thenExpression = cgElement.getThenExpression();
 		CGValuedElement elseExpression = cgElement.getElseExpression();
 		if ((thenExpression != null) && (elseExpression != null)) {
@@ -484,7 +496,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGLibraryIterateCallExp(@NonNull CGLibraryIterateCallExp cgElement) {
 		super.visitCGLibraryIterateCallExp(cgElement);
-		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'");
+		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), PivotMessages.NullNavigation, "source", cgElement.getReferredIteration());
 		rewriteAsBoxed(cgElement.getSource());
 		LibraryIteration libraryIteration = cgElement.getLibraryIteration();
 		if (!(libraryIteration instanceof IterateIteration)) {				// XXX why?
@@ -498,7 +510,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGLibraryIterationCallExp(@NonNull CGLibraryIterationCallExp cgElement) {
 		super.visitCGLibraryIterationCallExp(cgElement);
-		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + cgElement.getReferredIteration() + "'");
+		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), PivotMessages.NullNavigation, "source", cgElement.getReferredIteration());
 		rewriteAsBoxed(cgElement.getSource());
 		LibraryIteration libraryIteration = cgElement.getLibraryIteration();
 		if (!(libraryIteration instanceof IterateIteration)) {				// XXX why?
@@ -533,7 +545,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		if (!sourceMayBeNull) {
 			if (cgSource.isNull()) {
 //				CGInvalid cgInvalid = context.getInvalid("null value1 for source parameter");
-				CGInvalid cgInvalid = context.getInvalid("''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
+				CGInvalid cgInvalid = context.getInvalid(PivotMessages.TypedValueRequired, referredOperation.getOwningClass().getName(), "OclVoid");
 				CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
 				CGUtil.replace(cgElement, cgLiteralExp);
 				return null;
@@ -549,7 +561,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 				if (asParameter.isIsRequired()) {
 					if (cgArgument.isNull()) {
 	//					CGInvalid cgInvalid = context.getInvalid("null value2 for " + asParameter.getName() + " parameter");
-						CGInvalid cgInvalid = context.getInvalid("''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
+						CGInvalid cgInvalid = context.getInvalid(PivotMessages.TypedValueRequired, asParameter.getType().getName(), "OclVoid");
 						CGConstantExp cgLiteralExp = context.createCGConstantExp(CGUtil.getAST(cgElement), cgInvalid);
 						CGUtil.replace(cgElement, cgLiteralExp);
 						return null;
@@ -560,7 +572,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 		rewriteAsBoxed(cgSource);
 		if (!sourceMayBeNull && !cgSource.isNonNull()) {
 //			rewriteAsGuarded(cgSource, false, "value3 for source parameter");
-			rewriteAsGuarded(cgSource, false, "''" + referredOperation.getOwningClass().getName() + "'' rather than ''OclVoid'' value required");
+		//	rewriteAsGuarded(cgSource, false, "Non-null '" + referredOperation.getOwningClass().getName() + "' rather than 'OclVoid' value required");
+			rewriteAsGuarded(cgSource, false, PivotMessages.NullNavigation, "source", referredOperation);
 		}
 		for (int i = 0; i < iMax; i++) {			// Avoid CME from rewrite
 			CGValuedElement cgArgument = cgArguments.get(i);
@@ -568,7 +581,8 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			Parameter asParameter = ownedParameters.get(i);
 			if (asParameter.isIsRequired() && !cgArgument.isNonNull()) {
 //				rewriteAsGuarded(cgArgument, false, "value4 for " + asParameter.getName() + " parameter");
-				rewriteAsGuarded(cgArgument, false, "''" + asParameter.getType().getName() + "'' rather than ''OclVoid'' value required");
+			//	rewriteAsGuarded(cgArgument, false, "'" + asParameter.getType().getName() + "' rather than 'OclVoid' value required");
+				rewriteAsGuarded(cgArgument, false, PivotMessages.NullNavigation, "source", asParameter.getType());
 			}
 		}
 		return null;
@@ -578,7 +592,7 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	public @Nullable Object visitCGNativeOperationCallExp(@NonNull CGNativeOperationCallExp cgElement) {
 		super.visitCGNativeOperationCallExp(cgElement);
 		CGValuedElement cgSource = cgElement.getSource();
-		rewriteAsGuarded(cgSource, isSafe(cgElement), "source for '" + cgElement.getReferredOperation() + "'");
+		rewriteAsGuarded(cgSource, isSafe(cgElement), PivotMessages.NullNavigation, "source", cgElement.getReferredOperation());
 		rewriteAsUnboxed(cgSource);
 		List<CGValuedElement> cgArguments = cgElement.getArguments();
 		int iMax = cgArguments.size();
@@ -603,20 +617,17 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 			PropertyId referredPropertyId = referredProperty.getPropertyId();
 			referredPropertyName = ValueUtil.getElementIdName(referredPropertyId);
 		}
-		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), "source for '" + referredPropertyName + "'");
+		rewriteAsGuarded(cgElement.getSource(), isSafe(cgElement), PivotMessages.NullNavigation, "source", referredPropertyName);
 		return null;
 	}
 
 	@Override
 	public @Nullable Object visitCGOperation(@NonNull CGOperation cgElement) {
 		super.visitCGOperation(cgElement);
-		//		if ("isAttribute".equals(cgElement.getName())) {
-		//			System.out.println("visitCGOperation for " + cgElement.getAst().toString());
-		//		}
-		if (cgElement.isRequired()) {
+		if (cgElement.basicIsRequired()) {
 			CGValuedElement body = cgElement.getBody();
 			if (body != null) {
-				rewriteAsGuarded(body, false, "body for '" + cgElement.getAst() + "'");
+				rewriteAsGuarded(body, false, PivotMessages.NullNavigation, "body", cgElement.getAst());
 			}
 		}
 		return null;
@@ -625,10 +636,10 @@ public class BoxingAnalyzer extends AbstractExtendingCGModelVisitor<@Nullable Ob
 	@Override
 	public @Nullable Object visitCGProperty(@NonNull CGProperty cgElement) {
 		super.visitCGProperty(cgElement);
-		if (cgElement.isNonNull()) {
+		if (cgElement.basicIsRequired()) {
 			CGValuedElement body = cgElement.getBody();
 			if (body != null) {
-				rewriteAsGuarded(body, false, "body for '" + cgElement.getAst() + "'");
+				rewriteAsGuarded(body, false, PivotMessages.NullNavigation, "body", cgElement.getAst());
 			}
 		}
 		return null;
