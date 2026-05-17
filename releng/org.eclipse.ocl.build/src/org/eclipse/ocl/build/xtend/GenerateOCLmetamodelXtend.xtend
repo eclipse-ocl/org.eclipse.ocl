@@ -293,7 +293,7 @@ class GenerateOCLmetamodelXtend extends GenerateOCLmetamodel
 					/**
 					 * Overridden to avoid computing proxies for the shared instance.
 					 *
-					 * @since 1.23
+					 * @since 7.0
 					 */
 					@Override
 					public void preUnload(@NonNull EnvironmentFactory environmentFactory) {}
