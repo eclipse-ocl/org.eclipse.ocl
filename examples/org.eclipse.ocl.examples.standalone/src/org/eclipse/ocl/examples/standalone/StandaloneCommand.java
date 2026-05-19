@@ -282,7 +282,7 @@ public abstract class StandaloneCommand
 		URI fileUri;
 		try {
 			fileUri = URI.createURI(fileName, true);
-			if (!fileUri.isPlatform() && !fileUri.isFile()) {
+			if (!fileUri.isPlatform() && !fileUri.isFile() && !fileUri.isArchive()) {
 				File file = new File(fileName).getCanonicalFile();		// FIXME is this necessary
 				IPath filePath = new Path(file.getAbsolutePath());
 				if (isRelativePath(filePath)) {
@@ -300,6 +300,13 @@ public abstract class StandaloneCommand
 		}
 	}
 
+	/*
+	getModelUri
+	'archive:file:/home/jenkins/.m2/repository/p2/osgi/bundle/org.eclipse.ocl.examples.xtext.tests/3.24.0.v20260519-0614/org.eclipse.ocl.examples.xtext.tests-3.24.0.v20260519-0614.jar!/models/standalone/BadEcore.ecore'
+	=>
+	'file:/home/jenkins/agent/workspace/ocl-compatibility-21/tests/org.eclipse.ocl.compatibility.tests/target/test-reports/archive:file:/home/jenkins/.m2/repository/p2/osgi/bundle/org.eclipse.ocl.examples.xtext.tests/3.24.0.v20260519-0614/org.eclipse.ocl.examples.xtext.tests-3.24.0.v20260519-0614.jar!/models/standalone/BadEcore.ecore'
+	*/
+	
 	/**
 	 * Checks if the path is relative or absolute.
 	 *
