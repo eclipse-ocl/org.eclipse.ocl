@@ -77,7 +77,10 @@ Export-Package: org.eclipse.ocl.examples.pivot.tests,
  org.eclipse.ocl.examples.xtext.tests.noreflectioncompany,
  org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.impl,
  org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.util,
- org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.validation
+ org.eclipse.ocl.examples.xtext.tests.noreflectioncompany.validation,
+ org.eclipse.ocl.examples.xtext.tests.dummy,
+ org.eclipse.ocl.examples.xtext.tests.dummy.impl,
+ org.eclipse.ocl.examples.xtext.tests.dummy.util
 Import-Package: com.google.common.collect,
  org.apache.log4j;version="[1.2.15,2.0.0)",
  org.apache.log4j.spi;version="[1.2.15,2.0.0)",
