@@ -15,6 +15,7 @@ def targetPlatformToJavaVersionMap = [
   '2019-12' : '1.8',
   '2019-09' : '1.8',
   '2019-06' : '1.8',
+  'branch-11' : '11',
 ]
 
 /*def targetPlatformToTychoVersionMap = [
@@ -70,6 +71,7 @@ pipeline {
 			description: '''
 <ul>
 <li> reload -- to reload the parameter definitions from GIT and bypass testing
+<li> branch-11 -- to test the latest ocl-branch build on latest Eclipse
 <li> 2023-03 2021-06 -- to test a list of (two) specific platforms
 <li> &lt;blank&gt; -- to test all of the 2019-06 to 2023-03 inclusive platforms
 </ul>'''
@@ -107,7 +109,7 @@ pipeline {
 				script {
 					for (targetPlatform in targetPlatforms) {
 //						timeout(time: 1, unit: 'HOURS')
-						if (params.SELECTION == '' || params.SELECTION.contains(targetPlatform)) {
+						if (((params.SELECTION == '') && (targetPlatform != 'branch-11')) || params.SELECTION.contains(targetPlatform)) {
 							echo "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ ${targetPlatform}"
 							stage("${targetPlatform}") {
 								wrap([$class: 'Xvnc', takeScreenshot: false, useXauthority: true]) {

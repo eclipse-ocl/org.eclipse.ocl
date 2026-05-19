@@ -865,5 +865,44 @@
         <tycho-version>3.0.5</tycho-version>
       </properties>
     </profile>
+    <profile>
+      <id>branch-11</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-11</executionEnvironment>
+        <runtime-jdk-version>11.0</runtime-jdk-version>
+        <targetRelease>branch</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>branch-17</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-17</executionEnvironment>
+        <runtime-jdk-version>17.0</runtime-jdk-version>
+        <targetRelease>branch</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
+    <profile>
+      <id>branch-21</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-21</executionEnvironment>
+        <runtime-jdk-version>21.0</runtime-jdk-version>
+        <targetRelease>branch</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
   </profiles>
 </project>

@@ -682,9 +682,21 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		String fileString;
 		if (!EMFPlugin.IS_ECLIPSE_RUNNING) {
 			URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/" + relativeFileName, true);
+		//	System.out.println("testStandaloneExecution_exists_FilePath inputURI = '" + inputURI + "'");
 			URIConverter uriConverter = standaloneApplication.getURIConverter();
 			URI fileURI = uriConverter.normalize(inputURI);
-			fileString = "file:/" + fileURI.toFileString();
+			if (fileURI.isArchive()) {
+				fileString = fileURI.toString();
+			//	System.out.println("testStandaloneExecution_exists_FilePath isArchive '" + fileURI + "' => '" + fileString + "'");
+			}
+			else if (fileURI.isFile()) {			// XXX
+				fileString = "file:/" + fileURI.toFileString();
+			//	System.out.println("testStandaloneExecution_exists_FilePath isFile '" + fileURI + "' => '" + fileString + "'");
+			}
+			else {				// isArchive for compatibility tests
+				fileString = fileURI.toString();
+			//	System.out.println("testStandaloneExecution_exists_FilePath else '" + fileURI + "' => '" + fileString + "'");
+			}
 		}
 		else {
 			ProjectMap projectMap = (ProjectMap)standaloneApplication.getEnvironmentFactory().getProjectManager();
@@ -692,24 +704,34 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			assert projectDescriptor != null;
 			Bundle bundle = FrameworkUtil.getBundle(getClass());
 			String projectPath = bundle.getLocation();
-			URI uri;
 			if (!CGUtil.isTychoSurefire()) {														// FIXME Move to utility function
 				String expectedPrefix = "reference:";
 				assert projectPath.startsWith(expectedPrefix);
 				projectPath = projectPath.substring(expectedPrefix.length()) + relativeFileName;
-				uri = URI.createURI(projectPath);
+				URI uri = URI.createURI(projectPath);
+			//	System.out.println("testStandaloneExecution_exists_FilePath !tycho '" + projectPath + "' => '" + uri + "'");
+				assert uri.isFile();
+				fileString = uri.toString();
+				assert fileString != null;
 			}
 			else {
 				String expectedPrefix = "initial@reference:file:";
 				assert projectPath.startsWith(expectedPrefix);
-				projectPath = projectPath.substring(expectedPrefix.length());
-				projectPath = new File(projectPath).getCanonicalPath() + "/tests/" + PivotTestCase.PLUGIN_ID + "/" + relativeFileName;
-				uri = URI.createFileURI(projectPath);
+			//	System.out.println("testStandaloneExecution_exists_FilePath projectPath '" + projectPath + "'");
+				if (projectPath.endsWith(".jar")) {				// compatibility test wrt built jars
+					String bundlePath = new File("." + projectPath.substring(expectedPrefix.length())).getCanonicalPath();
+				//	System.out.println("testStandaloneExecution_exists_FilePath bundlePath '" + bundlePath + "'");
+					fileString = "archive:file:" + bundlePath.toString() + "!/" + relativeFileName;
+				}
+				else {											// build test wrt projects
+					String bundlePath = new File(projectPath.substring(expectedPrefix.length())).getCanonicalPath().replace("\\", "/");
+				//	System.out.println("testStandaloneExecution_exists_FilePath bundlePath '" + bundlePath + "'");
+					fileString = (bundlePath.startsWith("/") ? "file:"  : "file:/") + bundlePath + "/tests/" + PivotTestCase.PLUGIN_ID + "/" + relativeFileName;
+				}
+			//	System.out.println("testStandaloneExecution_exists_FilePath tycho '" + projectPath + "' => '" + fileString + "'");
 			}
-			assert uri.isFile();
-			fileString = uri.toString();
-			assert fileString != null;
 		}
+		assert fileString != null;
 		doExists(standaloneApplication, fileString, StandaloneResponse.OK);
 		standaloneApplication.stop();
 	}
@@ -788,7 +810,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		URI inputURI = URI.createPlatformPluginURI(PivotTestCase.PLUGIN_ID + "/models/standalone/BadEcore.ecore", true);
 		TestProject testProject = getTestProject();
 		TestFile testFile = testProject.copyFile(uriConverter, null, inputURI);
-		String fileString = "file:/" + testFile.getFile().toString();
+		String testFileString = testFile.getFile().toString().replace("\\", "/");
+		String fileString = (testFileString.startsWith("/") ? "file:"  : "file:/") + testFileString;
 		doValidate_BadEcore(standaloneApplication, fileString);		// e.g. file:/E:/...
 		standaloneApplication.stop();
 	}
