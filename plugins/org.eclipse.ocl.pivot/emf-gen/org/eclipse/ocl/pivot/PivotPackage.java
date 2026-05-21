@@ -1318,6 +1318,16 @@ extends EPackage
 	EOperation getIterateExp__ValidateBodyTypeConformsToResultType__DiagnosticChain_Map();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IterateExp#validateBodyTypesAreConformant(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Body Types Are Conformant</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Body Types Are Conformant</em>' operation.
+	 * @see org.eclipse.ocl.pivot.IterateExp#validateBodyTypesAreConformant(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getIterateExp__ValidateBodyTypesAreConformant__DiagnosticChain_Map();
+
+	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IterateExp#validateOneInitializer(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate One Initializer</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1480,6 +1490,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getIteratorExp__ValidateAnyTypeIsSourceElementType__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateBodyTypeIsConformant(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Body Type Is Conformant</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Validate Body Type Is Conformant</em>' operation.
+	 * @see org.eclipse.ocl.pivot.IteratorExp#validateBodyTypeIsConformant(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map)
+	 * @generated
+	 */
+	EOperation getIteratorExp__ValidateBodyTypeIsConformant__DiagnosticChain_Map();
 
 	/**
 	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.IteratorExp#validateClosureBodyElementTypeIsIteratorType(org.eclipse.emf.common.util.DiagnosticChain, java.util.Map) <em>Validate Closure Body Element Type Is Iterator Type</em>}' operation.
@@ -6823,6 +6843,14 @@ extends EPackage
 		EOperation ITERATE_EXP___VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIterateExp__ValidateBodyTypeConformsToResultType__DiagnosticChain_Map();
 
 		/**
+		 * The meta object literal for the '<em><b>Validate Body Types Are Conformant</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITERATE_EXP___VALIDATE_BODY_TYPES_ARE_CONFORMANT__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIterateExp__ValidateBodyTypesAreConformant__DiagnosticChain_Map();
+
+		/**
 		 * The meta object literal for the '<em><b>Validate One Initializer</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6958,6 +6986,14 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation ITERATOR_EXP___VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorExp__ValidateAnyTypeIsSourceElementType__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '<em><b>Validate Body Type Is Conformant</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITERATOR_EXP___VALIDATE_BODY_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorExp__ValidateBodyTypeIsConformant__DiagnosticChain_Map();
 
 		/**
 		 * The meta object literal for the '<em><b>Validate Closure Body Element Type Is Iterator Type</b></em>' operation.

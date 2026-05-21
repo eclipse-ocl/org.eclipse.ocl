@@ -99,6 +99,16 @@ public interface IteratorExp extends LoopExp, ReferringElement
 
 	/**
 	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * <!-- begin-model-doc -->
+	 * The body must conform to the parameter of the referred iteration.
+	 * <!-- end-model-doc -->
+	 * @generated
+	 */
+	boolean validateBodyTypeIsConformant(DiagnosticChain diagnostics, Map<Object, Object> context);
+
+	/**
+	 * <!-- begin-user-doc -->
 	 * @since 1.3
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->

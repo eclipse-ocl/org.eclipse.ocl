@@ -4739,6 +4739,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Constraint iv_IfExp_TypeIsNotInvalid = createInvariant(PivotPackage.Literals.IF_EXP___VALIDATE_TYPE_IS_NOT_INVALID__DIAGNOSTICCHAIN_MAP, "TypeIsNotInvalid", "type <> OclInvalid");
 		private final @NonNull Constraint iv_IntegerLiteralExp_TypeIsInteger = createInvariant(PivotPackage.Literals.INTEGER_LITERAL_EXP___VALIDATE_TYPE_IS_INTEGER__DIAGNOSTICCHAIN_MAP, "TypeIsInteger", "self.type = Integer");
 		private final @NonNull Constraint iv_IterateExp_BodyTypeConformsToResultType = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_BODY_TYPE_CONFORMS_TO_RESULT_TYPE__DIAGNOSTICCHAIN_MAP, "BodyTypeConformsToResultType", "true");
+		private final @NonNull Constraint iv_IterateExp_BodyTypesAreConformant = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_BODY_TYPES_ARE_CONFORMANT__DIAGNOSTICCHAIN_MAP, "BodyTypesAreConformant", "let iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tSequence{1..ownedBodies->size()}->forAll (i | \n\t\tlet argument : OCLExpression = ownedBodies->at(i) in\n\t\tlet parameter : Parameter = parameters?->at(i) in\n\t\tlet parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in\n\t\tlet parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in\n\t\tlet parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\t\tlet nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in\n\t\targument.type?.conformsTo(parameterType2) and nullityConforms)");
 		private final @NonNull Constraint iv_IterateExp_OneInitializer = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_ONE_INITIALIZER__DIAGNOSTICCHAIN_MAP, "OneInitializer", "true");
 		private final @NonNull Constraint iv_IterateExp_SafeIteratorIsRequired = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_ITERATOR_IS_REQUIRED__DIAGNOSTICCHAIN_MAP, "SafeIteratorIsRequired", "isSafe implies ownedIterators->forAll(isRequired)");
 		private final @NonNull Constraint iv_IterateExp_SafeSourceCanBeNull = createInvariant(PivotPackage.Literals.ITERATE_EXP___VALIDATE_SAFE_SOURCE_CAN_BE_NULL__DIAGNOSTICCHAIN_MAP, "SafeSourceCanBeNull", "isSafe implies not\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif");
@@ -4747,6 +4748,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Constraint iv_IteratorExp_AnyBodyTypeIsBoolean = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_BODY_TYPE_IS_BOOLEAN__DIAGNOSTICCHAIN_MAP, "AnyBodyTypeIsBoolean", "true");
 		private final @NonNull Constraint iv_IteratorExp_AnyHasOneIterator = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_HAS_ONE_ITERATOR__DIAGNOSTICCHAIN_MAP, "AnyHasOneIterator", "true");
 		private final @NonNull Constraint iv_IteratorExp_AnyTypeIsSourceElementType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_ANY_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "AnyTypeIsSourceElementType", "true");
+		private final @NonNull Constraint iv_IteratorExp_BodyTypeIsConformant = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_BODY_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP, "BodyTypeIsConformant", "let iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tlet argument : OCLExpression = ownedBody in\n\tlet parameter : Parameter = parameters?->at(1) in\n\tlet parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in\n\tlet parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in\n\tlet parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\tlet nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in\n\targument.type?.conformsTo(parameterType2) and nullityConforms");
 		private final @NonNull Constraint iv_IteratorExp_ClosureBodyElementTypeIsIteratorType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_BODY_ELEMENT_TYPE_IS_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureBodyElementTypeIsIteratorType", "name = \'closure\' implies\n\tlet bodyElementType = if ownedBody.type.oclIsKindOf(CollectionType) then ownedBody.type.oclAsType(CollectionType).elementType elseif ownedBody.type.oclIsKindOf(MapType) then ownedBody.type.oclAsType(MapType).keyType else ownedBody.type endif in \n\tlet iteratorType = ownedIterators->at(1).type in\n\tbodyElementType?.conformsTo(iteratorType)");
 		private final @NonNull Constraint iv_IteratorExp_ClosureBodyTypeIsConformanttoIteratorType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_BODY_TYPE_IS_CONFORMANTTO_ITERATOR_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureBodyTypeIsConformanttoIteratorType", "true");
 		private final @NonNull Constraint iv_IteratorExp_ClosureElementTypeIsSourceElementType = createInvariant(PivotPackage.Literals.ITERATOR_EXP___VALIDATE_CLOSURE_ELEMENT_TYPE_IS_SOURCE_ELEMENT_TYPE__DIAGNOSTICCHAIN_MAP, "ClosureElementTypeIsSourceElementType", "true");
@@ -4873,6 +4875,7 @@ public class OCLmetamodel extends ASResourceImpl
 
 			ownedInvariants = _IterateExp.getOwnedInvariants();
 			ownedInvariants.add(constraint = iv_IterateExp_BodyTypeConformsToResultType);
+			ownedInvariants.add(constraint = iv_IterateExp_BodyTypesAreConformant);
 			ownedInvariants.add(constraint = iv_IterateExp_OneInitializer);
 			ownedInvariants.add(constraint = iv_IterateExp_SafeIteratorIsRequired);
 			ownedInvariants.add(constraint = iv_IterateExp_SafeSourceCanBeNull);
@@ -4883,6 +4886,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedInvariants.add(constraint = iv_IteratorExp_AnyBodyTypeIsBoolean);
 			ownedInvariants.add(constraint = iv_IteratorExp_AnyHasOneIterator);
 			ownedInvariants.add(constraint = iv_IteratorExp_AnyTypeIsSourceElementType);
+			ownedInvariants.add(constraint = iv_IteratorExp_BodyTypeIsConformant);
 			ownedInvariants.add(constraint = iv_IteratorExp_ClosureBodyElementTypeIsIteratorType);
 			ownedInvariants.add(constraint = iv_IteratorExp_ClosureBodyTypeIsConformanttoIteratorType);
 			ownedInvariants.add(constraint = iv_IteratorExp_ClosureElementTypeIsSourceElementType);
@@ -5254,11 +5258,13 @@ public class OCLmetamodel extends ASResourceImpl
 			installComment(pr_InstanceSpecification_ownedSpecification, "A specification of how to compute, derive, or construct the instance.");
 			installComment(iv_IntegerLiteralExp_TypeIsInteger, "The type of an integer Literal expression is the type Integer.");
 			installComment(iv_IterateExp_BodyTypeConformsToResultType, "The type of the body expression must conform to the declared type of the result variable.");
+			installComment(iv_IterateExp_BodyTypesAreConformant, "The bodies must conform to the parameters of the referred iteration.");
 			installComment(iv_IterateExp_OneInitializer, "A result variable must have an init expression.");
 			installComment(iv_IterateExp_SafeIteratorIsRequired, "Safe navigation is not necessary when an iterator can be null.");
 			installComment(iv_IterateExp_SafeSourceCanBeNull, "Safe navigation is not necessary when the source collection is null-free.");
 			installComment(iv_IterateExp_TypeIsResultType, "The type of the iterate is the type of the result variable.");
 			installComment(iv_IterateExp_UnsafeSourceCanNotBeNull, "Safe navigation is necessary when an iterator cannot be null and the source collection is not null-free.");
+			installComment(iv_IteratorExp_BodyTypeIsConformant, "The body must conform to the parameter of the referred iteration.");
 			installComment(iv_IteratorExp_ClosureBodyElementTypeIsIteratorType, "The result element type is the same as type of the body elements or element.");
 			installComment(iv_IteratorExp_ClosureElementTypeIsSourceElementType, "The element type is the same as the source element type.");
 			installComment(iv_IteratorExp_ClosureResultElementTypeIsIteratorType, "Each body element is assignable to the iterator.");

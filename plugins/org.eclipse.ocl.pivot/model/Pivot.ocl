@@ -309,18 +309,18 @@ inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
 inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies
 	let sourceType = ownedSource?.type in
 	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
-/* The body must conform to the parameter of the referred iteration.
+/* The body must conform to the parameter of the referred iteration. */
 inv BodyTypeIsConformant:
 	let iteration : Iteration = self.referredIteration in
 	let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in
 	let selfType : Type = iteration?.owningClass in
 	let argument : OCLExpression = ownedBody in
 	let parameter : Parameter = parameters?->at(1) in
-	let parameterType : Type = parameter.type in
-	let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in
-	let isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in
-	let nullityConforms : Boolean = argument.isRequired or not isRequired in
-	argument.type?.conformsTo(requiredType) and nullityConforms */
+	let parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in
+	let parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in
+	let parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in
+	let nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in
+	argument.type?.conformsTo(parameterType2) and nullityConforms
 
 context IterateExp
 /* Safe navigation is not necessary when the source collection is null-free. */
@@ -333,7 +333,7 @@ inv SafeIteratorIsRequired: isSafe implies ownedIterators->forAll(isRequired)
 inv UnsafeSourceCanNotBeNull: (not isSafe and ownedIterators->exists(isRequired)) implies
 	let sourceType = ownedSource?.type in
 	if sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif
-/* The bodies must conform to the parameters of the referred iteration.
+/* The bodies must conform to the parameters of the referred iteration. */
 inv BodyTypesAreConformant:
 	let iteration : Iteration = self.referredIteration in
 	let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in
@@ -341,11 +341,11 @@ inv BodyTypesAreConformant:
 	Sequence{1..ownedBodies->size()}->forAll (i | 
 		let argument : OCLExpression = ownedBodies->at(i) in
 		let parameter : Parameter = parameters?->at(i) in
-		let parameterType : Type = parameter.type in
-		let requiredType : Type = if parameter.isTypeof then Class else parameterType?.specializeIn(self, selfType) endif in
-		let isRequired : Boolean = if parameterType.oclIsKindOf(LambdaType) then parameterType.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in
-		let nullityConforms : Boolean = argument.isRequired or not isRequired in
-		argument.type?.conformsTo(requiredType) and nullityConforms) */
+		let parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in
+		let parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in
+		let parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in
+		let nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in
+		argument.type?.conformsTo(parameterType2) and nullityConforms)
 
 context IteratorVariable
 /* Iterator variable has no initializer.*/
