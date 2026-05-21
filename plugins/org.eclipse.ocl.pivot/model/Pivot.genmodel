@@ -395,6 +395,9 @@
     <genClasses ecoreClass="Pivot.ecore#T-pivot-Iteration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Iteration-ownedAccumulator"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-Iteration-ownedIterators"/>
+      <genOperations ecoreOperation="Pivot.ecore#//Iteration/resolveBodyType">
+        <genParameters ecoreParameter="Pivot.ecore#//Iteration/resolveBodyType/argument"/>
+      </genOperations>
     </genClasses>
     <genClasses ecoreClass="Pivot.ecore#T-pivot-IteratorExp">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Pivot.ecore#F-pivot-IteratorExp-ownedBody"/>

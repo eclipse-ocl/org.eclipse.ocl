@@ -1253,6 +1253,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-Iteration" name="Iteration"
       eSuperTypes="#T-pivot-Operation">
+    <eOperations name="resolveBodyType" lowerBound="1" eType="#T-pivot-Type">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="body" value="argument.type"/>
+      </eAnnotations>
+      <eParameters name="argument" lowerBound="1" eType="#T-pivot-OCLExpression"/>
+    </eOperations>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Iteration-ownedAccumulator"
         name="ownedAccumulator" eType="#T-pivot-Parameter" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-Iteration-ownedIterators"
@@ -1311,7 +1317,7 @@
     </eOperations>
     <eOperations name="validateBodyTypeIsConformant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="body" value="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;let selfType : Type = iteration?.owningClass in&#xA;&#x9;let argument : OCLExpression = ownedBody in&#xA;&#x9;let parameter : Parameter = parameters?->at(1) in&#xA;&#x9;let parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in&#xA;&#x9;let parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in&#xA;&#x9;let parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in&#xA;&#x9;argument.type?.conformsTo(parameterType2) and nullityConforms&#xA;&#xA;"/>
+        <details key="body" value="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;let selfType : Type = iteration?.owningClass in&#xA;&#x9;let argument : OCLExpression = ownedBody in&#xA;&#x9;let argumentType : Type = iteration.resolveBodyType(ownedBody) in&#xA;&#x9;let parameter : Parameter = parameters?->at(1) in&#xA;&#x9;let parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in&#xA;&#x9;let parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in&#xA;&#x9;let parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in&#xA;&#x9;argumentType?.conformsTo(parameterType2) and nullityConforms&#xA;&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="The body must conform to the parameter of the referred iteration."/>

@@ -701,7 +701,7 @@ implements OperationCallExp {
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
 							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull OCLExpression argument = (@NonNull OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
+							final /*@Thrown*/ @NonNull OCLExpression argument_0 = (@NonNull OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
 							if (safe_ownedParameters_source == null) {
 								throw new InvalidValueException("Null \'source\' for \'Collection(T)::excluding($$0) : Collection($$0)\'");
 							}
@@ -736,7 +736,7 @@ implements OperationCallExp {
 								}
 								requiredType = safe_specializeIn_source;
 							}
-							final /*@Thrown*/ @Nullable Type type = argument.getType();
+							final /*@Thrown*/ @Nullable Type type = argument_0.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;
 							try {
 								CAUGHT_type = type;

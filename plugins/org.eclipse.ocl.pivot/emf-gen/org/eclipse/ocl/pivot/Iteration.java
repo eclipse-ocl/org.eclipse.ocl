@@ -71,4 +71,11 @@ public interface Iteration extends Operation
 	 * @generated
 	 */
 	@NonNull List<Parameter> getOwnedIterators();
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	Type resolveBodyType(OCLExpression argument);
 } // Iteration

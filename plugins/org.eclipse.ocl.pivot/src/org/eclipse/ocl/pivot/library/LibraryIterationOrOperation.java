@@ -23,7 +23,7 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 public interface LibraryIterationOrOperation extends LibraryFeature
 {
 	/**
-	 * Return the actual type of te body of callExp for which the regular library modeling suggests bodyType.
+	 * Return the actual type of the body of callExp for which the regular library modeling suggests bodyType.
 	 *
 	 * The default implementation just returns bodyType.
 	 * @since 7.0

@@ -315,7 +315,7 @@ inv BodyTypeIsConformant:
 	let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in
 	let selfType : Type = iteration?.owningClass in
 	let argument : OCLExpression = ownedBody in
-	let argumentType : Type = iteration.conformingBodyType(ownedBody) in
+	let argumentType : Type = iteration.resolveBodyType(ownedBody) in
 	let parameter : Parameter = parameters?->at(1) in
 	let parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in
 	let parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in
@@ -324,7 +324,7 @@ inv BodyTypeIsConformant:
 	argumentType?.conformsTo(parameterType2) and nullityConforms
 
 context Iteration
-def: conformingBodyType(argument : OCLExpression[1]) : Type[1] = argument.type
+def: resolveBodyType(argument : OCLExpression[1]) : Type[1] = argument.type	/* Actually redirects to implementation to support flattening collect() overload. */
 
 context IterateExp
 /* Safe navigation is not necessary when the source collection is null-free. */

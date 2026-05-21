@@ -496,33 +496,36 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 			 *             in
 			 *               let argument : OCLExpression[1] = ownedBody
 			 *               in
-			 *                 let parameter : Parameter[1] = parameters?->at(1)
+			 *                 let
+			 *                   argumentType : Type[1] = iteration.resolveBodyType(ownedBody)
 			 *                 in
-			 *                   let
-			 *                     parameterType1 : Type[1] = if parameter.isTypeof
-			 *                     then Class
-			 *                     else parameter.type.specializeIn(self, selfType)
-			 *                     endif
+			 *                   let parameter : Parameter[1] = parameters?->at(1)
 			 *                   in
 			 *                     let
-			 *                       parameterType2 : Type[?] = if
-			 *                         parameterType1.oclIsKindOf(LambdaType)
-			 *                       then
-			 *                         parameterType1.oclAsType(LambdaType).ownedResult.type
-			 *                       else parameterType1
+			 *                       parameterType1 : Type[1] = if parameter.isTypeof
+			 *                       then Class
+			 *                       else parameter.type.specializeIn(self, selfType)
 			 *                       endif
 			 *                     in
 			 *                       let
-			 *                         parameterIsRequired : Boolean[1] = if
+			 *                         parameterType2 : Type[?] = if
 			 *                           parameterType1.oclIsKindOf(LambdaType)
 			 *                         then
-			 *                           parameterType1.oclAsType(LambdaType).ownedResult.isRequired
-			 *                         else parameter.isRequired
+			 *                           parameterType1.oclAsType(LambdaType).ownedResult.type
+			 *                         else parameterType1
 			 *                         endif
 			 *                       in
-			 *                         let nullityConforms : Boolean[?] = argument.isRequired or not parameterIsRequired
+			 *                         let
+			 *                           parameterIsRequired : Boolean[1] = if
+			 *                             parameterType1.oclIsKindOf(LambdaType)
+			 *                           then
+			 *                             parameterType1.oclAsType(LambdaType).ownedResult.isRequired
+			 *                           else parameter.isRequired
+			 *                           endif
 			 *                         in
-			 *                           argument.type?.conformsTo(parameterType2) and nullityConforms
+			 *                           let nullityConforms : Boolean[?] = argument.isRequired or not parameterIsRequired
+			 *                           in
+			 *                             argumentType?.conformsTo(parameterType2) and nullityConforms
 			 *       in
 			 *         constraintName.logDiagnostic(self, null, diagnostics, context, null, severity, result, 0)
 			 *     endif
@@ -561,7 +564,21 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 						safe_owningClass_source = owningClass_0;
 					}
 					@SuppressWarnings("null")
-					final /*@NonInvalid*/ @NonNull OCLExpression argument = this.getOwnedBody();
+					final /*@NonInvalid*/ @NonNull OCLExpression argument_0 = this.getOwnedBody();
+					/*@Caught*/ @NonNull Object CAUGHT_argumentType;
+					try {
+						if (iteration == null) {
+							throw new InvalidValueException("Null \'source\' for \'Iteration::resolveBodyType(OCLExpression[1]) : Type[1]\'");
+						}
+						@SuppressWarnings("null")
+						final /*@NonInvalid*/ @NonNull OCLExpression ownedBody = this.getOwnedBody();
+						@SuppressWarnings("null")
+						final /*@Thrown*/ @NonNull Type argumentType = iteration.resolveBodyType(ownedBody);
+						CAUGHT_argumentType = argumentType;
+					}
+					catch (Exception e) {
+						CAUGHT_argumentType = ValueUtil.createInvalidValue(e);
+					}
 					/*@Caught*/ @NonNull Object CAUGHT_parameter;
 					try {
 						if (safe_ownedParameters_source == null) {
@@ -654,7 +671,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 					}
 					/*@Caught*/ @Nullable Object CAUGHT_nullityConforms;
 					try {
-						final /*@NonInvalid*/ boolean isRequired_1 = argument.isIsRequired();
+						final /*@NonInvalid*/ boolean isRequired_1 = argument_0.isIsRequired();
 						final /*@Thrown*/ @Nullable Boolean nullityConforms;
 						if (isRequired_1) {
 							nullityConforms = ValueUtil.TRUE_VALUE;
@@ -702,31 +719,22 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 					catch (Exception e) {
 						CAUGHT_nullityConforms = ValueUtil.createInvalidValue(e);
 					}
-					/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
+					/*@Caught*/ @NonNull Object CAUGHT_conformsTo;
 					try {
-						final /*@NonInvalid*/ @Nullable Type type_1 = argument.getType();
-						final /*@NonInvalid*/ @NonNull Object conformsTo = type_1 == null;
-						/*@Thrown*/ @Nullable Boolean safe_conformsTo_source;
-						if (conformsTo == Boolean.TRUE) {
-							safe_conformsTo_source = null;
+						if (CAUGHT_argumentType instanceof InvalidValueException) {
+							throw (InvalidValueException)CAUGHT_argumentType;
 						}
-						else {
-							if (type_1 == null) {
-								throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type) : Boolean[1]\'");
-							}
-							if (CAUGHT_parameterType2 instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_parameterType2;
-							}
-							final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_1, CAUGHT_parameterType2).booleanValue();
-							safe_conformsTo_source = conformsTo_0;
+						if (CAUGHT_parameterType2 instanceof InvalidValueException) {
+							throw (InvalidValueException)CAUGHT_parameterType2;
 						}
-						CAUGHT_safe_conformsTo_source = safe_conformsTo_source;
+						final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, CAUGHT_argumentType, CAUGHT_parameterType2).booleanValue();
+						CAUGHT_conformsTo = conformsTo;
 					}
 					catch (Exception e) {
-						CAUGHT_safe_conformsTo_source = ValueUtil.createInvalidValue(e);
+						CAUGHT_conformsTo = ValueUtil.createInvalidValue(e);
 					}
 					final /*@Thrown*/ @Nullable Boolean and;
-					if (CAUGHT_safe_conformsTo_source == ValueUtil.FALSE_VALUE) {
+					if (CAUGHT_conformsTo == ValueUtil.FALSE_VALUE) {
 						and = ValueUtil.FALSE_VALUE;
 					}
 					else {
@@ -734,13 +742,13 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							if (CAUGHT_safe_conformsTo_source instanceof InvalidValueException) {
-								throw (InvalidValueException)CAUGHT_safe_conformsTo_source;
+							if (CAUGHT_conformsTo instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_conformsTo;
 							}
 							if (CAUGHT_nullityConforms instanceof InvalidValueException) {
 								throw (InvalidValueException)CAUGHT_nullityConforms;
 							}
-							if ((CAUGHT_safe_conformsTo_source == null) || (CAUGHT_nullityConforms == null)) {
+							if (CAUGHT_nullityConforms == null) {
 								and = null;
 							}
 							else {

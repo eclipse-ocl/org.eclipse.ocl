@@ -429,6 +429,10 @@
       <ownedProperties xmi:id="eb1wJ" isComposite="true" name="ownedResult" opposite="#i9Axv" type="#t4j6T"/>
     </ownedClasses>
     <ownedClasses xmi:id="OZhAb" name="Iteration" superClasses="#Yz,F1">
+      <ownedOperations xmi:id="mFXGd" isRequired="true" name="resolveBodyType" type="#rrwsa">
+        <bodyExpression xsi:type="pivot:ExpressionInOCL" body="argument.type"/>
+        <ownedParameters xmi:id="hjXNz" isRequired="true" name="argument" type="#BFtK4"/>
+      </ownedOperations>
       <ownedProperties xmi:id="PJkfK" isComposite="true" name="ownedAccumulator" opposite="#u5ORV" type="#as9eG"/>
       <ownedProperties xmi:id="OpKAs" isComposite="true" isRequired="true" name="ownedIterators" opposite="#nZc1," type="#2ezwj"/>
       <ownedProperties xmi:id="7bx+Q" isImplicit="true" isRequired="true" name="LoopExp" opposite="#G2e3S" type="#0ymr3"/>
@@ -445,7 +449,7 @@
       </ownedInvariants>
       <ownedInvariants xmi:id=",kxb8" isCallable="true" name="BodyTypeIsConformant">
         <ownedComments body="The body must conform to the parameter of the referred iteration."/>
-        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;let selfType : Type = iteration?.owningClass in&#xA;&#x9;let argument : OCLExpression = ownedBody in&#xA;&#x9;let parameter : Parameter = parameters?->at(1) in&#xA;&#x9;let parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in&#xA;&#x9;let parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in&#xA;&#x9;let parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in&#xA;&#x9;argument.type?.conformsTo(parameterType2) and nullityConforms&#xA;&#xA;"/>
+        <ownedSpecification xsi:type="pivot:ExpressionInOCL" body="&#xA;&#x9;let iteration : Iteration = self.referredIteration in&#xA;&#x9;let parameters : OrderedSet(Parameter) = iteration?.ownedParameters in&#xA;&#x9;let selfType : Type = iteration?.owningClass in&#xA;&#x9;let argument : OCLExpression = ownedBody in&#xA;&#x9;let argumentType : Type = iteration.resolveBodyType(ownedBody) in&#xA;&#x9;let parameter : Parameter = parameters?->at(1) in&#xA;&#x9;let parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in&#xA;&#x9;let parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in&#xA;&#x9;let parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in&#xA;&#x9;let nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in&#xA;&#x9;argumentType?.conformsTo(parameterType2) and nullityConforms&#xA;&#xA;"/>
       </ownedInvariants>
       <ownedInvariants xmi:id="DSk3n" isCallable="true" name="ClosureBodyElementTypeIsIteratorType">
         <ownedComments body="The result element type is the same as type of the body elements or element."/>

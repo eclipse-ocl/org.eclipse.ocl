@@ -2598,6 +2598,17 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EOperation getIteration__ResolveBodyType__OCLExpression()
+	{
+		return iterationEClass.getEOperations().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getIteratorExp()
 	{
 		return iteratorExpEClass;
@@ -7374,6 +7385,7 @@ implements PivotPackage  {
 		iterationEClass = createEClass(47);
 		createEReference(iterationEClass, 28);
 		createEReference(iterationEClass, 29);
+		createEOperation(iterationEClass, 10);
 
 		iteratorExpEClass = createEClass(48);
 		createEReference(iteratorExpEClass, 16);
@@ -8484,6 +8496,9 @@ implements PivotPackage  {
 		initEClass(iterationEClass, Iteration.class, "Iteration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getIteration_OwnedAccumulator(), this.getParameter(), null, "ownedAccumulator", null, 0, 1, Iteration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 		initEReference(getIteration_OwnedIterators(), this.getParameter(), null, "ownedIterators", null, 0, -1, Iteration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getIteration__ResolveBodyType__OCLExpression(), this.getType(), "resolveBodyType", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getOCLExpression(), "argument", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(iteratorExpEClass, IteratorExp.class, "IteratorExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getIteratorExp_OwnedBody(), this.getOCLExpression(), null, "ownedBody", null, 1, 1, IteratorExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -10446,6 +10461,13 @@ implements PivotPackage  {
 			   "body", "(not isSafe and ownedIterators->exists(isRequired)) implies\n\tlet sourceType = ownedSource?.type in\n\tif sourceType.oclIsKindOf(MapType) then sourceType.oclAsType(MapType).keysAreNullFree else sourceType.oclAsType(CollectionType).isNullFree endif\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getIteration__ResolveBodyType__OCLExpression(),
+		   source,
+		   new String[]
+		   {
+			   "body", "argument.type" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getIteratorExp__ValidateAnyBodyTypeIsBoolean__DiagnosticChain_Map(),
 		   source,
 		   new String[]
@@ -10471,7 +10493,7 @@ implements PivotPackage  {
 		   source,
 		   new String[]
 		   {
-			   "body", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tlet argument : OCLExpression = ownedBody in\n\tlet parameter : Parameter = parameters?->at(1) in\n\tlet parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in\n\tlet parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in\n\tlet parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\tlet nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in\n\targument.type?.conformsTo(parameterType2) and nullityConforms\n\n" //$NON-NLS-1$ //$NON-NLS-2$
+			   "body", "\n\tlet iteration : Iteration = self.referredIteration in\n\tlet parameters : OrderedSet(Parameter) = iteration?.ownedParameters in\n\tlet selfType : Type = iteration?.owningClass in\n\tlet argument : OCLExpression = ownedBody in\n\tlet argumentType : Type = iteration.resolveBodyType(ownedBody) in\n\tlet parameter : Parameter = parameters?->at(1) in\n\tlet parameterType1 : Type = if parameter.isTypeof then Class else parameter.type.specializeIn(self, selfType) endif in\n\tlet parameterType2 : Type = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.type else parameterType1 endif in\n\tlet parameterIsRequired : Boolean = if parameterType1.oclIsKindOf(LambdaType) then parameterType1.oclAsType(LambdaType).ownedResult.isRequired else parameter.isRequired endif in\n\tlet nullityConforms : Boolean = argument.isRequired or not parameterIsRequired in\n\targumentType?.conformsTo(parameterType2) and nullityConforms\n\n" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getIteratorExp__ValidateClosureBodyElementTypeIsIteratorType__DiagnosticChain_Map(),

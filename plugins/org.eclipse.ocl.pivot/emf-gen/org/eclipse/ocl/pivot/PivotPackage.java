@@ -1390,6 +1390,16 @@ extends EPackage
 	EReference getIteration_OwnedIterators();
 
 	/**
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.Iteration#resolveBodyType(org.eclipse.ocl.pivot.OCLExpression) <em>Resolve Body Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Resolve Body Type</em>' operation.
+	 * @see org.eclipse.ocl.pivot.Iteration#resolveBodyType(org.eclipse.ocl.pivot.OCLExpression)
+	 * @generated
+	 */
+	EOperation getIteration__ResolveBodyType__OCLExpression();
+
+	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.IteratorExp <em>Iterator Exp</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -6899,6 +6909,14 @@ extends EPackage
 		 * @generated
 		 */
 		EReference ITERATION__OWNED_ITERATORS = eINSTANCE.getIteration_OwnedIterators();
+
+		/**
+		 * The meta object literal for the '<em><b>Resolve Body Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EOperation ITERATION___RESOLVE_BODY_TYPE__OCLEXPRESSION = eINSTANCE.getIteration__ResolveBodyType__OCLExpression();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.IteratorExpImpl <em>Iterator Exp</em>}' class.
