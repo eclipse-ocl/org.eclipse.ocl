@@ -40,6 +40,9 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.LoopExp;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -1618,14 +1621,48 @@ implements org.eclipse.ocl.pivot.Class {
 
 	@Override
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp callExpr, @Nullable Type selfType) {
+
+		if (this instanceof LambdaType) {
+			LoopExp loopExp = (LoopExp)callExpr;
+			Iteration asIteration = loopExp.getReferredIteration();
+			StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(callExpr);
+			@Nullable Iterable<@NonNull TemplateParameter> templateParameters = asIteration.basicGetOwnedTemplateParameters();
+		//	if ((templateParameters == null) && (selfType instanceof org.eclipse.ocl.pivot.Class)) {
+		//		templateParameters = ((org.eclipse.ocl.pivot.Class)selfType).basicGetOwnedTemplateParameters();
+		//	}
+			if (templateParameters != null) {
+				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType);
+			}
+			if (selfType instanceof org.eclipse.ocl.pivot.Class) {
+				templateParameters = ((org.eclipse.ocl.pivot.Class)selfType).basicGetOwnedTemplateParameters();
+			}
+			List<@NonNull TemplateArgument> templateArguments = asIteration.basicGetOwnedTemplateArguments();
+		//	if ((templateArguments == null) && (selfType instanceof org.eclipse.ocl.pivot.Class)) {
+		//		templateArguments = ((org.eclipse.ocl.pivot.Class)selfType).basicGetOwnedTemplateArguments();
+		//	}
+			if (templateArguments != null) {
+				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType);
+			}
+		}
+
+
 		assert callExpr != null;
 		if (selfType != null) {
 			StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(callExpr);
 			@Nullable Iterable<@NonNull TemplateParameter> templateParameters = basicGetOwnedTemplateParameters();
+		//	if ((templateParameters == null) && (selfType instanceof org.eclipse.ocl.pivot.Class)) {
+		//		templateParameters = ((org.eclipse.ocl.pivot.Class)selfType).basicGetOwnedTemplateParameters();
+		//	}
 			if (templateParameters != null) {
 				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType);
 			}
+			if (selfType instanceof org.eclipse.ocl.pivot.Class) {
+				templateParameters = ((org.eclipse.ocl.pivot.Class)selfType).basicGetOwnedTemplateParameters();
+			}
 			List<@NonNull TemplateArgument> templateArguments = basicGetOwnedTemplateArguments();
+		//	if ((templateArguments == null) && (selfType instanceof org.eclipse.ocl.pivot.Class)) {
+		//		templateArguments = ((org.eclipse.ocl.pivot.Class)selfType).basicGetOwnedTemplateArguments();
+		//	}
 			if (templateArguments != null) {
 				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType);
 			}
