@@ -12,12 +12,16 @@ package org.eclipse.ocl.pivot.library.iterator;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.CallExp;
+import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.evaluation.IterationManager;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.library.AbstractIteration;
+import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 import org.eclipse.ocl.pivot.values.IterableValue;
@@ -35,6 +39,16 @@ public class ClosureIteration extends AbstractIteration
 	@Override
 	public CollectionValue.@NonNull Accumulator createAccumulatorValue(@NonNull Executor executor, @NonNull TypeId accumulatorTypeId, @NonNull TypeId bodyTypeId) {
 		return createCollectionAccumulatorValue((CollectionTypeId) accumulatorTypeId);
+	}
+
+	@Override
+	public @Nullable Type resolveBodyType(@NonNull StandardLibrary standardLibrary, @NonNull CallExp callExp, @Nullable Type bodyType) {
+		if ((bodyType != null) && !(bodyType instanceof CollectionType)) {
+			return standardLibrary.getSetType(bodyType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_ONE_VALUE);
+		}
+		else {
+			return super.resolveBodyType(standardLibrary, callExp, bodyType);
+		}
 	}
 
 	/**
