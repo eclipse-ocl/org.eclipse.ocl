@@ -165,7 +165,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		context.refreshPivotList(Operation.class, pivotElement.getOwnedOperations(), csElement.getOwnedOperations());
 		refreshClassifier(pivotElement, csElement);
 		List<@NonNull WildcardType> wildcards = popWildcards(csElement);
-		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), wildcards);
+		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), true, wildcards);
 		return null;
 	}
 
@@ -482,7 +482,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		assert qualifiers != null;
 		pivotElement.setIsTransient(ElementUtil.getQualifier(qualifiers, "transient", "!transient", false));
 		List<@NonNull WildcardType> wildcards = popWildcards(csElement);
-		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), wildcards);
+		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), true, wildcards);
 		return null;
 	}
 

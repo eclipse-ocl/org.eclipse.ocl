@@ -623,7 +623,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		TemplateSignatureCS csTemplateSignature = null;
 		if (asTemplateParameters != null) {
 			csTemplateSignature = refreshElement(TemplateSignatureCS.class, BaseCSPackage.Literals.TEMPLATE_SIGNATURE_CS, asTemplateableElement);
-			refreshList(csTemplateSignature.getOwnedParameters(), visitDeclarations(TemplateParameterCS.class, asTemplateParameters, null));
+			PivotUtil.refreshList(csTemplateSignature.getOwnedParameters(), true, visitDeclarations(TemplateParameterCS.class, asTemplateParameters, null));
 		}
 		csClass.setOwnedSignature(csTemplateSignature);
 	}

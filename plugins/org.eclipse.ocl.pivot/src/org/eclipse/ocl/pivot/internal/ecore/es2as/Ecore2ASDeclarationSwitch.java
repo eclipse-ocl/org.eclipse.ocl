@@ -256,7 +256,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			}
 		}
 		List<@NonNull WildcardType> wildcards = popWildcards(eClass);
-		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), wildcards);
+		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), true, wildcards);
 		converter.queueReference(eClass);				// For superclasses
 		return pivotElement;
 	}
@@ -583,7 +583,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateParameters(pivotElement, eTypeParameters);
 		List<@NonNull WildcardType> wildcards = popWildcards(eOperation);
-		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), wildcards);
+		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), true, wildcards);
 		doSwitchAll(eOperation.getEGenericExceptions());
 		converter.queueReference(eOperation);				// For superclasses
 		return pivotElement;

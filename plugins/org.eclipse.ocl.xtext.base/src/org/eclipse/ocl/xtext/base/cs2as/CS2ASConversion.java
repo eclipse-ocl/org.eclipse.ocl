@@ -1143,7 +1143,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 				newPivotTemplateParameters.add(pivotTemplateParameter);
 			}
 		}
-		PivotUtil.refreshList(PivotUtil.getOwnedTemplateParametersList(pivotTemplateableElement, true), newPivotTemplateParameters);
+		PivotUtil.refreshList(PivotUtil.getOwnedTemplateParametersList(pivotTemplateableElement, true), true, newPivotTemplateParameters);
 	}
 
 	protected void resetPivotMappings(@NonNull CSResource csResource) {

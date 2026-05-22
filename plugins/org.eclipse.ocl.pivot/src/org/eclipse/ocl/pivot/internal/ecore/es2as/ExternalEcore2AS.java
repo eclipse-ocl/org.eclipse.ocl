@@ -1129,7 +1129,7 @@ public class ExternalEcore2AS extends Ecore2AS
 			if (superClass == null) {
 				superClass = eDataType instanceof EEnum ? oclEnumerationType : oclAnyType;
 			}
-			refreshList(pivotElement.getSuperClasses(), Collections.singletonList(superClass));
+			PivotUtil.refreshList(pivotElement.getSuperClasses(), false, Collections.singletonList(superClass));
 		}
 	}
 
