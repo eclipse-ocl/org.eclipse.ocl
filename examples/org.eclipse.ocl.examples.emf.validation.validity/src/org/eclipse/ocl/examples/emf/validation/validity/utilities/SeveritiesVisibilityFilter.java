@@ -29,7 +29,7 @@ public class SeveritiesVisibilityFilter implements IVisibilityFilter
 	 */
 	public void addFilteredSeverity(@NonNull Severity severity) {
 		rejectedSeverities |= 1 << severity.getValue();
-		System.out.println("addFilteredSeverity " + NameUtil.debugSimpleName(this) + " " + Integer.toHexString(rejectedSeverities));
+	//	System.out.println("addFilteredSeverity " + NameUtil.debugSimpleName(this) + " " + Integer.toHexString(rejectedSeverities));
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class SeveritiesVisibilityFilter implements IVisibilityFilter
 	 */
 	public boolean removeFilteredSeverity(@NonNull Severity severity) {
 		rejectedSeverities &= ~(1 << severity.getValue());
-		System.out.println("removeFilteredSeverity " + NameUtil.debugSimpleName(this) + " " + Integer.toHexString(rejectedSeverities));
+	//	System.out.println("removeFilteredSeverity " + NameUtil.debugSimpleName(this) + " " + Integer.toHexString(rejectedSeverities));
 		return rejectedSeverities == 0;
 	}
 }
