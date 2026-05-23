@@ -36,7 +36,7 @@ public class ShowValidityViewHandler extends AbstractHandler {
 		
 		EditorPart editorPartInstance = (EditorPart) editorPart;
 		IWorkbenchPartSite site = editorPartInstance.getSite();
-		updateValidityView(site, true, true);
+		updateValidityView(site, true, false);
 			
 		return null;
 	}
