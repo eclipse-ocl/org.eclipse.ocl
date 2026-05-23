@@ -50,7 +50,7 @@ public class CollectionSelectByTypeOperation extends AbstractUntypedBinaryOperat
         IdResolver idResolver = executor.getIdResolver();
 		for (Object element : collectionValue.iterable()) {
 			Type elementType = idResolver.getDynamicTypeOf(element);
-			if (elementType.isEqualTo(standardLibrary, requiredElementType)) {
+			if (elementType.conformsTo(standardLibrary, requiredElementType) && requiredElementType.conformsTo(standardLibrary, elementType)) {
         		newElements.add(element);
         	}
         	else {
