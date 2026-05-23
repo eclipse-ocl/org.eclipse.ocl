@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.types;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CompleteInheritance;
@@ -157,7 +158,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 				CompleteInheritance thisBaseInheritance = getFragment(i).getBaseInheritance();
 				for (int j = thatInheritance.getIndex(staticDepth); j < jMax; j++) {
 					CompleteInheritance thatBaseInheritance = thatInheritance.getFragment(j).getBaseInheritance();
-					if (thisBaseInheritance == thatBaseInheritance) {
+					if (isEquals(thisBaseInheritance, thatBaseInheritance)) {
 						commonInheritances++;
 						commonInheritance = thisBaseInheritance;
 						break;
@@ -182,7 +183,7 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 			int iMax = getIndex(staticDepth+1);
 			for (int i = getIndex(staticDepth); i < iMax; i++) {
 				InheritanceFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == thatInheritance) {
+				if (isEquals(fragment.getBaseInheritance(), thatInheritance)) {
 					return fragment;
 				}
 			}
@@ -193,6 +194,22 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getType() {
 		return getPivotClass();
+	}
+
+	private boolean isEquals(@NonNull CompleteInheritance thisInheritance, @NonNull CompleteInheritance thatInheritance) {
+		if (thisInheritance == thatInheritance) {
+			return true;
+		}
+		else {
+			EClassifier thisEClassifier = thisInheritance.basicGetEClassifier();
+			EClassifier thatEClassifier = thatInheritance.basicGetEClassifier();
+		//	EObject thisEObject = thisInheritance instanceof Element ? ((Element)thisInheritance).getESObject() : null;		// EcoreReflectiveType
+		//	EObject thatEObject = thatInheritance instanceof Element ? ((Element)thatInheritance).getESObject() : null;
+			if ((thisEClassifier != null) && (thisEClassifier == thatEClassifier)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public final boolean isInvalid() {
@@ -237,12 +254,13 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	public @NonNull Operation lookupActualOperation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
 		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
+		assert apparentInheritance != null;
+		int apparentDepth = apparentInheritance.getDepth();
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
 			for (int i = getIndex(apparentDepth); i < iMax; i++) {
 				InheritanceFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == apparentInheritance) {
+				if (isEquals(fragment.getBaseInheritance(), apparentInheritance)) {
 					Operation actualOperation = fragment.getActualOperation(apparentOperation);
 					return actualOperation;
 				}
@@ -255,12 +273,13 @@ public abstract class AbstractInheritance extends AbstractExecutorNamedElement i
 	public @NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation) {
 		getDepth();
 		CompleteInheritance apparentInheritance = apparentOperation.getInheritance(standardLibrary);
-		int apparentDepth = ClassUtil.nonNullModel(apparentInheritance).getDepth();
+		assert apparentInheritance != null;
+		int apparentDepth = apparentInheritance.getDepth();
 		if (apparentDepth+1 < getIndexes()) {				// null and invalid may fail here
 			int iMax = getIndex(apparentDepth+1);
 			for (int i = getIndex(apparentDepth); i < iMax; i++) {
 				InheritanceFragment fragment = getFragment(i);
-				if (fragment.getBaseInheritance() == apparentInheritance) {
+				if (isEquals(fragment.getBaseInheritance(), apparentInheritance)) {
 					return fragment.getImplementation(apparentOperation);
 				}
 			}

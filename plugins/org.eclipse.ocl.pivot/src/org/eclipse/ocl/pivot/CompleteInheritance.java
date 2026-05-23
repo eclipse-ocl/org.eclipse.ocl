@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot;
 
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.OperationId;
@@ -82,4 +83,8 @@ public interface CompleteInheritance extends Nameable
 	 */
 	@NonNull LibraryFeature lookupImplementation(@NonNull StandardLibrary standardLibrary, @NonNull Operation apparentOperation);
 	@Nullable Operation lookupLocalOperation(@NonNull StandardLibrary standardLibrary, @NonNull String operationName, CompleteInheritance... argumentTypes);
+
+	default @Nullable EClassifier basicGetEClassifier() {
+		return null;
+	}
 }

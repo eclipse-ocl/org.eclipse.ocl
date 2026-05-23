@@ -82,12 +82,17 @@ public class EcoreExecutorType extends ExecutorType
 		throw new UnsupportedOperationException();
 	}
 
-	public final EClassifier getEClassifier() {
+	public final @Nullable EClassifier getEClassifier() {
 		return eClassifier;
 	}
 
 	@Override
-	public EObject getESObject() {
+	public @Nullable EClassifier basicGetEClassifier() {
+		return eClassifier;
+	}
+
+	@Override
+	public @Nullable EObject getESObject() {
 		return eClassifier;
 	}
 

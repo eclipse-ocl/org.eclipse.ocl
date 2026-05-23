@@ -106,7 +106,12 @@ public class EcoreReflectiveType extends AbstractReflectiveInheritanceType
 	}
 
 	@Override
-	public EObject getESObject() {
+	public @Nullable EClassifier basicGetEClassifier() {
+		return eClassifier;
+	}
+
+	@Override
+	public @NonNull EObject getESObject() {
 		return eClassifier;
 	}
 

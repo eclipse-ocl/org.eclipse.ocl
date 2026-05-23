@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -147,7 +148,7 @@ public class AbstractExecutorElement implements Element
 	}
 
 	@Override
-	public EObject getESObject() {
+	public @Nullable EObject getESObject() {
 		throw new UnsupportedOperationException();
 	}
 
