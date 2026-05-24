@@ -129,9 +129,6 @@ public class ValidityModel
 	private final @NonNull Set<@NonNull IVisibilityFilter> validatableFilters = new HashSet<>();
 	private final @NonNull Set<@NonNull IVisibilityFilter> constrainingFilters = new HashSet<>();
 
-	private final @NonNull SeveritiesVisibilityFilter constrainingNodesFilterByKind = new SeveritiesVisibilityFilter();
-	private final @NonNull SeveritiesVisibilityFilter validatableNodesFilterByKind = new SeveritiesVisibilityFilter();
-
 	private final @NonNull Map<@NonNull TypeURI, @NonNull Set<@NonNull TypeURI>> typeClosures = new HashMap<>();
 	private final @NonNull Collection<@NonNull Resource> resources;
 
@@ -151,6 +148,11 @@ public class ValidityModel
 	public ValidityModel(@NonNull ValidityManager validityManager, @NonNull Collection<@NonNull Resource> newResources) {
 		this.validityManager = validityManager;
 		this.resources = newResources;
+		@NonNull SeveritiesVisibilityFilter severitiesVisibilityFilter = validityManager.getSeveritiesVisibilityFilter();
+		if (!severitiesVisibilityFilter.isEmpty()) {
+			addConstrainingFilter(severitiesVisibilityFilter);
+			addValidatableFilter(severitiesVisibilityFilter);
+		}
 	}
 
 	public @Nullable Set<@NonNull ConstrainingURI> accumulateConstrainingURIs(@Nullable Set<@NonNull ConstrainingURI> constrainingURIs, @NonNull TypeURI typeURI) {
@@ -166,13 +168,6 @@ public class ValidityModel
 
 	public void addConstrainingFilter(@NonNull IVisibilityFilter filter) {
 		constrainingFilters.add(filter);
-	}
-
-	public void addFilteredSeverity(@NonNull Severity severity) {
-		constrainingNodesFilterByKind.addFilteredSeverity(severity);
-		addConstrainingFilter(constrainingNodesFilterByKind);
-		validatableNodesFilterByKind.addFilteredSeverity(severity);
-		addValidatableFilter(validatableNodesFilterByKind);
 	}
 
 	public void addValidatableFilter(@NonNull IVisibilityFilter filter) {
@@ -988,15 +983,6 @@ public class ValidityModel
 
 	public void removeConstrainingFilter(@NonNull IVisibilityFilter filter) {
 		constrainingFilters.remove(filter);
-	}
-
-	public void removeFilteredSeverity(@NonNull Severity severity) {
-		if (!constrainingNodesFilterByKind.removeFilteredSeverity(severity)) {
-			constrainingFilters.remove(constrainingNodesFilterByKind);
-		}
-		if (!validatableNodesFilterByKind.removeFilteredSeverity(severity)) {
-			validatableFilters.remove(validatableNodesFilterByKind);
-		}
 	}
 
 	public void removeValidatableFilter(@NonNull IVisibilityFilter filter) {

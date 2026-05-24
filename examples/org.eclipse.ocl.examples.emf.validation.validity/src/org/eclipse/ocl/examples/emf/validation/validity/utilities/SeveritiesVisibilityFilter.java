@@ -14,7 +14,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.examples.emf.validation.validity.AbstractNode;
 import org.eclipse.ocl.examples.emf.validation.validity.Result;
 import org.eclipse.ocl.examples.emf.validation.validity.Severity;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 
 /**
  * A SeveritiesVisibilityFilter is used to filter the validatable of constrainable node view
@@ -30,6 +29,10 @@ public class SeveritiesVisibilityFilter implements IVisibilityFilter
 	public void addFilteredSeverity(@NonNull Severity severity) {
 		rejectedSeverities |= 1 << severity.getValue();
 	//	System.out.println("addFilteredSeverity " + NameUtil.debugSimpleName(this) + " " + Integer.toHexString(rejectedSeverities));
+	}
+
+	public boolean isEmpty() {
+		return rejectedSeverities == 0;
 	}
 
 	@Override
@@ -57,6 +60,6 @@ public class SeveritiesVisibilityFilter implements IVisibilityFilter
 	public boolean removeFilteredSeverity(@NonNull Severity severity) {
 		rejectedSeverities &= ~(1 << severity.getValue());
 	//	System.out.println("removeFilteredSeverity " + NameUtil.debugSimpleName(this) + " " + Integer.toHexString(rejectedSeverities));
-		return rejectedSeverities == 0;
+		return isEmpty();
 	}
 }
