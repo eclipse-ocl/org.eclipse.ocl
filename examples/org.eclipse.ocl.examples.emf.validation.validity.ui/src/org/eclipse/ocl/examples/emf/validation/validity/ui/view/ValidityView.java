@@ -77,6 +77,7 @@ import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ForceValidity
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.LockValidatableNodesAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.RunValidityAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.ShowElementInEditorAction;
+import org.eclipse.ocl.examples.emf.validation.validity.ui.actions.TraceValidityAction;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.messages.ValidityUIMessages;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.providers.ConstrainingNodeContentProvider;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.providers.NodeCheckStateProvider;
@@ -292,6 +293,8 @@ public class ValidityView extends ViewPart implements ISelectionListener
 	private Action runConstrainingAction;
 	private Action debugValidatableResultAction;
 	private Action debugConstrainingResultAction;
+	private Action traceValidatableResultAction;
+	private Action traceConstrainingResultAction;
 	private Action lockValidatableNodesAction;
 	private Action forceValidityViewRefreshAction;
 	private Action exportValidationResultAction;
@@ -650,6 +653,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(new Separator());
 		manager.add(runConstrainingAction);
 		manager.add(debugConstrainingResultAction);
+		manager.add(traceConstrainingResultAction);
 		manager.add(new Separator());
 		manager.add(showConstrainingElementInEditorAction);
 	}
@@ -699,6 +703,7 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		manager.add(new Separator());
 		manager.add(runValidatableAction);
 		manager.add(debugValidatableResultAction);
+		manager.add(traceValidatableResultAction);
 		manager.add(new Separator());
 		manager.add(showValidatableElementInEditorAction);
 	}
@@ -805,6 +810,8 @@ public class ValidityView extends ViewPart implements ISelectionListener
 		runConstrainingAction = new RunValidityAction(this, getConstrainingNodesViewer());
 		debugValidatableResultAction = new DebugValidityAction(this, getValidatableNodesViewer());
 		debugConstrainingResultAction = new DebugValidityAction(this, getConstrainingNodesViewer());
+		traceValidatableResultAction = new TraceValidityAction(this, getValidatableNodesViewer());
+		traceConstrainingResultAction = new TraceValidityAction(this, getConstrainingNodesViewer());
 
 		exportValidationResultAction = new ExportValidationResultAction(validityManager, this);
 		filterValidationResultAction = new FilterValidationResultAction(this);
