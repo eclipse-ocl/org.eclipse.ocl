@@ -25,6 +25,8 @@ import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.IfExp;
 import org.eclipse.ocl.pivot.IntegerLiteralExp;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
+import org.eclipse.ocl.pivot.IterateExp;
+import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
@@ -46,7 +48,6 @@ import org.eclipse.ocl.pivot.Variable;
 import org.eclipse.ocl.pivot.VariableExp;
 import org.eclipse.ocl.pivot.evaluation.EvaluationVisitor;
 import org.eclipse.ocl.pivot.evaluation.Executor;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.helper.HelperUtil;
 import org.eclipse.ocl.pivot.utilities.MetamodelManager;
 
@@ -83,8 +84,7 @@ public class TracingEvaluationVisitor extends EvaluationVisitorDecorator impleme
 	protected @Nullable Object trace(@NonNull Element expression, @Nullable Object value) {
 		try {
 			HelperUtil.trace("Evaluate: " + expression); //$NON-NLS-1$
-			HelperUtil.trace("Result  : " + //$NON-NLS-1$
-					(value != null ? TypeId.OCL_INVALID_NAME : String.valueOf(value)));
+			HelperUtil.trace("Result  : " + String.valueOf(value));
 		} catch (Exception e) {
 			// tracing must not interfere with evaluation
 		} catch (AssertionError e) {
@@ -147,6 +147,16 @@ public class TracingEvaluationVisitor extends EvaluationVisitorDecorator impleme
 	@Override
 	public @Nullable Object visitInvalidLiteralExp(@NonNull InvalidLiteralExp literalExp) {
 		return trace(literalExp, delegate.visitInvalidLiteralExp(literalExp));
+	}
+
+	@Override
+	public @Nullable Object visitIterateExp(@NonNull IterateExp iterateExp) {
+		return trace(iterateExp, delegate.visitIterateExp(iterateExp));
+	}
+
+	@Override
+	public @Nullable Object visitIteratorExp(@NonNull IteratorExp iteratorExp) {
+		return trace(iteratorExp, delegate.visitIteratorExp(iteratorExp));
 	}
 
 	@Override
