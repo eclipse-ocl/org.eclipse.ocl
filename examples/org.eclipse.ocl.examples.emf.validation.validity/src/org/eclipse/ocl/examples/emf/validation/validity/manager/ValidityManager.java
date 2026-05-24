@@ -164,7 +164,20 @@ public class ValidityManager
 	private boolean forceRefresh = false;
 	private @Nullable Object lastInput = null;
 
+	/**
+	 * The severities to be hidden in validatables / constraints panes.
+	 */
 	private final @NonNull SeveritiesVisibilityFilter severitiesVisibilityFilter = new SeveritiesVisibilityFilter();
+
+	/**
+	 * Whether metamodels of models should be deselected.
+	 */
+	private boolean deselectMetamodels = true;
+
+	/**
+	 * Whether multiple samed-named constraints (typically OCLinECore EAnnotation and CGed) should be pruned to the best (typically CGed).
+	 */
+	private boolean deselectMultipleConstraints = true;
 
 	public ValidityManager() {
 		adapterFactory = new ComposedAdapterFactory(ComposedAdapterFactory.Descriptor.Registry.INSTANCE);
@@ -226,7 +239,8 @@ public class ValidityManager
 	public @NonNull Map<Object, Object> createDefaultContext() {
 		Map<Object, Object> context2 = context;
 		if (context2 == null) {		// Local ValidationRegistry context normally set by setInput().
-			context = Diagnostician.INSTANCE.createDefaultContext();
+			context = context2 = Diagnostician.INSTANCE.createDefaultContext();
+			assert context2 != null;
 		}
 		return context2;
 	}
@@ -243,6 +257,26 @@ public class ValidityManager
 	public /*synchronized*/ @Nullable ResultSet createResultSet(@Nullable IProgressMonitor monitor) {
 		ValidityModel model2 = model;
 		return model2 != null ? model2.createResultSet(monitor) : null;
+	}
+
+	public void deselectMetamodels(boolean deSelect) {
+		if (deselectMetamodels != deSelect) {
+			deselectMetamodels = deSelect;
+			ValidityModel model = getModel();
+			if (model != null) {
+				model.deselectMetamodels(deSelect);
+			}
+		}
+	}
+
+	public void deselectMultipleConstraints(boolean deSelect) {
+		if (deselectMultipleConstraints != deSelect) {
+			deselectMultipleConstraints = deSelect;
+			ValidityModel model = getModel();
+			if (model != null) {
+				model.deselectMultipleConstraints(deSelect);
+			}
+		}
 	}
 
 	public void dispose() {
@@ -505,6 +539,14 @@ public class ValidityManager
 			}
 		}
 		return results;
+	}
+
+	public boolean isDeselectMetamodels() {
+		return deselectMetamodels;
+	}
+
+	public boolean isDeselectMultipleConstraints() {
+		return deselectMultipleConstraints;
 	}
 
 	public void removeConstrainingFilter(@NonNull IVisibilityFilter filter) {

@@ -12,14 +12,12 @@ package org.eclipse.ocl.examples.emf.validation.validity.ui.actions;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.messages.ValidityUIMessages;
+import org.eclipse.ocl.examples.emf.validation.validity.ui.view.IDEValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.view.ValidityView;
 
 public final class DisableMetamodelsAction extends AbstractFilterAction
 {
-//	private @NonNull UnusedNodesVisibilityFilter filter = new UnusedNodesVisibilityFilter();
-
 	public DisableMetamodelsAction(@NonNull ValidityView validityView) {
 		super(ValidityUIMessages.ValidityView_Action_DeselectMetamodels_Title,
 				IAction.AS_CHECK_BOX, validityView, true);
@@ -27,18 +25,16 @@ public final class DisableMetamodelsAction extends AbstractFilterAction
 	}
 
 	public void refreshChecked() {
-		boolean isEnabled = this.isChecked();
-		if (isEnabled){
+		boolean deSelect = this.isChecked();
+		if (deSelect) {
 			setToolTipText(ValidityUIMessages.ValidityView_Action_SelectMetamodels_ToolTipText);
 			setImage(ValidityUIMessages.ValidityView_Action_DeselectMetamodels_ImageLocation);
 		} else {
 			setToolTipText(ValidityUIMessages.ValidityView_Action_DeselectMetamodels_ToolTipText);
 			setImage(ValidityUIMessages.ValidityView_Action_SelectMetamodels_ImageLocation);
 		}
-		ValidityModel model = validityView.getValidityManager().getModel();
-		if (model != null) {
-			model.deselectMetamodels(!isEnabled);
-		}
+		IDEValidityManager validityManager = validityView.getValidityManager();
+		validityManager.deselectMetamodels(deSelect);
 	}
 
 	@Override

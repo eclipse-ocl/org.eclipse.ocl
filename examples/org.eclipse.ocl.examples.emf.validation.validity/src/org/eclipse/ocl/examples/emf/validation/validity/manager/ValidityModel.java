@@ -610,10 +610,24 @@ public class ValidityModel
 		return ValidityFactory.eINSTANCE.createValidatableNode();
 	}
 
+	private void deselectAll(@Nullable Set<@NonNull RootConstrainingNode> rootConstrainingNodes, @NonNull AbstractNode node,  boolean deSelect) {
+		node.setEnabled(!deSelect);
+		if (node instanceof ResultValidatableNode) {
+			ResultConstrainingNode resultConstrainingNode = ValidityUtils.getResultConstrainingNode((ResultValidatableNode)node);
+			RootConstrainingNode rootConstrainingNode = ValidityUtils.getRootConstrainingNode(resultConstrainingNode);
+			if (rootConstrainingNodes != null) {
+				rootConstrainingNodes.add(rootConstrainingNode);
+			}
+		}
+		for (@NonNull AbstractNode childNode : ValidityUtils.getChildren(node)) {
+			deselectAll(rootConstrainingNodes, childNode, deSelect);
+		}
+	}
+
 	/**
 	 * Disable/Enable all validatable nodes that form part of a Resource that defines the instantiations of another Resource.
 	 */
-	public void deselectMetamodels(boolean isEnabled) {
+	public void deselectMetamodels(boolean deSelect) {
 		Iterable<@NonNull RootValidatableNode> rootValidatableNodes = ValidityUtils.getValidatableNodes(rootNode);
 		Set<@NonNull Resource> metaModelResources = new UniqueList<>();
 		for (@NonNull RootValidatableNode rootValidatableNode : rootValidatableNodes) {
@@ -625,45 +639,31 @@ public class ValidityModel
 			Resource modelResource = constrainedObject.eResource();
 			assert modelResource != null;
 			if (metaModelResources.contains(modelResource)) {
-				disableAll(rootConstrainingNodes, rootValidatableNode, isEnabled);
+				deselectAll(rootConstrainingNodes, rootValidatableNode, deSelect);
 				rootValidatableNode.getConstrainedObject();
 			}
 		}
 		for (@NonNull RootConstrainingNode rootConstrainingNode : rootConstrainingNodes) {
-			disableAll(null, rootConstrainingNode, isEnabled);
+			deselectAll(null, rootConstrainingNode, deSelect);
 		}
 	}
 
-	public void deselectMultipleConstraints(boolean isEnabled) {
+	public void deselectMultipleConstraints(boolean deSelect) {
 		Iterable<@NonNull RootConstrainingNode> constrainingNodes = ValidityUtils.getConstrainingNodes(rootNode);
 		for (@NonNull ConstrainingNode constrainingNode : constrainingNodes) {
-			deselectMultipleConstraints(constrainingNode, isEnabled);
+			deselectMultipleConstraints(constrainingNode, deSelect);
 		}
 	}
 
-	private void deselectMultipleConstraints(@NonNull ConstrainingNode node, boolean isEnabled) {
+	private void deselectMultipleConstraints(@NonNull ConstrainingNode node, boolean deSelect) {
 		String previousLabel = null;
 		for (@NonNull ConstrainingNode childNode : ValidityUtils.getChildren(node)) {
 			String label = childNode.getLabel();
 			if ((childNode.getConstrainingObject() != null) && (label != null) && label.equals(previousLabel)) {
-				disableAll(null, childNode, isEnabled);
+				deselectAll(null, childNode, deSelect);
 			}
-			deselectMultipleConstraints(childNode, isEnabled);
+			deselectMultipleConstraints(childNode, deSelect);
 			previousLabel = label;
-		}
-	}
-
-	private void disableAll(@Nullable Set<@NonNull RootConstrainingNode> rootConstrainingNodes, @NonNull AbstractNode node,  boolean isEnabled) {
-		node.setEnabled(isEnabled);
-		if (node instanceof ResultValidatableNode) {
-			ResultConstrainingNode resultConstrainingNode = ValidityUtils.getResultConstrainingNode((ResultValidatableNode)node);
-			RootConstrainingNode rootConstrainingNode = ValidityUtils.getRootConstrainingNode(resultConstrainingNode);
-			if (rootConstrainingNodes != null) {
-				rootConstrainingNodes.add(rootConstrainingNode);
-			}
-		}
-		for (@NonNull AbstractNode childNode : ValidityUtils.getChildren(node)) {
-			disableAll(rootConstrainingNodes, childNode, isEnabled);
 		}
 	}
 
@@ -856,6 +856,8 @@ public class ValidityModel
 		EList<@NonNull RootValidatableNode> validatableNodes = ClassUtil.nullFree(rootNode.getValidatableNodes());
 		sortNodes(validatableNodes, natureComparator);
 		monitor.worked(WORK_FOR_SORT_VALIDATABLE_NODES);
+		deselectMetamodels(validityManager.isDeselectMetamodels());
+		deselectMultipleConstraints(validityManager.isDeselectMultipleConstraints());
 	}
 
 	/**

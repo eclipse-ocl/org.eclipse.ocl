@@ -476,6 +476,8 @@ public class ValidateCommand extends StandaloneCommand
 		validityManager.setRunJavaConstraints(usingToken.doRunJavaConstraints());
 		validityManager.setRunOCLConstraints(usingToken.doRunOCLConstraints());
 		validityManager.setRunUMLConstraints(usingToken.doRunUMLConstraints());
+		validityManager.deselectMetamodels(false);
+		validityManager.deselectMultipleConstraints(false);
 		validityManager.setInput(resourceSet);
 		return validityManager;
 	}

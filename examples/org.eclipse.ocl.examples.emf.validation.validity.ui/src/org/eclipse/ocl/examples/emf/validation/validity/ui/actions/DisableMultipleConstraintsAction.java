@@ -12,14 +12,12 @@ package org.eclipse.ocl.examples.emf.validation.validity.ui.actions;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.ocl.examples.emf.validation.validity.manager.ValidityModel;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.messages.ValidityUIMessages;
+import org.eclipse.ocl.examples.emf.validation.validity.ui.view.IDEValidityManager;
 import org.eclipse.ocl.examples.emf.validation.validity.ui.view.ValidityView;
 
 public final class DisableMultipleConstraintsAction extends AbstractFilterAction
 {
-//	private @NonNull UnusedNodesVisibilityFilter filter = new UnusedNodesVisibilityFilter();
-
 	public DisableMultipleConstraintsAction(@NonNull ValidityView validityView) {
 		super(ValidityUIMessages.ValidityView_Action_DeselectMultipleConstraints_Title,
 				IAction.AS_CHECK_BOX, validityView, false);
@@ -27,18 +25,16 @@ public final class DisableMultipleConstraintsAction extends AbstractFilterAction
 	}
 
 	public void refreshChecked() {
-		boolean isEnabled = this.isChecked();
-		if (isEnabled){
+		boolean deSelect = this.isChecked();
+		if (deSelect) {
 			setToolTipText(ValidityUIMessages.ValidityView_Action_SelectMultipleConstraints_ToolTipText);
 			setImage(ValidityUIMessages.ValidityView_Action_DeselectMultipleConstraints_ImageLocation);
 		} else {
 			setToolTipText(ValidityUIMessages.ValidityView_Action_DeselectMultipleConstraints_ToolTipText);
 			setImage(ValidityUIMessages.ValidityView_Action_SelectMultipleConstraints_ImageLocation);
 		}
-		ValidityModel model = validityView.getValidityManager().getModel();
-		if (model != null) {
-			model.deselectMultipleConstraints(!isEnabled);
-		}
+		IDEValidityManager validityManager = validityView.getValidityManager();
+		validityManager.deselectMultipleConstraints(deSelect);
 	}
 
 	@Override
