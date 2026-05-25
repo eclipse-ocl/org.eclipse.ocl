@@ -469,7 +469,10 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	 */
 	public @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, /*@NonNull*/ ParameterTypes iteratorTypes, @NonNull ParameterTypes parameterTypes, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
-	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+		if ("forAll".equals(name)) {
+			getClass();		// XXX
+		}
+		//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
 		Iteration asIteration = PivotFactory.eINSTANCE.createIteration();
 		asIteration.setName(name);
 		asIteration.setType(asType);		// OclInvalid if set later for nested specialization
