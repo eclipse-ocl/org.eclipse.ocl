@@ -602,7 +602,7 @@
 <topic href="help/PivotStandaloneApplication.html#rulesfilename" label="-rules file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#outputfilename2" label="-output file-name"></topic>
 <topic href="help/PivotStandaloneApplication.html#exportercsvhtmlmodeltext" label="-exporter csv|html|model|text"></topic>
-<topic href="help/PivotStandaloneApplication.html#usingalljavaocluml" label="-using all|java|ocl|uml"></topic>
+<topic href="help/PivotStandaloneApplication.html#usingalljavametamodelsmultiplesocluml" label="-using all|java|metamodels|multiples|ocl|uml"></topic>
 </topic>
 </topic>
 <topic href="help/PivotStandalone.html" label="Pivot Standalone API Configuration">

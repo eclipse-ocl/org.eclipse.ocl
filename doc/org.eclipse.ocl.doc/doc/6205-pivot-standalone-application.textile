@@ -230,6 +230,10 @@ h4. -exporter csv|html|model|text
 
 The optional @-exporter@ token specifies the form of output. The default textual or HTML output provide an overview identifying the models and validation verdict counts. The CSV and model output provide a detailed output identifying every validation attempt. The CSV output is bloated but verbose in the expectation that a user will hide/sort/count columns to suit their requirements. THe model output may be viewed using the Samp,e Reflective Ecore Editor or consumed by a custom tool.
 
-h4. -using all|java|ocl|uml
+h4. -using all|java|metamodels|multiples|ocl|uml
 
-A sub-selection of the validation may be specified  by choosing just one or more of the embedded Java, OCL or UML constraints.
+A sub-selection of the validation may be specified by choosing just one or more of the embedded Java, OCL or UML constraints.
+
+Selecting @metamodels@ includes validation of dynamically loaded metamodels of models; these are normally assumed correct and so ignored.
+
+Selecting @multiples@ validates using each variant of same-named constraints as may arise when an OCLinEcore metamodel is loaded in addition to its code generated metamodel; normally only the extra same-named constraints are ignored.

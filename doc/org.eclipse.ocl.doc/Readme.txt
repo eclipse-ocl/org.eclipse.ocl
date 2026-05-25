@@ -11,4 +11,6 @@ from Orbit 2025-12
 Apache XML Commons Serializer should be installed 'for free'
 
 If an xalan / xml.serializer version changes edit the xalan processor creation fails -
-edit textilebuild.xml
+edit textilebuild.xml (it changes in 2026-06).
+
+Last successful generation using "Eclipse 4.37 2025-09" on my old laptop.

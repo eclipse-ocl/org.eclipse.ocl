@@ -45,8 +45,8 @@ pipeline {
 			steps {
 				script {
 					env.BUILD_TYPE = params.BUILD_TYPE
-					echo "${params.BUILD_TYPE}"
-					currentBuild.description = "${params.BUILD_TYPE}"
+					echo "${params.BRANCH_NAME} ${params.BUILD_TYPE}"
+					currentBuild.description = "${params.BRANCH_NAME} ${params.BUILD_TYPE}"
 				}
 			}
 		}

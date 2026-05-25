@@ -44,7 +44,7 @@ Replay a Stable / Milestone ocl-promoter build to promote a Release.
 		
 		choice(
 			name: 'PDFDOC',
-			choices: ['', '-Pjavadoc'],
+			choices: ['', '-Ppdfdoc'],
 			description: 'Select the "pdfdoc" profile to copy and consequently promote the PDF doc.\nThe PDF doc should normally be manually regenerated and committed to GIT before\npromotion as part of a final RC build.'
 		)
 	}
