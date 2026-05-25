@@ -35,18 +35,6 @@ Replay a Stable / Milestone ocl-promoter build to promote a Release.
 <li> reload - to reload the parameter definitions from GIT and bypass building
 </ul>'''
 		)
-		
-		choice(
-			name: 'JAVADOC',
-			choices: ['', '-Pjavadoc'],
-			description: 'Select the "javadoc" profile to generate and consequently promote Javadoc.\nJavadoc should normally be regenerated as part of a final RC build.'
-		)
-		
-		choice(
-			name: 'PDFDOC',
-			choices: ['', '-Ppdfdoc'],
-			description: 'Select the "pdfdoc" profile to copy and consequently promote the PDF doc.\nThe PDF doc should normally be manually regenerated and committed to GIT before\npromotion as part of a final RC build.'
-		)
 	}
 
 	stages {
@@ -57,8 +45,8 @@ Replay a Stable / Milestone ocl-promoter build to promote a Release.
 			steps {
 				script {
 					env.BUILD_TYPE = params.BUILD_TYPE
-					echo "${params.BUILD_TYPE} ${params.JAVADOC} ${params.SIGNING}"
-					currentBuild.description = "${params.BUILD_TYPE} ${params.JAVADOC} ${params.SIGNING}"
+					echo "${params.BUILD_TYPE}"
+					currentBuild.description = "${params.BUILD_TYPE}"
 				}
 			}
 		}
@@ -87,8 +75,6 @@ Replay a Stable / Milestone ocl-promoter build to promote a Release.
 							verify \
 							-P${BUILD_TYPE} \
 							-Psign \
-							${params.JAVADOC} \
-							${params.PDFDOC} \
 							--global-toolchains toolchains.xml
 						cd releng/org.eclipse.ocl.releng.build-site/target/repository
 						zip -r ../../../../p2repo.zip .

@@ -100,28 +100,18 @@ pipeline {
 
 	post {
 		failure {
-			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME}\n\
-Build Number: ${env.BUILD_NUMBER}\n\
-Build URL: <${env.BUILD_URL}>\n\
-Console: <${env.BUILD_URL}console>"
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}",
+				mimeType: 'text/plain', body: "<${env.BUILD_URL}console>"
 			archiveArtifacts allowEmptyArchive: true, artifacts: '**/*'
 		}
 
 		fixed {
-			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}", mimeType: 'text/plain',
-body: "Project: ${env.JOB_NAME}\n\
-Build Number: ${env.BUILD_NUMBER}\n\
-Build URL: <${env.BUILD_URL}>\n\
-Console: <${env.BUILD_URL}console>"
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}",
+				mimeType: 'text/plain', body: "<${env.BUILD_URL}console>"
 		}
 
 		always {
 			junit allowEmptyResults: params.BUILD_TYPE == 'reload' || currentBuild.getPreviousBuild() == null, testResults: 'tests/*/target/**/surefire-reports/**/TEST-*.xml'
 		}
-
-//		cleanup {
-//			deleteDir()
-//		}
 	}
 }

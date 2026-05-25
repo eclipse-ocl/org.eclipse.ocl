@@ -1,0 +1,80 @@
+pipeline {
+	agent {
+		label 'ubuntu-latest'
+	}
+
+	options {
+		buildDiscarder(logRotator(numToKeepStr: '5'))
+		disableConcurrentBuilds()
+		skipDefaultCheckout false
+	}
+
+	tools {
+		maven 'apache-maven-latest'
+		jdk 'openjdk-jdk21-latest'
+	}
+
+	environment {
+		BUILD_TIMESTAMP = sh(returnStdout: true, script: 'date +%Y%m%d%H%M').trim()
+	}
+	
+	parameters {
+		string(
+			name: 'PDF_VERSION',
+			defaultValue: 'reload',
+			description: 'Specify the build version (e.g. 6.6.6) or reload to reload the parameter definitions from GIT.'
+		)
+		string(
+			name: 'BRANCH_NAME',
+			defaultValue: 'ewillink/2434',
+			description: 'Specify a bug branch name for example: (issue/123).'
+		)
+	}
+
+	stages {
+		//
+		//	Set PDF_VERSION in the Jenkins job description.
+		//
+		stage('Display Parameters') {
+			steps {
+				script {
+					env.PDF_VERSION = params.PDF_VERSION
+					echo "${params.BRANCH_NAME} ${params.PDF_VERSION}"
+					currentBuild.description = "${params.BRANCH_NAME} ${params.PDF_VERSION}"
+				}
+			}
+		}
+		//
+		//	Publish the PDF by copying to downloads
+		//
+		stage('Publish PDF') {
+			when {
+				expression { return params.PDF_VERSION != 'reload' && params.PDF_VERSION != '' && currentBuild.getPreviousBuild() != null }
+			}
+			steps {
+				sshagent(['projects-storage.eclipse.org-bot-ssh']) {
+					sh '''
+						set -e
+						set -x
+						LOGIN="genie.ocl@projects-storage.eclipse.org"
+						DOCS="/home/data/httpd/download.eclipse.org/ocl/doc"
+						ssh $LOGIN "cd $DOCS; mkdir -p $PDF_VERSION"
+						scp doc/org.eclipse.ocl.doc/manual/ocl.pdf $LOGIN:$DOCS/$PDF_VERSION/ocl.pdf
+					'''
+				}
+			}
+		}
+	}
+
+	post {
+		failure {
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Build Failure ${currentBuild.fullDisplayName}",
+				mimeType: 'text/plain', body: "<${env.BUILD_URL}console>"
+		}
+
+		fixed {
+			mail to: 'ed@willink.me.uk', subject: "[OCL CI] Back to normal ${currentBuild.fullDisplayName}",
+				mimeType: 'text/plain', body: "<${env.BUILD_URL}console>"
+		}
+	}
+}
