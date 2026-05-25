@@ -910,7 +910,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(inputOCLURI),
 			"-output", csvLogFileName,
-			"-exporter", CSVExporter.EXPORTER_TYPE};
+			"-exporter", CSVExporter.EXPORTER_TYPE,
+			"-using", "multiples"};
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 		assertEquals(StandaloneResponse.OK, applicationResponse);
@@ -929,7 +930,7 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 		assertEquals(StandaloneResponse.OK, applicationResponse);
-		checkValidateLogFile(textLogFileName, 36+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 1, 1, 1, 0);
+		checkValidateLogFile(textLogFileName, 33+EXTRA_EAnnotationValidator_SUCCESSES+6*EModelElement_CONSTRAINTS, 1, 1, 1, 0);
 		standaloneApplication.stop();
 	}
 
@@ -941,7 +942,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-rules", String.valueOf(inputOCLURI),
 			"-output", modelLogFileName,
 			//			"-using", "ocl",
-			"-exporter", ModelExporter.EXPORTER_TYPE};
+			"-exporter", ModelExporter.EXPORTER_TYPE,
+			"-using", "multiples"};
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 		assertEquals(StandaloneResponse.OK, applicationResponse);
@@ -1087,7 +1089,8 @@ public class StandaloneExecutionTests extends StandaloneTestCase
 			"-model", String.valueOf(inputModelURI),
 			"-rules", String.valueOf(textInputOCLURI),
 			"-output", textLogFileName,
-			"-exporter", TextExporter.EXPORTER_TYPE};
+			"-exporter", TextExporter.EXPORTER_TYPE,
+			"-using", "multiples"};
 		StandaloneApplication standaloneApplication = new StandaloneApplication();
 		StandaloneResponse applicationResponse = standaloneApplication.execute(arguments);
 		assertEquals(StandaloneResponse.OK, applicationResponse);

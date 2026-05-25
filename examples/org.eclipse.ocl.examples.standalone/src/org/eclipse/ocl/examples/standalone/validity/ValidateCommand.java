@@ -260,19 +260,34 @@ public class ValidateCommand extends StandaloneCommand
 	{
 		/** "-using" argument value to run the all constraints (ocl, java and uml). */
 		private static final @NonNull String ALL_LOCATORS = "all"; //$NON-NLS-1$
-		/** "-using" argument value to additionally run the OCL constraints. */
-		private static final @NonNull String OCL_LOCATOR = "ocl"; //$NON-NLS-1$
 		/** "-using" argument value to additionally run the Java constraints. */
 		private static final @NonNull String JAVA_LOCATOR = "java"; //$NON-NLS-1$
+		/** "-using" argument value to additionally run constraints on metamodels of models. */
+		private static final @NonNull String METAMODELS_LOCATOR = "metamodels"; //$NON-NLS-1$
+		/** "-using" argument value to additionally run multiple same-named constraints. */
+		private static final @NonNull String MULTIPLES_LOCATOR = "multiples"; //$NON-NLS-1$
+		/** "-using" argument value to additionally run the OCL constraints. */
+		private static final @NonNull String OCL_LOCATOR = "ocl"; //$NON-NLS-1$
 		/** "-using" argument value to additionally run the UML constraints. */
 		private static final @NonNull String UML_LOCATOR = "uml"; //$NON-NLS-1$
 
 		private boolean doJava = false;
 		private boolean doOCL = false;
 		private boolean doUML = false;
+		private boolean doMetamodels = false;
+		private boolean doMultiples = false;
 
 		public UsingToken(@NonNull StandaloneApplication standaloneApplication) {
-			super(standaloneApplication, "-using", StandaloneMessages.ValidateCommand_Using_Help, ALL_LOCATORS + "|" + JAVA_LOCATOR + "|" + OCL_LOCATOR + "|" + UML_LOCATOR);
+			super(standaloneApplication, "-using", StandaloneMessages.ValidateCommand_Using_Help, ALL_LOCATORS
+					+ "|" + JAVA_LOCATOR + "|" + METAMODELS_LOCATOR + "|" + MULTIPLES_LOCATOR + "|" + OCL_LOCATOR + "|" + UML_LOCATOR);
+		}
+
+		public boolean doMetamodelConstraints() {
+			return doMetamodels;
+		}
+
+		public boolean doMultipleConstraints() {
+			return doMultiples;
 		}
 
 		public boolean doRunJavaConstraints() {
@@ -310,6 +325,12 @@ public class ValidateCommand extends StandaloneCommand
 				else if (JAVA_LOCATOR.equals(locator)) {
 					doJava = true;
 				}
+				else if (METAMODELS_LOCATOR.equals(locator)) {
+					doMetamodels = true;
+				}
+				else if (MULTIPLES_LOCATOR.equals(locator)) {
+					doMultiples = true;
+				}
 				else if (OCL_LOCATOR.equals(locator)) {
 					doOCL = true;
 				}
@@ -326,7 +347,7 @@ public class ValidateCommand extends StandaloneCommand
 
 		@Override
 		public String toString() {
-			return super.toString() + "=" + (doJava ? " doJava" : "") + (doOCL ? " doOCL" : "") + (doUML ? " doUML" : "");
+			return super.toString() + "=" + (doJava ? " doJava" : "") + (doMetamodels ? " doMetamodels" : "") + (doMultiples ? " doMultiples" : "") + (doOCL ? " doOCL" : "") + (doUML ? " doUML" : "");
 		}
 	}
 
@@ -476,8 +497,8 @@ public class ValidateCommand extends StandaloneCommand
 		validityManager.setRunJavaConstraints(usingToken.doRunJavaConstraints());
 		validityManager.setRunOCLConstraints(usingToken.doRunOCLConstraints());
 		validityManager.setRunUMLConstraints(usingToken.doRunUMLConstraints());
-		validityManager.deselectMetamodels(false);
-		validityManager.deselectMultipleConstraints(false);
+		validityManager.deselectMetamodels(!usingToken.doMetamodelConstraints());
+		validityManager.deselectMultipleConstraints(!usingToken.doMultipleConstraints());
 		validityManager.setInput(resourceSet);
 		return validityManager;
 	}
