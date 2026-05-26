@@ -1,3 +1,5 @@
+def sleepTime = 15
+
 pipeline {
 	agent {
 		label 'ubuntu-latest'
@@ -82,28 +84,23 @@ pipeline {
 		//	Fetch the build to promote
 		//
 		stage('Copy Artifacts') {
+			options {
+				retry(7)
+			}
 			when {
 				expression { return params._BUILD_TYPE != 'reload' && currentBuild.getPreviousBuild() != null }
 			}
 			steps {
 				script {
-					def gotIt = fileExists('p2repo.zip')
-					for (delay in [ 1, 15, 30, 60, 120, 240, 480, 960, 1920 ]) {	
-						echo "$delay: gotIt = $gotIt"
-						if (!gotIt) {
-							sleep(time: delay)
-							copyArtifacts(projectName: "${params._JOB_NAME}",
-								selector: specific("${params._BUILD_NUMBER}"),
-								target: '.',
-								filter: 'p2repo.zip',
-								optional: true)
-							gotIt = fileExists('p2repo.zip')
-							echo "gotIt = $gotIt"
-						}
-					}
-					if (gotIt) {
-						sh 'unzip -ou p2repo.zip -d repository'
-					}
+					echo "sleepTime = $sleepTime"
+					sleep(time: sleepTime)
+					sleepTime = sleepTime + sleepTime
+					echo "sleepTime = $sleepTime"
+					copyArtifacts(projectName: "${params._JOB_NAME}",
+						selector: specific("${params._BUILD_NUMBER}"),
+						target: '.',
+						filter: 'p2repo.zip')
+					sh 'unzip -ou p2repo.zip -d repository'
 				}
 			}
 		}
