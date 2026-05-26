@@ -87,17 +87,21 @@ pipeline {
 			}
 			steps {
 				script {
+					def gotIt = fileExists('p2repo.zip')
 					for (delay in [ 1, 15, 30, 60, 120, 240, 480, 960, 1920 ]) {	
-						if (!fileExists('p2repo.zip')) {
+						echo "$delay: gotIt = $gotIt"
+						if (!gotIt) {
 							sleep(time: delay)
 							copyArtifacts(projectName: "${params._JOB_NAME}",
 								selector: specific("${params._BUILD_NUMBER}"),
 								target: '.',
 								filter: 'p2repo.zip',
 								optional: true)
+							gotIt = fileExists('p2repo.zip')
+							echo "gotIt = $gotIt"
 						}
 					}
-					if (fileExists('p2repo.zip')) {
+					if (gotIt) {
 						sh 'unzip -ou p2repo.zip -d repository'
 					}
 				}
