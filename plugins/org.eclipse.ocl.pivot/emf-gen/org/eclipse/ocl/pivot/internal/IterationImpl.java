@@ -38,16 +38,18 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
-import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ValueSpecification;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryIterationOrOperation;
 import org.eclipse.ocl.pivot.util.Visitor;
+import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
 
@@ -200,6 +202,7 @@ public class IterationImpl extends OperationImpl implements Iteration
 	@Override
 	public Type resolveBodyType(final OCLExpression argument)
 	{
+		System.out.println("resolveBodyType " + NameUtil.debugSimpleName(this) + " " + name + " " + NameUtil.debugSimpleName(implementation));
 		/**
 		 * argument.type
 		 */
@@ -207,8 +210,14 @@ public class IterationImpl extends OperationImpl implements Iteration
 		if (type == null) {
 			throw new InvalidValueException("Null body for \'Iteration::resolveBodyType(OCLExpression[1]) : Type[1]\'");
 		}
-		StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(argument);
-		return ((LibraryIterationOrOperation)implementation).resolveBodyType(standardLibrary, (CallExp)argument.eContainer(), type);
+		EnvironmentFactory environmentFactory = PivotUtil.getEnvironmentFactory(argument);
+		LibraryIterationOrOperation implementation2 = (LibraryIterationOrOperation) implementation;
+		if (implementation2 == null) {
+			implementation2 = environmentFactory.getIterationOrOperationImplementation(this);
+		}
+		CompleteStandardLibrary standardLibrary = environmentFactory.getStandardLibrary();
+		@SuppressWarnings("null") CallExp callExp = (@NonNull CallExp)argument.eContainer();
+		return implementation2.resolveBodyType(standardLibrary, callExp, type);
 	}
 
 	/**
@@ -663,5 +672,17 @@ public class IterationImpl extends OperationImpl implements Iteration
 	@Override
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitIteration(this);
+	}
+
+	@Override
+	public void setImplementation(LibraryFeature newImplementation) {
+		System.out.println("setImplementation " + NameUtil.debugSimpleName(this) + " " + name + " " + NameUtil.debugSimpleName(newImplementation));
+		super.setImplementation(newImplementation);
+	}
+
+	@Override
+	public void setName(String newName) {
+		System.out.println("setName " + NameUtil.debugSimpleName(this) + " " + newName);
+		super.setName(newName);
 	}
 } //IterationImpl

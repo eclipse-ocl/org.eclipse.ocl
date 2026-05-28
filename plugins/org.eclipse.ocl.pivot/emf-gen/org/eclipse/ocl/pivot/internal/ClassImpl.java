@@ -1623,18 +1623,19 @@ implements org.eclipse.ocl.pivot.Class {
 	@Override
 	public @NonNull Type specializeIn(/*@NonNull*/ CallExp callExpr, @Nullable Type selfType) {
 
-		TemplateParameterization templateParameterization1 = TemplateParameterization.basicGetTemplateParameterization(this);
+	//	TemplateParameterization templateParameterization1 = TemplateParameterization.basicGetTemplateParameterization(this);
 		if (this instanceof LambdaType) {
 			LoopExp loopExp = (LoopExp)callExpr;
 			Iteration asIteration = loopExp.getReferredIteration();
-			StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(callExpr);
+		//	StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(callExpr);
 			TemplateParameterization templateParameterization = TemplateParameterization.basicGetTemplateParameterization(asIteration);
-			@NonNull Iterable<@NonNull TemplateParameter> templateParameters = asIteration.getOwnedTemplateParameters();
+		//	@NonNull Iterable<@NonNull TemplateParameter> templateParameters = asIteration.getOwnedTemplateParameters();
 		//	@Nullable Iterable<@NonNull TemplateParameter> templateParameters = asIteration.basicGetOwnedTemplateParameters();
 		//	if ((templateParameters == null) && (selfType instanceof org.eclipse.ocl.pivot.Class)) {
 		//		templateParameters = ((org.eclipse.ocl.pivot.Class)selfType).basicGetOwnedTemplateParameters();
 		//	}
-			if (templateParameters != null) {
+			if (templateParameterization != null) {
+				StandardLibrary standardLibrary = PivotUtil.getStandardLibrary(callExpr);
 				return TemplateArgumentVisitor.specializeType(this, callExpr, standardLibrary, selfType);
 			}
 	//		if (selfType instanceof org.eclipse.ocl.pivot.Class) {
