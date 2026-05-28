@@ -1,3 +1,5 @@
+This needs updating for justj / restricted inter job access
+
 The Tycho build automatically promotes downloads and updates, so no cron job help is necessary.
 The Tycho build minimises the need for shell activity by auto-registering in P2 repos including the latest.
 
