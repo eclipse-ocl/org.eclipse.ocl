@@ -387,7 +387,6 @@ implements org.eclipse.ocl.pivot.Class {
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
-	 * @since 7.0
 	 */
 	@Override
 	public List<WildcardType> getOwnedWildcards()
