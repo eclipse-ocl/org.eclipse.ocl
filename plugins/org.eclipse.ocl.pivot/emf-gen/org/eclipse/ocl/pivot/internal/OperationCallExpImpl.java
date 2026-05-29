@@ -700,14 +700,15 @@ implements OperationCallExp {
 						 */
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
-							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull OCLExpression argument = (@NonNull OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
+							final /*@Thrown*/ @Nullable OCLExpression argument = (@Nullable OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
 							if (safe_ownedParameters_source == null) {
 								throw new InvalidValueException("Null \'\'Collection\'\' rather than \'\'OclVoid\'\' value required");
 							}
 							final /*@Thrown*/ @NonNull OrderedSetValue safe_at_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
-							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull Parameter parameter = (@NonNull Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_at_sources, i);
+							final /*@Thrown*/ @Nullable Parameter parameter = (@Nullable Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_at_sources, i);
+							if (parameter == null) {
+								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+							}
 							final /*@Thrown*/ @Nullable Type parameterType = parameter.getType();
 							final /*@Thrown*/ boolean isTypeof = parameter.isIsTypeof();
 							/*@Thrown*/ @Nullable Type requiredType;
@@ -735,6 +736,9 @@ implements OperationCallExp {
 									safe_specializeIn_source = specializeIn_0;
 								}
 								requiredType = safe_specializeIn_source;
+							}
+							if (argument == null) {
+								throw new InvalidValueException("Null source for \'TypedElement::type\'");
 							}
 							final /*@Thrown*/ @Nullable Type type = argument.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;

@@ -552,8 +552,10 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							@SuppressWarnings("null")
 							final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull Variable at = (@NonNull Variable)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedIterators, PivotTables.INT_1);
+							final /*@Thrown*/ @Nullable Variable at = (@Nullable Variable)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedIterators, PivotTables.INT_1);
+							if (at == null) {
+								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+							}
 							final /*@Thrown*/ @Nullable Type iteratorType = at.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_bodyElementType;
 							try {
@@ -695,8 +697,10 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							@SuppressWarnings("null")
 							final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull Variable at = (@NonNull Variable)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedIterators, PivotTables.INT_1);
+							final /*@Thrown*/ @Nullable Variable at = (@Nullable Variable)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedIterators, PivotTables.INT_1);
+							if (at == null) {
+								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+							}
 							final /*@Thrown*/ @Nullable Type iteratorType = at.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_iteratorType;
 							try {
