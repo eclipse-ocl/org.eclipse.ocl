@@ -367,10 +367,6 @@
         <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateBodyTypeConformsToResultType/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateBodyTypeConformsToResultType/context"/>
       </genOperations>
-      <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateBodyTypesAreConformant">
-        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateBodyTypesAreConformant/diagnostics"/>
-        <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateBodyTypesAreConformant/context"/>
-      </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//IterateExp/validateOneInitializer">
         <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateOneInitializer/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//IterateExp/validateOneInitializer/context"/>
@@ -409,10 +405,6 @@
       <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType">
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType/diagnostics"/>
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateAnyTypeIsSourceElementType/context"/>
-      </genOperations>
-      <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateBodyTypeIsConformant">
-        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateBodyTypeIsConformant/diagnostics"/>
-        <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateBodyTypeIsConformant/context"/>
       </genOperations>
       <genOperations ecoreOperation="Pivot.ecore#//IteratorExp/validateClosureBodyElementTypeIsIteratorType">
         <genParameters ecoreParameter="Pivot.ecore#//IteratorExp/validateClosureBodyElementTypeIsIteratorType/diagnostics"/>
