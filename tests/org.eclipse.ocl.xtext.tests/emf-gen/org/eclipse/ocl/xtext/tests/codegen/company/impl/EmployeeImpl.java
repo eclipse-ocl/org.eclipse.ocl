@@ -290,7 +290,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 			 * manager = self
 			 */
 			if (_1 == null) {
-				throw new InvalidValueException("Null source for \'\'http://www.eclipse.org/ocl/test/Pivot/Company.ecore\'::Employee::manager\'");
+				throw new InvalidValueException("Null \'source\' for \'\'http://www.eclipse.org/ocl/test/Pivot/Company.ecore\'::Employee::manager\'");
 			}
 			final /*@Thrown*/ @Nullable Employee manager_0 = _1.getManager();
 			final /*@Thrown*/ boolean eq = this.equals(manager_0);
@@ -376,7 +376,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 				safe_reportingChain_source = BOXED_reportingChain_0;
 			}
 			if (safe_reportingChain_source == null) {
-				throw new InvalidValueException("Null \'\'OrderedSet\'\' rather than \'\'OclVoid\'\' value required");
+				throw new InvalidValueException("Null \'source\' for \'OrderedSet(T)::prepend($$0) : OrderedSet($$0)\'");
 			}
 			final /*@Thrown*/ @NonNull OrderedSetValue prepend = (@Nullable OrderedSetValue)OrderedCollectionPrependOperation.INSTANCE.evaluate(safe_reportingChain_source, manager_2);
 			IF_oclIsUndefined = prepend;
@@ -671,7 +671,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 						try {
 							final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
 							if (name_0 == null) {
-								throw new InvalidValueException("Null \'\'String\'\' rather than \'\'OclVoid\'\' value required");
+								throw new InvalidValueException("Null \'source\' for \'String::size() : Integer[1]\'");
 							}
 							final /*@Thrown*/ @NonNull IntegerValue size = StringSizeOperation.INSTANCE.evaluate(name_0);
 							final /*@Thrown*/ boolean gt = OclComparableGreaterThanOperation.INSTANCE.evaluate(executor, size, CodegencompanyTables.INT_0).booleanValue();

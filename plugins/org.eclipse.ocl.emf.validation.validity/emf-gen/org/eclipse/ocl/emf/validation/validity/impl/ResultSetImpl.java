@@ -252,7 +252,7 @@ public class ResultSetImpl extends MinimalEObjectImpl.Container implements Resul
 			 * severity
 			 */
 			if (_1 == null) {
-				throw new InvalidValueException("Null source for \'http://www.eclipse.org/emf/validation/2013/Validity::Result::severity\'");
+				throw new InvalidValueException("Null \'source\' for \'http://www.eclipse.org/emf/validation/2013/Validity::Result::severity\'");
 			}
 			@SuppressWarnings("null")
 			final /*@Thrown*/ @NonNull Severity severity = _1.getSeverity();

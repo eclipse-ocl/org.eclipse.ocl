@@ -703,7 +703,7 @@ implements OperationCallExp {
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull OCLExpression argument = (@NonNull OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
 							if (safe_ownedParameters_source == null) {
-								throw new InvalidValueException("Null \'\'Collection\'\' rather than \'\'OclVoid\'\' value required");
+								throw new InvalidValueException("Null \'source\' for \'Collection(T)::excluding($$0) : Collection($$0)\'");
 							}
 							final /*@Thrown*/ @NonNull OrderedSetValue safe_at_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
 							@SuppressWarnings("null")
@@ -751,7 +751,7 @@ implements OperationCallExp {
 							}
 							else {
 								if (type == null) {
-									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type) : Boolean[1]\'");
 								}
 								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, requiredType).booleanValue();
 								safe_conformsTo_source = conformsTo_0;
@@ -855,7 +855,7 @@ implements OperationCallExp {
 							/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 							try {
 								if (ownedSource == null) {
-									throw new InvalidValueException("Null source for \'OCLExpression::isNonNull() : Boolean[1]\'");
+									throw new InvalidValueException("Null \'source\' for \'OCLExpression::isNonNull() : Boolean[1]\'");
 								}
 								final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
 								CAUGHT_isNonNull = isNonNull;
@@ -1016,7 +1016,7 @@ implements OperationCallExp {
 								try {
 									final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
 									if (ownedSource_0 == null) {
-										throw new InvalidValueException("Null source for \'OCLExpression::isNonNull() : Boolean[1]\'");
+										throw new InvalidValueException("Null \'source\' for \'OCLExpression::isNonNull() : Boolean[1]\'");
 									}
 									final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
 									CAUGHT_isNonNull = isNonNull;
@@ -1129,7 +1129,7 @@ implements OperationCallExp {
 						safe_ownedParameters_source = BOXED_ownedParameters_0;
 					}
 					if (safe_ownedParameters_source == null) {
-						throw new InvalidValueException("Null \'\'Collection\'\' rather than \'\'OclVoid\'\' value required");
+						throw new InvalidValueException("Null \'source\' for \'Collection(T)::excluding($$0) : Collection($$0)\'");
 					}
 					final /*@Thrown*/ @NonNull OrderedSetValue safe_size_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
 					final /*@Thrown*/ @NonNull IntegerValue size_0 = CollectionSizeOperation.INSTANCE.evaluate(safe_size_sources);

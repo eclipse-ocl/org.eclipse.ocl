@@ -569,7 +569,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							}
 							else {
 								if (bodyElementType == null) {
-									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type) : Boolean[1]\'");
 								}
 								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, bodyElementType, iteratorType).booleanValue();
 								safe_conformsTo_source = conformsTo_0;
@@ -712,7 +712,7 @@ public class IteratorExpImpl extends LoopExpImpl implements IteratorExp
 							}
 							else {
 								if (iteratorType == null) {
-									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type) : Boolean[1]\'");
 								}
 								final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, iteratorType, resultElementType).booleanValue();
 								safe_conformsTo_source = conformsTo_0;

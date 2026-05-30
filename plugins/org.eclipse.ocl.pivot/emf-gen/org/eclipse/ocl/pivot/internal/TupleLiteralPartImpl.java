@@ -208,7 +208,7 @@ implements TupleLiteralPart {
 							/*@Caught*/ @NonNull Object CAUGHT_ne_0;
 							try {
 								if (ownedInit == null) {
-									throw new InvalidValueException("Null source for \'TypedElement::type\'");
+									throw new InvalidValueException("Null \'source\' for \'TypedElement::type\'");
 								}
 								final /*@Thrown*/ @Nullable Type type = ownedInit.getType();
 								final /*@Thrown*/ boolean ne_0 = type != null;
@@ -241,11 +241,11 @@ implements TupleLiteralPart {
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit_1 = this.getOwnedInit();
 							if (ownedInit_1 == null) {
-								throw new InvalidValueException("Null source for \'TypedElement::type\'");
+								throw new InvalidValueException("Null \'source\' for \'TypedElement::type\'");
 							}
 							final /*@Thrown*/ @Nullable Type type_0 = ownedInit_1.getType();
 							if (type_0 == null) {
-								throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+								throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type) : Boolean[1]\'");
 							}
 							final /*@NonInvalid*/ @Nullable Type type_1 = this.getType();
 							final /*@Thrown*/ boolean conformsTo = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type_0, type_1).booleanValue();

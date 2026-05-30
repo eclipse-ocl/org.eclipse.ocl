@@ -607,7 +607,7 @@ implements PropertyCallExp {
 							}
 							else {
 								if (safe_type_source == null) {
-									throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type) : Boolean[1]\'");
 								}
 								@SuppressWarnings("null")
 								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();
@@ -711,7 +711,7 @@ implements PropertyCallExp {
 							/*@Caught*/ @NonNull Object CAUGHT_isNonNull;
 							try {
 								if (ownedSource == null) {
-									throw new InvalidValueException("Null source for \'OCLExpression::isNonNull() : Boolean[1]\'");
+									throw new InvalidValueException("Null \'source\' for \'OCLExpression::isNonNull() : Boolean[1]\'");
 								}
 								final /*@Thrown*/ boolean isNonNull = ownedSource.isNonNull();
 								CAUGHT_isNonNull = isNonNull;
@@ -851,7 +851,7 @@ implements PropertyCallExp {
 						try {
 							final /*@NonInvalid*/ @Nullable OCLExpression ownedSource_0 = this.getOwnedSource();
 							if (ownedSource_0 == null) {
-								throw new InvalidValueException("Null source for \'OCLExpression::isNonNull() : Boolean[1]\'");
+								throw new InvalidValueException("Null \'source\' for \'OCLExpression::isNonNull() : Boolean[1]\'");
 							}
 							final /*@Thrown*/ boolean isNonNull = ownedSource_0.isNonNull();
 							CAUGHT_isNonNull = isNonNull;

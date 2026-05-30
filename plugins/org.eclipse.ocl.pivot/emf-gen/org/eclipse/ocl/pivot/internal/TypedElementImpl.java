@@ -202,14 +202,14 @@ implements TypedElement {
 		}
 		else {
 			if (type == null) {
-				throw new InvalidValueException("Null \'\'Type\'\' rather than \'\'OclVoid\'\' value required");
+				throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type) : Boolean[1]\'");
 			}
 			final /*@NonInvalid*/ @Nullable Type type_0 = this.getType();
 			final /*@Thrown*/ boolean conformsTo_0 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, type_0).booleanValue();
 			safe_conformsTo_source = conformsTo_0;
 		}
 		if (safe_conformsTo_source == null) {
-			throw new InvalidValueException("Null body for \'TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
+			throw new InvalidValueException("Null \'body\' for \'TypedElement::CompatibleBody(ValueSpecification[1]) : Boolean[1]\'");
 		}
 		return safe_conformsTo_source;
 	}

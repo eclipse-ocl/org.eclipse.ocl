@@ -239,7 +239,7 @@ public abstract class ElementImpl
 				final /*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class TYP_Element_0 = idResolver.getClass(PivotTables.CLSSid_Element, null);
 				final /*@NonInvalid*/ @Nullable Element CAST_null = (Element)_1;
 				if (CAST_null == null) {
-					throw new InvalidValueException("Null \'\'OclElement\'\' rather than \'\'OclVoid\'\' value required");
+					throw new InvalidValueException("Null \'source\' for \'OclElement::oclContents() : Set(OclElement[*|1])\'");
 				}
 				final /*@Thrown*/ @NonNull SetValue oclContents = ClassifierOclContentsOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OclElement, CAST_null);
 				final /*@Thrown*/ @NonNull SetValue selectByKind = (@Nullable SetValue)CollectionSelectByKindOperation.INSTANCE.evaluate(executor, oclContents, TYP_Element_0);

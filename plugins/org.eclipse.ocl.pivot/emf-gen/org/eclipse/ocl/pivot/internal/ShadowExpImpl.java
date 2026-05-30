@@ -466,7 +466,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object oclAsSet, final /*@NonInvalid*/ @Nullable Object _1_0) {
 								final /*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class CAST_null = (org.eclipse.ocl.pivot.Class)_1_0;
 								if (CAST_null == null) {
-									throw new InvalidValueException("Null source for \'Class::superClasses\'");
+									throw new InvalidValueException("Null \'source\' for \'Class::superClasses\'");
 								}
 								final /*@Thrown*/ @NonNull List<org.eclipse.ocl.pivot.Class> superClasses = CAST_null.getSuperClasses();
 								final /*@Thrown*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
@@ -571,7 +571,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (or_1 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
+								throw new InvalidValueException("Null \'body\' for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (or_1 == ValueUtil.FALSE_VALUE) {
@@ -599,13 +599,13 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 							}
 							else {
 								if (name == null) {
-									throw new InvalidValueException("Null \'\'String\'\' rather than \'\'OclVoid\'\' value required");
+									throw new InvalidValueException("Null \'source\' for \'String::startsWith(String[1]) : Boolean[1]\'");
 								}
 								final /*@Thrown*/ boolean startsWith_0 = StringStartsWithOperation.INSTANCE.evaluate(name, PivotTables.STR_ocl).booleanValue();
 								safe_startsWith_source = startsWith_0;
 							}
 							if (safe_startsWith_source == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
+								throw new InvalidValueException("Null \'body\' for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (safe_startsWith_source == ValueUtil.FALSE_VALUE) {
@@ -677,7 +677,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (or_2 == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
+								throw new InvalidValueException("Null \'body\' for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (or_2 == ValueUtil.FALSE_VALUE) {
@@ -728,7 +728,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								/*@Caught*/ @NonNull Object CAUGHT_isComposite;
 								try {
 									if (opposite == null) {
-										throw new InvalidValueException("Null source for \'Property::isComposite\'");
+										throw new InvalidValueException("Null \'source\' for \'Property::isComposite\'");
 									}
 									final /*@Thrown*/ boolean isComposite = opposite.isIsComposite();
 									CAUGHT_isComposite = isComposite;
@@ -747,7 +747,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								}
 							}
 							if (and == null) {
-								throw new InvalidValueException("Null body for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
+								throw new InvalidValueException("Null \'body\' for \'Set(T).reject($$0 | Lambda $$0() : Boolean[1]) : Set($$0)\'");
 							}
 							//
 							if (and == ValueUtil.FALSE_VALUE) {
@@ -777,7 +777,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 								public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object extraProperties, final /*@NonInvalid*/ @Nullable Object _1_8) {
 									final /*@NonInvalid*/ @Nullable NamedElement CAST_null_0 = (NamedElement)_1_8;
 									if (CAST_null_0 == null) {
-										throw new InvalidValueException("Null source for \'NamedElement::name\'");
+										throw new InvalidValueException("Null \'source\' for \'NamedElement::name\'");
 									}
 									final /*@Thrown*/ @Nullable String name_0 = CAST_null_0.getName();
 									return name_0;
@@ -827,7 +827,7 @@ public class ShadowExpImpl extends OCLExpressionImpl implements ShadowExp
 									public @Nullable Object evaluate(final @NonNull Executor executor, final @NonNull TypeId typeId, final @Nullable Object missingProperties, final /*@NonInvalid*/ @Nullable Object _1_9) {
 										final /*@NonInvalid*/ @Nullable NamedElement CAST_null_1 = (NamedElement)_1_9;
 										if (CAST_null_1 == null) {
-											throw new InvalidValueException("Null source for \'NamedElement::name\'");
+											throw new InvalidValueException("Null \'source\' for \'NamedElement::name\'");
 										}
 										final /*@Thrown*/ @Nullable String name_2 = CAST_null_1.getName();
 										return name_2;
