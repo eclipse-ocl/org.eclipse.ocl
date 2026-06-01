@@ -10,13 +10,15 @@
  *******************************************************************************/
 package org.eclipse.ocl.compatibility.tests;
 
+import org.eclipse.ocl.xtext.tests.AllXtextTests;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class CompatibilityPivotTests extends org.eclipse.ocl.xtext.tests.xtext.AllXtextTests
+public class CompatibilityPivotTests extends AllXtextTests
 {
 	public static Test suite() {
-		TestSuite suite = (TestSuite) org.eclipse.ocl.xtext.tests.xtext.AllXtextTests.suite();
+		TestSuite suite = (TestSuite) AllXtextTests.suite();
 		suite.addTestSuite(StandaloneClassPathTests.class);
 		return suite;
 	}

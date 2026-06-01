@@ -53,7 +53,7 @@
         <artifactId>tycho-surefire-plugin</artifactId>
         <configuration>
           <!--debugPort>5005</debugPort-->
-          <testClass>org.eclipse.ocl.examples.test.xtext.AllXtextTests</testClass>
+          <testClass>org.eclipse.ocl.xtext.tests.AllXtextTests</testClass>
           <useUIHarness>true</useUIHarness>
           <useUIThread>true</useUIThread>
           <argLine>-DtestNameSuffix="tycho" -Dorg.eclipse.emf.common.CommonPlugin.doNotUsePDE=true ${argLineTail}</argLine>
