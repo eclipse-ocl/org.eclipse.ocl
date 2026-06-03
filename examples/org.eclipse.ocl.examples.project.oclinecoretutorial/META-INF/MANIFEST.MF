@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-SymbolicName: org.eclipse.ocl.examples.project.oclinecoretutorial
-Bundle-Version: 1.24.0.qualifier
+Bundle-Version: 1.25.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: org.eclipse.ocl.examples.project.oclinecoretutorial
 Bundle-Localization: plugin
