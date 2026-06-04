@@ -355,10 +355,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	 * @since 7.0
 	 */
 	protected void copyOperations(@NonNull EDataType eDataType, @NonNull DataType pivotDataType) {
-		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotDataType.getOwnedOperations(), copyOperationsFilter);
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotDataType.getOwnedOperations(), nonDuplicateOperationsFilter);
 		if (!Iterables.isEmpty(nonDuplicateOperations)) {
-			EAnnotation eCoClass = getCoEClass(eDataType);
-			@SuppressWarnings("null")@NonNull List<EObject> eOperations = eCoClass.getContents();
+			EClass eClass = getCoEClass(eDataType);
+			@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
 			safeVisitAll(eOperations, nonDuplicateOperations);
 		}
 	}
@@ -369,8 +369,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	protected void copyProperties(@NonNull EDataType eDataType, @NonNull DataType pivotDataType) {
 		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotDataType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		if (!Iterables.isEmpty(nonDuplicateProperties)) {
-			EAnnotation eCoClass = getCoEClass(eDataType);
-			@SuppressWarnings("null")@NonNull List<EObject> eProperties = eCoClass.getContents();
+			EClass eClass = getCoEClass(eDataType);
+			@SuppressWarnings("null")@NonNull List<EStructuralFeature> eProperties = eClass.getEStructuralFeatures();
 			safeVisitAll(eProperties, nonDuplicateProperties);
 		}
 	}
@@ -406,14 +406,23 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	/**
 	 * @since 7.0
 	 */
-	protected @NonNull EAnnotation getCoEClass(@NonNull EDataType eDataType) {
+	protected @NonNull EClass getCoEClass(@NonNull EDataType eDataType) {
+		EClass eClass;
 		EAnnotation eAnnotation = eDataType.getEAnnotation(PivotConstants.CO_CLASS_ANNOTATION_SOURCE);
 		if (eAnnotation == null) {
+			eClass = EcoreFactory.eINSTANCE.createEClass();
+			eClass.setName(eDataType.getName() + "_Features");
+			eClass.setAbstract(true);
+			eClass.setInterface(true);
 			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 			eAnnotation.setSource(PivotConstants.CO_CLASS_ANNOTATION_SOURCE);
+			eAnnotation.getContents().add(eClass);
 			eDataType.getEAnnotations().add(eAnnotation);
 		}
-		return eAnnotation;
+		else {
+			eClass = (EClass) eDataType.getEAnnotations().get(0);
+		}
+		return eClass;
 	}
 
 	public <T extends EObject> void safeVisitAll(@NonNull List<T> eObjects, @NonNull Iterable<? extends Element> pivotObjects) {
