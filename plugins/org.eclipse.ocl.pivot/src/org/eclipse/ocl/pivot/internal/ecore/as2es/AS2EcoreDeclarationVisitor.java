@@ -65,7 +65,6 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
-import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -83,6 +82,7 @@ import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -321,6 +321,30 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	/**
 	 * @since 7.0
 	 */
+	protected void copyOperations(@NonNull EDataType eDataType, @NonNull DataType pivotDataType) {
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotDataType.getOwnedOperations(), nonDuplicateOperationsFilter);
+		if (!Iterables.isEmpty(nonDuplicateOperations)) {
+			EClass eClass = getCoEClass(eDataType);
+			@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
+			safeVisitAll(eOperations, nonDuplicateOperations);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected void copyProperties(@NonNull EDataType eDataType, @NonNull DataType pivotDataType) {
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotDataType.getOwnedProperties(), nonDuplicatePropertiesFilter);
+		if (!Iterables.isEmpty(nonDuplicateProperties)) {
+			EClass eClass = getCoEClass(eDataType);
+			@SuppressWarnings("null")@NonNull List<EStructuralFeature> eProperties = eClass.getEStructuralFeatures();
+			safeVisitAll(eProperties, nonDuplicateProperties);
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	protected void copyTemplateParameters(@NonNull List<ETypeParameter> eTypeParameters, @NonNull TemplateableElement pivotElement) {
 		Iterable<@NonNull TemplateParameter> asTemplateParameters = pivotElement.basicGetOwnedTemplateParameters();
 		if (asTemplateParameters != null) {
@@ -344,6 +368,28 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		assert details != null;
 		oppositePropertyDetails.addToDetails(details);
 		return eAnnotation;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull EClass getCoEClass(@NonNull EDataType eDataType) {
+		EClass eClass;
+		EAnnotation eAnnotation = eDataType.getEAnnotation(PivotConstants.CO_CLASS_ANNOTATION_SOURCE);
+		if (eAnnotation == null) {
+			eClass = EcoreFactory.eINSTANCE.createEClass();
+			eClass.setName(eDataType.getName() + "_Features");
+			eClass.setAbstract(true);
+			eClass.setInterface(true);
+			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+			eAnnotation.setSource(PivotConstants.CO_CLASS_ANNOTATION_SOURCE);
+			eAnnotation.getContents().add(eClass);
+			eDataType.getEAnnotations().add(eAnnotation);
+		}
+		else {
+			eClass = (EClass) eDataType.getEAnnotations().get(0);
+		}
+		return eClass;
 	}
 
 	public <T extends EObject> void safeVisitAll(@NonNull List<T> eObjects, @NonNull Iterable<? extends Element> pivotObjects) {
@@ -509,9 +555,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		else if ("UniqueCollection".equals(name)) {
 			instanceClass = Collection.class;
 		}
+		@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotCollectionType.getOwnedOperations(), nonDuplicateOperationsFilter);
+		safeVisitAll(eOperations, nonDuplicateOperations);
 		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
 		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotCollectionType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
+//		copyOperations(eDataType, pivotCollectionType);
+//		copyProperties(eDataType, pivotCollectionType);
 		eClass.setInstanceClass(instanceClass);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
@@ -540,6 +591,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EDataType eDataType = EcoreFactory.eINSTANCE.createEDataType();
 		copyDataTypeOrEnum(eDataType, pivotDataType);
+		copyOperations(eDataType, pivotDataType);
+		copyProperties(eDataType, pivotDataType);
 		return eDataType;
 	}
 
@@ -608,9 +661,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		copyClassifier(eClass, pivotMapType);
+		@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotMapType.getOwnedOperations(), nonDuplicateOperationsFilter);
+		safeVisitAll(eOperations, nonDuplicateOperations);
 		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
 		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotMapType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
+//		copyOperations(eDataType, pivotMapType);
+//		copyProperties(eDataType, pivotMapType);
 		eClass.setInstanceClass(Map.class);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
@@ -728,7 +786,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		return eParameter;
 	}
 
-	@Override
+/*	@Override
 	public EObject visitPrimitiveType(@NonNull PrimitiveType pivotPrimitiveType) {
 		if (pivotPrimitiveType.basicGetOwnedTemplateArguments() != null) {
 			return null;
@@ -736,7 +794,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EDataType eDataType = EcoreFactory.eINSTANCE.createEDataType();
 		copyDataTypeOrEnum(eDataType, pivotPrimitiveType);
-		/*		Class<?> instanceClass = null;
+		/ *		Class<?> instanceClass = null;
 		String name = pivotPrimitiveType.getName();
 		if ("Boolean".equals(name)) {
 			instanceClass = Boolean.class;
@@ -753,9 +811,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		else if ("UnlimitedNatural".equals(name)) {
 			instanceClass = UnlimitedNaturalValue.class;
 		}
-		eDataType.setInstanceClass(instanceClass); */
+		eDataType.setInstanceClass(instanceClass); * /
 		return eDataType;
-	}
+	} */
 
 	@Override
 	public EObject visitProperty(@NonNull Property pivotProperty) {

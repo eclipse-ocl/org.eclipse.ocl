@@ -125,11 +125,12 @@ public class ModelMerger extends AbstractProjectComponent
 							continue;
 						}
 					}
+					String pathName = path + "." + eStructuralFeature.getName();
 					if (eStructuralFeature.isMany()) {
-						mergeMultipleFeature(mergedEObject, path+ "." + eStructuralFeature.getName(), eStructuralFeature, eObjects);
+						mergeMultipleFeature(mergedEObject, pathName, eStructuralFeature, eObjects);
 					}
 					else {
-						mergeSingleFeature(mergedEObject, path+ "." + eStructuralFeature.getName(), eStructuralFeature, eObjects);
+						mergeSingleFeature(mergedEObject, pathName, eStructuralFeature, eObjects);
 					}
 				}
 			}

@@ -120,6 +120,12 @@ public interface PivotConstants
 	static final @NonNull String ENTRY_CLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/EntryClass";
 
 	/**
+	 * The annotated class is a coclass for the EOPerations of an EDataType.
+	 * @since 7.0
+	 */
+	static final @NonNull String CO_CLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/CoClass";
+
+	/**
 	 * @since 1.3
 	 */
 	static final @NonNull String AS_EXTENSION_SUFFIX = "as";
