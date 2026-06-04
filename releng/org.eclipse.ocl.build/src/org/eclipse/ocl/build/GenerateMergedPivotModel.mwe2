@@ -243,7 +243,7 @@ Workflow {
     	oclURI = "model/OCL-2.5.oclstdlib"
     	oclURI = "model/Pivot.ocl"
     	invariantPrefix = "validate"
-    }
+    } */
     component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     	uri = "/${internalProjectName}/model/Pivot.ecore"
@@ -300,6 +300,6 @@ Workflow {
     }
 	component = ConvertToUnixLineEndings {
 		directory = "${basePivotProject}/emf-gen"
-	} */
+	}
 }
 
