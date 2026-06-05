@@ -215,6 +215,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	}
 
 	@Override
+	public R visitEntryType(org.eclipse.ocl.pivot.@NonNull EntryType object) {
+		return delegate.visitEntryType(object);
+	}
+
+	@Override
 	public R visitEnumLiteralExp(org.eclipse.ocl.pivot.@NonNull EnumLiteralExp object) {
 		return delegate.visitEnumLiteralExp(object);
 	}
@@ -302,6 +307,11 @@ public abstract class AbstractDelegatingVisitor<R, C, @NonNull D extends Visitor
 	@Override
 	public R visitIteratorVariable(org.eclipse.ocl.pivot.@NonNull IteratorVariable object) {
 		return delegate.visitIteratorVariable(object);
+	}
+
+	@Override
+	public R visitKeyValueType(org.eclipse.ocl.pivot.@NonNull KeyValueType object) {
+		return delegate.visitKeyValueType(object);
 	}
 
 	@Override

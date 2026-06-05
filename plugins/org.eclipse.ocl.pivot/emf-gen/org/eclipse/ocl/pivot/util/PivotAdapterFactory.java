@@ -46,6 +46,7 @@ import org.eclipse.ocl.pivot.DynamicValueSpecification;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ElementLiteralExp;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -64,6 +65,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.KeyValueType;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -366,6 +368,11 @@ extends AdapterFactoryImpl {
 				return createElementLiteralExpAdapter();
 			}
 			@Override
+			public Adapter caseEntryType(EntryType object)
+			{
+				return createEntryTypeAdapter();
+			}
+			@Override
 			public Adapter caseEnumLiteralExp(EnumLiteralExp object)
 			{
 				return createEnumLiteralExpAdapter();
@@ -454,6 +461,11 @@ extends AdapterFactoryImpl {
 			public Adapter caseIteratorVariable(IteratorVariable object)
 			{
 				return createIteratorVariableAdapter();
+			}
+			@Override
+			public Adapter caseKeyValueType(KeyValueType object)
+			{
+				return createKeyValueTypeAdapter();
 			}
 			@Override
 			public Adapter caseLambdaParameter(LambdaParameter object)
@@ -948,6 +960,21 @@ extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.EntryType <em>Entry Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.EntryType
+	 * @generated
+	 */
+	public Adapter createEntryTypeAdapter()
+	{
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.BagType <em>Bag Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -1403,6 +1430,21 @@ extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createIteratorVariableAdapter()
+	{
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.eclipse.ocl.pivot.KeyValueType <em>Key Value Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.eclipse.ocl.pivot.KeyValueType
+	 * @generated
+	 */
+	public Adapter createKeyValueTypeAdapter()
 	{
 		return null;
 	}

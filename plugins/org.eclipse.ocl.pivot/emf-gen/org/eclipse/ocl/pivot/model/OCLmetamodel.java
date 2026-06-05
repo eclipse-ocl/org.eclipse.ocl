@@ -315,6 +315,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final org.eclipse.ocl.pivot.@NonNull Class _Element = createClass(PivotPackage.Literals.ELEMENT);
 		private final org.eclipse.ocl.pivot.@NonNull Class _ElementExtension = createClass(PivotPackage.Literals.ELEMENT_EXTENSION);
 		private final org.eclipse.ocl.pivot.@NonNull Class _ElementLiteralExp = createClass(PivotPackage.Literals.ELEMENT_LITERAL_EXP);
+		private final org.eclipse.ocl.pivot.@NonNull Class _EntryType = createClass(PivotPackage.Literals.ENTRY_TYPE);
 		private final org.eclipse.ocl.pivot.@NonNull Class _EnumLiteralExp = createClass(PivotPackage.Literals.ENUM_LITERAL_EXP);
 		private final org.eclipse.ocl.pivot.@NonNull Class _Enumeration = createClass(PivotPackage.Literals.ENUMERATION);
 		private final org.eclipse.ocl.pivot.@NonNull Class _EnumerationLiteral = createClass(PivotPackage.Literals.ENUMERATION_LITERAL);
@@ -333,6 +334,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final org.eclipse.ocl.pivot.@NonNull Class _Iteration = createClass(PivotPackage.Literals.ITERATION);
 		private final org.eclipse.ocl.pivot.@NonNull Class _IteratorExp = createClass(PivotPackage.Literals.ITERATOR_EXP);
 		private final org.eclipse.ocl.pivot.@NonNull Class _IteratorVariable = createClass(PivotPackage.Literals.ITERATOR_VARIABLE);
+		private final org.eclipse.ocl.pivot.@NonNull Class _KeyValueType = createClass(PivotPackage.Literals.KEY_VALUE_TYPE);
 		private final org.eclipse.ocl.pivot.@NonNull Class _LambdaParameter = createClass(PivotPackage.Literals.LAMBDA_PARAMETER);
 		private final org.eclipse.ocl.pivot.@NonNull Class _LambdaType = createClass(PivotPackage.Literals.LAMBDA_TYPE);
 		private final org.eclipse.ocl.pivot.@NonNull Class _LanguageExpression = createClass(PivotPackage.Literals.LANGUAGE_EXPRESSION);
@@ -456,6 +458,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull BagType _Bag_DynamicElement_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_DynamicProperty_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_ElementExtension_F = createBagType(_Bag);
+		private final @NonNull BagType _Bag_EntryType_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_EnumLiteralExp_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_Import_F = createBagType(_Bag);
 		private final @NonNull BagType _Bag_InstanceSpecification_F = createBagType(_Bag);
@@ -501,6 +504,7 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_DynamicElement_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_DynamicProperty_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_ElementExtension_F = createCollectionType(_Collection);
+		private final @NonNull CollectionType _Collection_EntryType_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_EnumLiteralExp_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_Import_F = createCollectionType(_Collection);
 		private final @NonNull CollectionType _Collection_InstanceSpecification_F = createCollectionType(_Collection);
@@ -794,6 +798,10 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_LiteralExp);
 			ownedClasses.add(type);
+			type = _EntryType;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_KeyValueType);
+			ownedClasses.add(type);
 			type = _EnumLiteralExp;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_LiteralExp);
@@ -871,6 +879,11 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Variable);
 			ownedClasses.add(type);
+			type = _KeyValueType;
+			type.setIsAbstract(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_DataType);
+			ownedClasses.add(type);
 			type = _LambdaParameter;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Parameter);
@@ -920,6 +933,7 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _MapType;
 			superClasses = type.getSuperClasses();
+			superClasses.add(_KeyValueType);
 			superClasses.add(_IterableType);
 			ownedClasses.add(type);
 			type = _MessageExp;
@@ -1352,6 +1366,11 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_Collection);
 			superClasses.add(_Collection_ElementExtension_F);
 			ownedClasses.add(type);
+			type = _Bag_EntryType_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection);
+			superClasses.add(_Collection_EntryType_F);
+			ownedClasses.add(type);
 			type = _Bag_EnumLiteralExp_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection);
@@ -1560,6 +1579,10 @@ public class OCLmetamodel extends ASResourceImpl
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 			type = _Collection_ElementExtension_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
+			type = _Collection_EntryType_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -2573,6 +2596,10 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_ElementExtension_isRequired = createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__IS_REQUIRED, _Boolean);
 		private final @NonNull Property pr_ElementExtension_stereotype = createProperty(PivotPackage.Literals.ELEMENT_EXTENSION__STEREOTYPE, _Stereotype);
 		private final @NonNull Property pr_ElementLiteralExp_referredElement = createProperty(PivotPackage.Literals.ELEMENT_LITERAL_EXP__REFERRED_ELEMENT, _EcoreObject);
+		private final @NonNull Property pr_EntryType_keyType = createProperty(PivotPackage.Literals.ENTRY_TYPE__KEY_TYPE, _Type);
+		private final @NonNull Property pr_EntryType_keysAreNullFree = createProperty(PivotPackage.Literals.ENTRY_TYPE__KEYS_ARE_NULL_FREE, _Boolean);
+		private final @NonNull Property pr_EntryType_valueType = createProperty(PivotPackage.Literals.ENTRY_TYPE__VALUE_TYPE, _Type);
+		private final @NonNull Property pr_EntryType_valuesAreNullFree = createProperty(PivotPackage.Literals.ENTRY_TYPE__VALUES_ARE_NULL_FREE, _Boolean);
 		private final @NonNull Property pr_EnumLiteralExp_referredLiteral = createProperty(PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL, _EnumerationLiteral);
 		private final @NonNull Property pr_Enumeration_ownedLiterals = createProperty(PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, _OrderedSet_EnumerationLiteral_T);
 		private final @NonNull Property pr_EnumerationLiteral_literal = createProperty(PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL, _String);
@@ -2830,6 +2857,8 @@ public class OCLmetamodel extends ASResourceImpl
 		private final @NonNull Property pr_TupleLiteralPart_TupleLiteralExp_ownedParts = createProperty("TupleLiteralExp", _TupleLiteralExp);
 		private final @NonNull Property pr_Type_CollectionType_elementType = createProperty("CollectionType", _Bag_CollectionType_F);
 		private final @NonNull Property pr_Type_DynamicElement_metaType = createProperty("DynamicElement", _Bag_DynamicElement_F);
+		private final @NonNull Property pr_Type_EntryType_keyType = createProperty("EntryType", _Bag_EntryType_F);
+		private final @NonNull Property pr_Type_EntryType_valueType = createProperty("EntryType", _Bag_EntryType_F);
 		private final @NonNull Property pr_Type_MapType_keyType = createProperty("MapType", _Bag_MapType_F);
 		private final @NonNull Property pr_Type_MapType_valueType = createProperty("MapType", _Bag_MapType_F);
 		private final @NonNull Property pr_Type_OCLExpression_typeValue = createProperty("OCLExpression", _Bag_OCLExpression_F);
@@ -3323,6 +3352,22 @@ public class OCLmetamodel extends ASResourceImpl
 			ownedProperties.add(property = pr_ElementLiteralExp_referredElement);
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
+
+			ownedProperties = _EntryType.getOwnedProperties();
+			ownedProperties.add(property = pr_EntryType_keyType);
+			property.setIsTransient(true);
+			property.setOpposite(pr_Type_EntryType_keyType);
+			ownedProperties.add(property = pr_EntryType_keysAreNullFree);
+			property.setIsRequired(true);
+			property.setIsResolveProxies(true);
+			property.setDefaultValueString("true");
+			ownedProperties.add(property = pr_EntryType_valueType);
+			property.setIsTransient(true);
+			property.setOpposite(pr_Type_EntryType_valueType);
+			ownedProperties.add(property = pr_EntryType_valuesAreNullFree);
+			property.setIsRequired(true);
+			property.setIsResolveProxies(true);
+			property.setDefaultValueString("true");
 
 			ownedProperties = _EnumLiteralExp.getOwnedProperties();
 			ownedProperties.add(property = pr_EnumLiteralExp_referredLiteral);
@@ -4547,6 +4592,16 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_DynamicElement_metaType);
+			ownedProperties.add(property = pr_Type_EntryType_keyType);
+			property.setIsImplicit(true);
+			property.setIsRequired(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_EntryType_keyType);
+			ownedProperties.add(property = pr_Type_EntryType_valueType);
+			property.setIsImplicit(true);
+			property.setIsRequired(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_EntryType_valueType);
 			ownedProperties.add(property = pr_Type_MapType_keyType);
 			property.setIsImplicit(true);
 			property.setIsRequired(true);
@@ -5010,6 +5065,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_Bag_DynamicElement_F, _DynamicElement);
 			addBinding(_Bag_DynamicProperty_F, _DynamicProperty);
 			addBinding(_Bag_ElementExtension_F, _ElementExtension);
+			addBinding(_Bag_EntryType_F, _EntryType);
 			addBinding(_Bag_EnumLiteralExp_F, _EnumLiteralExp);
 			addBinding(_Bag_Import_F, _Import);
 			addBinding(_Bag_InstanceSpecification_F, _InstanceSpecification);
@@ -5055,6 +5111,7 @@ public class OCLmetamodel extends ASResourceImpl
 			addBinding(_Collection_DynamicElement_F, _DynamicElement);
 			addBinding(_Collection_DynamicProperty_F, _DynamicProperty);
 			addBinding(_Collection_ElementExtension_F, _ElementExtension);
+			addBinding(_Collection_EntryType_F, _EntryType);
 			addBinding(_Collection_EnumLiteralExp_F, _EnumLiteralExp);
 			addBinding(_Collection_Import_F, _Import);
 			addBinding(_Collection_InstanceSpecification_F, _InstanceSpecification);

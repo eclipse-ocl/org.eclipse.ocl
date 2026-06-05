@@ -190,6 +190,11 @@ public abstract class AbstractMergedVisitor<R, C>
 	}
 
 	@Override
+	public R visitEntryType(org.eclipse.ocl.pivot.@NonNull EntryType object) {
+		return visiting(object);
+	}
+
+	@Override
 	public R visitEnumLiteralExp(org.eclipse.ocl.pivot.@NonNull EnumLiteralExp object) {
 		return visiting(object);
 	}
@@ -276,6 +281,11 @@ public abstract class AbstractMergedVisitor<R, C>
 
 	@Override
 	public R visitIteratorVariable(org.eclipse.ocl.pivot.@NonNull IteratorVariable object) {
+		return visiting(object);
+	}
+
+	@Override
+	public R visitKeyValueType(org.eclipse.ocl.pivot.@NonNull KeyValueType object) {
 		return visiting(object);
 	}
 

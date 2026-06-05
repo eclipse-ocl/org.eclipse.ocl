@@ -52,7 +52,7 @@ import org.eclipse.ocl.pivot.util.Visitor;
  *
  * @generated
  */
-public class MapTypeImpl extends IterableTypeImpl implements MapType
+public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 {
 	/**
 	 * The number of structural features of the '<em>Map Type</em>' class.
@@ -61,7 +61,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	 * @generated
 	 * @ordered
 	 */
-	public static final int MAP_TYPE_FEATURE_COUNT = IterableTypeImpl.ITERABLE_TYPE_FEATURE_COUNT + 5;
+	public static final int MAP_TYPE_FEATURE_COUNT = KeyValueTypeImpl.KEY_VALUE_TYPE_FEATURE_COUNT + 5;
 	/**
 	 * The number of operations of the '<em>Map Type</em>' class.
 	 * <!-- begin-user-doc -->
@@ -69,7 +69,7 @@ public class MapTypeImpl extends IterableTypeImpl implements MapType
 	 * @generated
 	 * @ordered
 	 */
-	public static final int MAP_TYPE_OPERATION_COUNT = IterableTypeImpl.ITERABLE_TYPE_OPERATION_COUNT + 0;
+	public static final int MAP_TYPE_OPERATION_COUNT = KeyValueTypeImpl.KEY_VALUE_TYPE_OPERATION_COUNT + 0;
 	/**
 	 * The cached value of the '{@link #getEntryClass() <em>Entry Class</em>}' reference.
 	 * <!-- begin-user-doc -->

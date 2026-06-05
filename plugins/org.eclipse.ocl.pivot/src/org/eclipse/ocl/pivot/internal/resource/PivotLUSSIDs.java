@@ -23,6 +23,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Feature;
 import org.eclipse.ocl.pivot.IterableType;
@@ -151,6 +152,15 @@ public class PivotLUSSIDs extends LUSSIDs
 				Number upper = collectionType.getUpper();
 				if (!(upper instanceof Unlimited)) {
 					localId += COLLECTION_UPPER_BOUND_MULTIPLIER * (upper.intValue() + 1);
+				}
+			}
+			else if (element instanceof EntryType) {
+				EntryType entryType = (EntryType)element;
+				if (!entryType.isKeysAreNullFree()) {
+					localId += MAP_KEYS_ARE_NULL_FREE_MULTIPLIER;
+				}
+				if (!entryType.isValuesAreNullFree()) {
+					localId += MAP_VALUES_ARE_NULL_FREE_MULTIPLIER;
 				}
 			}
 			else if (element instanceof MapType) {

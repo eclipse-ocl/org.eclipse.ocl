@@ -286,6 +286,15 @@ extends EFactory {
 	@NonNull ElementLiteralExp createElementLiteralExp();
 
 	/**
+	 * Returns a new object of class '<em>Entry Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Entry Type</em>'.
+	 * @generated
+	 */
+	@NonNull EntryType createEntryType();
+
+	/**
 	 * Returns a new object of class '<em>Any Type</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

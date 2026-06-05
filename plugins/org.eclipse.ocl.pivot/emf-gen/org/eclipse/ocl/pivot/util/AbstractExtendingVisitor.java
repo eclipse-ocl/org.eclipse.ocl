@@ -198,6 +198,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitEntryType(org.eclipse.ocl.pivot.@NonNull EntryType object) {
+		return visitKeyValueType(object);
+	}
+
+	@Override
 	public R visitEnumLiteralExp(org.eclipse.ocl.pivot.@NonNull EnumLiteralExp object) {
 		return visitLiteralExp(object);
 	}
@@ -288,6 +293,11 @@ public abstract class AbstractExtendingVisitor<R, C>
 	}
 
 	@Override
+	public R visitKeyValueType(org.eclipse.ocl.pivot.@NonNull KeyValueType object) {
+		return visitDataType(object);
+	}
+
+	@Override
 	public R visitLambdaParameter(org.eclipse.ocl.pivot.@NonNull LambdaParameter object) {
 		return visitParameter(object);
 	}
@@ -339,7 +349,7 @@ public abstract class AbstractExtendingVisitor<R, C>
 
 	@Override
 	public R visitMapType(org.eclipse.ocl.pivot.@NonNull MapType object) {
-		return visitIterableType(object);
+		return visitKeyValueType(object);
 	}
 
 	@Override

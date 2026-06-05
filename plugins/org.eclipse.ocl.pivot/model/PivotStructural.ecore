@@ -430,6 +430,16 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EntryType" eSuperTypes="#//KeyValueType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" eType="#//Type"
+        transient="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="keysAreNullFree" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" eType="#//Type"
+        transient="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="valuesAreNullFree" lowerBound="1"
+        eType="#//Boolean" defaultValueLiteral="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EnumLiteralExp" eSuperTypes="#//LiteralExp">
     <eStructuralFeatures xsi:type="ecore:EReference" name="referredLiteral" eType="#//EnumerationLiteral"/>
   </eClassifiers>
@@ -573,6 +583,7 @@
         eType="#//OCLExpression" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="IteratorVariable" eSuperTypes="#//Variable"/>
+  <eClassifiers xsi:type="ecore:EClass" name="KeyValueType" abstract="true" eSuperTypes="#//DataType"/>
   <eClassifiers xsi:type="ecore:EClass" name="LambdaParameter" eSuperTypes="#//Parameter">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="A LambdaParameter specifies the name, type and multiplicity of a LambdaType context, parameter or result."/>
@@ -641,7 +652,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="ownedValue" lowerBound="1"
         eType="#//OCLExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MapType" eSuperTypes="#//IterableType">
+  <eClassifiers xsi:type="ecore:EClass" name="MapType" eSuperTypes="#//KeyValueType #//IterableType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="entryClass" eType="#//Class">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="A type for an entry that may allow an external syntax serialization as a set-of-entryClass."/>

@@ -31,7 +31,7 @@ import org.eclipse.jdt.annotation.NonNull;
  * @see org.eclipse.ocl.pivot.PivotPackage#getMapType()
  * @generated
  */
-public interface MapType extends IterableType
+public interface MapType extends KeyValueType, IterableType
 {
 	/**
 	 * Returns the value of the '<em><b>Entry Class</b></em>' reference.

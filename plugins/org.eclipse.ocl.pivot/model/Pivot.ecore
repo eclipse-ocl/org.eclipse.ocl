@@ -856,6 +856,17 @@
       </eAnnotations>
     </eStructuralFeatures>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-EntryType" name="EntryType"
+      eSuperTypes="#T-pivot-KeyValueType">
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-EntryType-keyType"
+        name="keyType" eType="#T-pivot-Type" transient="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-EntryType-keysAreNullFree"
+        name="keysAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-EntryType-valueType"
+        name="valueType" eType="#T-pivot-Type" transient="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-EntryType-valuesAreNullFree"
+        name="valuesAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-EnumLiteralExp" name="EnumLiteralExp"
       eSuperTypes="#T-pivot-LiteralExp">
     <eOperations name="validateTypeIsEnumerationType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
@@ -1609,6 +1620,8 @@
       </eParameters>
     </eOperations>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-KeyValueType" name="KeyValueType"
+      abstract="true" eSuperTypes="#T-pivot-DataType"/>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LambdaParameter" name="LambdaParameter"
       eSuperTypes="#T-pivot-Parameter">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1921,7 +1934,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapLiteralPart-ownedValue"
         name="ownedValue" lowerBound="1" eType="#T-pivot-OCLExpression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MapType" name="MapType" eSuperTypes="#T-pivot-IterableType">
+  <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-MapType" name="MapType" eSuperTypes="#T-pivot-KeyValueType #T-pivot-IterableType">
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-MapType-entryClass"
         name="entryClass" eType="#T-pivot-Class">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

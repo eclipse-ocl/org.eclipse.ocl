@@ -70,6 +70,7 @@ public interface Visitor<R>
 	R visitElement(org.eclipse.ocl.pivot.@NonNull Element object);
 	R visitElementExtension(org.eclipse.ocl.pivot.@NonNull ElementExtension object);
 	R visitElementLiteralExp(org.eclipse.ocl.pivot.@NonNull ElementLiteralExp object);
+	R visitEntryType(org.eclipse.ocl.pivot.@NonNull EntryType object);
 	R visitEnumLiteralExp(org.eclipse.ocl.pivot.@NonNull EnumLiteralExp object);
 	R visitEnumeration(org.eclipse.ocl.pivot.@NonNull Enumeration object);
 	R visitEnumerationLiteral(org.eclipse.ocl.pivot.@NonNull EnumerationLiteral object);
@@ -88,6 +89,7 @@ public interface Visitor<R>
 	R visitIteration(org.eclipse.ocl.pivot.@NonNull Iteration object);
 	R visitIteratorExp(org.eclipse.ocl.pivot.@NonNull IteratorExp object);
 	R visitIteratorVariable(org.eclipse.ocl.pivot.@NonNull IteratorVariable object);
+	R visitKeyValueType(org.eclipse.ocl.pivot.@NonNull KeyValueType object);
 	R visitLambdaParameter(org.eclipse.ocl.pivot.@NonNull LambdaParameter object);
 	R visitLambdaType(org.eclipse.ocl.pivot.@NonNull LambdaType object);
 	R visitLanguageExpression(org.eclipse.ocl.pivot.@NonNull LanguageExpression object);

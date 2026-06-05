@@ -259,6 +259,60 @@ extends EPackage
 	EAttribute getElementLiteralExp_ReferredElement();
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.EntryType <em>Entry Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Entry Type</em>'.
+	 * @see org.eclipse.ocl.pivot.EntryType
+	 * @generated
+	 */
+	EClass getEntryType();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.EntryType#getKeyType <em>Key Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key Type</em>'.
+	 * @see org.eclipse.ocl.pivot.EntryType#getKeyType()
+	 * @see #getEntryType()
+	 * @generated
+	 */
+	EReference getEntryType_KeyType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.EntryType#isKeysAreNullFree <em>Keys Are Null Free</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Keys Are Null Free</em>'.
+	 * @see org.eclipse.ocl.pivot.EntryType#isKeysAreNullFree()
+	 * @see #getEntryType()
+	 * @generated
+	 */
+	EAttribute getEntryType_KeysAreNullFree();
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.EntryType#getValueType <em>Value Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value Type</em>'.
+	 * @see org.eclipse.ocl.pivot.EntryType#getValueType()
+	 * @see #getEntryType()
+	 * @generated
+	 */
+	EReference getEntryType_ValueType();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.eclipse.ocl.pivot.EntryType#isValuesAreNullFree <em>Values Are Null Free</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Values Are Null Free</em>'.
+	 * @see org.eclipse.ocl.pivot.EntryType#isValuesAreNullFree()
+	 * @see #getEntryType()
+	 * @generated
+	 */
+	EAttribute getEntryType_ValuesAreNullFree();
+
+	/**
 	 * Returns the meta object for the container reference '{@link org.eclipse.ocl.pivot.ElementExtension#getBase <em>Base</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1450,6 +1504,16 @@ extends EPackage
 	 * @generated
 	 */
 	EOperation getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
+
+	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.KeyValueType <em>Key Value Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Key Value Type</em>'.
+	 * @see org.eclipse.ocl.pivot.KeyValueType
+	 * @generated
+	 */
+	EClass getKeyValueType();
 
 	/**
 	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.LambdaParameter <em>Lambda Parameter</em>}'.
@@ -5955,6 +6019,48 @@ extends EPackage
 		EAttribute ELEMENT_LITERAL_EXP__REFERRED_ELEMENT = eINSTANCE.getElementLiteralExp_ReferredElement();
 
 		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.EntryTypeImpl <em>Entry Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.EntryTypeImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getEntryType()
+		 * @generated
+		 */
+		EClass ENTRY_TYPE = eINSTANCE.getEntryType();
+
+		/**
+		 * The meta object literal for the '<em><b>Key Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ENTRY_TYPE__KEY_TYPE = eINSTANCE.getEntryType_KeyType();
+
+		/**
+		 * The meta object literal for the '<em><b>Keys Are Null Free</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENTRY_TYPE__KEYS_ARE_NULL_FREE = eINSTANCE.getEntryType_KeysAreNullFree();
+
+		/**
+		 * The meta object literal for the '<em><b>Value Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ENTRY_TYPE__VALUE_TYPE = eINSTANCE.getEntryType_ValueType();
+
+		/**
+		 * The meta object literal for the '<em><b>Values Are Null Free</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ENTRY_TYPE__VALUES_ARE_NULL_FREE = eINSTANCE.getEntryType_ValuesAreNullFree();
+
+		/**
 		 * The meta object literal for the '<em><b>Base</b></em>' container reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -6932,6 +7038,16 @@ extends EPackage
 		 * @generated
 		 */
 		EOperation ITERATOR_VARIABLE___VALIDATE_HAS_NO_INITIALIZER__DIAGNOSTICCHAIN_MAP = eINSTANCE.getIteratorVariable__ValidateHasNoInitializer__DiagnosticChain_Map();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.KeyValueTypeImpl <em>Key Value Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.internal.KeyValueTypeImpl
+		 * @see org.eclipse.ocl.pivot.internal.PivotPackageImpl#getKeyValueType()
+		 * @generated
+		 */
+		EClass KEY_VALUE_TYPE = eINSTANCE.getKeyValueType();
 
 		/**
 		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.internal.LambdaParameterImpl <em>Lambda Parameter</em>}' class.

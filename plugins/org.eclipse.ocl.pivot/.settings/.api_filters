@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.ocl.pivot" version="2">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/EntryType.java" type="org.eclipse.ocl.pivot.EntryType">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.EntryType"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/IterateExp.java" type="org.eclipse.ocl.pivot.IterateExp">
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getOwnedBodies()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="validateBodyTypesAreConformant(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
     </resource>
@@ -24,10 +26,10 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/IteratorExp.java" type="org.eclipse.ocl.pivot.IteratorExp">
-        <filter id="1211105284">
+    <resource path="emf-gen/org/eclipse/ocl/pivot/KeyValueType.java" type="org.eclipse.ocl.pivot.KeyValueType">
+        <filter id="1110441988">
             <message_arguments>
-                <message_argument value="validateBodyTypeIsConformant(DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+                <message_argument value="org.eclipse.ocl.pivot.KeyValueType"/>
             </message_arguments>
         </filter>
     </resource>
@@ -87,7 +89,7 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotFactory.java" type="org.eclipse.ocl.pivot.PivotFactory">
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="createCompleteStandardLibrary()"/>
+                <message_argument value="createEntryType()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -109,17 +111,32 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage">
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="getCompleteStandardLibrary()"/>
+                <message_argument value="getEntryType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getEntryType_KeyType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getEntryType_KeysAreNullFree()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getEntryType_ValueType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getEntryType_ValuesAreNullFree()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getIterateExp_OwnedBodies()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getIterateExp__ValidateBodyTypesAreConformant__DiagnosticChain_Map()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -134,7 +151,7 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="getIteratorExp__ValidateBodyTypeIsConformant__DiagnosticChain_Map()"/>
+                <message_argument value="getKeyValueType()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -231,17 +248,32 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotPackage.java" type="org.eclipse.ocl.pivot.PivotPackage$Literals">
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="COMPLETE_STANDARD_LIBRARY"/>
+                <message_argument value="ENTRY_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY_TYPE__KEYS_ARE_NULL_FREE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY_TYPE__KEY_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY_TYPE__VALUES_ARE_NULL_FREE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY_TYPE__VALUE_TYPE"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ITERATE_EXP__OWNED_BODIES"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="ITERATE_EXP___VALIDATE_BODY_TYPES_ARE_CONFORMANT__DIAGNOSTICCHAIN_MAP"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -256,7 +288,7 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="ITERATOR_EXP___VALIDATE_BODY_TYPE_IS_CONFORMANT__DIAGNOSTICCHAIN_MAP"/>
+                <message_argument value="KEY_VALUE_TYPE"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -353,7 +385,17 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
         <filter id="1143996420">
             <message_arguments>
+                <message_argument value="BAG_CLSSid_EntryType"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
                 <message_argument value="BAG_CLSSid_TemplateArgument"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="CLSSid_EntryType"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -422,7 +464,12 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables$Types">
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="_CompleteStandardLibrary"/>
+                <message_argument value="_EntryType"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_KeyValueType"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -722,6 +769,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/EntryTypeImpl.java" type="org.eclipse.ocl.pivot.internal.EntryTypeImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.EntryTypeImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/IterateExpImpl.java" type="org.eclipse.ocl.pivot.internal.IterateExpImpl">
         <filter id="1143996420">
             <message_arguments>
@@ -745,6 +799,13 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="ownedBody"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/internal/KeyValueTypeImpl.java" type="org.eclipse.ocl.pivot.internal.KeyValueTypeImpl">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.internal.KeyValueTypeImpl"/>
             </message_arguments>
         </filter>
     </resource>
@@ -946,7 +1007,12 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotAdapterFactory.java" type="org.eclipse.ocl.pivot.util.PivotAdapterFactory">
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="createCompleteStandardLibraryAdapter()"/>
+                <message_argument value="createEntryTypeAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createKeyValueTypeAdapter()"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -968,7 +1034,12 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotSwitch.java" type="org.eclipse.ocl.pivot.util.PivotSwitch">
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="caseCompleteStandardLibrary(CompleteStandardLibrary)"/>
+                <message_argument value="caseEntryType(EntryType)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseKeyValueType(KeyValueType)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -990,27 +1061,12 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/PivotValidator.java" type="org.eclipse.ocl.pivot.util.PivotValidator">
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="ITERATE_EXP__VALIDATE_BODY_TYPES_ARE_CONFORMANT"/>
+                <message_argument value="validateEntryType(EntryType, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="ITERATOR_EXP__VALIDATE_BODY_TYPE_IS_CONFORMANT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="validateCompleteStandardLibrary(CompleteStandardLibrary, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="validateIterateExp_validateBodyTypesAreConformant(IterateExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
-            </message_arguments>
-        </filter>
-        <filter id="1143996420">
-            <message_arguments>
-                <message_argument value="validateIteratorExp_validateBodyTypeIsConformant(IteratorExp, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
+                <message_argument value="validateKeyValueType(KeyValueType, DiagnosticChain, Map&lt;Object,Object&gt;)"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -1032,7 +1088,12 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/util/Visitor.java" type="org.eclipse.ocl.pivot.util.Visitor">
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="visitCompleteStandardLibrary(CompleteStandardLibrary)"/>
+                <message_argument value="visitEntryType(EntryType)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="visitKeyValueType(KeyValueType)"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
