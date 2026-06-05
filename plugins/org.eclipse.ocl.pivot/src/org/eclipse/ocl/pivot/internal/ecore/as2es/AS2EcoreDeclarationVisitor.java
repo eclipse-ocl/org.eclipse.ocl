@@ -56,6 +56,7 @@ import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
@@ -76,6 +77,7 @@ import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.OCL_Import_EAnnotationConverter;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.OCL_Pivot_Operation_EAnnotationConverter;
+import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -93,12 +95,40 @@ import com.google.common.collect.Iterables;
 public class AS2EcoreDeclarationVisitor
 extends AbstractExtendingVisitor<Object, AS2Ecore>
 {
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull CopyOperationsFilter copyOperationsFilter = new CopyOperationsFilter();
 	public static final @NonNull DuplicateConstraintsFilter duplicateConstraintsFilter = new DuplicateConstraintsFilter();
 	public static final @NonNull DuplicateOperationsFilter duplicateOperationsFilter = new DuplicateOperationsFilter();
 	public static final @NonNull DuplicatePropertiesFilter duplicatePropertiesFilter = new DuplicatePropertiesFilter();
 	public static final @NonNull NonDuplicateConstraintsFilter nonDuplicateConstraintsFilter = new NonDuplicateConstraintsFilter();
 	public static final @NonNull NonDuplicateOperationsFilter nonDuplicateOperationsFilter = new NonDuplicateOperationsFilter();
 	public static final @NonNull NonDuplicatePropertiesFilter nonDuplicatePropertiesFilter = new NonDuplicatePropertiesFilter();
+
+	/**
+	 * @since 7.0
+	 */
+	protected static class CopyOperationsFilter implements Predicate<Operation>
+	{
+		@Override
+		public boolean apply(@Nullable Operation anOperation) {
+			if (anOperation == null) {
+				return false;
+			}
+			if (anOperation.getImplementation() instanceof JavaCompareToOperation) {
+				return false;
+			}
+			if (anOperation.getRedefinedOperations().size() == 0) {
+				return true;
+			}
+			if ("containingActivity".equals(anOperation.getName()) && "ActivityNode".equals(anOperation.getOwningClass().getName())) {
+				return true;		// FIXME Bug 405061 workaround
+			}
+			return false;
+			//			return (anOperation != null) && (anOperation.getRedefinedOperation().size() == 0);
+		}
+	}
 
 	protected static class DuplicateConstraintsFilter implements Predicate<Constraint>
 	{
@@ -269,6 +299,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	protected void copyNamedElement(@NonNull ENamedElement eNamedElement, @NonNull NamedElement pivotNamedElement) {
 		copyModelElement(eNamedElement, pivotNamedElement);
 		String name = pivotNamedElement.getName();
+		if (pivotNamedElement instanceof Iteration) {
+			name += ((Iteration)pivotNamedElement).getOwnedIterators().size();
+		}
 		if ("containingActivity".equals(name)) {		// FIXME Bug 405061 workaround
 			EObject eContainer = pivotNamedElement.eContainer();
 			if ((eContainer instanceof Type) && "ActivityNode".equals(((Type)eContainer).getName())) {
@@ -322,10 +355,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	 * @since 7.0
 	 */
 	protected void copyOperations(@NonNull EDataType eDataType, @NonNull DataType pivotDataType) {
-		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotDataType.getOwnedOperations(), nonDuplicateOperationsFilter);
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotDataType.getOwnedOperations(), copyOperationsFilter);
 		if (!Iterables.isEmpty(nonDuplicateOperations)) {
-			EClass eClass = getCoEClass(eDataType);
-			@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
+			EAnnotation eCoClass = getCoEClass(eDataType);
+			@SuppressWarnings("null")@NonNull List<EObject> eOperations = eCoClass.getContents();
 			safeVisitAll(eOperations, nonDuplicateOperations);
 		}
 	}
@@ -336,8 +369,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	protected void copyProperties(@NonNull EDataType eDataType, @NonNull DataType pivotDataType) {
 		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotDataType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		if (!Iterables.isEmpty(nonDuplicateProperties)) {
-			EClass eClass = getCoEClass(eDataType);
-			@SuppressWarnings("null")@NonNull List<EStructuralFeature> eProperties = eClass.getEStructuralFeatures();
+			EAnnotation eCoClass = getCoEClass(eDataType);
+			@SuppressWarnings("null")@NonNull List<EObject> eProperties = eCoClass.getContents();
 			safeVisitAll(eProperties, nonDuplicateProperties);
 		}
 	}
@@ -373,23 +406,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	/**
 	 * @since 7.0
 	 */
-	protected @NonNull EClass getCoEClass(@NonNull EDataType eDataType) {
-		EClass eClass;
+	protected @NonNull EAnnotation getCoEClass(@NonNull EDataType eDataType) {
 		EAnnotation eAnnotation = eDataType.getEAnnotation(PivotConstants.CO_CLASS_ANNOTATION_SOURCE);
 		if (eAnnotation == null) {
-			eClass = EcoreFactory.eINSTANCE.createEClass();
-			eClass.setName(eDataType.getName() + "_Features");
-			eClass.setAbstract(true);
-			eClass.setInterface(true);
 			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 			eAnnotation.setSource(PivotConstants.CO_CLASS_ANNOTATION_SOURCE);
-			eAnnotation.getContents().add(eClass);
 			eDataType.getEAnnotations().add(eAnnotation);
 		}
-		else {
-			eClass = (EClass) eDataType.getEAnnotations().get(0);
-		}
-		return eClass;
+		return eAnnotation;
 	}
 
 	public <T extends EObject> void safeVisitAll(@NonNull List<T> eObjects, @NonNull Iterable<? extends Element> pivotObjects) {

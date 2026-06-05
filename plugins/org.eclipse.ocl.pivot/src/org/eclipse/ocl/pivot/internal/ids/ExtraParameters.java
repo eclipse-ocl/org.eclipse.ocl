@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.internal.ids;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
- * The ExtraParameters enumeration identifies the numbers of template paramters, kiterators, accumulators that
+ * The ExtraParameters enumeration identifies the numbers of template parameters, iterators, accumulators that
  * may be in use without needing to identify their names.
  *
  * @since 7.0

@@ -98,6 +98,8 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 		s.append(parentId);
 		s.append("::");
 		s.append(name);
+		s.append("|");
+		s.append(extraParameters);
 		return s.toString();
 	}
 

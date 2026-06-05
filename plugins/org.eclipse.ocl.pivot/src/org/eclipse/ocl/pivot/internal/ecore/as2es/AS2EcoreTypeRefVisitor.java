@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -303,6 +304,20 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		}
 		else {
 			return OCLstdlibPackage.Literals.OCL_INVALID;
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public EObject visitLambdaType(@NonNull LambdaType pivotType) {
+		EClassifier eClassifier = context.getCreated(EClassifier.class, pivotType);
+		if (eClassifier != null) {
+			return eClassifier;
+		}
+		else {
+			return OCLstdlibPackage.Literals.OCL_LAMBDA;
 		}
 	}
 

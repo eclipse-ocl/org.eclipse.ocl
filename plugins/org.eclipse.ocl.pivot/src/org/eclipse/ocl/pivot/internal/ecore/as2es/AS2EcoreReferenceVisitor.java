@@ -231,12 +231,12 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		Type keyType = PivotUtil.getKeyType(pivotType);
 		Type valueType = PivotUtil.getValueType(pivotType);
 		StringBuilder s = new StringBuilder();
-		s.append(keyType.getName());
+		s.append(keyType.getName().replace("$", "_"));
 		if (!pivotType.isKeysAreNullFree()) {
 			s.append("Opt");
 		}
-		s.append("2");
-		s.append(valueType.getName());
+		s.append("_to_");
+		s.append(valueType.getName().replace("$", "_"));
 		if (!pivotType.isValuesAreNullFree()) {
 			s.append("Opt");
 		}
@@ -257,7 +257,15 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eKeyFeature = EcoreFactory.eINSTANCE.createEReference();
 		}
 		eKeyFeature.setName("key");
-		eKeyFeature.setEType((EClassifier)typeRefVisitor.safeVisit(keyType, pivotType.isKeysAreNullFree()));
+		EObject eKeyType = typeRefVisitor.safeVisit(keyType, pivotType.isKeysAreNullFree());
+		if (eKeyType instanceof EClassifier) {
+			eKeyFeature.setEType((EClassifier)eKeyType);
+		}
+		else {
+			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+			eGenericType.setETypeParameter((ETypeParameter) eKeyType);
+			eKeyFeature.setEGenericType(eGenericType);
+		}
 		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
 		eKeyFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eKeyFeature);
@@ -269,7 +277,15 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eValueFeature = EcoreFactory.eINSTANCE.createEReference();
 		}
 		eValueFeature.setName("value");
-		eValueFeature.setEType((EClassifier)typeRefVisitor.safeVisit(valueType, pivotType.isValuesAreNullFree()));
+		EObject eValueType = typeRefVisitor.safeVisit(valueType, pivotType.isValuesAreNullFree());
+		if (eValueType instanceof EClassifier) {
+			eValueFeature.setEType((EClassifier)eValueType);
+		}
+		else {
+			EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+			eGenericType.setETypeParameter((ETypeParameter) eValueType);
+			eValueFeature.setEGenericType(eGenericType);
+		}
 		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
@@ -459,7 +475,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eTypedElement.setLowerBound(0);
 			eTypedElement.setUpperBound(-1);
 		}
-		else {
+		else {						// XXX LambdaType
 			if (isRequired) {
 				eTypedElement.setLowerBound(1);
 				eTypedElement.setUpperBound(1);
