@@ -107,6 +107,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			import org.eclipse.ocl.pivot.AssociativityKind;
 			import org.eclipse.ocl.pivot.BagType;
 			import org.eclipse.ocl.pivot.CollectionType;
+			import org.eclipse.ocl.pivot.EntryType;
 			import org.eclipse.ocl.pivot.InvalidType;
 			import org.eclipse.ocl.pivot.Iteration;
 			import org.eclipse.ocl.pivot.LambdaType;
@@ -427,6 +428,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«thisModel.installPrimitiveTypes()»
 						«thisModel.installEnumerations()»
 						«thisModel.installCollectionTypes()»
+						«thisModel.installEntryTypes()»
 						«thisModel.installMapTypes()»
 						«thisModel.installLambdaTypes()»
 						«thisModel.installTupleTypes()»
@@ -450,11 +452,13 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					«thisModel.defineTemplateParameters()»
 					«thisModel.declareTupleTypes()»
 					«thisModel.declareCollectionTypes()»
+					«thisModel.declareEntryTypes()»
 					«thisModel.declareMapTypes()»
 					«thisModel.defineClassTypes()»
 					«thisModel.definePrimitiveTypes()»
 					«thisModel.defineEnumerations()»
 					«thisModel.defineCollectionTypes()»
+					«thisModel.defineEntryTypes()»
 					«thisModel.defineMapTypes()»
 					«thisModel.defineTupleTypes()»
 					«thisModel.defineLambdaTypes()»

@@ -44,6 +44,7 @@ Workflow {
     	excludedEClassifierName = "BooleanType"
     	excludedEClassifierName = "Class"
     	excludedEClassifierName = "CollectionType"
+    	excludedEClassifierName = "EntryType"
     	excludedEClassifierName = "Enumeration"
     	excludedEClassifierName = "EnumerationLiteral"
     	excludedEClassifierName = "InvalidType"

@@ -32,6 +32,7 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -312,6 +313,7 @@ public class OCLstdlib extends ASResourceImpl
 			installClassTypes();
 			installPrimitiveTypes();
 			installCollectionTypes();
+			installEntryTypes();
 			installMapTypes();
 			installLambdaTypes();
 			installTupleTypes();
@@ -336,6 +338,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final org.eclipse.ocl.pivot.@NonNull Class _BooleanType = createClass("BooleanType");
 		private final org.eclipse.ocl.pivot.@NonNull Class _Class = createClass("Class");
 		private final org.eclipse.ocl.pivot.@NonNull Class _CollectionType = createClass("CollectionType");
+		private final org.eclipse.ocl.pivot.@NonNull Class _EntryType = createClass("EntryType");
 		private final org.eclipse.ocl.pivot.@NonNull Class _Enumeration = createClass("Enumeration");
 		private final org.eclipse.ocl.pivot.@NonNull Class _EnumerationLiteral = createClass("EnumerationLiteral");
 		private final org.eclipse.ocl.pivot.@NonNull Class _InvalidType = createClass("InvalidType");
@@ -391,6 +394,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull TemplateParameter tp_Collection_selectByKind_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Collection_selectByType_TT = createTemplateParameter("TT");
 		private final @NonNull TemplateParameter tp_Collection_T = createTemplateParameter("T");
+		private final @NonNull TemplateParameter tp_Entry_K = createTemplateParameter("K");
+		private final @NonNull TemplateParameter tp_Entry_V = createTemplateParameter("V");
 		private final @NonNull TemplateParameter tp_Map_collectBy_E = createTemplateParameter("E");
 		private final @NonNull TemplateParameter tp_Map_collectNested_E = createTemplateParameter("E");
 		private final @NonNull TemplateParameter tp_Map_collect_E = createTemplateParameter("E");
@@ -460,16 +465,15 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull BagType _Bag_$$1_T = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_$$2_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_CollectionType_F = createBagType(_Bag_Bag_T);
-		private final @NonNull BagType _Bag_MapType_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclElement_F = createBagType(_Bag_Bag_T);
 		private final @NonNull BagType _Bag_OclInvalid_F = createBagType(_Bag_Bag_T);
+		private final @NonNull BagType _Bag_Entry_F = createBagType(_Bag_Bag_T);
 		private final @NonNull CollectionType _Collection_$$0_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_$$1_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_$$1_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_$$2_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_CollectionType_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Integer_T = createCollectionType(_Collection_Collection_T);
-		private final @NonNull CollectionType _Collection_MapType_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclAny_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclElement_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_OclElement_T = createCollectionType(_Collection_Collection_T);
@@ -482,6 +486,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _Collection_OclSelf_T_L2_U2 = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_String_T = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _Collection_Tuple_T = createCollectionType(_Collection_Collection_T);
+		private final @NonNull CollectionType _Collection_Entry_F = createCollectionType(_Collection_Collection_T);
 		private final @NonNull CollectionType _OrderedCollection_$$0_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_$$1_F = createCollectionType(_OrderedCollection_OrderedCollection_T);
 		private final @NonNull CollectionType _OrderedCollection_$$1_T = createCollectionType(_OrderedCollection_OrderedCollection_T);
@@ -519,6 +524,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull CollectionType _UniqueCollection_OclSelf_T_L2_U2 = createCollectionType(_UniqueCollection_UniqueCollection_T);
 		private final @NonNull CollectionType _UniqueCollection_Tuple_T = createCollectionType(_UniqueCollection_UniqueCollection_T);
 
+		private final @NonNull EntryType _Entry_Entry_K_Entry_V = createEntryType(OCLstdlibPackage.Literals.ENTRY, tp_Entry_K, tp_Entry_V);
+
 		private final @NonNull MapType _Map_Map_K_Map_V = createMapType(OCLstdlibPackage.Literals.MAP, tp_Map_K, tp_Map_V);
 		private final @NonNull MapType _Map_$$0_T_$$1_T = createMapType(_Map_Map_K_Map_V);
 		private final @NonNull MapType _Map_$$0_T_$$2_T = createMapType(_Map_Map_K_Map_V);
@@ -539,6 +546,10 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclElement);
 			ownedClasses.add(type);
 			type = _CollectionType;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclElement);
+			ownedClasses.add(type);
+			type = _EntryType;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclElement);
 			ownedClasses.add(type);
@@ -729,10 +740,6 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_CollectionType_F);
 			ownedClasses.add(type);
-			type = _Bag_MapType_F;
-			superClasses = type.getSuperClasses();
-			superClasses.add(_Collection_MapType_F);
-			ownedClasses.add(type);
 			type = _Bag_OclElement_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OclElement_F);
@@ -740,6 +747,10 @@ public class OCLstdlib extends ASResourceImpl
 			type = _Bag_OclInvalid_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_OclInvalid_F);
+			ownedClasses.add(type);
+			type = _Bag_Entry_F;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_Collection_Entry_F);
 			ownedClasses.add(type);
 			type = _Collection_$$0_F;
 			superClasses = type.getSuperClasses();
@@ -764,10 +775,6 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _Collection_Integer_T;
 			type.setIsNullFree(true);
-			superClasses = type.getSuperClasses();
-			superClasses.add(_OclAny);
-			ownedClasses.add(type);
-			type = _Collection_MapType_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -830,6 +837,10 @@ public class OCLstdlib extends ASResourceImpl
 			ownedClasses.add(type);
 			type = _Collection_Tuple_T;
 			type.setIsNullFree(true);
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
+			ownedClasses.add(type);
+			type = _Collection_Entry_F;
 			superClasses = type.getSuperClasses();
 			superClasses.add(_OclAny);
 			ownedClasses.add(type);
@@ -1014,6 +1025,18 @@ public class OCLstdlib extends ASResourceImpl
 			type.setIsNullFree(true);
 			superClasses = type.getSuperClasses();
 			superClasses.add(_Collection_Tuple_T);
+			ownedClasses.add(type);
+		}
+
+		private void installEntryTypes() {
+			List<org.eclipse.ocl.pivot.Class> ownedClasses;
+			List<org.eclipse.ocl.pivot.Class> superClasses;
+			EntryType type;
+
+			ownedClasses = library.getOwnedClasses();
+			type = _Entry_Entry_K_Entry_V;
+			superClasses = type.getSuperClasses();
+			superClasses.add(_OclAny);
 			ownedClasses.add(type);
 		}
 
@@ -3066,8 +3089,10 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_CollectionType_elementType = createProperty("elementType", _Type);
 		private final @NonNull Property pr_CollectionType_lower = createProperty("lower", _Integer);
 		private final @NonNull Property pr_CollectionType_upper = createProperty("upper", _UnlimitedNatural);
-		private final @NonNull Property pr_MapType_keyType = createProperty("keyType", _Type);
-		private final @NonNull Property pr_MapType_valueType = createProperty("valueType", _Type);
+		private final @NonNull Property pr_Entry_key = createProperty(OCLstdlibPackage.Literals.ENTRY__KEY, $$0);
+		private final @NonNull Property pr_Entry_value = createProperty(OCLstdlibPackage.Literals.ENTRY__VALUE, $$1);
+		private final @NonNull Property pr_OclAny_Entry_key = createProperty("Entry", _Bag_Entry_F);
+		private final @NonNull Property pr_OclAny_Entry_value = createProperty("Entry", _Bag_Entry_F);
 		private final @NonNull Property pr_OclAny_OclInvalid_oclBadProperty = createProperty("OclInvalid", _Bag_OclInvalid_F);
 		private final @NonNull Property pr_OclElement_oclContainer = createProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTAINER, _OclElement);
 		private final @NonNull Property pr_OclElement_oclContents = createProperty(OCLstdlibPackage.Literals.OCL_ELEMENT__OCL_CONTENTS, _Set_OclElement_T);
@@ -3075,8 +3100,6 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Property pr_OclElement_OclElement_oclContents = createProperty("OclElement", _Bag_OclElement_F);
 		private final @NonNull Property pr_OclInvalid_oclBadProperty = createProperty(OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY, _OclAny);
 		private final @NonNull Property pr_Type_CollectionType_elementType = createProperty("CollectionType", _Bag_CollectionType_F);
-		private final @NonNull Property pr_Type_MapType_keyType = createProperty("MapType", _Bag_MapType_F);
-		private final @NonNull Property pr_Type_MapType_valueType = createProperty("MapType", _Bag_MapType_F);
 
 		private void installProperties() {
 			List<Property> ownedProperties;
@@ -3100,21 +3123,29 @@ public class OCLstdlib extends ASResourceImpl
 			property.setImplementationClass("org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty");
 			property.setImplementation(org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty.INSTANCE);
 
-			ownedProperties = _MapType.getOwnedProperties();
-			ownedProperties.add(property = pr_MapType_keyType);
-			property.setIsRequired(true);
+			ownedProperties = _Entry_Entry_K_Entry_V.getOwnedProperties();
+			ownedProperties.add(property = pr_Entry_key);
 			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Type_MapType_keyType);
-			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty");
-			property.setImplementation(org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty.INSTANCE);
-			ownedProperties.add(property = pr_MapType_valueType);
-			property.setIsRequired(true);
+			property.setOpposite(pr_OclAny_Entry_key);
+			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.EntryKeyProperty");
+			property.setImplementation(org.eclipse.ocl.pivot.library.map.EntryKeyProperty.INSTANCE);
+			ownedProperties.add(property = pr_Entry_value);
 			property.setIsResolveProxies(true);
-			property.setOpposite(pr_Type_MapType_valueType);
-			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.MapValueTypeProperty");
-			property.setImplementation(org.eclipse.ocl.pivot.library.map.MapValueTypeProperty.INSTANCE);
+			property.setOpposite(pr_OclAny_Entry_value);
+			property.setImplementationClass("org.eclipse.ocl.pivot.library.map.EntryValueProperty");
+			property.setImplementation(org.eclipse.ocl.pivot.library.map.EntryValueProperty.INSTANCE);
 
 			ownedProperties = _OclAny.getOwnedProperties();
+			ownedProperties.add(property = pr_OclAny_Entry_key);
+			property.setIsImplicit(true);
+			property.setIsRequired(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_Entry_key);
+			ownedProperties.add(property = pr_OclAny_Entry_value);
+			property.setIsImplicit(true);
+			property.setIsRequired(true);
+			property.setIsResolveProxies(true);
+			property.setOpposite(pr_Entry_value);
 			ownedProperties.add(property = pr_OclAny_OclInvalid_oclBadProperty);
 			property.setIsImplicit(true);
 			property.setIsRequired(true);
@@ -3155,16 +3186,6 @@ public class OCLstdlib extends ASResourceImpl
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
 			property.setOpposite(pr_CollectionType_elementType);
-			ownedProperties.add(property = pr_Type_MapType_keyType);
-			property.setIsImplicit(true);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_MapType_keyType);
-			ownedProperties.add(property = pr_Type_MapType_valueType);
-			property.setIsImplicit(true);
-			property.setIsRequired(true);
-			property.setIsResolveProxies(true);
-			property.setOpposite(pr_MapType_valueType);
 		}
 
 		private void installTemplateArguments() {
@@ -3173,7 +3194,7 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Bag_$$1_T, $$1);
 			addBinding(_Bag_$$2_F, $$2);
 			addBinding(_Bag_CollectionType_F, _CollectionType);
-			addBinding(_Bag_MapType_F, _MapType);
+			addBinding(_Bag_Entry_F, _Entry_Entry_K_Entry_V);
 			addBinding(_Bag_OclElement_F, _OclElement);
 			addBinding(_Bag_OclInvalid_F, _OclInvalid);
 			addBinding(_Collection_$$0_F, $$0);
@@ -3181,8 +3202,8 @@ public class OCLstdlib extends ASResourceImpl
 			addBinding(_Collection_$$1_T, $$1);
 			addBinding(_Collection_$$2_F, $$2);
 			addBinding(_Collection_CollectionType_F, _CollectionType);
+			addBinding(_Collection_Entry_F, _Entry_Entry_K_Entry_V);
 			addBinding(_Collection_Integer_T, _Integer);
-			addBinding(_Collection_MapType_F, _MapType);
 			addBinding(_Collection_OclAny_F, _OclAny);
 			addBinding(_Collection_OclElement_F, _OclElement);
 			addBinding(_Collection_OclElement_T, _OclElement);
@@ -3489,12 +3510,13 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(it_Collection_sortedBy, "Results in the Collection containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
 			installComment(op_Collection_sum, "The addition of all elements in oclText[self].\nElements must be of an oclText[OclSummable] type to provide the zero() and sum() operations.\nThe e[sum] operation must be both associative: a.sum(b).sum(c) = a.sum(b.sum(c)), and commutative: a.sum(b) = b.sum(a).\nInteger and Real fulfill this condition.\n\nIf the e[sum] operation is not both associative and commutative, the e[sum] expression is not well-formed,\nwhich may result in unpredictable results during evaluation.\nIf an implementation is able to detect a lack of associativity or commutativity,\nthe implementation may bypass the evaluation and return an oclText[invalid] result.");
 			installComment(op_Collection_union, "The bag consisting of all elements in oclText[self] and all elements in c.");
+			installComment(_Entry_Entry_K_Entry_V, "An Entry provides a key-value pair suitable for identifying an entry in a Map.");
+			installComment(pr_Entry_key, "The key value of the oclText[self] key-value pair.");
+			installComment(pr_Entry_value, "The value value of the oclText[self] key-value pair.");
 			installComment(_Enumeration, "@Deprecated: Use OclEnumeration\nThe Enumeration type is the type of an OrderedSet of EnumerationLiteral.");
 			installComment(op_Enumeration_allInstances, "Return a set of all enumeration values of oclText[self].");
 			installComment(_EnumerationLiteral, "The standard type EnumerationLiteral represents a named constant value of an Enumeration.");
 			installComment(op_InvalidType_allInstances, "Returns oclText[invalid].");
-			installComment(pr_MapType_keyType, "The key type of the key-value pairs of oclText[self].");
-			installComment(pr_MapType_valueType, "The value type of the key-value pairs of oclText[self].");
 			installComment(_Map_Map_K_Map_V, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
 			installComment(op_Map__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Map__eq_, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");

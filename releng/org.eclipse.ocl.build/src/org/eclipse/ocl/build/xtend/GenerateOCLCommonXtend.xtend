@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.NormalizedTemplateParameter
 import org.eclipse.ocl.pivot.LambdaParameter
 import org.eclipse.ocl.pivot.internal.manager.Orphanage
 import org.eclipse.ocl.pivot.TemplateArgument
+import org.eclipse.ocl.pivot.EntryType
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -72,6 +73,29 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«IF type.basicGetOwnedTemplateParameters() === null»
 			private final «getEClassReference(true, type)» «typeName» = create«type.eClass.name»(«type.getGeneric().getSymbolName()»);
 			«ENDIF»
+			«ENDFOR»
+		«ENDFOR»
+		'''
+	}
+
+	protected def String declareEntryTypes(/*@NonNull*/ Model root) {
+		var pkge2mapTypes = root.getSortedEntryTypes();
+		if (pkge2mapTypes.isEmpty()) return "";
+		var sortedPackages = root.getSortedPackages(pkge2mapTypes.keySet());
+		'''
+
+		«FOR pkge : sortedPackages»
+			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
+				«IF type.basicGetOwnedTemplateParameters() !== null»
+					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
+					eClass.name»(«getEcoreLiteral(type)»«IF type.basicGetOwnedTemplateParameters() !== null»«FOR templateParameter : type.getOwnedTemplateParameters()», «templateParameter.getSymbolName()»«ENDFOR»«ENDIF»);
+				«ENDIF»
+			«ENDFOR»
+			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
+				«IF type.basicGetOwnedTemplateParameters() === null»
+					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
+					eClass.name»(«type.getGeneric().getSymbolName()»);
+				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
 		'''
@@ -242,6 +266,35 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«FOR pComment : pElement.getSortedComments()»
 					installComment(«pElement.getSymbolName()», "«pComment.javaString()»");
 				«ENDFOR»
+				«ENDFOR»
+			}
+		'''
+	}
+
+	protected def String defineEntryTypes(/*@NonNull*/ Model root) {
+		var pkge2mapTypes = root.getSortedEntryTypes();
+		if (pkge2mapTypes.isEmpty()) return "";
+		var sortedPackages = root.getSortedPackages(pkge2mapTypes.keySet());
+		'''
+
+			private void installEntryTypes() {
+				List<org.eclipse.ocl.pivot.Class> ownedClasses;
+				List<org.eclipse.ocl.pivot.Class> superClasses;
+				EntryType type;
+				«FOR pkge : sortedPackages»
+
+					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
+					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
+						type = «type.getSymbolName()»;
+						«IF !type.keysAreNullFree»
+						type.setKeysAreNullFree(false);
+						«ENDIF»
+						«IF !type.valuesAreNullFree»
+						type.setValuesAreNullFree(false);
+						«ENDIF»
+						«type.emitSuperClasses("type")»
+						ownedClasses.add(type);
+					«ENDFOR»
 				«ENDFOR»
 			}
 		'''
@@ -777,6 +830,12 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 		'''installComments();'''
 	}
 
+	protected def String installEntryTypes(/*@NonNull*/ Model root) {
+		var pkge2entryTypes = root.getSortedEntryTypes();
+		if (pkge2entryTypes.isEmpty()) return "";
+		'''installEntryTypes();'''
+	}
+
 	protected def String installEnumerations(/*@NonNull*/ Model root) {
 		var pkge2enumerations = root.getSortedEnumerations();
 		if (pkge2enumerations.isEmpty()) return "";
@@ -858,6 +917,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			CollectionType case element.elementType === null: return element.javaName()
 			CollectionType: return element.javaName()
 			Constraint: return getPartialName(element)
+			EntryType case element.keyType === null: return element.javaName()
+			EntryType case element.valueType === null: return element.javaName()
+			EntryType: return element.javaName()
 			LambdaType case element.ownedContext.type === null: return "null"
 			LambdaType: return element.javaName() + "_" + element.ownedContext.type.partialName()
 			MapType case element.keyType === null: return element.javaName()

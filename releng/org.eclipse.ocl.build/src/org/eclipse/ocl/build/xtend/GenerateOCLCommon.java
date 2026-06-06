@@ -36,6 +36,7 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
@@ -212,6 +213,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		private final @NonNull Map<@NonNull Element, @NonNull String> element2moniker = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> package2sortedClasses = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull CollectionType>> package2sortedCollectionTypes = new HashMap<>();
+		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull EntryType>> package2sortedEntryTypes = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Constraint>> package2sortedInvariants = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Enumeration>> package2sortedEnumerations = new HashMap<>();
 		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Iteration>> package2sortedIterations = new HashMap<>();
@@ -311,6 +313,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				List<@NonNull CollectionType> sortedCollectionTypes = package2sortedCollectionTypes.get(asPackage);
 				if (sortedCollectionTypes != null) {
 					Collections.sort(sortedCollectionTypes, collectionTypeComparator);
+				}
+				List<@NonNull EntryType> sortedEntryTypes = package2sortedEntryTypes.get(asPackage);
+				if (sortedEntryTypes != null) {
+					Collections.sort(sortedEntryTypes, monikerComparator);
 				}
 				List<@NonNull Constraint> sortedConstraints = package2sortedInvariants.get(asPackage);
 				if (sortedConstraints != null) {
@@ -455,6 +461,20 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 
 		@Override
 		public @Nullable Object visitDetail(@NonNull Detail asDetail) {
+			return null;
+		}
+
+		@Override
+		public @Nullable Object visitEntryType(@NonNull EntryType asEntryType) {
+			org.eclipse.ocl.pivot.Package asPackage = asEntryType.getOwningPackage();
+			List<@NonNull EntryType> sortedEntryTypes = package2sortedEntryTypes.get(asPackage);
+			if (sortedEntryTypes == null) {
+				sortedEntryTypes = new ArrayList<>();
+				package2sortedEntryTypes.put(asPackage, sortedEntryTypes);
+			}
+			sortedEntryTypes.add(asEntryType);
+			doTemplateableElement(asEntryType);
+			doSuperClasses(asEntryType);
 			return null;
 		}
 
@@ -1046,6 +1066,10 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		List<Comment> sortedElements = new ArrayList<>(element.getOwnedComments());
 		Collections.sort(sortedElements, commentComparator);
 		return sortedElements;
+	}
+
+	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull EntryType>> getSortedEntryTypes(@NonNull Model root) {
+		return contentAnalysis.package2sortedEntryTypes;
 	}
 
 	protected @NonNull Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<@NonNull Enumeration>> getSortedEnumerations(@NonNull Model root) {

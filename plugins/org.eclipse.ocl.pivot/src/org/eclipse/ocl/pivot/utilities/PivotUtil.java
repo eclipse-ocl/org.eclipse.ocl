@@ -67,6 +67,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -1958,6 +1959,13 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Type getKeyType(@NonNull EntryType entryType) {
+		return ClassUtil.requireNonNull(entryType.getKeyType());
+	}
+
+	/**
 	 * @since 1.7
 	 */
 	public static @NonNull Type getKeyType(@NonNull MapType mapType) {
@@ -2901,6 +2909,13 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull String getURI(@NonNull CompletePackage completePackage) {
 		return completePackage.getURI();
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull Type getValueType(@NonNull EntryType entryType) {
+		return ClassUtil.requireNonNull(entryType.getValueType());
 	}
 
 	/**

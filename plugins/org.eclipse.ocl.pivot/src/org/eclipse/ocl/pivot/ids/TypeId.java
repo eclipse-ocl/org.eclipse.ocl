@@ -48,6 +48,10 @@ public interface TypeId extends ElementId
 	public static final @NonNull String COLLECTION_NAME = "Collection";
 	public static final @NonNull String COLLECTION_TYPE_NAME = "CollectionType";
 	public static final @NonNull String DATA_TYPE_NAME = "DataType";
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull String ENTRY_TYPE_NAME = "EntryType";
 	public static final @NonNull String ENUMERATION_NAME = "Enumeration";
 	public static final @NonNull String INTEGER_NAME = "Integer";
 	public static final @NonNull String INTEGER_RANGE_NAME = "IntegerRange";

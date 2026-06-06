@@ -824,6 +824,31 @@
         <ownedComments body="&#xA;Evaluates to the upper bound on the number of collection elements.&#xA;"/>
       </ownedProperties>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:EntryType" xmi:id="hVNHJ" instanceClassName="java.util.Map$Entry" name="Entry" superClasses="#jbMkR">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
+        <ownedDetails name="ClassGroup">
+          <values>Collection</values>
+        </ownedDetails>
+      </ownedAnnotations>
+      <ownedComments body="&#xA;An Entry provides a key-value pair suitable for identifying an entry in a Map.&#xA;"/>
+      <ownedProperties xmi:id="UrP5E" implementationClass="org.eclipse.ocl.pivot.library.map.EntryKeyProperty" name="key" opposite="#azPW,"
+          type="#YVcXo">
+        <ownedComments body="&#xA;The key value of the oclText[self] key-value pair.&#xA;"/>
+      </ownedProperties>
+      <ownedProperties xmi:id="m3+jL" implementationClass="org.eclipse.ocl.pivot.library.map.EntryValueProperty" name="value" opposite="#YJaBu"
+          type="#ZVcXo">
+        <ownedComments body="&#xA;The value value of the oclText[self] key-value pair.&#xA;"/>
+      </ownedProperties>
+      <ownedTemplateParameters xmi:id="VPPb+" name="K"/>
+      <ownedTemplateParameters xmi:id="gPPb+" name="V"/>
+    </ownedClasses>
+    <ownedClasses xmi:id="7+F,f" name="EntryType" superClasses="#zfDWR">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
+        <ownedDetails name="ClassGroup">
+          <values>UML</values>
+        </ownedDetails>
+      </ownedAnnotations>
+    </ownedClasses>
     <ownedClasses xmi:id="28WYD" name="Enumeration" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
@@ -1203,14 +1228,6 @@
           <values>UML</values>
         </ownedDetails>
       </ownedAnnotations>
-      <ownedProperties xmi:id="ifXaB" implementationClass="org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty" isRequired="true" name="keyType"
-          opposite="#CWW9w" type="#pBMRF">
-        <ownedComments body="&#xA;The key type of the key-value pairs of oclText[self].&#xA;"/>
-      </ownedProperties>
-      <ownedProperties xmi:id="0HJYE" implementationClass="org.eclipse.ocl.pivot.library.map.MapValueTypeProperty" isRequired="true" name="valueType"
-          opposite="#AwxtF" type="#pBMRF">
-        <ownedComments body="&#xA;The value type of the key-value pairs of oclText[self].&#xA;"/>
-      </ownedProperties>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:AnyType" xmi:id="jbMkR" instanceClassName="org.eclipse.ocl.pivot.AnyType" isAbstract="true" name="OclAny">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
@@ -1328,6 +1345,8 @@
           name="toString" type="#AlwVZ">
         <ownedComments body="&#xA;Returns a string representation of oclText[self].&#xA;"/>
       </ownedOperations>
+      <ownedProperties xmi:id="azPW," isImplicit="true" isRequired="true" name="Entry" opposite="#UrP5E" type="#zmohp"/>
+      <ownedProperties xmi:id="YJaBu" isImplicit="true" isRequired="true" name="Entry" opposite="#m3+jL" type="#zmohp"/>
       <ownedProperties xmi:id="c8rKW" isImplicit="true" isRequired="true" name="OclInvalid" opposite="#QSjNW" type="#4eSgX"/>
     </ownedClasses>
     <ownedClasses xmi:id="BEwMu" isAbstract="true" name="OclComparable" superClasses="#jbMkR">
@@ -2420,8 +2439,6 @@
         <ownedParameters xmi:id="ESnxi" name="type2" type="#pBMRF"/>
       </ownedOperations>
       <ownedProperties xmi:id="PjpFg" isImplicit="true" isRequired="true" name="CollectionType" opposite="#5RgO0" type="#JSczz"/>
-      <ownedProperties xmi:id="CWW9w" isImplicit="true" isRequired="true" name="MapType" opposite="#ifXaB" type="#Xt65a"/>
-      <ownedProperties xmi:id="AwxtF" isImplicit="true" isRequired="true" name="MapType" opposite="#0HJYE" type="#Xt65a"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="5a0EE" instanceClassName="java.util.Collection" isAbstract="true" name="UniqueCollection"
         superClasses="#o1HIW">
@@ -2522,8 +2539,8 @@
     <ownedClasses xsi:type="pivot:BagType" xmi:id="JSczz" generic="#yEcHF" name="Bag" superClasses="#ftE1C">
       <ownedTemplateArguments actual="#nwL7b"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="Xt65a" generic="#yEcHF" name="Bag" superClasses="#tIj7p">
-      <ownedTemplateArguments actual="#l+ONa"/>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="zmohp" generic="#yEcHF" name="Bag" superClasses="#JCRj4">
+      <ownedTemplateArguments actual="#hVNHJ"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="158KG" generic="#yEcHF" name="Bag" superClasses="#LVlMV">
       <ownedTemplateArguments actual="#zfDWR"/>
@@ -2546,11 +2563,11 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="ftE1C" generic="#IgEJU" name="Collection" superClasses="#jbMkR">
       <ownedTemplateArguments actual="#nwL7b"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="JCRj4" generic="#IgEJU" name="Collection" superClasses="#jbMkR">
+      <ownedTemplateArguments actual="#hVNHJ"/>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="6c1Sm" generic="#IgEJU" isNullFree="true" name="Collection" superClasses="#jbMkR">
       <ownedTemplateArguments actual="#tYtCd"/>
-    </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tIj7p" generic="#IgEJU" name="Collection" superClasses="#jbMkR">
-      <ownedTemplateArguments actual="#l+ONa"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="7aA3o" generic="#IgEJU" name="Collection" superClasses="#jbMkR">
       <ownedTemplateArguments actual="#jbMkR"/>

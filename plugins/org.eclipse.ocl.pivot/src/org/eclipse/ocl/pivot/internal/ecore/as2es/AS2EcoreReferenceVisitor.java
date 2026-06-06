@@ -40,6 +40,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
@@ -540,6 +541,19 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	public EObject visitDataType(@NonNull DataType pivotDataType) {
 		EDataType eDataType = getCreated(EDataType.class, pivotDataType);
 		return eDataType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @Nullable EObject visitEntryType(@NonNull EntryType pivotClass) {
+		EClass eClass = getCreated(EClass.class, pivotClass);
+		if (eClass == null) {
+			return null;
+		}
+		resolveSuperClasses(eClass, pivotClass);
+		return eClass;
 	}
 
 	/**

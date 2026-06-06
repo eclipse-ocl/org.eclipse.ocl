@@ -601,6 +601,21 @@ abstract type Collection(T) : CollectionType conformsTo OclAny => 'java.util.Col
 }
 
 /*
+ * An Entry provides a key-value pair suitable for identifying an entry in a Map.
+ */
+type Entry(K,V) : EntryType conformsTo OclAny => 'java.util.Map$Entry' {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
+	/*
+	The key value of the oclText[self] key-value pair.
+	*/
+	property key : K[?] => 'org.eclipse.ocl.pivot.library.map.EntryKeyProperty';
+	/*
+	The value value of the oclText[self] key-value pair.
+	*/
+	property value : V[?] => 'org.eclipse.ocl.pivot.library.map.EntryValueProperty';
+}
+
+/*
  The standard type EnumerationLiteral represents a named constant value of an Enumeration.
  */
 type EnumerationLiteral conformsTo OclAny {
@@ -1961,16 +1976,12 @@ type CollectionType {
 	property upper : UnlimitedNatural[1] => 'org.eclipse.ocl.pivot.library.collection.CollectionUpperProperty';
 }
 
+type EntryType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
+}
+
 type MapType {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
-	/*
-	The key type of the key-value pairs of oclText[self].
-	*/
-	property keyType : Type[1] => 'org.eclipse.ocl.pivot.library.map.MapKeyTypeProperty';
-	/*
-	The value type of the key-value pairs of oclText[self].
-	*/
-	property valueType : Type[1] => 'org.eclipse.ocl.pivot.library.map.MapValueTypeProperty';
 }
 
 

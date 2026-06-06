@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.ElementLiteralExp;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidLiteralExp;
@@ -210,6 +211,18 @@ public abstract class ValueUtil
 		}
 		else {
 			throw new InvalidValueException(PivotMessages.TypedValueRequired, "ElementExtension", getTypeName(value));
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull EntryType asEntryType(@Nullable Object value) {
+		if (value instanceof EntryType) {
+			return (EntryType)value;
+		}
+		else {
+			throw new InvalidValueException(PivotMessages.TypedValueRequired, TypeId.ENTRY_TYPE_NAME, getTypeName(value));
 		}
 	}
 

@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Import;
@@ -505,6 +506,27 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@NonNull EDataType eDataType = EcoreFactory.eINSTANCE.createEDataType();
 		copyDataTypeOrEnum(eDataType, pivotDataType);
 		return eDataType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public EObject visitEntryType(@NonNull EntryType pivotEntryType) {
+		if (pivotEntryType.basicGetOwnedTemplateArguments() != null) {
+			return null;
+		}
+		@SuppressWarnings("null")
+		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
+		copyClassifier(eClass, pivotEntryType);
+		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotEntryType.getOwnedProperties(), nonDuplicatePropertiesFilter);
+		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
+		eClass.setInstanceClass(java.util.Map.Entry.class);
+		eClass.setAbstract(true);
+		eClass.setInterface(true);
+		context.defer(pivotEntryType);		// Defer superclass resolution
+		return eClass;
 	}
 
 	@Override

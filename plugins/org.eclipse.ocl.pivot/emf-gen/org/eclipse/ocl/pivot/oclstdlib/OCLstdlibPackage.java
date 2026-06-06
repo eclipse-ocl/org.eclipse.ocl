@@ -99,6 +99,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass entryEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass mapEClass = null;
 
 	/**
@@ -583,6 +590,47 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Entry</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Entry</em>'.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public EClass getEntry() {
+		return entryEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getEntry()
+	 * @generated
+	 */
+	public EReference getEntry_Key() {
+		return (EReference)entryEClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getEntry()
+	 * @generated
+	 */
+	public EReference getEntry_Value() {
+		return (EReference)entryEClass.getEStructuralFeatures().get(1);
+	}
+
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.IntegerValue <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -749,55 +797,59 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		collectionEClass = createEClass(1);
 
-		mapEClass = createEClass(2);
+		entryEClass = createEClass(2);
+		createEReference(entryEClass, 0);
+		createEReference(entryEClass, 1);
 
-		oclAnyEClass = createEClass(3);
+		mapEClass = createEClass(3);
 
-		oclComparableEClass = createEClass(4);
+		oclAnyEClass = createEClass(4);
 
-		oclElementEClass = createEClass(5);
+		oclComparableEClass = createEClass(5);
+
+		oclElementEClass = createEClass(6);
 		createEReference(oclElementEClass, 0);
 		createEReference(oclElementEClass, 1);
 
-		oclEnumerationEClass = createEClass(6);
+		oclEnumerationEClass = createEClass(7);
 
-		oclInvalidEClass = createEClass(7);
+		oclInvalidEClass = createEClass(8);
 		createEReference(oclInvalidEClass, 0);
 
-		oclLambdaEClass = createEClass(8);
+		oclLambdaEClass = createEClass(9);
 
-		oclMessageEClass = createEClass(9);
+		oclMessageEClass = createEClass(10);
 
-		oclSelfEClass = createEClass(10);
+		oclSelfEClass = createEClass(11);
 
-		oclStateEClass = createEClass(11);
+		oclStateEClass = createEClass(12);
 
-		oclStereotypeEClass = createEClass(12);
+		oclStereotypeEClass = createEClass(13);
 
-		oclSummableEClass = createEClass(13);
+		oclSummableEClass = createEClass(14);
 
-		oclTupleEClass = createEClass(14);
+		oclTupleEClass = createEClass(15);
 
-		oclTypeEClass = createEClass(15);
+		oclTypeEClass = createEClass(16);
 
-		oclVoidEClass = createEClass(16);
+		oclVoidEClass = createEClass(17);
 
-		orderedCollectionEClass = createEClass(17);
+		orderedCollectionEClass = createEClass(18);
 
-		orderedSetEClass = createEClass(18);
+		orderedSetEClass = createEClass(19);
 
-		sequenceEClass = createEClass(19);
+		sequenceEClass = createEClass(20);
 
-		setEClass = createEClass(20);
+		setEClass = createEClass(21);
 
-		uniqueCollectionEClass = createEClass(21);
+		uniqueCollectionEClass = createEClass(22);
 
 		// Create data types
-		booleanEDataType = createEDataType(22);
-		integerEDataType = createEDataType(23);
-		realEDataType = createEDataType(24);
-		stringEDataType = createEDataType(25);
-		unlimitedNaturalEDataType = createEDataType(26);
+		booleanEDataType = createEDataType(23);
+		integerEDataType = createEDataType(24);
+		realEDataType = createEDataType(25);
+		stringEDataType = createEDataType(26);
+		unlimitedNaturalEDataType = createEDataType(27);
 	}
 
 	/**
@@ -826,6 +878,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Create type parameters
 		ETypeParameter bagEClass_T = addETypeParameter(bagEClass, "T"); //$NON-NLS-1$
 		addETypeParameter(collectionEClass, "T"); //$NON-NLS-1$
+		ETypeParameter entryEClass_K = addETypeParameter(entryEClass, "K"); //$NON-NLS-1$
+		ETypeParameter entryEClass_V = addETypeParameter(entryEClass, "V"); //$NON-NLS-1$
 		addETypeParameter(mapEClass, "K"); //$NON-NLS-1$
 		addETypeParameter(mapEClass, "V"); //$NON-NLS-1$
 		ETypeParameter orderedCollectionEClass_T = addETypeParameter(orderedCollectionEClass, "T"); //$NON-NLS-1$
@@ -883,6 +937,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEClass(bagEClass, Bag.class, "Bag", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(collectionEClass, Collection.class, "Collection", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(entryEClass, Map.Entry.class, "Entry", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		g1 = createEGenericType(entryEClass_K);
+		initEReference(getEntry_Key(), g1, null, "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(entryEClass_V);
+		initEReference(getEntry_Value(), g1, null, "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(mapEClass, Map.class, "Map", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -1175,6 +1235,32 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EDataType BOOLEAN = eINSTANCE.getBoolean();
+
+		/**
+		 * The meta object literal for the '{@link java.util.Map.Entry <em>Entry</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see java.util.Map.Entry
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getEntry()
+		 * @generated
+		 */
+		public static final EClass ENTRY = eINSTANCE.getEntry();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference ENTRY__KEY = eINSTANCE.getEntry_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference ENTRY__VALUE = eINSTANCE.getEntry_Value();
 
 		/**
 		 * The meta object literal for the '<em>Integer</em>' data type.

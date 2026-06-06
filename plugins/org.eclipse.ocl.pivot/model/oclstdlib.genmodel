@@ -28,6 +28,12 @@
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//Collection">
       <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/T"/>
     </genClasses>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//Entry">
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Entry/K"/>
+      <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Entry/V"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//Entry/key"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//Entry/value"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//Map">
       <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/K"/>
       <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/V"/>

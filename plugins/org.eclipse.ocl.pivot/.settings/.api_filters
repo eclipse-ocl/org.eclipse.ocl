@@ -963,6 +963,23 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibPackage.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage$Literals">
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY__KEY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY__VALUE"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables">
         <filter id="1143996420">
             <message_arguments>
@@ -1001,6 +1018,20 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="$$3"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibTables.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables$Types">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="_Entry"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/util/OCLstdlibAdapterFactory.java" type="org.eclipse.ocl.pivot.oclstdlib.util.OCLstdlibAdapterFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createEntryAdapter()"/>
             </message_arguments>
         </filter>
     </resource>

@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.Feature;
@@ -388,6 +389,20 @@ public class AS2MonikerVisitor extends AbstractExtendingVisitor<Object, AS2Monik
 	public Object visitDetail(@NonNull Detail object) {
 		context.appendParent(object, BINDINGS_PREFIX);
 		context.append(object.getName());
+		return true;
+	}
+
+	@Override
+	public Object visitEntryType(@NonNull EntryType object) {
+		super.visitEntryType(object);
+		context.append(COLLECTION_ELEMENT_SEPARATOR);
+		if (object.isKeysAreNullFree()) {
+			context.append("1");
+		}
+		context.append(COLLECTION_ELEMENT_SEPARATOR);
+		if (object.isValuesAreNullFree()) {
+			context.append("1");
+		}
 		return true;
 	}
 

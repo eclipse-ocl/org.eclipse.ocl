@@ -103,6 +103,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull TemplateParameter _0_Bag_T = LIBRARY.createTemplateParameter("T");
 		private static final @NonNull TemplateParameter _0_Collection_T = LIBRARY.createTemplateParameter("T");
+		private static final @NonNull TemplateParameter _0_Entry_K = LIBRARY.createTemplateParameter("K");
 		private static final @NonNull TemplateParameter _0_Map_K = LIBRARY.createTemplateParameter("K");
 		private static final @NonNull TemplateParameter _0_OclAny_oclAsType_TT = LIBRARY.createTemplateParameter("TT");
 		private static final @NonNull TemplateParameter _0_OclElement_oclAsModelType_TT = LIBRARY.createTemplateParameter("TT");
@@ -134,6 +135,7 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull TemplateParameter _1_Collection_search_Q_1 = LIBRARY.createTemplateParameter("Q");
 		private static final @NonNull TemplateParameter _1_Collection_selectByKind_TT = LIBRARY.createTemplateParameter("TT");
 		private static final @NonNull TemplateParameter _1_Collection_selectByType_TT = LIBRARY.createTemplateParameter("TT");
+		private static final @NonNull TemplateParameter _1_Entry_V = LIBRARY.createTemplateParameter("V");
 		private static final @NonNull TemplateParameter _1_Map_V = LIBRARY.createTemplateParameter("V");
 		private static final @NonNull TemplateParameter _1_OrderedCollection_gather_E = LIBRARY.createTemplateParameter("E");
 		private static final @NonNull TemplateParameter _1_OrderedSet_closure_E = LIBRARY.createTemplateParameter("E");
@@ -201,6 +203,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Bag = LIBRARY.createClass(PivotPackage.Literals.BAG_TYPE, OCLstdlibPackage.Literals.BAG, TypeId.BAG, 0, TypeParameters._0_Bag_T);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Boolean = LIBRARY.createClass(PivotPackage.Literals.BOOLEAN_TYPE, OCLstdlibPackage.Literals.BOOLEAN, TypeId.BOOLEAN, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Collection = LIBRARY.createClass(PivotPackage.Literals.COLLECTION_TYPE, OCLstdlibPackage.Literals.COLLECTION, TypeId.COLLECTION, 0 | FlatClass.ABSTRACT, TypeParameters._0_Collection_T);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Entry = LIBRARY.createClass(PivotPackage.Literals.CLASS, OCLstdlibPackage.Literals.ENTRY, null, 0, TypeParameters._0_Entry_K, TypeParameters._1_Entry_V);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Integer = LIBRARY.createClass(PivotPackage.Literals.PRIMITIVE_TYPE, OCLstdlibPackage.Literals.INTEGER, TypeId.INTEGER, 0);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _Map = LIBRARY.createClass(PivotPackage.Literals.MAP_TYPE, OCLstdlibPackage.Literals.MAP, TypeId.MAP, 0, TypeParameters._0_Map_K, TypeParameters._1_Map_V);
 		public static final org.eclipse.ocl.pivot.@NonNull Class _OclAny = LIBRARY.createClass(PivotPackage.Literals.ANY_TYPE, OCLstdlibPackage.Literals.OCL_ANY, TypeId.OCL_ANY, 0 | FlatClass.ABSTRACT);
@@ -233,30 +236,31 @@ public class OCLstdlibTables extends AbstractTables
 			/* 0 */ _Bag,
 			/* 1 */ _Boolean,
 			/* 2 */ _Collection,
-			/* 3 */ _Integer,
-			/* 4 */ _Map,
-			/* 5 */ _OclAny,
-			/* 6 */ _OclComparable,
-			/* 7 */ _OclElement,
-			/* 8 */ _OclEnumeration,
-			/* 9 */ _OclInvalid,
-			/* 10 */ _OclLambda,
-			/* 11 */ _OclMessage,
-			/* 12 */ _OclSelf,
-			/* 13 */ _OclState,
-			/* 14 */ _OclStereotype,
-			/* 15 */ _OclSummable,
-			/* 16 */ _OclTuple,
-			/* 17 */ _OclType,
-			/* 18 */ _OclVoid,
-			/* 19 */ _OrderedCollection,
-			/* 20 */ _OrderedSet,
-			/* 21 */ _Real,
-			/* 22 */ _Sequence,
-			/* 23 */ _Set,
-			/* 24 */ _String,
-			/* 25 */ _UniqueCollection,
-			/* 26 */ _UnlimitedNatural
+			/* 3 */ _Entry,
+			/* 4 */ _Integer,
+			/* 5 */ _Map,
+			/* 6 */ _OclAny,
+			/* 7 */ _OclComparable,
+			/* 8 */ _OclElement,
+			/* 9 */ _OclEnumeration,
+			/* 10 */ _OclInvalid,
+			/* 11 */ _OclLambda,
+			/* 12 */ _OclMessage,
+			/* 13 */ _OclSelf,
+			/* 14 */ _OclState,
+			/* 15 */ _OclStereotype,
+			/* 16 */ _OclSummable,
+			/* 17 */ _OclTuple,
+			/* 18 */ _OclType,
+			/* 19 */ _OclVoid,
+			/* 20 */ _OrderedCollection,
+			/* 21 */ _OrderedSet,
+			/* 22 */ _Real,
+			/* 23 */ _Sequence,
+			/* 24 */ _Set,
+			/* 25 */ _String,
+			/* 26 */ _UniqueCollection,
+			/* 27 */ _UnlimitedNatural
 		};
 
 		/*
@@ -291,6 +295,9 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull FlatFragment _Collection__Collection = LIBRARY.createFragment(Types._Collection, Types._Collection);
 		private static final @NonNull FlatFragment _Collection__OclAny = LIBRARY.createFragment(Types._Collection, Types._OclAny);
+
+		private static final @NonNull FlatFragment _Entry__Entry = LIBRARY.createFragment(Types._Entry, Types._Entry);
+		private static final @NonNull FlatFragment _Entry__OclAny = LIBRARY.createFragment(Types._Entry, Types._OclAny);
 
 		private static final @NonNull FlatFragment _Integer__Integer = LIBRARY.createFragment(Types._Integer, Types._Integer);
 		private static final @NonNull FlatFragment _Integer__OclAny = LIBRARY.createFragment(Types._Integer, Types._OclAny);
@@ -1231,7 +1238,12 @@ public class OCLstdlibTables extends AbstractTables
 			Operations.init();
 		}
 
-		public static final @NonNull Property _OclAny__OclInvalid__oclBadProperty = LIBRARY.createOppositeProperty(Types._OclAny, "OclInvalid", MODEL.getCollectionType(Types._Bag, Types._OclInvalid, false), 0 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Entry__key = LIBRARY.createProperty(Types._Entry, "key", TypeParameters.$$0, 0 | IsResolveProxies, org.eclipse.ocl.pivot.library.map.EntryKeyProperty.INSTANCE);
+		public static final @NonNull Property _Entry__value = LIBRARY.createProperty(Types._Entry, "value", TypeParameters.$$1, 1 | IsResolveProxies, org.eclipse.ocl.pivot.library.map.EntryValueProperty.INSTANCE);
+
+		public static final @NonNull Property _OclAny__Entry__key = LIBRARY.createOppositeProperty(Types._OclAny, "Entry", MODEL.getCollectionType(Types._Bag, Types._Entry, false), 0 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _OclAny__Entry__value = LIBRARY.createOppositeProperty(Types._OclAny, "Entry", MODEL.getCollectionType(Types._Bag, Types._Entry, false), 1 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _OclAny__OclInvalid__oclBadProperty = LIBRARY.createOppositeProperty(Types._OclAny, "OclInvalid", MODEL.getCollectionType(Types._Bag, Types._OclInvalid, false), 2 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _OclElement__oclContainer = LIBRARY.createProperty(Types._OclElement, "oclContainer", Types._OclElement, 0 | IsResolveProxies, org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty.INSTANCE);
 		public static final @NonNull Property _OclElement__oclContents = LIBRARY.createProperty(Types._OclElement, "oclContents", MODEL.getCollectionType(Types._Set, Types._OclElement, true), 1 | IsRequired | IsResolveProxies, org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty.INSTANCE);
@@ -1241,6 +1253,11 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Property _OclInvalid__oclBadProperty = LIBRARY.createProperty(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID__OCL_BAD_PROPERTY, Types._OclAny, 0 | IsResolveProxies);
 
 		static {
+			_Entry__key.setOpposite(_OclAny__Entry__key);
+			_Entry__value.setOpposite(_OclAny__Entry__value);
+
+			_OclAny__Entry__key.setOpposite(_Entry__key);
+			_OclAny__Entry__value.setOpposite(_Entry__value);
 			_OclAny__OclInvalid__oclBadProperty.setOpposite(_OclInvalid__oclBadProperty);
 
 			_OclElement__oclContainer.setOpposite(_OclElement__OclElement__oclContainer);
@@ -1289,6 +1306,13 @@ public class OCLstdlibTables extends AbstractTables
 				Fragments._Collection__Collection /* 1 */
 			};
 		private static final int @NonNull [] __Collection = { 0,1 };
+
+		private static final @NonNull FlatFragment @NonNull [] _Entry =
+			{
+				Fragments._Entry__OclAny /* 0 */,
+				Fragments._Entry__Entry /* 1 */
+			};
+		private static final int @NonNull [] __Entry = { 0,1 };
 
 		private static final @NonNull FlatFragment @NonNull [] _Integer =
 			{
@@ -1487,6 +1511,7 @@ public class OCLstdlibTables extends AbstractTables
 			Types._Bag.initFragments(_Bag, __Bag);
 			Types._Boolean.initFragments(_Boolean, __Boolean);
 			Types._Collection.initFragments(_Collection, __Collection);
+			Types._Entry.initFragments(_Entry, __Entry);
 			Types._Integer.initFragments(_Integer, __Integer);
 			Types._Map.initFragments(_Map, __Map);
 			Types._OclAny.initFragments(_OclAny, __OclAny);
@@ -1701,6 +1726,25 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _Collection__OclAny = {
 			Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
 			Operations._Collection___eq_ /* _'='(OclSelf[?]) */,
+			Operations._OclAny__oclAsSet /* oclAsSet() */,
+			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
+			Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
+			Operations._OclAny__oclIsInvalid /* oclIsInvalid() */,
+			Operations._OclAny__oclIsKindOf /* oclIsKindOf(OclType[1]) */,
+			Operations._OclAny__oclIsNew /* oclIsNew() */,
+			Operations._OclAny__oclIsTypeOf /* oclIsTypeOf(OclType[1]) */,
+			Operations._OclAny__oclIsUndefined /* oclIsUndefined() */,
+			Operations._OclAny__0_oclLog /* oclLog() */,
+			Operations._OclAny__1_oclLog /* oclLog(String[1]) */,
+			Operations._OclAny__oclType /* oclType() */,
+			Operations._OclAny__oclTypes /* oclTypes() */,
+			Operations._OclAny__toString /* toString() */
+		};
+
+		private static final @NonNull Operation @NonNull [] _Entry__Entry = {};
+		private static final @NonNull Operation @NonNull [] _Entry__OclAny = {
+			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
 			Operations._OclAny__oclIsInState /* oclIsInState(OclState[?]) */,
@@ -2836,6 +2880,9 @@ public class OCLstdlibTables extends AbstractTables
 			Fragments._Collection__Collection.initOperations(_Collection__Collection);
 			Fragments._Collection__OclAny.initOperations(_Collection__OclAny);
 
+			Fragments._Entry__Entry.initOperations(_Entry__Entry);
+			Fragments._Entry__OclAny.initOperations(_Entry__OclAny);
+
 			Fragments._Integer__Integer.initOperations(_Integer__Integer);
 			Fragments._Integer__OclAny.initOperations(_Integer__OclAny);
 			Fragments._Integer__OclComparable.initOperations(_Integer__OclComparable);
@@ -2954,6 +3001,11 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Property @NonNull [] _Collection = {};
 
+		private static final @NonNull Property @NonNull [] _Entry = {
+			Properties._Entry__key,
+			Properties._Entry__value
+		};
+
 		private static final @NonNull Property @NonNull [] _Integer = {};
 
 		private static final @NonNull Property @NonNull [] _Map = {};
@@ -3023,6 +3075,7 @@ public class OCLstdlibTables extends AbstractTables
 			Fragments._Bag__Bag.initProperties(_Bag);
 			Fragments._Boolean__Boolean.initProperties(_Boolean);
 			Fragments._Collection__Collection.initProperties(_Collection);
+			Fragments._Entry__Entry.initProperties(_Entry);
 			Fragments._Integer__Integer.initProperties(_Integer);
 			Fragments._Map__Map.initProperties(_Map);
 			Fragments._OclAny__OclAny.initProperties(_OclAny);

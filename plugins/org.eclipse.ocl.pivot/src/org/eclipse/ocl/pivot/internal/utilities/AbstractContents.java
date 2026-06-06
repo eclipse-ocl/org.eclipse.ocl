@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
@@ -175,6 +176,17 @@ public abstract class AbstractContents extends PivotUtil
 		specializedType.setUpper(genericType.getUpper());
 		specializedType.setGeneric(genericType);
 		return specializedType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull EntryType createEntryType(/*@NonNull*/ EClass entry, @NonNull TemplateParameter keyParameter, @NonNull TemplateParameter valueParameter) {
+		EntryType entryType = PivotFactory.eINSTANCE.createEntryType();
+		entryType.setName(entry.getName());
+		initTemplateParameters(entryType, keyParameter, valueParameter);
+		((PivotObjectImpl)entryType).setESObject(entry);
+		return entryType;
 	}
 
 	protected @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {

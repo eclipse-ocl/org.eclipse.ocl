@@ -96,39 +96,45 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 2: {
+				@SuppressWarnings("unchecked") Map.Entry<?, ?> entry = (Map.Entry<?, ?>)theEObject;
+				T1 result = caseEntry(entry);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 3: {
 				Map<?, ?> map = (Map<?, ?>)theEObject;
 				T1 result = caseMap(map);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 3: {
+			case 4: {
 				Object oclAny = theEObject;
 				T1 result = caseOclAny(oclAny);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 4: {
+			case 5: {
 				Object oclComparable = theEObject;
 				T1 result = caseOclComparable(oclComparable);
 				if (result == null) result = caseOclAny(oclComparable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 5: {
+			case 6: {
 				Object oclElement = theEObject;
 				T1 result = caseOclElement(oclElement);
 				if (result == null) result = caseOclAny(oclElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 6: {
+			case 7: {
 				Object oclEnumeration = theEObject;
 				T1 result = caseOclEnumeration(oclEnumeration);
 				if (result == null) result = caseOclAny(oclEnumeration);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 7: {
+			case 8: {
 				Object oclInvalid = theEObject;
 				T1 result = caseOclInvalid(oclInvalid);
 				if (result == null) result = caseOclVoid(oclInvalid);
@@ -136,35 +142,35 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 8: {
+			case 9: {
 				Object oclLambda = theEObject;
 				T1 result = caseOclLambda(oclLambda);
 				if (result == null) result = caseOclAny(oclLambda);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 9: {
+			case 10: {
 				Object oclMessage = theEObject;
 				T1 result = caseOclMessage(oclMessage);
 				if (result == null) result = caseOclAny(oclMessage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 10: {
+			case 11: {
 				Object oclSelf = theEObject;
 				T1 result = caseOclSelf(oclSelf);
 				if (result == null) result = caseOclAny(oclSelf);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 11: {
+			case 12: {
 				Object oclState = theEObject;
 				T1 result = caseOclState(oclState);
 				if (result == null) result = caseOclAny(oclState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 12: {
+			case 13: {
 				Object oclStereotype = theEObject;
 				T1 result = caseOclStereotype(oclStereotype);
 				if (result == null) result = caseOclType(oclStereotype);
@@ -173,21 +179,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 13: {
+			case 14: {
 				Object oclSummable = theEObject;
 				T1 result = caseOclSummable(oclSummable);
 				if (result == null) result = caseOclAny(oclSummable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 14: {
+			case 15: {
 				Object oclTuple = theEObject;
 				T1 result = caseOclTuple(oclTuple);
 				if (result == null) result = caseOclAny(oclTuple);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 15: {
+			case 16: {
 				Object oclType = theEObject;
 				T1 result = caseOclType(oclType);
 				if (result == null) result = caseOclElement(oclType);
@@ -195,21 +201,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 16: {
+			case 17: {
 				Object oclVoid = theEObject;
 				T1 result = caseOclVoid(oclVoid);
 				if (result == null) result = caseOclAny(oclVoid);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 17: {
+			case 18: {
 				Collection<?> orderedCollection = (Collection<?>)theEObject;
 				T1 result = caseOrderedCollection(orderedCollection);
 				if (result == null) result = caseCollection(orderedCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 18: {
+			case 19: {
 				OrderedSet<?> orderedSet = (OrderedSet<?>)theEObject;
 				T1 result = caseOrderedSet(orderedSet);
 				if (result == null) result = caseOrderedCollection(orderedSet);
@@ -218,7 +224,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 19: {
+			case 20: {
 				List<?> sequence = (List<?>)theEObject;
 				T1 result = caseSequence(sequence);
 				if (result == null) result = caseOrderedCollection(sequence);
@@ -226,7 +232,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 20: {
+			case 21: {
 				Set<?> set = (Set<?>)theEObject;
 				T1 result = caseSet(set);
 				if (result == null) result = caseUniqueCollection(set);
@@ -234,7 +240,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 21: {
+			case 22: {
 				Collection<?> uniqueCollection = (Collection<?>)theEObject;
 				T1 result = caseUniqueCollection(uniqueCollection);
 				if (result == null) result = caseCollection(uniqueCollection);
@@ -272,6 +278,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @generated
 	 */
 	public <T> T1 caseCollection(Collection<T> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Entry</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Entry</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <K, V> T1 caseEntry(Map.Entry<K, V> object) {
 		return null;
 	}
 

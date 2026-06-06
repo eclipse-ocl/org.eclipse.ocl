@@ -91,6 +91,10 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 				return createCollectionAdapter();
 			}
 			@Override
+			public <K, V> Adapter caseEntry(Map.Entry<K, V> object) {
+				return createEntryAdapter();
+			}
+			@Override
 			public <K, V> Adapter caseMap(Map<K, V> object) {
 				return createMapAdapter();
 			}
@@ -215,6 +219,20 @@ public class OCLstdlibAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createCollectionAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>Entry</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public Adapter createEntryAdapter() {
 		return null;
 	}
 
