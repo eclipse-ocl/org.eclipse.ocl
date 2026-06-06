@@ -1460,50 +1460,6 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
-	public EReference getEntryType_KeyType()
-	{
-		return (EReference)entryTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getEntryType_KeysAreNullFree()
-	{
-		return (EAttribute)entryTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getEntryType_ValueType()
-	{
-		return (EReference)entryTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getEntryType_ValuesAreNullFree()
-	{
-		return (EAttribute)entryTypeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
 	public EReference getElementExtension_Base()
 	{
 		return (EReference)elementExtensionEClass.getEStructuralFeatures().get(0);
@@ -2746,6 +2702,50 @@ implements PivotPackage  {
 	 * @generated
 	 */
 	@Override
+	public EReference getKeyValueType_KeyType()
+	{
+		return (EReference)keyValueTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getKeyValueType_KeysAreNullFree()
+	{
+		return (EAttribute)keyValueTypeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EReference getKeyValueType_ValueType()
+	{
+		return (EReference)keyValueTypeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public EAttribute getKeyValueType_ValuesAreNullFree()
+	{
+		return (EAttribute)keyValueTypeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
 	public EClass getLambdaParameter()
 	{
 		return lambdaParameterEClass;
@@ -3343,50 +3343,6 @@ implements PivotPackage  {
 	public EReference getMapType_EntryClass()
 	{
 		return (EReference)mapTypeEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getMapType_KeyType()
-	{
-		return (EReference)mapTypeEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getMapType_KeysAreNullFree()
-	{
-		return (EAttribute)mapTypeEClass.getEStructuralFeatures().get(2);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EReference getMapType_ValueType()
-	{
-		return (EReference)mapTypeEClass.getEStructuralFeatures().get(3);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public EAttribute getMapType_ValuesAreNullFree()
-	{
-		return (EAttribute)mapTypeEClass.getEStructuralFeatures().get(4);
 	}
 
 	/**
@@ -7362,10 +7318,6 @@ implements PivotPackage  {
 		createEAttribute(elementLiteralExpEClass, 9);
 
 		entryTypeEClass = createEClass(32);
-		createEReference(entryTypeEClass, 24);
-		createEAttribute(entryTypeEClass, 25);
-		createEReference(entryTypeEClass, 26);
-		createEAttribute(entryTypeEClass, 27);
 
 		enumLiteralExpEClass = createEClass(33);
 		createEReference(enumLiteralExpEClass, 9);
@@ -7467,6 +7419,10 @@ implements PivotPackage  {
 		createEOperation(iteratorVariableEClass, 7);
 
 		keyValueTypeEClass = createEClass(51);
+		createEReference(keyValueTypeEClass, 24);
+		createEAttribute(keyValueTypeEClass, 25);
+		createEReference(keyValueTypeEClass, 26);
+		createEAttribute(keyValueTypeEClass, 27);
 
 		lambdaParameterEClass = createEClass(52);
 
@@ -7518,11 +7474,7 @@ implements PivotPackage  {
 		createEReference(mapLiteralPartEClass, 5);
 
 		mapTypeEClass = createEClass(62);
-		createEReference(mapTypeEClass, 24);
-		createEReference(mapTypeEClass, 25);
-		createEAttribute(mapTypeEClass, 26);
-		createEReference(mapTypeEClass, 27);
-		createEAttribute(mapTypeEClass, 28);
+		createEReference(mapTypeEClass, 28);
 
 		messageExpEClass = createEClass(63);
 		createEReference(messageExpEClass, 9);
@@ -8369,10 +8321,6 @@ implements PivotPackage  {
 		initEAttribute(getElementLiteralExp_ReferredElement(), this.getEcoreObject(), "referredElement", null, 1, 1, ElementLiteralExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(entryTypeEClass, EntryType.class, "EntryType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-		initEReference(getEntryType_KeyType(), this.getType(), null, "keyType", null, 0, 1, EntryType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getEntryType_KeysAreNullFree(), this.getBoolean(), "keysAreNullFree", "true", 1, 1, EntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(getEntryType_ValueType(), this.getType(), null, "valueType", null, 0, 1, EntryType.class, IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getEntryType_ValuesAreNullFree(), this.getBoolean(), "valuesAreNullFree", "true", 1, 1, EntryType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(enumLiteralExpEClass, EnumLiteralExp.class, "EnumLiteralExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getEnumLiteralExp_ReferredLiteral(), this.getEnumerationLiteral(), null, "referredLiteral", null, 0, 1, EnumLiteralExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
@@ -8746,6 +8694,10 @@ implements PivotPackage  {
 		addEParameter(op, g1, "context", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(keyValueTypeEClass, KeyValueType.class, "KeyValueType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		initEReference(getKeyValueType_KeyType(), this.getType(), null, "keyType", null, 1, 1, KeyValueType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getKeyValueType_KeysAreNullFree(), this.getBoolean(), "keysAreNullFree", "true", 1, 1, KeyValueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
+		initEReference(getKeyValueType_ValueType(), this.getType(), null, "valueType", null, 1, 1, KeyValueType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		initEAttribute(getKeyValueType_ValuesAreNullFree(), this.getBoolean(), "valuesAreNullFree", "true", 1, 1, KeyValueType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(lambdaParameterEClass, LambdaParameter.class, "LambdaParameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -8902,10 +8854,6 @@ implements PivotPackage  {
 
 		initEClass(mapTypeEClass, MapType.class, "MapType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getMapType_EntryClass(), this.getClass_(), null, "entryClass", null, 0, 1, MapType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEReference(getMapType_KeyType(), this.getType(), null, "keyType", null, 1, 1, MapType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getMapType_KeysAreNullFree(), this.getBoolean(), "keysAreNullFree", "true", 1, 1, MapType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
-		initEReference(getMapType_ValueType(), this.getType(), null, "valueType", null, 1, 1, MapType.class, IS_TRANSIENT, IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
-		initEAttribute(getMapType_ValuesAreNullFree(), this.getBoolean(), "valuesAreNullFree", "true", 1, 1, MapType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$ //$NON-NLS-2$
 
 		initEClass(messageExpEClass, MessageExp.class, "MessageExp", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getMessageExp_OwnedArguments(), this.getOCLExpression(), null, "ownedArguments", null, 0, -1, MessageExp.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$

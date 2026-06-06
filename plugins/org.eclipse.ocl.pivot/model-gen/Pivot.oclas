@@ -299,12 +299,7 @@
         <ownedComments body="This is an Object to avoid injecting a confusing opposite into EObject "/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xmi:id="9oqa1" name="EntryType" superClasses="#dxgVa">
-      <ownedProperties xmi:id="agqsG" isResolveProxies="false" isTransient="true" name="keyType" opposite="#S4,mv" type="#rrwsa"/>
-      <ownedProperties xmi:id="UZ8N7" defaultValueString="true" isRequired="true" name="keysAreNullFree" type="#ZuwnB"/>
-      <ownedProperties xmi:id="sIcqJ" isResolveProxies="false" isTransient="true" name="valueType" opposite="#QSbXE" type="#rrwsa"/>
-      <ownedProperties xmi:id="m5KR3" defaultValueString="true" isRequired="true" name="valuesAreNullFree" type="#ZuwnB"/>
-    </ownedClasses>
+    <ownedClasses xmi:id="9oqa1" name="EntryType" superClasses="#dxgVa"/>
     <ownedClasses xmi:id="Aaj,v" name="EnumLiteralExp" superClasses="#fKWWp">
       <ownedInvariants xmi:id="13IpA" isCallable="true" name="TypeIsEnumerationType">
         <ownedComments body="The type of an enum Literal expression is the type of the referred literal."/>
@@ -518,7 +513,14 @@
       </ownedInvariants>
       <ownedProperties xmi:id="sbNVd" isImplicit="true" name="LoopExp" opposite="#Oa7sP" type="#KhrnS"/>
     </ownedClasses>
-    <ownedClasses xmi:id="dxgVa" isAbstract="true" name="KeyValueType" superClasses="#1mHCJ"/>
+    <ownedClasses xmi:id="dxgVa" isAbstract="true" name="KeyValueType" superClasses="#1mHCJ">
+      <ownedProperties xmi:id="6GQeF" isDerived="true" isRequired="true" isResolveProxies="false" isTransient="true" isVolatile="true"
+          name="keyType" opposite="#yA2hU" type="#rrwsa"/>
+      <ownedProperties xmi:id="0,h,5" defaultValueString="true" isRequired="true" name="keysAreNullFree" type="#ZuwnB"/>
+      <ownedProperties xmi:id="MvBcI" isDerived="true" isRequired="true" isResolveProxies="false" isTransient="true" isVolatile="true"
+          name="valueType" opposite="#waRSp" type="#rrwsa"/>
+      <ownedProperties xmi:id="GgwC2" defaultValueString="true" isRequired="true" name="valuesAreNullFree" type="#ZuwnB"/>
+    </ownedClasses>
     <ownedClasses xmi:id="T8YnB" name="LambdaParameter" superClasses="#as9eG">
       <ownedComments body="A LambdaParameter specifies the name, type and multiplicity of a LambdaType context, parameter or result."/>
       <ownedProperties xmi:id="mIKrg" isImplicit="true" name="LambdaType" opposite="#snCZn" type="#S9Pb5"/>
@@ -621,12 +623,6 @@
       <ownedProperties xmi:id="J5GM0" name="entryClass" opposite="#9Vw0e" type="#pDcbe">
         <ownedComments body="A type for an entry that may allow an external syntax serialization as a set-of-entryClass."/>
       </ownedProperties>
-      <ownedProperties xmi:id="cBKS6" isDerived="true" isRequired="true" isResolveProxies="false" isTransient="true" isVolatile="true"
-          name="keyType" opposite="#83I1p" type="#rrwsa"/>
-      <ownedProperties xmi:id="W6bzu" defaultValueString="true" isRequired="true" name="keysAreNullFree" type="#ZuwnB"/>
-      <ownedProperties xmi:id="up7P9" isDerived="true" isRequired="true" isResolveProxies="false" isTransient="true" isVolatile="true"
-          name="valueType" opposite="#6Rkl+" type="#rrwsa"/>
-      <ownedProperties xmi:id="oaq2q" defaultValueString="true" isRequired="true" name="valuesAreNullFree" type="#ZuwnB"/>
     </ownedClasses>
     <ownedClasses xmi:id="HRils" name="MessageExp" superClasses="#BFtK4">
       <ownedInvariants xmi:id="K+QpH" isCallable="true" name="OneCallOrOneSend">
@@ -1288,10 +1284,8 @@
       </ownedOperations>
       <ownedProperties xmi:id="JFc9Y" isImplicit="true" isRequired="true" name="CollectionType" opposite="#zzSGt" type="#7uaJn"/>
       <ownedProperties xmi:id="Nn,Xg" isImplicit="true" isRequired="true" name="DynamicElement" opposite="#t8fLB" type="#44OiT"/>
-      <ownedProperties xmi:id="S4,mv" isImplicit="true" isRequired="true" name="EntryType" opposite="#agqsG" type="#voYlQ"/>
-      <ownedProperties xmi:id="QSbXE" isImplicit="true" isRequired="true" name="EntryType" opposite="#sIcqJ" type="#voYlQ"/>
-      <ownedProperties xmi:id="83I1p" isImplicit="true" isRequired="true" name="MapType" opposite="#cBKS6" type="#JK5PO"/>
-      <ownedProperties xmi:id="6Rkl+" isImplicit="true" isRequired="true" name="MapType" opposite="#up7P9" type="#JK5PO"/>
+      <ownedProperties xmi:id="yA2hU" isImplicit="true" isRequired="true" name="KeyValueType" opposite="#6GQeF" type="#Pdqam"/>
+      <ownedProperties xmi:id="waRSp" isImplicit="true" isRequired="true" name="KeyValueType" opposite="#MvBcI" type="#Pdqam"/>
       <ownedProperties xmi:id="onVlb" isImplicit="true" isRequired="true" name="OCLExpression" opposite="#s8mFO" type="#TqxYF"/>
       <ownedProperties xmi:id="iPrT3" isImplicit="true" isRequired="true" name="Operation" opposite="#sg5YQ" type="#SI01z"/>
       <ownedProperties xmi:id="wAkbS" isImplicit="true" isRequired="true" name="TemplateArgument" opposite="#O8d+p" type="#Cb3VK"/>
@@ -1444,9 +1438,6 @@
     <ownedClasses xsi:type="pivot:BagType" xmi:id="uwltw" generic="pivot:BagType &_0;#yEcHF" name="Bag" superClasses="&_0;#IgEJU #EMOv,">
       <ownedTemplateArguments actual="#URISB"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="voYlQ" generic="pivot:BagType &_0;#yEcHF" name="Bag" superClasses="&_0;#IgEJU #FEBnf">
-      <ownedTemplateArguments actual="#9oqa1"/>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="61U4t" generic="pivot:BagType &_0;#yEcHF" name="Bag" superClasses="&_0;#IgEJU #QR958">
       <ownedTemplateArguments actual="#Aaj,v"/>
     </ownedClasses>
@@ -1455,6 +1446,9 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="B2y2s" generic="pivot:BagType &_0;#yEcHF" name="Bag" superClasses="&_0;#IgEJU #XRb47">
       <ownedTemplateArguments actual="#f3gRG"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="Pdqam" generic="pivot:BagType &_0;#yEcHF" name="Bag" superClasses="&_0;#IgEJU #l4Sc1">
+      <ownedTemplateArguments actual="#dxgVa"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="0ymr3" generic="pivot:BagType &_0;#yEcHF" name="Bag" superClasses="&_0;#IgEJU #KOPtG">
       <ownedTemplateArguments actual="#KhrnS"/>
@@ -1582,9 +1576,6 @@
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="EMOv," generic="pivot:CollectionType &_0;#IgEJU" name="Collection" superClasses="&_0;#jbMkR">
       <ownedTemplateArguments actual="#URISB"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FEBnf" generic="pivot:CollectionType &_0;#IgEJU" name="Collection" superClasses="&_0;#jbMkR">
-      <ownedTemplateArguments actual="#9oqa1"/>
-    </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="QR958" generic="pivot:CollectionType &_0;#IgEJU" name="Collection" superClasses="&_0;#jbMkR">
       <ownedTemplateArguments actual="#Aaj,v"/>
     </ownedClasses>
@@ -1593,6 +1584,9 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="XRb47" generic="pivot:CollectionType &_0;#IgEJU" name="Collection" superClasses="&_0;#jbMkR">
       <ownedTemplateArguments actual="#f3gRG"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="l4Sc1" generic="pivot:CollectionType &_0;#IgEJU" name="Collection" superClasses="&_0;#jbMkR">
+      <ownedTemplateArguments actual="#dxgVa"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="KOPtG" generic="pivot:CollectionType &_0;#IgEJU" name="Collection" superClasses="&_0;#jbMkR">
       <ownedTemplateArguments actual="#KhrnS"/>

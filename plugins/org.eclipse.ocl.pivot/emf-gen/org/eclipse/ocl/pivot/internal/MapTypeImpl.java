@@ -44,10 +44,6 @@ import org.eclipse.ocl.pivot.util.Visitor;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#getEntryClass <em>Entry Class</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#getKeyType <em>Key Type</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#isKeysAreNullFree <em>Keys Are Null Free</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#getValueType <em>Value Type</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.internal.MapTypeImpl#isValuesAreNullFree <em>Values Are Null Free</em>}</li>
  * </ul>
  *
  * @generated
@@ -61,7 +57,7 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 	 * @generated
 	 * @ordered
 	 */
-	public static final int MAP_TYPE_FEATURE_COUNT = KeyValueTypeImpl.KEY_VALUE_TYPE_FEATURE_COUNT + 5;
+	public static final int MAP_TYPE_FEATURE_COUNT = KeyValueTypeImpl.KEY_VALUE_TYPE_FEATURE_COUNT + 1;
 	/**
 	 * The number of operations of the '<em>Map Type</em>' class.
 	 * <!-- begin-user-doc -->
@@ -81,47 +77,6 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 	 */
 	protected org.eclipse.ocl.pivot.Class entryClass;
 	/**
-	 * The default value of the '{@link #isKeysAreNullFree() <em>Keys Are Null Free</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * @since 1.6
-	 * <!-- end-user-doc -->
-	 * @see #isKeysAreNullFree()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean KEYS_ARE_NULL_FREE_EDEFAULT = true;
-	/**
-	 * The flag representing the value of the '{@link #isKeysAreNullFree() <em>Keys Are Null Free</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * @since 1.6
-	 * <!-- end-user-doc -->
-	 * @see #isKeysAreNullFree()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int KEYS_ARE_NULL_FREE_EFLAG = 1 << 12;
-	/**
-	 * The default value of the '{@link #isValuesAreNullFree() <em>Values Are Null Free</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * @since 1.6
-	 * <!-- end-user-doc -->
-	 * @see #isValuesAreNullFree()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final boolean VALUES_ARE_NULL_FREE_EDEFAULT = true;
-	/**
-	 * The flag representing the value of the '{@link #isValuesAreNullFree() <em>Values Are Null Free</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * @since 1.6
-	 * <!-- end-user-doc -->
-	 * @see #isValuesAreNullFree()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int VALUES_ARE_NULL_FREE_EFLAG = 1 << 13;
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -129,8 +84,6 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 	protected MapTypeImpl()
 	{
 		super();
-		eFlags |= KEYS_ARE_NULL_FREE_EFLAG;
-		eFlags |= VALUES_ARE_NULL_FREE_EFLAG;
 	}
 
 	/**
@@ -159,7 +112,7 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 			if (entryClass != oldEntryClass)
 			{
 				if (eNotificationRequired())
-					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 24, oldEntryClass, entryClass));
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, 28, oldEntryClass, entryClass));
 			}
 		}
 		return entryClass;
@@ -187,7 +140,7 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 		org.eclipse.ocl.pivot.Class oldEntryClass = entryClass;
 		entryClass = newEntryClass;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 24, oldEntryClass, entryClass));
+			eNotify(new ENotificationImpl(this, Notification.SET, 28, oldEntryClass, entryClass));
 	}
 
 	/**
@@ -251,16 +204,16 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 			case 23:
 				return getValue();
 			case 24:
+				return getKeyType();
+			case 25:
+				return isKeysAreNullFree();
+			case 26:
+				return getValueType();
+			case 27:
+				return isValuesAreNullFree();
+			case 28:
 				if (resolve) return getEntryClass();
 				return basicGetEntryClass();
-			case 25:
-				return getKeyType();
-			case 26:
-				return isKeysAreNullFree();
-			case 27:
-				return getValueType();
-			case 28:
-				return isValuesAreNullFree();
 		}
 		return eDynamicGet(featureID, resolve, coreType);
 	}
@@ -360,19 +313,19 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 				setIsSerializable((Boolean)newValue);
 				return;
 			case 24:
-				setEntryClass((org.eclipse.ocl.pivot.Class)newValue);
-				return;
-			case 25:
 				setKeyType((Type)newValue);
 				return;
-			case 26:
+			case 25:
 				setKeysAreNullFree((Boolean)newValue);
 				return;
-			case 27:
+			case 26:
 				setValueType((Type)newValue);
 				return;
-			case 28:
+			case 27:
 				setValuesAreNullFree((Boolean)newValue);
+				return;
+			case 28:
+				setEntryClass((org.eclipse.ocl.pivot.Class)newValue);
 				return;
 		}
 		eDynamicSet(featureID, newValue);
@@ -458,19 +411,19 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 				setIsSerializable(IS_SERIALIZABLE_EDEFAULT);
 				return;
 			case 24:
-				setEntryClass((org.eclipse.ocl.pivot.Class)null);
-				return;
-			case 25:
 				setKeyType((Type)null);
 				return;
-			case 26:
+			case 25:
 				setKeysAreNullFree(KEYS_ARE_NULL_FREE_EDEFAULT);
 				return;
-			case 27:
+			case 26:
 				setValueType((Type)null);
 				return;
-			case 28:
+			case 27:
 				setValuesAreNullFree(VALUES_ARE_NULL_FREE_EDEFAULT);
+				return;
+			case 28:
+				setEntryClass((org.eclipse.ocl.pivot.Class)null);
 				return;
 		}
 		eDynamicUnset(featureID);
@@ -535,15 +488,15 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 			case 23:
 				return VALUE_EDEFAULT == null ? getValue() != null : !VALUE_EDEFAULT.equals(getValue());
 			case 24:
-				return entryClass != null;
-			case 25:
 				return getKeyType() != null;
-			case 26:
+			case 25:
 				return ((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0) != KEYS_ARE_NULL_FREE_EDEFAULT;
-			case 27:
+			case 26:
 				return getValueType() != null;
-			case 28:
+			case 27:
 				return ((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0) != VALUES_ARE_NULL_FREE_EDEFAULT;
+			case 28:
+				return entryClass != null;
 		}
 		return eDynamicIsSet(featureID);
 	}
@@ -583,86 +536,6 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 				return TypeId.MAP.getSpecializedId(keyTypeId, valueTypeId, isKeysAreNullFree(), isValuesAreNullFree());
 			}
 		}
-	}
-
-	@Override
-	public Type getKeyType() {
-		if (ownedTemplateParameters != null) {
-			return ownedTemplateParameters.get(0);
-		}
-		else {
-			return ownedTemplateArguments.get(0).getActual();
-		}
-	}
-
-	@Override
-	public Type getValueType() {
-		if (ownedTemplateParameters != null) {
-			return ownedTemplateParameters.get(1);
-		}
-		else {
-			return ownedTemplateArguments.get(1).getActual();
-		}
-	}
-
-	@Override
-	public void setKeyType(Type newKeyType) {				// FIXME delete me once compatibility not needed
-		System.err.println(eClass().getName() + ".setKeyType() is ignored");
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isKeysAreNullFree()
-	{
-		return (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setKeysAreNullFree(boolean newKeysAreNullFree)
-	{
-		boolean oldKeysAreNullFree = (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
-		if (newKeysAreNullFree) eFlags |= KEYS_ARE_NULL_FREE_EFLAG; else eFlags &= ~KEYS_ARE_NULL_FREE_EFLAG;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 26, oldKeysAreNullFree, newKeysAreNullFree));
-	}
-
-	@Override
-	public void setValueType(Type newValueType) {			// FIXME delete me once compatibility not needed
-		System.err.println(eClass().getName() + ".setValueType() is ignored");
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public boolean isValuesAreNullFree()
-	{
-		return (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public void setValuesAreNullFree(boolean newValuesAreNullFree)
-	{
-		boolean oldValuesAreNullFree = (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
-		if (newValuesAreNullFree) eFlags |= VALUES_ARE_NULL_FREE_EFLAG; else eFlags &= ~VALUES_ARE_NULL_FREE_EFLAG;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 28, oldValuesAreNullFree, newValuesAreNullFree));
 	}
 
 	@Override

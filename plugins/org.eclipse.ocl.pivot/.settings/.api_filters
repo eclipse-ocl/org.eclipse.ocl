@@ -116,26 +116,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="getEntryType_KeyType()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getEntryType_KeysAreNullFree()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getEntryType_ValueType()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="getEntryType_ValuesAreNullFree()"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="getIterateExp_OwnedBodies()"/>
             </message_arguments>
         </filter>
@@ -152,6 +132,26 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="getKeyValueType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getKeyValueType_KeyType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getKeyValueType_KeysAreNullFree()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getKeyValueType_ValueType()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getKeyValueType_ValuesAreNullFree()"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -253,26 +253,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="ENTRY_TYPE__KEYS_ARE_NULL_FREE"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="ENTRY_TYPE__KEY_TYPE"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="ENTRY_TYPE__VALUES_ARE_NULL_FREE"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="ENTRY_TYPE__VALUE_TYPE"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="ITERATE_EXP__OWNED_BODIES"/>
             </message_arguments>
         </filter>
@@ -289,6 +269,26 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="KEY_VALUE_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="KEY_VALUE_TYPE__KEYS_ARE_NULL_FREE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="KEY_VALUE_TYPE__KEY_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="KEY_VALUE_TYPE__VALUES_ARE_NULL_FREE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="KEY_VALUE_TYPE__VALUE_TYPE"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -385,7 +385,7 @@
     <resource path="emf-gen/org/eclipse/ocl/pivot/PivotTables.java" type="org.eclipse.ocl.pivot.PivotTables">
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="BAG_CLSSid_EntryType"/>
+                <message_argument value="BAG_CLSSid_KeyValueType"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">
@@ -395,7 +395,7 @@
         </filter>
         <filter id="1143996420">
             <message_arguments>
-                <message_argument value="CLSSid_EntryType"/>
+                <message_argument value="CLSSid_KeyValueType"/>
             </message_arguments>
         </filter>
         <filter id="1143996420">

@@ -22,10 +22,6 @@ import org.eclipse.jdt.annotation.NonNull;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.ocl.pivot.MapType#getEntryClass <em>Entry Class</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.MapType#getKeyType <em>Key Type</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.MapType#isKeysAreNullFree <em>Keys Are Null Free</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.MapType#getValueType <em>Value Type</em>}</li>
- *   <li>{@link org.eclipse.ocl.pivot.MapType#isValuesAreNullFree <em>Values Are Null Free</em>}</li>
  * </ul>
  *
  * @see org.eclipse.ocl.pivot.PivotPackage#getMapType()
@@ -60,31 +56,6 @@ public interface MapType extends KeyValueType, IterableType
 	void setEntryClass(org.eclipse.ocl.pivot.Class value);
 
 	/**
-	 * Returns the value of the '<em><b>Key Type</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Key Type</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Key Type</em>' reference.
-	 * @see #setKeyType(Type)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getMapType_KeyType()
-	 * @generated
-	 */
-	Type getKeyType();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.MapType#getKeyType <em>Key Type</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Key Type</em>' reference.
-	 * @see #getKeyType()
-	 * @generated
-	 */
-	void setKeyType(Type value);
-
-	/**
 	 * Returns the value of the '<em><b>Keys Are Null Free</b></em>' attribute.
 	 * The default value is <code>"true"</code>.
 	 * <!-- begin-user-doc -->
@@ -99,6 +70,7 @@ public interface MapType extends KeyValueType, IterableType
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getMapType_KeysAreNullFree()
 	 * @generated NOT
 	 */
+	@Override
 	default boolean isKeysAreNullFree() { return false; }
 
 	/**
@@ -110,32 +82,8 @@ public interface MapType extends KeyValueType, IterableType
 	 * @see #isKeysAreNullFree()
 	 * @generated NOT
 	 */
+	@Override
 	default void setKeysAreNullFree(boolean value) {}
-
-	/**
-	 * Returns the value of the '<em><b>Value Type</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Value Type</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Value Type</em>' reference.
-	 * @see #setValueType(Type)
-	 * @see org.eclipse.ocl.pivot.PivotPackage#getMapType_ValueType()
-	 * @generated
-	 */
-	Type getValueType();
-
-	/**
-	 * Sets the value of the '{@link org.eclipse.ocl.pivot.MapType#getValueType <em>Value Type</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Value Type</em>' reference.
-	 * @see #getValueType()
-	 * @generated
-	 */
-	void setValueType(Type value);
 
 	/**
 	 * Returns the value of the '<em><b>Values Are Null Free</b></em>' attribute.
@@ -152,6 +100,7 @@ public interface MapType extends KeyValueType, IterableType
 	 * @see org.eclipse.ocl.pivot.PivotPackage#getMapType_ValuesAreNullFree()
 	 * @generated NOT
 	 */
+	@Override
 	default boolean isValuesAreNullFree() { return false; }
 
 	/**
@@ -163,6 +112,7 @@ public interface MapType extends KeyValueType, IterableType
 	 * @see #isValuesAreNullFree()
 	 * @generated NOT
 	 */
+	@Override
 	default void setValuesAreNullFree(boolean value) {}
 
 	/**

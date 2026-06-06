@@ -130,7 +130,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_DynamicType = PivotTables.PACKid_$metamodel$.getClassId("DynamicType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Element = PivotTables.PACKid_$metamodel$.getClassId("Element", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_ElementExtension = PivotTables.PACKid_$metamodel$.getClassId("ElementExtension", 0);
-	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_EntryType = PivotTables.PACKid_$metamodel$.getClassId("EntryType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_EnumLiteralExp = PivotTables.PACKid_$metamodel$.getClassId("EnumLiteralExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Enumeration = PivotTables.PACKid_$metamodel$.getClassId("Enumeration", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_EnumerationLiteral = PivotTables.PACKid_$metamodel$.getClassId("EnumerationLiteral", 0);
@@ -146,6 +145,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_Iteration = PivotTables.PACKid_$metamodel$.getClassId("Iteration", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_IteratorExp = PivotTables.PACKid_$metamodel$.getClassId("IteratorExp", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_IteratorVariable = PivotTables.PACKid_$metamodel$.getClassId("IteratorVariable", 0);
+	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_KeyValueType = PivotTables.PACKid_$metamodel$.getClassId("KeyValueType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_LambdaParameter = PivotTables.PACKid_$metamodel$.getClassId("LambdaParameter", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_LambdaType = PivotTables.PACKid_$metamodel$.getClassId("LambdaType", 0);
 	public static final /*@NonInvalid*/ @NonNull ClassId CLSSid_LanguageExpression = PivotTables.PACKid_$metamodel$.getClassId("LanguageExpression", 0);
@@ -246,10 +246,10 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_DynamicElement = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_DynamicElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_DynamicProperty = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_DynamicProperty, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_ElementExtension = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_ElementExtension, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_EntryType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_EntryType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_EnumLiteralExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_EnumLiteralExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Import = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Import, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_InstanceSpecification = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_InstanceSpecification, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_KeyValueType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_KeyValueType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_LoopExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_LoopExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_MapType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_MapType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_MessageType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_MessageType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -2304,11 +2304,6 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _ElementLiteralExp__referredElement = LIBRARY.createProperty(Types._ElementLiteralExp, PivotPackage.Literals.ELEMENT_LITERAL_EXP__REFERRED_ELEMENT, Types._EcoreObject, 0 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _EntryType__keyType = LIBRARY.createProperty(Types._EntryType, PivotPackage.Literals.ENTRY_TYPE__KEY_TYPE, Types._Type, 0 | IsTransient);
-		public static final @NonNull Property _EntryType__keysAreNullFree = LIBRARY.createProperty(Types._EntryType, PivotPackage.Literals.ENTRY_TYPE__KEYS_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _EntryType__valueType = LIBRARY.createProperty(Types._EntryType, PivotPackage.Literals.ENTRY_TYPE__VALUE_TYPE, Types._Type, 2 | IsTransient);
-		public static final @NonNull Property _EntryType__valuesAreNullFree = LIBRARY.createProperty(Types._EntryType, PivotPackage.Literals.ENTRY_TYPE__VALUES_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 3 | IsRequired | IsResolveProxies);
-
 		public static final @NonNull Property _EnumLiteralExp__referredLiteral = LIBRARY.createProperty(Types._EnumLiteralExp, PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL, Types._EnumerationLiteral, 0 | IsResolveProxies);
 
 		public static final @NonNull Property _Enumeration__ownedLiterals = LIBRARY.createProperty(Types._Enumeration, PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._EnumerationLiteral, true), 0 | IsComposite | IsRequired | IsResolveProxies);
@@ -2356,6 +2351,11 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _IteratorVariable__LoopExp__ownedCoIterators = LIBRARY.createOppositeProperty(Types._IteratorVariable, "LoopExp", Types._LoopExp, 0 | IsImplicit | IsResolveProxies);
 
+		public static final @NonNull Property _KeyValueType__keyType = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__KEY_TYPE, Types._Type, 0 | IsDerived | IsRequired | IsTransient | IsVolatile);
+		public static final @NonNull Property _KeyValueType__keysAreNullFree = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__KEYS_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _KeyValueType__valueType = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__VALUE_TYPE, Types._Type, 2 | IsDerived | IsRequired | IsTransient | IsVolatile);
+		public static final @NonNull Property _KeyValueType__valuesAreNullFree = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__VALUES_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 3 | IsRequired | IsResolveProxies);
+
 		public static final @NonNull Property _LambdaParameter__LambdaType__ownedContext = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", Types._LambdaType, 0 | IsImplicit | IsResolveProxies);
 		public static final @NonNull Property _LambdaParameter__LambdaType__ownedParameters = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", Types._LambdaType, 1 | IsImplicit | IsResolveProxies);
 		public static final @NonNull Property _LambdaParameter__LambdaType__ownedResult = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", Types._LambdaType, 2 | IsImplicit | IsResolveProxies);
@@ -2388,10 +2388,6 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _MapLiteralPart__MapLiteralExp__ownedParts = LIBRARY.createOppositeProperty(Types._MapLiteralPart, "MapLiteralExp", Types._MapLiteralExp, 2 | IsImplicit | IsResolveProxies);
 
 		public static final @NonNull Property _MapType__entryClass = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS, Types._Class, 0 | IsResolveProxies);
-		public static final @NonNull Property _MapType__keyType = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__KEY_TYPE, Types._Type, 1 | IsDerived | IsRequired | IsTransient | IsVolatile);
-		public static final @NonNull Property _MapType__keysAreNullFree = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__KEYS_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _MapType__valueType = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__VALUE_TYPE, Types._Type, 3 | IsDerived | IsRequired | IsTransient | IsVolatile);
-		public static final @NonNull Property _MapType__valuesAreNullFree = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__VALUES_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 4 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _MessageExp__ownedArguments = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, true), 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _MessageExp__ownedCalledOperation = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION, Types._CallOperationAction, 1 | IsComposite | IsResolveProxies);
@@ -2631,18 +2627,16 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _Type__CollectionType__elementType = LIBRARY.createOppositeProperty(Types._Type, "CollectionType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._CollectionType, false), 0 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Type__DynamicElement__metaType = LIBRARY.createOppositeProperty(Types._Type, "DynamicElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._DynamicElement, false), 1 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__EntryType__keyType = LIBRARY.createOppositeProperty(Types._Type, "EntryType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._EntryType, false), 2 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__EntryType__valueType = LIBRARY.createOppositeProperty(Types._Type, "EntryType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._EntryType, false), 3 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__MapType__keyType = LIBRARY.createOppositeProperty(Types._Type, "MapType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._MapType, false), 4 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__MapType__valueType = LIBRARY.createOppositeProperty(Types._Type, "MapType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._MapType, false), 5 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__OCLExpression__typeValue = LIBRARY.createOppositeProperty(Types._Type, "OCLExpression", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._OCLExpression, false), 6 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__Operation__raisedExceptions = LIBRARY.createOppositeProperty(Types._Type, "Operation", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Operation, false), 7 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__TemplateArgument__actual = LIBRARY.createOppositeProperty(Types._Type, "TemplateArgument", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateArgument, false), 8 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__TypeExp__referredType = LIBRARY.createOppositeProperty(Types._Type, "TypeExp", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TypeExp, false), 9 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__TypedElement__type = LIBRARY.createOppositeProperty(Types._Type, "TypedElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TypedElement, false), 10 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__VariableDeclaration__typeValue = LIBRARY.createOppositeProperty(Types._Type, "VariableDeclaration", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._VariableDeclaration, false), 11 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__WildcardType__lowerBound = LIBRARY.createOppositeProperty(Types._Type, "WildcardType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._WildcardType, false), 12 | IsImplicit | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Type__WildcardType__upperBound = LIBRARY.createOppositeProperty(Types._Type, "WildcardType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._WildcardType, false), 13 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__KeyValueType__keyType = LIBRARY.createOppositeProperty(Types._Type, "KeyValueType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._KeyValueType, false), 2 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__KeyValueType__valueType = LIBRARY.createOppositeProperty(Types._Type, "KeyValueType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._KeyValueType, false), 3 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__OCLExpression__typeValue = LIBRARY.createOppositeProperty(Types._Type, "OCLExpression", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._OCLExpression, false), 4 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__Operation__raisedExceptions = LIBRARY.createOppositeProperty(Types._Type, "Operation", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Operation, false), 5 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__TemplateArgument__actual = LIBRARY.createOppositeProperty(Types._Type, "TemplateArgument", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateArgument, false), 6 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__TypeExp__referredType = LIBRARY.createOppositeProperty(Types._Type, "TypeExp", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TypeExp, false), 7 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__TypedElement__type = LIBRARY.createOppositeProperty(Types._Type, "TypedElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TypedElement, false), 8 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__VariableDeclaration__typeValue = LIBRARY.createOppositeProperty(Types._Type, "VariableDeclaration", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._VariableDeclaration, false), 9 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__WildcardType__lowerBound = LIBRARY.createOppositeProperty(Types._Type, "WildcardType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._WildcardType, false), 10 | IsImplicit | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Type__WildcardType__upperBound = LIBRARY.createOppositeProperty(Types._Type, "WildcardType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._WildcardType, false), 11 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _TypeExp__referredType = LIBRARY.createProperty(Types._TypeExp, PivotPackage.Literals.TYPE_EXP__REFERRED_TYPE, Types._Type, 0 | IsResolveProxies);
 
@@ -2795,11 +2789,6 @@ public class PivotTables extends AbstractTables
 			_ElementExtension__stereotype.setOpposite(_Stereotype__ElementExtension__stereotype);
 
 
-			_EntryType__keyType.setOpposite(_Type__EntryType__keyType);
-			_EntryType__keysAreNullFree.setDefaultValueString("true");
-			_EntryType__valueType.setOpposite(_Type__EntryType__valueType);
-			_EntryType__valuesAreNullFree.setDefaultValueString("true");
-
 			_EnumLiteralExp__referredLiteral.setOpposite(_EnumerationLiteral__EnumLiteralExp__referredLiteral);
 
 			_Enumeration__ownedLiterals.setOpposite(_EnumerationLiteral__owningEnumeration);
@@ -2844,6 +2833,11 @@ public class PivotTables extends AbstractTables
 
 			_IteratorVariable__LoopExp__ownedCoIterators.setOpposite(_LoopExp__ownedCoIterators);
 
+			_KeyValueType__keyType.setOpposite(_Type__KeyValueType__keyType);
+			_KeyValueType__keysAreNullFree.setDefaultValueString("true");
+			_KeyValueType__valueType.setOpposite(_Type__KeyValueType__valueType);
+			_KeyValueType__valuesAreNullFree.setDefaultValueString("true");
+
 			_LambdaParameter__LambdaType__ownedContext.setOpposite(_LambdaType__ownedContext);
 			_LambdaParameter__LambdaType__ownedParameters.setOpposite(_LambdaType__ownedParameters);
 			_LambdaParameter__LambdaType__ownedResult.setOpposite(_LambdaType__ownedResult);
@@ -2874,10 +2868,6 @@ public class PivotTables extends AbstractTables
 			_MapLiteralPart__MapLiteralExp__ownedParts.setOpposite(_MapLiteralExp__ownedParts);
 
 			_MapType__entryClass.setOpposite(_Class__MapType__entryClass);
-			_MapType__keyType.setOpposite(_Type__MapType__keyType);
-			_MapType__keysAreNullFree.setDefaultValueString("true");
-			_MapType__valueType.setOpposite(_Type__MapType__valueType);
-			_MapType__valuesAreNullFree.setDefaultValueString("true");
 
 			_MessageExp__ownedArguments.setOpposite(_OCLExpression__MessageExp__ownedArguments);
 			_MessageExp__ownedCalledOperation.setOpposite(_CallOperationAction__MessageExp__ownedCalledOperation);
@@ -3104,10 +3094,8 @@ public class PivotTables extends AbstractTables
 
 			_Type__CollectionType__elementType.setOpposite(_CollectionType__elementType);
 			_Type__DynamicElement__metaType.setOpposite(_DynamicElement__metaType);
-			_Type__EntryType__keyType.setOpposite(_EntryType__keyType);
-			_Type__EntryType__valueType.setOpposite(_EntryType__valueType);
-			_Type__MapType__keyType.setOpposite(_MapType__keyType);
-			_Type__MapType__valueType.setOpposite(_MapType__valueType);
+			_Type__KeyValueType__keyType.setOpposite(_KeyValueType__keyType);
+			_Type__KeyValueType__valueType.setOpposite(_KeyValueType__valueType);
 			_Type__OCLExpression__typeValue.setOpposite(_OCLExpression__typeValue);
 			_Type__Operation__raisedExceptions.setOpposite(_Operation__raisedExceptions);
 			_Type__TemplateArgument__actual.setOpposite(_TemplateArgument__actual);
@@ -12965,8 +12953,8 @@ public class PivotTables extends AbstractTables
 			Properties._Class__isActive,
 			Properties._Class__isInterface,
 			Properties._DataType__isSerializable,
-			Properties._EntryType__keyType,
-			Properties._EntryType__keysAreNullFree,
+			Properties._KeyValueType__keyType,
+			Properties._KeyValueType__keysAreNullFree,
 			Properties._NamedElement__name,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
@@ -12984,8 +12972,8 @@ public class PivotTables extends AbstractTables
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value,
-			Properties._EntryType__valueType,
-			Properties._EntryType__valuesAreNullFree
+			Properties._KeyValueType__valueType,
+			Properties._KeyValueType__valuesAreNullFree
 		};
 
 		private static final @NonNull Property @NonNull [] _EnumLiteralExp = {
@@ -13367,6 +13355,8 @@ public class PivotTables extends AbstractTables
 			Properties._Class__isActive,
 			Properties._Class__isInterface,
 			Properties._DataType__isSerializable,
+			Properties._KeyValueType__keyType,
+			Properties._KeyValueType__keysAreNullFree,
 			Properties._NamedElement__name,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
@@ -13383,7 +13373,9 @@ public class PivotTables extends AbstractTables
 			Properties._TemplateableElement__ownedWildcards,
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
-			Properties._DataType__value
+			Properties._DataType__value,
+			Properties._KeyValueType__valueType,
+			Properties._KeyValueType__valuesAreNullFree
 		};
 
 		private static final @NonNull Property @NonNull [] _LambdaParameter = {
@@ -13577,8 +13569,8 @@ public class PivotTables extends AbstractTables
 			Properties._Class__isActive,
 			Properties._Class__isInterface,
 			Properties._DataType__isSerializable,
-			Properties._MapType__keyType,
-			Properties._MapType__keysAreNullFree,
+			Properties._KeyValueType__keyType,
+			Properties._KeyValueType__keysAreNullFree,
 			Properties._NamedElement__name,
 			OCLstdlibTables.Properties._OclElement__oclContainer,
 			OCLstdlibTables.Properties._OclElement__oclContents,
@@ -13596,8 +13588,8 @@ public class PivotTables extends AbstractTables
 			Properties._Class__owningPackage,
 			Properties._Class__superClasses,
 			Properties._DataType__value,
-			Properties._MapType__valueType,
-			Properties._MapType__valuesAreNullFree
+			Properties._KeyValueType__valueType,
+			Properties._KeyValueType__valuesAreNullFree
 		};
 
 		private static final @NonNull Property @NonNull [] _MessageExp = {
