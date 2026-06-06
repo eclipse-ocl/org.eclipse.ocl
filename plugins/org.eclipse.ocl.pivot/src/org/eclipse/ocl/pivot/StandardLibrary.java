@@ -27,6 +27,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
+import org.eclipse.ocl.pivot.manager.EntryTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
@@ -202,6 +203,26 @@ public interface StandardLibrary
 	 * @since 7.0
 	 */
 	org.eclipse.ocl.pivot.@NonNull Class getCommonType(org.eclipse.ocl.pivot.@NonNull Class thisType, org.eclipse.ocl.pivot.@NonNull Class thatType);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull EntryType getEntryType();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull EntryType getEntryType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull EntryType getEntryType(@NonNull MapTypeArguments typeArguments);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull EntryTypeManager getEntryTypeManager();
 
 	/**
 	 * Obtains the single instance of the EnumerationType metatype, named

@@ -51,6 +51,10 @@ public interface TypeId extends ElementId
 	/**
 	 * @since 7.0
 	 */
+	public static final @NonNull String ENTRY_NAME = "Entry";
+	/**
+	 * @since 7.0
+	 */
 	public static final @NonNull String ENTRY_TYPE_NAME = "EntryType";
 	public static final @NonNull String ENUMERATION_NAME = "Enumeration";
 	public static final @NonNull String INTEGER_NAME = "Integer";
@@ -182,6 +186,10 @@ public interface TypeId extends ElementId
 	public static final @NonNull CollectionTypeId SET = IdManager.getCollectionTypeId(SET_NAME);
 	public static final @NonNull CollectionTypeId UNIQUE_COLLECTION = IdManager.getCollectionTypeId(UNIQUE_COLLECTION_NAME);
 
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull MapTypeId ENTRY = IdManager.getMapTypeId(ENTRY_NAME);
 	public static final @NonNull MapTypeId MAP = IdManager.getMapTypeId(MAP_NAME);
 
 	public static final @NonNull TemplateParameterId T_1 = IdManager.getTemplateParameterId(0);

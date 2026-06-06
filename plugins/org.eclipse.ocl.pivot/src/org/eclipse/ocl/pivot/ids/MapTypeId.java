@@ -13,7 +13,7 @@ package org.eclipse.ocl.pivot.ids;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
- * A MapTypeId provides a unique identifier for an unspecialized map type such as Map(K,V).
+ * A MapTypeId provides a unique identifier for a specialized key-value type such as Map(K,V) or Entry(K,V).
  */
 public interface MapTypeId extends BuiltInTypeId, TemplateableId
 {

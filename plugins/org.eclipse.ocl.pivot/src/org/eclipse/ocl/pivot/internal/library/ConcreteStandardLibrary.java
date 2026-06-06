@@ -18,6 +18,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.MapType;
@@ -46,6 +47,7 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
+import org.eclipse.ocl.pivot.manager.EntryTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
@@ -79,6 +81,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	protected ConcreteStandardLibrary()
 	{
 		this.collectionTypeManager = createCollectionTypeManager();
+		this.entryTypeManager = null; //createEntryTypeManager();
 		this.javaTypeManager = createJavaTypeManager();
 		this.lambdaTypeManager = null; //createLambdaTypeManager();
 		this.mapTypeManager = null; //createMapTypeManager();
@@ -91,6 +94,11 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 * Shared cache of the lazily created lazily deleted specializations of each collection type.
 	 */
 	private /*@NonNull*/ CollectionTypeManager collectionTypeManager = null;
+
+	/**
+	 * Shared cache of the lazily created lazily deleted specializations of each entry type.
+	 */
+	private @Nullable EntryTypeManager entryTypeManager = null;
 
 	/**
 	 * @since 7.0
@@ -142,6 +150,11 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 * @since 7.0
 	 */
 	protected abstract @NonNull CollectionTypeManager createCollectionTypeManager();
+
+	/**
+	 * @since 7.0
+	 */
+	protected abstract @NonNull EntryTypeManager createEntryTypeManager();
 
 	/**
 	 * @since 7.0
@@ -289,6 +302,35 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	@Override
 	public boolean getCommonIsRequired(boolean leftIsRequired, boolean rightIsRequired) {
 		return leftIsRequired && rightIsRequired;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull EntryType getEntryType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		MapTypeArguments typeArguments = new MapTypeArguments(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
+		return getEntryType(typeArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull EntryType getEntryType(@NonNull MapTypeArguments typeArguments) {
+		return getEntryTypeManager().getEntryType(typeArguments);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull EntryTypeManager getEntryTypeManager() {
+		EntryTypeManager entryTypeManager2 = entryTypeManager;
+		if (entryTypeManager2 == null) {
+			entryTypeManager2 = entryTypeManager = createEntryTypeManager();
+		}
+		return entryTypeManager2;
 	}
 
 	@Override
@@ -722,6 +764,10 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		if (collectionTypeManager != null) {
 			collectionTypeManager.dispose();
 			collectionTypeManager = null;
+		}
+		if (entryTypeManager != null) {
+			entryTypeManager.dispose();
+			entryTypeManager = null;
 		}
 		if (idResolver != null) {
 			idResolver.dispose();

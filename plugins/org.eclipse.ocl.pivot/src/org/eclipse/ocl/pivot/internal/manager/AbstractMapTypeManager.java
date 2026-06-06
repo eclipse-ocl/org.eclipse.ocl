@@ -25,7 +25,7 @@ import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 
 /**
- * MapTypeManagerInternal encapsulates the knowledge about known map types.
+ * AbstractMapTypeManager encapsulates the knowledge about known map types.
  *
  * @since 7.0
  */

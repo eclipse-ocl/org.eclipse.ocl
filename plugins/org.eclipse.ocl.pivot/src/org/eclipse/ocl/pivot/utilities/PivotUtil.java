@@ -746,6 +746,24 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	public static @NonNull EntryType createEntryType(@NonNull EntryType genericEntryType, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		assert getGenericElement(genericEntryType) == genericEntryType;
+		//
+		EntryType specializedEntryType = PivotFactory.eINSTANCE.createEntryType();
+		specializedEntryType.setName(genericEntryType.getName());
+		specializedEntryType.setGeneric(genericEntryType);
+		List<@NonNull TemplateArgument> templateArguments = getOwnedTemplateArgumentsList(specializedEntryType, true);
+		templateArguments.add(createTemplateArgument(keyType, keysAreNullFree));
+		templateArguments.add(createTemplateArgument(valueType, valuesAreNullFree));
+		assert specializedEntryType.getKeyType() == keyType;
+		assert specializedEntryType.getValueType() == valueType;
+		// NB no superClasses
+		return specializedEntryType;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static @NonNull EnumLiteralExp createEnumLiteralExp(@NonNull EnumerationLiteral value) {
 		EnumLiteralExp asEnumLiteralExp = PivotFactory.eINSTANCE.createEnumLiteralExp();
 		asEnumLiteralExp.setReferredLiteral(value);
@@ -958,9 +976,9 @@ public class PivotUtil implements PivotConstants
 		assert getGenericElement(genericMapType) == genericMapType;
 		//
 		MapType specializedMapType = PivotFactory.eINSTANCE.createMapType();
-		specializedMapType.setName(genericMapType.getName());
+		specializedMapType.setName(TypeId.MAP_NAME);
 		specializedMapType.setGeneric(genericMapType);
-		List<@NonNull TemplateArgument> templateArguments = PivotUtil.getOwnedTemplateArgumentsList(specializedMapType, true);
+		List<@NonNull TemplateArgument> templateArguments = getOwnedTemplateArgumentsList(specializedMapType, true);
 		templateArguments.add(createTemplateArgument(keyType, keysAreNullFree));
 		templateArguments.add(createTemplateArgument(valueType, valuesAreNullFree));
 		assert specializedMapType.getKeyType() == keyType;
@@ -973,12 +991,12 @@ public class PivotUtil implements PivotConstants
 	 * @since 7.0
 	 */
 	public static @NonNull MapTypeArguments createMapTypeArguments(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
+		Iterable<@NonNull Property> ownedProperties = getOwnedProperties(entryClass);
 		Property keyProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
 		Property valueProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
-		Type keyType = PivotUtil.getType(keyProperty);
+		Type keyType = getType(keyProperty);
 		boolean keysAreNullFree = keyProperty.isIsRequired();
-		Type valueType = PivotUtil.getType(valueProperty);
+		Type valueType = getType(valueProperty);
 		boolean valuesAreNullFree = valueProperty.isIsRequired();
 		return new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
@@ -3008,12 +3026,12 @@ public class PivotUtil implements PivotConstants
 		if (!asPackage.getOwnedInstances().isEmpty()) {
 			return false;
 		}
-		for (org.eclipse.ocl.pivot.Package asNestedPackage : PivotUtil.getOwnedPackages(asPackage)) {
+		for (org.eclipse.ocl.pivot.Package asNestedPackage : getOwnedPackages(asPackage)) {
 			if (!isImplicitPackage(asNestedPackage)) {
 				return false;
 			}
 		}
-		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
+		for (org.eclipse.ocl.pivot.Class asClass : getOwnedClasses(asPackage)) {
 			if (!asClass.getOwnedAnnotations().isEmpty()) {
 				return false;
 			}
@@ -3038,7 +3056,7 @@ public class PivotUtil implements PivotConstants
 			if (!asClass.getOwnedOperations().isEmpty()) {
 				return false;
 			}
-			for (Property asProperty : PivotUtil.getOwnedProperties(asClass)) {
+			for (Property asProperty : getOwnedProperties(asClass)) {
 				if (!asProperty.isIsImplicit()) {
 					return false;
 				}

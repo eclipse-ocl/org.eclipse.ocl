@@ -374,7 +374,7 @@ public final class IdManager
 	}
 
 	/**
-	 * Return the named collection typeId.
+	 * Return the named map typeId.
 	 */
 	public static @NonNull MapTypeId getMapTypeId(@NonNull String mapTypeName) {
 		return mapNames.getSingleton(PRIVATE_INSTANCE, mapTypeName);

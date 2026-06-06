@@ -37,6 +37,7 @@ import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -86,6 +87,7 @@ import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.PropertyImpl;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractEntryTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
@@ -98,6 +100,7 @@ import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
+import org.eclipse.ocl.pivot.manager.EntryTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
@@ -230,6 +233,13 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	public static class PartialCollectionTypeManager extends AbstractCollectionTypeManager
 	{
 		public PartialCollectionTypeManager(@NonNull StandardLibrary standardLibrary) {
+			super(standardLibrary);
+		}
+	}
+
+	public static class PartialEntryTypeManager extends AbstractEntryTypeManager
+	{
+		public PartialEntryTypeManager(@NonNull StandardLibrary standardLibrary) {
 			super(standardLibrary);
 		}
 	}
@@ -412,6 +422,11 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		constraint.setESObject(eOperation);
 		asClass.getOwnedInvariants().add(constraint);
 		return constraint;
+	}
+
+	@Override
+	protected @NonNull EntryTypeManager createEntryTypeManager() {
+		return new PartialEntryTypeManager(this);
 	}
 
 	/**
@@ -804,6 +819,12 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	}
 
 	@Override
+	public @NonNull EntryType getEntryType() {
+	//	return (EntryType) OCLstdlibTables.Types._Entry;
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public org.eclipse.ocl.pivot.@NonNull Class getEnumerationType() {
 		Map<org.eclipse.ocl.pivot.@NonNull Package, @NonNull List<org.eclipse.ocl.pivot.@NonNull Package>> extensions2 = extensions;
 		if (extensions2 == null) {
@@ -1051,6 +1072,12 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 			Type elementType = getSpecializedType(ClassUtil.requireNonNull(collectionType.getElementType()), substitutions);
 			return getCollectionType(genericType, elementType, collectionType.isIsNullFree(), collectionType.getLowerValue(), collectionType.getUpperValue());
 		}
+		else if (type instanceof EntryType) {
+			EntryType entryType = (EntryType)type;
+			Type keyType = getSpecializedType(ClassUtil.requireNonNull(entryType.getKeyType()), substitutions);
+			Type valueType = getSpecializedType(ClassUtil.requireNonNull(entryType.getValueType()), substitutions);
+			return getEntryType(keyType, entryType.isKeysAreNullFree(), valueType, entryType.isValuesAreNullFree());
+		}
 		else if (type instanceof MapType) {
 			MapType mapType = (MapType)type;
 			Type keyType = getSpecializedType(ClassUtil.requireNonNull(mapType.getKeyType()), substitutions);
@@ -1228,6 +1255,18 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 								CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) genericSuperClass.getTypeId(), templateArgument,
 									specializedCollection.isIsNullFree(), specializedCollection.getLowerValue(), specializedCollection.getUpperValue());
 								org.eclipse.ocl.pivot.Class specializedSuperClass = getCollectionType(typeArguments);
+								specializedClass.getSuperClasses().add(specializedSuperClass);
+							}
+						}
+					}
+					else if (genericSuperClass instanceof EntryType) {
+						EntryType specializedEntry = (EntryType)specializedClass;
+						if (superSpecializedTemplateArguments.size() == 2) {
+							Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
+							Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
+							if ((keyArgument != null) && (valueArgument != null)) {
+								MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedEntry.isKeysAreNullFree(), valueArgument, specializedEntry.isValuesAreNullFree());
+								org.eclipse.ocl.pivot.Class specializedSuperClass = getEntryType(typeArguments);
 								specializedClass.getSuperClasses().add(specializedSuperClass);
 							}
 						}

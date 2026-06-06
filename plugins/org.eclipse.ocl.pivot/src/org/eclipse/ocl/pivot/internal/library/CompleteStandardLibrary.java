@@ -26,6 +26,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.InvalidType;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LambdaType;
@@ -57,6 +58,7 @@ import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.complete.PartialPackages;
 import org.eclipse.ocl.pivot.internal.manager.AbstractCollectionTypeManager;
+import org.eclipse.ocl.pivot.internal.manager.AbstractEntryTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractJavaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractLambdaTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
@@ -70,6 +72,7 @@ import org.eclipse.ocl.pivot.internal.utilities.IllegalLibraryException;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
+import org.eclipse.ocl.pivot.manager.EntryTypeManager;
 import org.eclipse.ocl.pivot.manager.JavaTypeManager;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
@@ -120,6 +123,23 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 		@Override
 		protected boolean isValid(@Nullable Type type) {
 			return (type != null) && (type.eResource() != null);		// XXX Built-in have null Resource
+		}
+	}
+
+	/**
+	 * CompleteEntryTypeManager encapsulates the knowledge about known entry types.
+	 *
+	 * @since 7.0
+	 */
+	public static class CompleteEntryTypeManager extends AbstractEntryTypeManager
+	{
+		public CompleteEntryTypeManager(@NonNull CompleteStandardLibrary standardLibrary) {
+			super(standardLibrary);
+		}
+
+		@Override
+		protected boolean isValid(@Nullable Type type) {
+			return (type != null) && (type.eResource() != null);
 		}
 	}
 
@@ -210,6 +230,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	private @Nullable BooleanType booleanType = null;
 	private org.eclipse.ocl.pivot.@Nullable Class classType = null;
 	private @Nullable CollectionType collectionType = null;
+	private @Nullable EntryType entryType = null;
 	private org.eclipse.ocl.pivot.@Nullable Class enumerationType = null;
 	private @Nullable PrimitiveType integerType = null;
 	private @Nullable MapType mapType = null;
@@ -411,6 +432,11 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	}
 
 	@Override
+	protected @NonNull EntryTypeManager createEntryTypeManager() {
+		return new CompleteEntryTypeManager(this);
+	}
+
+	@Override
 	protected @NonNull CompleteFlatModel createFlatModel() {
 		assert completeModel != null;
 		return new CompleteFlatModel(this, completeModel);
@@ -550,6 +576,28 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 
 	public @NonNull String getDefaultStandardLibraryURI() {
 		return defaultStandardLibraryURI;
+	}
+
+	@Override
+	public @NonNull EntryType getEntryType() {
+		EntryType entryType2 = entryType;
+		if (entryType2 == null) {
+			entryType2 = entryType = resolveRequiredTemplateableType(EntryType.class, TypeId.ENTRY_NAME, 2);
+		}
+		return entryType2;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	public @NonNull EntryType getEntryType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		EntryType entryType = getEntryType();
+		assert entryType == PivotUtil.getGenericElement(entryType);
+		if ((keyType == entryType.getKeyType()) && (valueType == entryType.getValueType())) {
+			return entryType;		// XXX ??? never happens now that NormalizedTemplatedParameter in use
+		}
+		return super.getEntryType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	@Override
@@ -1182,6 +1230,18 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 							CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) superPivotClass.getTypeId(), templateArgument,
 								specializedCollection.isIsNullFree(), specializedCollection.getLowerValue(), specializedCollection.getUpperValue());
 							org.eclipse.ocl.pivot.Class specializedSuperClass = getCollectionType(typeArguments);
+							specializedClass.getSuperClasses().add(specializedSuperClass);
+						}
+					}
+				}
+				else if (superPivotClass instanceof EntryType) {
+					EntryType specializedEntry = (EntryType)specializedClass;
+					if (superSpecializedTemplateArguments.size() == 2) {
+						Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
+						Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
+						if ((keyArgument != null) && (valueArgument != null)) {
+							MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedEntry.isKeysAreNullFree(), valueArgument, specializedEntry.isValuesAreNullFree());
+							org.eclipse.ocl.pivot.Class specializedSuperClass = getEntryType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
 					}
