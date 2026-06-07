@@ -22,6 +22,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CallExp;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
@@ -152,6 +153,12 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		if (referencedType instanceof CollectionType) {			// XXX generalize to templateArguments
 			Type elementType = ((CollectionType)referencedType).getElementType();
 			return needsSpecialization(elementType);
+		}
+		if (referencedType instanceof EntryType) {
+			EntryType entryType = (EntryType)referencedType;
+			Type keyType = entryType.getKeyType();
+			Type valueType = entryType.getValueType();
+			return needsSpecialization(keyType) || needsSpecialization(valueType);
 		}
 		if (referencedType instanceof MapType) {
 			MapType mapType = (MapType)referencedType;

@@ -228,22 +228,31 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private @NonNull EClass getEntryEClass(@NonNull EPackage ePackage, @NonNull MapType pivotType) {
+		EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
+		if (eAnnotation == null) {
+			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+			eAnnotation.setSource(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
+			ePackage.getEAnnotations().add(eAnnotation);
+		}
 		Type keyType = PivotUtil.getKeyType(pivotType);
 		Type valueType = PivotUtil.getValueType(pivotType);
+		boolean keysAreNullFree = pivotType.isKeysAreNullFree();
+		boolean valuesAreNullFree = pivotType.isValuesAreNullFree();
 		StringBuilder s = new StringBuilder();
+		s.append("Entry");
+		s.append(keysAreNullFree ? "_r" : "_o");
 		s.append(keyType.getName().replace("$", "_"));
-		if (!pivotType.isKeysAreNullFree()) {
-			s.append("Opt");
-		}
-		s.append("_to_");
+		s.append(valuesAreNullFree ? "_r" : "_o");
 		s.append(valueType.getName().replace("$", "_"));
-		if (!pivotType.isValuesAreNullFree()) {
-			s.append("Opt");
-		}
 		String name = s.toString();
-		EClassifier eClassifier = ePackage.getEClassifier(name);
-		if (eClassifier instanceof EClass) {
-			return (EClass) eClassifier;
+		EObject eKeyType = typeRefVisitor.safeVisit(keyType, keysAreNullFree);
+		EObject eValueType = typeRefVisitor.safeVisit(valueType, valuesAreNullFree);
+		EList<EObject> eEntryClasses = eAnnotation.getContents();
+		for (EObject eObject : eEntryClasses) {
+			EClass eEntryClass = (EClass)eObject;
+			if (name.equals(eEntryClass.getName())) {			// XXX duplicate across scopes
+				return eEntryClass;
+			}
 		}
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
@@ -257,7 +266,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eKeyFeature = EcoreFactory.eINSTANCE.createEReference();
 		}
 		eKeyFeature.setName("key");
-		EObject eKeyType = typeRefVisitor.safeVisit(keyType, pivotType.isKeysAreNullFree());
 		if (eKeyType instanceof EClassifier) {
 			eKeyFeature.setEType((EClassifier)eKeyType);
 		}
@@ -266,7 +274,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eGenericType.setETypeParameter((ETypeParameter) eKeyType);
 			eKeyFeature.setEGenericType(eGenericType);
 		}
-		eKeyFeature.setLowerBound(pivotType.isKeysAreNullFree() ? 1 : 0);
+		eKeyFeature.setLowerBound(keysAreNullFree ? 1 : 0);
 		eKeyFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eKeyFeature);
 		EStructuralFeature eValueFeature;
@@ -277,7 +285,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eValueFeature = EcoreFactory.eINSTANCE.createEReference();
 		}
 		eValueFeature.setName("value");
-		EObject eValueType = typeRefVisitor.safeVisit(valueType, pivotType.isValuesAreNullFree());
 		if (eValueType instanceof EClassifier) {
 			eValueFeature.setEType((EClassifier)eValueType);
 		}
@@ -286,13 +293,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eGenericType.setETypeParameter((ETypeParameter) eValueType);
 			eValueFeature.setEGenericType(eGenericType);
 		}
-		eValueFeature.setLowerBound(pivotType.isValuesAreNullFree() ? 1 : 0);
+		eValueFeature.setLowerBound(valuesAreNullFree ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
-		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-		eAnnotation.setSource(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
-		eClass.getEAnnotations().add(eAnnotation);
-		ePackage.getEClassifiers().add(eClass);
+		eEntryClasses.add(eClass);
 		return eClass;
 	}
 
@@ -455,6 +459,25 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			else if (rootEAnnotation != null) {
 				eTypedElement.getEAnnotations().remove(rootEAnnotation);
 			}
+		}
+		else if (pivotType instanceof EntryType) {
+			EntryType entryClass = (EntryType)pivotType;
+			if (entryClass != null) {
+				setEType(eTypedElement, entryClass, isRequired);
+			}
+			else {
+				for (EObject eContainer = eTypedElement; eContainer != null; eContainer = eContainer.eContainer()) {
+					if (eContainer instanceof EPackage) {
+						EClass entryEClass = getEntryEClass((EPackage)eContainer, (MapType)pivotType);
+						eTypedElement.setEType(entryEClass);
+						break;
+					}
+				}
+			}
+			eTypedElement.setOrdered(true);		// sic; Ecore idiom is OrderedSet(Entry(K,V)[*|1])[1]
+			eTypedElement.setUnique(true);
+			eTypedElement.setLowerBound(0);
+			eTypedElement.setUpperBound(-1);
 		}
 		else if (pivotType instanceof MapType) {
 			org.eclipse.ocl.pivot.Class entryClass = ((MapType)pivotType).getEntryClass();

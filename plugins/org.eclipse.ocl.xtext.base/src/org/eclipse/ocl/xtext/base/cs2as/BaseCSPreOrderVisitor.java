@@ -159,8 +159,17 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 					if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
 						StandardLibrary standardLibrary = context.getStandardLibrary();
 						org.eclipse.ocl.pivot.@NonNull Class mapType = standardLibrary.getMapEntryType(entryClass);
-						context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
+
+						List<Property> asProperties = entryClass.getOwnedProperties();
+						Property keyProperty = NameUtil.getNameable(asProperties, "key");
+						Property valueProperty = NameUtil.getNameable(asProperties, "value");
+						assert keyProperty != null;
+						assert valueProperty != null;
+						org.eclipse.ocl.pivot.@NonNull Class entryType = standardLibrary.getEntryType(keyProperty.getType(), keyProperty.isIsRequired(), valueProperty.getType(), valueProperty.isIsRequired());
+
+						context.installPivotReference(csElement, entryType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 						return null;
+					//	throw new UnsupportedOperationException();
 					}
 				}
 			}
