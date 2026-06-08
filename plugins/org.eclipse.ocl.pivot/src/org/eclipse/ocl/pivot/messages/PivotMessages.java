@@ -45,6 +45,10 @@ public class PivotMessages
 	/**
 	 * @since 7.0
 	 */
+	public static String EntryClassMustMaveA0Property;
+	/**
+	 * @since 7.0
+	 */
 	public static String ExpectedAccumulatorType;
 	/**
 	 * @since 7.0

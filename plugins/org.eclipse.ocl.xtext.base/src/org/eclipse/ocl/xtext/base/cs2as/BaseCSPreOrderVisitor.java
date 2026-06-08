@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
 import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
+import org.eclipse.ocl.pivot.messages.PivotMessages;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
@@ -104,7 +105,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			org.eclipse.ocl.pivot.Class pivotElement = PivotUtil.basicGetPivot(org.eclipse.ocl.pivot.Class.class, csElement);
 			if (pivotElement != null) {
 				List<org.eclipse.ocl.pivot.@NonNull Class> superClasses = ClassUtil.nullFree(pivotElement.getSuperClasses());
-				context.refreshList(org.eclipse.ocl.pivot.Class.class, superClasses, csElement.getOwnedSuperTypes());
+				context.refreshList(org.eclipse.ocl.pivot.Class.class, superClasses, false, csElement.getOwnedSuperTypes());
 				if (superClasses.isEmpty()) {
 					org.eclipse.ocl.pivot.Class oclElementType = context.getStandardLibrary().getOclElementType();
 					pivotElement.getSuperClasses().add(oclElementType);
@@ -154,22 +155,22 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			Type pivotType = csElement.getReferredType();
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 				MultiplicityCS csMultiplicity = csElement.getOwnedMultiplicity();
-				if ((csMultiplicity != null) && (csMultiplicity.getLower() == 0) && (csMultiplicity.getUpper() < 0)) {
+				if ((csMultiplicity != null) && (csMultiplicity.getLower() == 0) && (csMultiplicity.getUpper() < 0)) {			// 0..*
 					org.eclipse.ocl.pivot.Class entryClass = (org.eclipse.ocl.pivot.Class)pivotType;
 					if (java.util.Map.Entry.class.getName().equals(entryClass.getInstanceClassName())) {
 						StandardLibrary standardLibrary = context.getStandardLibrary();
 						org.eclipse.ocl.pivot.@NonNull Class mapType = standardLibrary.getMapEntryType(entryClass);
-
 						List<Property> asProperties = entryClass.getOwnedProperties();
 						Property keyProperty = NameUtil.getNameable(asProperties, "key");
+						if (keyProperty == null) {
+							context.addError(csElement, PivotMessages.EntryClassMustMaveA0Property, "key");
+						}
 						Property valueProperty = NameUtil.getNameable(asProperties, "value");
-						assert keyProperty != null;
-						assert valueProperty != null;
-						org.eclipse.ocl.pivot.@NonNull Class entryType = standardLibrary.getEntryType(keyProperty.getType(), keyProperty.isIsRequired(), valueProperty.getType(), valueProperty.isIsRequired());
-
-						context.installPivotReference(csElement, entryType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
+						if (valueProperty == null) {
+							context.addError(csElement, PivotMessages.EntryClassMustMaveA0Property, "value");
+						}
+						context.installPivotReference(csElement, mapType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 						return null;
-					//	throw new UnsupportedOperationException();
 					}
 				}
 			}

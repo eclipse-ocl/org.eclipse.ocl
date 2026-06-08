@@ -680,19 +680,19 @@ public class RoundTripTests extends XtextTestCase
 						"	class Maps\n" +
 						"	{\n" +
 // KeyToValue[*|1]		"		property eMap0 : OrderedSet(KeyToValue);\n" +
-	//					"		property eMap1 : KeyToValue[1];\n" +
-	//					"		property eMap1o : KeyToValue[?];\n" +
-	//					"		property eMap2 : KeyToValue[+|1] { !ordered, !unique };\n" +
+						"		property eMap1 : KeyToValue[1];\n" +
+						"		property eMap1o : KeyToValue[?];\n" +
+						"		property eMap2 : KeyToValue[+|1] { !ordered, !unique };\n" +
 // always Ecore-like 'OrderedSet' non-null entries	"		property eMap2o : KeyToValue[*|?] { ordered, !unique };\n" +
 						"		property eMap2o : KeyToValue[*|1] { ordered, unique };\n" +
-	//					"		property eMap3 : KeyToValue[3..5|1] { ordered, unique };\n" +
-	//					"		property eMap3o : KeyToValue[17..17|?] { !ordered, !unique };\n" +
+						"		property eMap3 : KeyToValue[3..5|1] { ordered, unique };\n" +
+						"		property eMap3o : KeyToValue[17..17|?] { !ordered, !unique };\n" +
 // always non-null map	"		property oMap1 : Map(String[1],Integer[?])[?];\n" +
-	//					"		property oMap5 : Map(String[1],Integer[?])[1];\n" +
-	//					"		property oMap6 : Map(String[1],Integer[1])[1];\n" +
-	//					"		property oMap7 : Map(String[?],Integer[?])[1];\n" +
-	//					"		property oMap8 : Map(String[?],Integer[1])[1];\n" +
-	//					"		invariant MapIterators: Map{1 with 1}->collect(k with v | v * k)->notEmpty();\n" +
+						"		property oMap5 : Map(String[1],Integer[?])[1];\n" +
+						"		property oMap6 : Map(String[1],Integer[1])[1];\n" +
+						"		property oMap7 : Map(String[?],Integer[?])[1];\n" +
+						"		property oMap8 : Map(String[?],Integer[1])[1];\n" +
+						"		invariant MapIterators: Map{1 with 1}->collect(k with v | v * k)->notEmpty();\n" +
 						"	}\n" +
 						"	class KeyToValue : 'java.util.Map$Entry'\n" +
 						"	{\n" +
