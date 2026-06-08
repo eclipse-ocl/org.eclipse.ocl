@@ -228,10 +228,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private @NonNull EClass getEntryEClass(@NonNull EPackage ePackage, @NonNull MapType pivotType) {
-		EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
+		EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE);
 		if (eAnnotation == null) {
 			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			eAnnotation.setSource(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
+			eAnnotation.setSource(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE);
 			ePackage.getEAnnotations().add(eAnnotation);
 		}
 		Type keyType = PivotUtil.getKeyType(pivotType);

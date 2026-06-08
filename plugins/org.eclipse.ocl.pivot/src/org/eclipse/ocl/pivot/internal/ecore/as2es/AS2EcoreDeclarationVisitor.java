@@ -407,10 +407,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	 * @since 7.0
 	 */
 	protected @NonNull EAnnotation getCoEClass(@NonNull EDataType eDataType) {
-		EAnnotation eAnnotation = eDataType.getEAnnotation(PivotConstants.CO_CLASS_ANNOTATION_SOURCE);
+		EAnnotation eAnnotation = eDataType.getEAnnotation(PivotConstants.CO_ECLASS_ANNOTATION_SOURCE);
 		if (eAnnotation == null) {
 			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			eAnnotation.setSource(PivotConstants.CO_CLASS_ANNOTATION_SOURCE);
+			eAnnotation.setSource(PivotConstants.CO_ECLASS_ANNOTATION_SOURCE);
 			eDataType.getEAnnotations().add(eAnnotation);
 		}
 		return eAnnotation;

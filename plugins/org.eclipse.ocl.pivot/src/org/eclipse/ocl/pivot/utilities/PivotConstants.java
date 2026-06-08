@@ -115,15 +115,15 @@ public interface PivotConstants
 
 	/**
 	 * The annotated EPackage contains entry class(es) for Ecore serialization of an OCL Map as an EMap.
-	 * @since 1.7
+	 * @since 7.0
 	 */
-	static final @NonNull String ENTRY_CLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/EntryClass";
+	static final @NonNull String ENTRY_ECLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/EntryEClass";
 
 	/**
 	 * The annotated EClass is a co-EClass for the EOperations of an EDataType.
 	 * @since 7.0
 	 */
-	static final @NonNull String CO_CLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/CoClass";
+	static final @NonNull String CO_ECLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/CoEClass";
 
 	/**
 	 * @since 1.3

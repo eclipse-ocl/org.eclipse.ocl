@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
- * The OCL_EntryClass_EAnnotationConverter suppresses the redundant mapping of http://www.eclipse.org/OCL/EntryClass
+ * The OCL_EntryClass_EAnnotationConverter suppresses the redundant mapping of http://www.eclipse.org/OCL/EntryEClass
  * contents since, if needed, they are captured by MapType references.
  *
  * @since 7.0
@@ -39,7 +39,7 @@ public class OCL_EntryClass_EAnnotationConverter extends AbstractEAnnotationConv
 	}
 
 	private OCL_EntryClass_EAnnotationConverter() {
-		super(PivotConstants.ENTRY_CLASS_ANNOTATION_SOURCE);
+		super(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE);
 	}
 
 	@Override
