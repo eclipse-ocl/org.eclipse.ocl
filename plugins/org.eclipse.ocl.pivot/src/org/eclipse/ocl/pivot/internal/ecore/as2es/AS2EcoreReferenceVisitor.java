@@ -231,12 +231,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private @NonNull EClass getEntryEClass(@NonNull EPackage ePackage, @NonNull MapType pivotType) {
-		EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE);
-		if (eAnnotation == null) {
-			eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-			eAnnotation.setSource(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE);
-			ePackage.getEAnnotations().add(eAnnotation);
-		}
 		Type keyType = PivotUtil.getKeyType(pivotType);
 		Type valueType = PivotUtil.getValueType(pivotType);
 		boolean keysAreNullFree = pivotType.isKeysAreNullFree();
@@ -257,12 +251,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		//
 		//	Find pre-existing entry EClass
 		//
-		EList<EObject> eEntryClasses = eAnnotation.getContents();
-		for (EObject eObject : eEntryClasses) {
-			EClass eEntryClass = (EClass)eObject;
-			if (name.equals(eEntryClass.getName())) {			// XXX duplicate across scopes
-				return eEntryClass;
-			}
+		EClassifier eClassifier = ePackage.getEClassifier(name);
+		if ((eClassifier instanceof EClass) && (eClassifier.getEAnnotation(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE) != null)) {
+			return (EClass) eClassifier;
 		}
 		//
 		//	Create new EClass
@@ -271,7 +262,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.setName(name);
 		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
-		eEntryClasses.add(eClass);
 		//
 		//	Create K ETypeParameter if required
 		//
@@ -342,6 +332,13 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eValueFeature.setLowerBound(valuesAreNullFree ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
+		//
+		//	Install the entry EClass
+		//
+		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+		eAnnotation.setSource(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE);
+		eClass.getEAnnotations().add(eAnnotation);
+		ePackage.getEClassifiers().add(eClass);
 		return eClass;
 	}
 

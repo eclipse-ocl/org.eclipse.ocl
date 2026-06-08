@@ -454,9 +454,15 @@ public class ModelMerger extends AbstractProjectComponent
 					keyedSlots.add(asNamedElement);
 				}
 			}
+			int size = key2slots.size();
+			if (size == 0) {
+				return null;
+			}
 			List<Object> mergedSlots = new ArrayList<>();
 			List<Object> keys = new ArrayList<>(key2slots.keySet());
-			sort(keys);
+			if (size > 1) {
+				sort(keys);
+			}
 			for (Object key : keys) {
 				List<@NonNull NamedElement> keyedSlots = key2slots.get(key);
 				assert keyedSlots != null;

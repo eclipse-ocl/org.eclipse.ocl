@@ -101,13 +101,7 @@ public abstract class AbstractExternal2AS extends AbstractConversion implements 
 	 * @since 1.7
 	 */
 	public boolean isEcoreOnlyEntryClass(@Nullable EClassifier eClassifier) {
-		if (eClassifier != null) {
-			EObject eContainer = eClassifier.eContainer();
-			if ((eContainer instanceof EAnnotation) && PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE.equals(((EAnnotation)eContainer).getSource())) {
-				return true;
-			}
-		}
-		return false;
+		return (eClassifier != null) && (eClassifier.getEAnnotation(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE) != null);
 	}
 
 	/**

@@ -109,12 +109,12 @@ public interface PivotConstants
 	static final @NonNull String AS_METAMODEL_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/ASMetamodel";
 
 	/**
-	 * EPackage/EClass annotation identifying sub-sectikons groupings in the OCL Standard Library documentation.
+	 * EPackage/EClass annotation identifying sub-sections groupings in the OCL Standard Library documentation.
 	 */
 	static final @NonNull String OMG_OCL_ANNOTATION_SOURCE = "http://www.omg.org/ocl";
 
 	/**
-	 * The annotated EPackage contains entry class(es) for Ecore serialization of an OCL Map as an EMap.
+	 * The annotation identifies an entry class for Ecore serialization of an OCL Map as an EMap.
 	 * @since 7.0
 	 */
 	static final @NonNull String ENTRY_ECLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/EntryEClass";
