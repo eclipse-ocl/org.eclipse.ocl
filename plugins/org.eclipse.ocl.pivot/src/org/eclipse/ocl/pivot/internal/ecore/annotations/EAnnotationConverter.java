@@ -18,9 +18,11 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 
 /**
  * EAnnotationConverter defines the basic behaviour for EAnnotation-source-specific functionalities for use
@@ -78,6 +80,12 @@ public interface EAnnotationConverter
 	}
 
 	public void convertDetail(@NonNull Detail asDetail, @NonNull EAnnotation eAnnotation);
+
+	/**
+	 * Create the PAnnotation to support the Pivot aspects of an EAnnotation.
+	 * Returns null if suppressed.
+	 */
+	public @Nullable Annotation createAnnotation(@NonNull AbstractExternal2AS converter, @NonNull EAnnotation eAnnotation);
 
 	/**
 	 * Convert the Pivot-supported details of eAnnotation to their Pivot counterparts in asElement.

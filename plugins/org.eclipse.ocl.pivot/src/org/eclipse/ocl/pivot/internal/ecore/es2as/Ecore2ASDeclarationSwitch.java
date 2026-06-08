@@ -119,37 +119,40 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 
 	@Override
 	public Object caseEAnnotation(EAnnotation eObject) {
-		String source = eObject.getSource();
-		EMap<String, String> details = eObject.getDetails();
-		assert details != null;
-		Annotation asAnnotation = PivotFactory.eINSTANCE.createAnnotation();			// XXX skip if just documentation
-		asAnnotation.setName(source);
-		converter.addMapping(eObject, asAnnotation);
-		copyAnnotatedElement(asAnnotation, eObject);
-		doSwitchAll(asAnnotation.getOwnedContents(), eObject.getContents());
-		if (details.size() > 0) {
-			EAnnotationConverter eAnnotationConverter = EAnnotationConverter.getEAnnotationConverter(eObject);
-			List<Detail> asDetails = asAnnotation.getOwnedDetails();
-			for (Map.Entry<String, String> entry : details) {
-				assert entry != null;
-				Detail asDetail = eAnnotationConverter.convertEDetail(entry);
-				if (asDetail != null) {
-					asDetails.add(asDetail);	// FIXME refreshList
+		assert eObject != null;
+		EAnnotationConverter eAnnotationConverter = EAnnotationConverter.getEAnnotationConverter(eObject);
+		Annotation asAnnotation = eAnnotationConverter.createAnnotation(converter, eObject);
+		if (asAnnotation != null) {
+			String source = eObject.getSource();
+			EMap<String, String> details = eObject.getDetails();
+			assert details != null;
+			asAnnotation.setName(source);
+			converter.addMapping(eObject, asAnnotation);
+			copyAnnotatedElement(asAnnotation, eObject);
+			doSwitchAll(asAnnotation.getOwnedContents(), eObject.getContents());
+			if (details.size() > 0) {
+				List<Detail> asDetails = asAnnotation.getOwnedDetails();
+				for (Map.Entry<String, String> entry : details) {
+					assert entry != null;
+					Detail asDetail = eAnnotationConverter.convertEDetail(entry);
+					if (asDetail != null) {
+						asDetails.add(asDetail);	// FIXME refreshList
+					}
 				}
 			}
-		}
-		if (!eObject.getReferences().isEmpty()) {
-			converter.queueReference(eObject);
+			if (!eObject.getReferences().isEmpty()) {
+				converter.queueReference(eObject);
+			}
 		}
 		return asAnnotation;
 	}
 
 	@Override
 	public Object caseEAttribute(EAttribute eObject) {
-		@SuppressWarnings("null") @NonNull EAttribute eObject2 = eObject;
-		Property pivotElement = converter.refreshElement(Property.class, PivotPackage.Literals.PROPERTY, eObject2);
-		copyStructuralFeature(pivotElement, eObject2);
-		pivotElement.setIsID(eObject2.isID());
+		assert eObject != null;
+		Property pivotElement = converter.refreshElement(Property.class, PivotPackage.Literals.PROPERTY, eObject);
+		copyStructuralFeature(pivotElement, eObject);
+		pivotElement.setIsID(eObject.isID());
 		return pivotElement;
 	}
 
@@ -633,7 +636,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			try {
 				if (eAnnotationConverter.convertEAnnotationDetails(eAnnotation, pivotElement)) {
 					Annotation asAnnotation = (Annotation)doSwitch(eAnnotation);
-					asAnnotations.add(asAnnotation);
+					if (asAnnotation != null) {
+						asAnnotations.add(asAnnotation);
+					}
 				}
 			} catch (XMIException e) {
 				converter.error(e);

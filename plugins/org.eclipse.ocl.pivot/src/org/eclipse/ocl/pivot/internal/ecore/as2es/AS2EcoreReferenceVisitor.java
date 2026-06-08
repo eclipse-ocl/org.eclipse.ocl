@@ -351,7 +351,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private void setEType(@NonNull ETypedElement eTypedElement, @NonNull Type pivotType, boolean isRequired) {
-		assert !(pivotType instanceof MapType);
+		assert !(pivotType instanceof EntryType) && !(pivotType instanceof MapType);
 		/*	if (pivotType instanceof MapType) {
 			org.eclipse.ocl.pivot.Class entryClass = ((MapType)pivotType).getEntryClass();
 			if (entryClass != null) {
@@ -462,16 +462,11 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 		else if (pivotType instanceof EntryType) {
 			EntryType entryClass = (EntryType)pivotType;
-			if (entryClass != null) {
-				setEType(eTypedElement, entryClass, isRequired);
-			}
-			else {
-				for (EObject eContainer = eTypedElement; eContainer != null; eContainer = eContainer.eContainer()) {
-					if (eContainer instanceof EPackage) {
-						EClass entryEClass = getEntryEClass((EPackage)eContainer, (MapType)pivotType);
-						eTypedElement.setEType(entryEClass);
-						break;
-					}
+			for (EObject eContainer = eTypedElement; eContainer != null; eContainer = eContainer.eContainer()) {
+				if (eContainer instanceof EPackage) {
+					EClass entryEClass = getEntryEClass((EPackage)eContainer, (MapType)pivotType);
+					eTypedElement.setEType(entryEClass);
+					break;
 				}
 			}
 			eTypedElement.setOrdered(true);		// sic; Ecore idiom is OrderedSet(Entry(K,V)[*|1])[1]

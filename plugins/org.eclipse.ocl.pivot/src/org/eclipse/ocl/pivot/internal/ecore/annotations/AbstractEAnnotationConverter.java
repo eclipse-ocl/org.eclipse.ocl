@@ -24,10 +24,12 @@ import org.eclipse.emf.ecore.xmi.XMIException;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.util.DerivedConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
@@ -53,6 +55,11 @@ public abstract class AbstractEAnnotationConverter implements EAnnotationConvert
 
 	/*package*/ static EAnnotationConverter basicGetEAnnotationConverter(/*@NonNull*/ String source) {
 		return source2handler.get(source);
+	}
+
+	@Override
+	public @Nullable Annotation createAnnotation(@NonNull AbstractExternal2AS converter, @NonNull EAnnotation eAnnotation) {
+		return PivotFactory.eINSTANCE.createAnnotation();			// XXX skip if just documentation
 	}
 
 	@Override
@@ -152,6 +159,7 @@ public abstract class AbstractEAnnotationConverter implements EAnnotationConvert
 		EMF_GenModel_EAnnotationConverter.getInstance();
 		MOF_XML_EAnnotationConverter.getInstance();
 		OCL_Collection_EAnnotationConverter.getInstance();
+		OCL_EntryClass_EAnnotationConverter.getInstance();
 		OCL_Import_EAnnotationConverter.getInstance();
 		OCL_ASLibrary_EAnnotationConverter.getInstance();
 		OCL_ASMetamodel_EAnnotationConverter.getInstance();
