@@ -307,6 +307,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		super(ecoreResource, environmentFactory);
 		assert !(ecoreResource instanceof DelegatedSinglePackageResource);			// XXX
 		assert !ecoreResource.getClass().getName().contains("UMLResource");			// XXX
+	//	System.out.println("ctor " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(ecoreResource) + " " + ecoreResource);
 	}
 
 	/**
@@ -315,6 +316,7 @@ public class ExternalEcore2AS extends Ecore2AS
 	protected void addCreated(@NonNull EObject eObject, @NonNull Element pivotElement) {
 		@SuppressWarnings("unused")
 		Element oldElement = newCreateMap.put(eObject, pivotElement);
+	//	System.out.println("addCreated " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(pivotElement) + " " + pivotElement);
 	}
 
 	@Override
@@ -431,6 +433,7 @@ public class ExternalEcore2AS extends Ecore2AS
 	public Type getASType(@NonNull EObject eObject) {
 		Element pivotElement = newCreateMap.get(eObject);
 		if (pivotElement == null) {
+		//	System.out.println("getASType " + NameUtil.debugSimpleName(this) + " " + NameUtil.debugSimpleName(eObject) + " " + eObject);
 			Resource resource = eObject.eResource();
 			if ((resource != ecoreResource) && (resource != null)) {
 				Ecore2AS converter = getAdapter(resource, environmentFactory);
@@ -492,6 +495,10 @@ public class ExternalEcore2AS extends Ecore2AS
 
 	public @NonNull Model importObjects(@NonNull Collection<@NonNull EObject> ecoreContents, @NonNull URI pivotURI) {
 		EPackage libraryEPackage = isLibrary(ecoreContents);
+		if (libraryEPackage != null) {
+			System.err.println("Suppressing 'when generating OCLstdlib'");
+			libraryEPackage = null;
+		}
 		if (libraryEPackage != null) {			 // when generating OCLstdlib
 			newCreateMap = new HashMap<>();
 			AnyType asAnyType = standardLibrary.basicGetOclAnyType();

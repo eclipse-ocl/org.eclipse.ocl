@@ -159,7 +159,7 @@ public abstract class AbstractEAnnotationConverter implements EAnnotationConvert
 		EMF_GenModel_EAnnotationConverter.getInstance();
 		MOF_XML_EAnnotationConverter.getInstance();
 		OCL_Collection_EAnnotationConverter.getInstance();
-		OCL_EntryClass_EAnnotationConverter.getInstance();
+		OCL_EntryEClass_EAnnotationConverter.getInstance();
 		OCL_Import_EAnnotationConverter.getInstance();
 		OCL_ASLibrary_EAnnotationConverter.getInstance();
 		OCL_ASMetamodel_EAnnotationConverter.getInstance();

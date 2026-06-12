@@ -20,26 +20,26 @@ import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
- * The OCL_EntryClass_EAnnotationConverter suppresses the redundant mapping of http://www.eclipse.org/OCL/EntryEClass
- * contents since, if needed, they are captured by MapType references.
+ * The OCL_EntryEClass_EAnnotationConverter suppresses the redundant mapping of an http://www.eclipse.org/OCL/EntryEClass
+ * contents since, if needed, it is captured by MapType references.
  *
  * @since 7.0
  */
-public class OCL_EntryClass_EAnnotationConverter extends AbstractEAnnotationConverter
+public class OCL_EntryEClass_EAnnotationConverter extends AbstractEAnnotationConverter
 {
-	private static final @NonNull OCL_EntryClass_EAnnotationConverter INSTANCE = new OCL_EntryClass_EAnnotationConverter();
+	private static final @NonNull OCL_EntryEClass_EAnnotationConverter INSTANCE = new OCL_EntryEClass_EAnnotationConverter();
 
-	public static @NonNull OCL_EntryClass_EAnnotationConverter getInstance() {
+	public static @NonNull OCL_EntryEClass_EAnnotationConverter getInstance() {
 		return INSTANCE;
+	}
+
+	private OCL_EntryEClass_EAnnotationConverter() {
+		super(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE);
 	}
 
 	@Override
 	public boolean convertEAnnotationDetails(@NonNull EAnnotation eAnnotation, @NonNull NamedElement asElement) throws XMIException {
 		return false;
-	}
-
-	private OCL_EntryClass_EAnnotationConverter() {
-		super(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE);
 	}
 
 	@Override

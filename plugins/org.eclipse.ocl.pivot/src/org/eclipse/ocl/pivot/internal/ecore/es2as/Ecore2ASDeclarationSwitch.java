@@ -103,6 +103,9 @@ import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.RealValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
+/**
+ * @since 7.0
+ */
 public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 {
 	protected final @NonNull AbstractExternal2AS converter;
@@ -156,6 +159,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		return pivotElement;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
 	public Object caseEClass(EClass eClass) {
 		assert eClass != null;
@@ -219,16 +225,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		doSwitchAll(eClass.getEGenericSuperTypes());
 		List<Operation> pivotOperations = pivotElement.getOwnedOperations();
 		List<Constraint> pivotInvariants = pivotElement.getOwnedInvariants();
-		for (@SuppressWarnings("null")@NonNull EOperation eOperation : eClass.getEOperations()) {
-			if (converter.isInvariant(eOperation)) {
-				Object pivotObject = doSwitch(eOperation);
-				pivotInvariants.add((Constraint) pivotObject);
-			}
-			else {
-				Object pivotObject = doSwitch(eOperation);
-				pivotOperations.add((Operation) pivotObject);
-			}
-		}
+		convertEOperations(eClass.getEOperations(), pivotOperations, pivotInvariants);
 		List<Property> pivotProperties = pivotElement.getOwnedProperties();
 		doSwitchAll(pivotProperties, eClass.getEStructuralFeatures());
 		if (duplicatesAnnotation != null) {
@@ -593,6 +590,33 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	/**
 	 * @since 7.0
 	 */
+	protected void convertEOperations(Iterable<EOperation> eOperations, List<Operation> pivotOperations, List<Constraint> pivotInvariants) {
+		for (@SuppressWarnings("null")@NonNull EOperation eOperation : eOperations) {
+			if (converter.isInvariant(eOperation)) {
+				Object pivotObject = doSwitch(eOperation);
+				pivotInvariants.add((Constraint) pivotObject);
+			}
+			else {
+				Object pivotObject = doSwitch(eOperation);
+				pivotOperations.add((Operation) pivotObject);
+			}
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected void convertEStructuralFeature(Iterable<EStructuralFeature> eFeatures, List<Property> pivotProperties) {
+		for (@SuppressWarnings("null")@NonNull EStructuralFeature eFeature : eFeatures) {
+			Object pivotObject = doSwitch(eFeature);
+			pivotProperties.add((Property) pivotObject);
+
+		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	protected void copyClassifier(org.eclipse.ocl.pivot.@NonNull Class pivotElement, @NonNull EClassifier eClassifier) {
 		refreshTypeConstraints(pivotElement, eClassifier);
 		copyNamedElement(pivotElement, eClassifier);
@@ -611,6 +635,27 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	protected void copyDataTypeOrEnum(@NonNull DataType pivotElement, @NonNull EDataType eDataType) {
 		copyClassifier(pivotElement, eDataType);
 		pivotElement.setIsSerializable(eDataType.isSerializable());
+		List<Operation> pivotOperations = pivotElement.getOwnedOperations();
+		List<Constraint> pivotInvariants = pivotElement.getOwnedInvariants();
+		List<Property> pivotProperties = pivotElement.getOwnedProperties();
+		EAnnotation eAnnotation = eDataType.getEAnnotation(PivotConstants.CO_ECLASS_ANNOTATION_SOURCE);
+		if (eAnnotation != null) {
+			List<@NonNull EOperation> eOperations = new ArrayList<>();
+			List<@NonNull EStructuralFeature> eFeatures = new ArrayList<>();
+			for (EObject eObject : eAnnotation.getContents()) {
+				if (eObject instanceof EOperation) {
+					eOperations.add((EOperation)eObject);
+				}
+				else if (eObject instanceof EStructuralFeature) {
+					eFeatures.add((EStructuralFeature)eObject);
+				}
+				else {
+					throw new UnsupportedOperationException();
+				}
+			}
+			convertEOperations(eOperations, pivotOperations, pivotInvariants);
+			convertEStructuralFeature(eFeatures, pivotProperties);
+		}
 	}
 
 	/**
