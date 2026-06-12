@@ -623,12 +623,14 @@ public class ExternalEcore2AS extends Ecore2AS
 				}
 				if (hasOclAny || hasBoolean) {
 					for (EClassifier eClassifier : ePackage.getEClassifiers()) {
-						Element asClass = newCreateMap.get(eClassifier);
-						assert asClass != null;
-						if (asClasses == null) {
-							asClasses = new ArrayList<>();
+						if (eClassifier.getEAnnotation(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE) == null) {
+							Element asClass = newCreateMap.get(eClassifier);
+							assert asClass != null;
+							if (asClasses == null) {
+								asClasses = new ArrayList<>();
+							}
+							asClasses.add((org.eclipse.ocl.pivot.Class)asClass);
 						}
-						asClasses.add((org.eclipse.ocl.pivot.Class)asClass);
 					}
 				}
 			}
