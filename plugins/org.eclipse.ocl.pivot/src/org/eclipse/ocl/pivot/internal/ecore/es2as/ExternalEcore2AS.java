@@ -982,7 +982,7 @@ public class ExternalEcore2AS extends Ecore2AS
 			IntegerValue lowerValue = getCollectionLowerValueDetail(eDetails);
 			UnlimitedNaturalValue upperValue = getCollectionUpperValueDetail(eDetails);
 
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
+			CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
 			return standardLibrary.getCollectionType(typeArguments);
 		}
 		else {

@@ -1823,7 +1823,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 				commonType = standardLibrary.getOclVoidType();
 			}
 			CollectionTypeId genericTypeId = IdManager.getCollectionTypeId(collectionTypeName);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericTypeId, commonType, isNullFree, null, null);
+			CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(genericTypeId, commonType, isNullFree, null, null);
 			Type type = standardLibrary.getCollectionType(typeArguments);
 			helper.setType(expression, type, true, null);
 			expression.setKind(PivotUtil.getCollectionKind((CollectionType) type));

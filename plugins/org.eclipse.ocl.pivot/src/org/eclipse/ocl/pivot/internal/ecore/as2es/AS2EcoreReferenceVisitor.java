@@ -84,6 +84,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	private static final Logger logger = Logger.getLogger(AS2EcoreReferenceVisitor.class);
 
 	protected final @NonNull AS2EcoreTypeRefVisitor typeRefVisitor;				// Optional
+	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	private final @NonNull AnyType oclAnyType;
 	private final org.eclipse.ocl.pivot.@NonNull Class oclElementType;
@@ -92,7 +93,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	public AS2EcoreReferenceVisitor(@NonNull AS2Ecore context) {
 		super(context);
 		typeRefVisitor = new AS2EcoreTypeRefVisitor(context);
-		CompleteStandardLibrary standardLibrary = context.getStandardLibrary();
+		standardLibrary = context.getStandardLibrary();
 		oclAnyType = standardLibrary.getOclAnyType();
 		oclElementType = standardLibrary.getOclElementType();
 		oclTypeType = standardLibrary.getOclTypeType();
@@ -153,9 +154,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					else if (redefiningType != null) {
 						CollectionType redefinedCollectionType = (CollectionType)redefinedType;
 						CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique());
-						CollectionTypeArguments typeArguments = new CollectionTypeArguments(context.getStandardLibrary(), genericCollectionTypeId, redefiningType, redefinedCollectionType.isIsNullFree(),
+						CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(genericCollectionTypeId, redefiningType, redefinedCollectionType.isIsNullFree(),
 							redefinedCollectionType.getLowerValue(), redefinedCollectionType.getUpperValue());
-						optionalType = new OptionalType(context.getStandardLibrary().getCollectionType(typeArguments), redefinedProperty.isIsRequired());
+						optionalType = new OptionalType(standardLibrary .getCollectionType(typeArguments), redefinedProperty.isIsRequired());
 					}
 				}
 			}
@@ -444,7 +445,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eTypedElement.setOrdered(true);
 			eTypedElement.setUnique(true);
 		}
-		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getGeneric() != context.getStandardLibrary().getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
+		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getGeneric() != standardLibrary .getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
 			CollectionType collectionType = (CollectionType)pivotType;
 			Type elementType = collectionType.getElementType();
 			EObject eObject = typeRefVisitor.safeVisit(elementType, false);

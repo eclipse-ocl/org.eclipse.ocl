@@ -454,7 +454,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 			}
 		}
 		CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
+		CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(genericCollectionTypeId, asClass, true, ValueUtil.integerValueOf(umlProperty.getLower()), null);
 		return standardLibrary.getCollectionType(typeArguments);
 	}
 
@@ -495,7 +495,7 @@ public class UML2ASReferenceSwitch extends UMLSwitch<Object>
 		int upper = umlProperty.getUpper();
 		IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 		UnlimitedNaturalValue upperValue = ValueUtil.unlimitedNaturalValueOf(upper);
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, asClass, isNullFree, lowerValue, upperValue);
+		CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(genericCollectionTypeId, asClass, isNullFree, lowerValue, upperValue);
 		return standardLibrary.getCollectionType(typeArguments);
 	}
 

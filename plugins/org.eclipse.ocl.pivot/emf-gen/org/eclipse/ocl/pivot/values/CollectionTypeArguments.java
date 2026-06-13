@@ -64,7 +64,7 @@ public class CollectionTypeArguments //implements Iterable<Object>
 			getClass();			// XXX
 		}
 		this.collectionTypeId = collectionTypeId;
-		this.elementType = standardLibrary.getPrimaryType(elementType);
+		this.elementType = elementType;
 		this.isNullFree = isNullFree;
 		this.lower = lower != null ? lower : PivotConstants.DEFAULT_LOWER_BOUND;
 		this.upper = upper != null ? upper : PivotConstants.DEFAULT_UPPER_BOUND;

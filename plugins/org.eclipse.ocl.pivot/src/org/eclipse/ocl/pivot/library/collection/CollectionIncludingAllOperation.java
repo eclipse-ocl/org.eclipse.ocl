@@ -65,7 +65,7 @@ public class CollectionIncludingAllOperation extends AbstractSimpleBinaryOperati
 								if (returnCollectionType.isIsNullFree() != isNullFree) {
 									@SuppressWarnings("null")@NonNull Type elementType = returnCollectionType.getElementType();
 									CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
-									CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
+									CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree, returnCollectionType.getLowerValue(), returnCollectionType.getUpperValue());
 									returnType = standardLibrary.getCollectionType(typeArguments);
 								}
 							}

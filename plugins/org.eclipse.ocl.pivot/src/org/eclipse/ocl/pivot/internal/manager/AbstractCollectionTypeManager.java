@@ -205,7 +205,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		boolean commonIsNullFree = standardLibrary.getCommonIsRequired(leftCollectionType.isIsNullFree(), rightCollectionType.isIsNullFree());
 		IntegerValue commonLower = getCommonLowerValue(leftCollectionType.getLowerValue(), rightCollectionType.getLowerValue());
 		UnlimitedNaturalValue commonUpper = getCommonUpperValue(leftCollectionType.getUpperValue(), rightCollectionType.getUpperValue());
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, commonGenericType.getTypeId(), commonElementType, commonIsNullFree, commonLower, commonUpper);
+		CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(commonGenericType.getTypeId(), commonElementType, commonIsNullFree, commonLower, commonUpper);
 		return getCollectionType(typeArguments);
 	}
 
@@ -263,7 +263,7 @@ public abstract class AbstractCollectionTypeManager implements CollectionTypeMan
 		boolean isNullFree = asCollectionType.isIsNullFree();
 		IntegerValue lowerValue = asCollectionType.getLowerValue();
 		UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
-		CollectionTypeArguments collectionTypeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
+		CollectionTypeArguments collectionTypeArguments = standardLibrary.createCollectionTypeArguments(genericCollectionType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
 		WeakReference<@Nullable CollectionType> ref = collectionTypes.get(collectionTypeArguments);
 		CollectionType old = ref != null ? ref.get() : null;
 		if (old == null) {

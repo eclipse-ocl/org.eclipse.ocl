@@ -157,7 +157,7 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 		if ((commonKeyType == rightKeyType) && (commonValueType == rightValueType) && (commonKeysAreNullFree == rightKeysAreNullFree) && (commonValuesAreNullFree == rightValuesAreNullFree)) {
 			return rightMapType;
 		}
-		MapTypeArguments typeArguments = new MapTypeArguments(standardLibrary, commonKeyType, commonKeysAreNullFree, commonValueType, commonValuesAreNullFree);
+		MapTypeArguments typeArguments = standardLibrary.createMapTypeArguments(commonKeyType, commonKeysAreNullFree, commonValueType, commonValuesAreNullFree);
 		return getMapType(typeArguments);
 	}
 
@@ -172,7 +172,7 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 			boolean keysAreNullFree = keyProperty.isIsRequired();
 			Type valueType = PivotUtil.getType(valueProperty);
 			boolean valuesAreNullFree = valueProperty.isIsRequired();
-			MapTypeArguments typeArguments = new MapTypeArguments(standardLibrary, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+			MapTypeArguments typeArguments = standardLibrary.createMapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			MapType mapType = getMapType(typeArguments);
 			Map<@NonNull MapType, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull MapType>> mapType2entryClass2mapEntryType2 = mapType2entryClass2mapEntryType;
 			if (mapType2entryClass2mapEntryType2 == null) {
@@ -249,7 +249,7 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 		Type valueType = PivotUtil.getValueType(asMapType);
 		boolean keysAreNullFree = asMapType.isKeysAreNullFree();
 		boolean valuesAreNullFree = asMapType.isValuesAreNullFree();
-		MapTypeArguments mapTypeArguments = new MapTypeArguments(standardLibrary, keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		MapTypeArguments mapTypeArguments = standardLibrary.createMapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 		WeakReference<@Nullable MapType> ref = mapTypes.get(mapTypeArguments);
 		MapType old = ref != null ? ref.get() : null;
 		if (old == null) {

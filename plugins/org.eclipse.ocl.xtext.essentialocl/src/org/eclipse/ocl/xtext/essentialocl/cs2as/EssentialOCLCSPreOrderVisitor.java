@@ -90,7 +90,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 						upperValue = PivotConstants.DEFAULT_UPPER_BOUND;
 					}
 					CollectionTypeId genericTypeId = IdManager.getCollectionTypeId(name);
-					CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericTypeId, elementType, isNullFree, lowerValue, upperValue);
+					CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(genericTypeId, elementType, isNullFree, lowerValue, upperValue);
 					type = standardLibrary.getCollectionType(typeArguments);
 					MultiplicityCS csMultiplicity = csElement.getOwnedMultiplicity();
 					if (csMultiplicity != null) {
@@ -99,7 +99,7 @@ public class EssentialOCLCSPreOrderVisitor extends AbstractEssentialOCLCSPreOrde
 							isNullFree = csMultiplicity.isIsNullFree();
 							lowerValue = ValueUtil.integerValueOf(csMultiplicity.getLower());
 							upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
-							typeArguments = new CollectionTypeArguments(standardLibrary, TypeId.SET, type, isNullFree, lowerValue, upperValue);
+							typeArguments = standardLibrary.createCollectionTypeArguments(TypeId.SET, type, isNullFree, lowerValue, upperValue);
 							type = standardLibrary.getCollectionType(typeArguments);
 						}
 					}

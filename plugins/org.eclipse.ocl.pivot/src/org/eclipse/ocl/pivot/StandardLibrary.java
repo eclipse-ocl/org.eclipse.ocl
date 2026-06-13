@@ -35,6 +35,7 @@ import org.eclipse.ocl.pivot.manager.TupleTypeManager;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.LambdaTypeArguments;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -118,6 +119,22 @@ public interface StandardLibrary
 	 * @since 7.0
 	 */
 	boolean conformsToSimpleType(@NonNull Type leftType, @NonNull Type rightType);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull CollectionTypeArguments createCollectionTypeArguments(@NonNull CollectionTypeId genericCollectionTypeId, @NonNull Type pivotType,
+			boolean isNullFree, IntegerValue lowerValue, UnlimitedNaturalValue upperValue);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull LambdaTypeArguments createLambdaTypeArguments(@NonNull TypedElement context, @NonNull Iterable<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result);
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull MapTypeArguments createMapTypeArguments(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree);
 
 	/**
 	 * Obtains the generic instance of the BagType metatype, named

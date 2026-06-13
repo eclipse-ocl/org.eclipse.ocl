@@ -1234,7 +1234,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 					if (superSpecializedTemplateArguments.size() == 1) {
 						Type templateArgument = superSpecializedTemplateArguments.get(0).getActual();
 						if (templateArgument != null) {
-							CollectionTypeArguments typeArguments = new CollectionTypeArguments(this, (CollectionTypeId) superPivotClass.getTypeId(), templateArgument,
+							CollectionTypeArguments typeArguments = createCollectionTypeArguments((CollectionTypeId) superPivotClass.getTypeId(), templateArgument,
 								specializedCollection.isIsNullFree(), specializedCollection.getLowerValue(), specializedCollection.getUpperValue());
 							org.eclipse.ocl.pivot.Class specializedSuperClass = getCollectionType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
@@ -1247,7 +1247,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 						Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
 						Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
 						if ((keyArgument != null) && (valueArgument != null)) {
-							MapTypeArguments typeArguments = new MapTypeArguments(this, keyArgument, specializedEntry.isKeysAreNullFree(), valueArgument, specializedEntry.isValuesAreNullFree());
+							MapTypeArguments typeArguments = createMapTypeArguments(keyArgument, specializedEntry.isKeysAreNullFree(), valueArgument, specializedEntry.isValuesAreNullFree());
 							org.eclipse.ocl.pivot.Class specializedSuperClass = getEntryType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
@@ -1259,7 +1259,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 						Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
 						Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
 						if ((keyArgument != null) && (valueArgument != null)) {
-							MapTypeArguments typeArguments = new MapTypeArguments(this, keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
+							MapTypeArguments typeArguments = createMapTypeArguments(keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
 							org.eclipse.ocl.pivot.Class specializedSuperClass = getMapType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}

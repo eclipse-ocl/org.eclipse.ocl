@@ -60,6 +60,7 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.LambdaTypeArguments;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -146,6 +147,13 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		return collectionTypeManager.basicGetCollectionType(typeArguments);
 	}
 
+	@Override
+	public @NonNull CollectionTypeArguments createCollectionTypeArguments(@NonNull CollectionTypeId collectionTypeId, @NonNull Type elementType,
+			boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+		Type primaryElementType = getPrimaryType(elementType);
+		return new CollectionTypeArguments(this, collectionTypeId, primaryElementType, isNullFree, lower, upper);
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -171,10 +179,24 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 */
 	protected abstract @NonNull JavaTypeManager createJavaTypeManager();
 
+	@Override
+	public @NonNull LambdaTypeArguments createLambdaTypeArguments(@NonNull TypedElement context, @NonNull Iterable<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
+		//	The limited usage does not merit the creation of primary typed elements. Conversion to primary therefore occurs
+		//	in the LambdaTypeArguments constructor.
+		return new LambdaTypeArguments(this, context, parameters, result);
+	}
+
 	/**
 	 * @since 7.0
 	 */
 	protected abstract @NonNull LambdaTypeManager createLambdaTypeManager();
+
+	@Override
+	public @NonNull MapTypeArguments createMapTypeArguments(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+		Type primaryKeyType = getPrimaryType(keyType);
+		Type primaryValueType = getPrimaryType(valueType);
+		return new MapTypeArguments(this, primaryKeyType, keysAreNullFree, primaryValueType, valuesAreNullFree);
+	}
 
 	/**
 	 * @since 7.0
@@ -224,7 +246,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		assert genericType.getOwnedTemplateParameters().size() == 1;
 		assert genericType.getOwnedTemplateParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
 		assert PivotUtil.getGenericElement(genericType) == genericType;
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(this, genericType.getTypeId(), elementType, isNullFree, lower, upper);
+		CollectionTypeArguments typeArguments = createCollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lower, upper);
 		assert collectionTypeManager != null;
 		CollectionType collectionType = collectionTypeManager.getCollectionType(typeArguments);
 		assert collectionType.eContainer() != null; // == basicGetOrphanage();
@@ -309,7 +331,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 */
 	@Override
 	public @NonNull EntryType getEntryType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		MapTypeArguments typeArguments = new MapTypeArguments(this, keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
+		MapTypeArguments typeArguments = createMapTypeArguments(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 		return getEntryType(typeArguments);
 	}
 
@@ -469,7 +491,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 */
 	@Override
 	public @NonNull MapType getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		MapTypeArguments typeArguments = new MapTypeArguments(this, keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
+		MapTypeArguments typeArguments = createMapTypeArguments(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 		return getMapType(typeArguments);
 	}
 
@@ -708,7 +730,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		}
 		else {
 			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(this, genericCollectionTypeId, thisClass, false, lower, upper);
+			CollectionTypeArguments typeArguments = createCollectionTypeArguments(genericCollectionTypeId, thisClass, false, lower, upper);
 			oppositeType = getCollectionType(typeArguments);
 			isRequired = true;
 		}

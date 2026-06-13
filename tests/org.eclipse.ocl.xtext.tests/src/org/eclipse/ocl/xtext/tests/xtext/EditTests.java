@@ -1108,7 +1108,7 @@ public class EditTests extends XtextTestCase
 		assertNoResourceErrors("Loading input", asResource);
 		//
 		Type myType = ClassUtil.requireNonNull(completeModel.getPrimaryType(LibraryConstants.STDLIB_URI, "MyType"));
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, TypeId.SEQUENCE, myType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+		CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(TypeId.SEQUENCE, myType, PivotConstants.DEFAULT_IS_NULL_FREE, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 		WeakReference<Type> sequenceMyType = new WeakReference<>(standardLibrary.basicGetCollectionType(typeArguments));
 		assertNull(sequenceMyType.get());
 		//

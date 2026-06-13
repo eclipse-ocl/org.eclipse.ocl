@@ -57,9 +57,9 @@ public class MapTypeArguments implements Iterable<@NonNull Type>
 
 	public MapTypeArguments(@NonNull StandardLibrary standardLibrary, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		this.hashCode = 5*keyType.hashCode() + (keysAreNullFree ? 9876 : 0) + 7*valueType.hashCode() + (valuesAreNullFree ? 5432 : 0);
-		this.keyType = standardLibrary.getPrimaryType(keyType);
+		this.keyType = keyType;
 		this.keysAreNullFree = keysAreNullFree;
-		this.valueType = standardLibrary.getPrimaryType(valueType);
+		this.valueType = valueType;
 		this.valuesAreNullFree = valuesAreNullFree;
 		assert PivotUtil.assertIsNormalizedType(standardLibrary, keyType);
 		assert PivotUtil.assertIsNormalizedType(standardLibrary, valueType);
