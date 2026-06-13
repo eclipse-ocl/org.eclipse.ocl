@@ -1203,7 +1203,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	public void initPackage(@NonNull BuiltInModel asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses, @NonNull NormalizedTemplateParameter... typeParameters) {
 		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
 		libraryLoadInProgress = true;
-		orphanage = asModel.getOrphanage();
+		setOrphanage(asModel.getOrphanage());
 		if ((typeParameters != null) && (typeParameters.length > 0)) {
 			ClassImpl asOrphanClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();			// XXX common up with Orphanage
 			asOrphanClass.setName(PivotConstants.ORPHANAGE_NAME);
@@ -1287,7 +1287,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 							Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
 							Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
 							if ((keyArgument != null) && (valueArgument != null)) {
-								MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedEntry.isKeysAreNullFree(), valueArgument, specializedEntry.isValuesAreNullFree());
+								MapTypeArguments typeArguments = new MapTypeArguments(this, keyArgument, specializedEntry.isKeysAreNullFree(), valueArgument, specializedEntry.isValuesAreNullFree());
 								org.eclipse.ocl.pivot.Class specializedSuperClass = getEntryType(typeArguments);
 								specializedClass.getSuperClasses().add(specializedSuperClass);
 							}
@@ -1299,7 +1299,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 							Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
 							Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
 							if ((keyArgument != null) && (valueArgument != null)) {
-								MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
+								MapTypeArguments typeArguments = new MapTypeArguments(this, keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
 								org.eclipse.ocl.pivot.Class specializedSuperClass = getMapType(typeArguments);
 								specializedClass.getSuperClasses().add(specializedSuperClass);
 							}
@@ -1344,6 +1344,11 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		if ((operationFlagsAndIndex & AbstractTables.IsValidating) != 0) {
 			asOperation.setIsValidating(true);
 		}
+	}
+
+	protected void setOrphanage(org.eclipse.ocl.pivot.@NonNull Package orphanage) {
+	//	assert this.orphanage == null;
+		this.orphanage = orphanage;
 	}
 
 	private void setPropertyFlagsAndIndex(@NonNull Property asProperty, int propertyFlagsAndIndex) {

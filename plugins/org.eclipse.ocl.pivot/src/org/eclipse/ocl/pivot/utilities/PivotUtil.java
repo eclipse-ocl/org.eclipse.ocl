@@ -157,7 +157,6 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.AbstractTables.BuiltInModel;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.InvalidValueException;
-import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.Unlimited;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -1041,20 +1040,6 @@ public class PivotUtil implements PivotConstants
 		assert specializedMapType.getValueType() == valueType;
 		// NB no superClasses
 		return specializedMapType;
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull MapTypeArguments createMapTypeArguments(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
-		Iterable<@NonNull Property> ownedProperties = getOwnedProperties(entryClass);
-		Property keyProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
-		Property valueProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
-		Type keyType = getType(keyProperty);
-		boolean keysAreNullFree = keyProperty.isIsRequired();
-		Type valueType = getType(valueProperty);
-		boolean valuesAreNullFree = valueProperty.isIsRequired();
-		return new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
 
 	public static @NonNull Model createModel(String externalURI) {

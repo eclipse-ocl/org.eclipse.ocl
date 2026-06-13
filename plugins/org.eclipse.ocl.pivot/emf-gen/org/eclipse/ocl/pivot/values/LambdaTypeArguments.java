@@ -16,6 +16,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.IterableType;
 import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -35,21 +36,21 @@ public class LambdaTypeArguments
 	private final @NonNull List<@NonNull TypedElement> parameters;
 	private final @NonNull TypedElement result;
 
-	public LambdaTypeArguments(@NonNull TypedElement context, @NonNull Iterable<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
+	public LambdaTypeArguments(@NonNull StandardLibrary standardLibrary, @NonNull TypedElement context, @NonNull Iterable<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result) {
 		int hash = 0;		// Distinctly named same-typed lambdas are kept distinct although conformant
 		List<@NonNull TypedElement> parametersList = new ArrayList<>();
 		for (@NonNull TypedElement parameter : parameters) {
 			hash *= 3;
-			Type parameterType = parameter.getType();
-			assert PivotUtil.assertIsNormalizedType(parameterType);
+			Type parameterType = standardLibrary.getPrimaryType(parameter.getType());
+			assert PivotUtil.assertIsNormalizedType(standardLibrary, parameterType);
 			hash += 11*(parameterType.hashCode() + PivotUtil.getName(parameter).hashCode() + (parameter.isIsRequired() ? 1 : 0));
 			parametersList.add(parameter);
 		}
-		Type contextType = context.getType();
-		assert PivotUtil.assertIsNormalizedType(contextType);
+		Type contextType = standardLibrary.getPrimaryType(context.getType());
+		assert PivotUtil.assertIsNormalizedType(standardLibrary, contextType);
 		hash += 5*(contextType.hashCode() + PivotUtil.getName(context).hashCode() + (context.isIsRequired() ? 1 : 0));
-		Type resultType = result.getType();
-		assert PivotUtil.assertIsNormalizedType(resultType);
+		Type resultType = standardLibrary.getPrimaryType(result.getType());
+		assert PivotUtil.assertIsNormalizedType(standardLibrary, resultType);
 		hash += 7*(resultType.hashCode() + PivotUtil.getName(result).hashCode() + (result.isIsRequired() ? 1 : 0));
 		this.hashCode = hash;
 		this.context = context;

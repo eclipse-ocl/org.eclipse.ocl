@@ -17,9 +17,12 @@ import java.util.Map;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.manager.MapTypeManager;
+import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.MapTypeArguments;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
@@ -154,7 +157,7 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 		if ((commonKeyType == rightKeyType) && (commonValueType == rightValueType) && (commonKeysAreNullFree == rightKeysAreNullFree) && (commonValuesAreNullFree == rightValuesAreNullFree)) {
 			return rightMapType;
 		}
-		MapTypeArguments typeArguments = new MapTypeArguments(commonKeyType, commonKeysAreNullFree, commonValueType, commonValuesAreNullFree);
+		MapTypeArguments typeArguments = new MapTypeArguments(standardLibrary, commonKeyType, commonKeysAreNullFree, commonValueType, commonValuesAreNullFree);
 		return getMapType(typeArguments);
 	}
 
@@ -162,7 +165,14 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 	public @NonNull MapType getMapEntryType(org.eclipse.ocl.pivot.@NonNull Class entryClass) {
 		assert !entryClass.eIsProxy();
 		synchronized (mapTypes) {
-			MapTypeArguments typeArguments = PivotUtil.createMapTypeArguments(entryClass);
+			Iterable<@NonNull Property> ownedProperties = PivotUtil.getOwnedProperties(entryClass);
+			Property keyProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "key"));
+			Property valueProperty = ClassUtil.requireNonNull(NameUtil.getNameable(ownedProperties, "value"));
+			Type keyType = PivotUtil.getType(keyProperty);
+			boolean keysAreNullFree = keyProperty.isIsRequired();
+			Type valueType = PivotUtil.getType(valueProperty);
+			boolean valuesAreNullFree = valueProperty.isIsRequired();
+			MapTypeArguments typeArguments = new MapTypeArguments(standardLibrary, keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			MapType mapType = getMapType(typeArguments);
 			Map<@NonNull MapType, @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull MapType>> mapType2entryClass2mapEntryType2 = mapType2entryClass2mapEntryType;
 			if (mapType2entryClass2mapEntryType2 == null) {
@@ -239,7 +249,7 @@ public abstract class AbstractMapTypeManager implements MapTypeManager
 		Type valueType = PivotUtil.getValueType(asMapType);
 		boolean keysAreNullFree = asMapType.isKeysAreNullFree();
 		boolean valuesAreNullFree = asMapType.isValuesAreNullFree();
-		MapTypeArguments mapTypeArguments = new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		MapTypeArguments mapTypeArguments = new MapTypeArguments(standardLibrary, keyType, keysAreNullFree, valueType, valuesAreNullFree);
 		WeakReference<@Nullable MapType> ref = mapTypes.get(mapTypeArguments);
 		MapType old = ref != null ? ref.get() : null;
 		if (old == null) {

@@ -147,7 +147,7 @@ public abstract class AbstractEntryTypeManager implements EntryTypeManager
 		if ((commonKeyType == rightKeyType) && (commonValueType == rightValueType) && (commonKeysAreNullFree == rightKeysAreNullFree) && (commonValuesAreNullFree == rightValuesAreNullFree)) {
 			return rightEntryType;
 		}
-		MapTypeArguments typeArguments = new MapTypeArguments(commonKeyType, commonKeysAreNullFree, commonValueType, commonValuesAreNullFree);
+		MapTypeArguments typeArguments = new MapTypeArguments(standardLibrary, commonKeyType, commonKeysAreNullFree, commonValueType, commonValuesAreNullFree);
 		return getEntryType(typeArguments);
 	}
 
@@ -208,7 +208,7 @@ public abstract class AbstractEntryTypeManager implements EntryTypeManager
 		Type valueType = PivotUtil.getValueType(asEntryType);
 		boolean keysAreNullFree = asEntryType.isKeysAreNullFree();
 		boolean valuesAreNullFree = asEntryType.isValuesAreNullFree();
-		MapTypeArguments entryTypeArguments = new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+		MapTypeArguments entryTypeArguments = new MapTypeArguments(standardLibrary, keyType, keysAreNullFree, valueType, valuesAreNullFree);
 		WeakReference<@Nullable EntryType> ref = entryTypes.get(entryTypeArguments);
 		EntryType old = ref != null ? ref.get() : null;
 		if (old == null) {

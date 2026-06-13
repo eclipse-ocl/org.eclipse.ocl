@@ -525,12 +525,14 @@ public class Orphanage extends PackageImpl
 	 * @since 7.0
 	 */
 	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index) {
-		List<org.eclipse.ocl.pivot.Class> orphanClasses = orphanPackage.getOwnedClasses();
-		org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(orphanClasses, PivotConstants.ORPHANAGE_NAME);
-		if (orphanClass == null) {
-			orphanClass = PivotUtil.createClass(PivotConstants.ORPHANAGE_NAME);
-			orphanClass.setOwningPackage(orphanPackage);
-		}
+		org.eclipse.ocl.pivot.Class orphanClass = getOrphanClass(orphanPackage);
+		return getNormalizedTemplateParameter(orphanClass, index);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Class orphanClass, int index) {
 		List<@NonNull TemplateParameter> asTemplatedParameterTypes = PivotUtil.getOwnedTemplateParametersList(orphanClass, true);
 		while (asTemplatedParameterTypes.size() <= index) {
 			NormalizedTemplateParameter normalizedTemplateParameter = PivotFactory.eINSTANCE.createNormalizedTemplateParameter();
@@ -540,6 +542,22 @@ public class Orphanage extends PackageImpl
 		TemplateParameter templateParameter = asTemplatedParameterTypes.get(index);
 		assert templateParameter != null;
 		return (NormalizedTemplateParameter)templateParameter;
+	}
+
+	/**
+	 * Return and if necessary create the special orphan clkass that is the parent of orphan elements such as
+	 * normalized template parameters.
+	 *
+	 * @since 7.0
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Class getOrphanClass(org.eclipse.ocl.pivot.@NonNull Package orphanPackage) {
+		List<org.eclipse.ocl.pivot.Class> orphanClasses = orphanPackage.getOwnedClasses();
+		org.eclipse.ocl.pivot.Class orphanClass = NameUtil.getNameable(orphanClasses, PivotConstants.ORPHANAGE_NAME);
+		if (orphanClass == null) {
+			orphanClass = PivotUtil.createClass(PivotConstants.ORPHANAGE_NAME);
+			orphanClass.setOwningPackage(orphanPackage);
+		}
+		return orphanClass;
 	}
 
 	/**

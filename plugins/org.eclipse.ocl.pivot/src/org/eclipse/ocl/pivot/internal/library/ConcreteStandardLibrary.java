@@ -309,7 +309,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 */
 	@Override
 	public @NonNull EntryType getEntryType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		MapTypeArguments typeArguments = new MapTypeArguments(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
+		MapTypeArguments typeArguments = new MapTypeArguments(this, keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 		return getEntryType(typeArguments);
 	}
 
@@ -469,7 +469,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	 */
 	@Override
 	public @NonNull MapType getMapType(@NonNull Type keyType, boolean keyValuesAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
-		MapTypeArguments typeArguments = new MapTypeArguments(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
+		MapTypeArguments typeArguments = new MapTypeArguments(this, keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 		return getMapType(typeArguments);
 	}
 

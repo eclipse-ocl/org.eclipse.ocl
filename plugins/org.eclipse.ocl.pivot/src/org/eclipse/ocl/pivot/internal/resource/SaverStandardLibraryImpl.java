@@ -164,6 +164,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 			if (eRoot instanceof Model) {
 				for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages((Model)eRoot)) {
 					if (Orphanage.isOrphanage(asPackage)) {
+						setOrphanage(asPackage);
 						loadOrphanage(asPackage);
 					}
 					else if (asPackage instanceof Library) {
@@ -577,6 +578,10 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		if (localOrphanPackage != null) {
 			loadOrphanage(localOrphanPackage);
 		}
+		else {
+			localOrphanPackage = Orphanage.getLocalOrphanPackage(asModel);
+		}
+		setOrphanage(localOrphanPackage);				// ?? redundant
 		List<@NonNull EObject> moreEObjects = resource.getContents();
 		while ((moreEObjects != null) && !moreEObjects.isEmpty()) {
 			Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(moreEObjects);

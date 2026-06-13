@@ -1247,7 +1247,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 						Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
 						Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
 						if ((keyArgument != null) && (valueArgument != null)) {
-							MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedEntry.isKeysAreNullFree(), valueArgument, specializedEntry.isValuesAreNullFree());
+							MapTypeArguments typeArguments = new MapTypeArguments(this, keyArgument, specializedEntry.isKeysAreNullFree(), valueArgument, specializedEntry.isValuesAreNullFree());
 							org.eclipse.ocl.pivot.Class specializedSuperClass = getEntryType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}
@@ -1259,7 +1259,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 						Type keyArgument = superSpecializedTemplateArguments.get(0).getActual();
 						Type valueArgument = superSpecializedTemplateArguments.get(1).getActual();
 						if ((keyArgument != null) && (valueArgument != null)) {
-							MapTypeArguments typeArguments = new MapTypeArguments(keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
+							MapTypeArguments typeArguments = new MapTypeArguments(this, keyArgument, specializedMap.isKeysAreNullFree(), valueArgument, specializedMap.isValuesAreNullFree());
 							org.eclipse.ocl.pivot.Class specializedSuperClass = getMapType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);
 						}

@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.values;
 import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
@@ -54,14 +55,14 @@ public class MapTypeArguments implements Iterable<@NonNull Type>
 	private final @NonNull Type valueType;
 	private final boolean valuesAreNullFree;
 
-	public MapTypeArguments(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
+	public MapTypeArguments(@NonNull StandardLibrary standardLibrary, @NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		this.hashCode = 5*keyType.hashCode() + (keysAreNullFree ? 9876 : 0) + 7*valueType.hashCode() + (valuesAreNullFree ? 5432 : 0);
-		this.keyType = keyType;
+		this.keyType = standardLibrary.getPrimaryType(keyType);
 		this.keysAreNullFree = keysAreNullFree;
-		this.valueType = valueType;
+		this.valueType = standardLibrary.getPrimaryType(valueType);
 		this.valuesAreNullFree = valuesAreNullFree;
-		assert PivotUtil.assertIsNormalizedType(keyType);
-		assert PivotUtil.assertIsNormalizedType(valueType);
+		assert PivotUtil.assertIsNormalizedType(standardLibrary, keyType);
+		assert PivotUtil.assertIsNormalizedType(standardLibrary, valueType);
 	}
 
 	@Override

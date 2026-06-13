@@ -143,7 +143,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 	public @NonNull LambdaType getLambdaType(@NonNull TypedElement context, @NonNull List<@NonNull ? extends TypedElement> parameters, @NonNull TypedElement result,
 			@Nullable TemplateArguments bindings) {
 		if (bindings == null) {
-			LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(context, parameters, result);
+			LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(standardLibrary, context, parameters, result);
 			return getLambdaType(lambdaTypeArguments);
 		}
 		else {
@@ -153,7 +153,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 				specializedParameters.add(specialize(parameter, bindings));
 			}
 			TypedElement specializedResult = specialize(result, bindings);
-			LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(specializedContext, specializedParameters, specializedResult);
+			LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(standardLibrary, specializedContext, specializedParameters, specializedResult);
 			return getLambdaType(lambdaTypeArguments);
 		}
 	}
@@ -195,7 +195,7 @@ public abstract class AbstractLambdaTypeManager implements LambdaTypeManager
 		LambdaParameter contextParameter = PivotUtil.getOwnedContext(asLambdaType);
 		Iterable<@NonNull LambdaParameter> parameters = PivotUtil.getOwnedParameters(asLambdaType);
 		LambdaParameter resultParameter = PivotUtil.getOwnedResult(asLambdaType);
-		LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(contextParameter, parameters, resultParameter);
+		LambdaTypeArguments lambdaTypeArguments = new LambdaTypeArguments(standardLibrary, contextParameter, parameters, resultParameter);
 		WeakReference<@Nullable LambdaType> ref = lambdaTypes.get(lambdaTypeArguments);
 		LambdaType old = ref != null ? ref.get() : null;
 		if (old == null) {

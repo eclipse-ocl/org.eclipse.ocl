@@ -814,7 +814,7 @@ public abstract class AbstractIdResolver implements IdResolver
 			}
 			boolean keysAreNullFree = keys.excludes(null);
 			boolean valuesAreNullFree = values.excludes(null);
-			MapTypeArguments typeArguments = new MapTypeArguments(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+			MapTypeArguments typeArguments = new MapTypeArguments(standardLibrary, keyType, keysAreNullFree, valueType, valuesAreNullFree);
 			return standardLibrary.getMapType(typeArguments);
 		}
 		return getStaticClassOf(value);

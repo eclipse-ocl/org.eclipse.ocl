@@ -64,7 +64,7 @@ public class CollectionTypeArguments //implements Iterable<Object>
 			getClass();			// XXX
 		}
 		this.collectionTypeId = collectionTypeId;
-		this.elementType = elementType;
+		this.elementType = standardLibrary.getPrimaryType(elementType);
 		this.isNullFree = isNullFree;
 		this.lower = lower != null ? lower : PivotConstants.DEFAULT_LOWER_BOUND;
 		this.upper = upper != null ? upper : PivotConstants.DEFAULT_UPPER_BOUND;
@@ -74,7 +74,7 @@ public class CollectionTypeArguments //implements Iterable<Object>
 		hash += 7 * this.lower.hashCode();
 		hash += 17 * this.upper.hashCode();
 		hashCode = hash;
-		assert PivotUtil.assertIsNormalizedType(standardLibrary, elementType);
+		assert PivotUtil.assertIsNormalizedType(standardLibrary, this.elementType);
 	}
 
 	@Override
