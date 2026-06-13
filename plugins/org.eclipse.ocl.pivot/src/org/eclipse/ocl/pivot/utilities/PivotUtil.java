@@ -234,12 +234,68 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	public static boolean assertIsNormalizedType(/*@NonNull*/ Type asType) {
+		if (asType instanceof NormalizedTemplateParameter) {
+			return true;
+		}
+		if (!(asType instanceof TemplateParameter)) {
+			return true;
+		}
+		if (!(asType.getESObject() instanceof ETypeParameter)) {
+			return true;
+		}
+		System.out.println("assertIsNormalizedType " + ((ETypeParameter)asType.getESObject()).getEBounds().size());
+		if (!((ETypeParameter)asType.getESObject()).getEBounds().isEmpty()) {
+			return true;
+		}
 		if (!((asType instanceof NormalizedTemplateParameter) || !(asType instanceof TemplateParameter) || !(asType.getESObject() instanceof ETypeParameter) || !((ETypeParameter)asType.getESObject()).getEBounds().isEmpty())) {
 			System.out.println("assertIsNormalizedType " + NameUtil.debugSimpleName(asType) + " " + asType);
 		}
 		assert (asType instanceof NormalizedTemplateParameter) || !(asType instanceof TemplateParameter) || !(asType.getESObject() instanceof ETypeParameter) || !((ETypeParameter)asType.getESObject()).getEBounds().isEmpty();
 		return true;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static boolean assertIsNormalizedType(@NonNull StandardLibrary standardLibrary, /*@NonNull*/ Type asType) {
+		if (asType instanceof NormalizedTemplateParameter) {
+			EObject eContainer1 = asType.eContainer();
+			EObject eContainer2 = eContainer1 != null ? eContainer1.eContainer() : null;
+			org.eclipse.ocl.pivot.Package orphanage = standardLibrary.getOrphanage();
+			assert eContainer2 == orphanage : "NormalizedTemplateParameter '" + asType + "' is from wrong standard library";
+			return true;
+		}
+		else if (asType instanceof TemplateParameter) {
+			Type asContainingType = PivotUtil.getContainingType(((TemplateParameter)asType).getOwningTemplateableElement());
+			Type asPrimaryType = standardLibrary.getPrimaryType(asContainingType);
+			assert asPrimaryType == asContainingType : "TemplateParameter '" + asType + "' is not a primary TemplateParameter";
+			return true;
+		}
+		else {
+			Type asPrimaryType = standardLibrary.getPrimaryType(asType);
+			if (asPrimaryType != asType) {
+				asPrimaryType = standardLibrary.getPrimaryType(asType);
+			}
+			assert asPrimaryType == asType : asType.eClass().getName() + " '" + asType + "' is not a primary type";
+			return true;
+		}
+	/*	if (!(asType instanceof TemplateParameter)) {
+			return true;
+		}
+		if (!(asType.getESObject() instanceof ETypeParameter)) {
+			return true;
+		}
+		System.out.println("assertIsNormalizedType " + ((ETypeParameter)asType.getESObject()).getEBounds().size());
+		if (!((ETypeParameter)asType.getESObject()).getEBounds().isEmpty()) {
+			return true;
+		}
+		if (!((asType instanceof NormalizedTemplateParameter) || !(asType instanceof TemplateParameter) || !(asType.getESObject() instanceof ETypeParameter) || !((ETypeParameter)asType.getESObject()).getEBounds().isEmpty())) {
+			System.out.println("assertIsNormalizedType " + NameUtil.debugSimpleName(asType) + " " + asType);
+		}
+		assert (asType instanceof NormalizedTemplateParameter) || !(asType instanceof TemplateParameter) || !(asType.getESObject() instanceof ETypeParameter) || !((ETypeParameter)asType.getESObject()).getEBounds().isEmpty();
+		return true; */
 	}
 
 	/**

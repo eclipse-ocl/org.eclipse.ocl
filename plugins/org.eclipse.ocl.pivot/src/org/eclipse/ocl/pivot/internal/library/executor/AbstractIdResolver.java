@@ -796,7 +796,7 @@ public abstract class AbstractIdResolver implements IdResolver
 			boolean isNullFree = collectionValue.excludes(null);
 			IntegerValue lower = collectionValue.size();
 			UnlimitedNaturalValue upper = lower.asUnlimitedNaturalValue();
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(generalizedId, elementType, isNullFree, lower, upper);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, generalizedId, elementType, isNullFree, lower, upper);
 			return standardLibrary.getCollectionType(typeArguments);
 		}
 		else if (value instanceof MapValue) {
@@ -1409,7 +1409,7 @@ public abstract class AbstractIdResolver implements IdResolver
 		}
 		CollectionTypeId collectionTypeId = id.getGeneralizedId();
 	//	CollectionType collectionType = getCollectionType(collectionTypeId);
-		return standardLibrary.getCollectionType(new CollectionTypeArguments(collectionTypeId, elementType, false, null, null));
+		return standardLibrary.getCollectionType(new CollectionTypeArguments(standardLibrary, collectionTypeId, elementType, false, null, null));
 	}
 
 	@Override

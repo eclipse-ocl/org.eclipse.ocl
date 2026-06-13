@@ -823,7 +823,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 			IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 			UnlimitedNaturalValue upperValue = upper != -1 ? ValueUtil.unlimitedNaturalValueOf(upper) : ValueUtil.UNLIMITED_VALUE;
 			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, pivotType, isNullFree, lowerValue, upperValue);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, pivotType, isNullFree, lowerValue, upperValue);
 			CollectionType pivotCollectionType = standardLibrary.getCollectionType(typeArguments);
 			installPivotReference(csElement, pivotCollectionType, BaseCSPackage.Literals.PIVOTABLE_ELEMENT_CS__PIVOT);
 		}

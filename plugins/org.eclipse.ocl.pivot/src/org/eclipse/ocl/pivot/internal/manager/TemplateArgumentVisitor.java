@@ -341,7 +341,8 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 			TemplateParameter asTemplateParameter = (TemplateParameter)asType;
 			if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
 			//	assert false;
-				return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), asTemplateParameter);
+				org.eclipse.ocl.pivot.Package orphanage = standardLibrary.getOrphanage();
+				return Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter);
 			}
 		}
 		return asType;
@@ -472,7 +473,8 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 			if (actualType instanceof TemplateParameter) {
 				TemplateParameter asTemplateParameter = (TemplateParameter)actualType;
 				if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
-					return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), asTemplateParameter);
+					org.eclipse.ocl.pivot.Package orphanage = standardLibrary.getOrphanage();
+					return Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter);
 				}
 			}
 			return actualType;

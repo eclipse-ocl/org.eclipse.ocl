@@ -130,14 +130,12 @@ public abstract class AbstractTables
 	public static class BuiltInModel extends ModelImpl
 	{
 		private final @NonNull PartialStandardLibrary library;
-		private final @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses;
+		private org.eclipse.ocl.pivot.@Nullable Package orphanage = null;
 
 		public BuiltInModel(@NonNull PartialStandardLibrary library, org.eclipse.ocl.pivot.@NonNull Package asPackage) {
 			this.library = library;
 			setExternalURI(asPackage.getURI());
 			getOwnedPackages().add(asPackage);
-			org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.getLocalOrphanPackage(this);
-			this.orphanClasses = PivotUtil.getOwnedClassesList(localOrphanPackage);
 		}
 
 		public @NonNull CollectionType getCollectionType(org.eclipse.ocl.pivot.@NonNull Class genericType, @NonNull Type elementType, boolean isNullFree) {
@@ -154,8 +152,17 @@ public abstract class AbstractTables
 			return library.getMapType(keyType, keyValuesAreNullFree, valueType, valuesAreNullFree);
 		}
 
+		public org.eclipse.ocl.pivot.@NonNull Package getOrphanage() {
+			org.eclipse.ocl.pivot.Package orphanage2 = this.orphanage;
+			if (orphanage2 == null) {
+				orphanage = orphanage2 = Orphanage.createLocalOrphanPackage();
+				getOwnedPackages().add(orphanage2);
+			}
+			return orphanage2;
+		}
+
 		public @NonNull TemplateParameter getTemplateParameter(int i) {
-			return Orphanage.getNormalizedTemplateParameter(Orphanage.getLocalOrphanPackage(this), i);
+			return Orphanage.getNormalizedTemplateParameter(getOrphanage(), i);
 		}
 
 		public @NonNull Type getTupleType(@NonNull Property @NonNull... asParts) {

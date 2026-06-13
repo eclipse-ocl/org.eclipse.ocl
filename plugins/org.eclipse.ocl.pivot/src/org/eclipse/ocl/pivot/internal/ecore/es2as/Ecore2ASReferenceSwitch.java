@@ -314,7 +314,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 							else {
 								isRequired = true;
 								CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-								CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, pivotType, false, lowerValue, upperValue);
+								CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, pivotType, false, lowerValue, upperValue);
 								pivotType = standardLibrary.getCollectionType(typeArguments);
 							}
 						}
@@ -460,7 +460,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 							pivotType = converter.getNormalizedType(pivotType);
 							assert pivotType != null;
 							CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-							CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, pivotType, isNullFree, lowerValue, upperValue);
+							CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, pivotType, isNullFree, lowerValue, upperValue);
 							pivotType = standardLibrary.getCollectionType(typeArguments);
 						}
 					}

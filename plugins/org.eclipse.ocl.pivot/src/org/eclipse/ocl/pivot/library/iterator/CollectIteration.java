@@ -94,7 +94,7 @@ public class CollectIteration extends AbstractIteration
 			boolean isNullFree = asType instanceof CollectionType && ((CollectionType)asType).isIsNullFree();
 			boolean isRequired = !(asType instanceof CollectionType) && (body != null) && body.isIsRequired();
 			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, false);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree || isRequired, null, null);	// FIXME null, null
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, elementType, isNullFree || isRequired, null, null);	// FIXME null, null
 			returnType = standardLibrary.getCollectionType(typeArguments);
 		}
 		return returnType;

@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.StandardLibrary;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
@@ -57,7 +58,7 @@ public class CollectionTypeArguments //implements Iterable<Object>
 	protected final @NonNull IntegerValue lower;
 	protected final @NonNull UnlimitedNaturalValue upper;
 
-	public CollectionTypeArguments(@NonNull CollectionTypeId collectionTypeId, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
+	public CollectionTypeArguments(@NonNull StandardLibrary standardLibrary, @NonNull CollectionTypeId collectionTypeId, @NonNull Type elementType, boolean isNullFree, @Nullable IntegerValue lower, @Nullable UnlimitedNaturalValue upper) {
 		assert collectionTypeId == collectionTypeId.getGeneralizedId();
 		if (isNullFree && (collectionTypeId == TypeId.ORDERED_SET)) {
 			getClass();			// XXX
@@ -73,7 +74,7 @@ public class CollectionTypeArguments //implements Iterable<Object>
 		hash += 7 * this.lower.hashCode();
 		hash += 17 * this.upper.hashCode();
 		hashCode = hash;
-		assert PivotUtil.assertIsNormalizedType(elementType);
+		assert PivotUtil.assertIsNormalizedType(standardLibrary, elementType);
 	}
 
 	@Override

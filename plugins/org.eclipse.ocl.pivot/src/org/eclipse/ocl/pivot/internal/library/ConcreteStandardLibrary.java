@@ -224,7 +224,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		assert genericType.getOwnedTemplateParameters().size() == 1;
 		assert genericType.getOwnedTemplateParameters().get(0).eClass() == PivotPackage.Literals.TEMPLATE_PARAMETER;
 		assert PivotUtil.getGenericElement(genericType) == genericType;
-		CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lower, upper);
+		CollectionTypeArguments typeArguments = new CollectionTypeArguments(this, genericType.getTypeId(), elementType, isNullFree, lower, upper);
 		assert collectionTypeManager != null;
 		CollectionType collectionType = collectionTypeManager.getCollectionType(typeArguments);
 		assert collectionType.eContainer() != null; // == basicGetOrphanage();
@@ -503,11 +503,6 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 	}
 
 	@Override
-	public @NonNull Orphanage getOrphanage() {
-		throw new UnsupportedOperationException();			// XXX
-	}
-
-	@Override
 	public @Nullable Type getPrimitiveType(@NonNull PrimitiveTypeId typeId) {
 		if (typeId == TypeId.BOOLEAN) {
 			return getBooleanType();
@@ -713,7 +708,7 @@ public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 		}
 		else {
 			CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, thisClass, false, lower, upper);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(this, genericCollectionTypeId, thisClass, false, lower, upper);
 			oppositeType = getCollectionType(typeArguments);
 			isRequired = true;
 		}

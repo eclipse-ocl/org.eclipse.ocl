@@ -64,12 +64,12 @@ import org.eclipse.ocl.pivot.utilities.TreeIterable;
  * <br>
  * There is no global orphanage. Any reference to one is stale.
  * <br>
- * Each OCL CompleteModel has a shared orphanage that contains the referenced unique synthesized elements.
- * The shared orphanage is never saved and so the Orphanage class can be used.
+ * Each OCL CompleteModel has a shared Orphanage that contains the referenced unique synthesized elements.
+ * The shared Orphanage is never saved and so the Orphanage class can be used.
  * <br>
  * Each saved ASResource has a local orphanage that contains a selective copy of the shared orphanage so that
  * all references are terminated locally. ASSaver creates this copy via PivotSaveImpl.init(). The local orphanages
- * use a regular Package to avod the need for Orphange support in XMI.
+ * use a regular Package to avoid the need for Orphanage support in XMI.
  */
 public class Orphanage extends PackageImpl
 {
@@ -490,41 +490,24 @@ public class Orphanage extends PackageImpl
 	}
 
 	/**
-	 * Create and return the local orphanage Package within resource.
+	 * Create and return the local orphanage Package.
 	 *
-	 * @since 1.18
+	 * @since 7.0
 	 */
-	public static org.eclipse.ocl.pivot.@NonNull Package createLocalOrphanPackage(@NonNull Model asModel) {
-		org.eclipse.ocl.pivot.Package orphanage = PivotFactory.eINSTANCE.createPackage();
-		orphanage.setName(PivotConstants.ORPHANAGE_NAME);
-		orphanage.setNsPrefix(PivotConstants.ORPHANAGE_PREFIX);
-		orphanage.setURI(PivotConstants.ORPHANAGE_URI);
-		asModel.getOwnedPackages().add(orphanage);
-		return orphanage;
+	public static org.eclipse.ocl.pivot.@NonNull Package createLocalOrphanPackage() {
+		return PivotUtil.createPackage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI);
 	}
 
 	/**
-	 * @since 1.18
-	 */
-	public static @NonNull Orphanage createSharedOrphanage(@NonNull ResourceSet resourceSet) {
-		Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI);
-		Model orphanModel = PivotFactory.eINSTANCE.createModel();
-		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
-		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
-		orphanModel.getOwnedPackages().add(orphanage);
-		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
-		orphanageResource.getContents().add(orphanModel);		// and invoke setLoaded()
-		resourceSet.getResources().add(orphanageResource);
-		return orphanage;
-	}
-
-	/**
+	 * Return and if necessary create the local orphanage Package within asModel.
+	 *
 	 * @since 7.0
 	 */
 	public static org.eclipse.ocl.pivot.@NonNull Package getLocalOrphanPackage(@NonNull Model asModel) {
 		org.eclipse.ocl.pivot.Package asPackage = basicGetLocalOrphanPackage(asModel);
 		if (asPackage == null) {
-			asPackage = createLocalOrphanPackage(asModel);
+			asPackage = createLocalOrphanPackage();
+			asModel.getOwnedPackages().add(asPackage);
 		}
 		return asPackage;
 	}
@@ -560,21 +543,30 @@ public class Orphanage extends PackageImpl
 	}
 
 	/**
-	 * Return the Orphanage for a resourceSet.
+	 * Return and if necessary create the Orphanage for a resourceSet.
 	 */
 	public static @NonNull Orphanage getOrphanage(@NonNull ResourceSet resourceSet) {
-		for (Resource aResource : resourceSet.getResources()) {
+		for (Resource aResource : resourceSet.getResources()) {			// OrphanResource
 			for (EObject eContent : aResource.getContents()) {
 				if (eContent instanceof Model) {
 					for (org.eclipse.ocl.pivot.Package asPackage : ((Model)eContent).getOwnedPackages()) {
 						if (asPackage instanceof Orphanage) {
+							assert aResource instanceof OrphanResource;			// XXX simplifcation testing
 							return (Orphanage) asPackage;
 						}
 					}
 				}
 			}
 		}
-		return createSharedOrphanage(resourceSet);
+		Orphanage orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI);
+		Model orphanModel = PivotFactory.eINSTANCE.createModel();
+		orphanModel.setName(PivotConstants.ORPHANAGE_NAME);;
+		orphanModel.setExternalURI(PivotConstants.ORPHANAGE_URI);
+		orphanModel.getOwnedPackages().add(orphanage);
+		Resource orphanageResource = new OrphanResource(ORPHANAGE_URI);
+		orphanageResource.getContents().add(orphanModel);		// and invoke setLoaded()
+		resourceSet.getResources().add(orphanageResource);
+		return orphanage;
 	}
 
 	/**

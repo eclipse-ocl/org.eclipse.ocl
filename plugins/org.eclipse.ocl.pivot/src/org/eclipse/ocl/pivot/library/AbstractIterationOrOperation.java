@@ -43,7 +43,7 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 					CollectionType sourceCollectionType = (CollectionType)sourceType;
 					Type elementType = PivotUtil.getElementType(sourceCollectionType);
 					CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
-					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, sourceCollectionType.isIsNullFree(), sourceCollectionType.getLowerValue(), sourceCollectionType.getUpperValue());
+					CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, elementType, sourceCollectionType.isIsNullFree(), sourceCollectionType.getLowerValue(), sourceCollectionType.getUpperValue());
 					returnType = standardLibrary.getCollectionType(typeArguments);
 				}
 			}
@@ -80,7 +80,7 @@ public abstract class AbstractIterationOrOperation extends AbstractFeature imple
 				if ((sourceType instanceof CollectionType) && ((CollectionType)sourceType).isIsNullFree() && !collectionType.isIsNullFree()) {
 					@SuppressWarnings("null")@NonNull Type elementType = collectionType.getElementType();
 					CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(collectionType.isOrdered(), collectionType.isUnique());
-					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
+					CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, elementType, true, collectionType.getLowerValue(), collectionType.getUpperValue());
 					returnType = standardLibrary.getCollectionType(typeArguments);
 				}
 			}

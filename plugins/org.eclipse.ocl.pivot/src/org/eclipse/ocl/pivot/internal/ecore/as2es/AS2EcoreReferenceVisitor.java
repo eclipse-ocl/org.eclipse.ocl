@@ -153,7 +153,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					else if (redefiningType != null) {
 						CollectionType redefinedCollectionType = (CollectionType)redefinedType;
 						CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique());
-						CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, redefiningType, redefinedCollectionType.isIsNullFree(),
+						CollectionTypeArguments typeArguments = new CollectionTypeArguments(context.getStandardLibrary(), genericCollectionTypeId, redefiningType, redefinedCollectionType.isIsNullFree(),
 							redefinedCollectionType.getLowerValue(), redefinedCollectionType.getUpperValue());
 						optionalType = new OptionalType(context.getStandardLibrary().getCollectionType(typeArguments), redefinedProperty.isIsRequired());
 					}

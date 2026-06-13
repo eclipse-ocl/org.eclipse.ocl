@@ -80,7 +80,7 @@ public class CollectionFlattenOperation extends AbstractSimpleUnaryOperation
 						elementType = PivotUtil.getElementType(nestedCollectionType);
 					}
 					CollectionTypeId genericCollectionTypeId = ((CollectionType)returnCollectionType.getGeneric()).getTypeId();// IdManager.getCollectionTypeId(returnCollectionType.isOrdered(), returnCollectionType.isUnique());
-					CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericCollectionTypeId, elementType, isNullFree, lowerValue, upperValue);
+					CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericCollectionTypeId, elementType, isNullFree, lowerValue, upperValue);
 					returnType = standardLibrary.getCollectionType(typeArguments);
 				}
 			}

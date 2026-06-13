@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
+import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 
@@ -267,7 +268,7 @@ public class OCLstdlibTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass, TypeParameters.$$0, TypeParameters.$$1, TypeParameters.$$2, TypeParameters.$$3);
+			LIBRARY.initPackage(MODEL, PACKAGE, eClassifierID2asClass, TypeParameters.$$0, TypeParameters.$$1, TypeParameters.$$2, TypeParameters.$$3);
 			Init.initEnd();
 		}
 

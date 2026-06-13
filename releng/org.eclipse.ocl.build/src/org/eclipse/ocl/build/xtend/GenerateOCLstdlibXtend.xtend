@@ -388,7 +388,8 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«stdlib.getSymbolName()» = «stdlib.getExternalReference()»;
 						«FOR pkge : thisModel.getSortedAllPackages()»
 						«IF Orphanage.isOrphan(pkge)»
-						«pkge.getSymbolName()» = create«pkge.eClass().getName()»("«pkge.getName()»", «pkge.getNsPrefix() !== null ? "\""+pkge.getNsPrefix()+"\"" : "null"», "«pkge.getURI()»", «pkge.getGeneratedPackageId()», null);
+						«pkge.getSymbolName()» = Orphanage.createLocalOrphanPackage());
+						«stdlib.getSymbolName()».getOwnedPackages().add(«pkge.getSymbolName()»);
 						«ENDIF»
 						«ENDFOR»
 						«ENDIF»

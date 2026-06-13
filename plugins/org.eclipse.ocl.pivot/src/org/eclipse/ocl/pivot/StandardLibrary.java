@@ -24,7 +24,6 @@ import org.eclipse.ocl.pivot.ids.IdResolver;
 import org.eclipse.ocl.pivot.ids.PartId;
 import org.eclipse.ocl.pivot.ids.PrimitiveTypeId;
 import org.eclipse.ocl.pivot.ids.TupleTypeId;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.EntryTypeManager;
@@ -482,7 +481,7 @@ public interface StandardLibrary
 	/**
 	 * @since 7.0
 	 */
-	@NonNull Orphanage getOrphanage();
+	org.eclipse.ocl.pivot.@NonNull Package getOrphanage();
 
 	/**
 	 * Obtains the package containing the library types

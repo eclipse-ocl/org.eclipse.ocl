@@ -987,7 +987,7 @@ public abstract class UML2AS extends AbstractExternal2AS
 						IntegerValue lowerValue = ValueUtil.integerValueOf(lower);
 						UnlimitedNaturalValue upperValue = upper == -1 ? ValueUtil.UNLIMITED_VALUE : ValueUtil.unlimitedNaturalValueOf(upper);
 						CollectionTypeId genericTypeId = IdManager.getCollectionTypeId(isOrdered, isUnique);
-						CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericTypeId, pivotType, isNullFree == Boolean.TRUE, lowerValue, upperValue);
+						CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericTypeId, pivotType, isNullFree == Boolean.TRUE, lowerValue, upperValue);
 						pivotType = environmentFactory.getStandardLibrary().getCollectionType(typeArguments);
 					}
 				}

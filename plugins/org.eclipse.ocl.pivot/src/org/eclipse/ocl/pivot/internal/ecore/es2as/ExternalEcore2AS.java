@@ -982,7 +982,7 @@ public class ExternalEcore2AS extends Ecore2AS
 			IntegerValue lowerValue = getCollectionLowerValueDetail(eDetails);
 			UnlimitedNaturalValue upperValue = getCollectionUpperValueDetail(eDetails);
 
-			CollectionTypeArguments typeArguments = new CollectionTypeArguments(genericType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
+			CollectionTypeArguments typeArguments = new CollectionTypeArguments(standardLibrary, genericType.getTypeId(), elementType, isNullFree, lowerValue, upperValue);
 			return standardLibrary.getCollectionType(typeArguments);
 		}
 		else {
@@ -1132,7 +1132,8 @@ public class ExternalEcore2AS extends Ecore2AS
 			}
 			ETypeParameter eTypeParameter = eGenericType.getETypeParameter();
 			if ((eTypeParameter != null) && eTypeParameter.getEBounds().isEmpty()) {
-				return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), (TemplateParameter)pivotType);
+				Orphanage orphanage = standardLibrary.getOrphanage();
+				return Orphanage.getNormalizedTemplateParameter(orphanage, (TemplateParameter)pivotType);
 			}
 			return pivotType;
 		}

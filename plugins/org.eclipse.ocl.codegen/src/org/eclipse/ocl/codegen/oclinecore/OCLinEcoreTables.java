@@ -1378,7 +1378,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 *	Install the type descriptors in the package descriptor.\n");
 		s.append("		 */\n");
 		s.append("		static {\n");
-		s.append("			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass");
+		s.append("			LIBRARY.initPackage(MODEL, PACKAGE, eClassifierID2asClass");
 		Orphanage orphanage = standardLibrary.getOrphanage();
 		for (int i = 0; true; i++) {
 			NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.basicGetNormalizedTemplateParameter(orphanage, i) ;

@@ -94,7 +94,6 @@ import org.eclipse.ocl.pivot.internal.manager.AbstractMapTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractSpecializedTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.AbstractTupleTypeManager;
 import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
@@ -318,9 +317,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 			assert (pivotElement instanceof LambdaType)
 			|| (pivotElement instanceof TupleType);
 		}
-		if (orphanage == null) {
-			orphanage = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI);
-		}
+		org.eclipse.ocl.pivot.@NonNull Package orphanage = getOrphanage();
 		pivotElement.setOwningPackage(orphanage);
 	}
 
@@ -981,6 +978,22 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		return (OrderedSetType) OCLstdlibTables.Types._OrderedSet;
 	}
 
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Package getOrphanage() {
+		return ClassUtil.requireNonNull(orphanage);
+	}
+
+/*	@Override
+	public org.eclipse.ocl.pivot.@NonNull Package getOrphanage() {
+		org.eclipse.ocl.pivot.Package orphanage2 = orphanage;
+		if (orphanage2 == null) {
+		//	Model asModel = PivotUtil.getContainingModel(asPackage);
+		//	org.eclipse.ocl.pivot.@NonNull Package orphanage2 = Orphanage.getLocalOrphanPackage(asModel);
+			orphanage = orphanage2 = new Orphanage(PivotConstants.ORPHANAGE_NAME, PivotConstants.ORPHANAGE_PREFIX, PivotConstants.ORPHANAGE_URI);
+		}
+		return orphanage2;
+	} */
+
 /*	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getOrphanage() {			// XXX promote ??
 		org.eclipse.ocl.pivot.Package orphanage2 = orphanage;
@@ -1178,12 +1191,21 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	public void initPackage(org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses, @NonNull NormalizedTemplateParameter... typeParameters) {
+		BuiltInModel asModel = (BuiltInModel) PivotUtil.getContainingModel(asPackage);
+		initPackage(asModel, asPackage, asClasses, typeParameters);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public void initPackage(@NonNull BuiltInModel asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses, @NonNull NormalizedTemplateParameter... typeParameters) {
 		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
 		libraryLoadInProgress = true;
-		orphanage = Orphanage.getLocalOrphanPackage(PivotUtil.getContainingModel(asPackage));
+		orphanage = asModel.getOrphanage();
 		if ((typeParameters != null) && (typeParameters.length > 0)) {
-			ClassImpl asOrphanClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();
+			ClassImpl asOrphanClass = (ClassImpl)PivotFactory.eINSTANCE.createClass();			// XXX common up with Orphanage
 			asOrphanClass.setName(PivotConstants.ORPHANAGE_NAME);
 			asOrphanClass.setIsAbstract(true);
 			initTemplateParameters(asOrphanClass, typeParameters);
@@ -1252,7 +1274,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 						if (superSpecializedTemplateArguments.size() == 1) {
 							Type templateArgument = superSpecializedTemplateArguments.get(0).getActual();
 							if (templateArgument != null) {
-								CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) genericSuperClass.getTypeId(), templateArgument,
+								CollectionTypeArguments typeArguments = new CollectionTypeArguments(this, (CollectionTypeId) genericSuperClass.getTypeId(), templateArgument,
 									specializedCollection.isIsNullFree(), specializedCollection.getLowerValue(), specializedCollection.getUpperValue());
 								org.eclipse.ocl.pivot.Class specializedSuperClass = getCollectionType(typeArguments);
 								specializedClass.getSuperClasses().add(specializedSuperClass);

@@ -284,7 +284,8 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 			|| (pivotElement instanceof TupleType);
 		}
 		assert environmentFactory != null;
-		pivotElement.setOwningPackage(getOrphanage());
+		org.eclipse.ocl.pivot.Package orphanage = getOrphanage();
+		pivotElement.setOwningPackage(orphanage);
 	}
 
 	@Override
@@ -346,7 +347,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	}
 
 	@Override
-	public org.eclipse.ocl.pivot.@Nullable Package basicGetOrphanage() {
+	public @Nullable Orphanage basicGetOrphanage() {
 		return orphanage;
 	}
 
@@ -863,22 +864,28 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	public @NonNull Orphanage getOrphanage() {
 		Orphanage orphanage2 = orphanage;
 		if (orphanage2 == null) {
-			orphanage2 = orphanage = Orphanage.getOrphanage(environmentFactory.getASResourceSet());
+			orphanage2 = Orphanage.getOrphanage(environmentFactory.getASResourceSet());
 			@SuppressWarnings("unused") CompletePackage completePackage = completeModel.getCompletePackage(orphanage2);
-		//	OrphanCompletePackageImpl orphanCompletePackage2 = getOrphanCompletePackage();
-		//	package2completePackage.put(orphanage2, orphanCompletePackage2);
-		//	packageURI2completePackage.put(PivotConstants.ORPHANAGE_URI, orphanCompletePackage2);
+			//	OrphanCompletePackageImpl orphanCompletePackage2 = getOrphanCompletePackage();
+			//	package2completePackage.put(orphanage2, orphanCompletePackage2);
+			//	packageURI2completePackage.put(PivotConstants.ORPHANAGE_URI, orphanCompletePackage2);
 			Model orphanModel = PivotUtil.getContainingModel(orphanage2);
-			//	didAddPartialModel(orphanModel);
+				//	didAddPartialModel(orphanModel);
 			assert completeModel.getPartialModels().contains(orphanModel);
-		//	PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
-		//	orphanage2.addPackageListener(partialPackages);
-		//	for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {
-		//		didAddPackage(asPackage);
-		//	}
+			//	PartialPackages partialPackages = getOrphanCompletePackage().getPartialPackages();
+			//	orphanage2.addPackageListener(partialPackages);
+			//	for (org.eclipse.ocl.pivot.@NonNull Package asPackage : PivotUtil.getOwnedPackages(orphanage2)) {
+			//		didAddPackage(asPackage);
+			//	}
+			orphanage = orphanage2;
 		}
 		return orphanage2;
 	}
+
+/*	@Override
+	public @NonNull Orphanage getOrphanage() {
+		return ClassUtil.requireNonNull(orphanage);
+	} */
 
 	@Override
 	public org.eclipse.ocl.pivot.@NonNull Package getPackage() {
@@ -1153,9 +1160,9 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 		unlimitedNaturalType = null;
 		nameToLibraryTypeMap = null;
 		asLibraries.clear();
-		Orphanage orphanage2 = orphanage;
-		if (orphanage2 != null) {
-			orphanage2.removePackageListener((PartialPackages)completeModel.getOrphanCompletePackage().getPartialPackages());
+		if (orphanage != null) {
+			orphanage.removePackageListener((PartialPackages)completeModel.getOrphanCompletePackage().getPartialPackages());
+			//	orphanage.dispose();
 			orphanage = null;
 		}
 		super.resetLibrary();
@@ -1227,7 +1234,7 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 					if (superSpecializedTemplateArguments.size() == 1) {
 						Type templateArgument = superSpecializedTemplateArguments.get(0).getActual();
 						if (templateArgument != null) {
-							CollectionTypeArguments typeArguments = new CollectionTypeArguments((CollectionTypeId) superPivotClass.getTypeId(), templateArgument,
+							CollectionTypeArguments typeArguments = new CollectionTypeArguments(this, (CollectionTypeId) superPivotClass.getTypeId(), templateArgument,
 								specializedCollection.isIsNullFree(), specializedCollection.getLowerValue(), specializedCollection.getUpperValue());
 							org.eclipse.ocl.pivot.Class specializedSuperClass = getCollectionType(typeArguments);
 							specializedClass.getSuperClasses().add(specializedSuperClass);

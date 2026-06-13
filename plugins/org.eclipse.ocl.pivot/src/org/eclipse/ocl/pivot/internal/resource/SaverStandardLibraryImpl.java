@@ -229,11 +229,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 
 	protected org.eclipse.ocl.pivot.@NonNull Package getLocalOrphanage() {
 		Model asModel = PivotUtil.getModel(resource);
-		org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.basicGetLocalOrphanPackage(asModel);
-		if (localOrphanPackage == null) {
-			localOrphanPackage = Orphanage.createLocalOrphanPackage(asModel);
-		}
-		return localOrphanPackage;
+		return Orphanage.getLocalOrphanPackage(asModel);
 	}
 
 	@Override
