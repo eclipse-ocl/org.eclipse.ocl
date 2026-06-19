@@ -924,9 +924,16 @@ implements PropertyCallExp {
 			}
 			else {
 				final /*@NonInvalid*/ @Nullable Type type = this.getType();
+				final /*@NonInvalid*/ @Nullable Type primaryType = type;// != null ? executor.getStandardLibrary().getPrimaryType(type) : null;
 				@SuppressWarnings("null")
 				final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyType = this.getSpecializedReferredPropertyType();
-				final /*@NonInvalid*/ boolean result = (type != null) ? (type.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
+
+				final /*@Thrown*/ boolean conformsTo1 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, type, getSpecializedReferredPropertyType);
+				final /*@Thrown*/ boolean conformsTo2 = OclTypeConformsToOperation.INSTANCE.evaluate(executor, getSpecializedReferredPropertyType, type);
+				final /*@NonInvalid*/ boolean result = conformsTo1 && conformsTo2;
+
+
+			//	final /*@NonInvalid*/ boolean result = (primaryType != null) ? (primaryType.getTypeId() == getSpecializedReferredPropertyType.getTypeId()) : false;
 				final /*@NonInvalid*/ boolean logDiagnostic = CGStringLogDiagnosticOperation.INSTANCE.evaluate(executor, TypeId.BOOLEAN, constraintName, this, (Object)null, diagnostics, context, (Object)null, severity_0, result, PivotTables.INT_0).booleanValue();
 				IF_le = logDiagnostic;
 			}
