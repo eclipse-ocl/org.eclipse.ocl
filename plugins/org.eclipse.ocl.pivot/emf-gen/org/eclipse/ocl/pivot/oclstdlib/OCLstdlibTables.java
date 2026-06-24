@@ -38,7 +38,6 @@ import org.eclipse.ocl.pivot.flat.FlatFragment;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
-import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 
@@ -622,19 +621,19 @@ public class OCLstdlibTables extends AbstractTables
 			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		public static final @NonNull Operation _Collection__excludingAll = LIBRARY.createOperation(Types._Collection, "excludingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__2_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__0_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			15 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Iteration _Collection__1_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			16 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__0_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__2_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			17 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation(Types._Collection, "flatten", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, false),
 			18 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_flatten_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__2_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__0_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			19 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Iteration _Collection__1_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			20 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__0_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__2_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			21 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Iteration _Collection__gather = LIBRARY.createIteration(Types._Collection, "gather", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			22 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_gather_V), org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE);
@@ -746,17 +745,17 @@ public class OCLstdlibTables extends AbstractTables
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
 		public static final @NonNull Operation _Map__excludingMap = LIBRARY.createOperation(Types._Map, "excludingMap", null, Parameters._Map__$$2_$$3__, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			15, new TemplateParameters(TypeParameters._2_Map_excludingMap_K2, TypeParameters._3_Map_excludingMap_V2), org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
-		public static final @NonNull Iteration _Map__2_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__0_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			16 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
 		public static final @NonNull Iteration _Map__1_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			17 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__0_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__2_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			18 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__2_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__0_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			19 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Iteration _Map__1_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			20 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__0_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__2_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			21 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
 		public static final @NonNull Iteration _Map__gather = LIBRARY.createIteration(Types._Map, "gather", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$2, false),
 			22 | IsRequired, new TemplateParameters(TypeParameters._2_Map_gather_E), org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE);
@@ -855,9 +854,9 @@ public class OCLstdlibTables extends AbstractTables
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclExtension = LIBRARY.createOperation(Types._OclElement, "oclExtension", null, Parameters._OclStereotype, Types._OclElement,
 			5 | IsInvalidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation(Types._OclElement, "oclExtensions", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
+		public static final @NonNull Operation _OclElement__0_oclExtensions = LIBRARY.createOperation(Types._OclElement, "oclExtensions", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
 			6 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__0_oclExtensions = LIBRARY.createOperation(Types._OclElement, "oclExtensions", null, Parameters._OclStereotype, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
+		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation(Types._OclElement, "oclExtensions", null, Parameters._OclStereotype, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
 			7 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
 		public static final @NonNull Operation _OclElement__oclIsModelKindOf = LIBRARY.createOperation(Types._OclElement, "oclIsModelKindOf", null, Parameters._OclType, Types._Boolean,
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
@@ -1589,13 +1588,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			Operations._Bag__excluding /* excluding(T[?]) */,
 			Operations._Bag__excludingAll /* excludingAll(Collection($$0)) */,
-			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Bag__flatten /* flatten(T2)() */,
-			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda $$0() : $$1[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
@@ -1690,13 +1689,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			Operations._Collection__excluding /* excluding(T[?]) */,
 			Operations._Collection__excludingAll /* excludingAll(Collection($$0)) */,
-			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__flatten /* flatten(T2)() */,
-			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda $$0() : $$1[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
@@ -1836,12 +1835,12 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Map__1_excluding /* excluding(K[?],V[?]) */,
 			Operations._Map__excludingAll /* excludingAll(Collection($$0)) */,
 			Operations._Map__excludingMap /* excludingMap(K2, V2)(Map($$2[1],$$3[1])[?]) */,
-			Operations._Map__2_exists /* exists(K[?],K[?],K[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Map__0_exists /* exists(K[?],K[?],K[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Map__1_exists /* exists(K[?],K[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Map__0_exists /* exists(K[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Map__2_forAll /* forAll(K[?],K[?],K[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Map__2_exists /* exists(K[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Map__0_forAll /* forAll(K[?],K[?],K[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Map__1_forAll /* forAll(K[?],K[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Map__0_forAll /* forAll(K[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Map__2_forAll /* forAll(K[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Map__gather /* gather(E)(K[?]|Lambda $$0() : $$2[?]) */,
 			Operations._Map__0_includes /* includes(K[?]) */,
 			Operations._Map__1_includes /* includes(K[?],V[?]) */,
@@ -1932,8 +1931,8 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclElement__oclContainer /* oclContainer() */,
 			Operations._OclElement__oclContents /* oclContents() */,
 			Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			Operations._OclElement__1_oclExtensions /* oclExtensions() */,
-			Operations._OclElement__0_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
 			Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
 			Operations._OclElement__oclModelType /* oclModelType() */,
 			Operations._OclElement__oclModelTypes /* oclModelTypes() */
@@ -1981,8 +1980,8 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclElement__oclContainer /* oclContainer() */,
 			Operations._OclElement__oclContents /* oclContents() */,
 			Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			Operations._OclElement__1_oclExtensions /* oclExtensions() */,
-			Operations._OclElement__0_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
 			Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
 			Operations._OclElement__oclModelType /* oclModelType() */,
 			Operations._OclElement__oclModelTypes /* oclModelTypes() */
@@ -2151,8 +2150,8 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclElement__oclContainer /* oclContainer() */,
 			Operations._OclElement__oclContents /* oclContents() */,
 			Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			Operations._OclElement__1_oclExtensions /* oclExtensions() */,
-			Operations._OclElement__0_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
 			Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
 			Operations._OclElement__oclModelType /* oclModelType() */,
 			Operations._OclElement__oclModelTypes /* oclModelTypes() */
@@ -2232,8 +2231,8 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclElement__oclContainer /* oclContainer() */,
 			Operations._OclElement__oclContents /* oclContents() */,
 			Operations._OclElement__oclExtension /* oclExtension(OclStereotype[1]) */,
-			Operations._OclElement__1_oclExtensions /* oclExtensions() */,
-			Operations._OclElement__0_oclExtensions /* oclExtensions(OclStereotype[1]) */,
+			Operations._OclElement__0_oclExtensions /* oclExtensions() */,
+			Operations._OclElement__1_oclExtensions /* oclExtensions(OclStereotype[1]) */,
 			Operations._OclElement__oclIsModelKindOf /* oclIsModelKindOf(OclType[1]) */,
 			Operations._OclElement__oclModelType /* oclModelType() */,
 			Operations._OclElement__oclModelTypes /* oclModelTypes() */
@@ -2300,13 +2299,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			Operations._Collection__excluding /* excluding(T[?]) */,
 			Operations._Collection__excludingAll /* excludingAll(Collection($$0)) */,
-			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__flatten /* flatten(T2)() */,
-			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda $$0() : $$1[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
@@ -2393,13 +2392,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			Operations._OrderedSet__excluding /* excluding(T[?]) */,
 			Operations._OrderedSet__excludingAll /* excludingAll(Collection($$0)) */,
-			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._OrderedSet__flatten /* flatten(T2)() */,
-			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda $$0() : $$1[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
@@ -2543,13 +2542,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			Operations._Sequence__excluding /* excluding(T[?]) */,
 			Operations._Sequence__excludingAll /* excludingAll(Collection($$0)) */,
-			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Sequence__flatten /* flatten(T2)() */,
-			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda $$0() : $$1[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
@@ -2636,13 +2635,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			Operations._Set__excluding /* excluding(T[?]) */,
 			Operations._Set__excludingAll /* excludingAll(Collection($$0)) */,
-			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Set__flatten /* flatten(T2)() */,
-			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda $$0() : $$1[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,
@@ -2784,13 +2783,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection($$1)) */,
 			Operations._Collection__excluding /* excluding(T[?]) */,
 			Operations._Collection__excludingAll /* excludingAll(Collection($$0)) */,
-			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__flatten /* flatten(T2)() */,
-			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda $$0() : Boolean[?]) */,
-			Operations._Collection__0_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?]|Lambda $$0() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda $$0() : $$1[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection($$1)) */,

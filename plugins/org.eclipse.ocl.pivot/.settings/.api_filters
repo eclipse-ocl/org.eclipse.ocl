@@ -963,10 +963,39 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/Entry_r_r.java" type="org.eclipse.ocl.pivot.oclstdlib.Entry_r_r">
+        <filter id="1110441988">
+            <message_arguments>
+                <message_argument value="org.eclipse.ocl.pivot.oclstdlib.Entry_r_r"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibFactory.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibFactory">
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createEntry_r_r()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibPackage.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage$Literals">
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ENTRY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY_RR"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY_RR__KEY"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ENTRY_RR__VALUE"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1032,6 +1061,11 @@
         <filter id="1143996420">
             <message_arguments>
                 <message_argument value="createEntryAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createEntry_r_rAdapter()"/>
             </message_arguments>
         </filter>
     </resource>

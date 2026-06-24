@@ -12,6 +12,7 @@
  */
 package org.eclipse.ocl.pivot.oclstdlib;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -76,6 +77,7 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
+			case 23: return (EObject)createEntry_r_r();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
@@ -89,15 +91,15 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case 23:
-				return createBooleanFromString(eDataType, initialValue);
 			case 24:
-				return createIntegerFromString(eDataType, initialValue);
+				return createBooleanFromString(eDataType, initialValue);
 			case 25:
-				return createRealFromString(eDataType, initialValue);
+				return createIntegerFromString(eDataType, initialValue);
 			case 26:
-				return createStringFromString(eDataType, initialValue);
+				return createRealFromString(eDataType, initialValue);
 			case 27:
+				return createStringFromString(eDataType, initialValue);
+			case 28:
 				return createUnlimitedNaturalFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -112,19 +114,29 @@ public class OCLstdlibFactory extends EFactoryImpl {
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case 23:
-				return convertBooleanToString(eDataType, instanceValue);
 			case 24:
-				return convertIntegerToString(eDataType, instanceValue);
+				return convertBooleanToString(eDataType, instanceValue);
 			case 25:
-				return convertRealToString(eDataType, instanceValue);
+				return convertIntegerToString(eDataType, instanceValue);
 			case 26:
-				return convertStringToString(eDataType, instanceValue);
+				return convertRealToString(eDataType, instanceValue);
 			case 27:
+				return convertStringToString(eDataType, instanceValue);
+			case 28:
 				return convertUnlimitedNaturalToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
 		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public <K, V> Map.Entry<K, V> createEntry_r_r() {
+		Entry_r_r<K, V> entry_r_r = new Entry_r_r<K, V>();
+		return entry_r_r;
 	}
 
 	/**

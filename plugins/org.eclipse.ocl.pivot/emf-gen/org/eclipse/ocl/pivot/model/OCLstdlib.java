@@ -294,13 +294,11 @@ public class OCLstdlib extends ASResourceImpl
 
 		protected AbstractLibraryContents() {
 			library = createLibrary("ocl", "ocl", "http://www.eclipse.org/ocl/2015/Library", null, OCLstdlibPackage.eINSTANCE);
-			local_orphanage = Orphanage.createLocalOrphanPackage();
-			library.getOwnedPackages().add(local_orphanage);
-			org.eclipse.ocl.pivot.@NonNull Class orphanClass = Orphanage.getOrphanClass(local_orphanage);
-			$$0 = Orphanage.getNormalizedTemplateParameter(orphanClass, 0, null);
-			$$1 = Orphanage.getNormalizedTemplateParameter(orphanClass, 1, null);
-			$$2 = Orphanage.getNormalizedTemplateParameter(orphanClass, 2, null);
-			$$3 = Orphanage.getNormalizedTemplateParameter(orphanClass, 3, null);
+			local_orphanage = createPackage("$$", null, "http://www.eclipse.org/ocl/2015/Orphanage", null, null);
+			$$0 = Orphanage.getNormalizedTemplateParameter(local_orphanage, 0, null);
+			$$1 = Orphanage.getNormalizedTemplateParameter(local_orphanage, 1, null);
+			$$2 = Orphanage.getNormalizedTemplateParameter(local_orphanage, 2, null);
+			$$3 = Orphanage.getNormalizedTemplateParameter(local_orphanage, 3, null);
 		}
 	}
 

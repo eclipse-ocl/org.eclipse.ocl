@@ -77,6 +77,9 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	 */
 	private static /*@LazyNonNull*/ List<@NonNull TemplateParameterIdImpl> templateParameterNormalizedIds = null;
 
+	/**
+	 * @since 7.0
+	 */
 	public static synchronized @NonNull TemplateParameterId getNormalizedTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		assert index >= 0;
 		if (templateParameterNormalizedIds == null) {

@@ -131,4 +131,14 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Entry_r_r" instanceClassName="java.util.Map$Entry">
+    <eTypeParameters name="K"/>
+    <eTypeParameters name="V"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="key" lowerBound="1">
+      <eGenericType eTypeParameter="#//Entry_r_r/K"/>
+    </eStructuralFeatures>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" lowerBound="1">
+      <eGenericType eTypeParameter="#//Entry_r_r/V"/>
+    </eStructuralFeatures>
+  </eClassifiers>
 </ecore:EPackage>

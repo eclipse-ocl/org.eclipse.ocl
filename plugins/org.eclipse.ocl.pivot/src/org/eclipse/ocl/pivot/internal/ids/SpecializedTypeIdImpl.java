@@ -15,9 +15,7 @@ import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.IdVisitor;
 import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.PackageId;
-import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
-import org.eclipse.ocl.pivot.ids.TypeId;
 
 public /*abstract*/ class SpecializedTypeIdImpl extends AbstractSpecializedIdImpl<@NonNull TemplateableTypeId> implements TemplateableTypeId, NestedTypeId
 {

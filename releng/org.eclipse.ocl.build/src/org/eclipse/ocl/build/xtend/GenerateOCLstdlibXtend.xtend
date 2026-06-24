@@ -394,7 +394,7 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 						«ENDFOR»
 						«ENDIF»
 						«FOR normalizedTemplateParameter : thisModel.getNormalizedTemplateParameters()»
-						«normalizedTemplateParameter.getSymbolName()» = Orphanage.getNormalizedTemplateParameter(«thisModel.getOrphanPackage().getSymbolName()», «normalizedTemplateParameter.getIndex()»);
+						«normalizedTemplateParameter.getSymbolName()» = Orphanage.getNormalizedTemplateParameter(«thisModel.getOrphanPackage().getSymbolName()», «normalizedTemplateParameter.getIndex()», null);
 						«ENDFOR»
 					}
 				}

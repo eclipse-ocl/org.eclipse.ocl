@@ -35,7 +35,7 @@ public interface TemplateableId extends ElementId
 	@NonNull TemplateableId getSpecializedId(@NonNull BindingsId bindingsId);
 
 	/**
-	 * @since 1.18
+	 * @since 7.0
 	 */
 	@NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds);
 

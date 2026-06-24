@@ -246,6 +246,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass entry_r_rEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EDataType booleanEDataType = null;
 
 	/**
@@ -764,6 +771,47 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>Entry rr</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Entry rr</em>'.
+	 * @see java.util.Map.Entry
+	 * @generated
+	 */
+	public EClass getEntry_r_r() {
+		return entry_r_rEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Key</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getEntry_r_r()
+	 * @generated
+	 */
+	public EReference getEntry_r_r_Key() {
+		return (EReference)entry_r_rEClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Value</em>'.
+	 * @see java.util.Map.Entry
+	 * @see #getEntry_r_r()
+	 * @generated
+	 */
+	public EReference getEntry_r_r_Value() {
+		return (EReference)entry_r_rEClass.getEStructuralFeatures().get(1);
+	}
+
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -844,12 +892,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		uniqueCollectionEClass = createEClass(22);
 
+		entry_r_rEClass = createEClass(23);
+		createEReference(entry_r_rEClass, 0);
+		createEReference(entry_r_rEClass, 1);
+
 		// Create data types
-		booleanEDataType = createEDataType(23);
-		integerEDataType = createEDataType(24);
-		realEDataType = createEDataType(25);
-		stringEDataType = createEDataType(26);
-		unlimitedNaturalEDataType = createEDataType(27);
+		booleanEDataType = createEDataType(24);
+		integerEDataType = createEDataType(25);
+		realEDataType = createEDataType(26);
+		stringEDataType = createEDataType(27);
+		unlimitedNaturalEDataType = createEDataType(28);
 	}
 
 	/**
@@ -887,6 +939,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		ETypeParameter sequenceEClass_T = addETypeParameter(sequenceEClass, "T"); //$NON-NLS-1$
 		ETypeParameter setEClass_T = addETypeParameter(setEClass, "T"); //$NON-NLS-1$
 		ETypeParameter uniqueCollectionEClass_T = addETypeParameter(uniqueCollectionEClass, "T"); //$NON-NLS-1$
+		ETypeParameter entry_r_rEClass_K = addETypeParameter(entry_r_rEClass, "K"); //$NON-NLS-1$
+		ETypeParameter entry_r_rEClass_V = addETypeParameter(entry_r_rEClass, "V"); //$NON-NLS-1$
 
 		// Set bounds for type parameters
 
@@ -986,6 +1040,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEClass(setEClass, Set.class, "Set", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		initEClass(uniqueCollectionEClass, Collection.class, "UniqueCollection", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+		initEClass(entry_r_rEClass, Map.Entry.class, "Entry_r_r", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		g1 = createEGenericType(entry_r_rEClass_K);
+		initEReference(getEntry_r_r_Key(), g1, null, "key", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(entry_r_rEClass_V);
+		initEReference(getEntry_r_r_Value(), g1, null, "value", null, 1, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		// Initialize data types
 		initEDataType(booleanEDataType, Boolean.class, "Boolean", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -1371,6 +1431,32 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EClass UNIQUE_COLLECTION = eINSTANCE.getUniqueCollection();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.Entry_r_r <em>Entry rr</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.Entry_r_r
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getEntry_r_r()
+		 * @generated
+		 */
+		public static final EClass ENTRY_RR = eINSTANCE.getEntry_r_r();
+
+		/**
+		 * The meta object literal for the '<em><b>Key</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference ENTRY_RR__KEY = eINSTANCE.getEntry_r_r_Key();
+
+		/**
+		 * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference ENTRY_RR__VALUE = eINSTANCE.getEntry_r_r_Value();
 
 	}
 

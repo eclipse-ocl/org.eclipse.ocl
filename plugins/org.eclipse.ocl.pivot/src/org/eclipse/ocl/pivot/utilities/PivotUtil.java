@@ -271,7 +271,7 @@ public class PivotUtil implements PivotConstants
 		if (asType instanceof NormalizedTemplateParameter) {
 			EObject eContainer1 = asType.eContainer();
 			EObject eContainer2 = eContainer1 != null ? eContainer1.eContainer() : null;
-			org.eclipse.ocl.pivot.Package orphanage = standardLibrary.getOrphanage();
+			org.eclipse.ocl.pivot.Package orphanage = standardLibrary.basicGetOrphanage();
 			assert eContainer2 == orphanage : "NormalizedTemplateParameter '" + asType + "' is from wrong standard library";
 			return true;
 		}

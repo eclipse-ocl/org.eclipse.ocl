@@ -84,6 +84,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	private static final Logger logger = Logger.getLogger(AS2EcoreReferenceVisitor.class);
 
 	protected final @NonNull AS2EcoreTypeRefVisitor typeRefVisitor;				// Optional
+	/**
+	 * @since 7.0
+	 */
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
 	private final @NonNull AnyType oclAnyType;
