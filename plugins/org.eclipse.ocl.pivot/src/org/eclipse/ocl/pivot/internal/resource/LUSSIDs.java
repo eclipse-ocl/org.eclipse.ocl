@@ -363,9 +363,9 @@ public abstract class LUSSIDs
 					Integer localId = null;
 					if (eContainmentFeature.isUnique() || !eContainmentFeature.isOrdered()) {
 						localId = computeLocalLUSSID(as2id, element, wildcardContext);
-						if ((localId != null) && (localId == -1320380777)) {
-							localId = computeLocalLUSSID(as2id, element, wildcardContext);
-						}
+					//	if ((localId != null) && (localId == -1320380777)) {
+					//		localId = computeLocalLUSSID(as2id, element, wildcardContext);
+					//	}
 					}
 					if (localId != null) {
 						id += localId.intValue();

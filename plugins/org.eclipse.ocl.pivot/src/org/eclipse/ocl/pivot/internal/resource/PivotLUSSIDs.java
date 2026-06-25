@@ -184,7 +184,7 @@ public class PivotLUSSIDs extends LUSSIDs
 				lambdaParameters.add(PivotUtil.getOwnedResult(lambdaType));
 				lambdaParameters.addAll(PivotUtil.getOwnedParametersList(lambdaType));
 				localId += computeParametersLUSSID(as2id, lambdaParameters, wildcardContext);
-				System.out.println("computeLocalLUSSID " + element + " => " + localId);
+			//	System.out.println("computeLocalLUSSID " + element + " => " + localId);
 			}
 			else if (element instanceof Iteration) {
 				Iteration iteration = (Iteration)element;
@@ -244,7 +244,10 @@ public class PivotLUSSIDs extends LUSSIDs
 			int index = -1;
 			Type parameterType = parameter.getType();
 			assert (parameterType == null) || (parameterType instanceof NormalizedTemplateParameter) || (parameterType.eResource() != null);
-			if (parameterType instanceof TemplateParameter) {
+			if (parameterType instanceof NormalizedTemplateParameter) {
+				index = ((NormalizedTemplateParameter)parameterType).getIndex();
+			}
+			else if (parameterType instanceof TemplateParameter) {
 				TemplateableElement templateableElement = ((TemplateParameter)parameterType).getOwningTemplateableElement();
 				List<@NonNull TemplateParameter> templateParameters = PivotUtil.getOwnedTemplateParametersList(templateableElement);
 				index = templateParameters.indexOf(parameterType);
