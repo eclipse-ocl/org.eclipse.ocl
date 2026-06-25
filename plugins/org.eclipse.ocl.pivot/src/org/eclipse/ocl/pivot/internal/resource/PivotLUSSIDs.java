@@ -95,6 +95,7 @@ public class PivotLUSSIDs extends LUSSIDs
 	/**
 	 * Return the hash of the aspects of element that distinguish it from its siblings.
 	 * Return null if there are no distinguishing aspects.
+	 * XXX change to a Visitor
 	 */
 	@Override
 	protected @Nullable Integer computeLocalLUSSID(@NonNull AS2ID as2id, @NonNull EObject element, @Nullable TemplateableElement wildcardContext) {
@@ -183,6 +184,7 @@ public class PivotLUSSIDs extends LUSSIDs
 				lambdaParameters.add(PivotUtil.getOwnedResult(lambdaType));
 				lambdaParameters.addAll(PivotUtil.getOwnedParametersList(lambdaType));
 				localId += computeParametersLUSSID(as2id, lambdaParameters, wildcardContext);
+				System.out.println("computeLocalLUSSID " + element + " => " + localId);
 			}
 			else if (element instanceof Iteration) {
 				Iteration iteration = (Iteration)element;

@@ -10,6 +10,8 @@
  *******************************************************************************/
 package org.eclipse.ocl.pivot.internal.prettyprint;
 
+import java.util.List;
+
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AnyType;
@@ -160,8 +162,16 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 	}
 
 	@Override
-	public Object visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter object) {
-		context.appendName(object);
+	public Object visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter type) {
+	//	context.appendName(object);
+		context.append(type.getName());
+		List<org.eclipse.ocl.pivot.Class> constrainingClasses = type.getConstrainingClasses();
+		if (!constrainingClasses.isEmpty()) {
+			context.append(" extends");
+			for (org.eclipse.ocl.pivot.Class constrainingClass : constrainingClasses) {
+				context.appendElement(constrainingClass);
+			}
+		}
 		return null;
 	}
 

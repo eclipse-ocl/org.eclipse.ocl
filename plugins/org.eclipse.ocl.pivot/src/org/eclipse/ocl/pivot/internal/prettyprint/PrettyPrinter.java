@@ -41,7 +41,6 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
-import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions.Global;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PathElement;
@@ -670,13 +669,22 @@ public class PrettyPrinter
 	 */
 	public void appendTypedElement(@NonNull Element object, Type type) {
 		if (type instanceof NormalizedTemplateParameter) {
-			TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
-			if (!templateParameterization.isEmpty()) {
-				appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
-			}
-			else {
+		//	TemplateParameterization templateParameterization2 = TemplateParameterization.basicGetTemplateParameterization(object);
+		//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
+		//	if (!templateParameterization.isEmpty()) {
+		//		appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
+		//	}
+		//	else {
+			appendElement(type);
 				append(type.getName());
-			}
+				List<org.eclipse.ocl.pivot.Class> constrainingClasses = ((NormalizedTemplateParameter)type).getConstrainingClasses();
+				if ((constrainingClasses != null) && !constrainingClasses.isEmpty()) {
+					append(" extends");
+					for (org.eclipse.ocl.pivot.Class constrainingClass : constrainingClasses) {
+						appendElement(constrainingClass);
+					}
+				}
+		//	}
 		}
 		else {
 			appendElement(type);

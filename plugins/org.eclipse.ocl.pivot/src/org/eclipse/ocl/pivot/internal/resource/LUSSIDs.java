@@ -48,7 +48,7 @@ import org.eclipse.ocl.pivot.utilities.UniqueList;
  * referenceable xmi:ids before falling back on hierachical position. Disambiguation is therefore very likely to give
  * stable results after many forms of model evolution.
  *
- * The LUSSID (Locally Unique Semantically Sentsitive ID) is the hashcode of the hierarchical path of the element.
+ * The LUSSID (Locally Unique Semantically Sensitive ID) is the hashcode of the hierarchical path of the element.
  * The resource location, model name and external URI are ignored avoiding dependence on location and URI.
  * Elements within ordered non-unique collections use the index as part of their identity. Other collection elements
  * use a further local LUSSID that captures the name/template bindings/parameter names/collection bounds
@@ -363,6 +363,9 @@ public abstract class LUSSIDs
 					Integer localId = null;
 					if (eContainmentFeature.isUnique() || !eContainmentFeature.isOrdered()) {
 						localId = computeLocalLUSSID(as2id, element, wildcardContext);
+						if ((localId != null) && (localId == -1320380777)) {
+							localId = computeLocalLUSSID(as2id, element, wildcardContext);
+						}
 					}
 					if (localId != null) {
 						id += localId.intValue();
