@@ -377,6 +377,18 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
+	public static org.eclipse.ocl.pivot.@Nullable Class basicGetContainingClass(@Nullable Element element) {
+		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
+			if (eObject instanceof org.eclipse.ocl.pivot.Class) {
+				return (org.eclipse.ocl.pivot.Class)eObject;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	public static @Nullable Constraint basicGetContainingConstraint(@Nullable Element element) {
 		for (EObject eObject = element; eObject != null; eObject = eObject.eContainer()) {
 			if (eObject instanceof Constraint) {
@@ -1828,6 +1840,13 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getConstrainingClassesList(@NonNull TemplateParameter asTemplateParameter) {
 		return ClassUtil.nullFree(asTemplateParameter.getConstrainingClasses());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static org.eclipse.ocl.pivot.@NonNull Class getContainingClass(@Nullable Element element) {
+		return ClassUtil.requireNonNull(basicGetContainingClass(element));
 	}
 
 	/**
@@ -3469,6 +3488,13 @@ public class PivotUtil implements PivotConstants
 		expressionInOCL.setOwnedBody(oclExpression);
 		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
 		expressionInOCL.setIsRequired((oclExpression != null) && oclExpression.isIsRequired());;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static void setESObject(@NonNull Element asObject, @NonNull EObject esObject) {
+		((PivotObjectImpl)asObject).setESObject(esObject);
 	}
 
 	/**

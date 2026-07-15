@@ -29,7 +29,7 @@ public class OperationContext extends ClassContext
 	private final @Nullable String resultVariableName;		// Null for none
 
 	public OperationContext(@NonNull EnvironmentFactory environmentFactory, @Nullable URI uri, @NonNull Operation operation, @Nullable String resultVariableName) {
-		super(environmentFactory, uri, PivotUtil.getOwningClass(operation), null);
+		super(environmentFactory, uri, PivotUtil.getContainingClass(operation), null);		// maybe a CoEClass Annotation
 		this.operation = operation;
 		this.resultVariableName = resultVariableName;
 	}
