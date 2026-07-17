@@ -45,6 +45,7 @@ import org.eclipse.emf.ecore.impl.EStringToStringMapEntryImpl;
 import org.eclipse.emf.ecore.xmi.impl.EMOFExtendedMetaData;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
@@ -223,6 +224,59 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 	}
 
+	private static @NonNull String getEOperationName(@NonNull Operation asOperation) {
+		String name = PivotUtil.getName(asOperation);
+		assert !"inActivity".equals(name);				// Debugging	// FIXME Bug 420330 workaround
+		if ("containingActivity".equals(name)) {		// FIXME Bug 405061 workaround
+			EObject eContainer = asOperation.eContainer();
+			if ((eContainer instanceof Type) && "ActivityNode".equals(((Type)eContainer).getName())) {
+				return "ActivityNode_" + name;
+			}
+		}
+		if (asOperation instanceof Iteration) {
+			return name + ((Iteration)asOperation).getOwnedIterators().size();
+		}
+		return name;
+	}
+
+	private static @NonNull String getEStructuralFeatureName(@NonNull Property asProperty) {
+		String name = PivotUtil.getName(asProperty);
+		assert !"containingActivity".equals(name);		// Debugging	// FIXME Bug 405061 workaround
+		if ("inActivity".equals(name)) {				// FIXME Bug 420330 workaround
+			EObject eContainer = asProperty.eContainer();
+			if ((eContainer instanceof Type) && "StructuredActivityNode".equals(((Type)eContainer).getName())) {
+				name = "activity";
+			}
+		}
+		return name;
+	}
+
+	private static @NonNull String wellFormedIdentifier(@NonNull String name) {
+		if (name.length() == 0) {
+			return name;
+		}
+		boolean isOk = Character.isJavaIdentifierStart(name.charAt(0));
+		for (int i = 1; isOk && (i < name.length()); ++i) {
+			if (!Character.isJavaIdentifierPart(name.charAt(i))) {
+				isOk = false;
+			}
+		}
+		if (isOk) {
+			return name;
+		}
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < name.length(); ++i) {
+			char ch = name.charAt(i);
+			if (i == 0 ? Character.isJavaIdentifierStart(ch) : Character.isJavaIdentifierPart(ch)) {
+				s.append(ch);
+			}
+			else {
+				s.append("_" + Integer.toString(ch));
+			}
+		}
+		return s.toString();
+	}
+
 	protected final @NonNull DelegateInstaller delegateInstaller;
 
 	public AS2EcoreDeclarationVisitor(@NonNull AS2Ecore context) {
@@ -298,23 +352,22 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	protected void copyNamedElement(@NonNull ENamedElement eNamedElement, @NonNull NamedElement pivotNamedElement) {
 		copyModelElement(eNamedElement, pivotNamedElement);
-		String name = pivotNamedElement.getName();
-		if (pivotNamedElement instanceof Iteration) {
-			name += ((Iteration)pivotNamedElement).getOwnedIterators().size();
+		String name;
+		String implementationClassName = null;
+		if (pivotNamedElement instanceof Operation) {
+			Operation asOperation = (Operation)pivotNamedElement;
+			name = getEOperationName(asOperation);
+			implementationClassName = asOperation.getImplementationClass();
 		}
-		if ("containingActivity".equals(name)) {		// FIXME Bug 405061 workaround
-			EObject eContainer = pivotNamedElement.eContainer();
-			if ((eContainer instanceof Type) && "ActivityNode".equals(((Type)eContainer).getName())) {
-				name = "ActivityNode_" + name;
-			}
+		else if (pivotNamedElement instanceof Property) {
+			Property asProperty = (Property)pivotNamedElement;
+			name = getEStructuralFeatureName(asProperty);
+			implementationClassName = asProperty.getImplementationClass();
 		}
-		else if ("inActivity".equals(name)) {		// FIXME Bug 420330 workaround
-			EObject eContainer = pivotNamedElement.eContainer();
-			if ((eContainer instanceof Type) && "StructuredActivityNode".equals(((Type)eContainer).getName())) {
-				name = "activity";
-			}
+		else {
+			name = pivotNamedElement.getName();
 		}
-		else if (name != null) {
+		if (name != null) {
 			String validName = wellFormedIdentifier(name);
 			if (!name.equals(validName)) {
 				NameUtil.setOriginalName(eNamedElement, name);
@@ -322,33 +375,25 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			}
 		}
 		eNamedElement.setName(name);
-	}
-
-
-	private static @NonNull String wellFormedIdentifier(@NonNull String name) {
-		if (name.length() == 0) {
-			return name;
+		EAnnotation eAnnotation = OCLCommon.getDelegateAnnotation(eNamedElement);
+		if (implementationClassName != null) {
+			if (eAnnotation == null) {
+				eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+				eAnnotation.setSource(OCLCommon.OCL_DELEGATE_URI_PIVOT);
+				eNamedElement.getEAnnotations().add(eAnnotation);
+			}
+			EMap<String, String> details = eAnnotation.getDetails();
+			details.put(PivotConstants.CLASS_DETAIL, implementationClassName);
 		}
-		boolean isOk = Character.isJavaIdentifierStart(name.charAt(0));
-		for (int i = 1; isOk && (i < name.length()); ++i) {
-			if (!Character.isJavaIdentifierPart(name.charAt(i))) {
-				isOk = false;
+		else {
+			if (eAnnotation != null) {
+				EMap<String, String> details = eAnnotation.getDetails();
+				details.removeKey(PivotConstants.CLASS_DETAIL);
+				if (details.isEmpty()) {
+					eNamedElement.getEAnnotations().remove(eAnnotation);
+				}
 			}
 		}
-		if (isOk) {
-			return name;
-		}
-		StringBuilder s = new StringBuilder();
-		for (int i = 0; i < name.length(); ++i) {
-			char ch = name.charAt(i);
-			if (i == 0 ? Character.isJavaIdentifierStart(ch) : Character.isJavaIdentifierPart(ch)) {
-				s.append(ch);
-			}
-			else {
-				s.append("_" + Integer.toString(ch));
-			}
-		}
-		return s.toString();
 	}
 
 	/**
