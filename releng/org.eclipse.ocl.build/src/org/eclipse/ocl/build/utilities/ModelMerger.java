@@ -87,22 +87,22 @@ public class ModelMerger extends AbstractProjectComponent
 			this.modelMerger = modelMerger;
 		}
 
-		protected <T extends EObject> @Nullable T createMergedEObject(@NonNull Iterable<@NonNull T> eObjects) {
-			EClass mergedEClass = getMergedEClass(eObjects);
+		protected <T extends EObject> @Nullable T createMergedEObject(@NonNull Iterable<@NonNull T> asObjects) {
+			EClass mergedEClass = getMergedEClass(asObjects);
 			if (mergedEClass == null) {
 				return null;
 			}
 			EObject mergedEObject = mergedEClass.getEPackage().getEFactoryInstance().create(mergedEClass);
-			for (@NonNull T eObject : eObjects) {
-				modelMerger.putMerged(mergedEObject, eObject);
+			for (@NonNull T asObject : asObjects) {
+				modelMerger.putMerged(mergedEObject, asObject);
 			}
 			return (T) mergedEObject;
 		}
 
-		protected EClass getMergedEClass(Iterable<@NonNull ? extends EObject> eObjects) {
+		protected EClass getMergedEClass(@NonNull Iterable<@NonNull ? extends EObject> asObjects) {
 			EClass mergedEClass = null;
-			for (@NonNull EObject eObject : eObjects) {
-				EClass eClass = eObject.eClass();
+			for (@NonNull EObject asObject : asObjects) {
+				EClass eClass = asObject.eClass();
 				if ((mergedEClass == null) || mergedEClass.isSuperTypeOf(eClass)) {
 					mergedEClass = eClass;
 				}
@@ -110,12 +110,24 @@ public class ModelMerger extends AbstractProjectComponent
 			return mergedEClass;
 		}
 
-		protected @Nullable EObject mergeEObjects(@NonNull String path, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
-			EObject mergedEObject = createMergedEObject(eObjects);
-			if (mergedEObject != null) {
-				EClass mergedEClass = mergedEObject.eClass();
+		protected @Nullable EObject mergeASObjects(@NonNull String path, @NonNull Iterable<@NonNull ? extends EObject> asObjects) {
+			EObject asMergedObject = createMergedEObject(asObjects);
+			if (asMergedObject != null) {
+				EClass mergedEClass = asMergedObject.eClass();
+			//	if ("Boolean".equals(mergedEClass.getName())) {
+			//		getClass();			// XXX
+			//	}
 				List<@NonNull EStructuralFeature> eAllStructuralFeatures = mergedEClass.getEAllStructuralFeatures();
 				for (@NonNull EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
+					if ("booleanSymbol".equals(eStructuralFeature.getName())) {
+						getClass();			// XXX
+					}
+					if ("instanceClassName".equals(eStructuralFeature.getName())) {
+						getClass();			// XXX
+					}
+					if ("ownedClasses".equals(eStructuralFeature.getName())) {
+						getClass();			// XXX
+					}
 					if (eStructuralFeature.isDerived() || eStructuralFeature.isTransient() || eStructuralFeature.isVolatile()) {
 						continue;
 					}
@@ -127,40 +139,40 @@ public class ModelMerger extends AbstractProjectComponent
 					}
 					String pathName = path + "." + eStructuralFeature.getName();
 					if (eStructuralFeature.isMany()) {
-						mergeMultipleFeature(mergedEObject, pathName, eStructuralFeature, eObjects);
+						mergeMultipleFeature(asMergedObject, pathName, eStructuralFeature, asObjects);
 					}
 					else {
-						mergeSingleFeature(mergedEObject, pathName, eStructuralFeature, eObjects);
+						mergeSingleFeature(asMergedObject, pathName, eStructuralFeature, asObjects);
 					}
 				}
 			}
-			return mergedEObject;
+			return asMergedObject;
 		}
 
-		protected void mergeSingleFeature(@NonNull EObject mergedEObject, @NonNull String path, @NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
+		protected void mergeSingleFeature(@NonNull EObject asMergedObject, @NonNull String path, @NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull ? extends EObject> asObjects) {
 			assert !eFeature.isMany();
 			List<Object> slots = new ArrayList<>();
-			for (@NonNull EObject eObject : eObjects) {
-				if (eObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
-					slots.add(eObject.eGet(eFeature));
+			for (@NonNull EObject asObject : asObjects) {
+				if (asObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
+					slots.add(asObject.eGet(eFeature));
 				}
 			}
 			SingleSlotMerger featureMerger = modelMerger.getSingleSlotMerger(eFeature);
-			Object mergedSlot = featureMerger.merge(path, slots);
+			Object mergedSlot = slots.size() > 1 ? featureMerger.merge(path, slots) : slots.get(0);
 			if ((mergedSlot != null) && (eFeature instanceof EReference) && ((EReference)eFeature).isContainment()) {
 				if (slots.contains(mergedSlot)) {
 					mergedSlot = EcoreUtil.copy((EObject) mergedSlot);
 				}
 			}
-			mergedEObject.eSet(eFeature, mergedSlot);
+			asMergedObject.eSet(eFeature, mergedSlot);
 		}
 
-		protected void mergeMultipleFeature(@NonNull EObject mergedEObject, @NonNull String path, @NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull ? extends EObject> eObjects) {
+		protected void mergeMultipleFeature(@NonNull EObject asMergedObject, @NonNull String path, @NonNull EStructuralFeature eFeature, @NonNull Iterable<@NonNull ? extends EObject> asObjects) {
 			assert eFeature.isMany();
 			List<Iterable<Object>> slots = new ArrayList<>();
-			for (@NonNull EObject eObject : eObjects) {
-				if (eObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
-					slots.add((List<Object>)eObject.eGet(eFeature));
+			for (@NonNull EObject asObject : asObjects) {
+				if (asObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
+					slots.add((List<Object>)asObject.eGet(eFeature));
 				}
 			}
 			MultipleSlotMerger featureMerger = modelMerger.getMultipleSlotMerger(eFeature);
@@ -180,7 +192,7 @@ public class ModelMerger extends AbstractProjectComponent
 						mergedSlots = EcoreUtil.copyAll(mergedSlots);
 					}
 				}
-				((List<Object>)mergedEObject.eGet(eFeature)).addAll(mergedSlots);
+				((List<Object>)asMergedObject.eGet(eFeature)).addAll(mergedSlots);
 			}
 		}
 	}
@@ -227,7 +239,7 @@ public class ModelMerger extends AbstractProjectComponent
 			super(modelMerger, PivotPackage.Literals.CLASS);
 		}
 
-		public String getKey(Object slot) {
+		public @Nullable String getKey(@NonNull Object slot) {
 			return ((org.eclipse.ocl.pivot.Class)slot).getName();
 		}
 
@@ -242,7 +254,7 @@ public class ModelMerger extends AbstractProjectComponent
 
 		@Override
 		public @NonNull List<Object> merge(@NonNull String path, @NonNull Iterable<@NonNull Iterable<Object>> slotSlots) {
-			Map<String, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> key2slots = new HashMap<>();
+			Map<@NonNull String, @NonNull List<org.eclipse.ocl.pivot.@NonNull Class>> key2slots = new HashMap<>();
 			for (@NonNull Iterable<Object> slots : slotSlots) {
 				for (Object slot : slots) {
 					assert slot != null;
@@ -257,13 +269,16 @@ public class ModelMerger extends AbstractProjectComponent
 				}
 			}
 			List<Object> mergedSlots = new ArrayList<>();
-			List<String> keys = new ArrayList<>(key2slots.keySet());
+			List<@NonNull String> keys = new ArrayList<>(key2slots.keySet());
 			Collections.sort(keys);
 			for (String key : keys) {
+				if ("Boolean".equals(key)) {
+					getClass();		// XXX
+				}
 				List<org.eclipse.ocl.pivot.@NonNull Class> keyedSlots = key2slots.get(key);
 				assert keyedSlots != null;
-				EObject mergedClass = mergeEObjects(path, keyedSlots);
-				mergedSlots.add(mergedClass);
+				EObject mergedASObject = mergeASObjects(path, keyedSlots);
+				mergedSlots.add(mergedASObject);
 			}
 			return mergedSlots;
 		}
@@ -287,7 +302,7 @@ public class ModelMerger extends AbstractProjectComponent
 				}
 			}
 			if (mergedSlots != null) {
-				mergedSlots = Collections.singletonList(mergeEObjects(path, (Iterable<@NonNull ? extends EObject>) mergedSlots));
+				mergedSlots = Collections.singletonList(mergeASObjects(path, (Iterable<@NonNull ? extends EObject>) mergedSlots));
 			}
 			return mergedSlots;
 		}
@@ -310,7 +325,7 @@ public class ModelMerger extends AbstractProjectComponent
 					eObjects.add((EObject)slot);
 				}
 			}
-			return eObjects != null ? mergeEObjects(path, eObjects) : null;
+			return eObjects != null ? mergeASObjects(path, eObjects) : null;
 		}
 	}
 
@@ -326,6 +341,31 @@ public class ModelMerger extends AbstractProjectComponent
 			for (Object slot : slots) {
 				if (mergedSlot == this) {
 					mergedSlot = slot;
+				}
+			}
+			return mergedSlot;
+		}
+	}
+
+	public static class InstanceClassNameSlotMerger extends SingleSlotMerger
+	{
+		public InstanceClassNameSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+		@Override
+		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
+			Object mergedSlot = this;
+			for (Object slot : slots) {
+				if (mergedSlot == this) {
+					mergedSlot = slot;
+				}
+				else if (slot != mergedSlot) {
+					if (slot.equals(boolean.class.getName())) {
+						if (mergedSlot.equals(Boolean.class.getName())) {
+							mergedSlot = slot;
+						}
+					}
 				}
 			}
 			return mergedSlot;
@@ -368,7 +408,7 @@ public class ModelMerger extends AbstractProjectComponent
 				}
 			}
 			if (mergedSlots != null) {
-				mergedSlots = Collections.singletonList(mergeEObjects(path, (Iterable<@NonNull ? extends EObject>) mergedSlots));
+				mergedSlots = Collections.singletonList(mergeASObjects(path, (Iterable<@NonNull ? extends EObject>) mergedSlots));
 			}
 			return mergedSlots;
 		} */
@@ -379,7 +419,7 @@ public class ModelMerger extends AbstractProjectComponent
 			String packageURI = completePackage.getURI();
 		//	org.eclipse.ocl.pivot.@NonNull Package mergedPackage = helper.createPackage(packageName, packagePrefix, packageURI);
 
-			EObject mergedEObject = mergeEObjects("partialPackages", completePackage.getPartialPackages());
+			EObject mergedEObject = mergeASObjects("partialPackages", completePackage.getPartialPackages());
 			org.eclipse.ocl.pivot.@NonNull Package mergedPackage = (org.eclipse.ocl.pivot.Package) mergedEObject;
 			return mergedPackage;
 		}
@@ -466,7 +506,7 @@ public class ModelMerger extends AbstractProjectComponent
 			for (Object key : keys) {
 				List<@NonNull NamedElement> keyedSlots = key2slots.get(key);
 				assert keyedSlots != null;
-				EObject mergedNamedElement = mergeEObjects(path, keyedSlots);
+				EObject mergedNamedElement = mergeASObjects(path, keyedSlots);
 				mergedSlots.add(mergedNamedElement);
 			}
 			return mergedSlots;
@@ -839,7 +879,7 @@ public class ModelMerger extends AbstractProjectComponent
 		feature2multipleSlotMerger.put(PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, new NamedElementMultipleSlotMerger(this));
 		feature2multipleSlotMerger.put(PivotPackage.Literals.PACKAGE__OWNED_CLASSES, new ClassMultipleSlotMerger(this));
 		feature2multipleSlotMerger.put(PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, new TemplateParametersMultipleSlotMerger(this));
-		feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME, new FirstSingleSlotMerger(this));
+		feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME, new InstanceClassNameSlotMerger(this));
 		feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__IS_ABSTRACT, new BooleanOrSingleSlotMerger(this));
 		feature2singleSlotMerger.put(PivotPackage.Literals.CLASS__IS_INTERFACE, new BooleanOrSingleSlotMerger(this));
 		feature2singleSlotMerger.put(PivotPackage.Literals.COMMENT__BODY, new FirstSingleSlotMerger(this));
