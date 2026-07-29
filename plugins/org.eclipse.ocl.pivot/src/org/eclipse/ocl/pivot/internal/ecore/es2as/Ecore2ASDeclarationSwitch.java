@@ -572,7 +572,7 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		//	specification.setBody(value);
 		}
 		if (eAnnotation != null) {
-			PivotUtil.setESObject(specification, eAnnotation);
+			PivotUtil.setESObject(specification, eOperation);
 		}
 	//	List<@NonNull WildcardType> wildcards = popWildcards(eOperation);
 	//	PivotUtil.refreshList(constraint.getOwnedWildcards(), wildcards);
@@ -862,6 +862,17 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		if (ecoreAnnotation != null) {
 			String invariantNameList = ecoreAnnotation.getDetails().get(DelegateInstaller.CONSTRAINTS_KEY);
 			if (invariantNameList != null) {
+				@NonNull Map<@NonNull String, @NonNull EOperation> name2eOperation = new HashMap<>();
+				if (eClassifier instanceof EClass) {
+					for (EOperation eOperation : ((EClass)eClassifier).getEOperations()) {
+						if (EcoreUtil.isInvariant(eOperation)) {
+							String name = NameUtil.getOriginalName(eOperation);
+							EOperation old = name2eOperation.put(name, eOperation);
+							assert old == null : "Conflicting invariant " + eOperation;
+						}
+
+					}
+				}
 				String[] invariantNames = invariantNameList.split(" ");
 				for (String invariantName : invariantNames) {
 					if ((oclAnnotationDetails == null) || !oclAnnotationDetails.containsKey(invariantName)) {
@@ -872,7 +883,8 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 						if (invariant == null) {
 							invariant = PivotFactory.eINSTANCE.createConstraint();
 							invariant.setName(invariantName);
-							((ConstraintImpl)invariant).setESObject(ecoreAnnotation);
+							EOperation eOperation = name2eOperation.get(invariantName);
+							((ConstraintImpl)invariant).setESObject(eOperation != null ? eOperation : ecoreAnnotation);
 						}
 						ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();		// TODO Change Constraint.ownedSpecification to optional
 						invariant.setOwnedSpecification(specification);
