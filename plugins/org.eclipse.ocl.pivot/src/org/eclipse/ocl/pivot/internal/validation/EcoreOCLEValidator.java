@@ -64,6 +64,7 @@ import org.eclipse.ocl.pivot.util.PivotPlugin;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.ParserException;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
@@ -749,18 +750,33 @@ public class EcoreOCLEValidator implements EValidator
 		if (eAnnotation != null) {
 			EnvironmentFactory environmentFactory = ValidationContext.getEnvironmentFactory(context, eStructuralFeature);
 			EMap<String, String> details = eAnnotation.getDetails();
-			int entries = 0;
+			int bodyEntries = 0;
+			int classEntries = 0;
 			String value = null;
 			if (details.containsKey(SettingBehavior.DERIVATION_CONSTRAINT_KEY)) {
-				entries++;
+				bodyEntries++;
 				value = details.get(SettingBehavior.DERIVATION_CONSTRAINT_KEY);
 			}
 			if (details.containsKey(SettingBehavior.INITIAL_CONSTRAINT_KEY)) {
-				entries++;
+				bodyEntries++;
 				value = details.get(SettingBehavior.INITIAL_CONSTRAINT_KEY);
 			}
+			if (details.containsKey(PivotConstants.CLASS_DETAIL)) {
+				classEntries++;
+			}
 			int severity = PivotUtil.getSeverity(environmentFactory);
-			if (entries == 0) {
+			if (classEntries != 0) {
+				if (diagnostics != null) {
+					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
+					String message = StringUtil.bind(EXTRA_PROPERTY_KEY, objectLabel);
+					diagnostics.add(new BasicDiagnostic(severity, EcoreValidator.DIAGNOSTIC_SOURCE,
+						0, message,  new Object[] { eStructuralFeature }));
+				}
+				else {
+					allOk = false;
+				}
+			}
+			else if (bodyEntries == 0) {
 				if (diagnostics != null) {
 					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
 					String message = StringUtil.bind(MISSING_PROPERTY_KEY, objectLabel);
@@ -771,7 +787,7 @@ public class EcoreOCLEValidator implements EValidator
 					allOk = false;
 				}
 			}
-			else if (entries == 2) {
+			else if (bodyEntries == 2) {
 				if (diagnostics != null) {
 					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
 					String message = StringUtil.bind(DOUBLE_PROPERTY_KEY, objectLabel);

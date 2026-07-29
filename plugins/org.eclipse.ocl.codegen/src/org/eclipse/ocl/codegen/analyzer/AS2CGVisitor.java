@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -110,6 +111,7 @@ import org.eclipse.ocl.pivot.CollectionRange;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
@@ -1502,6 +1504,14 @@ public class AS2CGVisitor extends AbstractExtendingVisitor<@Nullable CGNamedElem
 
 	@Override
 	public @Nullable CGOperation visitOperation(@NonNull Operation asOperation) {
+		org.eclipse.ocl.pivot.Class asClass = PivotUtil.getOwningClass(asOperation);
+		if (asClass instanceof DataType) {
+			EObject esOperation = asOperation.getESObject();
+			assert esOperation != null;
+			EObject eContainer = esOperation.eContainer();
+			assert eContainer instanceof EAnnotation : "CoEClass expected";
+			return null;
+		}
 		CGOperation cgOperation = asFinalOperation2cgOperation.get(asOperation);
 		if (cgOperation == null) {
 			cgOperation = createFinalCGOperationWithoutBody(asOperation);

@@ -818,15 +818,27 @@ public class OCLinEcoreTablesUtils
 		return sortedClasses;
 	}
 
-	protected @NonNull List<org.eclipse.ocl.pivot.@NonNull Class> getAllClassesSortedByClassifierID(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
-		List<org.eclipse.ocl.pivot.@NonNull Class> classes = new ArrayList<>();
+	protected @NonNull List<org.eclipse.ocl.pivot.@Nullable Class> getAllClassesSortedByClassifierID(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+		EPackage ePackage = (EPackage)asPackage.getESObject();
+		List<@NonNull EClassifier> eClassifiers = ePackage.getEClassifiers();
+//		int index = 0;
+//		EList<EClassifier> eClassifiers2 = ;
+//		for (EClassifier eClassifier : eClassifiers2) {
+//			assert eClassifier.getClassifierID() == index;
+//			eClassifiers.add(eClassifier);
+//			index++;
+//		}
+		int size = eClassifiers.size();
+		ArrayList<org.eclipse.ocl.pivot.@Nullable Class> classes = new ArrayList<>(size);	// Null for entry classes
+		for (int i = 0; i < size; i++) {
+			classes.add(null);
+		}
 		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
 			EClassifier eClassifier = (EClassifier)asClass.getESObject();
-			if (eClassifier.getClassifierID() >= 0) {
-				classes.add(asClass);
-			}
+			int classifierID = eClassifier.getClassifierID();
+			classes.set(classifierID, asClass);
 		}
-		Collections.sort(classes, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
+/*		Collections.sort(classes, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
 		{
 			@Override
 			public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
@@ -834,7 +846,7 @@ public class OCLinEcoreTablesUtils
 				int i2 = ((EClassifier)o2.getESObject()).getClassifierID();
 				return i1 - i2;
 			}
-		});
+		}); */
 		return classes;
 	}
 

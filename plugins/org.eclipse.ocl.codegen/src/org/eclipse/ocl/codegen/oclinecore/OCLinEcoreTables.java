@@ -1344,8 +1344,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			declareType(pClass);
 		}
 		s.append("\n");
-		List<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByClassifierID = getAllClassesSortedByClassifierID(asPackage);
-		Collections.sort(activeClassesSortedByClassifierID, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
+		List<org.eclipse.ocl.pivot.@Nullable Class> activeClassesSortedByClassifierID = getAllClassesSortedByClassifierID(asPackage);
+	/*	Collections.sort(activeClassesSortedByClassifierID, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
 			{
 				@Override
 				public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
@@ -1353,7 +1353,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					int i2 = ((EClassifier)o2.getESObject()).getClassifierID();
 					return i1 - i2;
 				}
-			});
+			}); */
 		s.append("		/*\n");
 		s.append("		 * AS Class indexed by EClassifier.getClassifierID().\n");
 		s.append("		 */\n");
@@ -1361,17 +1361,22 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
 		s.append(" " + atNonNull() + " [] eClassifierID2asClass = {");
 		int index = 0;
-		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByClassifierID) {
-			EClassifier eClassifier = (EClassifier) asClass.getESObject();
-			int classifierID = eClassifier.getClassifierID();
-			assert index == classifierID;
+		for (org.eclipse.ocl.pivot.@Nullable Class asClass : activeClassesSortedByClassifierID) {
+		//	EClassifier eClassifier = (EClassifier) asClass.getESObject();
+		//	int classifierID = eClassifier.getClassifierID();
+		//	assert index == classifierID;
 			if (index > 0) {
 				s.append(",");
 			}
 			s.append("\n");
 			s.append("			");
-			s.append("/* " + eClassifier.getClassifierID() + " */ ");
-			asClass.accept(emitReferencedElement);
+			s.append("/* " + index + " */ ");
+			if (asClass != null) {
+				asClass.accept(emitReferencedElement);
+			}
+			else {
+				s.append("null");
+			}
 			index++;
 		}
 		s.append("\n");

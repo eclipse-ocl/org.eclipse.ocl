@@ -154,7 +154,10 @@ public class ModelMerger extends AbstractProjectComponent
 			List<Object> slots = new ArrayList<>();
 			for (@NonNull EObject asObject : asObjects) {
 				if (asObject.eClass().getEAllStructuralFeatures().contains(eFeature)) {
-					slots.add(asObject.eGet(eFeature));
+					Object asSlot = asObject.eGet(eFeature);
+					if (!slots.contains(asSlot)) {
+						slots.add(asSlot);
+					}
 				}
 			}
 			SingleSlotMerger featureMerger = modelMerger.getSingleSlotMerger(eFeature);
@@ -354,7 +357,7 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 
 		@Override
-		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
+		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {		// XXX mismatch is bad not first
 			Object mergedSlot = this;
 			for (Object slot : slots) {
 				if (mergedSlot == this) {
