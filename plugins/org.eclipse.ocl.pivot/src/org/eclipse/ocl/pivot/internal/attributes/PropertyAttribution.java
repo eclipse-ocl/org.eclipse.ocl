@@ -13,10 +13,12 @@ package org.eclipse.ocl.pivot.internal.attributes;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.ocl.pivot.CollectionType;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.scoping.AbstractAttribution;
 import org.eclipse.ocl.pivot.internal.scoping.EnvironmentView;
 import org.eclipse.ocl.pivot.internal.scoping.ScopeView;
@@ -33,6 +35,9 @@ public class PropertyAttribution extends AbstractAttribution
 			Type type = targetElement.getType();
 			while (type instanceof CollectionType) {
 				type = ((CollectionType)type).getElementType();
+			}
+			if (type instanceof NormalizedTemplateParameter) {
+				type = TemplateParameterization.denormalize((NormalizedTemplateParameter)type, targetElement);
 			}
 			if (type instanceof org.eclipse.ocl.pivot.Class) {
 				environmentView.addAllProperties((org.eclipse.ocl.pivot.Class)type, FeatureFilter.SELECT_NON_STATIC);

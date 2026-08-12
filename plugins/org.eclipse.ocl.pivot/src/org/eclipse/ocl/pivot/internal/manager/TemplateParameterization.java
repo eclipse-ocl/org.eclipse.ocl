@@ -18,8 +18,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.IndexableIterable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -32,6 +34,9 @@ import org.eclipse.ocl.pivot.utilities.PivotUtil;
  */
 public class TemplateParameterization implements IndexableIterable<@NonNull TemplateParameter>
 {
+	private static final @NonNull TemplateParameter @NonNull [] NO_TEMPLATE_PARAMETERS = new @NonNull TemplateParameter[0];
+	private static final @NonNull TemplateParameterization NO_TEMPLATE_PARAMETERIZATION = new TemplateParameterization(null, null);
+
 	protected class Iterator implements java.util.Iterator<@NonNull TemplateParameter>
 	{
 		private int index = 0;
@@ -81,6 +86,11 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 		return templateParameters;
 	}
 
+	public static Type denormalize(@NonNull NormalizedTemplateParameter normalizedTemplateParameter, @NonNull Element context) {
+		TemplateParameterization templateParameterization = getTemplateParameterization(context);
+		return templateParameterization.get(normalizedTemplateParameter.getIndex());
+	}
+
 	public static @NonNull TemplateParameterization getTemplateParameterization(@NonNull Element element) {
 		for (EObject eContainer = element; eContainer != null; eContainer = eContainer.eContainer()) {
 			if (eContainer instanceof TemplateableElement) {
@@ -95,19 +105,24 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 		return ClassUtil.requireNonNull(basicGetTemplateParameters(null, element));
 	}
 
-	protected final @NonNull TemplateableElement templateableElement;
+	protected final @Nullable TemplateableElement templateableElement;
 	protected final @NonNull TemplateParameter @NonNull [] templateParameters;
 
-	private TemplateParameterization(@NonNull TemplateableElement templateableElement,
+	private TemplateParameterization(@Nullable TemplateableElement templateableElement,
 			@Nullable List<@NonNull TemplateParameter> templateParameters) {
 		this.templateableElement = templateableElement;
 		if (templateParameters != null) {
+			assert templateableElement != null;
 			int size = templateParameters.size();
 	 		this.templateParameters = templateParameters.toArray(new @NonNull TemplateParameter[size]);
 		}
 		else {
-			this.templateParameters = new @NonNull TemplateParameter[0];
+			this.templateParameters = NO_TEMPLATE_PARAMETERS;
 		}
+	}
+
+	public @Nullable TemplateableElement basicGetTemplateableElement() {
+		return templateableElement;
 	}
 
 	@Override
@@ -116,7 +131,7 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 	}
 
 	public @NonNull TemplateableElement getTemplateableElement() {
-		return templateableElement;
+		return ClassUtil.requireNonNull(templateableElement);
 	}
 
 	public int indexOf(@NonNull TemplateParameter templateParameter) {
