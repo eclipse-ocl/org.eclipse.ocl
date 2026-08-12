@@ -80,7 +80,7 @@ import org.eclipse.ocl.xtext.basecs.util.VisitableCS;
 
 public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Continuation<?>, @NonNull CS2ASConversion>
 {
-	protected static class ClassSupersContinuation extends SingleContinuation<StructuredClassCS>
+	protected static class ClassSupersContinuation extends SingleContinuation<@NonNull StructuredClassCS>
 	{
 		private static @NonNull Dependency[] computeDependencies(@NonNull CS2ASConversion context, @NonNull StructuredClassCS csElement) {
 			List<TypedRefCS> csSuperTypes = csElement.getOwnedSuperTypes();
@@ -115,7 +115,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class GenericTypeRefContinuation extends TypedRefContinuation<TypedTypeRefCS>
+	protected static class GenericTypeRefContinuation extends TypedRefContinuation<@NonNull TypedTypeRefCS>
 	{
 		public GenericTypeRefContinuation(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
 			super(context, csElement, context.getTypesHaveSignaturesInterDependency());
@@ -180,7 +180,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class LambdaParameterContinuation extends SingleContinuation<LambdaParameterCS>// Lambda withparameter names
+	protected static class LambdaParameterContinuation extends SingleContinuation<@NonNull LambdaParameterCS>// Lambda withparameter names
 	{
 		private static @NonNull Dependency @NonNull [] computeDependencies(@NonNull CS2ASConversion context, @NonNull LambdaParameterCS csElement) {
 			TypedRefCS ownedContextType = ClassUtil.requireNonNull(csElement.getOwnedContextType());
@@ -251,7 +251,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class LambdaTypeContinuation extends SingleContinuation<LambdaTypeCS>	// Lambda without parameter names
+	protected static class LambdaTypeContinuation extends SingleContinuation<@NonNull LambdaTypeCS>	// Lambda without parameter names
 	{
 		private static @NonNull Dependency @NonNull [] computeDependencies(@NonNull CS2ASConversion context, @NonNull LambdaTypeCS csElement) {
 			TypedRefCS ownedContextType = ClassUtil.requireNonNull(csElement.getOwnedContextType());
@@ -349,7 +349,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class PrimitiveTypeRefContinuation extends TypedRefContinuation<PrimitiveTypeRefCS>
+	protected static class PrimitiveTypeRefContinuation extends TypedRefContinuation<@NonNull PrimitiveTypeRefCS>
 	{
 		public PrimitiveTypeRefContinuation(@NonNull CS2ASConversion context, @NonNull PrimitiveTypeRefCS csElement) {
 			super(context, csElement);
@@ -366,7 +366,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class SpecializedTypeRefContinuation1 extends SingleContinuation<TypedTypeRefCS>
+	protected static class SpecializedTypeRefContinuation1 extends SingleContinuation<@NonNull TypedTypeRefCS>
 	{
 		public SpecializedTypeRefContinuation1(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
 			super(context, null, null, csElement, context.getTypesHaveSignaturesInterDependency());
@@ -381,7 +381,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class SpecializedTypeRefContinuation2 extends TypedRefContinuation<TypedTypeRefCS>
+	protected static class SpecializedTypeRefContinuation2 extends TypedRefContinuation<@NonNull TypedTypeRefCS>
 	{
 		private static Dependency[] computeDependencies(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
 			List<@NonNull Dependency> dependencies = new ArrayList<>();
@@ -463,7 +463,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class TypeParameterContinuation extends SingleContinuation<TypeParameterCS>
+	protected static class TypeParameterContinuation extends SingleContinuation<@NonNull TypeParameterCS>
 	{
 		public TypeParameterContinuation(@NonNull CS2ASConversion context, @NonNull TypeParameterCS csElement) {
 			super(context, null, null, csElement);
@@ -501,7 +501,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class TemplateSignatureContinuation extends SingleContinuation<ClassCS>
+	protected static class TemplateSignatureContinuation extends SingleContinuation<@NonNull ClassCS>
 	{
 		public TemplateSignatureContinuation(@NonNull CS2ASConversion context, NamedElement pivotParent, @NonNull ClassCS csElement) {
 //			super(context, pivotParent, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, csElement);
@@ -522,7 +522,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class TupleContinuation extends TypedRefContinuation<TupleTypeCS>
+	protected static class TupleContinuation extends TypedRefContinuation<@NonNull TupleTypeCS>
 	{
 		public TupleContinuation(@NonNull CS2ASConversion context, @NonNull TupleTypeCS csElement) {
 			super(context, csElement);
@@ -583,7 +583,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 		}
 	}
 
-	protected static class TypedElementContinuation extends SingleContinuation<TypedElementCS>
+	protected static class TypedElementContinuation extends SingleContinuation<@NonNull TypedElementCS>
 	{
 		public TypedElementContinuation(@NonNull CS2ASConversion context, @NonNull TypedElementCS csElement) {
 			super(context, null, null, csElement);
@@ -617,8 +617,8 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	protected static abstract class TypedRefContinuation<T extends TypedRefCS> extends SingleContinuation<T>
 	{
-		public TypedRefContinuation(@NonNull CS2ASConversion context, @NonNull T csElement, Dependency... dependencies) {
-			super(context, null, null, csElement);
+		public TypedRefContinuation(@NonNull CS2ASConversion context, @NonNull T csElement, @NonNull Dependency... dependencies) {
+			super(context, null, null, csElement, dependencies);
 		}
 	}
 
