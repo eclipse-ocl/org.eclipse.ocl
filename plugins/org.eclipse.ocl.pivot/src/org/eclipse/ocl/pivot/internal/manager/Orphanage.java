@@ -48,6 +48,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.ids.ElementId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
@@ -518,34 +519,49 @@ public class Orphanage extends PackageImpl
 	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, @NonNull TemplateParameter templateParameter) {
 		assert !(templateParameter instanceof WildcardType);
 		int index = templateParameter.getTemplateParameterId().getIndex();
-		return getNormalizedTemplateParameter(orphanPackage, index);
+		List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses = PivotUtil.getConstrainingClassesList(templateParameter);
+		assert !PivotUtil.hasUnresolvedConstrainingClasses(constrainingClasses);
+		return getNormalizedTemplateParameter(orphanPackage, index, constrainingClasses);
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index) {
+	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Package orphanPackage, int index, @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses) {
 		org.eclipse.ocl.pivot.Class orphanClass = getOrphanClass(orphanPackage);
-		return getNormalizedTemplateParameter(orphanClass, index);
+		return getNormalizedTemplateParameter(orphanClass, index, constrainingClasses);
 	}
 
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Class orphanClass, int index) {
+	public static @NonNull NormalizedTemplateParameter getNormalizedTemplateParameter(org.eclipse.ocl.pivot.@NonNull Class orphanClass, int index, @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses) {
+		int hashCode = NormalizedTemplateParameterImpl.getHashCode(index, constrainingClasses);
+	//	assert (constrainingClasses == null) || (constrainingClasses.isEmpty());
 		List<@NonNull TemplateParameter> asTemplatedParameterTypes = PivotUtil.getOwnedTemplateParametersList(orphanClass, true);
-		while (asTemplatedParameterTypes.size() <= index) {
-			NormalizedTemplateParameter normalizedTemplateParameter = PivotFactory.eINSTANCE.createNormalizedTemplateParameter();
-			normalizedTemplateParameter.setName(PivotConstants.ORPHANAGE_NAME + asTemplatedParameterTypes.size());
-			asTemplatedParameterTypes.add(normalizedTemplateParameter);
+		for (@NonNull TemplateParameter asTemplatedParameterType : asTemplatedParameterTypes) {
+			assert asTemplatedParameterType instanceof NormalizedTemplateParameter;
+			if (asTemplatedParameterType.hashCode() == hashCode) {
+				return (NormalizedTemplateParameter) asTemplatedParameterType;
+			}
 		}
-		TemplateParameter templateParameter = asTemplatedParameterTypes.get(index);
-		assert templateParameter != null;
-		return (NormalizedTemplateParameter)templateParameter;
+	//	while (asTemplatedParameterTypes.size() <= index) {
+			NormalizedTemplateParameter normalizedTemplateParameter = PivotFactory.eINSTANCE.createNormalizedTemplateParameter();
+			String name = PivotConstants.ORPHANAGE_NAME + index;
+			if ((constrainingClasses != null) && !constrainingClasses.isEmpty()) {
+				name += "$" + asTemplatedParameterTypes.size();
+				normalizedTemplateParameter.getConstrainingClasses().addAll(constrainingClasses);
+			}
+			normalizedTemplateParameter.setName(name);
+			asTemplatedParameterTypes.add(normalizedTemplateParameter);
+	//	}
+	//	TemplateParameter templateParameter = asTemplatedParameterTypes.get(index);
+	//	assert templateParameter != null;
+		return normalizedTemplateParameter;
 	}
 
 	/**
-	 * Return and if necessary create the special orphan clkass that is the parent of orphan elements such as
+	 * Return and if necessary create the special orphan class that is the parent of orphan elements such as
 	 * normalized template parameters.
 	 *
 	 * @since 7.0

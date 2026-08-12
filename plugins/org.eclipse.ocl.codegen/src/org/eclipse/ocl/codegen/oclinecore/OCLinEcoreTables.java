@@ -1597,7 +1597,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		if (asTemplateParameters != null) {
 			Orphanage orphanage = standardLibrary.getOrphanage();
 			for (@NonNull TemplateParameter asTemplateParameter : asTemplateParameters) {
-				Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter.getTemplateParameterId().getIndex());
+				Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter/*.getTemplateParameterId().getIndex()*/);
 				String baseName = getTemplateParameterNameCandidate(asTemplateParameter);
 				String name = baseName;
 				int disambiguator = 0;

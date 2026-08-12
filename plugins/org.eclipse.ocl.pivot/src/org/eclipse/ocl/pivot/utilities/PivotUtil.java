@@ -67,6 +67,7 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -195,6 +196,13 @@ public class PivotUtil implements PivotConstants
 	 * The start time of a test as updated by debugReset().
 	 */
 	private static long startTime = System.currentTimeMillis();
+
+	/**
+	 * The unresolvedConstrainingClasses Class instance is installed as the TemplateParameter.constrainingClasses
+	 * during parsing until their pivots are resolved.
+	 */
+	private static org.eclipse.ocl.pivot.@Nullable Class unresolvedConstrainingClasses = null;
+
 	/**
 	 * @since 7.0
 	 */
@@ -2973,6 +2981,20 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull Type getValueType(@NonNull KeyValueType entryType) {
 		return ClassUtil.requireNonNull(entryType.getValueType());
+	}
+
+	/**
+	 * @since 1.7
+	 */
+	public static @NonNull Type getValueType(@NonNull MapType mapType) {
+		return ClassUtil.requireNonNull(mapType.getValueType());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static boolean hasUnresolvedConstrainingClasses(@NonNull List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses) {
+		return (constrainingClasses.size() == 1) && (constrainingClasses.get(0) == unresolvedConstrainingClasses);
 	}
 
 	public static @NonNull Operation initOperation(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL) {

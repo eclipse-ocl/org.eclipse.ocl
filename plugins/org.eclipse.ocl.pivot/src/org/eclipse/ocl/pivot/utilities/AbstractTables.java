@@ -162,7 +162,7 @@ public abstract class AbstractTables
 		}
 
 		public @NonNull TemplateParameter getTemplateParameter(int i) {
-			return Orphanage.getNormalizedTemplateParameter(getOrphanage(), i);
+			return Orphanage.getNormalizedTemplateParameter(getOrphanage(), i, null);
 		}
 
 		public @NonNull Type getTupleType(@NonNull Property @NonNull... asParts) {

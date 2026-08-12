@@ -297,10 +297,10 @@ public class OCLstdlib extends ASResourceImpl
 			local_orphanage = Orphanage.createLocalOrphanPackage();
 			library.getOwnedPackages().add(local_orphanage);
 			org.eclipse.ocl.pivot.@NonNull Class orphanClass = Orphanage.getOrphanClass(local_orphanage);
-			$$0 = Orphanage.getNormalizedTemplateParameter(orphanClass, 0);
-			$$1 = Orphanage.getNormalizedTemplateParameter(orphanClass, 1);
-			$$2 = Orphanage.getNormalizedTemplateParameter(orphanClass, 2);
-			$$3 = Orphanage.getNormalizedTemplateParameter(orphanClass, 3);
+			$$0 = Orphanage.getNormalizedTemplateParameter(orphanClass, 0, null);
+			$$1 = Orphanage.getNormalizedTemplateParameter(orphanClass, 1, null);
+			$$2 = Orphanage.getNormalizedTemplateParameter(orphanClass, 2, null);
+			$$3 = Orphanage.getNormalizedTemplateParameter(orphanClass, 3, null);
 		}
 	}
 

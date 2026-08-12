@@ -940,7 +940,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 				normalizedTemplateParameters.add(normalizedTemplateParameter);
 			}
 			while (normalizedTemplateParameters.size() < 4) {
-				normalizedTemplateParameters.add(Orphanage.getNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size()));			// Define four in case in transition from no NormalizedTemplateParameters.
+				normalizedTemplateParameters.add(Orphanage.getNormalizedTemplateParameter(orphanage, normalizedTemplateParameters.size(), null));			// Define four in case in transition from no NormalizedTemplateParameters.
 			}
 		}
 		return normalizedTemplateParameters;

@@ -558,8 +558,18 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	protected @NonNull NormalizedTemplateParameter localizeNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter asNormalizedTemplateParameter) {
 		// create the corresponding local singletons
 		int index = asNormalizedTemplateParameter.getIndex();
+		List<org.eclipse.ocl.pivot.@NonNull Class> localConstrainingClasses = null;
+		List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtil.getConstrainingClassesList(asNormalizedTemplateParameter);
+		assert !PivotUtil.hasUnresolvedConstrainingClasses(asConstrainingClasses);
+		if (asConstrainingClasses.size() > 0) {
+			localConstrainingClasses = new ArrayList<>(asConstrainingClasses.size());
+			for (org.eclipse.ocl.pivot.@NonNull Class asConstrainingClass : asConstrainingClasses) {
+				org.eclipse.ocl.pivot.Class localConstrainingClass = localizeElement(asConstrainingClass);
+				localConstrainingClasses.add(localConstrainingClass);
+			}
+		}
 		org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
-		NormalizedTemplateParameter localNormalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(localOrphanage, index);
+		NormalizedTemplateParameter localNormalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(localOrphanage, index, localConstrainingClasses);
 		remote2local.put(asNormalizedTemplateParameter, localNormalizedTemplateParameter);
 		return localNormalizedTemplateParameter;
 	}
@@ -581,7 +591,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		else {
 			localOrphanPackage = Orphanage.getLocalOrphanPackage(asModel);
 		}
-		setOrphanage(localOrphanPackage);				// ?? redundant
+		setOrphanage(localOrphanPackage);
 		List<@NonNull EObject> moreEObjects = resource.getContents();
 		while ((moreEObjects != null) && !moreEObjects.isEmpty()) {
 			Map<EObject, Collection<Setting>> references = EcoreUtil.CrossReferencer.find(moreEObjects);

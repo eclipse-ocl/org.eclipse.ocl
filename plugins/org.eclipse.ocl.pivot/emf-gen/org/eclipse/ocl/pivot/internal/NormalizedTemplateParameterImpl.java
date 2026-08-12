@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -65,6 +66,16 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 	 */
 	protected static final Number INDEX_EDEFAULT = (Number)PivotFactory.eINSTANCE.createFromString(PivotPackage.eINSTANCE.getInteger(), "-1");
 
+	public static int getHashCode(int index, @Nullable Iterable<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses) {
+		int hashCode = NormalizedTemplateParameter.class.hashCode() + 97 * index;
+		if (constrainingClasses != null) {
+			for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : constrainingClasses) {
+				hashCode += 3 * constrainingClass.hashCode();		// NB order independent
+			}
+		}
+		return hashCode;
+	}
+
 	/**
 	 * The cached value of the '{@link #getIndex() <em>Index</em>}' attribute.
 	 * <!-- begin-user-doc -->
@@ -74,6 +85,8 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 	 * @ordered
 	 */
 	protected Number index = INDEX_EDEFAULT;
+
+	private Integer hashcode = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -207,8 +220,19 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 	}
 
 	@Override
+	public int hashCode() {
+		if (hashcode == null) {
+			hashcode = Integer.valueOf(getHashCode(index.intValue(), constrainingClasses));
+		}
+		return hashcode;
+	}
+
+	@Override
 	public void setName(String newName) {
-		this.index = Integer.parseInt(newName.substring(PivotConstants.ORPHANAGE_NAME.length()));
+		int start = PivotConstants.ORPHANAGE_NAME.length();
+		int end = newName.indexOf("$", start);
+		String indexString = end <= start ? newName.substring(start) : newName.substring(start, end);
+		this.index = Integer.parseInt(indexString);
 		super.setName(newName);
 	}
 

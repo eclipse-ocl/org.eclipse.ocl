@@ -555,9 +555,8 @@ public class OCLinEcoreTablesUtils
 				s.append("LIBRARY.getTemplateParameter(");
 				namespace2.accept(this);
 				s.append(", ");
-				int index = asTemplateParameter.getTemplateParameterId().getIndex();
 				Orphanage orphanage = standardLibrary.getOrphanage();
-				NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(orphanage, index);
+				NormalizedTemplateParameter normalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(orphanage, asTemplateParameter);
 				s.append(AbstractGenModelHelper.TYPE_PARAMETERS_PACKAGE_NAME);
 				s.append(".");
 				s.append(normalizedTemplateParameter.getName());
