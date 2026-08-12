@@ -28,6 +28,7 @@ import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.flat.FlatClass;
 import org.eclipse.ocl.pivot.messages.StatusCodes;
 import org.eclipse.ocl.pivot.options.PivotValidationOptions;
+import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.TemplateArguments;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -93,20 +94,30 @@ public abstract class AbstractStandardLibrary implements StandardLibrary
 		//
 		//	Resolve left template parameters to its TemplateArgument
 		//
-		if ((leftType instanceof TemplateParameter) && (leftTemplateArguments != null)) {
+		if (leftType instanceof TemplateParameter) {
 			TemplateParameter leftTemplateParameter = (TemplateParameter)leftType;
-			Type leftTemplateArgument = leftTemplateArguments.get(leftTemplateParameter);
-			if (leftTemplateArgument != null) {
-				leftType = leftTemplateArgument;
+			if (leftTemplateArguments != null) {
+				Type leftTemplateArgument = leftTemplateArguments.get(leftTemplateParameter);
+				if (leftTemplateArgument != null) {
+					leftType = leftTemplateArgument;
+				}
+			}
+			else {
+				leftType = PivotUtil.getLowerBound(leftTemplateParameter, getOclAnyType());
 			}
 		}
 		//
 		//	Accrue solution to the right template parameter
 		//
-		if ((rightType instanceof TemplateParameter) && (rightTemplateArguments != null)) {
+		if (rightType instanceof TemplateParameter) {
 			TemplateParameter rightTemplateParameter = (TemplateParameter)rightType;
-			rightTemplateArguments.put(rightTemplateParameter, leftType);
-			return true;
+			if (rightTemplateArguments != null) {
+				rightTemplateArguments.put(rightTemplateParameter, leftType);
+				return true;
+			}
+			else {
+				rightType = PivotUtil.getLowerBound(rightTemplateParameter, getOclAnyType());
+			}
 		}
 		if (leftType == rightType) {
 			return true;
