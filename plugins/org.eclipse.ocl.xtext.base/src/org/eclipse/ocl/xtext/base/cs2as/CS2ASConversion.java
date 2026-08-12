@@ -597,7 +597,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	/**
-	 * Return true if asTemplateParameter should be normalized to a TemplateParamterType.
+	 * Return true if asTemplateParameter should be normalized to a TemplateParameterType.
 	 * This method peeks at the CS definition of the TemplateParameter to determine wherther there are any bounds
 	 * avoiding a cyclic dependency if the caller waited for the AS constrainingClasses to be defined.
 	 */

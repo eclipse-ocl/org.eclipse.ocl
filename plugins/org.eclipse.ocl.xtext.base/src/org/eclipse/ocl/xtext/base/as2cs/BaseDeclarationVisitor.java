@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
@@ -36,6 +37,7 @@ import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -87,7 +89,7 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 		PivotUtil.refreshList(csElement.getOwnedDetails(), true, context.visitDeclarations(DetailCS.class, object.getOwnedDetails(), null));
 		List<Element> references = object.getReferences();
 		if (references.size() > 0) {
-			List<ModelElementRefCS> csReferences = new ArrayList<ModelElementRefCS>(references.size());
+			List<@NonNull ModelElementRefCS> csReferences = new ArrayList<>(references.size());
 			for (Element reference : references) {
 				if (reference != null) {
 					ModelElementRefCS csRef = BaseCSFactory.eINSTANCE.createModelElementRefCS();
@@ -307,12 +309,17 @@ public class BaseDeclarationVisitor extends AbstractExtendingVisitor<ElementCS, 
 	@Override
 	public ElementCS visitTemplateParameter(@NonNull TemplateParameter object) {
 		TypeParameterCS csElement = context.refreshElement(TypeParameterCS.class, BaseCSPackage.Literals.TYPE_PARAMETER_CS, object);
+	//	context.addCreated(object, csElement);
 		csElement.setName(object.getName());
 		Iterable<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = object.basicGetConstrainingClasses();
 		if (asConstrainingClasses != null) {
-			List<TypedRefCS> csExtends = new ArrayList<TypedRefCS>();
+			List<TypedRefCS> csExtends = new ArrayList<>();
 			for (org.eclipse.ocl.pivot.@NonNull Class asConstrainingClass : asConstrainingClasses) {
-				TypedRefCS typeRef = context.visitReference(TypedRefCS.class, asConstrainingClass);
+				Type elementType = asConstrainingClass;
+				if (elementType instanceof NormalizedTemplateParameter) {
+					elementType = TemplateParameterization.denormalize((NormalizedTemplateParameter)asConstrainingClass, object);
+				}
+				TypedRefCS typeRef = context.visitReference(TypedRefCS.class, elementType);
 				csExtends.add(typeRef);
 			}
 			PivotUtil.refreshList(csElement.getOwnedExtends(), true, csExtends);

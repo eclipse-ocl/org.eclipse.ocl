@@ -38,6 +38,7 @@ import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
@@ -48,6 +49,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractConversion;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.util.Visitable;
@@ -632,7 +634,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 	public <@NonNull T extends TypedElementCS> T refreshTypedElement(@NonNull Class<T> csClass, /*@NonNull */EClass csEClass, @NonNull TypedElement object) {
 		T csElement = refreshNamedElement(csClass, csEClass, object);
 		final Type type = object.getType();
-		final Type elementType;
+		Type elementType;
 		boolean isEMap = (type instanceof MapType) && (((MapType)type).getEntryClass() != null);
 		if (isEMap) {
 			elementType = ((MapType)type).getEntryClass();
@@ -646,6 +648,9 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 		}
 		else {
 			elementType = type;
+		}
+		if (elementType instanceof NormalizedTemplateParameter) {
+			elementType = TemplateParameterization.denormalize((NormalizedTemplateParameter)elementType, object);
 		}
 		if (elementType != null) {
 			PivotUtil.debugWellContainedness(elementType);
@@ -770,6 +775,7 @@ public class AS2CSConversion extends AbstractConversion implements PivotConstant
 			logger.warn("Unresolved reference " + ((BasicEObjectImpl)eObject).eProxyURI());
 			return null;
 		}
+		assert !(eObject instanceof NormalizedTemplateParameter);
 		ElementCS csElement = ((Visitable)eObject).accept(referenceVisitor);
 		if (csElement == null) {
 			return null;

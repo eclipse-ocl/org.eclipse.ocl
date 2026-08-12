@@ -18,11 +18,13 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.PrimitiveType;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateArgument;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
 import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
@@ -75,6 +77,9 @@ public class BaseReferenceVisitor extends AbstractExtendingVisitor<ElementCS, AS
 			for (TemplateArgument templateArgument : templateArguments) {
 				Type actual = templateArgument.getActual();
 				if (actual != null) {
+					if (actual instanceof NormalizedTemplateParameter) {
+						actual = TemplateParameterization.denormalize((NormalizedTemplateParameter)actual, object);
+					}
 					TemplateParameterSubstitutionCS csTemplateParameterSubstitution = BaseCSFactory.eINSTANCE.createTemplateParameterSubstitutionCS();
 					TypeRefCS csParameterable = context.visitReference(TypeRefCS.class, actual);			// XXX actualIsRequired
 					csTemplateParameterSubstitution.setOwnedActualParameter(csParameterable);
