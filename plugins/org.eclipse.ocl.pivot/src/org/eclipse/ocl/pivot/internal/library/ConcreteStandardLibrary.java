@@ -74,11 +74,6 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public abstract class ConcreteStandardLibrary extends AbstractStandardLibrary
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated NOT
-	 */
 	protected ConcreteStandardLibrary()
 	{
 		this.collectionTypeManager = createCollectionTypeManager();
