@@ -138,6 +138,7 @@ import org.eclipse.ocl.pivot.evaluation.Executor;
 import org.eclipse.ocl.pivot.ids.OperationId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
+import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.ecore.EcoreExecutorManager;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
@@ -2977,6 +2978,23 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * Return the unresolvedConstrainingClasses Class instance for installation as the TemplateParameter.constrainingClasses
+	 * during parsing until pivots are resolved.
+	 *
+	 * @since 7.0
+	 */
+	private static org.eclipse.ocl.pivot.@NonNull Class getUnresolvedConstrainingClasses() {
+		org.eclipse.ocl.pivot.Class unresolvedConstrainingClasses2 = unresolvedConstrainingClasses;
+		if (unresolvedConstrainingClasses2 == null) {
+			unresolvedConstrainingClasses = unresolvedConstrainingClasses2 = new ClassImpl()
+			{
+				{ setName("Unresolved Constraining Classes"); }
+			};
+		}
+		return unresolvedConstrainingClasses2;
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	public static @NonNull Type getValueType(@NonNull KeyValueType entryType) {
@@ -3468,6 +3486,18 @@ public class PivotUtil implements PivotConstants
 		expressionInOCL.setOwnedBody(oclExpression);
 		expressionInOCL.setType(oclExpression != null ? oclExpression.getType() : null);
 		expressionInOCL.setIsRequired((oclExpression != null) && oclExpression.isIsRequired());;
+	}
+
+	/**
+	 * Configure pivotElement as having unresolved constraining classes. This inhibits premature
+	 * determination of the appropriate NormalizedTemplateParameter during parsing before pivots are resolved.
+	 *
+	 * @since 7.0
+	 */
+	public static void setUnresolvedConstrainingClasses(@NonNull TemplateParameter pivotElement) {
+		List<org.eclipse.ocl.pivot.Class> constrainingClasses = pivotElement.getConstrainingClasses();
+		constrainingClasses.clear();
+		constrainingClasses.add(getUnresolvedConstrainingClasses());	// inhibit use of NormalizedTemplateParameter
 	}
 
 	/**
