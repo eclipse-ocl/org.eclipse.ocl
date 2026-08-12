@@ -42,8 +42,10 @@ import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.MapType;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -52,6 +54,7 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.internal.utilities.PivotObjectImpl;
 import org.eclipse.ocl.pivot.util.AbstractExtendingVisitor;
@@ -238,15 +241,22 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		Type valueType = PivotUtil.getValueType(pivotType);
 		boolean keysAreNullFree = pivotType.isKeysAreNullFree();
 		boolean valuesAreNullFree = pivotType.isValuesAreNullFree();
+		boolean keyIsTemplate = keyType instanceof TemplateParameter;
+		boolean valueIsTemplate = valueType instanceof TemplateParameter;
 		StringBuilder s = new StringBuilder();
 		s.append("Entry");
 		s.append(keysAreNullFree ? "_r" : "_o");
-		s.append(keyType.getName().replace("$", "_"));
+		if (!keyIsTemplate) {
+			s.append(keyType.getName());
+		}
 		s.append(valuesAreNullFree ? "_r" : "_o");
-		s.append(valueType.getName().replace("$", "_"));
+		if (!valueIsTemplate) {
+			s.append(valueType.getName());
+		}
 		String name = s.toString();
-		EObject eKeyType = typeRefVisitor.safeVisit(keyType, keysAreNullFree);
-		EObject eValueType = typeRefVisitor.safeVisit(valueType, valuesAreNullFree);
+		//
+		//	Find pre-existing entry EClass
+		//
 		EList<EObject> eEntryClasses = eAnnotation.getContents();
 		for (EObject eObject : eEntryClasses) {
 			EClass eEntryClass = (EClass)eObject;
@@ -254,10 +264,43 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 				return eEntryClass;
 			}
 		}
+		//
+		//	Create new EClass
+		//
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		eClass.setName(name);
 		eClass.setInstanceClassName(java.util.Map.Entry.class.getName());
+		eEntryClasses.add(eClass);
+		//
+		//	Create K ETypeParameter if required
+		//
+		EObject eKeyType;
+		if (keyIsTemplate) {
+			ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+			eTypeParameter.setName("K");
+			eClass.getETypeParameters().add(eTypeParameter);
+			eKeyType = eTypeParameter;
+		}
+		else {
+			eKeyType = typeRefVisitor.safeVisit(keyType, keysAreNullFree);
+		}
+		//
+		//	Create V ETypeParameter if required
+		//
+		EObject eValueType;
+		if (valueIsTemplate) {
+			ETypeParameter eTypeParameter = EcoreFactory.eINSTANCE.createETypeParameter();
+			eTypeParameter.setName("V");
+			eClass.getETypeParameters().add(eTypeParameter);
+			eValueType = eTypeParameter;
+		}
+		else {
+			eValueType = typeRefVisitor.safeVisit(valueType, valuesAreNullFree);
+		}
+		//
+		//	Create key EStructuralFeature
+		//
 		EStructuralFeature eKeyFeature;
 		if (keyType instanceof DataType) {
 			eKeyFeature = EcoreFactory.eINSTANCE.createEAttribute();
@@ -277,6 +320,9 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eKeyFeature.setLowerBound(keysAreNullFree ? 1 : 0);
 		eKeyFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eKeyFeature);
+		//
+		//	Create value EStructuralFeature
+		//
 		EStructuralFeature eValueFeature;
 		if (valueType instanceof DataType) {
 			eValueFeature = EcoreFactory.eINSTANCE.createEAttribute();
@@ -296,7 +342,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		eValueFeature.setLowerBound(valuesAreNullFree ? 1 : 0);
 		eValueFeature.setUpperBound(1);
 		eClass.getEStructuralFeatures().add(eValueFeature);
-		eEntryClasses.add(eClass);
 		return eClass;
 	}
 
@@ -392,7 +437,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 	}
 
-	protected void setETypeAndMultiplicity(@NonNull ETypedElement eTypedElement, @Nullable Type pivotType, boolean isRequired) {
+	/**
+	 * @since 7.0
+	 */
+	protected void setETypeAndMultiplicity(@NonNull ETypedElement eTypedElement, @NonNull TypedElement pivotTypedElement, @Nullable Type pivotType, boolean isRequired) {
 		if ((pivotType == null) || (pivotType instanceof VoidType)) {				// Occurs for Operation return type
 			eTypedElement.setLowerBound(0);
 			eTypedElement.setUpperBound(1);
@@ -475,15 +523,35 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eTypedElement.setUpperBound(-1);
 		}
 		else if (pivotType instanceof MapType) {
-			org.eclipse.ocl.pivot.Class entryClass = ((MapType)pivotType).getEntryClass();
+			MapType mapType = (MapType)pivotType;
+			org.eclipse.ocl.pivot.Class entryClass = mapType.getEntryClass();
 			if (entryClass != null) {
 				setEType(eTypedElement, entryClass, isRequired);
 			}
 			else {
 				for (EObject eContainer = eTypedElement; eContainer != null; eContainer = eContainer.eContainer()) {
 					if (eContainer instanceof EPackage) {
-						EClass entryEClass = getEntryEClass((EPackage)eContainer, (MapType)pivotType);
-						eTypedElement.setEType(entryEClass);
+						EClass entryEClass = getEntryEClass((EPackage)eContainer, mapType);
+						if (entryEClass.getETypeParameters().isEmpty()) {
+							eTypedElement.setEType(entryEClass);
+						}
+						else {
+							TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(pivotTypedElement);
+							EGenericType eGenericType = EcoreFactory.eINSTANCE.createEGenericType();
+							eGenericType.setEClassifier(entryEClass);
+							for (TemplateArgument templateArgument : mapType.getOwnedTemplateArguments()) {
+								Type actual = templateArgument.getActual();
+								if (actual instanceof NormalizedTemplateParameter) {
+									int index = ((NormalizedTemplateParameter)actual).getIndex();
+									TemplateParameter templateParameter = templateParameterization.get(index);
+									ETypeParameter eTypeParameter = context.getCreated(ETypeParameter.class, templateParameter);
+									EGenericType eGenericType2 = EcoreFactory.eINSTANCE.createEGenericType();
+									eGenericType2.setETypeParameter(eTypeParameter);
+									eGenericType.getETypeArguments().add(eGenericType2);
+								}
+							}
+							eTypedElement.setEGenericType(eGenericType);
+						}
 						break;
 					}
 				}
@@ -692,7 +760,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		}
 		Element savedAsScope = typeRefVisitor.pushScope(pivotProperty);
 		try {
-			setETypeAndMultiplicity(eStructuralFeature, pivotType, pivotIsRequired);
+			setETypeAndMultiplicity(eStructuralFeature, pivotProperty, pivotType, pivotIsRequired);
 		}
 		finally {
 			typeRefVisitor.popScope(savedAsScope);
@@ -733,7 +801,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			//			setEType(eTypedElement, pivotType);
 			Element savedASScope = typeRefVisitor.pushScope(pivotTypedElement);
 			try {
-				setETypeAndMultiplicity(eTypedElement, pivotType, pivotTypedElement.isIsRequired());
+				setETypeAndMultiplicity(eTypedElement, pivotTypedElement, pivotType, pivotTypedElement.isIsRequired());
 			}
 			finally {
 				typeRefVisitor.popScope(savedASScope);
