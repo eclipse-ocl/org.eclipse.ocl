@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.internal.ids.BindingsIdImpl.BindingsIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.CompletePackageIdImpl.CompletePackageIdSingletonScope;
 import org.eclipse.ocl.pivot.internal.ids.ExtraParameters;
@@ -403,8 +404,7 @@ public final class IdManager
 		int typeParametersSize = templateParameters.parametersSize();
 		ParametersId parametersId;
 		if ((typeParametersSize <= 0) || (anOperation.getGeneric() != null)) {	// If unspecializeable or specialized
-			@NonNull Type @NonNull [] parameterTypes = PivotUtil.getOperationParameterTypes(anOperation);
-			parametersId = getParametersId(parameterTypes);
+			parametersId = getParametersId(anOperation);
 		}
 		else {																				// If unspecialized
 			TemplateParameterization contextTemplateParameterization = TemplateParameterization.basicGetTemplateParameterization(owningClass);
@@ -551,6 +551,34 @@ public final class IdManager
 	 */
 	public static @NonNull ParameterId getParameterId(@NonNull Parameter parameter) {
 		return parameterIds.getSingleton(PRIVATE_INSTANCE, parameter.getTypeId(), parameter.isIsTypeof());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull ParametersId getParametersId(@NonNull Operation anOperation) {
+		@NonNull ParameterId @NonNull [] parameterIds;
+		int iParameter = 0;
+		List<@NonNull ? extends TypedElement> ownedParameters = PivotUtil.getOwnedParametersList(anOperation);
+		if (anOperation instanceof Iteration) {
+			Iteration anIteration = (Iteration)anOperation;
+			List<@NonNull ? extends TypedElement> ownedIterators = PivotUtil.getOwnedIteratorsList(anIteration);
+			TypedElement ownedAccumulator = anIteration.getOwnedAccumulator();
+			parameterIds = new @NonNull ParameterId[ownedIterators.size() + (ownedAccumulator != null ? 1 : 0) + ownedParameters.size()];
+			for (@NonNull TypedElement ownedIterator : ownedIterators) {
+				parameterIds[iParameter++] = getParameterId(ownedIterator.getTypeId(), false);
+			}
+			if (ownedAccumulator != null) {
+				parameterIds[iParameter++] = getParameterId(ownedAccumulator.getTypeId(), false);
+			}
+		}
+		else {
+			parameterIds = new @NonNull ParameterId[ownedParameters.size()];
+		}
+		for (@NonNull TypedElement ownedParameter : ownedParameters) {
+			parameterIds[iParameter++] = getParameterId(ownedParameter.getTypeId(), false);
+		}
+		return getParametersId(parameterIds);
 	}
 
 	public static @NonNull ParametersId getParametersId(@NonNull Type @NonNull [] parameterTypes) {

@@ -2144,35 +2144,6 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
-	 * @since 7.0
-	 */
-	public static @NonNull Type @NonNull [] getOperationParameterTypes(@NonNull Operation anOperation) {
-		@NonNull Type @NonNull [] parameterTypes;
-		int iParameter = 0;
-		List<@NonNull ? extends TypedElement> ownedParameters = getOwnedParametersList(anOperation);
-		if (anOperation instanceof Iteration) {
-			Iteration anIteration = (Iteration)anOperation;
-			List<@NonNull ? extends TypedElement> ownedIterators = getOwnedIteratorsList(anIteration);
-			TypedElement ownedAccumulator = anIteration.getOwnedAccumulator();
-			parameterTypes = new @NonNull Type[ownedIterators.size() + (ownedAccumulator != null ? 1 : 0) + ownedParameters.size()];
-			for (@NonNull TypedElement ownedIterator : ownedIterators) {
-				parameterTypes[iParameter++] = getType(ownedIterator);
-			}
-			if (ownedAccumulator != null) {
-				parameterTypes[iParameter++] = getType(ownedAccumulator);
-			}
-		}
-		else {
-			parameterTypes = new @NonNull Type[ownedParameters.size()];
-		}
-		for (@NonNull TypedElement ownedParameter : ownedParameters) {
-			parameterTypes[iParameter++] = getType(ownedParameter);
-		}
-		return parameterTypes;
-	}
-
-
-	/**
 	 * @since 1.3
 	 */
 	public static @NonNull Property getOpposite(@NonNull Property asProperty) {
