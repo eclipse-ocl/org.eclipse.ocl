@@ -142,6 +142,9 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	private final @NonNull BaseCSVisitor<Continuation<?>> postOrderVisitor;
 	private final @NonNull BaseCSVisitor<Continuation<?>> preOrderVisitor;
 
+	/*
+	 * The TemplateSignature of all StructuredClassCS have been converted
+	 */
 	private @NonNull InterDependency<@NonNull TemplateSignatureContinuation> typesHaveSignatures = new InterDependency<>("All unspecialized signatures defined", null);
 
 	private @NonNull InterDependency<@NonNull OperatorExpContinuation<?>> operatorsHavePrecedence = new InterDependency<>("All operator precedences defined", null);
@@ -597,13 +600,13 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	}
 
 	/**
-	 * Return true if asTemplateParameter should be normalized to a TemplateParameterType.
-	 * This method peeks at the CS definition of the TemplateParameter to determine wherther there are any bounds
+	 * Return true if asTemplateParameter should be normalized to a NormalizedTemplateParameter.
+	 * This method peeks at the CS definition of the TemplateParameter to determine whether there are any bounds
 	 * avoiding a cyclic dependency if the caller waited for the AS constrainingClasses to be defined.
 	 */
 	public boolean canBeNormalized(@NonNull TemplateParameter asTemplateParameter) {
 		boolean canBeNormalized = false;
-		if (asTemplateParameter.basicGetConstrainingClasses() == null) {
+		if (!(asTemplateParameter instanceof NormalizedTemplateParameter) && asTemplateParameter.basicGetConstrainingClasses() == null) {
 			// Cannot wait till TemplateParameter.constrainingClasses defined because might be cyclic: e.g. T extends Generic(T).
 			ModelElementCS csDefinition = converter.getCSElement(asTemplateParameter);
 			assert csDefinition != null;

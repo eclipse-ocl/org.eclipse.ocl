@@ -129,6 +129,12 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				return false;
 			}
 			Type pivotType = csElement.getReferredType();
+		//	if (pivotType instanceof TemplateParameter)  {
+		//		List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses = PivotUtil.getConstrainingClassesList((TemplateParameter)pivotType);
+		//		if (PivotUtil.hasUnresolvedConstrainingClasses(constrainingClasses)) {
+		//			return false;
+		//		}
+		//	}
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
 				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
@@ -467,6 +473,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	{
 		public TypeParameterContinuation(@NonNull CS2ASConversion context, @NonNull TypeParameterCS csElement) {
 			super(context, null, null, csElement);
+			assert csElement.getOwnedExtends().size() > 0;
 		}
 
 		@Override

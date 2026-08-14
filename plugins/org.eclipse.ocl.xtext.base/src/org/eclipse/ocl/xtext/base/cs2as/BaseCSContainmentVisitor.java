@@ -90,6 +90,7 @@ import org.eclipse.ocl.xtext.basecs.TemplateSignatureCS;
 import org.eclipse.ocl.xtext.basecs.TemplateableElementCS;
 import org.eclipse.ocl.xtext.basecs.TuplePartCS;
 import org.eclipse.ocl.xtext.basecs.TupleTypeCS;
+import org.eclipse.ocl.xtext.basecs.TypeParameterCS;
 import org.eclipse.ocl.xtext.basecs.TypeRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedRefCS;
 import org.eclipse.ocl.xtext.basecs.TypedTypeRefCS;
@@ -618,6 +619,14 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 		return null;
 	}
 
+	@Override
+	public Continuation<?> visitTypeParameterCS(@NonNull TypeParameterCS csElement) {
+		TemplateParameter pivotElement = refreshNamedElement(TemplateParameter.class, PivotPackage.Literals.TEMPLATE_PARAMETER, csElement);
+		if (!csElement.getOwnedExtends().isEmpty()) {
+			PivotUtil.setUnresolvedConstrainingClasses(pivotElement);	// inhibit use of NormalizedTemplateParameter
+		}
+		return null;
+	}
 
 	@Override
 	public Continuation<?> visitTypeRefCS(@NonNull TypeRefCS csElement) {

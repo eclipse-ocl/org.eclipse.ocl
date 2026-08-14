@@ -68,12 +68,20 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 	}
 
 	private static @Nullable List<@NonNull TemplateParameter> basicGetTemplateParameters(@Nullable List<@NonNull TemplateParameter> templateParameters, @NonNull EObject element) {
+	//	if (element instanceof TemplateableElement) {
+	//		TemplateableElement templateableElement = (TemplateableElement)element;
+	//		TemplateableElement generic = templateableElement.getGeneric();
+	//		if (generic != null) {
+	//			templateParameters = basicGetTemplateParameters(templateParameters, generic);
+	//		}
+	//	}
 		EObject eContainer = element.eContainer();
 		if (eContainer != null) {
 			templateParameters = basicGetTemplateParameters(templateParameters, eContainer);
 		}
 		if (element instanceof TemplateableElement) {
-			Iterable<@NonNull TemplateParameter> asTemplateParameters = ((TemplateableElement)element).basicGetOwnedTemplateParameters();
+			TemplateableElement templateableElement = (TemplateableElement)element;
+			Iterable<@NonNull TemplateParameter> asTemplateParameters = templateableElement.basicGetOwnedTemplateParameters();
 			if (asTemplateParameters != null) {
 				for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
 					if (templateParameters == null) {
