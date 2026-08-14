@@ -316,6 +316,9 @@ public class OCLstdlibTests extends XtextTestCase
 		//		}
 		//		assertEquals(fileMoniker2asMap.size(), javaMoniker2asMap.size());
 		for (String moniker : fileMoniker2asMap.keySet()) {
+			if (moniker.contains("!product{T2}")) {
+				getClass();			// XXX
+			}
 			Element fileElement = fileMoniker2asMap.get(moniker);
 			Element javaElement = javaMoniker2asMap.get(moniker);
 			if (javaElement == null) {
