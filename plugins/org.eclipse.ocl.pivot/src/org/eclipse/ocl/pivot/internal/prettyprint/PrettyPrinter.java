@@ -286,7 +286,7 @@ public class PrettyPrinter
 		return printType(element, createOptions(null));
 	}
 	public static @NonNull String printType(@NonNull Element element, @NonNull Namespace namespace) {
-		return printType(element, createOptions(element instanceof Namespace ? (Namespace)element : namespace));		// XXX distinvcre namespace / context scope
+		return printType(element, createOptions(namespace));
 	}
 	public static @NonNull String printType(@NonNull Element element, @NonNull PrettyPrintOptions options) {
 		PrettyPrinter printer = new PrettyPrinter(options, Mode.TYPE, element);
@@ -305,22 +305,25 @@ public class PrettyPrinter
 	private enum Mode { TYPE, NAME, FULL };
 
 	private final @NonNull PrettyPrintOptions options;
+	private @NonNull Mode mode;
+	private @NonNull Element element;
 	private String pendingPrefix = "";
 	private final @NonNull StringBuilder pendingText;
 	protected Fragment fragment;
-	private @NonNull Mode mode;
 	private final AbstractVisitor<Object, PrettyPrinter> visitor;
 	private @Nullable Namespace scope;
 	private @Nullable Precedence currentPrecedence = null;
 	private @Nullable PrecedenceManager precedenceManager;
+	private @Nullable TemplateParameterization templateParameterization = null;
 
 	/**
 	 * Initializes me.
 	 * @param element
 	 */
-	private PrettyPrinter(@NonNull PrettyPrintOptions options, @NonNull Mode mode, @NonNull Element element) {
+	private PrettyPrinter(@NonNull PrettyPrintOptions options, @NonNull Mode mode, @NonNull Element element) {		// XXX persist element as better template parameter context
 		this.options = options;
 		this.mode = mode;
+		this.element = element;
 		this.scope = options.getScope();
 		pendingText = new StringBuilder();
 		fragment = new Fragment(null, 0, "", "", "");
@@ -670,30 +673,32 @@ public class PrettyPrinter
 	 */
 	public void appendTypedElement(@NonNull Element object, Type type) {
 		if (type instanceof NormalizedTemplateParameter) {
-		//	Type type2 = TemplateParameterization.denormalize((NormalizedTemplateParameter)type, object);
-			TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
-			int index = ((NormalizedTemplateParameter)type).getIndex();
+			NormalizedTemplateParameter normalizedTemplateParameter = (NormalizedTemplateParameter)type;
+			TemplateParameterization templateParameterization = getTemplateParameterization();
+			int index = normalizedTemplateParameter.getIndex();
 			if (index < templateParameterization.size()) {
 				Type type2 = templateParameterization.get(index);
 				appendElement(type2);
 				return;
 			}
-		//	TemplateParameterization templateParameterization2 = TemplateParameterization.basicGetTemplateParameterization(object);
-		//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
-		//	if (!templateParameterization.isEmpty()) {
-		//		appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
-		//	}
-		//	else {
+		/*	TemplateableElement templateableElement = templateParameterization.getTemplateableElement();
+			templateParameterization = TemplateParameterization.getTemplateParameterization(templateableElement.getGeneric());
+			index = normalizedTemplateParameter.getIndex();
+			assert index < templateParameterization.size();			// XXX
+			if (index < templateParameterization.size()) {
+				Type type2 = templateParameterization.get(index);
+				appendElement(type2);
+				return;
+			} */
 			appendElement(type);
-				append(type.getName());
-				List<org.eclipse.ocl.pivot.Class> constrainingClasses = ((NormalizedTemplateParameter)type).getConstrainingClasses();
-				if ((constrainingClasses != null) && !constrainingClasses.isEmpty()) {
-					append(" extends");
-					for (org.eclipse.ocl.pivot.Class constrainingClass : constrainingClasses) {
-						appendElement(constrainingClass);
-					}
+		//	append(type.getName());
+			List<org.eclipse.ocl.pivot.Class> constrainingClasses = normalizedTemplateParameter.getConstrainingClasses();		// XXX
+			if ((constrainingClasses != null) && !constrainingClasses.isEmpty()) {
+				append(" extends");
+				for (org.eclipse.ocl.pivot.Class constrainingClass : constrainingClasses) {
+					appendElement(constrainingClass);
 				}
-		//	}
+			}
 		}
 		else {
 			appendElement(type);
@@ -789,6 +794,17 @@ public class PrettyPrinter
 	 */
 	public @Nullable PrecedenceManager getPrecedenceManager() {
 		return precedenceManager;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public @NonNull TemplateParameterization getTemplateParameterization() {
+		TemplateParameterization templateParameterization2 = templateParameterization;
+		if (templateParameterization2 == null) {
+			templateParameterization = templateParameterization2 = TemplateParameterization.getTemplateParameterization(element);
+		}
+		return templateParameterization2;
 	}
 
 	/**
