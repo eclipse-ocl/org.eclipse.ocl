@@ -179,11 +179,11 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 		}
 		if (referencedType instanceof LambdaType) {
 			LambdaType lambdaType = (LambdaType)referencedType;
-			Type contextType = lambdaType.getContextType();
+			Type contextType = PivotUtil.getContextType(lambdaType);
 			if (needsSpecialization(contextType)) {
 				return true;
 			}
-			Type resultType = lambdaType.getResultType();
+			Type resultType = PivotUtil.getResultType(lambdaType);
 			if (needsSpecialization(resultType)) {
 				return true;
 			}
@@ -644,8 +644,8 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 	public @Nullable Object visitLambdaType(@NonNull LambdaType object) {
 		if (actual instanceof LambdaType) {
 			LambdaType actualLambdaType = (LambdaType)actual;
-			analyzeType(object.getContextType(), actualLambdaType.getContextType());
-			analyzeType(object.getResultType(), actualLambdaType.getResultType());
+			analyzeType(PivotUtil.getContextType(object), PivotUtil.getContextType(actualLambdaType));
+			analyzeType(PivotUtil.getResultType(object), PivotUtil.getContextType(actualLambdaType));
 			List<LambdaParameter> formalParameters = object.getOwnedParameters();
 			List<LambdaParameter> actualParameters = actualLambdaType.getOwnedParameters();
 			int iMax = formalParameters.size();
@@ -657,7 +657,7 @@ public /*abstract*/ class TemplateArgumentVisitor extends AbstractExtendingVisit
 			}
 		}
 		else {
-			analyzeType(object.getResultType(), actual);
+			analyzeType(PivotUtil.getResultType(object), actual);
 		}
 		return null;
 	}

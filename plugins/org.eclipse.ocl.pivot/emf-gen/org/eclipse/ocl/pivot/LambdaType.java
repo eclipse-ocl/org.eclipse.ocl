@@ -95,10 +95,4 @@ public interface LambdaType extends DataType
 	 * @generated
 	 */
 	void setOwnedResult(LambdaParameter value);
-
-	@Deprecated
-	Type getResultType();
-
-	@Deprecated
-	Type getContextType();
 } // LambdaType

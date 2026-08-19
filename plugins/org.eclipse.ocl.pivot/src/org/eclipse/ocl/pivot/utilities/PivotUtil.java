@@ -1884,6 +1884,10 @@ public class PivotUtil implements PivotConstants
 		return depth;
 	}
 
+	public static @NonNull Type getContextType(@NonNull LambdaType lambdaType) {
+		return getType(getOwnedContext(lambdaType));
+	}
+
 	/**
 	 * @since 1.3
 	 */
@@ -2818,6 +2822,10 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull Resource getResource(@NonNull EObject eObject) {
 		return ClassUtil.requireNonNull(eObject.eResource());
+	}
+
+	public static @NonNull Type getResultType(@NonNull LambdaType lambdaType) {
+		return getType(getOwnedResult(lambdaType));
 	}
 
 	/**

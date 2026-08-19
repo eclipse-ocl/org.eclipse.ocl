@@ -33,15 +33,13 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.StereotypeExtender;
-import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateArgument;
+import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
-import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.util.Visitor;
-import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
  * <!-- begin-user-doc -->
@@ -638,15 +636,5 @@ public class LambdaTypeImpl extends DataTypeImpl implements LambdaType
 	@Override
 	public @NonNull TypeId computeId() {
 		return IdManager.getLambdaTypeId(this);
-	}
-
-	@Override
-	public @NonNull Type getContextType() {
-		return PivotUtil.getType(ownedContext);
-	}
-
-	@Override
-	public @NonNull Type getResultType() {
-		return PivotUtil.getType(ownedResult);
 	}
 } //LambdaTypeImpl
