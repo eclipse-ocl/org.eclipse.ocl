@@ -1192,6 +1192,19 @@ public class OCLinEcoreTablesUtils
 		return "";
 	}
 
+	public static @NonNull String getSignature(org.eclipse.ocl.pivot.@NonNull Class aClass) {
+		String qualifiedSignature = PrettyPrinter.printType(aClass, aClass);
+		int colonColonIndex = qualifiedSignature.indexOf("::");
+		int parenthesisIndex = qualifiedSignature.indexOf("(");
+		if ((parenthesisIndex < 0) ? (colonColonIndex > 0) : (colonColonIndex < parenthesisIndex)) {	// FIXME use a decent inherently right algorithm
+			@NonNull String substring = qualifiedSignature.substring(colonColonIndex+1);
+			return substring;
+		}
+		else {
+			return qualifiedSignature;	// FIXME with PrettyPrintOptions
+		}
+	}
+
 	public static @NonNull String getSignature(@NonNull Operation anOperation) {
 		org.eclipse.ocl.pivot.Class owningType = anOperation.getOwningClass();
 		if (owningType == null) {

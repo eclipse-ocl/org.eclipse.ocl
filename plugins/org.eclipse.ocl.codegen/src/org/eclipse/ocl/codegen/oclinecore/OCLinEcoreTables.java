@@ -573,6 +573,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					s.appendClassReference(true, Operation.class);
 					s.append(" " + atNonNull() + " [] ");
 					appendClassSuperClassName(asClass, asSuperClass);
+					s.append(" /* ");
+					s.append(getSignature(asClass));
+					s.append(" */");
 					s.append(" = ");
 					if (sortedOperations.size() <= 0) {
 						s.append("{};\n");
