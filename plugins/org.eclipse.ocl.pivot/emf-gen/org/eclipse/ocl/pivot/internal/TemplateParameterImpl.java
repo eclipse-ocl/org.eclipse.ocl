@@ -44,7 +44,6 @@ import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
-import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -448,7 +447,7 @@ public class TemplateParameterImpl
 					}
 					templateParameterId = templateParameterId2 = computeTemplateParameterId();
 				//	TemplateParameterization.denormalize(templateParameterId2, getOwningTemplateableElement());
-					System.out.println("getTemplateParameterId " + NameUtil.debugSimpleName(this) + " " + this + " => " + NameUtil.debugSimpleName(templateParameterId2) + " " + templateParameterId2); // XXX
+				//	System.out.println("getTemplateParameterId " + NameUtil.debugSimpleName(this) + " " + this + " => " + NameUtil.debugSimpleName(templateParameterId2) + " " + templateParameterId2); // XXX
 				}
 			}
 		}
