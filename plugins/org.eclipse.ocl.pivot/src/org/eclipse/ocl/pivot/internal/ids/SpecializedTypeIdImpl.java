@@ -28,7 +28,6 @@ public /*abstract*/ class SpecializedTypeIdImpl extends AbstractSpecializedIdImp
 	@Override
 	public <R> R accept(@NonNull IdVisitor<R> visitor) {
 		throw new UnsupportedOperationException();		// Must be overridden since logically abstract
-//		return visitor.visitTemplateableTypeId(this);
 	}
 
 	@Override
@@ -45,11 +44,6 @@ public /*abstract*/ class SpecializedTypeIdImpl extends AbstractSpecializedIdImp
 	public @NonNull PackageId getParent() {
 		return ((NestedTypeId)generalizedId).getParent();
 	}
-
-/*    @Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
-		throw new UnsupportedOperationException();		// FIXME migrate to generalized only
-	} */
 
 	@Override
 	public @NonNull TemplateableTypeId specialize(@NonNull BindingsId templateBindings) {

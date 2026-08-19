@@ -46,7 +46,7 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 
 		@Override
 		public @NonNull TemplateParameterId createSingleton() {
-			return new TemplateParameterIdImpl(templateableId, index, constrainingTypeIds);
+			return new TemplateParameterIdImpl(hashCode, templateableId, index, constrainingTypeIds);
 		}
 
 		@Override
@@ -64,6 +64,9 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	 */
 	public static class TemplateParameterIdSingletonScope extends AbstractSingletonScope<@NonNull TemplateParameterId, @NonNull TemplateParameter>
 	{
+		/**
+		 * @since 7.0
+		 */
 		public @NonNull TemplateParameterId getSingleton(@NonNull TemplateableId templateableId, int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 			return getSingletonFor(new TemplateParameterIdValue(templateableId, index, constrainingTypeIds));
 		}
@@ -74,32 +77,34 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	 */
 	private static /*@LazyNonNull*/ List<@NonNull TemplateParameterIdImpl> templateParameterNormalizedIds = null;
 
-	public static synchronized @NonNull TemplateParameterId getNormalizedTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeId) {
+	public static synchronized @NonNull TemplateParameterId getNormalizedTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		assert index >= 0;
 		if (templateParameterNormalizedIds == null) {
 			templateParameterNormalizedIds = new ArrayList<>(10);
 		}
-		if (index >= templateParameterNormalizedIds.size()) {
-			while (index >= templateParameterNormalizedIds.size()) {
-				templateParameterNormalizedIds.add(new TemplateParameterIdImpl(null, templateParameterNormalizedIds.size(), constrainingTypeId));
+		int hashCode = IdHash.createConstrainedHash(null, index, constrainingTypeIds);
+		for (@NonNull TemplateParameterIdImpl templateParameterId : templateParameterNormalizedIds) {
+			if ((hashCode == templateParameterId.hashCode()) && templateParameterId.equals(null, index, constrainingTypeIds)) {
+				return templateParameterId;
 			}
 		}
-		TemplateParameterIdImpl templateParameterId = templateParameterNormalizedIds.get(index);
-		assert templateParameterId != null;
+		TemplateParameterIdImpl templateParameterId = new TemplateParameterIdImpl(hashCode, null, index, constrainingTypeIds);
+		templateParameterNormalizedIds.add(templateParameterId);
 		return templateParameterId;
 	}
 
+	private final int hashCode;
 	private final @Nullable TemplateableId templateableId;
 	private final int index;
 	private  @NonNull TypeId @NonNull [] constrainingTypeIds;
 	private final @NonNull String name;
-	private final int hashCode;
 
 	/**
 	 * @since 1.18
 	 */
-	private TemplateParameterIdImpl(@Nullable TemplateableId templateableId, int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+	private TemplateParameterIdImpl(int hashCode, @Nullable TemplateableId templateableId, int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		//		System.out.println("create " + ClassUtil.debugFullName(this));
+		this.hashCode = hashCode;
 		this.templateableId = templateableId;
 		this.index = index;
 		this.constrainingTypeIds = constrainingTypeIds;
@@ -110,7 +115,6 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 			s.append(constrainingTypeId);
 		}
 		this.name = s.toString();
-		this.hashCode = IdHash.createConstrainedHash(templateableId, index, constrainingTypeIds);
 	}
 
 	@Override
@@ -121,7 +125,7 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	/**
 	 * @since 7.0
 	 */
-	public boolean equals(@NonNull TemplateableId thatTemplateableId, int thatIndex, @NonNull TypeId @NonNull [] thoseConstrainingTypeIds) {
+	public boolean equals(@Nullable TemplateableId thatTemplateableId, int thatIndex, @NonNull TypeId @NonNull [] thoseConstrainingTypeIds) {
 		if (this.index != thatIndex) {
 			return false;
 		}

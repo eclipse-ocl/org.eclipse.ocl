@@ -85,6 +85,7 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.ids.UnspecifiedId;
 import org.eclipse.ocl.pivot.ids.WildcardId;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.values.BagImpl;
 import org.eclipse.ocl.pivot.internal.values.OrderedSetImpl;
@@ -1639,11 +1640,16 @@ public abstract class AbstractIdResolver implements IdResolver
 
 	@Override
 	public @NonNull Element visitTemplateParameterId(@NonNull TemplateParameterId id) {
-		@NonNull TemplateableId templateableId = ClassUtil.requireNonNull(id.getTemplateableId());
-		Element resolvedElement = templateableId.accept(this);
-		Element type = ClassUtil.requireNonNull(resolvedElement);
-		List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(type);
-		return templateParameters.get(id.getIndex());
+		TemplateableId templateableId = id.getTemplateableId();
+		if (templateableId == null) {
+			return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), id.getIndex(), null);
+		}
+		else {
+			Element resolvedElement = templateableId.accept(this);
+			Element type = ClassUtil.requireNonNull(resolvedElement);
+			List<@NonNull TemplateParameter> templateParameters = TemplateParameterization.getTemplateParameters(type);
+			return templateParameters.get(id.getIndex());
+		}
 	}
 
 	@Override

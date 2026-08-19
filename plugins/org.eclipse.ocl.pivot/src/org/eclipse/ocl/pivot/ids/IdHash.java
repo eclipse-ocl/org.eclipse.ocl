@@ -50,8 +50,6 @@ public class IdHash
 	}
 
 	/**
-	 * @param name 
-	 * @param generalizedId 
 	 * @since 7.0
 	 */
 	public static int createConstrainedHash(@Nullable TemplateableId generalizedId, int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {

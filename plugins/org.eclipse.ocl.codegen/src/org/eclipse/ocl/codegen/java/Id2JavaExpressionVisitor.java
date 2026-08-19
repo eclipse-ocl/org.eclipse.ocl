@@ -321,7 +321,15 @@ public class Id2JavaExpressionVisitor implements IdVisitor<@Nullable Object>
 		}
 		else {
 			js.appendClassReference(null, IdManager.class);
-			js.append(".getTemplateParameterId(" + index + ")");
+			js.append(".getNormalizedTemplateParameterId(" + index);
+			@NonNull TypeId[] constrainingTypeIds = id.getConstrainingTypeIds();
+			if (constrainingTypeIds != null) {
+				for (@NonNull TypeId constrainingTypeId : constrainingTypeIds) {
+					js.append(", ");
+					constrainingTypeId.accept(this);
+				}
+			}
+			js.append(")");
 		}
 		return null;
 	}
