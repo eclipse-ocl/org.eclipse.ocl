@@ -46,10 +46,10 @@ public /*abstract*/ class SpecializedTypeIdImpl extends AbstractSpecializedIdImp
 		return ((NestedTypeId)generalizedId).getParent();
 	}
 
-    @Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+/*    @Override
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		throw new UnsupportedOperationException();		// FIXME migrate to generalized only
-	}
+	} */
 
 	@Override
 	public @NonNull TemplateableTypeId specialize(@NonNull BindingsId templateBindings) {

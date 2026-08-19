@@ -54,12 +54,11 @@ public class IdHash
 	 * @param generalizedId 
 	 * @since 7.0
 	 */
-	public static int createConstrainedHash(@Nullable TemplateableId generalizedId, int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+	public static int createConstrainedHash(@Nullable TemplateableId generalizedId, int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		long hash = TemplateParameterId.class.hashCode() + index;
 		if (generalizedId != null) {
 			hash += generalizedId.hashCode();
 		}
-		hash += name.hashCode();
 		for (TypeId constrainingTypeId : constrainingTypeIds) {
 			hash = CONSTRAINED_SCALING * hash + longValueOf(constrainingTypeId.hashCode());
 		}

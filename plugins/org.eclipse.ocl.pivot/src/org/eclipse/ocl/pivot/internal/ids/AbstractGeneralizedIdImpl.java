@@ -43,7 +43,7 @@ public abstract class AbstractGeneralizedIdImpl<@NonNull T extends TemplateableI
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		TemplateParameterIdSingletonScope templateParameterIds2 = templateParameterIds;
 		if (templateParameterIds2 == null) {
 			synchronized (this) {
@@ -53,6 +53,6 @@ public abstract class AbstractGeneralizedIdImpl<@NonNull T extends TemplateableI
 				}
 			}
 		}
-		return templateParameterIds2.getSingleton(this, index, name, constrainingTypeIds);
+		return templateParameterIds2.getSingleton(this, index, constrainingTypeIds);
 	}
 }

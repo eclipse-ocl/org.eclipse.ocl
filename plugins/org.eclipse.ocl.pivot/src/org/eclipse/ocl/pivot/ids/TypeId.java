@@ -196,9 +196,9 @@ public interface TypeId extends ElementId
 	public static final @NonNull MapTypeId ENTRY = IdManager.getMapTypeId(ENTRY_NAME);
 	public static final @NonNull MapTypeId MAP = IdManager.getMapTypeId(MAP_NAME);
 
-	public static final @NonNull TemplateParameterId T_1 = IdManager.getTemplateParameterId(0, TypeId.NULL_TYPE_ID_ARRAY);
-	public static final @NonNull TemplateParameterId T_2 = IdManager.getTemplateParameterId(1, TypeId.NULL_TYPE_ID_ARRAY);
-	public static final @NonNull TemplateParameterId T_3 = IdManager.getTemplateParameterId(2, TypeId.NULL_TYPE_ID_ARRAY);
+	public static final @NonNull TemplateParameterId T_1 = IdManager.getNormalizedTemplateParameterId(0, TypeId.NULL_TYPE_ID_ARRAY);
+	public static final @NonNull TemplateParameterId T_2 = IdManager.getNormalizedTemplateParameterId(1, TypeId.NULL_TYPE_ID_ARRAY);
+	public static final @NonNull TemplateParameterId T_3 = IdManager.getNormalizedTemplateParameterId(2, TypeId.NULL_TYPE_ID_ARRAY);
 
 	@Nullable String getLiteralName();
 

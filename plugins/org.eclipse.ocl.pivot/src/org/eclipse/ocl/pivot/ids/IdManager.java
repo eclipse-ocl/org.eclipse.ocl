@@ -382,6 +382,24 @@ public final class IdManager
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TemplateParameterId getNormalizedTemplateParameterId(@NonNull TemplateParameter templateParameter) {
+		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(templateParameter);
+		int index = templateParameterization.indexOf(templateParameter);
+		@NonNull TypeId @NonNull [] constrainingTypeIds = templateParameter.getConstrainingTypeIds();
+		return TemplateParameterIdImpl.getNormalizedTemplateParameterId(index, constrainingTypeIds);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TemplateParameterId getNormalizedTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+		assert index >= 0;
+		return TemplateParameterIdImpl.getNormalizedTemplateParameterId(index, constrainingTypeIds);
+	}
+
+	/**
 	 * Return the URIed package typeId.
 	 */
 	public static @NonNull NsURIPackageId getNsURIPackageId(@NonNull String nsURI, @Nullable String nsPrefix, @Nullable EPackage ePackage) {
@@ -420,7 +438,7 @@ public final class IdManager
 					@NonNull TypeId[] constrainingTypeIds = templateParameter.getConstrainingTypeIds();
 				//	TemplateParameterId templateParameterId = templateParameter.getTemplateParameterId();
 				//	parameterIds[i] = IdManager.getParameterId(templateParameterId, false);
-					parameterIds[i] = IdManager.getParameterId(IdManager.getTemplateParameterId(contextTemplateParameterSize + i, constrainingTypeIds), false);
+					parameterIds[i] = IdManager.getParameterId(IdManager.getNormalizedTemplateParameterId(contextTemplateParameterSize + i, constrainingTypeIds), false);
 				}
 				parametersId = getParametersId(parameterIds);
 			}
@@ -658,32 +676,6 @@ public final class IdManager
 		//	}
 		return roots.getSingleton(PRIVATE_INSTANCE, name);
 	}
-
-	/**
-	 * @since 1.18
-	 */
-	public static @NonNull TemplateParameterId getTemplateParameterIndexId(@NonNull TemplateParameter templateParameter) {
-		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(templateParameter);
-		int index = templateParameterization.indexOf(templateParameter);
-		@NonNull TypeId @NonNull [] constrainingTypeIds = templateParameter.getConstrainingTypeIds();
-		return TemplateParameterIdImpl.getTemplateParameterId(index, constrainingTypeIds);
-	}
-
-	/**
-	 * @since 7.0
-	 */
-	public static @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
-		assert index >= 0;
-		return TemplateParameterIdImpl.getTemplateParameterId(index, constrainingTypeIds);
-	}
-
-	/**
-	 * @since 7.0
-	 *
-	public static @NonNull TemplateParameterId getTemplateParameterId(int index, @Nullable List<@NonNull TypeId> constrainingTypeIds) {
-		assert index >= 0;
-		return TemplateParameterIdImpl.getTemplateParameterId(index, constrainingTypeIds);
-	} */
 
 	/**
 	 * Return the named tuple typeId with the defined collection of parts (which need not be alphabetically ordered).

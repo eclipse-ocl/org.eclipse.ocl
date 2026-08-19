@@ -100,7 +100,7 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		return this;
 	}
 

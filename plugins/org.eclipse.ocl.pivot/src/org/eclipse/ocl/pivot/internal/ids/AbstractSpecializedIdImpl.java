@@ -73,7 +73,7 @@ public abstract class AbstractSpecializedIdImpl<@NonNull T extends TemplateableI
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		throw new UnsupportedOperationException();
 	}
 }

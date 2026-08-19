@@ -433,7 +433,7 @@ public class TemplateParameterImpl
 		assert generalizedTypeId != null;
 		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(this);
 		int index = templateParameterization.indexOf(this);
-		return generalizedTypeId.getTemplateParameterId(index, PivotUtil.getName(this), getConstrainingTypeIds());
+		return generalizedTypeId.getTemplateParameterId(index, getConstrainingTypeIds());
 	}
 
 	@Override

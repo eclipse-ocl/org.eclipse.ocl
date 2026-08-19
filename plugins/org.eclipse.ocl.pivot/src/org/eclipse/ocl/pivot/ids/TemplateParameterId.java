@@ -25,15 +25,27 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 public interface TemplateParameterId extends TypeId, Nameable
 {
 	/**
+	 * Return the TypeIds that constrain this TemplateParameterId.
+	 * 
 	 * @since 7.0
 	 */
 	@NonNull TypeId @NonNull [] getConstrainingTypeIds();
 
+	/**
+	 * Return the index of this TemplateParameterId in the contextual hierarchy of TemplateParameters.
+	 */
 	int getIndex();
 
+	/**
+	 * Return the name of this TemplateParameterId computed from the index and constrainingTypeIds.
+	 */
 	@Override
 	@NonNull String getName();
+	
 	/**
+	 * Return the GeneralizedTypeId that scopes this TemplateParameterId, or null for a NormalizedTemplateParameter,
+	 * or unparameterized type.
+	 * 
 	 * @since 1.18
 	 */
 	default @Nullable TemplateableId getTemplateableId() { return null; }
