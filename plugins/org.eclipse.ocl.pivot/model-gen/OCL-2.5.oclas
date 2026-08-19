@@ -35,7 +35,7 @@
           isRequired="true" name="closure" type="#KcjGH">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
         <ownedIterators xmi:id="lJPEW" name="i" type="#ZVcXo"/>
-        <ownedParameters xmi:id="M9FFC" name="lambda" type="#bF2V1"/>
+        <ownedParameters xmi:id="M9FFC" name="lambda" type="#lNYQ1"/>
         <ownedTemplateParameters xmi:id="Dp+jV" name="E"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="zRrYi" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
@@ -1776,7 +1776,7 @@
           isRequired="true" name="closure" type="#deaTr">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
         <ownedIterators xmi:id="6K,GS" name="i" type="#ZVcXo"/>
-        <ownedParameters xmi:id="b2Qvq" name="lambda" type="#JH+j0"/>
+        <ownedParameters xmi:id="b2Qvq" name="lambda" type="#TPge0"/>
         <ownedTemplateParameters xmi:id="YqumR" name="E"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="sW1iE" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
@@ -2040,7 +2040,7 @@
           isRequired="true" name="closure" type="#deaTr">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
         <ownedIterators xmi:id="mIj+f" name="i" type="#ZVcXo"/>
-        <ownedParameters xmi:id="H00m4" name="lambda" type="#JH+j0"/>
+        <ownedParameters xmi:id="H00m4" name="lambda" type="#TPge0"/>
         <ownedTemplateParameters xmi:id="EoSef" name="E"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="ICR5M" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
@@ -2165,7 +2165,7 @@
           isRequired="true" name="closure" type="#KcjGH">
         <ownedComments body="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
         <ownedIterators xmi:id="PWsqV" name="i" type="#ZVcXo"/>
-        <ownedParameters xmi:id="2JjrB" name="lambda" type="#bF2V1"/>
+        <ownedParameters xmi:id="2JjrB" name="lambda" type="#lNYQ1"/>
         <ownedTemplateParameters xmi:id="t1bKV" name="E"/>
       </ownedOperations>
       <ownedOperations xsi:type="pivot:Iteration" xmi:id="lt1Yj" implementationClass="org.eclipse.ocl.pivot.library.iterator.CollectIteration"
@@ -2629,11 +2629,11 @@
       <ownedContext name="self" type="#YVcXo"/>
       <ownedResult name="result" type="#BEwMu"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="bF2V1" name="Lambda" superClasses="#ufpqK">
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="lNYQ1" name="Lambda" superClasses="#ufpqK">
       <ownedContext name="self" type="#ZVcXo"/>
       <ownedResult name="result" type="#B3HIW"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="JH+j0" name="Lambda" superClasses="#ufpqK">
+    <ownedClasses xsi:type="pivot:LambdaType" xmi:id="TPge0" name="Lambda" superClasses="#ufpqK">
       <ownedContext name="self" type="#ZVcXo"/>
       <ownedResult name="result" type="#OH9eM"/>
     </ownedClasses>
@@ -2873,8 +2873,8 @@
       <ownedTemplateArguments actual="#,5eVD" actualIsRequired="true"/>
     </ownedClasses>
     <ownedClasses xmi:id="Xt1f+" name="$$">
-      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="YVcXo" name="$$0"/>
       <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="ZVcXo" name="$$1"/>
+      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="YVcXo" name="$$0"/>
       <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="aVcXo" name="$$2"/>
       <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="bVcXo" name="$$3"/>
     </ownedClasses>
