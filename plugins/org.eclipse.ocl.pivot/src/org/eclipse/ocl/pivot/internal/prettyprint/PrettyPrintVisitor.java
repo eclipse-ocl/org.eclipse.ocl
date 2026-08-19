@@ -111,7 +111,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 		//		appendParent(object.eContainer(), object, "::");
 		context.appendName(object, context.getRestrictedNames());
 		context.append(" ");
-		context.appendTypedElement(object, PivotUtil.getContextType(object));
+		context.appendTypedElement(context.getScope(), PivotUtil.getContextType(object));
 		context.append("(");
 		String prefix = ""; //$NON-NLS-1$
 		for (LambdaParameter parameter : object.getOwnedParameters()) {
@@ -120,7 +120,7 @@ public class PrettyPrintVisitor extends AbstractExtendingVisitor<Object,PrettyPr
 			prefix = ",";
 		}
 		context.append(") : ");
-		context.appendTypedElement(object, PivotUtil.getResultType(object));
+		context.appendTypedElement(context.getScope(), PivotUtil.getResultType(object));
 		return null;
 	}
 

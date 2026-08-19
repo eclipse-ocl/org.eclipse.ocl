@@ -41,6 +41,7 @@ import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
+import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrintOptions.Global;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.PathElement;
@@ -285,7 +286,7 @@ public class PrettyPrinter
 		return printType(element, createOptions(null));
 	}
 	public static @NonNull String printType(@NonNull Element element, @NonNull Namespace namespace) {
-		return printType(element, createOptions(namespace));
+		return printType(element, createOptions(element instanceof Namespace ? (Namespace)element : namespace));		// XXX distinvcre namespace / context scope
 	}
 	public static @NonNull String printType(@NonNull Element element, @NonNull PrettyPrintOptions options) {
 		PrettyPrinter printer = new PrettyPrinter(options, Mode.TYPE, element);
@@ -669,6 +670,14 @@ public class PrettyPrinter
 	 */
 	public void appendTypedElement(@NonNull Element object, Type type) {
 		if (type instanceof NormalizedTemplateParameter) {
+		//	Type type2 = TemplateParameterization.denormalize((NormalizedTemplateParameter)type, object);
+			TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
+			int index = ((NormalizedTemplateParameter)type).getIndex();
+			if (index < templateParameterization.size()) {
+				Type type2 = templateParameterization.get(index);
+				appendElement(type2);
+				return;
+			}
 		//	TemplateParameterization templateParameterization2 = TemplateParameterization.basicGetTemplateParameterization(object);
 		//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
 		//	if (!templateParameterization.isEmpty()) {
