@@ -92,54 +92,12 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 			 *******************************************************************************/
 			package	«javaPackageName»;
 
-			import java.io.IOException;
-			import java.util.List;
-			import java.util.Map;
-
-			import org.eclipse.emf.common.notify.Notification;
-			import org.eclipse.emf.common.notify.NotificationChain;
-			import org.eclipse.emf.common.util.URI;
-			import org.eclipse.emf.ecore.resource.Resource;
-			import org.eclipse.emf.ecore.resource.ResourceSet;
-			import org.eclipse.jdt.annotation.NonNull;
-			import org.eclipse.jdt.annotation.Nullable;
-			import org.eclipse.ocl.pivot.AnyType;
-			import org.eclipse.ocl.pivot.AssociativityKind;
-			import org.eclipse.ocl.pivot.BagType;
-			import org.eclipse.ocl.pivot.CollectionType;
-			import org.eclipse.ocl.pivot.EntryType;
-			import org.eclipse.ocl.pivot.InvalidType;
-			import org.eclipse.ocl.pivot.Iteration;
-			import org.eclipse.ocl.pivot.LambdaType;
-			import org.eclipse.ocl.pivot.Library;
-			import org.eclipse.ocl.pivot.MapType;
-			import org.eclipse.ocl.pivot.Model;
-			import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
-			import org.eclipse.ocl.pivot.Operation;
-			import org.eclipse.ocl.pivot.OrderedSetType;
-			import org.eclipse.ocl.pivot.Parameter;
-			import org.eclipse.ocl.pivot.PivotPackage;
-			import org.eclipse.ocl.pivot.Precedence;
-			import org.eclipse.ocl.pivot.PrimitiveType;
-			import org.eclipse.ocl.pivot.Property;
-			import org.eclipse.ocl.pivot.SelfType;
-			import org.eclipse.ocl.pivot.SequenceType;
-			import org.eclipse.ocl.pivot.SetType;
-			import org.eclipse.ocl.pivot.TemplateParameter;
-			import org.eclipse.ocl.pivot.TupleType;
-			import org.eclipse.ocl.pivot.VoidType;
-			import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
-			import org.eclipse.ocl.pivot.internal.manager.Orphanage;
-			import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
-			import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
-			import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
-			import org.eclipse.ocl.pivot.utilities.ClassUtil;
-			import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
-			import org.eclipse.ocl.pivot.utilities.PivotConstants;
-			import org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup;
-			import org.eclipse.ocl.pivot.utilities.PivotUtil;
-			«FOR importedClassName : thisModel.getSortedImportedJavaClassNames()»
-				import «importedClassName»;
+			«FOR importLine : getImportLines()»
+				«IF importLine !== null»
+					«importLine»
+				«ELSE»
+					
+				«ENDIF»
 			«ENDFOR»
 
 			/**

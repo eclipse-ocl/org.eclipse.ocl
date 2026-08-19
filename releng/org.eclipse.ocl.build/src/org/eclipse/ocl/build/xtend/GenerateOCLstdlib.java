@@ -13,6 +13,7 @@ package org.eclipse.ocl.build.xtend;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,6 +88,81 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		}
 		return super.getExternalReference(element);
 	} */
+
+	protected List<String> getImportLines() {
+		List<String> importLines = new ArrayList<>();
+		for (Class<?> jClass : new Class<?>[] {
+				java.io.IOException.class,
+				java.util.List.class,
+				java.util.Map.class,
+				org.eclipse.emf.common.notify.Notification.class,
+				org.eclipse.emf.common.notify.NotificationChain.class,
+				org.eclipse.emf.common.util.URI.class,
+				org.eclipse.emf.ecore.resource.Resource.class,
+				org.eclipse.emf.ecore.resource.ResourceSet.class,
+				org.eclipse.jdt.annotation.NonNull.class,
+				org.eclipse.jdt.annotation.Nullable.class,
+				org.eclipse.ocl.pivot.AnyType.class,
+				org.eclipse.ocl.pivot.AssociativityKind.class,
+				org.eclipse.ocl.pivot.BagType.class,
+				org.eclipse.ocl.pivot.CollectionType.class,
+				org.eclipse.ocl.pivot.EntryType.class,
+				org.eclipse.ocl.pivot.InvalidType.class,
+				org.eclipse.ocl.pivot.Iteration.class,
+				org.eclipse.ocl.pivot.LambdaType.class,
+				org.eclipse.ocl.pivot.Library.class,
+				org.eclipse.ocl.pivot.MapType.class,
+				org.eclipse.ocl.pivot.Model.class,
+				org.eclipse.ocl.pivot.NormalizedTemplateParameter.class,
+				org.eclipse.ocl.pivot.Operation.class,
+				org.eclipse.ocl.pivot.OrderedSetType.class,
+				org.eclipse.ocl.pivot.Parameter.class,
+				org.eclipse.ocl.pivot.PivotPackage.class,
+				org.eclipse.ocl.pivot.Precedence.class,
+				org.eclipse.ocl.pivot.PrimitiveType.class,
+				org.eclipse.ocl.pivot.Property.class,
+				org.eclipse.ocl.pivot.SelfType.class,
+				org.eclipse.ocl.pivot.SequenceType.class,
+				org.eclipse.ocl.pivot.SetType.class,
+				org.eclipse.ocl.pivot.TemplateParameter.class,
+				org.eclipse.ocl.pivot.TupleType.class,
+				org.eclipse.ocl.pivot.VoidType.class,
+				org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution.class,
+				org.eclipse.ocl.pivot.internal.manager.Orphanage.class,
+				org.eclipse.ocl.pivot.internal.resource.ASResourceImpl.class,
+				org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory.class,
+				org.eclipse.ocl.pivot.internal.utilities.AbstractContents.class,
+				org.eclipse.ocl.pivot.utilities.ClassUtil.class,
+				org.eclipse.ocl.pivot.utilities.EnvironmentFactory.class,
+				org.eclipse.ocl.pivot.utilities.PivotConstants.class,
+				org.eclipse.ocl.pivot.utilities.PivotStandaloneSetup.class,
+				org.eclipse.ocl.pivot.utilities.PivotUtil.class
+			}) {
+			importLines.add("import " + jClass.getName() + ";");
+		}
+		for (String importedClassName : getSortedImportedJavaClassNames(getThisModel())) {
+			importLines.add("import " + importedClassName + ";");
+		}
+		Collections.sort(importLines);
+		int iMax = importLines.size();
+		String prev = importLines.get(iMax-1).substring(0, 10);
+		int index = prev.indexOf(".");
+		if (index > 0) {
+			prev = prev.substring(0, index);
+		}
+		for (int i = iMax-2; i > 0; i--) {
+			String curr = importLines.get(i);
+			index = curr.indexOf(".");
+			if (index > 0) {
+				curr = curr.substring(0, index);
+			}
+			if (!prev.equals(curr)) {
+				importLines.add(i+1, null);
+			}
+			prev = curr;
+		}
+		return importLines;
+	}
 
 	protected @Nullable Library getLibrary(@NonNull Model root) {
 		TreeIterator<EObject> tit = root.eAllContents();
