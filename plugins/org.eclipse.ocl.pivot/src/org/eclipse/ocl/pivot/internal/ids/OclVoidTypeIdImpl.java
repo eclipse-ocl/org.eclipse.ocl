@@ -39,6 +39,11 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 		return this;
 	}
 
+	@Override
+	public @NonNull TypeId @NonNull [] getConstrainingTypeIds() {
+		return TypeId.NULL_TYPE_ID_ARRAY;
+	}
+
 	public @NonNull TypeId getElementId() {
 		return this;
 	}
@@ -95,7 +100,7 @@ public class OclVoidTypeIdImpl extends UnscopedId implements OclVoidTypeId
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name) {
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		return this;
 	}
 

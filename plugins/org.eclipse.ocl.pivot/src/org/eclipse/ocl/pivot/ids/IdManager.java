@@ -416,7 +416,11 @@ public final class IdManager
 				@NonNull ParameterId parameterIds[] = new @NonNull ParameterId[operationTemplateParameterSize];
 				int contextTemplateParameterSize = contextTemplateParameterization != null ? contextTemplateParameterization.size() : 0;
 				for (int i = 0; i < operationTemplateParameterSize; i++) {
-					parameterIds[i] = IdManager.getParameterId(IdManager.getTemplateParameterId(contextTemplateParameterSize + i), false);
+					TemplateParameter templateParameter = templateParameters.get(i);
+					@NonNull TypeId[] constrainingTypeIds = templateParameter.getConstrainingTypeIds();
+				//	TemplateParameterId templateParameterId = templateParameter.getTemplateParameterId();
+				//	parameterIds[i] = IdManager.getParameterId(templateParameterId, false);
+					parameterIds[i] = IdManager.getParameterId(IdManager.getTemplateParameterId(contextTemplateParameterSize + i, constrainingTypeIds), false);
 				}
 				parametersId = getParametersId(parameterIds);
 			}
@@ -661,13 +665,25 @@ public final class IdManager
 	public static @NonNull TemplateParameterId getTemplateParameterIndexId(@NonNull TemplateParameter templateParameter) {
 		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(templateParameter);
 		int index = templateParameterization.indexOf(templateParameter);
-		return TemplateParameterIdImpl.getTemplateParameterId(index);
+		@NonNull TypeId @NonNull [] constrainingTypeIds = templateParameter.getConstrainingTypeIds();
+		return TemplateParameterIdImpl.getTemplateParameterId(index, constrainingTypeIds);
 	}
 
-	public static @NonNull TemplateParameterId getTemplateParameterId(int index) {
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		assert index >= 0;
-		return TemplateParameterIdImpl.getTemplateParameterId(index);
+		return TemplateParameterIdImpl.getTemplateParameterId(index, constrainingTypeIds);
 	}
+
+	/**
+	 * @since 7.0
+	 *
+	public static @NonNull TemplateParameterId getTemplateParameterId(int index, @Nullable List<@NonNull TypeId> constrainingTypeIds) {
+		assert index >= 0;
+		return TemplateParameterIdImpl.getTemplateParameterId(index, constrainingTypeIds);
+	} */
 
 	/**
 	 * Return the named tuple typeId with the defined collection of parts (which need not be alphabetically ordered).

@@ -33,31 +33,31 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 {
 	private static class TemplateParameterIdValue extends AbstractKeyAndValue<@NonNull TemplateParameterId>
 	{
-		private final @NonNull TemplateableId generalizedId;
+		private final @Nullable TemplateableId generalizedId;
 		private final int index;
 		private final @NonNull String name;
+		private final @NonNull TypeId @NonNull [] constrainingTypeIds;
 
-		private TemplateParameterIdValue(@NonNull TemplateableId generalizedId, int index, @NonNull String name) {
-			super(computeHashCode(generalizedId, name));
+		private TemplateParameterIdValue(@Nullable TemplateableId generalizedId, int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+			super(computeHashCode(generalizedId, index, name, constrainingTypeIds));
 			this.generalizedId = generalizedId;
 			this.index = index;
 			this.name = name;
+			this.constrainingTypeIds = constrainingTypeIds;
 		}
 
 		@Override
 		public @NonNull TemplateParameterId createSingleton() {
-			return new TemplateParameterIdImpl(generalizedId, index, name);
+			return new TemplateParameterIdImpl(generalizedId, index, name, constrainingTypeIds);
 		}
 
 		@Override
-		public boolean equals(@Nullable Object that) {
-			if (that instanceof TemplateParameterIdImpl) {
-				TemplateParameterIdImpl singleton = (TemplateParameterIdImpl)that;
-				return name.equals(singleton.getName());
-			}
-			else {
+		public boolean equals(@Nullable Object object) {
+			if (!(object instanceof TemplateParameterIdImpl)) {
 				return false;
 			}
+			TemplateParameterIdImpl that = (TemplateParameterIdImpl)object;
+			return that.equals(index, name, constrainingTypeIds);
 		}
 	}
 
@@ -66,8 +66,8 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	 */
 	public static class TemplateParameterIdSingletonScope extends AbstractSingletonScope<@NonNull TemplateParameterId, @NonNull TemplateParameter>
 	{
-		public @NonNull TemplateParameterId getSingleton(@NonNull TemplateableId generalizedId, int index, @NonNull String name) {
-			return getSingletonFor(new TemplateParameterIdValue(generalizedId, index, name));
+		public @NonNull TemplateParameterId getSingleton(@Nullable TemplateableId generalizedId, int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+			return getSingletonFor(new TemplateParameterIdValue(generalizedId, index, name, constrainingTypeIds));
 		}
 	}
 
@@ -76,18 +76,18 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 	 */
 	private static /*@LazyNonNull*/ List<@NonNull TemplateParameterIdImpl> templateParameterNormalizedIds = null;
 
-	private static int computeHashCode(@NonNull TemplateableId generalizedId, @NonNull String name) {
-		return IdHash.createChildHash(generalizedId, name);
+	private static int computeHashCode(@Nullable TemplateableId generalizedId, int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+		return IdHash.createConstrainedHash(generalizedId, index, name, constrainingTypeIds);
 	}
 
-	public static synchronized @NonNull TemplateParameterId getTemplateParameterId(int index) {
+	public static synchronized @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull TypeId @NonNull [] constrainingTypeId) {
 		assert index >= 0;
 		if (templateParameterNormalizedIds == null) {
 			templateParameterNormalizedIds = new ArrayList<>(10);
 		}
 		if (index >= templateParameterNormalizedIds.size()) {
 			while (index >= templateParameterNormalizedIds.size()) {
-				templateParameterNormalizedIds.add(new TemplateParameterIdImpl(templateParameterNormalizedIds.size()));
+				templateParameterNormalizedIds.add(new TemplateParameterIdImpl(templateParameterNormalizedIds.size(), constrainingTypeId));
 			}
 		}
 		TemplateParameterIdImpl templateParameterId = templateParameterNormalizedIds.get(index);
@@ -99,30 +99,60 @@ public class TemplateParameterIdImpl extends AbstractElementId implements Templa
 
 	private final int index;
 	private final @NonNull String name;
+	private  @NonNull TypeId @NonNull [] constrainingTypeIds;
 	private final int hashCode;
 
-	private TemplateParameterIdImpl(int index) {
+	private TemplateParameterIdImpl(int index, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		//		System.out.println("create " + ClassUtil.debugFullName(this));
-		this.templateableId = null;
-		this.index = index;
-		this.name = "$" + Integer.toString(index);
-		this.hashCode = TemplateParameterIdImpl.class.hashCode() + name.hashCode();
+//		this.templateableId = null;
+//		this.index = index;
+//		this,name = "$" + Integer.toString(index);
+//		this.hashCode = TemplateParameterIdImpl.class.hashCode() + name.hashCode();
+		this(null, index, "$" + Integer.toString(index), constrainingTypeIds);
 	}
 
 	/**
 	 * @since 1.18
 	 */
-	private TemplateParameterIdImpl(@NonNull TemplateableId templateableId, int index, @NonNull String name) {
+	private TemplateParameterIdImpl(@Nullable TemplateableId templateableId, int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		//		System.out.println("create " + ClassUtil.debugFullName(this));
 		this.templateableId = templateableId;
 		this.index = index;
 		this.name = name;
-		this.hashCode = computeHashCode(templateableId, name);
+		this.hashCode = computeHashCode(templateableId, index, name, constrainingTypeIds);
+		this.constrainingTypeIds = constrainingTypeIds;
 	}
 
 	@Override
 	public <R> R accept(@NonNull IdVisitor<R> visitor) {
 		return visitor.visitTemplateParameterId(this);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public boolean equals(int thatIndex, @NonNull String thatName, @NonNull TypeId @NonNull [] thoseConstrainingTypeIds) {
+		if (this.index != thatIndex) {
+			return false;
+		}
+		if (!this.name.equals(thatName)) {
+			return false;
+		}
+		int iMax = this.constrainingTypeIds.length;
+		if (iMax != thoseConstrainingTypeIds.length) {
+			return false;
+		}
+		for (int i = 0; i < iMax; i++) {
+			if (this.constrainingTypeIds[i] != thoseConstrainingTypeIds[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public @NonNull TypeId @NonNull [] getConstrainingTypeIds() {
+		return constrainingTypeIds;
 	}
 
 	@Override

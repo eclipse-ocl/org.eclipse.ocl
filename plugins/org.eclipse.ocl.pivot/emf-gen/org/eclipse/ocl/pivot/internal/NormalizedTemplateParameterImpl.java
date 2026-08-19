@@ -201,7 +201,7 @@ public class NormalizedTemplateParameterImpl extends TemplateParameterImpl imple
 
 	@Override
 	protected @NonNull TemplateParameterId computeTemplateParameterId() {
-		return IdManager.getTemplateParameterId(index.intValue());
+		return IdManager.getTemplateParameterId(index.intValue(), getConstrainingTypeIds());
 	}
 
 	@Override

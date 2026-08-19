@@ -24,6 +24,11 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
  */
 public interface TemplateParameterId extends TypeId, Nameable
 {
+	/**
+	 * @since 7.0
+	 */
+	@NonNull TypeId @NonNull [] getConstrainingTypeIds();
+
 	int getIndex();
 
 	@Override

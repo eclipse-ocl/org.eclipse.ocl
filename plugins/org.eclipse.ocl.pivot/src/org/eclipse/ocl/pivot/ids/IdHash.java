@@ -15,6 +15,7 @@ import org.eclipse.jdt.annotation.Nullable;
 
 public class IdHash
 {
+	private static final int CONSTRAINED_SCALING = 3;
 	private static final int GLOBAL_CONTEXT_SCALING = 3;
 	private static final int FUNCTION_PARAMETER_SCALING = 3;
 	private static final int PARENT_SCALING = 47;
@@ -44,6 +45,23 @@ public class IdHash
 		}
 		if (name != null) {
 			hash += longValueOf(name.hashCode());
+		}
+		return (int)hash;
+	}
+
+	/**
+	 * @param name 
+	 * @param generalizedId 
+	 * @since 7.0
+	 */
+	public static int createConstrainedHash(@Nullable TemplateableId generalizedId, int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
+		long hash = TemplateParameterId.class.hashCode() + index;
+		if (generalizedId != null) {
+			hash += generalizedId.hashCode();
+		}
+		hash += name.hashCode();
+		for (TypeId constrainingTypeId : constrainingTypeIds) {
+			hash = CONSTRAINED_SCALING * hash + longValueOf(constrainingTypeId.hashCode());
 		}
 		return (int)hash;
 	}

@@ -17,6 +17,7 @@ import org.eclipse.ocl.pivot.ids.NestedTypeId;
 import org.eclipse.ocl.pivot.ids.PackageId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableTypeId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 
 public /*abstract*/ class SpecializedTypeIdImpl extends AbstractSpecializedIdImpl<@NonNull TemplateableTypeId> implements TemplateableTypeId, NestedTypeId
 {
@@ -46,7 +47,7 @@ public /*abstract*/ class SpecializedTypeIdImpl extends AbstractSpecializedIdImp
 	}
 
     @Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name) {
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		throw new UnsupportedOperationException();		// FIXME migrate to generalized only
 	}
 

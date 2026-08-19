@@ -15,6 +15,7 @@ import org.eclipse.ocl.pivot.ids.BindingsId;
 import org.eclipse.ocl.pivot.ids.SpecializedId;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 
 public abstract class AbstractSpecializedIdImpl<@NonNull T extends TemplateableId> extends AbstractTemplateableIdImpl<T> implements SpecializedId
 {
@@ -72,7 +73,7 @@ public abstract class AbstractSpecializedIdImpl<@NonNull T extends TemplateableI
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name) {
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		throw new UnsupportedOperationException();
 	}
 }

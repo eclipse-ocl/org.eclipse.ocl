@@ -15,6 +15,7 @@ import java.util.List;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 
 /**
  * <!-- begin-user-doc -->
@@ -79,6 +80,11 @@ public interface TemplateParameter extends Type {
 	 * @since 7.0
 	 */
 	@Nullable List<org.eclipse.ocl.pivot.@NonNull Class> basicGetConstrainingClasses();
+
+	/**
+	 * @since 7.0
+	 */
+	@NonNull TypeId @NonNull [] getConstrainingTypeIds();
 
 	@NonNull TemplateParameterId getTemplateParameterId();
 

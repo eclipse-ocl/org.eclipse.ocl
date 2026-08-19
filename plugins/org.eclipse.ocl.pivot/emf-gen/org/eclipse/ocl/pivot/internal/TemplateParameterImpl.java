@@ -36,13 +36,16 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.flat.FlatClass;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ids.AbstractGeneralizedIdImpl;
 import org.eclipse.ocl.pivot.internal.manager.TemplateArgumentVisitor;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.util.Visitor;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
+import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ThreadLocalExecutor;
 
@@ -395,6 +398,21 @@ public class TemplateParameterImpl
 		return (constrainingClasses == null) || constrainingClasses.isEmpty() ? null : ClassUtil.nullFree(constrainingClasses);
 	}
 
+	@Override
+	public @NonNull TypeId @NonNull [] getConstrainingTypeIds() {
+		@Nullable List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses = basicGetConstrainingClasses();
+		if ((constrainingClasses == null) || constrainingClasses.isEmpty()) {
+			return TypeId.NULL_TYPE_ID_ARRAY;
+		}
+		int iMax = constrainingClasses.size();
+		@NonNull TypeId [] constrainingTypeIds = new @NonNull TypeId [iMax];
+		for (int i = 0; i < iMax; i++) {
+			org.eclipse.ocl.pivot.@NonNull Class constrainingClass = constrainingClasses.get(i);
+			constrainingTypeIds[i] = constrainingClass.getTypeId();
+		}
+		return constrainingTypeIds;
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -415,7 +433,7 @@ public class TemplateParameterImpl
 		assert generalizedTypeId != null;
 		TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(this);
 		int index = templateParameterization.indexOf(this);
-		return generalizedTypeId.getTemplateParameterId(index, PivotUtil.getName(this));
+		return generalizedTypeId.getTemplateParameterId(index, PivotUtil.getName(this), getConstrainingTypeIds());
 	}
 
 	@Override
@@ -426,7 +444,12 @@ public class TemplateParameterImpl
 			synchronized (this) {
 				templateParameterId2 = templateParameterId;
 				if (templateParameterId2 == null) {
+					if ("Collection.T".equals(toString())) {
+						getClass();			// XXX}
+					}
 					templateParameterId = templateParameterId2 = computeTemplateParameterId();
+				//	TemplateParameterization.denormalize(templateParameterId2, getOwningTemplateableElement());
+					System.out.println("getTemplateParameterId " + NameUtil.debugSimpleName(this) + " " + this + " => " + NameUtil.debugSimpleName(templateParameterId2) + " " + templateParameterId2); // XXX
 				}
 			}
 		}

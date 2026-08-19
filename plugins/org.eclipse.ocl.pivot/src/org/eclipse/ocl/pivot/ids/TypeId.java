@@ -139,6 +139,10 @@ public interface TypeId extends ElementId
 	 */
 	public static final @NonNull String VOID_TYPE_NAME = "VoidType";
 
+	public static final @NonNull String @NonNull [] NULL_STRING_ARRAY = new @NonNull String[0];
+	public static final @NonNull PartId @NonNull [] NULL_TUPLE_PART_ID_ARRAY = new @NonNull PartId[0];
+	public static final @NonNull TypeId @NonNull [] NULL_TYPE_ID_ARRAY = new @NonNull TypeId[0];
+
 	public static final @NonNull PrimitiveTypeId BOOLEAN = IdManager.getPrimitiveTypeId(BOOLEAN_NAME);
 	public static final @NonNull PrimitiveTypeId INTEGER = IdManager.getPrimitiveTypeId(INTEGER_NAME);
 
@@ -192,13 +196,9 @@ public interface TypeId extends ElementId
 	public static final @NonNull MapTypeId ENTRY = IdManager.getMapTypeId(ENTRY_NAME);
 	public static final @NonNull MapTypeId MAP = IdManager.getMapTypeId(MAP_NAME);
 
-	public static final @NonNull TemplateParameterId T_1 = IdManager.getTemplateParameterId(0);
-	public static final @NonNull TemplateParameterId T_2 = IdManager.getTemplateParameterId(1);
-	public static final @NonNull TemplateParameterId T_3 = IdManager.getTemplateParameterId(2);
-
-	public static final @NonNull String @NonNull [] NULL_STRING_ARRAY = new @NonNull String[0];
-	public static final @NonNull PartId @NonNull [] NULL_TUPLE_PART_ID_ARRAY = new @NonNull PartId[0];
-	public static final @NonNull TypeId @NonNull [] NULL_TYPE_ID_ARRAY = new @NonNull TypeId[0];
+	public static final @NonNull TemplateParameterId T_1 = IdManager.getTemplateParameterId(0, TypeId.NULL_TYPE_ID_ARRAY);
+	public static final @NonNull TemplateParameterId T_2 = IdManager.getTemplateParameterId(1, TypeId.NULL_TYPE_ID_ARRAY);
+	public static final @NonNull TemplateParameterId T_3 = IdManager.getTemplateParameterId(2, TypeId.NULL_TYPE_ID_ARRAY);
 
 	@Nullable String getLiteralName();
 

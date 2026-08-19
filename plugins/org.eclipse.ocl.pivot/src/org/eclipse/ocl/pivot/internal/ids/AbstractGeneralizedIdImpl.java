@@ -14,6 +14,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.ids.TemplateParameterId;
 import org.eclipse.ocl.pivot.ids.TemplateableId;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ids.TemplateParameterIdImpl.TemplateParameterIdSingletonScope;
 
 public abstract class AbstractGeneralizedIdImpl<@NonNull T extends TemplateableId> extends AbstractTemplateableIdImpl<T> //implements TemplateableTypeId
@@ -42,7 +43,7 @@ public abstract class AbstractGeneralizedIdImpl<@NonNull T extends TemplateableI
 	 * @since 1.18
 	 */
 	@Override
-	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name) {
+	public @NonNull TemplateParameterId getTemplateParameterId(int index, @NonNull String name, @NonNull TypeId @NonNull [] constrainingTypeIds) {
 		TemplateParameterIdSingletonScope templateParameterIds2 = templateParameterIds;
 		if (templateParameterIds2 == null) {
 			synchronized (this) {
@@ -52,6 +53,6 @@ public abstract class AbstractGeneralizedIdImpl<@NonNull T extends TemplateableI
 				}
 			}
 		}
-		return templateParameterIds2.getSingleton(this, index, name);
+		return templateParameterIds2.getSingleton(this, index, name, constrainingTypeIds);
 	}
 }
