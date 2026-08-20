@@ -100,14 +100,16 @@ public class TemplateParameterization implements IndexableIterable<@NonNull Temp
 	}
 
 	public static @NonNull TemplateParameterization getTemplateParameterization(@NonNull Element element) {
-		for (EObject eContainer = element; eContainer != null; eContainer = eContainer.eContainer()) {
+		TemplateParameterization templateParameterization = basicGetTemplateParameterization(element);
+		return templateParameterization != null ? templateParameterization : NO_TEMPLATE_PARAMETERIZATION;
+/*		for (EObject eContainer = element; eContainer != null; eContainer = eContainer.eContainer()) {
 			if (eContainer instanceof TemplateableElement) {
 				List<@NonNull TemplateParameter> templateParameters = basicGetTemplateParameters(null, eContainer);
 				return new TemplateParameterization((TemplateableElement)eContainer, templateParameters);
 			}
 		}
 		throw new NullPointerException("No TemplateableElement scope for " + element);
-	}
+*/	}
 
 	public static @NonNull List<@NonNull TemplateParameter> getTemplateParameters(@NonNull Element element) {
 		return ClassUtil.requireNonNull(basicGetTemplateParameters(null, element));

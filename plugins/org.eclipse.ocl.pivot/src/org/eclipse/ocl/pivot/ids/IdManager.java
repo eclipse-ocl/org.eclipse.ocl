@@ -425,7 +425,7 @@ public final class IdManager
 			parametersId = getParametersId(anOperation);
 		}
 		else {																				// If unspecialized
-			TemplateParameterization contextTemplateParameterization = TemplateParameterization.basicGetTemplateParameterization(owningClass);
+			TemplateParameterization contextTemplateParameterization = TemplateParameterization.getTemplateParameterization(owningClass);
 			int operationTemplateParameterSize = Iterables.size(PivotUtil.getOwnedTemplateParametersList(anOperation));
 			if (operationTemplateParameterSize <= 0) {									// Never happens
 				parametersId = ParametersId.EMPTY;
