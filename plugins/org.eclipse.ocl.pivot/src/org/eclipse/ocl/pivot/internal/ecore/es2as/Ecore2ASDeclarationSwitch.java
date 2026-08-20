@@ -76,6 +76,7 @@ import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -188,6 +189,9 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 		}
 		else if (TypeId.OCL_INVALID_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(InvalidType.class, PivotPackage.Literals.INVALID_TYPE, eClass);
+		}
+		else if (TypeId.OCL_SELF_NAME.equals(newName)) {
+			pivotElement = converter.refreshElement(SelfType.class, PivotPackage.Literals.SELF_TYPE, eClass);
 		}
 		else if (TypeId.OCL_VOID_NAME.equals(newName)) {
 			pivotElement = converter.refreshElement(VoidType.class, PivotPackage.Literals.VOID_TYPE, eClass);
