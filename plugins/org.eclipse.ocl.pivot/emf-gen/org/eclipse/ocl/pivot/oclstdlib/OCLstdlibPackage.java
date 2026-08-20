@@ -1060,6 +1060,8 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Create annotations
 		// http://www.eclipse.org/OCL/ASLibrary
 		createASLibraryAnnotations();
+		// http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot
+		createPivotAnnotations();
 		// http://www.eclipse.org/OCL/Collection
 		createCollectionAnnotations();
 	}
@@ -1078,6 +1080,41 @@ public class OCLstdlibPackage extends EPackageImpl {
 		   new String[] {
 		   });
 	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createPivotAnnotations() {
+		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"; //$NON-NLS-1$
+		addAnnotation
+		  (getEntry_Key(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.map.EntryKeyProperty" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getEntry_Value(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.map.EntryValueProperty" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclElement_OclContainer(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclElementOclContainerProperty" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclElement_OclContents(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
 
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Collection</b>.

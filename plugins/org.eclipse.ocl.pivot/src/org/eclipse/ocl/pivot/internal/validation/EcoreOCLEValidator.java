@@ -95,7 +95,7 @@ public class EcoreOCLEValidator implements EValidator
 	public static final @NonNull String INCOMPATIBLE_TYPE_2 = "Incompatible type ''{0}'' for {1} ''{2}''";
 	public static final @NonNull String NULL_EXPRESSION = "Null expression for ''{0}''";
 	public static final @NonNull String NULL_PROPERTY_KEY = "Non-null ''" + SettingBehavior.DERIVATION_CONSTRAINT_KEY + "'' or ''" + SettingBehavior.INITIAL_CONSTRAINT_KEY + "'' detail allowed for ''{0}''";
-	public static final @NonNull String EXTRA_PROPERTY_KEY = "Only ''" + SettingBehavior.DERIVATION_CONSTRAINT_KEY + "'' or ''" + SettingBehavior.INITIAL_CONSTRAINT_KEY + "'' detail allowed for ''{0}''";
+	public static final @NonNull String EXTRA_PROPERTY_KEY = "Only ''" + PivotConstants.CLASS_DETAIL + "'' or ''" + SettingBehavior.DERIVATION_CONSTRAINT_KEY + "'' or ''" + SettingBehavior.INITIAL_CONSTRAINT_KEY + "'' detail allowed for ''{0}''";
 	public static final @NonNull String DOUBLE_PROPERTY_KEY = "Both ''" + SettingBehavior.DERIVATION_CONSTRAINT_KEY + "'' and ''" + SettingBehavior.INITIAL_CONSTRAINT_KEY + "'' detail for ''{0}''";
 	public static final @NonNull String MISSING_PROPERTY_KEY = "Missing ''" + SettingBehavior.DERIVATION_CONSTRAINT_KEY + "'' or ''" + SettingBehavior.INITIAL_CONSTRAINT_KEY + "'' detail for ''{0}''";
 
@@ -752,20 +752,24 @@ public class EcoreOCLEValidator implements EValidator
 			EMap<String, String> details = eAnnotation.getDetails();
 			int bodyEntries = 0;
 			int classEntries = 0;
+			int unknownEntries = 0;
 			String value = null;
 			if (details.containsKey(SettingBehavior.DERIVATION_CONSTRAINT_KEY)) {
 				bodyEntries++;
 				value = details.get(SettingBehavior.DERIVATION_CONSTRAINT_KEY);
 			}
-			if (details.containsKey(SettingBehavior.INITIAL_CONSTRAINT_KEY)) {
+			else if (details.containsKey(SettingBehavior.INITIAL_CONSTRAINT_KEY)) {
 				bodyEntries++;
 				value = details.get(SettingBehavior.INITIAL_CONSTRAINT_KEY);
 			}
-			if (details.containsKey(PivotConstants.CLASS_DETAIL)) {
+			else if (details.containsKey(PivotConstants.CLASS_DETAIL)) {
 				classEntries++;
 			}
+			else {
+				unknownEntries++;
+			}
 			int severity = PivotUtil.getSeverity(environmentFactory);
-			if (classEntries != 0) {
+			if (unknownEntries > 0) {
 				if (diagnostics != null) {
 					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
 					String message = StringUtil.bind(EXTRA_PROPERTY_KEY, objectLabel);
@@ -776,18 +780,7 @@ public class EcoreOCLEValidator implements EValidator
 					allOk = false;
 				}
 			}
-			else if (bodyEntries == 0) {
-				if (diagnostics != null) {
-					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
-					String message = StringUtil.bind(MISSING_PROPERTY_KEY, objectLabel);
-					diagnostics.add(new BasicDiagnostic(severity, EcoreValidator.DIAGNOSTIC_SOURCE,
-						0, message,  new Object[] { eStructuralFeature }));
-				}
-				else {
-					allOk = false;
-				}
-			}
-			else if (bodyEntries == 2) {
+			if (bodyEntries >= 2) {
 				if (diagnostics != null) {
 					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
 					String message = StringUtil.bind(DOUBLE_PROPERTY_KEY, objectLabel);
@@ -798,36 +791,40 @@ public class EcoreOCLEValidator implements EValidator
 					allOk = false;
 				}
 			}
-			else if (details.size() != 1) {
-				if (diagnostics != null) {
-					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
-					String message = StringUtil.bind(EXTRA_PROPERTY_KEY, objectLabel);
-					diagnostics.add(new BasicDiagnostic(Math.min(severity, Diagnostic.WARNING), EcoreValidator.DIAGNOSTIC_SOURCE,
-						0, message, new Object[] { eStructuralFeature }));
+			else if (bodyEntries == 1) {
+				if (value == null) {
+					if (diagnostics != null) {
+						String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
+						String message = StringUtil.bind(NULL_PROPERTY_KEY, objectLabel);
+						diagnostics.add(new BasicDiagnostic(Math.min(severity, Diagnostic.WARNING), EcoreValidator.DIAGNOSTIC_SOURCE,
+							0, message,  new Object[] { eStructuralFeature }));
+					}
+					else {
+						allOk = false;
+					}
 				}
 				else {
-					allOk = false;
+					Property asProperty = getASOf(environmentFactory, Property.class, eStructuralFeature, diagnostics, context);
+					if (asProperty == null) {
+						return false;
+					}
+					LanguageExpression bodyExpression = asProperty.getOwnedExpression();
+					if (bodyExpression != null) {
+						if (!validateExpressionInOCL(environmentFactory, eStructuralFeature, asProperty, bodyExpression, asProperty.getType(), asProperty.isIsRequired(), diagnostics, context)) {
+							allOk = false;
+						}
+					}
 				}
 			}
-			else if (value == null) {
-				if (diagnostics != null) {
-					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
-					String message = StringUtil.bind(NULL_PROPERTY_KEY, objectLabel);
-					diagnostics.add(new BasicDiagnostic(Math.min(severity, Diagnostic.WARNING), EcoreValidator.DIAGNOSTIC_SOURCE,
-						0, message,  new Object[] { eStructuralFeature }));
-				}
-				else {
-					allOk = false;
-				}
-			}
-			else {
-				Property asProperty = getASOf(environmentFactory, Property.class, eStructuralFeature, diagnostics, context);
-				if (asProperty == null) {
-					return false;
-				}
-				LanguageExpression bodyExpression = asProperty.getOwnedExpression();
-				if (bodyExpression != null) {
-					if (!validateExpressionInOCL(environmentFactory, eStructuralFeature, asProperty, bodyExpression, asProperty.getType(), asProperty.isIsRequired(), diagnostics, context)) {
+			else if (bodyEntries == 0) {
+				if (classEntries == 0) {
+					if (diagnostics != null) {
+						String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
+						String message = StringUtil.bind(MISSING_PROPERTY_KEY, objectLabel);
+						diagnostics.add(new BasicDiagnostic(severity, EcoreValidator.DIAGNOSTIC_SOURCE,
+							0, message,  new Object[] { eStructuralFeature }));
+					}
+					else {
 						allOk = false;
 					}
 				}
