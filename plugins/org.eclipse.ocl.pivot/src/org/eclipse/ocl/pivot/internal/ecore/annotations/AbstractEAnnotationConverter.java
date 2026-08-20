@@ -158,6 +158,7 @@ public abstract class AbstractEAnnotationConverter implements EAnnotationConvert
 		OCL_Pivot_Dynamic_EAnnotationConverter.getInstance();
 		EMF_GenModel_EAnnotationConverter.getInstance();
 		MOF_XML_EAnnotationConverter.getInstance();
+		OCL_CoEClass_EAnnotationConverter.getInstance();
 		OCL_Collection_EAnnotationConverter.getInstance();
 		OCL_EntryEClass_EAnnotationConverter.getInstance();
 		OCL_Import_EAnnotationConverter.getInstance();
