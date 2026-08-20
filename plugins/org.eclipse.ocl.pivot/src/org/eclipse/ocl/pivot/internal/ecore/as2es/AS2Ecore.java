@@ -270,7 +270,7 @@ public class AS2Ecore extends AbstractConversion
 				if (DelegateInstaller.isBooleanInvariants(options)) {
 					body = "result = (" + body + ")";
 				}
-				eAnnotation.getDetails().put("body", body);
+				eAnnotation.getDetails().put(PivotConstants.BODY_DETAIL, body);
 				eOperation.getEAnnotations().add(eAnnotation);
 			}
 		}

@@ -126,6 +126,18 @@ public interface PivotConstants
 	static final @NonNull String CO_ECLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/CoEClass";
 
 	/**
+	 * Annotation detail identifying an implementing OCL expression.
+	 * @since 7.0
+	 */
+	static final @NonNull String BODY_DETAIL = "body"; //$NON-NLS-1$
+
+	/**
+	 * Annotation detail identifying an implementing Java class.
+	 * @since 7.0
+	 */
+	static final @NonNull String CLASS_DETAIL = "class"; //$NON-NLS-1$
+
+	/**
 	 * @since 1.3
 	 */
 	static final @NonNull String AS_EXTENSION_SUFFIX = "as";
