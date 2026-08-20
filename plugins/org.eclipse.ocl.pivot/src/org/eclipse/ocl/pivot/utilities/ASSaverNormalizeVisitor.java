@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.utilities;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
@@ -19,6 +20,8 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Property;
+import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.prettyprint.PrettyPrinter;
 import org.eclipse.ocl.pivot.internal.resource.ASSaver;
@@ -27,7 +30,9 @@ import org.eclipse.ocl.pivot.util.Visitable;
 
 /**
  * ASSaverNormalizeVisitor normalizes contents by alphabeticizing
+ * - lists of Operation.
  * - lists of Property.
+ * - lists of TemplateParameter.
  */
 public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, ASSaver>
 {
@@ -125,16 +130,34 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AS
 		super(context);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	protected void sortTemplateParameters(@NonNull TemplateableElement object) {
+		List<@NonNull TemplateParameter> asTemplateParameters = object.basicGetOwnedTemplateParameters();
+		if ((asTemplateParameters != null) && (asTemplateParameters.size() > 1)) {
+			@SuppressWarnings("null") Comparator<@NonNull Nameable> nameableComparator = NameUtil.NAMEABLE_COMPARATOR;
+			ClassUtil.sort(asTemplateParameters, nameableComparator);
+		}
+	}
+
 	@Override
 	public Object visitClass(org.eclipse.ocl.pivot.@NonNull Class object) {
 		ClassUtil.sort(PivotUtil.getOwnedOperationsList(object), OperationComparator.INSTANCE);
 		ClassUtil.sort(PivotUtil.getOwnedPropertiesList(object), PropertyComparator.INSTANCE);
+		sortTemplateParameters(object);
 		return null;
 	}
 
 	@Override
 	public Object visitEnumeration(@NonNull Enumeration object) {
 		ClassUtil.sort(PivotUtil.getOwnedLiteralsList(object), EnumerationLiteralComparator.INSTANCE);
+		return null;
+	}
+
+	@Override
+	public Object visitOperation(@NonNull Operation object) {
+		sortTemplateParameters(object);
 		return null;
 	}
 
