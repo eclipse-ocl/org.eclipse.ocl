@@ -88,7 +88,6 @@ import org.eclipse.ocl.pivot.WildcardType;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.CompleteModelImpl;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
-import org.eclipse.ocl.pivot.internal.ExpressionInOCLImpl;
 import org.eclipse.ocl.pivot.internal.PrimitiveCompletePackageImpl;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
@@ -565,15 +564,15 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 			eAnnotation = eOperation.getEAnnotation(DerivedConstants.UML2_GEN_MODEL_PACKAGE_1_1_NS_URI);
 		}
 		if (eAnnotation != null) {
-			value = eAnnotation.getDetails().get("body");
+			value = eAnnotation.getDetails().get(PivotConstants.BODY_DETAIL);
 		}
-		ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
+		ExpressionInOCL specification = PivotFactory.eINSTANCE.createExpressionInOCL();
 		constraint.setOwnedSpecification(specification);		// TODO Change Constraint.ownedSpecification to optional
 		if (value != null) {
 		//	specification.setBody(value);
 		}
 		if (eAnnotation != null) {
-			specification.setESObject(eAnnotation);
+			PivotUtil.setESObject(specification, eAnnotation);
 		}
 	//	List<@NonNull WildcardType> wildcards = popWildcards(eOperation);
 	//	PivotUtil.refreshList(constraint.getOwnedWildcards(), wildcards);

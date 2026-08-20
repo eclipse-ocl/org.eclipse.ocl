@@ -1176,7 +1176,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 					EOperation eOperation = null;
 					if (eTarget instanceof EOperation) {
 						eOperation = (EOperation) eTarget;
-						while (eOperation.eContainer() instanceof EAnnotation) {
+						EObject eContainer;
+						while (((eContainer = eOperation.eContainer()) instanceof EAnnotation) && !PivotConstants.CO_ECLASS_ANNOTATION_SOURCE.equals(((EAnnotation)eContainer).getSource())) {
 							EAnnotation redefines = eOperation.getEAnnotation(PivotConstantsInternal.REDEFINES_ANNOTATION_SOURCE);
 							if (redefines != null) {
 								List<EObject> references = redefines.getReferences();
