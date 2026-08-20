@@ -275,9 +275,6 @@ public class ModelMerger extends AbstractProjectComponent
 			List<@NonNull String> keys = new ArrayList<>(key2slots.keySet());
 			Collections.sort(keys);
 			for (String key : keys) {
-				if ("Boolean".equals(key)) {
-					getClass();		// XXX
-				}
 				List<org.eclipse.ocl.pivot.@NonNull Class> keyedSlots = key2slots.get(key);
 				assert keyedSlots != null;
 				EObject mergedASObject = mergeASObjects(path, keyedSlots);

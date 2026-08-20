@@ -61,7 +61,7 @@ Workflow {
     	mergedURI = "model-gen/PivotMerged.ecore"
     	invariantPrefix = "validate"
     }
-    component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true
+/*     component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     	uri = "/${internalProjectName}/model-gen/PivotMerged.ecore"
 	}
@@ -79,7 +79,7 @@ Workflow {
     }
     component = ResourceWriter { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
-    	uri = "/${internalProjectName}/model/Pivot.ecore"
+    	uri = "/${internalProjectName}/model-gen/PivotMerged.ecore"
     }
     //
     //
@@ -92,7 +92,7 @@ Workflow {
      component = GenmodelReloader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
     	projectName = "${internalProjectName}"
     	genModel = "/${internalProjectName}/model/Pivot.genmodel"
-    	ecoreFile = "/${internalProjectName}/model/Pivot.ecore"
+    	ecoreFile = "/${internalProjectName}/model-gen/PivotMerged.ecore"
     }
     
     component = GenerateModel { resourceSet = pivotGenerateResourceSet skipOnErrors = true
@@ -114,7 +114,7 @@ Workflow {
     	javaFolder = "emf-gen"
     	javaPackageName = "${pivotProjectName}.model"
     	javaClassName = "OCLmetamodel"
-    }
+    } */
 	component = ConvertToUnixLineEndings {
 		directory = "${basePivotProject}/emf-gen"
 	}
