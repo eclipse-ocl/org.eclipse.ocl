@@ -442,12 +442,7 @@ public class TemplateParameterImpl
 			synchronized (this) {
 				templateParameterId2 = templateParameterId;
 				if (templateParameterId2 == null) {
-					if ("Collection.T".equals(toString())) {
-						getClass();			// XXX}
-					}
 					templateParameterId = templateParameterId2 = computeTemplateParameterId();
-				//	TemplateParameterization.denormalize(templateParameterId2, getOwningTemplateableElement());
-				//	System.out.println("getTemplateParameterId " + NameUtil.debugSimpleName(this) + " " + this + " => " + NameUtil.debugSimpleName(templateParameterId2) + " " + templateParameterId2); // XXX
 				}
 			}
 		}
