@@ -414,12 +414,4 @@ public class ParameterImpl
 	public <R> R accept(@NonNull Visitor<R> visitor) {
 		return visitor.visitParameter(this);
 	}
-
-	@Override
-	public void setName(String newName) {
-		if ("upperGraph".equals(newName)) {
-			getClass();			// XXX
-		}
-		super.setName(newName);
-	}
 } //ParameterImpl

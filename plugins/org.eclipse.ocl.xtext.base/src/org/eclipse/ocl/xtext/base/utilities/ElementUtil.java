@@ -551,6 +551,23 @@ public class ElementUtil
 		return rawText != null ? rawText : "";
 	}
 
+	/**
+	 * Return the names of the csPathName.getOwnedPathElements() with double colon separation.
+	 */
+	public static @NonNull String getReferencedName(@NonNull PathNameCS csPathName) {
+		StringBuilder s = new StringBuilder();
+		for (PathElementCS csPathElement : csPathName.getOwnedPathElements()) {
+			assert csPathElement != null;
+			if (s.length() > 0) {
+				s.append("::");
+			}
+			ICompositeNode node = NodeModelUtils.getNode(csPathElement);
+			String name = node != null ? node.getText() : csPathElement.getName();
+			s.append(name);
+		}
+		return s.toString();
+	}
+
 	// FIXME is this fallback iregularity just for ShadowPartCSImpl ever really used / necessary ?
 	public static @Nullable String getText(@NonNull ElementCS csElement, /*@NonNull*/ EReference feature) {
 		@SuppressWarnings("null")@NonNull List<INode> nodes = NodeModelUtils.findNodesForFeature(csElement, feature);

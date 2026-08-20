@@ -586,13 +586,14 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 	public @Nullable Type getNormalizedType(@Nullable Type asType) {
 		if ((asType instanceof TemplateParameter) && !(asType instanceof NormalizedTemplateParameter)) {
 			TemplateParameter asTemplateParameter = (TemplateParameter)asType;
-			if (asTemplateParameter.getConstrainingClasses().isEmpty()) {
+			List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses = asTemplateParameter.basicGetConstrainingClasses();
+			if ((constrainingClasses == null) || constrainingClasses.isEmpty()) {
 				// Cannot wait till TemplateParameter.constrainingClasses defined because might be cyclic: e.g. T extends Generic(T).
 				ModelElementCS csDefinition = converter.getCSElement(asTemplateParameter);
 				assert csDefinition != null;
 				List<TypedRefCS> csExtends = ((TypeParameterCS)csDefinition).getOwnedExtends();
 				if (csExtends.isEmpty()) {
-					return Orphanage.getNormalizedTemplateParameter(environmentFactory.getStandardLibrary().getOrphanage(), asTemplateParameter);
+					return Orphanage.getNormalizedTemplateParameter(standardLibrary.getOrphanage(), asTemplateParameter);
 				}
 			}
 		}
@@ -801,7 +802,7 @@ public class CS2ASConversion extends AbstractBase2ASConversion
 
 	public void installPivotTypeWithMultiplicity(@Nullable Type pivotType, @NonNull TypedRefCS csElement) {
 		if ((pivotType == null) || pivotType.eIsProxy()) {
-			pivotType = getStandardLibrary().getOclInvalidType();
+			pivotType = standardLibrary.getOclInvalidType();
 		}
 		boolean isNullFree = PivotConstants.DEFAULT_IS_REQUIRED;
 		int lower = 0;

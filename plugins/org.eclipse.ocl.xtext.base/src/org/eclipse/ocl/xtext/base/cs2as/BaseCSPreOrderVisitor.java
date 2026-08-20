@@ -89,9 +89,7 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 			}
 			List<@NonNull Dependency> dependencies = new ArrayList<>();
 			for (TypedRefCS csSuperType : csSuperTypes) {
-				if (csSuperType != null) {
-					dependencies.add(new PivotDependency(csSuperType));
-				}
+				addDependency(dependencies, csSuperType);
 			}
 			return dependencies.toArray(new @NonNull Dependency[dependencies.size()]);
 		}
@@ -129,12 +127,6 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 				return false;
 			}
 			Type pivotType = csElement.getReferredType();
-		//	if (pivotType instanceof TemplateParameter)  {
-		//		List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses = PivotUtil.getConstrainingClassesList((TemplateParameter)pivotType);
-		//		if (PivotUtil.hasUnresolvedConstrainingClasses(constrainingClasses)) {
-		//			return false;
-		//		}
-		//	}
 			if (pivotType instanceof org.eclipse.ocl.pivot.Class) {
 				org.eclipse.ocl.pivot.Class pivotClass = (org.eclipse.ocl.pivot.Class)pivotType;
 				if (java.util.Map.Entry.class.getName().equals(pivotClass.getInstanceClassName())) {
@@ -389,25 +381,21 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 
 	protected static class SpecializedTypeRefContinuation2 extends TypedRefContinuation<@NonNull TypedTypeRefCS>
 	{
-		private static Dependency[] computeDependencies(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
+		private static @NonNull Dependency[] computeDependencies(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
 			List<@NonNull Dependency> dependencies = new ArrayList<>();
 			TemplateBindingCS csTemplateBinding = csElement.getOwnedBinding();
 			if (csTemplateBinding != null) {
 				for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : csTemplateBinding.getOwnedSubstitutions()) {
 					TypeRefCS csTemplateParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
-					if (csTemplateParameter != null) {
-						dependencies.add(new PivotDependency(csTemplateParameter));
-					}
+					addDependency(dependencies, csTemplateParameter);
 				}
 				for (TemplateParameterSubstitutionCS csTemplateParameterSubstitution : csTemplateBinding.getOwnedSubstitutions()) {
 					TypeRefCS csActualParameter = csTemplateParameterSubstitution.getOwnedActualParameter();
-					if (csActualParameter != null) {
-						dependencies.add(new PivotDependency(csActualParameter));	// FIXME may be a redundant duplicate
-					}
+					addDependency(dependencies, csActualParameter);
 				}
 			}
 			dependencies.add(new PivotHasSuperClassesDependency(csElement));
-			return dependencies.toArray(new Dependency[dependencies.size()]);
+			return dependencies.toArray(new @NonNull Dependency[dependencies.size()]);
 		}
 
 		public SpecializedTypeRefContinuation2(@NonNull CS2ASConversion context, @NonNull TypedTypeRefCS csElement) {
@@ -511,7 +499,6 @@ public class BaseCSPreOrderVisitor extends AbstractExtendingBaseCSVisitor<Contin
 	protected static class TemplateSignatureContinuation extends SingleContinuation<@NonNull ClassCS>
 	{
 		public TemplateSignatureContinuation(@NonNull CS2ASConversion context, NamedElement pivotParent, @NonNull ClassCS csElement) {
-//			super(context, pivotParent, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_SIGNATURE, csElement);
 			super(context, pivotParent, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, csElement);
 			context.getTypesHaveSignaturesInterDependency().addDependency(this);
 		}

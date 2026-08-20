@@ -10,7 +10,11 @@
  *******************************************************************************/
 package org.eclipse.ocl.xtext.base.cs2as;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 public interface Dependency
 {
 	boolean canExecute();
+
+	@NonNull Object getElement();
 }

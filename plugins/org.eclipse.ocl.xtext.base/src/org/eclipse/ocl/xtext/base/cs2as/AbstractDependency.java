@@ -14,9 +14,9 @@ import org.eclipse.jdt.annotation.NonNull;
 
 public abstract class AbstractDependency<@NonNull T> implements Dependency
 {
-	protected final T element;
+	protected final @NonNull T element;
 
-	public AbstractDependency(T element) {
+	public AbstractDependency(@NonNull T element) {
 		this.element = element;
 		//		assert element != null; -- happens for references to unresolved proxy types
 	}
@@ -24,7 +24,8 @@ public abstract class AbstractDependency<@NonNull T> implements Dependency
 	@Override
 	public abstract boolean canExecute();
 
-	public T getElement() {
+	@Override
+	public @NonNull T getElement() {
 		return element;
 	}
 

@@ -622,7 +622,7 @@ public class BaseCSContainmentVisitor extends AbstractExtendingBaseCSVisitor<Con
 	@Override
 	public Continuation<?> visitTypeParameterCS(@NonNull TypeParameterCS csElement) {
 		TemplateParameter pivotElement = refreshNamedElement(TemplateParameter.class, PivotPackage.Literals.TEMPLATE_PARAMETER, csElement);
-		if (!csElement.getOwnedExtends().isEmpty()) {
+		if (!csElement.getOwnedExtends().isEmpty()) {					// XXX filter ancestral references
 			PivotUtil.setUnresolvedConstrainingClasses(pivotElement);	// inhibit use of NormalizedTemplateParameter
 		}
 		return null;

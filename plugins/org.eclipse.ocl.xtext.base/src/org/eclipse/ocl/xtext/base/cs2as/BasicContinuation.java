@@ -35,6 +35,17 @@ public abstract class BasicContinuation<T> implements Continuation<T>
 {
 	static final Logger logger = Logger.getLogger(BasicContinuation.class);
 
+	protected static void addDependency(@NonNull List<@NonNull Dependency> dependencyList, @Nullable PivotableElementCS csElement) {
+		if (csElement != null) {
+			for (@NonNull Dependency dependency : dependencyList) {
+				if (dependency.getElement() == csElement) {
+					return;		// No need for duplicate
+				}
+			}
+			dependencyList.add(new PivotDependency(csElement));
+		}
+	}
+
 	protected static @NonNull Dependency @NonNull [] createDependencies(@Nullable PivotableElementCS csElement) {
 		return csElement != null ? new @NonNull PivotDependency[]{new PivotDependency(csElement)} : EMPTY_DEPENDENCIES;
 	}
