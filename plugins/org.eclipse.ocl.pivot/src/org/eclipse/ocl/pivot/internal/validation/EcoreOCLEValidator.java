@@ -752,24 +752,20 @@ public class EcoreOCLEValidator implements EValidator
 			EMap<String, String> details = eAnnotation.getDetails();
 			int bodyEntries = 0;
 			int classEntries = 0;
-			int unknownEntries = 0;
 			String value = null;
 			if (details.containsKey(SettingBehavior.DERIVATION_CONSTRAINT_KEY)) {
 				bodyEntries++;
 				value = details.get(SettingBehavior.DERIVATION_CONSTRAINT_KEY);
 			}
-			else if (details.containsKey(SettingBehavior.INITIAL_CONSTRAINT_KEY)) {
+			if (details.containsKey(SettingBehavior.INITIAL_CONSTRAINT_KEY)) {
 				bodyEntries++;
 				value = details.get(SettingBehavior.INITIAL_CONSTRAINT_KEY);
 			}
-			else if (details.containsKey(PivotConstants.CLASS_DETAIL)) {
+			if (details.containsKey(PivotConstants.CLASS_DETAIL)) {
 				classEntries++;
 			}
-			else {
-				unknownEntries++;
-			}
 			int severity = PivotUtil.getSeverity(environmentFactory);
-			if (unknownEntries > 0) {
+			if (bodyEntries + classEntries < details.size()) {
 				if (diagnostics != null) {
 					String objectLabel = EObjectValidator.getObjectLabel(eStructuralFeature, context);
 					String message = StringUtil.bind(EXTRA_PROPERTY_KEY, objectLabel);

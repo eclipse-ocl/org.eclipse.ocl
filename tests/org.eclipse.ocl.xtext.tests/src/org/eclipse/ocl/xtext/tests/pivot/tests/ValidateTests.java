@@ -290,6 +290,7 @@ public class ValidateTests extends AbstractValidateTests
 			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", PivotConstantsInternal.PRECONDITION_ROLE, LabelUtil.getLabel(badOp)),
 			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", PivotConstantsInternal.POSTCONDITION_ROLE, LabelUtil.getLabel(badOp)),
 			StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Boolean", PivotConstantsInternal.INITIALIZER_ROLE, LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
+			StringUtil.bind(EcoreOCLEValidator.EXTRA_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
 			StringUtil.bind(EcoreOCLEValidator.MISSING_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
 			StringUtil.bind(EcoreOCLEValidator.DOUBLE_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("derivationAndInitial")))};
 			checkValidationDiagnostics(temp, Diagnostic.ERROR, messages1);
@@ -303,6 +304,7 @@ public class ValidateTests extends AbstractValidateTests
 				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", PivotConstantsInternal.PRECONDITION_ROLE, LabelUtil.getLabel(badOp)),
 				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Integer", PivotConstantsInternal.POSTCONDITION_ROLE, LabelUtil.getLabel(badOp)),
 				StringUtil.bind(EcoreOCLEValidator.INCOMPATIBLE_TYPE_2, "Boolean", PivotConstantsInternal.INITIALIZER_ROLE, LabelUtil.getLabel(tester.getEStructuralFeature("badType"))),
+				StringUtil.bind(EcoreOCLEValidator.EXTRA_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
 				StringUtil.bind(EcoreOCLEValidator.MISSING_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("badDetailName"))),
 				StringUtil.bind(EcoreOCLEValidator.DOUBLE_PROPERTY_KEY, LabelUtil.getLabel(tester.getEStructuralFeature("derivationAndInitial")))};
 				assertEcoreOCLValidationDiagnostics(ocl, "Ecore Load", ecoreResource, messages2);
