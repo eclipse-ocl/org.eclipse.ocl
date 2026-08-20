@@ -23,6 +23,7 @@ package org.eclipse.ocl.pivot;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 // import org.eclipse.ocl.pivot.Constraint;
 // import org.eclipse.ocl.pivot.Enumeration;
 // import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -517,7 +518,7 @@ public class PivotTables extends AbstractTables
 		/*
 		 * AS Class indexed by EClassifier.getClassifierID().
 		 */
-		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] eClassifierID2asClass = {
+		private static final org.eclipse.ocl.pivot.@Nullable Class @NonNull [] eClassifierID2asClass = {
 			/* 0 */ OCLstdlibTables.Types._Boolean,
 			/* 1 */ _EcoreObject,
 			/* 2 */ OCLstdlibTables.Types._Integer,

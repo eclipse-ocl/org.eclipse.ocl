@@ -1200,7 +1200,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	/**
 	 * @since 7.0
 	 */
-	public void initPackage(@NonNull BuiltInModel asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot./*@NonNull*/ Class @NonNull [] asClasses, @NonNull NormalizedTemplateParameter... typeParameters) {
+	public void initPackage(@NonNull BuiltInModel asModel, org.eclipse.ocl.pivot.@NonNull Package asPackage, org.eclipse.ocl.pivot.@Nullable Class @NonNull [] asClasses, @NonNull NormalizedTemplateParameter... typeParameters) {
 		// FIXME commented @NonNull worksaround https://github.com/eclipse-jdt/eclipse.jdt.core/issues/4448
 		libraryLoadInProgress = true;
 		setOrphanage(asModel.getOrphanage());
@@ -1215,10 +1215,11 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		EObject ePackage = asPackage.getESObject();
 		List<org.eclipse.ocl.pivot.@NonNull Class> ownedClasses = PivotUtil.getOwnedClassesList(asPackage);
 		for (org.eclipse.ocl.pivot.Class asClass : asClasses) {
-			assert asClass != null;
-			EObject eClass = asClass.getESObject();
-			if (eClass.eContainer() == ePackage) {
-				ownedClasses.add(asClass);
+			if (asClass != null) {			// null for synthetic Entry tables classes
+				EObject eClass = asClass.getESObject();
+				if (eClass.eContainer() == ePackage) {
+					ownedClasses.add(asClass);
+				}
 			}
 		}
 		addPackage(asPackage, null);

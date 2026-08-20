@@ -22,6 +22,7 @@ package org.eclipse.ocl.pivot.oclstdlib;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.Model;
@@ -232,7 +233,7 @@ public class OCLstdlibTables extends AbstractTables
 		/*
 		 * AS Class indexed by EClassifier.getClassifierID().
 		 */
-		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] eClassifierID2asClass = {
+		private static final org.eclipse.ocl.pivot.@Nullable Class @NonNull [] eClassifierID2asClass = {
 			/* 0 */ _Bag,
 			/* 1 */ _Boolean,
 			/* 2 */ _Collection,
@@ -260,7 +261,8 @@ public class OCLstdlibTables extends AbstractTables
 			/* 24 */ _Set,
 			/* 25 */ _String,
 			/* 26 */ _UniqueCollection,
-			/* 27 */ _UnlimitedNatural
+			/* 27 */ _UnlimitedNatural,
+			/* 28 */ null
 		};
 
 		/*

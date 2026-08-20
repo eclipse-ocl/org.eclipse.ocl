@@ -836,7 +836,9 @@ public class OCLinEcoreTablesUtils
 		for (org.eclipse.ocl.pivot.Class asClass : PivotUtil.getOwnedClasses(asPackage)) {
 			EClassifier eClassifier = (EClassifier)asClass.getESObject();
 			int classifierID = eClassifier.getClassifierID();
-			classes.set(classifierID, asClass);
+			if (classifierID >= 0) {
+				classes.set(classifierID, asClass);
+			}
 		}
 /*		Collections.sort(classes, new Comparator<org.eclipse.ocl.pivot.@NonNull Class>()
 		{

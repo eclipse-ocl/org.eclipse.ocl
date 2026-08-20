@@ -1358,7 +1358,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		s.append("		 * AS Class indexed by EClassifier.getClassifierID().\n");
 		s.append("		 */\n");
 		s.append("		private static final ");
-		s.appendClassReference(true, org.eclipse.ocl.pivot.Class.class);
+		s.appendClassReference(false, org.eclipse.ocl.pivot.Class.class);
 		s.append(" " + atNonNull() + " [] eClassifierID2asClass = {");
 		int index = 0;
 		for (org.eclipse.ocl.pivot.@Nullable Class asClass : activeClassesSortedByClassifierID) {
