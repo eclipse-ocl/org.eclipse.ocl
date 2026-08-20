@@ -29,6 +29,7 @@ import org.eclipse.ocl.pivot.internal.PivotFactoryImpl;
 import org.eclipse.ocl.pivot.internal.delegate.SettingBehavior;
 import org.eclipse.ocl.pivot.internal.ecore.EObjectOperation;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
 /**
@@ -59,7 +60,10 @@ public class OCL_Pivot_EAnnotationConverter extends AbstractEAnnotationConverter
 			Map.Entry<String,String> bestEntry = null;
 			for (Map.Entry<String,String> entry : eAnnotation.getDetails()) {
 				String key = entry.getKey();
-				if (key.equals(SettingBehavior.DERIVATION_CONSTRAINT_KEY)) {
+				if (key.equals(PivotConstants.CLASS_DETAIL)) {
+					asProperty.setImplementationClass(entry.getValue());
+				}
+				else if (key.equals(SettingBehavior.DERIVATION_CONSTRAINT_KEY)) {
 					bestEntry = entry;
 				}
 				else if (key.equals(SettingBehavior.INITIAL_CONSTRAINT_KEY)) {
@@ -96,59 +100,64 @@ public class OCL_Pivot_EAnnotationConverter extends AbstractEAnnotationConverter
 				String postName = null;
 				String key = entry.getKey();
 				String value = entry.getValue();
-				if (key.equals("body")) {
-					bodyName = "";
-					if (value != null) {
-						value = PivotUtil.getBodyExpression(value);	// Workaround Bug 419324
-					}
-				}
-				else if (key.startsWith("body_")) {
-					bodyName = key.substring(5);
-				}
-				else if (key.equals("pre")) {
-					preName = "";
-				}
-				else if (key.startsWith("pre_")) {
-					preName = key.substring(4);
-				}
-				else if (key.equals("post")) {
-					postName = "";
-				}
-				else if (key.startsWith("post_")) {
-					postName = key.substring(5);
-				}
-				else
-				{
-					logger.error("Unsupported operation constraint " + key);
-					continue;
-				}
-				ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
-				specification.setESObject(eAnnotation);
-				specification.setBody(value);
-				//				constraint.setExprString(entry.getValue());
-				//				constraint.setExprString(entry.getValue());
-				if (bodyName != null) {
-					asOperation.setBodyExpression(specification);
-					asOperation.setImplementation(new EObjectOperation(asOperation, eOperation, specification));
+				if (key.equals(PivotConstants.CLASS_DETAIL)) {
+					asOperation.setImplementationClass(value);
 				}
 				else {
-					Constraint constraint = PivotFactory.eINSTANCE.createConstraint();
-					constraint.setOwnedSpecification(specification);
-					if (preName != null) {
-						asOperation.getOwnedPreconditions().add(constraint);
-						constraint.setName(preName);
+					if (key.equals(PivotConstants.BODY_DETAIL)) {		// "body"
+						bodyName = "";
+						if (value != null) {
+							value = PivotUtil.getBodyExpression(value);	// Workaround Bug 419324
+						}
+					}
+					else if (key.startsWith("body_")) {
+						bodyName = key.substring(5);
+					}
+					else if (key.equals("pre")) {
+						preName = "";
+					}
+					else if (key.startsWith("pre_")) {
+						preName = key.substring(4);
+					}
+					else if (key.equals("post")) {
+						postName = "";
+					}
+					else if (key.startsWith("post_")) {
+						postName = key.substring(5);
+					}
+					else
+					{
+						logger.error("Unsupported operation constraint " + key);
+						continue;
+					}
+					ExpressionInOCLImpl specification = (ExpressionInOCLImpl)PivotFactory.eINSTANCE.createExpressionInOCL();
+					specification.setESObject(eAnnotation);
+					specification.setBody(value);
+					//				constraint.setExprString(entry.getValue());
+					//				constraint.setExprString(entry.getValue());
+					if (bodyName != null) {
+						asOperation.setBodyExpression(specification);
+						asOperation.setImplementation(new EObjectOperation(asOperation, eOperation, specification));
 					}
 					else {
-						asOperation.getOwnedPostconditions().add(constraint);
-						constraint.setName(postName);
+						Constraint constraint = PivotFactory.eINSTANCE.createConstraint();
+						constraint.setOwnedSpecification(specification);
+						if (preName != null) {
+							asOperation.getOwnedPreconditions().add(constraint);
+							constraint.setName(preName);
+						}
+						else {
+							asOperation.getOwnedPostconditions().add(constraint);
+							constraint.setName(postName);
+						}
+						String commentText = EcoreUtil.getAnnotation(eAnnotation, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, key);
+						if (commentText != null) {
+							Comment comment = PivotFactoryImpl.eINSTANCE.createComment();
+							comment.setBody(commentText);
+							constraint.getOwnedComments().add(comment);
+						}
+					//	copyAnnotationComment(constraint, eAnnotation, key);
 					}
-					String commentText = EcoreUtil.getAnnotation(eAnnotation, PivotConstantsInternal.DOCUMENTATION_ANNOTATION_SOURCE, key);
-					if (commentText != null) {
-						Comment comment = PivotFactoryImpl.eINSTANCE.createComment();
-						comment.setBody(commentText);
-						constraint.getOwnedComments().add(comment);
-					}
-				//	copyAnnotationComment(constraint, eAnnotation, key);
 				}
 			}
 			return false;			// XXX Ignore more details
