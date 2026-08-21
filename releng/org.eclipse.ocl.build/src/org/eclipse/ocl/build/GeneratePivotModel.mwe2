@@ -55,9 +55,9 @@ Workflow {
     bean = EcoreGenModelSetup { resourceSet = pivotMergeResourceSet }
     component = ModelMerger { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	projectName = "${internalProjectName}"
-    //	ecoreURI = "model/Pivot.ecore"
     	oclURI = "model/OCL-2.5.oclstdlib"
     	oclURI = "model/Pivot.ocl"
+    	ecoreURI = "model/Pivot.ecore"
     	mergedURI = "model-gen/PivotMerged.ecore"
     	invariantPrefix = "validate"
     }

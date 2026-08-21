@@ -37,12 +37,16 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.Iteration;
+import org.eclipse.ocl.pivot.LambdaParameter;
+import org.eclipse.ocl.pivot.LambdaType;
+import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
@@ -52,11 +56,19 @@ import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
+import org.eclipse.ocl.pivot.TupleType;
+import org.eclipse.ocl.pivot.Type;
+import org.eclipse.ocl.pivot.TypedElement;
+import org.eclipse.ocl.pivot.WildcardType;
+import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
+import org.eclipse.ocl.pivot.internal.resource.SaverStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
+import org.eclipse.ocl.pivot.manager.LambdaTypeManager;
 import org.eclipse.ocl.pivot.resource.ASResource;
 import org.eclipse.ocl.pivot.resource.CSResource;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
@@ -65,6 +77,8 @@ import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotHelper;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.eclipse.ocl.pivot.values.IntegerValue;
+import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 import org.eclipse.ocl.xtext.completeocl.CompleteOCLStandaloneSetup;
 import org.eclipse.ocl.xtext.oclinecore.OCLinEcoreStandaloneSetup;
 import org.eclipse.ocl.xtext.oclstdlib.OCLstdlibStandaloneSetup;
@@ -75,10 +89,362 @@ import com.google.common.collect.Sets;
 
 /**
  * Loads an Complete AS Model from one or more Ecore <tt>uri</tt> and zero or more CompleteOCL/OCLstdlib/OCLinEcore <tt>uri</tt>.
- * THe result is output as a merged OCLAS and also Ecore model.
+ * The result is output as a merged OCLAS and also Ecore model.
  */
 public class ModelMerger extends AbstractProjectComponent
 {
+	protected static class MergerStandardLibrary extends SaverStandardLibraryImpl
+	{
+		public MergerStandardLibrary(@NonNull ASResource mergedResource, @NonNull Map<@NonNull Element, @NonNull Element> eObject2mergedEObject) {
+			super(mergedResource, eObject2mergedEObject);
+		}
+
+		@Override
+		public void addOrphanClass(org.eclipse.ocl.pivot.@NonNull Class localClass) {
+			if (localClass instanceof CollectionType) {
+				Type elementType = ((CollectionType)localClass).getElementType();
+				Resource elementResource = elementType.eResource();
+				assert elementResource == resource;
+			}
+			super.addOrphanClass(localClass);
+		}
+
+		@Override
+		public @Nullable Element basicGetLocal(@NonNull Element remoteElement) {
+			// TODO Auto-generated method stub
+			Element localElement = super.basicGetLocal(remoteElement);
+			System.out.println("basicGetLocal: " + NameUtil.debugSimpleName(remoteElement) + " => "  + NameUtil.debugSimpleName(localElement) + " " + remoteElement);
+			return localElement;
+		}
+
+		@Override
+		public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+			org.eclipse.ocl.pivot.@NonNull Class localizeElement = super.getPrimaryClass(asClass);
+			assert localizeElement.eResource() == resource;
+			return localizeElement;
+		}
+
+		@Override
+		public @NonNull Element getLocal(@NonNull Element element) {
+			Element local = basicGetLocal(element);
+			assert local != null;
+			return local;
+		//	Element element3 = local != null ? local : element;
+		//	assert (element3.eResource() == resource) || !Orphanage.isOrphan(element3);
+		//	assert (local.eResource() == resource) || !Orphanage.isOrphan(element3);
+		//	return element3;
+		}
+
+		@Override
+		public @NonNull Type getPrimaryType(@NonNull Type asType) {
+			Type localizeElement = super.getPrimaryType(asType);
+			assert localizeElement.eResource() == resource;
+			return localizeElement;
+		}
+
+		@Override
+		protected @NonNull CollectionType localizeCollectionType(@NonNull CollectionType asCollectionType) {
+			// parent package is localized by the CollectionTypeManager
+			// attributes are localized here along with the class
+			CollectionType genericCollectionType = PivotUtil.getGenericElement(asCollectionType);
+			Type elementType = localizeElement(PivotUtil.getElementType(asCollectionType));
+			boolean isNullFree = asCollectionType.isIsNullFree();
+			IntegerValue lowerValue = asCollectionType.getLowerValue();
+			UnlimitedNaturalValue upperValue = asCollectionType.getUpperValue();
+			CollectionType localCollectionType = getCollectionType(genericCollectionType, elementType, isNullFree, lowerValue, upperValue);
+			checkSuperClasses(localCollectionType, genericCollectionType);				// XXX do not re-resolve
+			assert localCollectionType.eContainer() != null;
+			putLocal(asCollectionType, localCollectionType);
+			return localCollectionType;
+		}
+
+		@Override
+		protected <T extends Element> @NonNull T localizeElement(@NonNull T asReferencedElement) {
+			EObject localElement = basicGetLocal(asReferencedElement);
+			if (localElement != null) {
+				return (T)localElement;			// re-use existing localization
+			}
+			if (!Orphanage.isOrphan(asReferencedElement)) { // && !(asReferencedElement instanceof Precedence)) {
+			//	getCompl
+
+
+				return asReferencedElement;		// Non-orphan is referenceable and so does not need localization
+			}
+			if (asReferencedElement instanceof CollectionType) {
+				return (T)localizeCollectionType((CollectionType)asReferencedElement);
+			}
+			else if (asReferencedElement instanceof LambdaType) {
+				return (T)localizeLambdaType((LambdaType)asReferencedElement);
+			}
+			else if (asReferencedElement instanceof MapType) {
+				return (T)localizeMapType((MapType)asReferencedElement);
+			}
+			else if (asReferencedElement instanceof NormalizedTemplateParameter) {
+				return (T)localizeNormalizedTemplateParameter((NormalizedTemplateParameter)asReferencedElement);
+			}
+		//	else if (asReferencedElement instanceof Precedence) {
+		//		return (T)localizePrecedence((Precedence)asReferencedElement);
+		//	}
+			else if (asReferencedElement instanceof Property) {				// Tuple part
+				return (T) localizeProperty((Property)asReferencedElement);
+			}
+			else if (asReferencedElement instanceof TupleType) {
+				return (T)localizeTupleType((TupleType)asReferencedElement);
+			}
+			else if (asReferencedElement instanceof WildcardType) {
+				return asReferencedElement;
+			}
+			else if (asReferencedElement instanceof org.eclipse.ocl.pivot.Class) {
+				org.eclipse.ocl.pivot.Class asClass = (org.eclipse.ocl.pivot.Class)asReferencedElement;
+				org.eclipse.ocl.pivot.Class genericSpecializedClass = PivotUtil.getGenericElement(asClass);
+				List<@NonNull TemplateParameter> asTemplateParameters = genericSpecializedClass.basicGetOwnedTemplateParameters();
+				if (asTemplateParameters != null) {
+					return (T)localizeSpecializedClass(asClass);
+				}
+				else {
+					// This class only localized when child properties are localized on demand.
+					return (T)asClass;		// Only implicit properties
+				}
+			}
+			else if (asReferencedElement instanceof org.eclipse.ocl.pivot.Package) {
+				org.eclipse.ocl.pivot.Package asPackage = (org.eclipse.ocl.pivot.Package)asReferencedElement;
+				// This package only localized when child classes are localized on demand.
+				return (T)asPackage;
+			}
+			throw new UnsupportedOperationException();
+		}
+
+		@Override
+		protected @NonNull LambdaType localizeLambdaType(@NonNull LambdaType asLambdaType) {
+			// parent package is localized by the LambdaTypeManager
+			// attributes are localized here along with the class
+			LambdaType genericLambdaType = PivotUtil.getGenericElement(asLambdaType);
+			LambdaParameter contextParameter = PivotUtil.getOwnedContext(asLambdaType);
+			Type localContextType = localizeElement(PivotUtil.getType(contextParameter));
+			TypedElement localContextParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(contextParameter), localContextType, contextParameter.isIsRequired());
+			List<@NonNull LambdaParameter> ownedParameters = PivotUtil.getOwnedParametersList(asLambdaType);
+			List<@NonNull TypedElement> localParameters = new ArrayList<>(ownedParameters.size());
+			for (@NonNull LambdaParameter asParameter : ownedParameters) {
+				Type parameterType = localizeElement(PivotUtil.getType(asParameter));
+				TypedElement localParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(asParameter), parameterType, asParameter.isIsRequired());
+				localParameters.add(localParameter);
+			}
+			LambdaParameter resultParameter = PivotUtil.getOwnedResult(asLambdaType);
+			Type localResultType = localizeElement(PivotUtil.getType(resultParameter));
+			TypedElement localResultParameter = LambdaTypeManager.createCandidateLambdaParameter(PivotUtil.getName(resultParameter), localResultType, resultParameter.isIsRequired());
+			LambdaType localLambdaType = getLambdaType(localContextParameter, localParameters, localResultParameter, null);
+			checkSuperClasses(localLambdaType, genericLambdaType);
+			assert localLambdaType.eContainer() != null;
+			putLocal(asLambdaType, localLambdaType);
+			return localLambdaType;
+		}
+
+		@Override
+		protected @NonNull MapType localizeMapType(@NonNull MapType asMapType) {
+			// parent package is localized by the MapTypeManager
+			// attributes are localized here along with the class
+			MapType genericMapType = PivotUtil.getGenericElement(asMapType);
+			Type keyType = localizeElement(PivotUtil.getKeyType(asMapType));
+			Type valueType = localizeElement(PivotUtil.getValueType(asMapType));
+			boolean keysAreNullFree = asMapType.isKeysAreNullFree();
+			boolean valuesAreNullFree = asMapType.isValuesAreNullFree();
+			MapType localMapType = getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
+			checkSuperClasses(localMapType, genericMapType);
+			assert localMapType.eContainer() != null;
+			putLocal(asMapType, localMapType);
+			return localMapType;
+		}
+
+		@Override
+		protected @NonNull NormalizedTemplateParameter localizeNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter asNormalizedTemplateParameter) {
+			// create the corresponding local singletons
+			int index = asNormalizedTemplateParameter.getIndex();
+			List<org.eclipse.ocl.pivot.@NonNull Class> localConstrainingClasses = null;
+			List<org.eclipse.ocl.pivot.@NonNull Class> asConstrainingClasses = PivotUtil.getConstrainingClassesList(asNormalizedTemplateParameter);
+			assert !PivotUtil.hasUnresolvedConstrainingClasses(asConstrainingClasses);
+			if (asConstrainingClasses.size() > 0) {
+				localConstrainingClasses = new ArrayList<>(asConstrainingClasses.size());
+				for (org.eclipse.ocl.pivot.@NonNull Class asConstrainingClass : asConstrainingClasses) {
+					org.eclipse.ocl.pivot.Class localConstrainingClass = localizeElement(asConstrainingClass);
+					localConstrainingClasses.add(localConstrainingClass);
+				}
+			}
+			org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getOrphanage();
+			NormalizedTemplateParameter localNormalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(localOrphanage, index, localConstrainingClasses);
+			putLocal(asNormalizedTemplateParameter, localNormalizedTemplateParameter);
+			return localNormalizedTemplateParameter;
+		}
+
+		@Override
+		protected @NonNull Property localizeProperty(@NonNull Property asProperty) {
+			EObject eContainer = asProperty.eContainer();
+			if (eContainer instanceof TupleType) {				// A tuple part
+				localizeTupleType((TupleType)eContainer);		// Tuple parts localized by TupleType
+				Property localProperty = (Property)getLocal(asProperty);
+				assert localProperty != null;
+				return localProperty;
+			}
+		//	else if (asProperty.isIsImplicit()) {
+				// implicit properties are not localized // XXX ??? why aren't they also transient and volatile ??
+		//		return asProperty;
+		//	}
+			else {
+				throw new UnsupportedOperationException();
+			/*	assert asProperty.isIsImplicit();
+				assert !asProperty.isIsComposite();
+				assert !asProperty.isIsDerived();
+			//	assert !asProperty.isIsResolveProxies();
+				assert !asProperty.isIsTransient();
+				assert !asProperty.isIsVolatile();
+				Property asOpposite = asProperty.getOpposite();
+				assert asOpposite != null;
+				assert resource == asOpposite.eResource();
+				return remote2local.get(asProperty); */
+			}
+		}
+
+		protected void localizeReferences(ASResource mergedResource,
+				List<@NonNull ASResource> mergedResources) {
+			for (Map.Entry<EObject, Collection<Setting>> entry : EcoreUtil.CrossReferencer.find(mergedResource.getContents()).entrySet()) {
+				EObject eTarget = entry.getKey();
+				Resource referencedResource = eTarget.eResource();
+				if (mergedResource == referencedResource) {
+					System.out.println("local: " + NameUtil.debugSimpleName(eTarget) + " " + eTarget);
+					// Already local
+					getClass();		// XXX
+				}
+				else if (mergedResources.contains(referencedResource)) {
+					// Not local
+					System.out.println("localize: " + NameUtil.debugSimpleName(eTarget) + " " + eTarget);
+			//	if (!Orphanage.isOrphan((Element)eTarget)) {
+					getClass();		// XXX
+				//	completeModel.getCompl
+					for (EStructuralFeature.Setting setting : entry.getValue()) {
+						Element mergedEObject = basicGetLocal((Element) eTarget);
+						if (mergedEObject != null) {
+							EObject eSource = setting.getEObject();
+							EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
+							System.out.println("\t" + NameUtil.debugSimpleName(eSource) + " " + eSource + "." + eStructuralFeature.getName());
+							if (eStructuralFeature.isMany()) {
+								@SuppressWarnings("unchecked") List<EObject> siblings = (List<EObject>) eSource.eGet(eStructuralFeature);
+								int index = siblings.indexOf(eTarget);
+								siblings.set(index, mergedEObject);
+							}
+							else {
+								eSource.eSet(eStructuralFeature, mergedEObject);
+							}
+						}
+					}
+				}
+				else if (Orphanage.isOrphan((Element)eTarget)) {
+					// Orphan reference
+					System.out.println("orphan: " + NameUtil.debugSimpleName(eTarget) + " " + eTarget);
+					for (EStructuralFeature.Setting setting : entry.getValue()) {
+						Element mergedEObject = basicGetLocal((Element) eTarget);
+						if (mergedEObject == null) {
+							mergedEObject = localizeElement((Element)eTarget);
+							if (mergedEObject != null) {
+								EObject eSource = setting.getEObject();
+								EStructuralFeature eStructuralFeature = setting.getEStructuralFeature();
+								System.out.println("\t" + NameUtil.debugSimpleName(eSource) + " " + eSource + "." + eStructuralFeature.getName());
+								if (eStructuralFeature.isMany()) {
+									@SuppressWarnings("unchecked") List<EObject> siblings = (List<EObject>) eSource.eGet(eStructuralFeature);
+									int index = siblings.indexOf(eTarget);
+									siblings.set(index, mergedEObject);
+								}
+								else {
+									eSource.eSet(eStructuralFeature, mergedEObject);
+								}
+							}
+						//	putMerged(eTarget, mergedEObject);
+						}
+					}
+				}
+				else {
+					// External reference
+					System.out.println("reference: " + NameUtil.debugSimpleName(eTarget) + " " + eTarget);
+					getClass();		// XXX
+				}
+			}
+		}
+
+		@Override
+		protected org.eclipse.ocl.pivot.@NonNull Class localizeSpecializedClass(org.eclipse.ocl.pivot.@NonNull Class asSpecializedClass) {
+			org.eclipse.ocl.pivot.Class genericSpecializedClass = PivotUtil.getGenericElement(asSpecializedClass);
+			List<@NonNull TemplateParameter> asTemplateParameters = PivotUtil.getOwnedTemplateParametersList(genericSpecializedClass);
+			TemplateSpecialization templateSpecialization = TemplateSpecialization.getTemplateSpecialization(asSpecializedClass);
+			List<@NonNull Type> localTemplateArguments = new ArrayList<@NonNull Type>(asTemplateParameters.size());
+			for (@NonNull TemplateParameter templateParameter : asTemplateParameters) {
+				Type templateArgument = templateSpecialization.get(templateParameter);
+				assert templateArgument != null;
+				localTemplateArguments.add(localizeElement(templateArgument));
+			}
+			org.eclipse.ocl.pivot.Class localSpecializedClass = getSpecializedType(genericSpecializedClass, localTemplateArguments);
+			putLocal(asSpecializedClass, localSpecializedClass);
+			for (@NonNull Property asProperty : PivotUtil.getOwnedProperties(asSpecializedClass)) {
+				if (asProperty.isIsImplicit()) {			// XXX is this redundant / doable lazily on demand
+					assert asProperty.isIsImplicit();
+					assert !asProperty.isIsComposite();
+					assert !asProperty.isIsDerived();
+				//	assert !asProperty.isIsResolveProxies();
+					assert !asProperty.isIsTransient();
+					assert !asProperty.isIsVolatile();
+					Property asOpposite = asProperty.getOpposite();
+					assert asOpposite != null;
+					Type asType = localizeElement(PivotUtil.getType(asProperty));
+					Property localProperty = PivotUtil.createProperty(PivotUtil.getName(asProperty), asType);
+					localProperty.setIsReadOnly(asProperty.isIsReadOnly());
+					localProperty.setIsRequired(asProperty.isIsRequired());
+					localProperty.setIsResolveProxies(asProperty.isIsResolveProxies());
+					localProperty.setOpposite(asOpposite);
+					localSpecializedClass.getOwnedProperties().add(localProperty);
+					putLocal(asProperty, localProperty);
+				}
+			}
+			return localSpecializedClass;
+		}
+
+		@Override
+		protected @NonNull TupleType localizeTupleType(@NonNull TupleType asTupleType) {
+			// parent package is localized by the TupleTypeManager
+			// child parts are localized here along with the class
+			TupleTypeId tupleTypeId = asTupleType.getTupleTypeId();
+			TupleType localTupleType = getTupleType(tupleTypeId);
+			Element old = putLocal(asTupleType, localTupleType);
+			Iterable<@NonNull Property> localParts = PivotUtil.getOwnedProperties(localTupleType);
+			for (@NonNull Property asPart : PivotUtil.getOwnedProperties(asTupleType)) {
+				Property localPart = NameUtil.getNameable(localParts, PivotUtil.getName(asPart));
+				assert localPart != null;
+				putLocal(asPart, localPart);
+			}
+			return localTupleType;
+		}
+
+		@Override
+		public @Nullable Element putLocal(@NonNull Element remoteElement, @NonNull Element localElement) {
+			System.out.println("putLocal: " + NameUtil.debugSimpleName(remoteElement) + " => "  + NameUtil.debugSimpleName(localElement) + " " + remoteElement);
+			return super.putLocal(remoteElement, localElement);
+		}
+
+		private void checkSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
+			List<org.eclipse.ocl.pivot.@NonNull Class> superClassesList = PivotUtil.getSuperClassesList(specializedClass);
+			List<org.eclipse.ocl.pivot.@NonNull Class> oldSuperClasses = new ArrayList(superClassesList);
+			superClassesList.clear();
+			super.resolveSuperClasses(specializedClass, unspecializedClass);
+			assert superClassesList.size() == oldSuperClasses.size();
+			for (int i = 0; i < superClassesList.size(); i++) {
+				org.eclipse.ocl.pivot.@NonNull Class oldSuperClass = oldSuperClasses.get(i);
+				org.eclipse.ocl.pivot.@NonNull Class newSuperClass = superClassesList.get(i);
+				assert oldSuperClass == newSuperClass;
+			}
+		}
+
+		@Override
+		protected void setOrphanage(org.eclipse.ocl.pivot.@NonNull Package orphanage) {
+			super.setOrphanage(orphanage);
+		}
+	}
+
 	public static abstract class AbstractSlotMerger
 	{
 		protected final @NonNull ModelMerger modelMerger;
@@ -87,14 +453,16 @@ public class ModelMerger extends AbstractProjectComponent
 			this.modelMerger = modelMerger;
 		}
 
-		protected <T extends EObject> @Nullable T createMergedEObject(@NonNull Iterable<@NonNull T> asObjects) {
+		protected <T extends Element> @Nullable T createMergedEObject(@NonNull Iterable<@NonNull T> asObjects) {
 			EClass mergedEClass = getMergedEClass(asObjects);
 			if (mergedEClass == null) {
 				return null;
 			}
-			EObject mergedEObject = mergedEClass.getEPackage().getEFactoryInstance().create(mergedEClass);
+			Element mergedEObject = (Element) mergedEClass.getEPackage().getEFactoryInstance().create(mergedEClass);
 			for (@NonNull T asObject : asObjects) {
-				modelMerger.putMerged(mergedEObject, asObject);
+//				modelMerger.putMerged(mergedEObject, asObject);
+//				System.out.println("preLocal: " + NameUtil.debugSimpleName(asObject) + " => "  + NameUtil.debugSimpleName(mergedEObject) + " " + asObject);
+				modelMerger.eObject2mergedEObject.put(asObject, mergedEObject);
 			}
 			return (T) mergedEObject;
 		}
@@ -110,7 +478,7 @@ public class ModelMerger extends AbstractProjectComponent
 			return mergedEClass;
 		}
 
-		protected @Nullable EObject mergeASObjects(@NonNull String path, @NonNull Iterable<@NonNull ? extends EObject> asObjects) {
+		protected @Nullable EObject mergeASObjects(@NonNull String path, @NonNull Iterable<@NonNull ? extends Element> asObjects) {
 			EObject asMergedObject = createMergedEObject(asObjects);
 			if (asMergedObject != null) {
 				EClass mergedEClass = asMergedObject.eClass();
@@ -302,7 +670,7 @@ public class ModelMerger extends AbstractProjectComponent
 				}
 			}
 			if (mergedSlots != null) {
-				mergedSlots = Collections.singletonList(mergeASObjects(path, (Iterable<@NonNull ? extends EObject>) mergedSlots));
+				mergedSlots = Collections.singletonList(mergeASObjects(path, (Iterable<@NonNull ? extends Element>) mergedSlots));
 			}
 			return mergedSlots;
 		}
@@ -316,13 +684,13 @@ public class ModelMerger extends AbstractProjectComponent
 
 		@Override
 		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
-			List<@NonNull EObject> eObjects = null;
+			List<@NonNull Element> eObjects = null;
 			for (Object slot : slots) {
 				if (slot != null) {
 					if (eObjects == null) {
 						eObjects = new ArrayList<>();
 					}
-					eObjects.add((EObject)slot);
+					eObjects.add((Element)slot);
 				}
 			}
 			return eObjects != null ? mergeASObjects(path, eObjects) : null;
@@ -678,15 +1046,15 @@ public class ModelMerger extends AbstractProjectComponent
 
 		@Override
 		public Object merge(@NonNull String path, @NonNull Iterable<Object> slots) {
-			CompleteClass mergedType = null;
+			CompleteClass mergedCompleteClass = null;
 			NormalizedTemplateParameter mergedNormalizedTemplateParameter = null;
 			for (Object slot : slots) {
 				if (slot instanceof org.eclipse.ocl.pivot.Class) {
 					CompleteClass type = completeModel.getCompleteClass((org.eclipse.ocl.pivot.Class)slot);
-					if (mergedType == null) {
-						mergedType = type;
+					if (mergedCompleteClass == null) {
+						mergedCompleteClass = type;
 					}
-					else if (mergedType != type) {
+					else if (mergedCompleteClass != type) {
 						StringBuilder s = new StringBuilder();
 						s.append("Conflicting " + path);
 						for (Object slot2 : slots) {
@@ -710,12 +1078,21 @@ public class ModelMerger extends AbstractProjectComponent
 					}
 				}
 			}
-			if (mergedType != null) {
+			if (mergedCompleteClass != null) {
 				assert mergedNormalizedTemplateParameter == null;
-				return mergedType.getPrimaryClass();
+				org.eclipse.ocl.pivot.Class primaryClass = mergedCompleteClass.getPrimaryClass();
+			/*	org.eclipse.ocl.pivot.Class resourceClass = null;
+				for (org.eclipse.ocl.pivot.Class asClass : mergedCompleteClass.getPartialClasses()) {
+					if (asClass.eResource() == modelMerger.getResource()) {
+						resourceClass = asClass;
+						break;
+					}
+				} */
+
+				return primaryClass;
 			}
 			else {
-				assert mergedType == null;
+				assert mergedCompleteClass == null;
 				return mergedNormalizedTemplateParameter;
 			}
 		}
@@ -781,7 +1158,7 @@ public class ModelMerger extends AbstractProjectComponent
 	protected final @NonNull Map<@NonNull EClassifier, @NonNull SingleSlotMerger> classifier2singleSlotMerger = new HashMap<>();
 	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull MultipleSlotMerger> feature2multipleSlotMerger = new HashMap<>();
 	protected final @NonNull Map<@NonNull EStructuralFeature, @NonNull SingleSlotMerger> feature2singleSlotMerger = new HashMap<>();
-	protected final @NonNull Map<@NonNull EObject, @NonNull EObject> eObject2mergedEObject = new HashMap<>();
+	protected final @NonNull Map<@NonNull Element, @NonNull Element> eObject2mergedEObject = new HashMap<>();
 
 	public ModelMerger() {
 	//	OCLstdlib.install();
@@ -924,6 +1301,42 @@ public class ModelMerger extends AbstractProjectComponent
 
 		//
 		try {
+			List<@NonNull ASResource> mergedResources = new ArrayList<>();		// Resources contributing to the mergedResource
+		/*	for (@NonNull String ecoreURI : ecoreURIs) {
+				URI uri = projectDescriptor.getPlatformResourceURI(ecoreURI);
+				log.info("Loading " + uri);
+				Resource ecoreResource = resourceSet.getResource(uri, true);
+				assert ecoreResource != null;
+				EcoreUtil.resolveAll(ecoreResource);
+				ResourceUtils.checkResource(ecoreResource);
+			//	for (EObject eObject : ecoreResource.getContents()) {
+			//		if (eObject instanceof EPackage) {
+			//			EPackage ePackage = (EPackage) eObject;
+			//		//	ClassUtil.getMetamodelAnnotation(ePackage); // Install EAnnotation
+			//		}
+			//	}
+				Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
+				Model pivotModel = ecore2as.getASModel();
+				ASResource asResource = ClassUtil.requireNonNull((ASResource)pivotModel.eResource());
+				mergedResources.add(asResource);
+			//	((CompleteModelImpl)environmentFactory.getCompleteModel()).suppressAutoloading(false);
+				ResourceUtils.checkResource(asResource);
+			}
+			EcoreUtil.resolveAll(resourceSet);
+			ResourceUtils.checkResourceSet(resourceSet); */
+			Set<@NonNull Resource> primaryASResources = Sets.newHashSet(ClassUtil.nullFree(asResourceSet.getResources()));
+			//
+			for (@NonNull String oclURI : oclURIs) {
+				URI uri = projectDescriptor.getPlatformResourceURI(oclURI);
+				log.info("Merging " + uri);
+				CSResource csResource = ocl.getCSResource(uri);
+				ResourceUtils.checkResourceSet(ocl.getResourceSet());
+				ASResource oclResource = csResource.getCS2AS(ocl.getEnvironmentFactory()).getASResource();
+				mergedResources.add(oclResource);
+				ResourceUtils.checkResourceSet(asResourceSet);
+			}
+			ResourceUtils.checkResourceSet(asResourceSet);
+			//
 			for (@NonNull String ecoreURI : ecoreURIs) {
 				URI uri = projectDescriptor.getPlatformResourceURI(ecoreURI);
 				log.info("Loading " + uri);
@@ -940,23 +1353,10 @@ public class ModelMerger extends AbstractProjectComponent
 				Ecore2AS ecore2as = Ecore2AS.getAdapter(ecoreResource, environmentFactory);
 				Model pivotModel = ecore2as.getASModel();
 				ASResource asResource = ClassUtil.requireNonNull((ASResource)pivotModel.eResource());
+				mergedResources.add(asResource);
 			//	((CompleteModelImpl)environmentFactory.getCompleteModel()).suppressAutoloading(false);
 				ResourceUtils.checkResource(asResource);
 			}
-			EcoreUtil.resolveAll(resourceSet);
-			ResourceUtils.checkResourceSet(resourceSet);
-			Set<@NonNull Resource> primaryASResources = Sets.newHashSet(ClassUtil.nullFree(asResourceSet.getResources()));
-			//
-			for (@NonNull String oclURI : oclURIs) {
-				URI uri = projectDescriptor.getPlatformResourceURI(oclURI);
-				log.info("Merging " + uri);
-				CSResource csResource = ocl.getCSResource(uri);
-				ResourceUtils.checkResourceSet(ocl.getResourceSet());
-				@SuppressWarnings("unused") Resource oclResource = csResource.getCS2AS(ocl.getEnvironmentFactory()).getASResource();
-				ResourceUtils.checkResourceSet(asResourceSet);
-			}
-			ResourceUtils.checkResourceSet(asResourceSet);
-			//
 
 			installSlotMergers(environmentFactory);
 			URI mergedFileURI = projectDescriptor.getPlatformResourceURI(mergedURI);
@@ -1227,9 +1627,9 @@ public class ModelMerger extends AbstractProjectComponent
 		this.invariantPrefix = invariantPrefix;
 	}
 
-	public void putMerged(@NonNull EObject mergedEObject, @NonNull EObject eObject) {
-		eObject2mergedEObject.put(eObject, mergedEObject);
-	}
+//	public void putMerged(@NonNull EObject mergedEObject, @NonNull EObject eObject) {
+//		eObject2mergedEObject.put(eObject, mergedEObject);
+//	}
 
 	/**
 	 * Define a URI to be loaded as the OCL Standard Library.

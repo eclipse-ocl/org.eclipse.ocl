@@ -769,6 +769,14 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		return new PartialTupleTypeManager(this);
 	}
 
+/*	protected void debugCheckSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass) {
+		UniqueList<String> names = new UniqueList<>();
+		for (org.eclipse.ocl.pivot.@NonNull Class superClass : PivotUtil.getSuperClasses(specializedClass)) {
+			boolean added = names.add(superClass.getName());
+			assert added;		// XXX Set(String) inherits UniqueCollection(T), UniqueCollection(String)
+		}
+	} */
+
 	public void freeze(@NonNull Resource resource) {
 		libraryLoadInProgress  = false;
 		((ASResource)resource).setSaveable(false);
@@ -1036,6 +1044,11 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		return asClass;
 	}
 
 	@Override
@@ -1319,9 +1332,11 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 					}
 				}
 				else {
-					specializedClass.getSuperClasses().add(superClass);
+					org.eclipse.ocl.pivot.@NonNull Class primarySuperClass = getPrimaryClass(superClass);
+					specializedClass.getSuperClasses().add(primarySuperClass);
 				}
 			}
+		//	debugCheckSuperClasses(specializedClass);
 		}
 	}
 

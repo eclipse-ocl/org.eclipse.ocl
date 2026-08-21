@@ -898,6 +898,12 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		assert completeModel != null;
+		return completeModel.getPrimaryClass(asClass);
+	}
+
+	@Override
 	public @NonNull Type getPrimaryType(@NonNull Type asType) {
 		assert completeModel != null;
 		return completeModel.getPrimaryType(asType);

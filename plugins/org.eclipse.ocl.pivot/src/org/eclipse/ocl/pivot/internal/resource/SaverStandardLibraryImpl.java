@@ -119,7 +119,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 
 	private @Nullable List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses = null;
 
-	private @NonNull Map<@NonNull Element, @NonNull Element> remote2local = new HashMap<>();
+	private @NonNull Map<@NonNull Element, @NonNull Element> remote2local;
 
 	/**
 	 * The appropriate normalization visitor for each Resource.
@@ -159,7 +159,16 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	private @Nullable PrimitiveType unlimitedNaturalType = null;
 
 	public SaverStandardLibraryImpl(@NonNull ASResource resource) {
-		this.resource = resource;
+		this(resource, new HashMap<>());
+	}
+
+	public SaverStandardLibraryImpl(@NonNull ASResource asResource,
+			@NonNull Map<@NonNull Element, @NonNull Element> remote2local) {
+		this.resource = asResource;
+		this.remote2local = remote2local;
+		for (Element value : remote2local.values()) {
+			assert value.eResource() == resource;
+		}
 		for (EObject eRoot : resource.getContents()) {
 			if (eRoot instanceof Model) {
 				for (org.eclipse.ocl.pivot.Package asPackage : PivotUtil.getOwnedPackages((Model)eRoot)) {
@@ -183,6 +192,11 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 			orphanClasses2 = orphanClasses = PivotUtil.getOwnedClassesList(localOrphanPackage);
 		}
 		orphanClasses2.add(localClass);
+	}
+
+//	@Override
+	public @Nullable Element basicGetLocal(@NonNull Element element) {
+		return remote2local.get(element);
 	}
 
 	@Override
@@ -223,8 +237,11 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	@Override
 	public @NonNull Element getLocal(@NonNull Element element) {
 		Element local = remote2local.get(element);
+	//	assert local != null;
+	//	return local;
 		Element element3 = local != null ? local : element;
-		assert (element3.eResource() ==getResource()) || !Orphanage.isOrphan(element3);
+		assert (element3.eResource() == resource) || !Orphanage.isOrphan(element3);
+	//	assert (local.eResource() == resource) || !Orphanage.isOrphan(element3);
 		return element3;
 	}
 
@@ -350,6 +367,28 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	}
 
 	@Override
+	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
+		org.eclipse.ocl.pivot.@NonNull Class localizeElement = localizeElement(asClass);
+		if (localizeElement.eResource() != resource) {
+			System.out.println("getPrimaryClass: " + NameUtil.debugSimpleName(asClass) + " => "  + NameUtil.debugSimpleName(localizeElement) + " " + asClass);
+			localizeElement = localizeElement(asClass);
+		}
+	//	assert localizeElement.eResource() == resource;
+		return localizeElement;
+	}
+
+	@Override
+	public @NonNull Type getPrimaryType(@NonNull Type asType) {
+		Type localizeElement = localizeElement(asType);
+		if (localizeElement.eResource() != resource) {
+			System.out.println("getPrimaryType: " + NameUtil.debugSimpleName(asType) + " => "  + NameUtil.debugSimpleName(localizeElement) + " " + asType);
+			localizeElement = localizeElement(asType);
+		}
+	//	assert localizeElement.eResource() == resource;
+		return localizeElement;
+	}
+
+	@Override
 	public @NonNull PrimitiveType getRealType() {
 		return realType != null ? realType : super.getRealType();
 	}
@@ -433,7 +472,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 			else if (asLocalClass instanceof MapType) {
 				getMapTypeManager().load((MapType)asLocalClass);
 			}
-			else if (asLocalClass instanceof NormalizedTemplateParameter) {
+			else if (asLocalClass instanceof NormalizedTemplateParameter) {			// XXX impossible
 				;
 			}
 			else if (asLocalClass instanceof TupleType) {
@@ -443,7 +482,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 				;
 			}
 			else if (Orphanage.isOrphan(asLocalClass)) {
-				;
+				;				// XXX NormalizedTemplateParameter
 			}
 			else {
 				getSpecializedTypeManager().load(asLocalClass);
@@ -462,7 +501,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		CollectionType localCollectionType = getCollectionType(genericCollectionType, elementType, isNullFree, lowerValue, upperValue);
 		resolveSuperClasses(localCollectionType, genericCollectionType);
 		assert localCollectionType.eContainer() != null;
-		remote2local.put(asCollectionType, localCollectionType);
+		putLocal(asCollectionType, localCollectionType);
 		return localCollectionType;
 	}
 
@@ -486,7 +525,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		LambdaType localLambdaType = getLambdaType(localContextParameter, localParameters, localResultParameter, null);
 		resolveSuperClasses(localLambdaType, genericLambdaType);
 		assert localLambdaType.eContainer() != null;
-		remote2local.put(asLambdaType, localLambdaType);
+		putLocal(asLambdaType, localLambdaType);
 		return localLambdaType;
 	}
 
@@ -495,7 +534,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		if (!Orphanage.isOrphan(asReferencedElement)) {
 			return asReferencedElement;		// Non-orphan is referenceable and so does not need localization
 		}
-		EObject localElement = remote2local.get(asReferencedElement);
+		EObject localElement = basicGetLocal(asReferencedElement);
 		if (localElement != null) {
 			return (T)localElement;			// re-use existing localization
 		}
@@ -511,6 +550,9 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		else if (asReferencedElement instanceof NormalizedTemplateParameter) {
 			return (T)localizeNormalizedTemplateParameter((NormalizedTemplateParameter)asReferencedElement);
 		}
+	//	else if (asReferencedElement instanceof Precedence) {
+	//		return (T)localizePrecedence((Precedence)asReferencedElement);
+	//	}
 		else if (asReferencedElement instanceof Property) {
 			return (T) localizeProperty((Property)asReferencedElement);
 		}
@@ -551,7 +593,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		MapType localMapType = getMapType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 		resolveSuperClasses(localMapType, genericMapType);
 		assert localMapType.eContainer() != null;
-		remote2local.put(asMapType, localMapType);
+		putLocal(asMapType, localMapType);
 		return localMapType;
 	}
 
@@ -570,7 +612,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		}
 		org.eclipse.ocl.pivot.@NonNull Package localOrphanage = getLocalOrphanage();
 		NormalizedTemplateParameter localNormalizedTemplateParameter = Orphanage.getNormalizedTemplateParameter(localOrphanage, index, localConstrainingClasses);
-		remote2local.put(asNormalizedTemplateParameter, localNormalizedTemplateParameter);
+		putLocal(asNormalizedTemplateParameter, localNormalizedTemplateParameter);
 		return localNormalizedTemplateParameter;
 	}
 
@@ -633,7 +675,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		EObject eContainer = asProperty.eContainer();
 		if (eContainer instanceof TupleType) {				// A tuple part
 			localizeTupleType((TupleType)eContainer);		// Tuple parts localized by TupleType
-			Property localProperty = (Property)remote2local.get(asProperty);
+			Property localProperty = (Property)getLocal(asProperty);
 			assert localProperty != null;
 			return localProperty;
 		}
@@ -652,7 +694,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 			Property asOpposite = asProperty.getOpposite();
 			assert asOpposite != null;
 			assert resource == asOpposite.eResource();
-			return remote2local.get(asProperty); */
+			return getLocal(asProperty); */
 		}
 	}
 
@@ -667,7 +709,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 			localTemplateArguments.add(localizeElement(templateArgument));
 		}
 		org.eclipse.ocl.pivot.Class localSpecializedClass = getSpecializedType(genericSpecializedClass, localTemplateArguments);
-		remote2local.put(asSpecializedClass, localSpecializedClass);
+		putLocal(asSpecializedClass, localSpecializedClass);
 		for (@NonNull Property asProperty : PivotUtil.getOwnedProperties(asSpecializedClass)) {
 			if (asProperty.isIsImplicit()) {			// XXX is this redundant / doable lazily on demand
 				assert asProperty.isIsImplicit();
@@ -685,7 +727,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 				localProperty.setIsResolveProxies(asProperty.isIsResolveProxies());
 				localProperty.setOpposite(asOpposite);
 				localSpecializedClass.getOwnedProperties().add(localProperty);
-				remote2local.put(asProperty, localProperty);
+				putLocal(asProperty, localProperty);
 			}
 		}
 		return localSpecializedClass;
@@ -696,12 +738,12 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		// child parts are localized here along with the class
 		TupleTypeId tupleTypeId = asTupleType.getTupleTypeId();
 		TupleType localTupleType = getTupleType(tupleTypeId);
-		Element old = remote2local.put(asTupleType, localTupleType);
+		Element old = putLocal(asTupleType, localTupleType);
 		Iterable<@NonNull Property> localParts = PivotUtil.getOwnedProperties(localTupleType);
 		for (@NonNull Property asPart : PivotUtil.getOwnedProperties(asTupleType)) {
 			Property localPart = NameUtil.getNameable(localParts, PivotUtil.getName(asPart));
 			assert localPart != null;
-			remote2local.put(asPart, localPart);
+			putLocal(asPart, localPart);
 		}
 		return localTupleType;
 	}
@@ -730,6 +772,11 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		}
 	}
 
+	protected @Nullable Element putLocal(@NonNull Element remoteElement, @NonNull Element localElement) {
+		assert localElement.eResource() == resource;
+		return remote2local.put(remoteElement, localElement);
+	}
+
 	@Override
 	public void resolveSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 		super.resolveSuperClasses(specializedClass, unspecializedClass);
@@ -738,10 +785,12 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 			org.eclipse.ocl.pivot.@NonNull Class superClass = superClassesList.get(i);
 		//	if (Orphanage.isOrphan(superClass) && (superClass.eResource() != resource)) {
 			org.eclipse.ocl.pivot.Class localSuperClass = localizeElement(superClass);
+			assert localSuperClass == superClass;				// XXX
 			if (localSuperClass != superClass) {
 				superClassesList.set(i, localSuperClass);
 			}
 		//	}
 		}
+	//	debugCheckSuperClasses(specializedClass);
 	}
 }

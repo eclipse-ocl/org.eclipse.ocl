@@ -508,6 +508,11 @@ public interface StandardLibrary
 	/**
 	 * @since 7.0
 	 */
+	org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class asClass);
+
+	/**
+	 * @since 7.0
+	 */
 	@NonNull Type getPrimaryType(@NonNull Type asType);
 
 	@Nullable Type getPrimitiveType(@NonNull PrimitiveTypeId typeId);
