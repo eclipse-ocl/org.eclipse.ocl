@@ -49,9 +49,9 @@ public final class PivotSaveImpl extends XMISaveImpl
 	{
 		private @NonNull ASSaver asSaver;
 
-		public PivotXMISaveHelperImpl(@NonNull ASResource asResource) {
+		public PivotXMISaveHelperImpl(@NonNull ASResource asResource, @Nullable ASSaver asSaver) {
 			super(asResource);
-			this.asSaver = new SaverStandardLibraryImpl(asResource);
+			this.asSaver = asSaver != null ? asSaver : new SaverStandardLibraryImpl(asResource);
 		}
 
 		@Override

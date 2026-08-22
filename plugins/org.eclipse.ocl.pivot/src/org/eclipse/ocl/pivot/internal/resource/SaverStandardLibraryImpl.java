@@ -296,9 +296,10 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 		orphanClasses2.add(localClass);
 	}
 
-//	@Override
-	public @Nullable Element basicGetLocal(@NonNull Element element) {
-		return remote2local.get(element);
+	public @Nullable Element basicGetLocal(@NonNull Element remoteElement) {
+		Element localElement = remote2local.get(remoteElement);
+	//	System.out.println("basicGetLocal: " + NameUtil.debugSimpleName(remote2local) + " : "  + NameUtil.debugSimpleName(remoteElement) + " => "  + NameUtil.debugSimpleName(localElement) + " " + remoteElement);
+		return localElement;
 	}
 
 	@Override
@@ -472,7 +473,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 		org.eclipse.ocl.pivot.@NonNull Class localizeElement = localizeElement(asClass);
 		if (localizeElement.eResource() != resource) {
-			System.out.println("getPrimaryClass: " + NameUtil.debugSimpleName(asClass) + " => "  + NameUtil.debugSimpleName(localizeElement) + " " + asClass);
+		//	System.out.println("getPrimaryClass: " + NameUtil.debugSimpleName(asClass) + " => "  + NameUtil.debugSimpleName(localizeElement) + " " + asClass);
 			localizeElement = localizeElement(asClass);
 		}
 	//	assert localizeElement.eResource() == resource;
@@ -483,7 +484,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	public @NonNull Type getPrimaryType(@NonNull Type asType) {
 		Type localizeElement = localizeElement(asType);
 		if (localizeElement.eResource() != resource) {
-			System.out.println("getPrimaryType: " + NameUtil.debugSimpleName(asType) + " => "  + NameUtil.debugSimpleName(localizeElement) + " " + asType);
+		//	System.out.println("getPrimaryType: " + NameUtil.debugSimpleName(asType) + " => "  + NameUtil.debugSimpleName(localizeElement) + " " + asType);
 			localizeElement = localizeElement(asType);
 		}
 	//	assert localizeElement.eResource() == resource;
@@ -882,6 +883,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	}
 
 	protected @Nullable Element putLocal(@NonNull Element remoteElement, @NonNull Element localElement) {
+	//	System.out.println("putLocal: " + NameUtil.debugSimpleName(remoteElement) + " => "  + NameUtil.debugSimpleName(localElement) + " " + remoteElement);
 		assert localElement.eResource() == resource;
 		return remote2local.put(remoteElement, localElement);
 	}

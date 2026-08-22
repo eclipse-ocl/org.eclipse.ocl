@@ -1400,6 +1400,7 @@ public class ModelMerger extends AbstractProjectComponent
 
 			log.info("Saving " + mergedASFileURI);
 			Map<Object, Object> saveOptions = getSaveOptions(mergedResource);
+			saveOptions.put(ASSaver.class, new MergerStandardLibrary(mergedResource, eObject2mergedEObject));
 			mergedResource.save(saveOptions);
 
 		/*	Set<@NonNull Resource> modifiedPrimaryASResources = new HashSet<>();

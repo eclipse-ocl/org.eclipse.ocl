@@ -396,7 +396,16 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	 */
 	@Override
 	protected @NonNull PivotSaveImpl createXMLSave() {
-		return new PivotSaveImpl(new PivotSaveImpl.PivotXMISaveHelperImpl(this));
+		return new PivotSaveImpl(new PivotSaveImpl.PivotXMISaveHelperImpl(this, null));
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
+	protected @NonNull PivotSaveImpl createXMLSave(Map<?, ?> options) {
+		@SuppressWarnings("unchecked") ASSaver asSaver = (ASSaver)options.get(ASSaver.class);
+		return new PivotSaveImpl(new PivotSaveImpl.PivotXMISaveHelperImpl(this, asSaver));
 	}
 
 	@Override
