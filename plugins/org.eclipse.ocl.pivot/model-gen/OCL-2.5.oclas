@@ -3,9 +3,6 @@
     xsi:schemaLocation="http://www.eclipse.org/ocl/2015/Pivot java://org.eclipse.ocl.pivot.PivotPackage" xmi:id="AAAAA" externalURI="platform:/resource/org.eclipse.ocl.pivot/model/OCL-2.5.oclstdlib" name="OCL-2.5.oclstdlib" xmiidVersion="1">
   <ownedPackages xsi:type="pivot:Library" xmi:id="S673I" URI="http://www.eclipse.org/ocl/2015/Library" name="ocl" nsPrefix="ocl">
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
-      <ownedDetails name="PackageRole">
-        <values>StandardLibrary</values>
-      </ownedDetails>
       <ownedDetails name="ClassGroup_Collection">
         <values>This sub clause defines the collection types and their operations. As defined in this sub clause, each collection type is actually a template type with one parameter. ‘T’ denotes the parameter. A concrete collection type is created by substituting a type for the T. So Set (Integer) and Bag (Person) are collection types.</values>
       </ownedDetails>
