@@ -65,6 +65,7 @@ import org.eclipse.ocl.pivot.internal.ecore.as2es.AS2Ecore;
 import org.eclipse.ocl.pivot.internal.ecore.es2as.Ecore2AS;
 import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.TemplateSpecialization;
+import org.eclipse.ocl.pivot.internal.resource.ASSaver;
 import org.eclipse.ocl.pivot.internal.resource.SaverStandardLibraryImpl;
 import org.eclipse.ocl.pivot.internal.resource.StandaloneProjectMap;
 import org.eclipse.ocl.pivot.internal.utilities.OCLInternal;
@@ -110,30 +111,34 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 
 		@Override
-		public @Nullable Element basicGetLocal(@NonNull Element remoteElement) {
-			// TODO Auto-generated method stub
-			Element localElement = super.basicGetLocal(remoteElement);
-			System.out.println("basicGetLocal: " + NameUtil.debugSimpleName(remoteElement) + " => "  + NameUtil.debugSimpleName(localElement) + " " + remoteElement);
-			return localElement;
-		}
-
-		@Override
 		public org.eclipse.ocl.pivot.@NonNull Class getPrimaryClass(org.eclipse.ocl.pivot.@NonNull Class asClass) {
 			org.eclipse.ocl.pivot.@NonNull Class localizeElement = super.getPrimaryClass(asClass);
 			assert localizeElement.eResource() == resource;
 			return localizeElement;
 		}
 
-		@Override
+	/*	@Override
 		public @NonNull Element getLocal(@NonNull Element element) {
 			Element local = basicGetLocal(element);
-			assert local != null;
-			return local;
+			if (local != null) {
+				return local;
+			}
+			if (element.eResource() != resource) {
+				for (EObject eContainer = element; eContainer instanceof Element; eContainer = eContainer.eContainer()) {
+					Element container = basicGetLocal((Element)eContainer);
+					if (container != null) {
+						getClass();			// XXX debugging
+					}
+				}
+			}
+			assert element.eResource() == resource;
+			return element;
+
 		//	Element element3 = local != null ? local : element;
 		//	assert (element3.eResource() == resource) || !Orphanage.isOrphan(element3);
 		//	assert (local.eResource() == resource) || !Orphanage.isOrphan(element3);
 		//	return element3;
-		}
+		} */
 
 		@Override
 		public @NonNull Type getPrimaryType(@NonNull Type asType) {
@@ -420,12 +425,6 @@ public class ModelMerger extends AbstractProjectComponent
 			return localTupleType;
 		}
 
-		@Override
-		public @Nullable Element putLocal(@NonNull Element remoteElement, @NonNull Element localElement) {
-			System.out.println("putLocal: " + NameUtil.debugSimpleName(remoteElement) + " => "  + NameUtil.debugSimpleName(localElement) + " " + remoteElement);
-			return super.putLocal(remoteElement, localElement);
-		}
-
 		private void checkSuperClasses(org.eclipse.ocl.pivot.@NonNull Class specializedClass, org.eclipse.ocl.pivot.@NonNull Class unspecializedClass) {
 			List<org.eclipse.ocl.pivot.@NonNull Class> superClassesList = PivotUtil.getSuperClassesList(specializedClass);
 			List<org.eclipse.ocl.pivot.@NonNull Class> oldSuperClasses = new ArrayList(superClassesList);
@@ -461,7 +460,7 @@ public class ModelMerger extends AbstractProjectComponent
 			Element mergedEObject = (Element) mergedEClass.getEPackage().getEFactoryInstance().create(mergedEClass);
 			for (@NonNull T asObject : asObjects) {
 //				modelMerger.putMerged(mergedEObject, asObject);
-//				System.out.println("preLocal: " + NameUtil.debugSimpleName(asObject) + " => "  + NameUtil.debugSimpleName(mergedEObject) + " " + asObject);
+			//	System.out.println("preLocal: " + NameUtil.debugSimpleName(modelMerger.eObject2mergedEObject) + " : "  + NameUtil.debugSimpleName(asObject) + " => "  + NameUtil.debugSimpleName(mergedEObject) + " " + asObject);
 				modelMerger.eObject2mergedEObject.put(asObject, mergedEObject);
 			}
 			return (T) mergedEObject;
@@ -487,7 +486,7 @@ public class ModelMerger extends AbstractProjectComponent
 			//	}
 				List<@NonNull EStructuralFeature> eAllStructuralFeatures = mergedEClass.getEAllStructuralFeatures();
 				for (@NonNull EStructuralFeature eStructuralFeature : eAllStructuralFeatures) {
-					if ("booleanSymbol".equals(eStructuralFeature.getName())) {
+					if ("ownedAccumulator".equals(eStructuralFeature.getName())) {
 						getClass();			// XXX
 					}
 					if ("instanceClassName".equals(eStructuralFeature.getName())) {
@@ -529,7 +528,7 @@ public class ModelMerger extends AbstractProjectComponent
 				}
 			}
 			SingleSlotMerger featureMerger = modelMerger.getSingleSlotMerger(eFeature);
-			Object mergedSlot = slots.size() > 1 ? featureMerger.merge(path, slots) : slots.get(0);
+			Object mergedSlot = slots.size() >= 1 ? featureMerger.merge(path, slots) : null;
 			if ((mergedSlot != null) && (eFeature instanceof EReference) && ((EReference)eFeature).isContainment()) {
 				if (slots.contains(mergedSlot)) {
 					mergedSlot = EcoreUtil.copy((EObject) mergedSlot);
