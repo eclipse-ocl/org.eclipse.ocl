@@ -12,6 +12,7 @@ package org.eclipse.ocl.pivot.internal.resource;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -47,7 +49,9 @@ import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.SelfType;
 import org.eclipse.ocl.pivot.SequenceType;
 import org.eclipse.ocl.pivot.SetType;
+import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
+import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
@@ -73,6 +77,104 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  */
 public class SaverStandardLibraryImpl extends PartialStandardLibrary implements ASSaver
 {
+	/**
+	 * TypeDeclarationDepthComparator supports sorting type declarations into a shallowest first order to ensure
+	 * that simple type declarations can be loaded by loadOrphanage before more complex type declarations that
+	 * might otherwise attempt to create rather than re-use the simpler decalartion.
+	 */
+	protected static class TypeDeclarationDepthComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
+	{
+		private final static int IN_PROGRESS = Integer.MAX_VALUE;		// Cyclic guard
+
+		private final @NonNull Map<@NonNull Type, @NonNull Integer> type2declarationDepth = new HashMap<>();
+
+		@Override
+		public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
+			int d1 = getBindingDepth(o1);
+			int d2 = getBindingDepth(o2);
+			int diff = d1 - d2;
+			if (diff != 0) {
+				return diff;
+			}
+			return System.identityHashCode(o1) - System.identityHashCode(o2);
+		}
+
+		protected int getBindingDepth(@NonNull Type asType) {
+			Integer bindingDepth = type2declarationDepth.get(asType);
+			if (bindingDepth == null) {
+				type2declarationDepth.put(asType, IN_PROGRESS);			// Cyclic guard
+				int maxDepth = 0;
+				if (asType instanceof TemplateableElement) {
+					List<@NonNull TemplateArgument> asTemplateArguments = ((TemplateableElement)asType).basicGetOwnedTemplateArguments();
+					if (asTemplateArguments != null) {
+						for (@NonNull TemplateArgument asTemplateArgument : asTemplateArguments) {
+							int nestedDepth = getBindingDepth(PivotUtil.getActual(asTemplateArgument));
+							if (nestedDepth > maxDepth) {
+								maxDepth = nestedDepth;
+							}
+						}
+					}
+				}
+				if (asType instanceof TupleType) {
+					for (@NonNull Property asProperty : PivotUtil.getOwnedProperties((TupleType)asType)) {
+						int nestedDepth = getBindingDepth(PivotUtil.getType(asProperty));
+						if (nestedDepth > maxDepth) {
+							maxDepth = nestedDepth;
+						}
+					}
+				}
+				else if (asType instanceof LambdaType) {
+					LambdaType asLambdaType = (LambdaType)asType;
+					int nestedDepth = getBindingDepth(PivotUtil.getContextType(asLambdaType));
+					if (nestedDepth > maxDepth) {
+						maxDepth = nestedDepth;
+					}
+					for (@NonNull LambdaParameter asLambdaParameter : PivotUtil.getOwnedParameters(asLambdaType)) {
+						nestedDepth = getBindingDepth(PivotUtil.getType(asLambdaParameter));
+						if (nestedDepth > maxDepth) {
+							maxDepth = nestedDepth;
+						}
+					}
+					nestedDepth = getBindingDepth(PivotUtil.getResultType(asLambdaType));
+					if (nestedDepth > maxDepth) {
+						maxDepth = nestedDepth;
+					}
+				}
+				for (EObject eObject : asType.eContents()) {
+					if (eObject instanceof EReference) {
+						EReference eReference = (EReference)eObject;
+						if (!eReference.isDerived() && !eReference.isTransient() && !eReference.isVolatile()) {
+							Object eTargetOrTargets = asType.eGet(eReference);
+							if (eReference.isMany()) {
+								for (Object object : (List<?>)eTargetOrTargets) {
+									if (object instanceof Type) {
+										int nestedDepth = getBindingDepth((Type)object);
+										if (nestedDepth > maxDepth) {
+											maxDepth = nestedDepth;
+										}
+									}
+								}
+							}
+							else if (eTargetOrTargets instanceof Type) {
+								int nestedDepth = getBindingDepth((Type)eTargetOrTargets);
+								if (nestedDepth > maxDepth) {
+									maxDepth = nestedDepth;
+								}
+							}
+						}
+					}
+				}
+				bindingDepth = Integer.valueOf(maxDepth < Integer.MAX_VALUE ? maxDepth + 1 : maxDepth);
+				type2declarationDepth.put(asType, bindingDepth);
+			//	System.out.println("getBindingDepth " + asType + " => " + bindingDepth);
+			}
+			else if (bindingDepth == IN_PROGRESS) {
+				System.out.println("Cyclic type declaration for " + asType);
+			}
+			return bindingDepth.intValue();
+		}
+	}
+
 	/**
 	 * @since 7.0
 	 */
@@ -462,7 +564,14 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	}
 
 	private void loadOrphanage(org.eclipse.ocl.pivot.@NonNull Package localOrphanage) {
-		for (org.eclipse.ocl.pivot.@NonNull Class asLocalClass : PivotUtil.getOwnedClasses(localOrphanage)) {
+		List<org.eclipse.ocl.pivot.@NonNull Class> orphanClasses = new ArrayList<>(localOrphanage.getOwnedClasses());
+		TypeDeclarationDepthComparator typeDeclarationDepthComparator = new TypeDeclarationDepthComparator();
+		Collections.sort(orphanClasses, typeDeclarationDepthComparator);
+		for (org.eclipse.ocl.pivot.@NonNull Class asLocalClass : orphanClasses) {	// Simple declarations first
+		//	System.out.println("loadOrphanage " + NameUtil.debugSimpleName(asLocalClass) + " " + asLocalClass);
+			if (asLocalClass.toString().contains("Tuple")) {
+				getClass();			// XXX
+			}
 			if (asLocalClass instanceof CollectionType) {
 				getCollectionTypeManager().load((CollectionType)asLocalClass);
 			}
