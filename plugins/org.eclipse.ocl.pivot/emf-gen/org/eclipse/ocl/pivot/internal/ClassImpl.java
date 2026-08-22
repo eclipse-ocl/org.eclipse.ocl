@@ -1373,6 +1373,21 @@ implements org.eclipse.ocl.pivot.Class {
 
 				@Override
 				public void didAdd(int index, org.eclipse.ocl.pivot.Class partialClass) {
+				/*	if (size > 0) {					// XXX debug aid but beware Set(String) extends UniqueCollection(string) and UniqueCollection(T)
+						for (int i = 0; i < size; i++) {
+							org.eclipse.ocl.pivot.Class iClass = basicGet(i);
+							if (iClass != null) {
+								String iName = iClass.getName();
+								for (int j = i+1; j < size; j++) {
+									org.eclipse.ocl.pivot.Class jClass = basicGet(j);
+									if (jClass != null) {
+										String jName = jClass.getName();
+										assert !iName.equals(jName);
+									}
+								}
+							}
+						}
+					} */
 					assert partialClass != null;
 					if (classListeners != null) {
 						classListeners.didAddSuperClass(partialClass);
