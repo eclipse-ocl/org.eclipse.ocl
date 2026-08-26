@@ -352,6 +352,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 
 	protected void copyNamedElement(@NonNull ENamedElement eNamedElement, @NonNull NamedElement pivotNamedElement) {
 		copyModelElement(eNamedElement, pivotNamedElement);
+		String originalName = pivotNamedElement.getName();
 		String name;
 		String implementationClassName = null;
 		if (pivotNamedElement instanceof Operation) {
@@ -365,12 +366,12 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			implementationClassName = asProperty.getImplementationClass();
 		}
 		else {
-			name = pivotNamedElement.getName();
+			name = originalName;
 		}
 		if (name != null) {
 			String validName = wellFormedIdentifier(name);
-			if (!name.equals(validName)) {
-				NameUtil.setOriginalName(eNamedElement, name);
+			if (!originalName.equals(validName)) {
+				NameUtil.setOriginalName(eNamedElement, originalName);
 				name = validName;
 			}
 		}
@@ -805,6 +806,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 		@SuppressWarnings("null")
 		@NonNull EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
+		if ("exists".equals(pivotOperation.getName())) {
+			getClass();			// XXX
+		}
 		copyTypedElement(eOperation, pivotOperation);
 		@SuppressWarnings("null")@NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateParameters(eTypeParameters, pivotOperation);

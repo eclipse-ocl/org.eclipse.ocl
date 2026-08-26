@@ -228,7 +228,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			Model pivotModel = (Model)ClassUtil.requireNonNull(asResource.getContents().get(0));
 		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
 			ASSaver saver = new SaverStandardLibraryImpl(asResource);
-			saver.localize();
+			saver.localize();					// XXX redundant
 			String fileName = folder + "/" + javaClassName + ".java";
 		//	log.info("Generating '" + fileName + "'");
 			initModel(pivotModel, saver);
@@ -286,7 +286,7 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 					if (eClassifier instanceof EClass) {
 						EClass eClass = (EClass) eClassifier;
 						//						eClass.getEGenericSuperTypes().clear();
-						eClass.getEOperations().clear();
+					//	eClass.getEOperations().clear();
 						//						eClass.getEStructuralFeatures().clear();
 					}
 					eClassifier.getEAnnotations().clear();

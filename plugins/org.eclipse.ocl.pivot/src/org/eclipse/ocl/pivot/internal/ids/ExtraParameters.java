@@ -62,7 +62,7 @@ public enum ExtraParameters
 		return (extraParameters >> 16);
 	}
 
-	public int getIteratrors() {
+	public int getIterators() {
 		return (extraParameters >> 8) & 0xFF;
 	}
 

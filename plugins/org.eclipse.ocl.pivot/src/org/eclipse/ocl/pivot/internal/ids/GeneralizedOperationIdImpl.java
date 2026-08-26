@@ -98,8 +98,22 @@ public class GeneralizedOperationIdImpl extends AbstractGeneralizedIdImpl<@NonNu
 		s.append(parentId);
 		s.append("::");
 		s.append(name);
+		int templateParameters = extraParameters.getTemplateParameters();
+		int iterators = extraParameters.getIterators();
+		if ((templateParameters > 0) || (iterators > 0)) {
+			s.append("<");
+			s.append(templateParameters);
+			s.append(":");
+			s.append(iterators);
+			int accumulators = extraParameters.getAccumulators();
+			if (accumulators > 0) {
+				s.append(";");
+				s.append(accumulators);
+			}
+			s.append(">");
+		}
 		s.append(parametersId);
-		s.append(extraParameters);
+	//	s.append(extraParameters);
 		return s.toString();
 	}
 
