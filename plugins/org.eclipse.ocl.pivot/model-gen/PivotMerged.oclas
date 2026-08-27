@@ -5,6 +5,11 @@
   <ownedPackages xsi:type="pivot:Library" xmi:id="S673I" URI="http://www.eclipse.org/ocl/2015/Library" name="ocl" nsPrefix="ocl">
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASLibrary"/>
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASMetamodel"/>
+    <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/Collection">
+      <ownedDetails name="nullFree">
+        <values>true</values>
+      </ownedDetails>
+    </ownedAnnotations>
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
       <ownedDetails name="ClassGroup_Collection">
         <values>This sub clause defines the collection types and their operations. As defined in this sub clause, each collection type is actually a template type with one parameter. ‘T’ denotes the parameter. A concrete collection type is created by substituting a type for the T. So Set (Integer) and Bag (Person) are collection types.</values>
