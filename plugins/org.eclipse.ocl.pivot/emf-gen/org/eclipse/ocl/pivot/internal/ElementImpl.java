@@ -254,6 +254,16 @@ public abstract class ElementImpl
 	}
 
 	/**
+	 * @since 7.0
+	 */
+	@SuppressWarnings("null")
+	@Override
+	public @Nullable List<@NonNull Element> basicGetOwnedAnnotations()
+	{
+		return ownedAnnotations;
+	}
+
+	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated

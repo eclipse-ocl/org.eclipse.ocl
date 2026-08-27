@@ -153,4 +153,9 @@ public interface Element extends EObject, org.eclipse.ocl.pivot.util.Visitable {
 	default @Nullable URI getReloadableURI(@NonNull EnvironmentFactory environmentFactory) {
 		return null;
 	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Nullable List<@NonNull Element> basicGetOwnedAnnotations();
 } // Element

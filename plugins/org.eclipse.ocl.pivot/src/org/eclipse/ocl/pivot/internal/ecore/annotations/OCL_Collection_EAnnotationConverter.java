@@ -11,10 +11,18 @@
 package org.eclipse.ocl.pivot.internal.ecore.annotations;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Annotation;
+import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.internal.ecore.es2as.AbstractExternal2AS;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 
 /**
@@ -41,8 +49,15 @@ public class OCL_Collection_EAnnotationConverter extends AbstractEAnnotationConv
 		boolean hasFurtherDetails = false;
 		for (Map.Entry<String, String> detail : eAnnotation.getDetails()) {
 			if (PivotConstants.COLLECTION_IS_NULL_FREE.equals(detail.getKey())) {
+				EObject eContainer = eAnnotation.eContainer();
+				if (eContainer instanceof EPackage) {
+					return true; // explicit propagates
+				}
+				if (eContainer instanceof EClassifier) {
+					return true; // explicit propagates
+				}
 				String isNullFree = detail.getValue();
-			//	return Boolean.parseBoolean(isNullFree);		// XXX There is no 'set' here
+				// return Boolean.parseBoolean(isNullFree);
 			}
 			else if (PivotConstants.COLLECTION_LOWER.equals(detail.getKey())) {
 				String lowerText = detail.getValue();
@@ -57,5 +72,32 @@ public class OCL_Collection_EAnnotationConverter extends AbstractEAnnotationConv
 			}
 		}
 		return hasFurtherDetails;
+	}
+
+	@Override
+	public @Nullable Detail convertEDetail(@NonNull Entry<String, String> eDetail) {
+		String key = eDetail.getKey();
+		if (PivotConstants.COLLECTION_LOWER.equals(key)) {
+			return null;
+		}
+		else if (PivotConstants.COLLECTION_UPPER.equals(key)) {
+			return null;
+		}
+		return super.convertEDetail(eDetail);
+	}
+
+	@Override
+	public @Nullable Annotation createAnnotation(
+			@NonNull AbstractExternal2AS converter,
+			@NonNull EAnnotation eAnnotation) {
+		// TODO Auto-generated method stub
+		EObject eContainer = eAnnotation.eContainer();
+		if (eContainer instanceof EPackage) {
+			return super.createAnnotation(converter, eAnnotation);
+		}
+		if (eContainer instanceof EClassifier) {
+			return super.createAnnotation(converter, eAnnotation);
+		}
+		return null;
 	}
 }

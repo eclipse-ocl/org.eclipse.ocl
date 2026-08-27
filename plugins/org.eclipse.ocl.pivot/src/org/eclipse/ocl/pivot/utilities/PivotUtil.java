@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.BagType;
@@ -65,6 +66,7 @@ import org.eclipse.ocl.pivot.CompleteModel;
 import org.eclipse.ocl.pivot.CompletePackage;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
 import org.eclipse.ocl.pivot.EntryType;
@@ -2344,6 +2346,13 @@ public class PivotUtil implements PivotConstants
 	 */
 	public static @NonNull LambdaParameter getOwnedContext(@NonNull LambdaType asLambdaType) {
 		return ClassUtil.requireNonNull(asLambdaType.getOwnedContext());
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull List<@NonNull Detail> getOwnedDetails(@NonNull Annotation asAnnotation) {
+		return ClassUtil.nullFree(asAnnotation.getOwnedDetails());
 	}
 
 	/**

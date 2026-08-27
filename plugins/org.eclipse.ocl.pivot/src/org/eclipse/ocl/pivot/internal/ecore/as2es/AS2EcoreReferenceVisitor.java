@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
@@ -39,6 +40,7 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
+import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.MapType;
@@ -159,7 +161,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 						CollectionTypeId genericCollectionTypeId = IdManager.getCollectionTypeId(redefinedCollectionType.isOrdered(), redefinedCollectionType.isUnique());
 						CollectionTypeArguments typeArguments = standardLibrary.createCollectionTypeArguments(genericCollectionTypeId, redefiningType, redefinedCollectionType.isIsNullFree(),
 							redefinedCollectionType.getLowerValue(), redefinedCollectionType.getUpperValue());
-						optionalType = new OptionalType(standardLibrary .getCollectionType(typeArguments), redefinedProperty.isIsRequired());
+						optionalType = new OptionalType(standardLibrary.getCollectionType(typeArguments), redefinedProperty.isIsRequired());
 					}
 				}
 			}
@@ -448,7 +450,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eTypedElement.setOrdered(true);
 			eTypedElement.setUnique(true);
 		}
-		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getGeneric() != standardLibrary .getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
+		else if ((pivotType instanceof CollectionType) && (((CollectionType)pivotType).getGeneric() != standardLibrary.getCollectionType())) {		// Collection(T) cannot be distinguished from concrete Ecore collections
 			CollectionType collectionType = (CollectionType)pivotType;
 			Type elementType = collectionType.getElementType();
 			EObject eObject = typeRefVisitor.safeVisit(elementType, false);
@@ -497,7 +499,32 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					break;
 				}
 			}
-			if (collectionType.isIsNullFree() != PivotConstants.DEFAULT_IS_NULL_FREE) {
+			boolean defaultIsNullFree = PivotConstants.DEFAULT_IS_NULL_FREE;
+			OUTER: for (EObject eContainer = pivotTypedElement; (eContainer = eContainer.eContainer()) instanceof Element; ) {
+				List<@NonNull Element> asAnnotations = ((Element) eContainer).basicGetOwnedAnnotations();
+				if (asAnnotations != null) {
+					for (@NonNull Element asElement : asAnnotations) {
+						if (asElement instanceof Annotation) {
+							Annotation asAnnotation = (Annotation)asElement;
+							if (PivotConstants.COLLECTION_ANNOTATION_SOURCE.equals(asAnnotation.getName())) {
+								for (@NonNull Detail asDetail : PivotUtil.getOwnedDetails(asAnnotation)) {
+									if (PivotConstants.COLLECTION_IS_NULL_FREE.equals(asDetail.getName())) {
+										List<String> values = asDetail.getValues();
+										if (values.size() == 1) {
+											String value = values.get(0);
+											if (value != null) {
+												defaultIsNullFree = Boolean.valueOf(value);
+												break OUTER;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (collectionType.isIsNullFree() != defaultIsNullFree) {
 				if (rootEAnnotation == null) {
 					rootEAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 					rootEAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);

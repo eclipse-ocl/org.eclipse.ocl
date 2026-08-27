@@ -884,6 +884,18 @@ public class ModelMerger extends AbstractProjectComponent
 		}
 	}
 
+	public static class AnnotationMultipleSlotMerger extends NamedElementMultipleSlotMerger
+	{
+		public AnnotationMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
+			super(modelMerger);
+		}
+
+		@Override
+		public @Nullable List<Object> merge(@NonNull String path, @NonNull Iterable<@NonNull Iterable<Object>> slotSlots) {
+			return super.merge(path, slotSlots);
+		}
+	}
+
 	public static class OperationMultipleSlotMerger extends NamedElementMultipleSlotMerger
 	{
 		public OperationMultipleSlotMerger(@NonNull ModelMerger modelMerger) {
@@ -1245,7 +1257,7 @@ public class ModelMerger extends AbstractProjectComponent
 		feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_INVARIANTS, new NamedElementMultipleSlotMerger(this));
 		feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_OPERATIONS, new OperationMultipleSlotMerger(this));
 		feature2multipleSlotMerger.put(PivotPackage.Literals.CLASS__OWNED_PROPERTIES, new PropertyMultipleSlotMerger(this));
-		feature2multipleSlotMerger.put(PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, new NamedElementMultipleSlotMerger(this));
+		feature2multipleSlotMerger.put(PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, new AnnotationMultipleSlotMerger(this));
 		feature2multipleSlotMerger.put(PivotPackage.Literals.ELEMENT__OWNED_COMMENTS, new CommentMultipleSlotMerger(this));
 		feature2multipleSlotMerger.put(PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, new NamedElementMultipleSlotMerger(this));
 		feature2multipleSlotMerger.put(PivotPackage.Literals.ITERATION__OWNED_ITERATORS, new IteratorsMultipleSlotMerger(this));

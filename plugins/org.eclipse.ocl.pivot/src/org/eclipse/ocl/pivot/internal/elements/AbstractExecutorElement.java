@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
@@ -41,8 +42,12 @@ public class AbstractExecutorElement implements Element
 	}
 
 	@Override
-	@NonNull
-	public List<Element> allOwnedElements() {
+	public @NonNull List<Element> allOwnedElements() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public @Nullable List<@NonNull Element> basicGetOwnedAnnotations() {
 		throw new UnsupportedOperationException();
 	}
 
