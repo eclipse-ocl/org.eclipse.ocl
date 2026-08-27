@@ -371,6 +371,9 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				}
 				log.info("Saving '" + ecoreURI + "'");
 				eResource.save(null);
+				if (getResourceSet() != eResource.getResourceSet()) {
+					getResourceSet().getResources().add(eResource);
+				}
 			}
 			@SuppressWarnings("null")@NonNull String metamodel = generateMetamodel(excludedEClassifierNames);
 			MergeWriter fw = new MergeWriter(fileName);

@@ -562,7 +562,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			eTypedElement.setLowerBound(0);
 			eTypedElement.setUpperBound(-1);
 		}
-		else {						// XXX LambdaType
+		else {						// LambdaType trims to just a type in Ecore
 			if (isRequired) {
 				eTypedElement.setLowerBound(1);
 				eTypedElement.setUpperBound(1);

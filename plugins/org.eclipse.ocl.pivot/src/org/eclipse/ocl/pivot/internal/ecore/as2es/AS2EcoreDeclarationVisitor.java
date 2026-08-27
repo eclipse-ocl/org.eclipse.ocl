@@ -806,9 +806,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		}
 		@SuppressWarnings("null")
 		@NonNull EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
-		if ("exists".equals(pivotOperation.getName())) {
-			getClass();			// XXX
-		}
 		copyTypedElement(eOperation, pivotOperation);
 		@SuppressWarnings("null")@NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateParameters(eTypeParameters, pivotOperation);

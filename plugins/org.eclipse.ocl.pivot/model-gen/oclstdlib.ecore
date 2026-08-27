@@ -44,7 +44,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/closure1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collect1" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
@@ -55,7 +55,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/collect1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collectNested1" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -69,7 +69,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/collectNested1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excluding" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -144,7 +144,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="select1" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -157,7 +157,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -202,7 +202,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eGenericSuperTypes eClassifier="#//Collection">
       <eTypeArguments eTypeParameter="#//Bag/T"/>
@@ -247,7 +247,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.AnyIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Collection/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="asBag" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -299,7 +299,7 @@
         <eTypeArguments eTypeParameter="#//Collection/collect1/E"/>
       </eGenericType>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collectBy1" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -316,7 +316,7 @@
         <eTypeArguments eTypeParameter="#//Collection/collectBy1/E"/>
       </eGenericType>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collectNested1" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -332,7 +332,7 @@
         <eTypeArguments eTypeParameter="#//Collection/collectNested1/E"/>
       </eGenericType>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="count" lowerBound="1" eType="#//Integer">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -410,7 +410,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="exists2" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -422,7 +422,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="exists3" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -434,7 +434,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="flatten" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -458,7 +458,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll2" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -470,7 +470,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll3" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -482,7 +482,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="gather1" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -496,7 +496,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Collection/gather1/V"/>
       <eTypeParameters name="V"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="includes" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -597,7 +597,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="iterate1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -611,7 +611,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Collection/iterate1/Tacc"/>
       <eTypeParameters name="Tacc"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="max" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -649,9 +649,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.OneIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="product" ordered="false" upperBound="-1" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclTuple">
+    <eOperations name="product" ordered="false" upperBound="-1" eType="#//OclTuple">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The cartesian product operation of oclText[self] and c2.&#xA;"/>
       </eAnnotations>
@@ -681,7 +681,7 @@
       <eGenericType eClassifier="#//Collection">
         <eTypeArguments eTypeParameter="#//Collection/T"/>
       </eGenericType>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="search1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -696,9 +696,9 @@
       <eGenericType eTypeParameter="#//Collection/search1/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
-      <eParameters name="nextAcc" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="break" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="return" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="nextAcc" eType="#//OclLambda"/>
+      <eParameters name="break" eType="#//OclLambda"/>
+      <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="search2">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -713,9 +713,9 @@
       <eGenericType eTypeParameter="#//Collection/search2/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
-      <eParameters name="nextAcc" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="break" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="return" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="nextAcc" eType="#//OclLambda"/>
+      <eParameters name="break" eType="#//OclLambda"/>
+      <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="search3">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -730,9 +730,9 @@
       <eGenericType eTypeParameter="#//Collection/search3/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
-      <eParameters name="nextAcc" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="break" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="return" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="nextAcc" eType="#//OclLambda"/>
+      <eParameters name="break" eType="#//OclLambda"/>
+      <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="select1" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -747,7 +747,7 @@
       <eGenericType eClassifier="#//Collection">
         <eTypeArguments eTypeParameter="#//Collection/T"/>
       </eGenericType>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -792,7 +792,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Collection/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="sum" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -881,7 +881,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.AnyIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/K"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="at">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -907,7 +907,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/collect1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collectBy1" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -924,7 +924,7 @@
         <eTypeArguments eTypeParameter="#//Map/collectBy1/E"/>
       </eGenericType>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collectNested1" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -938,7 +938,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/collectNested1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excludes" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1086,7 +1086,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="exists2" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1098,7 +1098,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="exists3" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1110,7 +1110,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1122,7 +1122,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll2" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1134,7 +1134,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll3" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1146,7 +1146,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="gather1" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1160,7 +1160,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/gather1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="includes" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1284,7 +1284,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="iterate1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1298,7 +1298,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/iterate1/Tacc"/>
       <eTypeParameters name="Tacc"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="keys" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1327,7 +1327,7 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.OneIteration"/>
       </eAnnotations>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="reject1" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1343,7 +1343,7 @@
         <eTypeArguments eTypeParameter="#//Map/K"/>
         <eTypeArguments eTypeParameter="#//Map/V"/>
       </eGenericType>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="search1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1358,9 +1358,9 @@
       <eGenericType eTypeParameter="#//Map/search1/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
-      <eParameters name="nextAcc" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="break" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="return" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="nextAcc" eType="#//OclLambda"/>
+      <eParameters name="break" eType="#//OclLambda"/>
+      <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="search2">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1375,9 +1375,9 @@
       <eGenericType eTypeParameter="#//Map/search2/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
-      <eParameters name="nextAcc" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="break" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="return" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="nextAcc" eType="#//OclLambda"/>
+      <eParameters name="break" eType="#//OclLambda"/>
+      <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="search3">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1392,9 +1392,9 @@
       <eGenericType eTypeParameter="#//Map/search3/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
-      <eParameters name="nextAcc" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="break" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
-      <eParameters name="return" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="nextAcc" eType="#//OclLambda"/>
+      <eParameters name="break" eType="#//OclLambda"/>
+      <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="select1" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1410,7 +1410,7 @@
         <eTypeArguments eTypeParameter="#//Map/K"/>
         <eTypeArguments eTypeParameter="#//Map/V"/>
       </eGenericType>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="size" lowerBound="1" eType="#//Integer">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1992,7 +1992,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedCollection/gather1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="indexOf" eType="#//Integer">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2097,7 +2097,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/closure1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collect1" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2111,7 +2111,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/collect1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collectNested1" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2125,7 +2125,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/collectNested1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excluding" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2237,7 +2237,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="reverse" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2259,7 +2259,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2304,7 +2304,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="subOrderedSet" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2391,7 +2391,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/closure1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collect1" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2405,7 +2405,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/collect1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collectNested1" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2419,7 +2419,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/collectNested1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excluding" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2531,7 +2531,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="reverse" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2553,7 +2553,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2598,7 +2598,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="subSequence" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2670,7 +2670,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/closure1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collect1" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2684,7 +2684,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/collect1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="collectNested1" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2698,7 +2698,7 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/collectNested1/E"/>
       <eTypeParameters name="E"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excluding" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2773,7 +2773,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="select1" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2786,7 +2786,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2831,7 +2831,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eGenericSuperTypes eClassifier="#//UniqueCollection">
       <eTypeArguments eTypeParameter="#//Set/T"/>
@@ -2879,7 +2879,7 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//UniqueCollection/T"/>
-      <eParameters name="lambda" eType="ecore:EClass http://www.eclipse.org/ocl/2015/Library#//OclLambda"/>
+      <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="symmetricDifference" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

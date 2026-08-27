@@ -194,6 +194,11 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			return eClassifier;
 		}
 		else {
+			org.eclipse.ocl.pivot.Class oclAnyType = standardLibrary.getOclAnyType();
+			eClassifier = context.getCreated(EClassifier.class, oclAnyType);
+			if (eClassifier != null) {
+				return eClassifier;
+			}
 			return OCLstdlibPackage.Literals.OCL_ANY;
 		}
 	}
@@ -303,6 +308,11 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			return eClassifier;
 		}
 		else {
+			org.eclipse.ocl.pivot.Class oclInvalidType = standardLibrary.getOclInvalidType();
+			eClassifier = context.getCreated(EClassifier.class, oclInvalidType);
+			if (eClassifier != null) {
+				return eClassifier;
+			}
 			return OCLstdlibPackage.Literals.OCL_INVALID;
 		}
 	}
@@ -317,6 +327,11 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			return eClassifier;
 		}
 		else {
+			org.eclipse.ocl.pivot.Class oclLambdaType = standardLibrary.getOclLambdaType();
+			eClassifier = context.getCreated(EClassifier.class, oclLambdaType);
+			if (eClassifier != null) {
+				return eClassifier;
+			}
 			return OCLstdlibPackage.Literals.OCL_LAMBDA;
 		}
 	}
@@ -438,6 +453,11 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			return eClassifier;
 		}
 		else {
+			org.eclipse.ocl.pivot.Class oclTupleType = standardLibrary.getOclTupleType();
+			eClassifier = context.getCreated(EClassifier.class, oclTupleType);
+			if (eClassifier != null) {
+				return eClassifier;
+			}
 			return OCLstdlibPackage.Literals.OCL_TUPLE;
 		}
 	}
@@ -449,6 +469,11 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 			return eClassifier;
 		}
 		else {
+			org.eclipse.ocl.pivot.Class oclVoidType = standardLibrary.getOclVoidType();
+			eClassifier = context.getCreated(EClassifier.class, oclVoidType);
+			if (eClassifier != null) {
+				return eClassifier;
+			}
 			return OCLstdlibPackage.Literals.OCL_VOID;
 		}
 	}

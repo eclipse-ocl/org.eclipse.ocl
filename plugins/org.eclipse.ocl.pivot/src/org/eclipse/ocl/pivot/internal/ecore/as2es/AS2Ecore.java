@@ -93,7 +93,7 @@ public class AS2Ecore extends AbstractConversion
 		@Override
 		public <T extends Element> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull EObject eObject) {
 			Element asElement = getCreatedMap().get(eObject);
-			//		System.out.println("Get " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
+			// System.out.println("getCreated(inverse) " + NameUtil.debugSimpleName(eObject) + " => " + NameUtil.debugSimpleName(asElement) + " " + eObject);
 			if (asElement == null) {
 				XMLResource ecoreResource2 = getEcoreResource();
 				assert eObject.eResource().getURI() == ecoreResource2.getURI() : "Wrong Ecore Resource URI " + eObject.eResource().getURI() + " for " + ecoreResource2.getURI();		// XXX
@@ -449,7 +449,7 @@ public class AS2Ecore extends AbstractConversion
 	 */
 	public <T extends EObject> @Nullable T getCreated(@NonNull Class<T> requiredClass, @NonNull Element pivotElement) {
 		EObject eObject = createMap.get(pivotElement);
-		//		System.out.println("Get " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
+		// System.out.println("Get " + NameUtil.debugSimpleName(pivotElement) + " " + pivotElement);
 		if (eObject == null) {
 			Element primaryElement = completeModel.getPrimaryElement(pivotElement);
 			if (pivotElement != primaryElement) {
@@ -530,12 +530,12 @@ public class AS2Ecore extends AbstractConversion
 
 	public void putCreated(@NonNull Element pivotElement, @NonNull EModelElement eModelElement) {
 		Element primaryElement = completeModel.getPrimaryElement(pivotElement);
-		//		System.out.println("Put1 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
+		// System.out.println("Put1 " + NameUtil.debugSimpleName(pivotElement) + " " + NameUtil.debugSimpleName(eModelElement));
 		EObject oldEObject = createMap.put(pivotElement, eModelElement);
 		assert oldEObject == null;
 		ecore2as.putCreated(eModelElement, pivotElement);
 		if ((pivotElement != primaryElement) && !createMap.containsKey(primaryElement)) {
-			//			System.out.println("Put2 " + PivotUtil.debugSimpleName(pivotElement) + " " + PivotUtil.debugSimpleName(eModelElement));
+			// System.out.println("Put2 " + NameUtil.debugSimpleName(pivotElement) + " " + NameUtil.debugSimpleName(eModelElement));
 			createMap.put(primaryElement, eModelElement);
 			ecore2as.putCreated(eModelElement, primaryElement);
 		}
