@@ -82,6 +82,7 @@ import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
+import org.eclipse.ocl.pivot.internal.IterationImpl;
 import org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -97,6 +98,7 @@ import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
+import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.EntryTypeManager;
@@ -520,6 +522,48 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 			asParameter.setType(parameterType);
 			asIteration.getOwnedParameters().add(asParameter);
 		}
+		setOperationFlagsAndIndex(asIteration, operationFlagsAndIndex);
+		asClass.getOwnedOperations().add(asIteration);
+		return asIteration;
+	}
+
+	public @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, /*@NonNull*/ EOperation eOperation,
+			@NonNull ParameterTypes iteratorParameterTypes, @NonNull ParameterTypes parameterTypes,
+			@NonNull Type asType, int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @NonNull LibraryIteration implementation) {
+		String name = eOperation.getName();
+		assert name != null;
+		// iteratorParameterTypes
+		return createIteration(asClass, eOperation, name, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
+	}
+
+	private @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable EOperation eOperation, @NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type asType,
+			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryIteration implementation) {
+		Iteration asIteration = PivotFactory.eINSTANCE.createIteration();
+		asIteration.setName(name);
+		asIteration.setType(asType);		// OclInvalid if set later for nested specialization
+		if (eOperation != null) {
+			((IterationImpl)asIteration).setESObject(eOperation);
+		}
+	//	asOperation.setIndex(index);
+		asIteration.setImplementation(implementation);
+		int n = 0;
+		if (typeParameters.parametersSize() > 0) {
+			List<@NonNull TemplateParameter> asTemplateParameters = PivotUtil.getOwnedTemplateParametersList(asIteration, true);
+			for (int i = 0; i < typeParameters.parametersSize(); i++) {
+				TemplateParameter asTemplateParameter = typeParameters.get(i);
+				asTemplateParameters.add(asTemplateParameter);
+			}
+		}
+		// iteratorParameterTypes
+	//	if (parameterTypes != null) {
+			for (int i = 0; i < parameterTypes.size(); i++) {
+				@NonNull Type parameterType = parameterTypes.getType(i);
+				Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
+				asParameter.setName("_" + n++);
+				asParameter.setType(parameterType);
+				asIteration.getOwnedParameters().add(asParameter);
+			}
+	//	}
 		setOperationFlagsAndIndex(asIteration, operationFlagsAndIndex);
 		asClass.getOwnedOperations().add(asIteration);
 		return asIteration;

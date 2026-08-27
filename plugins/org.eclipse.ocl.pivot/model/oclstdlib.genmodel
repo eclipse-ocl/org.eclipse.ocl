@@ -6,7 +6,7 @@
     templateDirectory="/org.eclipse.ocl.codegen/templates" modelName="OCLstdlib" nonNLSMarkers="true"
     suppressEMFModelTags="true" suppressInterfaces="true" importerID="org.eclipse.emf.importer.ecore"
     bundleManifest="false" complianceLevel="8.0" copyrightFields="false" runtimeVersion="2.7"
-    interfaceNamePattern="">
+    interfaceNamePattern="" operationReflection="true">
   <genAnnotations source="http://www.eclipse.org/OCL/GenModel">
     <details key="Use Delegates" value="false"/>
     <details key="Use Null Annotations" value="true"/>

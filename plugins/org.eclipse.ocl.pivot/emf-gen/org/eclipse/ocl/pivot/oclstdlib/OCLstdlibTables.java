@@ -535,35 +535,35 @@ public class OCLstdlibTables extends AbstractTables
 			Precedences.init();
 		}
 
-		public static final @NonNull Operation _Bag___lt__gt_ = LIBRARY.createOperation(Types._Bag, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Bag___lt__gt_ = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Bag___eq_ = LIBRARY.createOperation(Types._Bag, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Bag___eq_ = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Iteration _Bag__closure = LIBRARY.createIteration(Types._Bag, "closure", Parameters._$$1, Parameters._Lambda_self_$$1_F_result_Collection__$$1___F, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, true),
+		public static final @NonNull Iteration _Bag__closure = LIBRARY.createIteration(Types._Bag, OCLstdlibPackage.Literals.BAG___CLOSURE1__OBJECT, Parameters._$$1, Parameters._Lambda_self_$$1_F_result_Collection__$$1___F, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, true),
 			2 | IsRequired, new TemplateParameters(TypeParameters._1_Bag_closure_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-		public static final @NonNull Iteration _Bag__collect = LIBRARY.createIteration(Types._Bag, "collect", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Bag__collect = LIBRARY.createIteration(Types._Bag, OCLstdlibPackage.Literals.BAG___COLLECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			3 | IsRequired, new TemplateParameters(TypeParameters._1_Bag_collect_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull Iteration _Bag__collectNested = LIBRARY.createIteration(Types._Bag, "collectNested", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Bag__collectNested = LIBRARY.createIteration(Types._Bag, OCLstdlibPackage.Literals.BAG___COLLECT_NESTED1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			4 | IsRequired, new TemplateParameters(TypeParameters._1_Bag_collectNested_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-		public static final @NonNull Operation _Bag__excluding = LIBRARY.createOperation(Types._Bag, "excluding", null, Parameters._$$0, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Bag__excluding = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___EXCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			5 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		public static final @NonNull Operation _Bag__excludingAll = LIBRARY.createOperation(Types._Bag, "excludingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Bag__excludingAll = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___EXCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			6 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Bag__flatten = LIBRARY.createOperation(Types._Bag, "flatten", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
+		public static final @NonNull Operation _Bag__flatten = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___FLATTEN, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			7 | IsRequired, new TemplateParameters(TypeParameters._1_Bag_flatten_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull Operation _Bag__including = LIBRARY.createOperation(Types._Bag, "including", null, Parameters._$$0, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Bag__including = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___INCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		public static final @NonNull Operation _Bag__includingAll = LIBRARY.createOperation(Types._Bag, "includingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Bag__includingAll = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___INCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			9 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-		public static final @NonNull Iteration _Bag__reject = LIBRARY.createIteration(Types._Bag, "reject", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Bag__reject = LIBRARY.createIteration(Types._Bag, OCLstdlibPackage.Literals.BAG___REJECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Iteration _Bag__select = LIBRARY.createIteration(Types._Bag, "select", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Bag__select = LIBRARY.createIteration(Types._Bag, OCLstdlibPackage.Literals.BAG___SELECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-		public static final @NonNull Operation _Bag__selectByKind = LIBRARY.createOperation(Types._Bag, "selectByKind", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Bag__selectByKind = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___SELECT_BY_KIND__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, true),
 			12 | IsRequired, new TemplateParameters(TypeParameters._1_Bag_selectByKind_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-		public static final @NonNull Operation _Bag__selectByType = LIBRARY.createOperation(Types._Bag, "selectByType", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Bag__selectByType = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___SELECT_BY_TYPE__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, true),
 			13 | IsRequired, new TemplateParameters(TypeParameters._1_Bag_selectByType_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull Iteration _Bag__sortedBy = LIBRARY.createIteration(Types._Bag, "sortedBy", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Bag__sortedBy = LIBRARY.createIteration(Types._Bag, OCLstdlibPackage.Literals.BAG___SORTED_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 
 		public static final @NonNull Operation _Boolean___lt__gt_ = LIBRARY.createOperation(Types._Boolean, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
@@ -593,101 +593,101 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _Boolean__xor2 = LIBRARY.createOperation(Types._Boolean, "xor2", Precedences._XOR, Parameters._Boolean, Types._Boolean,
 			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2.INSTANCE);
 
-		public static final @NonNull Operation _Collection___lt__gt_ = LIBRARY.createOperation(Types._Collection, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Collection___lt__gt_ = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Collection___eq_ = LIBRARY.createOperation(Types._Collection, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Collection___eq_ = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__any = LIBRARY.createIteration(Types._Collection, "any", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, TypeParameters.$$0,
+		public static final @NonNull Iteration _Collection__any = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___ANY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, TypeParameters.$$0,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__asBag = LIBRARY.createOperation(Types._Collection, "asBag", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__asBag = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___AS_BAG, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asOrderedSet = LIBRARY.createOperation(Types._Collection, "asOrderedSet", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__asOrderedSet = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___AS_ORDERED_SET, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asSequence = LIBRARY.createOperation(Types._Collection, "asSequence", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__asSequence = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___AS_SEQUENCE, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			5 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSequenceOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__asSet = LIBRARY.createOperation(Types._Collection, "asSet", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__asSet = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___AS_SET, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			6 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__collect = LIBRARY.createIteration(Types._Collection, "collect", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Collection__collect = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___COLLECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, false),
 			7 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_collect_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__collectBy = LIBRARY.createIteration(Types._Collection, "collectBy", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Iteration _Collection__collectBy = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___COLLECT_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			8 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_collectBy_E), org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__collectNested = LIBRARY.createIteration(Types._Collection, "collectNested", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Collection__collectNested = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___COLLECT_NESTED1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, false),
 			9 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_collectNested_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__count = LIBRARY.createOperation(Types._Collection, "count", null, Parameters._$$0, Types._Integer,
+		public static final @NonNull Operation _Collection__count = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___COUNT__OBJECT, Parameters._$$0, Types._Integer,
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionCountOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__excludes = LIBRARY.createOperation(Types._Collection, "excludes", null, Parameters._$$0, Types._Boolean,
+		public static final @NonNull Operation _Collection__excludes = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___EXCLUDES__OBJECT, Parameters._$$0, Types._Boolean,
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludesOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__excludesAll = LIBRARY.createOperation(Types._Collection, "excludesAll", null, Parameters._Collection__$$1__, Types._Boolean,
+		public static final @NonNull Operation _Collection__excludesAll = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___EXCLUDES_ALL__COLLECTION, Parameters._Collection__$$1__, Types._Boolean,
 			12 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_excludesAll_T2), org.eclipse.ocl.pivot.library.collection.CollectionExcludesAllOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__excluding = LIBRARY.createOperation(Types._Collection, "excluding", null, Parameters._$$0, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__excluding = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___EXCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
 			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__excludingAll = LIBRARY.createOperation(Types._Collection, "excludingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__excludingAll = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___EXCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__0_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__2_exists = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___EXISTS3__OBJECT, Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			15 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__1_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__1_exists = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___EXISTS2__OBJECT, Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			16 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__2_exists = LIBRARY.createIteration(Types._Collection, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__0_exists = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___EXISTS1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			17 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation(Types._Collection, "flatten", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, false),
+		public static final @NonNull Operation _Collection__flatten = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___FLATTEN, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, false),
 			18 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_flatten_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__0_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__2_forAll = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___FOR_ALL3__OBJECT, Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			19 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__1_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__1_forAll = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___FOR_ALL2__OBJECT, Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			20 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__2_forAll = LIBRARY.createIteration(Types._Collection, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__0_forAll = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___FOR_ALL1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			21 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__gather = LIBRARY.createIteration(Types._Collection, "gather", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Collection__gather = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___GATHER1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			22 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_gather_V), org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__includes = LIBRARY.createOperation(Types._Collection, "includes", null, Parameters._$$0, Types._Boolean,
+		public static final @NonNull Operation _Collection__includes = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___INCLUDES__OBJECT, Parameters._$$0, Types._Boolean,
 			23 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludesOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__includesAll = LIBRARY.createOperation(Types._Collection, "includesAll", null, Parameters._Collection__$$1__, Types._Boolean,
+		public static final @NonNull Operation _Collection__includesAll = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___INCLUDES_ALL__COLLECTION, Parameters._Collection__$$1__, Types._Boolean,
 			24 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_includesAll_T2), org.eclipse.ocl.pivot.library.collection.CollectionIncludesAllOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__including = LIBRARY.createOperation(Types._Collection, "including", null, Parameters._$$0, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__including = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___INCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
 			25 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__includingAll = LIBRARY.createOperation(Types._Collection, "includingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__includingAll = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___INCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
 			26 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__0_intersection = LIBRARY.createOperation(Types._Collection, "intersection", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__0_intersection = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___INTERSECTION__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			27 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__1_intersection = LIBRARY.createOperation(Types._Collection, "intersection", null, Parameters._UniqueCollection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__1_intersection = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___INTERSECTION__ELIST, Parameters._UniqueCollection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			28 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__isEmpty = LIBRARY.createOperation(Types._Collection, "isEmpty", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _Collection__isEmpty = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___IS_EMPTY, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			29 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__isUnique = LIBRARY.createIteration(Types._Collection, "isUnique", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclAny_F, Types._Boolean,
+		public static final @NonNull Iteration _Collection__isUnique = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___IS_UNIQUE1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclAny_F, Types._Boolean,
 			30 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__iterate = LIBRARY.createIteration(Types._Collection, "iterate", Parameters._$$0___$$1, Parameters._Lambda_self_$$0_F_result_$$1_F, TypeParameters.$$1,
+		public static final @NonNull Iteration _Collection__iterate = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___ITERATE1__OBJECT, Parameters._$$0___$$1, Parameters._Lambda_self_$$0_F_result_$$1_F, TypeParameters.$$1,
 			31 | HasAccumulator, new TemplateParameters(TypeParameters._1_Collection_iterate_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__max = LIBRARY.createOperation(Types._Collection, "max", null, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
+		public static final @NonNull Operation _Collection__max = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___MAX, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
 			32 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMaxOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__min = LIBRARY.createOperation(Types._Collection, "min", null, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
+		public static final @NonNull Operation _Collection__min = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___MIN, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
 			33 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionMinOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__notEmpty = LIBRARY.createOperation(Types._Collection, "notEmpty", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _Collection__notEmpty = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___NOT_EMPTY, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			34 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__one = LIBRARY.createIteration(Types._Collection, "one", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Collection__one = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___ONE1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
 			35 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__product = LIBRARY.createOperation(Types._Collection, "product", null, Parameters._Collection__$$1__, Types._OclInvalid,
+		public static final @NonNull Operation _Collection__product = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___PRODUCT__COLLECTION, Parameters._Collection__$$1__, Types._OclInvalid,
 			36 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_product_T2), org.eclipse.ocl.pivot.library.collection.CollectionProductOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__reject = LIBRARY.createIteration(Types._Collection, "reject", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Collection__reject = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___REJECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
 			37 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__2_search = LIBRARY.createIteration(Types._Collection, "search", Parameters._$$0___$$0___$$0___$$1, Parameters._Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$1_F___Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F___Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F, TypeParameters.$$2,
+		public static final @NonNull Iteration _Collection__2_search = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SEARCH3__OBJECT_OBJECT_OBJECT, Parameters._$$0___$$0___$$0___$$1, Parameters._Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$1_F___Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F___Lambda_self_$$1_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F, TypeParameters.$$2,
 			38 | HasAccumulator, new TemplateParameters(TypeParameters._1_Collection_search_Q, TypeParameters._2_Collection_search_R), org.eclipse.ocl.pivot.library.iterator.SearchIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__1_search = LIBRARY.createIteration(Types._Collection, "search", Parameters._$$0___$$0___$$1, Parameters._Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$1_F___Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_Boolean_F___Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$2_F, TypeParameters.$$2,
+		public static final @NonNull Iteration _Collection__1_search = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SEARCH2__OBJECT_OBJECT_OBJECT, Parameters._$$0___$$0___$$1, Parameters._Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$1_F___Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_Boolean_F___Lambda_self_$$1_F_i_$$0_F_j_$$0_F_result_$$2_F, TypeParameters.$$2,
 			39 | HasAccumulator, new TemplateParameters(TypeParameters._1_Collection_search_Q_0, TypeParameters._2_Collection_search_R_0), org.eclipse.ocl.pivot.library.iterator.SearchIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__0_search = LIBRARY.createIteration(Types._Collection, "search", Parameters._$$0___$$1, Parameters._Lambda_self_$$1_F_i_$$0_F_result_$$1_F___Lambda_self_$$1_F_i_$$0_F_result_Boolean_F___Lambda_self_$$1_F_i_$$0_F_result_$$2_F, TypeParameters.$$2,
+		public static final @NonNull Iteration _Collection__0_search = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SEARCH1__OBJECT_OBJECT_OBJECT, Parameters._$$0___$$1, Parameters._Lambda_self_$$1_F_i_$$0_F_result_$$1_F___Lambda_self_$$1_F_i_$$0_F_result_Boolean_F___Lambda_self_$$1_F_i_$$0_F_result_$$2_F, TypeParameters.$$2,
 			40 | HasAccumulator, new TemplateParameters(TypeParameters._1_Collection_search_Q_1, TypeParameters._2_Collection_search_R_1), org.eclipse.ocl.pivot.library.iterator.SearchIteration.INSTANCE);
-		public static final @NonNull Iteration _Collection__select = LIBRARY.createIteration(Types._Collection, "select", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Collection__select = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SELECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Collection, TypeParameters.$$0, false),
 			41 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__selectByKind = LIBRARY.createOperation(Types._Collection, "selectByKind", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Collection__selectByKind = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SELECT_BY_KIND__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, true),
 			42 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_selectByKind_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__selectByType = LIBRARY.createOperation(Types._Collection, "selectByType", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Collection__selectByType = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SELECT_BY_TYPE__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Collection, TypeParameters.$$1, true),
 			43 | IsRequired, new TemplateParameters(TypeParameters._1_Collection_selectByType_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__size = LIBRARY.createOperation(Types._Collection, "size", null, ParameterTypes.EMPTY_LIST, Types._Integer,
+		public static final @NonNull Operation _Collection__size = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SIZE, ParameterTypes.EMPTY_LIST, Types._Integer,
 			44 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation.INSTANCE);
-		public static final @NonNull Iteration _Collection__sortedBy = LIBRARY.createIteration(Types._Collection, "sortedBy", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Collection__sortedBy = LIBRARY.createIteration(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SORTED_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			45 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation(Types._Collection, "sum", null, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
+		public static final @NonNull Operation _Collection__sum = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___SUM, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
 			46 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionSumOperation.INSTANCE);
-		public static final @NonNull Operation _Collection__union = LIBRARY.createOperation(Types._Collection, "union", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Collection__union = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___UNION__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Bag, TypeParameters.$$0, false),
 			47 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 
 		public static final @NonNull Operation _Integer___mul_ = LIBRARY.createOperation(Types._Integer, "*", Precedences._MULTIPLICATIVE, Parameters._OclSelf, Types._Integer,
@@ -715,91 +715,91 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _Integer__toUnlimitedNatural = LIBRARY.createOperation(Types._Integer, "toUnlimitedNatural", null, ParameterTypes.EMPTY_LIST, Types._UnlimitedNatural,
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.IntegerToUnlimitedNaturalOperation.INSTANCE);
 
-		public static final @NonNull Operation _Map___lt__gt_ = LIBRARY.createOperation(Types._Map, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Map___lt__gt_ = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Map___eq_ = LIBRARY.createOperation(Types._Map, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Map___eq_ = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Iteration _Map__any = LIBRARY.createIteration(Types._Map, "any", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, TypeParameters.$$0,
+		public static final @NonNull Iteration _Map__any = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___ANY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, TypeParameters.$$0,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.AnyIteration.INSTANCE);
-		public static final @NonNull Operation _Map__at = LIBRARY.createOperation(Types._Map, "at", null, Parameters._$$0, TypeParameters.$$1,
+		public static final @NonNull Operation _Map__at = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___AT__OBJECT, Parameters._$$0, TypeParameters.$$1,
 			3 | IsInvalidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
-		public static final @NonNull Iteration _Map__collect = LIBRARY.createIteration(Types._Map, "collect", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$2, false),
+		public static final @NonNull Iteration _Map__collect = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___COLLECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$2, false),
 			4 | IsRequired, new TemplateParameters(TypeParameters._2_Map_collect_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__collectBy = LIBRARY.createIteration(Types._Map, "collectBy", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$2, true),
+		public static final @NonNull Iteration _Map__collectBy = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___COLLECT_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$2, true),
 			5 | IsRequired, new TemplateParameters(TypeParameters._2_Map_collectBy_E), org.eclipse.ocl.pivot.library.iterator.CollectByIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__collectNested = LIBRARY.createIteration(Types._Map, "collectNested", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$2, false),
+		public static final @NonNull Iteration _Map__collectNested = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___COLLECT_NESTED1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$2, false),
 			6 | IsRequired, new TemplateParameters(TypeParameters._2_Map_collectNested_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-		public static final @NonNull Operation _Map__0_excludes = LIBRARY.createOperation(Types._Map, "excludes", null, Parameters._$$0, Types._Boolean,
+		public static final @NonNull Operation _Map__0_excludes = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDES__OBJECT, Parameters._$$0, Types._Boolean,
 			7 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
-		public static final @NonNull Operation _Map__1_excludes = LIBRARY.createOperation(Types._Map, "excludes", null, Parameters._$$0___$$1, Types._Boolean,
+		public static final @NonNull Operation _Map__1_excludes = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDES__OBJECT_OBJECT, Parameters._$$0___$$1, Types._Boolean,
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludesPairOperation.INSTANCE);
-		public static final @NonNull Operation _Map__excludesAll = LIBRARY.createOperation(Types._Map, "excludesAll", null, Parameters._Collection__$$2__, Types._Boolean,
+		public static final @NonNull Operation _Map__excludesAll = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDES_ALL__COLLECTION, Parameters._Collection__$$2__, Types._Boolean,
 			9 | IsRequired, new TemplateParameters(TypeParameters._2_Map_excludesAll_K2), org.eclipse.ocl.pivot.library.map.MapExcludesAllOperation.INSTANCE);
-		public static final @NonNull Operation _Map__excludesMap = LIBRARY.createOperation(Types._Map, "excludesMap", null, Parameters._Map__$$2_$$3__, Types._Boolean,
+		public static final @NonNull Operation _Map__excludesMap = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDES_MAP__EMAP, Parameters._Map__$$2_$$3__, Types._Boolean,
 			10 | IsRequired, new TemplateParameters(TypeParameters._2_Map_excludesMap_K2, TypeParameters._3_Map_excludesMap_V2), org.eclipse.ocl.pivot.library.map.MapExcludesMapOperation.INSTANCE);
-		public static final @NonNull Operation _Map__excludesValue = LIBRARY.createOperation(Types._Map, "excludesValue", null, Parameters._$$1, Types._Boolean,
+		public static final @NonNull Operation _Map__excludesValue = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDES_VALUE__OBJECT, Parameters._$$1, Types._Boolean,
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludesValueOperation.INSTANCE);
-		public static final @NonNull Operation _Map__0_excluding = LIBRARY.createOperation(Types._Map, "excluding", null, Parameters._$$0, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Map__0_excluding = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDING__OBJECT, Parameters._$$0, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			12, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingOperation.INSTANCE);
-		public static final @NonNull Operation _Map__1_excluding = LIBRARY.createOperation(Types._Map, "excluding", null, Parameters._$$0___$$1, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Map__1_excluding = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDING__OBJECT_OBJECT, Parameters._$$0___$$1, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			13, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingPairOperation.INSTANCE);
-		public static final @NonNull Operation _Map__excludingAll = LIBRARY.createOperation(Types._Map, "excludingAll", null, Parameters._Collection__$$0__, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Map__excludingAll = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			14, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Map__excludingMap = LIBRARY.createOperation(Types._Map, "excludingMap", null, Parameters._Map__$$2_$$3__, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Map__excludingMap = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EXCLUDING_MAP__EMAP, Parameters._Map__$$2_$$3__, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			15, new TemplateParameters(TypeParameters._2_Map_excludingMap_K2, TypeParameters._3_Map_excludingMap_V2), org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation.INSTANCE);
-		public static final @NonNull Iteration _Map__0_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__2_exists = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___EXISTS3__OBJECT, Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			16 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__1_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__1_exists = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___EXISTS2__OBJECT, Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			17 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__2_exists = LIBRARY.createIteration(Types._Map, "exists", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__0_exists = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___EXISTS1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			18 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ExistsIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__0_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__2_forAll = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___FOR_ALL3__OBJECT, Parameters._$$0___$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			19 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__1_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__1_forAll = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___FOR_ALL2__OBJECT, Parameters._$$0___$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			20 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__2_forAll = LIBRARY.createIteration(Types._Map, "forAll", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__0_forAll = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___FOR_ALL1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_F, Types._Boolean,
 			21 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.ForAllIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__gather = LIBRARY.createIteration(Types._Map, "gather", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$2, false),
+		public static final @NonNull Iteration _Map__gather = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___GATHER1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$2_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$2, false),
 			22 | IsRequired, new TemplateParameters(TypeParameters._2_Map_gather_E), org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE);
-		public static final @NonNull Operation _Map__0_includes = LIBRARY.createOperation(Types._Map, "includes", null, Parameters._$$0, Types._Boolean,
+		public static final @NonNull Operation _Map__0_includes = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___INCLUDES__OBJECT, Parameters._$$0, Types._Boolean,
 			23 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludesOperation.INSTANCE);
-		public static final @NonNull Operation _Map__1_includes = LIBRARY.createOperation(Types._Map, "includes", null, Parameters._$$0___$$1, Types._Boolean,
+		public static final @NonNull Operation _Map__1_includes = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___INCLUDES__OBJECT_OBJECT, Parameters._$$0___$$1, Types._Boolean,
 			24 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludesPairOperation.INSTANCE);
-		public static final @NonNull Operation _Map__includesAll = LIBRARY.createOperation(Types._Map, "includesAll", null, Parameters._Collection__$$2__, Types._Boolean,
+		public static final @NonNull Operation _Map__includesAll = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___INCLUDES_ALL__COLLECTION, Parameters._Collection__$$2__, Types._Boolean,
 			25 | IsRequired, new TemplateParameters(TypeParameters._2_Map_includesAll_K2), org.eclipse.ocl.pivot.library.map.MapIncludesAllOperation.INSTANCE);
-		public static final @NonNull Operation _Map__includesMap = LIBRARY.createOperation(Types._Map, "includesMap", null, Parameters._Map__$$2_$$3__, Types._Boolean,
+		public static final @NonNull Operation _Map__includesMap = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___INCLUDES_MAP__EMAP, Parameters._Map__$$2_$$3__, Types._Boolean,
 			26 | IsRequired, new TemplateParameters(TypeParameters._2_Map_includesMap_K2, TypeParameters._3_Map_includesMap_V2), org.eclipse.ocl.pivot.library.map.MapIncludesMapOperation.INSTANCE);
-		public static final @NonNull Operation _Map__includesValue = LIBRARY.createOperation(Types._Map, "includesValue", null, Parameters._$$1, Types._Boolean,
+		public static final @NonNull Operation _Map__includesValue = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___INCLUDES_VALUE__OBJECT, Parameters._$$1, Types._Boolean,
 			27 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludesValueOperation.INSTANCE);
-		public static final @NonNull Operation _Map__including = LIBRARY.createOperation(Types._Map, "including", null, Parameters._$$0___$$1, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Map__including = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___INCLUDING__OBJECT_OBJECT, Parameters._$$0___$$1, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			28, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIncludingPairOperation.INSTANCE);
-		public static final @NonNull Operation _Map__includingMap = LIBRARY.createOperation(Types._Map, "includingMap", null, Parameters._Map__$$2_$$3__, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Map__includingMap = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___INCLUDING_MAP__EMAP, Parameters._Map__$$2_$$3__, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			29, new TemplateParameters(TypeParameters._2_Map_includingMap_K2, TypeParameters._3_Map_includingMap_V2), org.eclipse.ocl.pivot.library.map.MapIncludingMapOperation.INSTANCE);
-		public static final @NonNull Operation _Map__isEmpty = LIBRARY.createOperation(Types._Map, "isEmpty", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _Map__isEmpty = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___IS_EMPTY, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			30 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation.INSTANCE);
-		public static final @NonNull Iteration _Map__isUnique = LIBRARY.createIteration(Types._Map, "isUnique", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclAny_F, Types._Boolean,
+		public static final @NonNull Iteration _Map__isUnique = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___IS_UNIQUE1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclAny_F, Types._Boolean,
 			31 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__iterate = LIBRARY.createIteration(Types._Map, "iterate", Parameters._$$0___$$2, Parameters._Lambda_self_$$0_F_result_$$2_F, TypeParameters.$$2,
+		public static final @NonNull Iteration _Map__iterate = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___ITERATE1__OBJECT, Parameters._$$0___$$2, Parameters._Lambda_self_$$0_F_result_$$2_F, TypeParameters.$$2,
 			32 | HasAccumulator, new TemplateParameters(TypeParameters._2_Map_iterate_Tacc), org.eclipse.ocl.pivot.library.iterator.IterateIteration.INSTANCE);
-		public static final @NonNull Operation _Map__keys = LIBRARY.createOperation(Types._Map, "keys", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Map__keys = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___KEYS, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			33 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapKeysOperation.INSTANCE);
-		public static final @NonNull Operation _Map__notEmpty = LIBRARY.createOperation(Types._Map, "notEmpty", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _Map__notEmpty = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___NOT_EMPTY, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			34 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
-		public static final @NonNull Iteration _Map__one = LIBRARY.createIteration(Types._Map, "one", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
+		public static final @NonNull Iteration _Map__one = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___ONE1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, Types._Boolean,
 			35 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.OneIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__reject = LIBRARY.createIteration(Types._Map, "reject", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Iteration _Map__reject = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___REJECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			36 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.MapRejectIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__2_search = LIBRARY.createIteration(Types._Map, "search", Parameters._$$0___$$0___$$0___$$2, Parameters._Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F___Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F___Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$3_F, TypeParameters.$$3,
+		public static final @NonNull Iteration _Map__2_search = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___SEARCH3__OBJECT_OBJECT_OBJECT, Parameters._$$0___$$0___$$0___$$2, Parameters._Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$2_F___Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_Boolean_F___Lambda_self_$$2_F_i_$$0_F_j_$$0_F_k_$$0_F_result_$$3_F, TypeParameters.$$3,
 			37 | HasAccumulator, new TemplateParameters(TypeParameters._2_Map_search_Q, TypeParameters._3_Map_search_R), org.eclipse.ocl.pivot.library.iterator.SearchIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__1_search = LIBRARY.createIteration(Types._Map, "search", Parameters._$$0___$$0___$$2, Parameters._Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$2_F___Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_Boolean_F___Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$3_F, TypeParameters.$$3,
+		public static final @NonNull Iteration _Map__1_search = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___SEARCH2__OBJECT_OBJECT_OBJECT, Parameters._$$0___$$0___$$2, Parameters._Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$2_F___Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_Boolean_F___Lambda_self_$$2_F_i_$$0_F_j_$$0_F_result_$$3_F, TypeParameters.$$3,
 			38 | HasAccumulator, new TemplateParameters(TypeParameters._2_Map_search_Q_0, TypeParameters._3_Map_search_R_0), org.eclipse.ocl.pivot.library.iterator.SearchIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__0_search = LIBRARY.createIteration(Types._Map, "search", Parameters._$$0___$$2, Parameters._Lambda_self_$$2_F_i_$$0_F_result_$$2_F___Lambda_self_$$2_F_i_$$0_F_result_Boolean_F___Lambda_self_$$2_F_i_$$0_F_result_$$3_F, TypeParameters.$$3,
+		public static final @NonNull Iteration _Map__0_search = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___SEARCH1__OBJECT_OBJECT_OBJECT, Parameters._$$0___$$2, Parameters._Lambda_self_$$2_F_i_$$0_F_result_$$2_F___Lambda_self_$$2_F_i_$$0_F_result_Boolean_F___Lambda_self_$$2_F_i_$$0_F_result_$$3_F, TypeParameters.$$3,
 			39 | HasAccumulator, new TemplateParameters(TypeParameters._2_Map_search_Q_1, TypeParameters._3_Map_search_R_1), org.eclipse.ocl.pivot.library.iterator.SearchIteration.INSTANCE);
-		public static final @NonNull Iteration _Map__select = LIBRARY.createIteration(Types._Map, "select", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
+		public static final @NonNull Iteration _Map__select = LIBRARY.createIteration(Types._Map, OCLstdlibPackage.Literals.MAP___SELECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getMapType(Types._Map, TypeParameters.$$0, true, TypeParameters.$$1, true),
 			40 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.MapSelectIteration.INSTANCE);
-		public static final @NonNull Operation _Map__size = LIBRARY.createOperation(Types._Map, "size", null, ParameterTypes.EMPTY_LIST, Types._Integer,
+		public static final @NonNull Operation _Map__size = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___SIZE, ParameterTypes.EMPTY_LIST, Types._Integer,
 			41 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapSizeOperation.INSTANCE);
-		public static final @NonNull Operation _Map__values = LIBRARY.createOperation(Types._Map, "values", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
+		public static final @NonNull Operation _Map__values = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___VALUES, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			42 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclAny___lt__gt_ = LIBRARY.createOperation(Types._OclAny, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
@@ -833,184 +833,184 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation(Types._OclAny, "toString", null, ParameterTypes.EMPTY_LIST, Types._String,
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclComparable___lt_ = LIBRARY.createOperation(Types._OclComparable, "<", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclComparable___lt_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___60__OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation.INSTANCE);
-		public static final @NonNull Operation _OclComparable___lt__eq_ = LIBRARY.createOperation(Types._OclComparable, "<=", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclComparable___lt__eq_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___60_61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclComparable___gt_ = LIBRARY.createOperation(Types._OclComparable, ">", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclComparable___gt_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation.INSTANCE);
-		public static final @NonNull Operation _OclComparable___gt__eq_ = LIBRARY.createOperation(Types._OclComparable, ">=", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclComparable___gt__eq_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___62_61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclComparable__compareTo = LIBRARY.createOperation(Types._OclComparable, "compareTo", null, Parameters._OclSelf, Types._Integer,
+		public static final @NonNull Operation _OclComparable__compareTo = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___COMPARE_TO__OBJECT, Parameters._OclSelf, Types._Integer,
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclElement__oclAsModelType = LIBRARY.createOperation(Types._OclElement, "oclAsModelType", null, Parameters._typeof_$$0, TypeParameters.$$0,
+		public static final @NonNull Operation _OclElement__oclAsModelType = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_AS_MODEL_TYPE__OBJECT, Parameters._typeof_$$0, TypeParameters.$$0,
 			0 | IsInvalidating | IsRequired, new TemplateParameters(TypeParameters._0_OclElement_oclAsModelType_TT), org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__0_oclBase = LIBRARY.createOperation(Types._OclElement, "oclBase", null, ParameterTypes.EMPTY_LIST, Types._OclType,
+		public static final @NonNull Operation _OclElement__0_oclBase = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_BASE, ParameterTypes.EMPTY_LIST, Types._OclType,
 			1, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__1_oclBase = LIBRARY.createOperation(Types._OclElement, "oclBase", null, Parameters._OclType, Types._OclType,
+		public static final @NonNull Operation _OclElement__1_oclBase = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_BASE__OBJECT, Parameters._OclType, Types._OclType,
 			2, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclContainer = LIBRARY.createOperation(Types._OclElement, "oclContainer", null, ParameterTypes.EMPTY_LIST, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclContainer = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_CONTAINER, ParameterTypes.EMPTY_LIST, Types._OclElement,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContainerOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclContents = LIBRARY.createOperation(Types._OclElement, "oclContents", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
+		public static final @NonNull Operation _OclElement__oclContents = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_CONTENTS, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierOclContentsOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclExtension = LIBRARY.createOperation(Types._OclElement, "oclExtension", null, Parameters._OclStereotype, Types._OclElement,
+		public static final @NonNull Operation _OclElement__oclExtension = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_EXTENSION__OBJECT, Parameters._OclStereotype, Types._OclElement,
 			5 | IsInvalidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__0_oclExtensions = LIBRARY.createOperation(Types._OclElement, "oclExtensions", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
+		public static final @NonNull Operation _OclElement__0_oclExtensions = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_EXTENSIONS, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
 			6 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation(Types._OclElement, "oclExtensions", null, Parameters._OclStereotype, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
+		public static final @NonNull Operation _OclElement__1_oclExtensions = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_EXTENSIONS__OBJECT, Parameters._OclStereotype, MODEL.getCollectionType(Types._Set, Types._OclElement, true),
 			7 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionsOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclIsModelKindOf = LIBRARY.createOperation(Types._OclElement, "oclIsModelKindOf", null, Parameters._OclType, Types._Boolean,
+		public static final @NonNull Operation _OclElement__oclIsModelKindOf = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_IS_MODEL_KIND_OF__OBJECT, Parameters._OclType, Types._Boolean,
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclModelType = LIBRARY.createOperation(Types._OclElement, "oclModelType", null, ParameterTypes.EMPTY_LIST, Types._OclSelf,
+		public static final @NonNull Operation _OclElement__oclModelType = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_MODEL_TYPE, ParameterTypes.EMPTY_LIST, Types._OclSelf,
 			9 | IsRequired | IsTypeof, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation(Types._OclElement, "oclModelTypes", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, false),
+		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_MODEL_TYPES, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, false),
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclInvalid___lt__gt_ = LIBRARY.createOperation(Types._OclInvalid, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid___lt__gt_ = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid___eq_ = LIBRARY.createOperation(Types._OclInvalid, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid___eq_ = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__and = LIBRARY.createOperation(Types._OclInvalid, "and", Precedences._AND, Parameters._Boolean, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid__and = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___AND__BOOLEAN, Parameters._Boolean, Types._Boolean,
 			2 | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__implies = LIBRARY.createOperation(Types._OclInvalid, "implies", Precedences._IMPLIES, Parameters._Boolean, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid__implies = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___IMPLIES__BOOLEAN, Parameters._Boolean, Types._Boolean,
 			3 | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__or = LIBRARY.createOperation(Types._OclInvalid, "or", Precedences._OR, Parameters._Boolean, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid__or = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OR__BOOLEAN, Parameters._Boolean, Types._Boolean,
 			4 | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclAsSet = LIBRARY.createOperation(Types._OclInvalid, "oclAsSet", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, true),
+		public static final @NonNull Operation _OclInvalid__oclAsSet = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OCL_AS_SET, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, true),
 			5 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclAsType = LIBRARY.createOperation(Types._OclInvalid, "oclAsType", null, Parameters._typeof_$$0, TypeParameters.$$0,
+		public static final @NonNull Operation _OclInvalid__oclAsType = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OCL_AS_TYPE__OBJECT, Parameters._typeof_$$0, TypeParameters.$$0,
 			6 | IsRequired, new TemplateParameters(TypeParameters._0_OclInvalid_oclAsType_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclBadOperation = LIBRARY.createOperation(Types._OclInvalid, "oclBadOperation", null, ParameterTypes.EMPTY_LIST, Types._OclAny,
+		public static final @NonNull Operation _OclInvalid__oclBadOperation = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OCL_BAD_OPERATION, ParameterTypes.EMPTY_LIST, Types._OclAny,
 			7, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OclInvalid__oclIsInvalid = LIBRARY.createOperation(Types._OclInvalid, "oclIsInvalid", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid__oclIsInvalid = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OCL_IS_INVALID, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			8 | IsRequired | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclIsKindOf = LIBRARY.createOperation(Types._OclInvalid, "oclIsKindOf", null, Parameters._OclType, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid__oclIsKindOf = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OCL_IS_KIND_OF__OBJECT, Parameters._OclType, Types._Boolean,
 			9 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclIsTypeOf = LIBRARY.createOperation(Types._OclInvalid, "oclIsTypeOf", null, Parameters._OclType, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid__oclIsTypeOf = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OCL_IS_TYPE_OF__OBJECT, Parameters._OclType, Types._Boolean,
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclIsUndefined = LIBRARY.createOperation(Types._OclInvalid, "oclIsUndefined", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid__oclIsUndefined = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OCL_IS_UNDEFINED, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			11 | IsRequired | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__oclType = LIBRARY.createOperation(Types._OclInvalid, "oclType", null, ParameterTypes.EMPTY_LIST, Types._OclSelf,
+		public static final @NonNull Operation _OclInvalid__oclType = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___OCL_TYPE, ParameterTypes.EMPTY_LIST, Types._OclSelf,
 			12 | IsRequired | IsTypeof, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclInvalid__toString = LIBRARY.createOperation(Types._OclInvalid, "toString", null, ParameterTypes.EMPTY_LIST, Types._String,
+		public static final @NonNull Operation _OclInvalid__toString = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___TO_STRING, ParameterTypes.EMPTY_LIST, Types._String,
 			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclMessage__hasReturned = LIBRARY.createOperation(Types._OclMessage, "hasReturned", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclMessage__hasReturned = LIBRARY.createOperation(Types._OclMessage, OCLstdlibPackage.Literals.OCL_MESSAGE___HAS_RETURNED, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__isOperationCall = LIBRARY.createOperation(Types._OclMessage, "isOperationCall", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclMessage__isOperationCall = LIBRARY.createOperation(Types._OclMessage, OCLstdlibPackage.Literals.OCL_MESSAGE___IS_OPERATION_CALL, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__isSignalSent = LIBRARY.createOperation(Types._OclMessage, "isSignalSent", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclMessage__isSignalSent = LIBRARY.createOperation(Types._OclMessage, OCLstdlibPackage.Literals.OCL_MESSAGE___IS_SIGNAL_SENT, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclMessage__result = LIBRARY.createOperation(Types._OclMessage, "result", null, ParameterTypes.EMPTY_LIST, Types._OclAny,
+		public static final @NonNull Operation _OclMessage__result = LIBRARY.createOperation(Types._OclMessage, OCLstdlibPackage.Literals.OCL_MESSAGE___RESULT, ParameterTypes.EMPTY_LIST, Types._OclAny,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclSummable__sum = LIBRARY.createOperation(Types._OclSummable, "sum", null, Parameters._OclSelf, Types._OclSelf,
+		public static final @NonNull Operation _OclSummable__sum = LIBRARY.createOperation(Types._OclSummable, OCLstdlibPackage.Literals.OCL_SUMMABLE___SUM__OBJECT, Parameters._OclSelf, Types._OclSelf,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation(Types._OclSummable, "zero", null, ParameterTypes.EMPTY_LIST, Types._OclSelf,
+		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation(Types._OclSummable, OCLstdlibPackage.Literals.OCL_SUMMABLE___ZERO, ParameterTypes.EMPTY_LIST, Types._OclSelf,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _OclTuple___lt__gt_ = LIBRARY.createOperation(Types._OclTuple, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclTuple___lt__gt_ = LIBRARY.createOperation(Types._OclTuple, OCLstdlibPackage.Literals.OCL_TUPLE___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclTuple___eq_ = LIBRARY.createOperation(Types._OclTuple, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclTuple___eq_ = LIBRARY.createOperation(Types._OclTuple, OCLstdlibPackage.Literals.OCL_TUPLE___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclType__conformsTo = LIBRARY.createOperation(Types._OclType, "conformsTo", null, Parameters._OclType, Types._Boolean,
+		public static final @NonNull Operation _OclType__conformsTo = LIBRARY.createOperation(Types._OclType, OCLstdlibPackage.Literals.OCL_TYPE___CONFORMS_TO__OBJECT, Parameters._OclType, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclVoid___add_ = LIBRARY.createOperation(Types._OclVoid, "+", Precedences._ADDITIVE, Parameters._String, Types._String,
+		public static final @NonNull Operation _OclVoid___add_ = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___43__STRING, Parameters._String, Types._String,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid___lt__gt_ = LIBRARY.createOperation(Types._OclVoid, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclVoid___lt__gt_ = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid___eq_ = LIBRARY.createOperation(Types._OclVoid, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclVoid___eq_ = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__and = LIBRARY.createOperation(Types._OclVoid, "and", Precedences._AND, Parameters._Boolean, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__and = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___AND__BOOLEAN, Parameters._Boolean, Types._Boolean,
 			3 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__implies = LIBRARY.createOperation(Types._OclVoid, "implies", Precedences._IMPLIES, Parameters._Boolean, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__implies = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___IMPLIES__BOOLEAN, Parameters._Boolean, Types._Boolean,
 			4 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__not = LIBRARY.createOperation(Types._OclVoid, "not", Precedences._UNARY, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__not = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___NOT, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			5 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanNotOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__or = LIBRARY.createOperation(Types._OclVoid, "or", Precedences._OR, Parameters._Boolean, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__or = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OR__BOOLEAN, Parameters._Boolean, Types._Boolean,
 			6 | IsInvalidating | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__xor = LIBRARY.createOperation(Types._OclVoid, "xor", Precedences._XOR, Parameters._Boolean, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__xor = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___XOR__BOOLEAN, Parameters._Boolean, Types._Boolean,
 			7, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__concat = LIBRARY.createOperation(Types._OclVoid, "concat", null, Parameters._String, Types._String,
+		public static final @NonNull Operation _OclVoid__concat = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___CONCAT__STRING, Parameters._String, Types._String,
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclAsSet = LIBRARY.createOperation(Types._OclVoid, "oclAsSet", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, true),
+		public static final @NonNull Operation _OclVoid__oclAsSet = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OCL_AS_SET, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, true),
 			9 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclAsType = LIBRARY.createOperation(Types._OclVoid, "oclAsType", null, Parameters._typeof_$$0, TypeParameters.$$0,
+		public static final @NonNull Operation _OclVoid__oclAsType = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OCL_AS_TYPE__OBJECT, Parameters._typeof_$$0, TypeParameters.$$0,
 			10 | IsInvalidating, new TemplateParameters(TypeParameters._0_OclVoid_oclAsType_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsInvalid = LIBRARY.createOperation(Types._OclVoid, "oclIsInvalid", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__oclIsInvalid = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OCL_IS_INVALID, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			11 | IsRequired | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsKindOf = LIBRARY.createOperation(Types._OclVoid, "oclIsKindOf", null, Parameters._OclType, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__oclIsKindOf = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OCL_IS_KIND_OF__OBJECT, Parameters._OclType, Types._Boolean,
 			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsTypeOf = LIBRARY.createOperation(Types._OclVoid, "oclIsTypeOf", null, Parameters._OclType, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__oclIsTypeOf = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OCL_IS_TYPE_OF__OBJECT, Parameters._OclType, Types._Boolean,
 			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclIsUndefined = LIBRARY.createOperation(Types._OclVoid, "oclIsUndefined", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclVoid__oclIsUndefined = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OCL_IS_UNDEFINED, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			14 | IsRequired | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclType = LIBRARY.createOperation(Types._OclVoid, "oclType", null, ParameterTypes.EMPTY_LIST, Types._OclSelf,
+		public static final @NonNull Operation _OclVoid__oclType = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OCL_TYPE, ParameterTypes.EMPTY_LIST, Types._OclSelf,
 			15 | IsRequired | IsTypeof, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__oclTypes = LIBRARY.createOperation(Types._OclVoid, "oclTypes", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, false),
+		public static final @NonNull Operation _OclVoid__oclTypes = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___OCL_TYPES, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, false),
 			16 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid__toString = LIBRARY.createOperation(Types._OclVoid, "toString", null, ParameterTypes.EMPTY_LIST, Types._String,
+		public static final @NonNull Operation _OclVoid__toString = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___TO_STRING, ParameterTypes.EMPTY_LIST, Types._String,
 			17 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
-		public static final @NonNull Operation _OrderedCollection__at = LIBRARY.createOperation(Types._OrderedCollection, "at", null, Parameters._Integer, TypeParameters.$$0,
+		public static final @NonNull Operation _OrderedCollection__at = LIBRARY.createOperation(Types._OrderedCollection, OCLstdlibPackage.Literals.ORDERED_COLLECTION___AT__INTEGERVALUE, Parameters._Integer, TypeParameters.$$0,
 			0 | IsInvalidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__first = LIBRARY.createOperation(Types._OrderedCollection, "first", null, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
+		public static final @NonNull Operation _OrderedCollection__first = LIBRARY.createOperation(Types._OrderedCollection, OCLstdlibPackage.Literals.ORDERED_COLLECTION___FIRST, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
 			1 | IsInvalidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
-		public static final @NonNull Iteration _OrderedCollection__gather = LIBRARY.createIteration(Types._OrderedCollection, "gather", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _OrderedCollection__gather = LIBRARY.createIteration(Types._OrderedCollection, OCLstdlibPackage.Literals.ORDERED_COLLECTION___GATHER1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
 			2 | IsRequired, new TemplateParameters(TypeParameters._1_OrderedCollection_gather_E), org.eclipse.ocl.pivot.library.iterator.GatherIteration.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__indexOf = LIBRARY.createOperation(Types._OrderedCollection, "indexOf", null, Parameters._$$0, Types._Integer,
+		public static final @NonNull Operation _OrderedCollection__indexOf = LIBRARY.createOperation(Types._OrderedCollection, OCLstdlibPackage.Literals.ORDERED_COLLECTION___INDEX_OF__OBJECT, Parameters._$$0, Types._Integer,
 			3, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedCollection__last = LIBRARY.createOperation(Types._OrderedCollection, "last", null, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
+		public static final @NonNull Operation _OrderedCollection__last = LIBRARY.createOperation(Types._OrderedCollection, OCLstdlibPackage.Literals.ORDERED_COLLECTION___LAST, ParameterTypes.EMPTY_LIST, TypeParameters.$$0,
 			4 | IsInvalidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
 
-		public static final @NonNull Operation _OrderedSet___sub_ = LIBRARY.createOperation(Types._OrderedSet, "-", Precedences._ADDITIVE, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet___sub_ = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___45__ELIST, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet___lt__gt_ = LIBRARY.createOperation(Types._OrderedSet, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OrderedSet___lt__gt_ = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet___eq_ = LIBRARY.createOperation(Types._OrderedSet, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OrderedSet___eq_ = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__append = LIBRARY.createOperation(Types._OrderedSet, "append", null, Parameters._$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__append = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___APPEND__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__appendAll = LIBRARY.createOperation(Types._OrderedSet, "appendAll", null, Parameters._OrderedCollection__$$0__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__appendAll = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___APPEND_ALL__ELIST, Parameters._OrderedCollection__$$0__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-		public static final @NonNull Iteration _OrderedSet__closure = LIBRARY.createIteration(Types._OrderedSet, "closure", Parameters._$$1, Parameters._Lambda_self_$$1_F_result_OrderedCollection__$$1___F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, true),
+		public static final @NonNull Iteration _OrderedSet__closure = LIBRARY.createIteration(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___CLOSURE1__OBJECT, Parameters._$$1, Parameters._Lambda_self_$$1_F_result_OrderedCollection__$$1___F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, true),
 			5 | IsRequired, new TemplateParameters(TypeParameters._1_OrderedSet_closure_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-		public static final @NonNull Iteration _OrderedSet__collect = LIBRARY.createIteration(Types._OrderedSet, "collect", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _OrderedSet__collect = LIBRARY.createIteration(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___COLLECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
 			6 | IsRequired, new TemplateParameters(TypeParameters._1_OrderedSet_collect_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull Iteration _OrderedSet__collectNested = LIBRARY.createIteration(Types._OrderedSet, "collectNested", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _OrderedSet__collectNested = LIBRARY.createIteration(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___COLLECT_NESTED1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
 			7 | IsRequired, new TemplateParameters(TypeParameters._1_OrderedSet_collectNested_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__excluding = LIBRARY.createOperation(Types._OrderedSet, "excluding", null, Parameters._$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__excluding = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___EXCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__excludingAll = LIBRARY.createOperation(Types._OrderedSet, "excludingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__excludingAll = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___EXCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			9 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__flatten = LIBRARY.createOperation(Types._OrderedSet, "flatten", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, false),
+		public static final @NonNull Operation _OrderedSet__flatten = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___FLATTEN, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, false),
 			10 | IsRequired, new TemplateParameters(TypeParameters._1_OrderedSet_flatten_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__including = LIBRARY.createOperation(Types._OrderedSet, "including", null, Parameters._$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__including = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___INCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__includingAll = LIBRARY.createOperation(Types._OrderedSet, "includingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__includingAll = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___INCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__insertAt = LIBRARY.createOperation(Types._OrderedSet, "insertAt", null, Parameters._Integer___$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__insertAt = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___INSERT_AT__INTEGERVALUE_OBJECT, Parameters._Integer___$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			13 | IsInvalidating | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__prepend = LIBRARY.createOperation(Types._OrderedSet, "prepend", null, Parameters._$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__prepend = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___PREPEND__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__prependAll = LIBRARY.createOperation(Types._OrderedSet, "prependAll", null, Parameters._OrderedCollection__$$0__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__prependAll = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___PREPEND_ALL__ELIST, Parameters._OrderedCollection__$$0__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			15 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
-		public static final @NonNull Iteration _OrderedSet__reject = LIBRARY.createIteration(Types._OrderedSet, "reject", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _OrderedSet__reject = LIBRARY.createIteration(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___REJECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			16 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__reverse = LIBRARY.createOperation(Types._OrderedSet, "reverse", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__reverse = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___REVERSE, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			17 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
-		public static final @NonNull Iteration _OrderedSet__select = LIBRARY.createIteration(Types._OrderedSet, "select", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _OrderedSet__select = LIBRARY.createIteration(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___SELECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			18 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__selectByKind = LIBRARY.createOperation(Types._OrderedSet, "selectByKind", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, true),
+		public static final @NonNull Operation _OrderedSet__selectByKind = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___SELECT_BY_KIND__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, true),
 			19 | IsRequired, new TemplateParameters(TypeParameters._1_OrderedSet_selectByKind_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__selectByType = LIBRARY.createOperation(Types._OrderedSet, "selectByType", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, true),
+		public static final @NonNull Operation _OrderedSet__selectByType = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___SELECT_BY_TYPE__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, true),
 			20 | IsRequired, new TemplateParameters(TypeParameters._1_OrderedSet_selectByType_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull Iteration _OrderedSet__sortedBy = LIBRARY.createIteration(Types._OrderedSet, "sortedBy", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _OrderedSet__sortedBy = LIBRARY.createIteration(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___SORTED_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			21 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		public static final @NonNull Operation _OrderedSet__subOrderedSet = LIBRARY.createOperation(Types._OrderedSet, "subOrderedSet", null, Parameters._Integer___Integer, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Operation _OrderedSet__subOrderedSet = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___SUB_ORDERED_SET__INTEGERVALUE_INTEGERVALUE, Parameters._Integer___Integer, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			22 | IsInvalidating | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
 
 		public static final @NonNull Operation _Real___mul_ = LIBRARY.createOperation(Types._Real, "*", Precedences._MULTIPLICATIVE, Parameters._OclSelf, Types._Real,
@@ -1040,82 +1040,82 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation(Types._Real, "toString", null, ParameterTypes.EMPTY_LIST, Types._String,
 			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
-		public static final @NonNull Operation _Sequence___lt__gt_ = LIBRARY.createOperation(Types._Sequence, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Sequence___lt__gt_ = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence___eq_ = LIBRARY.createOperation(Types._Sequence, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Sequence___eq_ = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__append = LIBRARY.createOperation(Types._Sequence, "append", null, Parameters._$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__append = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___APPEND__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__appendAll = LIBRARY.createOperation(Types._Sequence, "appendAll", null, Parameters._OrderedCollection__$$0__, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__appendAll = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___APPEND_ALL__ELIST, Parameters._OrderedCollection__$$0__, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
-		public static final @NonNull Iteration _Sequence__closure = LIBRARY.createIteration(Types._Sequence, "closure", Parameters._$$1, Parameters._Lambda_self_$$1_F_result_OrderedCollection__$$1___F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, true),
+		public static final @NonNull Iteration _Sequence__closure = LIBRARY.createIteration(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___CLOSURE1__OBJECT, Parameters._$$1, Parameters._Lambda_self_$$1_F_result_OrderedCollection__$$1___F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$1, true),
 			4 | IsRequired, new TemplateParameters(TypeParameters._1_Sequence_closure_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-		public static final @NonNull Iteration _Sequence__collect = LIBRARY.createIteration(Types._Sequence, "collect", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Sequence__collect = LIBRARY.createIteration(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___COLLECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
 			5 | IsRequired, new TemplateParameters(TypeParameters._1_Sequence_collect_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull Iteration _Sequence__collectNested = LIBRARY.createIteration(Types._Sequence, "collectNested", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Sequence__collectNested = LIBRARY.createIteration(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___COLLECT_NESTED1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
 			6 | IsRequired, new TemplateParameters(TypeParameters._1_Sequence_collectNested_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-		public static final @NonNull Operation _Sequence__excluding = LIBRARY.createOperation(Types._Sequence, "excluding", null, Parameters._$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__excluding = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___EXCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			7 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__excludingAll = LIBRARY.createOperation(Types._Sequence, "excludingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__excludingAll = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___EXCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__flatten = LIBRARY.createOperation(Types._Sequence, "flatten", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
+		public static final @NonNull Operation _Sequence__flatten = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___FLATTEN, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, false),
 			9 | IsRequired, new TemplateParameters(TypeParameters._1_Sequence_flatten_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__including = LIBRARY.createOperation(Types._Sequence, "including", null, Parameters._$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__including = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___INCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__includingAll = LIBRARY.createOperation(Types._Sequence, "includingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__includingAll = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___INCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__insertAt = LIBRARY.createOperation(Types._Sequence, "insertAt", null, Parameters._Integer___$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__insertAt = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___INSERT_AT__INTEGERVALUE_OBJECT, Parameters._Integer___$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			12 | IsInvalidating | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__prepend = LIBRARY.createOperation(Types._Sequence, "prepend", null, Parameters._$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__prepend = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___PREPEND__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__prependAll = LIBRARY.createOperation(Types._Sequence, "prependAll", null, Parameters._OrderedCollection__$$0__, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__prependAll = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___PREPEND_ALL__ELIST, Parameters._OrderedCollection__$$0__, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation.INSTANCE);
-		public static final @NonNull Iteration _Sequence__reject = LIBRARY.createIteration(Types._Sequence, "reject", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Sequence__reject = LIBRARY.createIteration(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___REJECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			15 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Operation _Sequence__reverse = LIBRARY.createOperation(Types._Sequence, "reverse", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__reverse = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___REVERSE, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			16 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation.INSTANCE);
-		public static final @NonNull Iteration _Sequence__select = LIBRARY.createIteration(Types._Sequence, "select", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Sequence__select = LIBRARY.createIteration(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___SELECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			17 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-		public static final @NonNull Operation _Sequence__selectByKind = LIBRARY.createOperation(Types._Sequence, "selectByKind", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Sequence__selectByKind = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___SELECT_BY_KIND__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, true),
 			18 | IsRequired, new TemplateParameters(TypeParameters._1_Sequence_selectByKind_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-		public static final @NonNull Operation _Sequence__selectByType = LIBRARY.createOperation(Types._Sequence, "selectByType", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Sequence__selectByType = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___SELECT_BY_TYPE__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$1, true),
 			19 | IsRequired, new TemplateParameters(TypeParameters._1_Sequence_selectByType_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull Iteration _Sequence__sortedBy = LIBRARY.createIteration(Types._Sequence, "sortedBy", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Sequence__sortedBy = LIBRARY.createIteration(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___SORTED_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			20 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		public static final @NonNull Operation _Sequence__subSequence = LIBRARY.createOperation(Types._Sequence, "subSequence", null, Parameters._Integer___Integer, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Sequence__subSequence = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___SUB_SEQUENCE__INTEGERVALUE_INTEGERVALUE, Parameters._Integer___Integer, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			21 | IsInvalidating | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
 
-		public static final @NonNull Operation _Set___sub_ = LIBRARY.createOperation(Types._Set, "-", Precedences._ADDITIVE, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Set___sub_ = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___45__ELIST, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-		public static final @NonNull Operation _Set___lt__gt_ = LIBRARY.createOperation(Types._Set, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Set___lt__gt_ = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___60_62__OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _Set___eq_ = LIBRARY.createOperation(Types._Set, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Set___eq_ = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___61__OBJECT, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Iteration _Set__closure = LIBRARY.createIteration(Types._Set, "closure", Parameters._$$1, Parameters._Lambda_self_$$1_F_result_Collection__$$1___F, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, true),
+		public static final @NonNull Iteration _Set__closure = LIBRARY.createIteration(Types._Set, OCLstdlibPackage.Literals.SET___CLOSURE1__OBJECT, Parameters._$$1, Parameters._Lambda_self_$$1_F_result_Collection__$$1___F, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, true),
 			3 | IsRequired, new TemplateParameters(TypeParameters._1_Set_closure_E), org.eclipse.ocl.pivot.library.iterator.ClosureIteration.INSTANCE);
-		public static final @NonNull Iteration _Set__collect = LIBRARY.createIteration(Types._Set, "collect", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Set__collect = LIBRARY.createIteration(Types._Set, OCLstdlibPackage.Literals.SET___COLLECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			4 | IsRequired, new TemplateParameters(TypeParameters._1_Set_collect_E), org.eclipse.ocl.pivot.library.iterator.CollectIteration.INSTANCE);
-		public static final @NonNull Iteration _Set__collectNested = LIBRARY.createIteration(Types._Set, "collectNested", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
+		public static final @NonNull Iteration _Set__collectNested = LIBRARY.createIteration(Types._Set, OCLstdlibPackage.Literals.SET___COLLECT_NESTED1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_$$1_F, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			5 | IsRequired, new TemplateParameters(TypeParameters._1_Set_collectNested_E), org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration.INSTANCE);
-		public static final @NonNull Operation _Set__excluding = LIBRARY.createOperation(Types._Set, "excluding", null, Parameters._$$0, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Set__excluding = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___EXCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			6 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
-		public static final @NonNull Operation _Set__excludingAll = LIBRARY.createOperation(Types._Set, "excludingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Set__excludingAll = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___EXCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			7 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
-		public static final @NonNull Operation _Set__flatten = LIBRARY.createOperation(Types._Set, "flatten", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, false),
+		public static final @NonNull Operation _Set__flatten = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___FLATTEN, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, false),
 			8 | IsRequired, new TemplateParameters(TypeParameters._1_Set_flatten_T2), org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation.INSTANCE);
-		public static final @NonNull Operation _Set__including = LIBRARY.createOperation(Types._Set, "including", null, Parameters._$$0, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Set__including = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___INCLUDING__OBJECT, Parameters._$$0, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			9 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingOperation.INSTANCE);
-		public static final @NonNull Operation _Set__includingAll = LIBRARY.createOperation(Types._Set, "includingAll", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _Set__includingAll = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___INCLUDING_ALL__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation.INSTANCE);
-		public static final @NonNull Iteration _Set__reject = LIBRARY.createIteration(Types._Set, "reject", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Set__reject = LIBRARY.createIteration(Types._Set, OCLstdlibPackage.Literals.SET___REJECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.RejectIteration.INSTANCE);
-		public static final @NonNull Iteration _Set__select = LIBRARY.createIteration(Types._Set, "select", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Set__select = LIBRARY.createIteration(Types._Set, OCLstdlibPackage.Literals.SET___SELECT1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_Boolean_T, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SelectIteration.INSTANCE);
-		public static final @NonNull Operation _Set__selectByKind = LIBRARY.createOperation(Types._Set, "selectByKind", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Set__selectByKind = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___SELECT_BY_KIND__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, true),
 			13 | IsRequired, new TemplateParameters(TypeParameters._1_Set_selectByKind_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE);
-		public static final @NonNull Operation _Set__selectByType = LIBRARY.createOperation(Types._Set, "selectByType", null, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, true),
+		public static final @NonNull Operation _Set__selectByType = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___SELECT_BY_TYPE__OBJECT, Parameters._typeof_$$1, MODEL.getCollectionType(Types._Set, TypeParameters.$$1, true),
 			14 | IsRequired, new TemplateParameters(TypeParameters._1_Set_selectByType_TT), org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE);
-		public static final @NonNull Iteration _Set__sortedBy = LIBRARY.createIteration(Types._Set, "sortedBy", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _Set__sortedBy = LIBRARY.createIteration(Types._Set, OCLstdlibPackage.Literals.SET___SORTED_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			15 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 
 		public static final @NonNull Operation _String___add_ = LIBRARY.createOperation(Types._String, "+", Precedences._ADDITIVE, Parameters._String, Types._String,
@@ -1189,15 +1189,15 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _String__trim = LIBRARY.createOperation(Types._String, "trim", null, ParameterTypes.EMPTY_LIST, Types._String,
 			34 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringTrimOperation.INSTANCE);
 
-		public static final @NonNull Operation _UniqueCollection___sub_ = LIBRARY.createOperation(Types._UniqueCollection, "-", Precedences._ADDITIVE, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._UniqueCollection, TypeParameters.$$0, false),
+		public static final @NonNull Operation _UniqueCollection___sub_ = LIBRARY.createOperation(Types._UniqueCollection, OCLstdlibPackage.Literals.UNIQUE_COLLECTION___45__ELIST, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._UniqueCollection, TypeParameters.$$0, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-		public static final @NonNull Operation _UniqueCollection__intersection = LIBRARY.createOperation(Types._UniqueCollection, "intersection", null, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _UniqueCollection__intersection = LIBRARY.createOperation(Types._UniqueCollection, OCLstdlibPackage.Literals.UNIQUE_COLLECTION___INTERSECTION__COLLECTION, Parameters._Collection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
-		public static final @NonNull Iteration _UniqueCollection__sortedBy = LIBRARY.createIteration(Types._UniqueCollection, "sortedBy", Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
+		public static final @NonNull Iteration _UniqueCollection__sortedBy = LIBRARY.createIteration(Types._UniqueCollection, OCLstdlibPackage.Literals.UNIQUE_COLLECTION___SORTED_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
-		public static final @NonNull Operation _UniqueCollection__symmetricDifference = LIBRARY.createOperation(Types._UniqueCollection, "symmetricDifference", null, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _UniqueCollection__symmetricDifference = LIBRARY.createOperation(Types._UniqueCollection, OCLstdlibPackage.Literals.UNIQUE_COLLECTION___SYMMETRIC_DIFFERENCE__ELIST, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
-		public static final @NonNull Operation _UniqueCollection__union = LIBRARY.createOperation(Types._UniqueCollection, "union", null, Parameters._UniqueCollection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
+		public static final @NonNull Operation _UniqueCollection__union = LIBRARY.createOperation(Types._UniqueCollection, OCLstdlibPackage.Literals.UNIQUE_COLLECTION___UNION__ELIST, Parameters._UniqueCollection__$$0__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 
 		public static final @NonNull Operation _UnlimitedNatural__max = LIBRARY.createOperation(Types._UnlimitedNatural, "max", null, Parameters._OclSelf, Types._UnlimitedNatural,
@@ -1590,13 +1590,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			Operations._Bag__excluding /* excluding(T[?]) */,
 			Operations._Bag__excludingAll /* excludingAll(Collection(T)) */,
-			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Bag__flatten /* flatten(T2)() */,
-			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda T() : V[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
@@ -1691,13 +1691,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			Operations._Collection__excluding /* excluding(T[?]) */,
 			Operations._Collection__excludingAll /* excludingAll(Collection(T)) */,
-			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__flatten /* flatten(T2)() */,
-			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda T() : V[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
@@ -1837,12 +1837,12 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Map__1_excluding /* excluding(K[?],V[?]) */,
 			Operations._Map__excludingAll /* excludingAll(Collection(K)) */,
 			Operations._Map__excludingMap /* excludingMap(K2, V2)(Map(K2[1],V2[1])[?]) */,
-			Operations._Map__0_exists /* exists(K[?],K[?],K[?]|Lambda K() : Boolean[?]) */,
+			Operations._Map__2_exists /* exists(K[?],K[?],K[?]|Lambda K() : Boolean[?]) */,
 			Operations._Map__1_exists /* exists(K[?],K[?]|Lambda K() : Boolean[?]) */,
-			Operations._Map__2_exists /* exists(K[?]|Lambda K() : Boolean[?]) */,
-			Operations._Map__0_forAll /* forAll(K[?],K[?],K[?]|Lambda K() : Boolean[?]) */,
+			Operations._Map__0_exists /* exists(K[?]|Lambda K() : Boolean[?]) */,
+			Operations._Map__2_forAll /* forAll(K[?],K[?],K[?]|Lambda K() : Boolean[?]) */,
 			Operations._Map__1_forAll /* forAll(K[?],K[?]|Lambda K() : Boolean[?]) */,
-			Operations._Map__2_forAll /* forAll(K[?]|Lambda K() : Boolean[?]) */,
+			Operations._Map__0_forAll /* forAll(K[?]|Lambda K() : Boolean[?]) */,
 			Operations._Map__gather /* gather(E)(K[?]|Lambda K() : E[?]) */,
 			Operations._Map__0_includes /* includes(K[?]) */,
 			Operations._Map__1_includes /* includes(K[?],V[?]) */,
@@ -2301,13 +2301,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			Operations._Collection__excluding /* excluding(T[?]) */,
 			Operations._Collection__excludingAll /* excludingAll(Collection(T)) */,
-			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__flatten /* flatten(T2)() */,
-			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda T() : V[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
@@ -2394,13 +2394,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			Operations._OrderedSet__excluding /* excluding(T[?]) */,
 			Operations._OrderedSet__excludingAll /* excludingAll(Collection(T)) */,
-			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._OrderedSet__flatten /* flatten(T2)() */,
-			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda T() : V[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
@@ -2544,13 +2544,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			Operations._Sequence__excluding /* excluding(T[?]) */,
 			Operations._Sequence__excludingAll /* excludingAll(Collection(T)) */,
-			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Sequence__flatten /* flatten(T2)() */,
-			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda T() : V[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
@@ -2637,13 +2637,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			Operations._Set__excluding /* excluding(T[?]) */,
 			Operations._Set__excludingAll /* excludingAll(Collection(T)) */,
-			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Set__flatten /* flatten(T2)() */,
-			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda T() : V[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,
@@ -2785,13 +2785,13 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__excludesAll /* excludesAll(T2)(Collection(T2)) */,
 			Operations._Collection__excluding /* excluding(T[?]) */,
 			Operations._Collection__excludingAll /* excludingAll(Collection(T)) */,
-			Operations._Collection__0_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_exists /* exists(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_exists /* exists(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_exists /* exists(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__flatten /* flatten(T2)() */,
-			Operations._Collection__0_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__2_forAll /* forAll(T[?],T[?],T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__1_forAll /* forAll(T[?],T[?]|Lambda T() : Boolean[?]) */,
-			Operations._Collection__2_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
+			Operations._Collection__0_forAll /* forAll(T[?]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__gather /* gather(V)(T[?]|Lambda T() : V[?]) */,
 			Operations._Collection__includes /* includes(T[?]) */,
 			Operations._Collection__includesAll /* includesAll(T2)(Collection(T2)) */,

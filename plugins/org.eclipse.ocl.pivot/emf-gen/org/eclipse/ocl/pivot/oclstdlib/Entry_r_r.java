@@ -50,6 +50,16 @@ public class Entry_r_r<K, V> extends EObjectImpl implements BasicEMap.Entry<K,V>
 
 
 	/**
+	 * The number of operations of the '<em>Entry rr</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	public static final int ENTRY_RR_OPERATION_COUNT = 0;
+
+
+	/**
 	 * The cached value of the '{@link #getTypedKey() <em>Key</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
