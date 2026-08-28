@@ -35,9 +35,11 @@ import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLConstants;
+import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Model;
@@ -466,6 +468,36 @@ public class AS2Ecore extends AbstractConversion
 		@SuppressWarnings("unchecked")
 		T castElement = (T) eObject;
 		return castElement;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public boolean getDefaultIsNullFree(@NonNull Element pivotTypedElement) {
+		for (EObject eContainer = pivotTypedElement; (eContainer = eContainer.eContainer()) instanceof Element; ) {
+			List<@NonNull Element> asAnnotations = ((Element) eContainer).basicGetOwnedAnnotations();
+			if (asAnnotations != null) {
+				for (@NonNull Element asElement : asAnnotations) {
+					if (asElement instanceof Annotation) {
+						Annotation asAnnotation = (Annotation)asElement;
+						if (PivotConstants.COLLECTION_ANNOTATION_SOURCE.equals(asAnnotation.getName())) {
+							for (@NonNull Detail asDetail : PivotUtil.getOwnedDetails(asAnnotation)) {
+								if (PivotConstants.COLLECTION_IS_NULL_FREE.equals(asDetail.getName())) {
+									List<String> values = asDetail.getValues();
+									if (values.size() == 1) {
+										String value = values.get(0);
+										if (value != null) {
+											return Boolean.valueOf(value);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		return PivotConstants.DEFAULT_IS_NULL_FREE;
 	}
 
 	public @NonNull DelegateInstaller getDelegateInstaller() {

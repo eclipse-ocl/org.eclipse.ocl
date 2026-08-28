@@ -61,13 +61,13 @@ Workflow {
     	mergedURI = "model-gen/PivotMerged.ecore"
     	invariantPrefix = "validate"
     }
-/*     component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true
+    component = ResourceReader { resourceSet = pivotMergeResourceSet skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     	uri = "/${internalProjectName}/model-gen/PivotMerged.ecore"
 	}
-    component = EPackageAlphabetizer { skipOnErrors = true
-    	modelSlot = "${ecoreSlot}"
-    }
+//    component = EPackageAlphabetizer { skipOnErrors = true
+//    	modelSlot = "${ecoreSlot}"
+//    }
     component = PruneSuperClasses { skipOnErrors = true
     	modelSlot = "${ecoreSlot}"
     }
@@ -91,25 +91,25 @@ Workflow {
     bean = EcoreGenModelSetup { resourceSet = pivotGenerateResourceSet }
      component = GenmodelReloader { resourceSet = pivotGenerateResourceSet skipOnErrors = true
     	projectName = "${internalProjectName}"
-    	genModel = "/${internalProjectName}/model/Pivot.genmodel"
+    	genModel = "/${internalProjectName}/model-gen/PivotMerged.genmodel"
     	ecoreFile = "/${internalProjectName}/model-gen/PivotMerged.ecore"
     }
     
     component = GenerateModel { resourceSet = pivotGenerateResourceSet skipOnErrors = true
 //    	projectName = "${internalProjectName}"
-    	genModel = "/${internalProjectName}/model/Pivot.genmodel"
+    	genModel = "/${internalProjectName}/model-gen/PivotMerged.genmodel"
 //    	clearResourceSet = false
 //    	modelSlot = "${ecoreSlot}"
     }
 
-    component = GenerateASVisitors { resourceSet = pivotGenerateResourceSet
+/*     component = GenerateASVisitors { resourceSet = pivotGenerateResourceSet
     	projectName = "${internalProjectName}"
-    	genModelFile = "model/Pivot.genmodel"
+    	genModelFile = "model-gen/PivotMerged.genmodel"
     }
     
     component = GenerateOCLmetamodelXtend { resourceSet = pivotGenerateResourceSet
     	projectName = "${internalProjectName}"
-    	modelFile = "model/Pivot.ecore"
+    	modelFile = "model-gen/PivotMerged.ecore"
     	uri = "http://www.eclipse.org/ocl/2015/Pivot"
     	javaFolder = "emf-gen"
     	javaPackageName = "${pivotProjectName}.model"

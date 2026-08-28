@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
 import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcoreFactory;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
@@ -40,7 +39,6 @@ import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
-import org.eclipse.ocl.pivot.Detail;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.MapType;
@@ -499,31 +497,7 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 					break;
 				}
 			}
-			boolean defaultIsNullFree = PivotConstants.DEFAULT_IS_NULL_FREE;
-			OUTER: for (EObject eContainer = pivotTypedElement; (eContainer = eContainer.eContainer()) instanceof Element; ) {
-				List<@NonNull Element> asAnnotations = ((Element) eContainer).basicGetOwnedAnnotations();
-				if (asAnnotations != null) {
-					for (@NonNull Element asElement : asAnnotations) {
-						if (asElement instanceof Annotation) {
-							Annotation asAnnotation = (Annotation)asElement;
-							if (PivotConstants.COLLECTION_ANNOTATION_SOURCE.equals(asAnnotation.getName())) {
-								for (@NonNull Detail asDetail : PivotUtil.getOwnedDetails(asAnnotation)) {
-									if (PivotConstants.COLLECTION_IS_NULL_FREE.equals(asDetail.getName())) {
-										List<String> values = asDetail.getValues();
-										if (values.size() == 1) {
-											String value = values.get(0);
-											if (value != null) {
-												defaultIsNullFree = Boolean.valueOf(value);
-												break OUTER;
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+			boolean defaultIsNullFree = context.getDefaultIsNullFree(pivotTypedElement);
 			if (collectionType.isIsNullFree() != defaultIsNullFree) {
 				if (rootEAnnotation == null) {
 					rootEAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();

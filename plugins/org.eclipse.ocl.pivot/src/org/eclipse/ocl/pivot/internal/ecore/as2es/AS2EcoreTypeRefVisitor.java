@@ -279,14 +279,15 @@ public class AS2EcoreTypeRefVisitor extends AbstractExtendingVisitor<EObject, AS
 		boolean isNullFree = pivotType.isIsNullFree();
 		IntegerValue lowerValue = pivotType.getLowerValue();
 		UnlimitedNaturalValue upperValue = pivotType.getUpperValue();
-		if ((isNullFree == PivotConstants.DEFAULT_IS_NULL_FREE) && lowerValue.equals(PivotConstants.DEFAULT_LOWER_BOUND) && upperValue.equals(PivotConstants.DEFAULT_UPPER_BOUND)) {
+		boolean defaultIsNullFree = asScope != null ? context.getDefaultIsNullFree(asScope) : PivotConstants.DEFAULT_IS_NULL_FREE;
+		if ((isNullFree == defaultIsNullFree) && lowerValue.equals(PivotConstants.DEFAULT_LOWER_BOUND) && upperValue.equals(PivotConstants.DEFAULT_UPPER_BOUND)) {
 			return eGenericType;
 		}
 		EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
 		eAnnotation.setSource(PivotConstants.COLLECTION_ANNOTATION_SOURCE);
 		eAnnotation.getReferences().add(eGenericType);
 		EMap<String, String> eDetails = eAnnotation.getDetails();
-		if (isNullFree != PivotConstants.DEFAULT_IS_NULL_FREE) {
+		if (isNullFree != defaultIsNullFree) {
 			eDetails.put(PivotConstants.COLLECTION_IS_NULL_FREE, Boolean.toString(isNullFree));
 		}
 		if (!lowerValue.equals(PivotConstants.DEFAULT_LOWER_BOUND)) {
