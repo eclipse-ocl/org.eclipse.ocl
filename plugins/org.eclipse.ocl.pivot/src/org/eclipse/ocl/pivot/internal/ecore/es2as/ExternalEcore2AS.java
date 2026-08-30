@@ -526,8 +526,27 @@ public class ExternalEcore2AS extends Ecore2AS
 				metamodelManager.installResource(asResource);
 			}
 			else if (isPivot(ecoreContents)) {
-				String nsURI = ((EPackage)ecoreContents.iterator().next()).getNsURI();
-				if (nsURI != null) {
+				boolean hasLibrary = false;
+				boolean hasNsURI = false;
+				for (EPackage eMetamodel : eMetamodels) {			// XXX share
+					if (eMetamodel.getNsURI() != null) {
+						hasNsURI = true;
+						if (eMetamodel.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) != null) {
+							hasLibrary = true;
+							break;
+						}
+					}
+				}
+		//		if (!hasLibrary && hasNsURI) {		//	// XXX search eMatamodels for http://www.eclipse.org/OCL/ASLibrary
+		//			OCLstdlib library = OCLstdlib.getDefault(); //create(stdlibASUri, "ocl", "ocl", nsURI);
+				//	Resource library = OCLstdlibTables.RESOURCE;
+		//			environmentFactory.getMetamodelManager().installResource(library);
+		//		}
+
+
+
+			//	String nsURI = ((EPackage)ecoreContents.iterator().next()).getNsURI();
+				if (!hasLibrary && hasNsURI) {
 				//	Resource libraryResource = standardLibrary.loadLibraryResource(LibraryConstants.STDLIB_URI); -- bad doubly-defines library types
 					String stdlibASUri = LibraryConstants.STDLIB_URI + PivotConstants.DOT_OCL_AS_FILE_EXTENSION;
 					OCLstdlib library = OCLstdlib.create(stdlibASUri, LibraryConstants.STDLIB_URI);
@@ -755,11 +774,12 @@ public class ExternalEcore2AS extends Ecore2AS
 			boolean hasLibrary = false;
 			boolean hasNsURI = false;
 			for (EPackage eMetamodel : eMetamodels) {
-				if (eMetamodel.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) != null) {
-					hasLibrary = true;
-				}
 				if (eMetamodel.getNsURI() != null) {
 					hasNsURI = true;
+					if (eMetamodel.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) != null) {
+						hasLibrary = true;
+						break;
+					}
 				}
 			}
 			if (!hasLibrary && hasNsURI) {		//	// XXX search eMatamodels for http://www.eclipse.org/OCL/ASLibrary

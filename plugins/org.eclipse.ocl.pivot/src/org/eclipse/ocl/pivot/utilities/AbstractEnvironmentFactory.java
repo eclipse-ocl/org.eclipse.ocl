@@ -1278,8 +1278,8 @@ public abstract class AbstractEnvironmentFactory extends AbstractCustomizable im
 		EPackage ePackage = eClass.getEPackage();
 		assert ePackage != null;
 		CompletePackage completePackage = completeModel.basicGetCompletePackage(PivotConstants.METAMODEL_ID);
-		if ((completePackage == null) || (completePackage.getPartialPackages().size() < 2)) {
-			Model asMetamodel = getMetamodel(ePackage);			// Avoid loading metamodel if one already available
+		if ((completePackage == null) /*|| (completePackage.getPartialPackages().size() < 2)*/) {
+			Model asMetamodel = getMetamodel(ePackage);			// XXX Avoid loading metamodel if one already available
 			completeModel.addPartialModel(asMetamodel);
 			completePackage = completeModel.basicGetCompletePackage(PivotConstants.METAMODEL_ID);
 		}
