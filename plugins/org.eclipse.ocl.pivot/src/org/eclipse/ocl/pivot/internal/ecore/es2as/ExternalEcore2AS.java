@@ -752,8 +752,17 @@ public class ExternalEcore2AS extends Ecore2AS
 			}
 		}
 		if ((eMetamodels != null) && (standardLibrary.getLibraryResource() == null)) {
-			String nsURI = eMetamodels.iterator().next().getNsURI();
-			if (nsURI != null) {
+			boolean hasLibrary = false;
+			boolean hasNsURI = false;
+			for (EPackage eMetamodel : eMetamodels) {
+				if (eMetamodel.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE) != null) {
+					hasLibrary = true;
+				}
+				if (eMetamodel.getNsURI() != null) {
+					hasNsURI = true;
+				}
+			}
+			if (!hasLibrary && hasNsURI) {		//	// XXX search eMatamodels for http://www.eclipse.org/OCL/ASLibrary
 				OCLstdlib library = OCLstdlib.getDefault(); //create(stdlibASUri, "ocl", "ocl", nsURI);
 			//	Resource library = OCLstdlibTables.RESOURCE;
 				environmentFactory.getMetamodelManager().installResource(library);
