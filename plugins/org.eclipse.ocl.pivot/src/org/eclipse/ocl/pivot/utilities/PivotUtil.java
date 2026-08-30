@@ -279,12 +279,12 @@ public class PivotUtil implements PivotConstants
 		}
 		else if (asType instanceof TemplateParameter) {
 			Type asContainingType = PivotUtil.getContainingType(((TemplateParameter)asType).getOwningTemplateableElement());
-			Type asPrimaryType = standardLibrary.getPrimaryType(asContainingType);
-			if (asPrimaryType != asContainingType) {
-				asPrimaryType = standardLibrary.getPrimaryType(asType);
+			Type asPrimaryContainingType = standardLibrary.getPrimaryType(asContainingType);
+			if (asPrimaryContainingType != asContainingType) {
+				asPrimaryContainingType = standardLibrary.getPrimaryType(asContainingType);
 				asContainingType = standardLibrary.getPrimaryType(asContainingType);
 			}
-			assert asPrimaryType == asContainingType : "TemplateParameter '" + asType + "' is not a primary TemplateParameter";
+			assert asPrimaryContainingType == asContainingType : "TemplateParameter '" + asType + "' is not a primary TemplateParameter";
 			return true;
 		}
 		else {
