@@ -224,14 +224,19 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		public @NonNull Iterator<NamedElement> iterator() {
 			return new SingletonIterator<NamedElement>(invocation);
 		}
+
+		@Override
+		public String toString() {
+			return "ResolvedInvocation: " + invocation.toString();
+		}
 	}
 
-	public static class UnresolvedInvocations implements Invocations
+	public static class NotYetResolvedInvocations implements Invocations
 	{
 		protected final @NonNull Type asType;
 		protected final @NonNull List<NamedElement> invocations;
 
-		public UnresolvedInvocations(@NonNull Type asType, @NonNull List<NamedElement> invocations) {
+		public NotYetResolvedInvocations(@NonNull Type asType, @NonNull List<NamedElement> invocations) {
 			this.asType = asType;
 			this.invocations = invocations;
 		}
@@ -249,6 +254,17 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		@Override
 		public @NonNull Iterator<NamedElement> iterator() {
 			return invocations.iterator();
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append("NotYetResolvedInvocations");
+			for (NamedElement invocation : invocations) {
+				s.append("\n\t");
+				s.append(invocation.toString());
+			}
+			return s.toString();
 		}
 	}
 
@@ -496,7 +512,7 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 			Iterable<@NonNull ? extends Operation> staticOperations = completeModel.getAllOperations(asTypeValue, FeatureFilter.SELECT_STATIC, name);
 			invocations = getInvocationsInternal(invocations, staticOperations, iteratorCount, expressionCount);
 		}
-		return invocations != null ? new UnresolvedInvocations(asClass, invocations) : null;
+		return invocations != null ? new NotYetResolvedInvocations(asClass, invocations) : null;
 	}
 	protected @Nullable List<@NonNull NamedElement> getInvocationsInternal(@Nullable List<@NonNull NamedElement> invocations,
 			@NonNull Iterable<@NonNull ? extends Operation> allOperations, int iteratorCount, int expressionCount) {
@@ -1495,6 +1511,9 @@ public class EssentialOCLCSLeft2RightVisitor extends AbstractEssentialOCLCSLeft2
 		}
 
 		if (asOperation == null) {
+			if (name != null) {
+				invocations = getInvocations(sourceType, null, name, 0, expression.getOwnedArguments().size());		// XXX debugging
+			}
 			StringBuilder s = new StringBuilder();
 			for (OCLExpression argument : PivotUtil.getOwnedArguments(expression)) {
 				Type argumentType = PivotUtil.getTypeInternal(argument);
