@@ -637,6 +637,201 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
+	 * Returns the meta object for the '{@link java.lang.Object#_eq_(java.lang.Object) <em>eq </em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see java.lang.Object#_eq_(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclAny___eq___Object() {
+		return oclAnyEClass.getEOperations().get(0);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.lang.Object#_ne_(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclAny___ne___Object() {
+		return oclAnyEClass.getEOperations().get(1);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclAsSet() <em>Ocl As Set</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl As Set</em>' operation.
+	 * @see java.lang.Object#oclAsSet()
+	 * @generated
+	 */
+	public EOperation getOclAny__OclAsSet() {
+		return oclAnyEClass.getEOperations().get(2);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclAsType(java.lang.Object) <em>Ocl As Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl As Type</em>' operation.
+	 * @see java.lang.Object#oclAsType(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclAny__OclAsType__Object() {
+		return oclAnyEClass.getEOperations().get(3);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclIsInState(java.lang.Object) <em>Ocl Is In State</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Is In State</em>' operation.
+	 * @see java.lang.Object#oclIsInState(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclAny__OclIsInState__Object() {
+		return oclAnyEClass.getEOperations().get(4);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclIsInvalid() <em>Ocl Is Invalid</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Is Invalid</em>' operation.
+	 * @see java.lang.Object#oclIsInvalid()
+	 * @generated
+	 */
+	public EOperation getOclAny__OclIsInvalid() {
+		return oclAnyEClass.getEOperations().get(5);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclIsKindOf(java.lang.Object) <em>Ocl Is Kind Of</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Is Kind Of</em>' operation.
+	 * @see java.lang.Object#oclIsKindOf(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclAny__OclIsKindOf__Object() {
+		return oclAnyEClass.getEOperations().get(6);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclIsNew() <em>Ocl Is New</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Is New</em>' operation.
+	 * @see java.lang.Object#oclIsNew()
+	 * @generated
+	 */
+	public EOperation getOclAny__OclIsNew() {
+		return oclAnyEClass.getEOperations().get(7);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclIsTypeOf(java.lang.Object) <em>Ocl Is Type Of</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Is Type Of</em>' operation.
+	 * @see java.lang.Object#oclIsTypeOf(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclAny__OclIsTypeOf__Object() {
+		return oclAnyEClass.getEOperations().get(8);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclIsUndefined() <em>Ocl Is Undefined</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Is Undefined</em>' operation.
+	 * @see java.lang.Object#oclIsUndefined()
+	 * @generated
+	 */
+	public EOperation getOclAny__OclIsUndefined() {
+		return oclAnyEClass.getEOperations().get(9);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclLog() <em>Ocl Log</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Log</em>' operation.
+	 * @see java.lang.Object#oclLog()
+	 * @generated
+	 */
+	public EOperation getOclAny__OclLog() {
+		return oclAnyEClass.getEOperations().get(10);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclLog(java.lang.String) <em>Ocl Log</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Log</em>' operation.
+	 * @see java.lang.Object#oclLog(java.lang.String)
+	 * @generated
+	 */
+	public EOperation getOclAny__OclLog__String() {
+		return oclAnyEClass.getEOperations().get(11);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclType() <em>Ocl Type</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Type</em>' operation.
+	 * @see java.lang.Object#oclType()
+	 * @generated
+	 */
+	public EOperation getOclAny__OclType() {
+		return oclAnyEClass.getEOperations().get(12);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#oclTypes() <em>Ocl Types</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>Ocl Types</em>' operation.
+	 * @see java.lang.Object#oclTypes()
+	 * @generated
+	 */
+	public EOperation getOclAny__OclTypes() {
+		return oclAnyEClass.getEOperations().get(13);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#toString() <em>To String</em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>To String</em>' operation.
+	 * @see java.lang.Object#toString()
+	 * @generated
+	 */
+	public EOperation getOclAny__ToString() {
+		return oclAnyEClass.getEOperations().get(14);
+	}
+
+
+	/**
 	 * Returns the meta object for class '{@link java.lang.Object <em>Ocl Invalid</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4001,55 +4196,70 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(mapEClass, 42);
 
 		oclAnyEClass = createEClass(4);
+		createEOperation(oclAnyEClass, 0);
+		createEOperation(oclAnyEClass, 1);
+		createEOperation(oclAnyEClass, 2);
+		createEOperation(oclAnyEClass, 3);
+		createEOperation(oclAnyEClass, 4);
+		createEOperation(oclAnyEClass, 5);
+		createEOperation(oclAnyEClass, 6);
+		createEOperation(oclAnyEClass, 7);
+		createEOperation(oclAnyEClass, 8);
+		createEOperation(oclAnyEClass, 9);
+		createEOperation(oclAnyEClass, 10);
+		createEOperation(oclAnyEClass, 11);
+		createEOperation(oclAnyEClass, 12);
+		createEOperation(oclAnyEClass, 13);
+		createEOperation(oclAnyEClass, 14);
 
 		oclComparableEClass = createEClass(5);
-		createEOperation(oclComparableEClass, 0);
-		createEOperation(oclComparableEClass, 1);
-		createEOperation(oclComparableEClass, 2);
-		createEOperation(oclComparableEClass, 3);
-		createEOperation(oclComparableEClass, 4);
+		createEOperation(oclComparableEClass, 15);
+		createEOperation(oclComparableEClass, 16);
+		createEOperation(oclComparableEClass, 17);
+		createEOperation(oclComparableEClass, 18);
+		createEOperation(oclComparableEClass, 19);
 
 		oclElementEClass = createEClass(6);
 		createEReference(oclElementEClass, 0);
 		createEReference(oclElementEClass, 1);
-		createEOperation(oclElementEClass, 0);
-		createEOperation(oclElementEClass, 1);
-		createEOperation(oclElementEClass, 2);
-		createEOperation(oclElementEClass, 3);
-		createEOperation(oclElementEClass, 4);
-		createEOperation(oclElementEClass, 5);
-		createEOperation(oclElementEClass, 6);
-		createEOperation(oclElementEClass, 7);
-		createEOperation(oclElementEClass, 8);
-		createEOperation(oclElementEClass, 9);
-		createEOperation(oclElementEClass, 10);
+		createEOperation(oclElementEClass, 15);
+		createEOperation(oclElementEClass, 16);
+		createEOperation(oclElementEClass, 17);
+		createEOperation(oclElementEClass, 18);
+		createEOperation(oclElementEClass, 19);
+		createEOperation(oclElementEClass, 20);
+		createEOperation(oclElementEClass, 21);
+		createEOperation(oclElementEClass, 22);
+		createEOperation(oclElementEClass, 23);
+		createEOperation(oclElementEClass, 24);
+		createEOperation(oclElementEClass, 25);
 
 		oclEnumerationEClass = createEClass(7);
 
 		oclInvalidEClass = createEClass(8);
 		createEReference(oclInvalidEClass, 0);
-		createEOperation(oclInvalidEClass, 18);
-		createEOperation(oclInvalidEClass, 19);
-		createEOperation(oclInvalidEClass, 20);
-		createEOperation(oclInvalidEClass, 21);
-		createEOperation(oclInvalidEClass, 22);
-		createEOperation(oclInvalidEClass, 23);
-		createEOperation(oclInvalidEClass, 24);
-		createEOperation(oclInvalidEClass, 25);
-		createEOperation(oclInvalidEClass, 26);
-		createEOperation(oclInvalidEClass, 27);
-		createEOperation(oclInvalidEClass, 28);
-		createEOperation(oclInvalidEClass, 29);
-		createEOperation(oclInvalidEClass, 30);
-		createEOperation(oclInvalidEClass, 31);
+		createEOperation(oclInvalidEClass, 33);
+		createEOperation(oclInvalidEClass, 34);
+		createEOperation(oclInvalidEClass, 35);
+		createEOperation(oclInvalidEClass, 36);
+		createEOperation(oclInvalidEClass, 37);
+		createEOperation(oclInvalidEClass, 38);
+		createEOperation(oclInvalidEClass, 39);
+		createEOperation(oclInvalidEClass, 40);
+		createEOperation(oclInvalidEClass, 41);
+		createEOperation(oclInvalidEClass, 42);
+		createEOperation(oclInvalidEClass, 43);
+		createEOperation(oclInvalidEClass, 44);
+		createEOperation(oclInvalidEClass, 45);
+		createEOperation(oclInvalidEClass, 46);
 
 		oclLambdaEClass = createEClass(9);
 
 		oclMessageEClass = createEClass(10);
-		createEOperation(oclMessageEClass, 0);
-		createEOperation(oclMessageEClass, 1);
-		createEOperation(oclMessageEClass, 2);
-		createEOperation(oclMessageEClass, 3);
+		createEOperation(oclMessageEClass, 15);
+		createEOperation(oclMessageEClass, 16);
+		createEOperation(oclMessageEClass, 17);
+		createEOperation(oclMessageEClass, 18);
 
 		oclSelfEClass = createEClass(11);
 
@@ -4058,35 +4268,35 @@ public class OCLstdlibPackage extends EPackageImpl {
 		oclStereotypeEClass = createEClass(13);
 
 		oclSummableEClass = createEClass(14);
-		createEOperation(oclSummableEClass, 0);
-		createEOperation(oclSummableEClass, 1);
+		createEOperation(oclSummableEClass, 15);
+		createEOperation(oclSummableEClass, 16);
 
 		oclTupleEClass = createEClass(15);
-		createEOperation(oclTupleEClass, 0);
-		createEOperation(oclTupleEClass, 1);
+		createEOperation(oclTupleEClass, 15);
+		createEOperation(oclTupleEClass, 16);
 
 		oclTypeEClass = createEClass(16);
-		createEOperation(oclTypeEClass, 11);
+		createEOperation(oclTypeEClass, 26);
 
 		oclVoidEClass = createEClass(17);
-		createEOperation(oclVoidEClass, 0);
-		createEOperation(oclVoidEClass, 1);
-		createEOperation(oclVoidEClass, 2);
-		createEOperation(oclVoidEClass, 3);
-		createEOperation(oclVoidEClass, 4);
-		createEOperation(oclVoidEClass, 5);
-		createEOperation(oclVoidEClass, 6);
-		createEOperation(oclVoidEClass, 7);
-		createEOperation(oclVoidEClass, 8);
-		createEOperation(oclVoidEClass, 9);
-		createEOperation(oclVoidEClass, 10);
-		createEOperation(oclVoidEClass, 11);
-		createEOperation(oclVoidEClass, 12);
-		createEOperation(oclVoidEClass, 13);
-		createEOperation(oclVoidEClass, 14);
 		createEOperation(oclVoidEClass, 15);
 		createEOperation(oclVoidEClass, 16);
 		createEOperation(oclVoidEClass, 17);
+		createEOperation(oclVoidEClass, 18);
+		createEOperation(oclVoidEClass, 19);
+		createEOperation(oclVoidEClass, 20);
+		createEOperation(oclVoidEClass, 21);
+		createEOperation(oclVoidEClass, 22);
+		createEOperation(oclVoidEClass, 23);
+		createEOperation(oclVoidEClass, 24);
+		createEOperation(oclVoidEClass, 25);
+		createEOperation(oclVoidEClass, 26);
+		createEOperation(oclVoidEClass, 27);
+		createEOperation(oclVoidEClass, 28);
+		createEOperation(oclVoidEClass, 29);
+		createEOperation(oclVoidEClass, 30);
+		createEOperation(oclVoidEClass, 31);
+		createEOperation(oclVoidEClass, 32);
 
 		orderedCollectionEClass = createEClass(18);
 		createEOperation(orderedCollectionEClass, 48);
@@ -4900,6 +5110,47 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(oclAnyEClass, Object.class, "OclAny", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
+		op = initEOperation(getOclAny___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getOclAny___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEOperation(getOclAny__OclAsSet(), this.getOclSelf(), "oclAsSet", 1, 1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getOclAny__OclAsType__Object(), null, "oclAsType", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "TT"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "type", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		initEOperation(op, g1);
+
+		op = initEOperation(getOclAny__OclIsInState__Object(), this.getBoolean(), "oclIsInState", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getOclState(), "statespec", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEOperation(getOclAny__OclIsInvalid(), this.getBoolean(), "oclIsInvalid", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getOclAny__OclIsKindOf__Object(), this.getBoolean(), "oclIsKindOf", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getOclType(), "type", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEOperation(getOclAny__OclIsNew(), this.getBoolean(), "oclIsNew", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getOclAny__OclIsTypeOf__Object(), this.getBoolean(), "oclIsTypeOf", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getOclType(), "type", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEOperation(getOclAny__OclIsUndefined(), this.getBoolean(), "oclIsUndefined", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEOperation(getOclAny__OclLog(), this.getOclSelf(), "oclLog", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getOclAny__OclLog__String(), this.getOclSelf(), "oclLog", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getString(), "message", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEOperation(getOclAny__OclType(), this.getOclSelf(), "oclType", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		initEOperation(getOclAny__OclTypes(), this.getOclSelf(), "oclTypes", 1, 1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+
+		initEOperation(getOclAny__ToString(), this.getString(), "toString", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
 		initEClass(oclComparableEClass, Object.class, "OclComparable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
 		op = initEOperation(getOclComparable___ge___Object(), this.getBoolean(), "_ge_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -5525,6 +5776,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createPivotAnnotations();
 		// http://www.eclipse.org/OCL/Collection
 		createCollectionAnnotations();
+		// http://www.eclipse.org/OCL/CoEClass
+		createCoEClassAnnotations();
+		// http://www.eclipse.org/OCL/EntryEClass
+		createEntryEClassAnnotations();
 	}
 
 	/**
@@ -5855,6 +6110,18 @@ public class OCLstdlibPackage extends EPackageImpl {
 		   source,
 		   new String[] {
 			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny___eq___Object(),
+		   source,
+		   new String[] {
+			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny___ne___Object(),
+		   source,
+		   new String[] {
+			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclComparable___ge___Object(),
@@ -6756,6 +7023,99 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.map.MapValuesOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getOclAny___eq___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", //$NON-NLS-1$ //$NON-NLS-2$
+			   "post", "result = (self = object2)" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny___ne___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", //$NON-NLS-1$ //$NON-NLS-2$
+			   "post", "result = not (self = object2)" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclAsSet(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclAsType__Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", //$NON-NLS-1$ //$NON-NLS-2$
+			   "post_IsSelf", "result = self" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclIsInState__Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclIsInvalid(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclIsKindOf__Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclIsNew(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclIsTypeOf__Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclIsUndefined(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclLog(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclLog__String(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclType(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclTypes(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__ToString(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getOclComparable___ge___Object(),
 		   source,
 		   new String[] {
@@ -7557,6 +7917,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getOclAny__OclAsSet(),
+		   source,
+		   new String[] {
+			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getOclElement__OclContents(),
 		   source,
 		   new String[] {
@@ -7645,6 +8011,57 @@ public class OCLstdlibPackage extends EPackageImpl {
 		   source,
 		   new String[] {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/CoEClass</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createCoEClassAnnotations() {
+		String source = "http://www.eclipse.org/OCL/CoEClass"; //$NON-NLS-1$
+		addAnnotation
+		  (booleanEDataType,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (integerEDataType,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (realEDataType,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (stringEDataType,
+		   source,
+		   new String[] {
+		   });
+		addAnnotation
+		  (unlimitedNaturalEDataType,
+		   source,
+		   new String[] {
+		   });
+	}
+
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/EntryEClass</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createEntryEClassAnnotations() {
+		String source = "http://www.eclipse.org/OCL/EntryEClass"; //$NON-NLS-1$
+		addAnnotation
+		  (entry_r_rEClass,
+		   source,
+		   new String[] {
 		   });
 	}
 
@@ -7846,6 +8263,126 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EClass OCL_ANY = eINSTANCE.getOclAny();
+
+		/**
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___EQ____OBJECT = eINSTANCE.getOclAny___eq___Object();
+
+		/**
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___NE____OBJECT = eINSTANCE.getOclAny___ne___Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl As Set</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_AS_SET = eINSTANCE.getOclAny__OclAsSet();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl As Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_AS_TYPE__OBJECT = eINSTANCE.getOclAny__OclAsType__Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Is In State</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_IS_IN_STATE__OBJECT = eINSTANCE.getOclAny__OclIsInState__Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Is Invalid</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_IS_INVALID = eINSTANCE.getOclAny__OclIsInvalid();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Is Kind Of</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_IS_KIND_OF__OBJECT = eINSTANCE.getOclAny__OclIsKindOf__Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Is New</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_IS_NEW = eINSTANCE.getOclAny__OclIsNew();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Is Type Of</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_IS_TYPE_OF__OBJECT = eINSTANCE.getOclAny__OclIsTypeOf__Object();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Is Undefined</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_IS_UNDEFINED = eINSTANCE.getOclAny__OclIsUndefined();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Log</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_LOG = eINSTANCE.getOclAny__OclLog();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Log</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_LOG__STRING = eINSTANCE.getOclAny__OclLog__String();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Type</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_TYPE = eINSTANCE.getOclAny__OclType();
+
+		/**
+		 * The meta object literal for the '<em><b>Ocl Types</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___OCL_TYPES = eINSTANCE.getOclAny__OclTypes();
+
+		/**
+		 * The meta object literal for the '<em><b>To String</b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_ANY___TO_STRING = eINSTANCE.getOclAny__ToString();
 
 		/**
 		 * The meta object literal for the '{@link java.lang.Object <em>Ocl Invalid</em>}' class.

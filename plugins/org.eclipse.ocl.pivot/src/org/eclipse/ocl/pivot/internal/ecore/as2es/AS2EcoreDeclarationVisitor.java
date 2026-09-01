@@ -74,7 +74,6 @@ import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.TypedElement;
-import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.ElementImpl;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.ecore.annotations.EAnnotationConverter;
@@ -493,7 +492,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		return eAnnotation;
 	}
 
-	@Override
+	/*	@Override
 	public EObject visitAnyType(@NonNull AnyType pivotAnyType) {
 		if (pivotAnyType.basicGetOwnedTemplateArguments() != null) {
 			return null;
@@ -509,6 +508,19 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		eClass.setInstanceClass(instanceClass);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);
+		copyOperations(eClass, pivotAnyType);
+		copyProperties(eClass, pivotAnyType);
+		return eClass;
+	} */
+
+	@Override
+	public EObject visitAnyType(@NonNull AnyType pivotAnyType) {
+		EClass eClass = (EClass)super.visitAnyType(pivotAnyType);
+		if (eClass != null) {
+			eClass.setInstanceClass(Object.class);			// XXX
+			eClass.setAbstract(true);
+			eClass.setInterface(true);
+		}
 		return eClass;
 	}
 

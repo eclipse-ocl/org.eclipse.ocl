@@ -265,19 +265,19 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				// FIXME EClass instanceClassNames are correct because they were loaded correct.
 				// FIXME EClass setInstanceClassName trashes EClasses that are set explicitly
 				//				setInstanceClassName(ePackage, "Bag", Bag.class, null);
-				setInstanceClassName(ePackage, TypeId.BOOLEAN_NAME, Boolean.class, null);
+				setInstanceClassName(ePackage, TypeId.BOOLEAN_NAME, Boolean.class);
 				//				setInstanceClassName(ePackage, "Collection", Collection.class, null);
-				setInstanceClassName(ePackage, TypeId.INTEGER_NAME, IntegerValue.class, null);
+				setInstanceClassName(ePackage, TypeId.INTEGER_NAME, IntegerValue.class);
 				//				setInstanceClassName(ePackage, "OclAny", Object.class, "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTRue functionality is only available once converted to a Pivot model.");
 				//			setInstanceClassName(ePackage, "OclInvalid", InvalidValue.class, null);
 				//			setInstanceClassName(ePackage, "OclVoid", NullValue.class, null);
 				//				setInstanceClassName(ePackage, "OrderedSet", OrderedSet.class, null);
-				setInstanceClassName(ePackage, TypeId.REAL_NAME, RealValue.class, null);
+				setInstanceClassName(ePackage, TypeId.REAL_NAME, RealValue.class);
 				//				setInstanceClassName(ePackage, "Sequence", List.class, null);
 				//				setInstanceClassName(ePackage, "Set", Set.class, null);
-				setInstanceClassName(ePackage, TypeId.STRING_NAME, String.class, null);
+				setInstanceClassName(ePackage, TypeId.STRING_NAME, String.class);
 				//				setInstanceClassName(ePackage, "UniqueCollection", Set.class, null);
-				setInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME, UnlimitedNaturalValue.class, null);
+				setInstanceClassName(ePackage, TypeId.UNLIMITED_NATURAL_NAME, UnlimitedNaturalValue.class);
 				EList<EClassifier> eClassifiers = ePackage.getEClassifiers();
 				EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ANY_NAME);
 				EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ELEMENT_NAME);
@@ -289,7 +289,15 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 					//	eClass.getEOperations().clear();
 						//						eClass.getEStructuralFeatures().clear();
 					}
-					eClassifier.getEAnnotations().clear();
+					//		eClassifier.getEAnnotations().clear();
+					EAnnotation zzAnnotation = eClassifier.getEAnnotation("http://www.omg.org/ocl");
+					if (zzAnnotation != null) {
+						eClassifier.getEAnnotations().remove(zzAnnotation);			// Lose OCL doc gen helper
+					}
+					zzAnnotation = eClassifier.getEAnnotation("http://www.eclipse.org/emf/2002/GenModel");
+					if (zzAnnotation != null) {
+						eClassifier.getEAnnotations().remove(zzAnnotation);			// XXX temporarily Lose documentation
+					}
 					//				EAnnotation eAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
 					//				if (eAnnotation != null) {
 					//					eClassifier.getEAnnotations().remove(eAnnotation);
@@ -399,11 +407,11 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		return excludedEClassifierNames.contains(asClass.getName());
 	}
 
-	private void setInstanceClassName(@NonNull EPackage ePackage, String typeName, Class<?> javaClass, @Nullable String comment) {
+	private void setInstanceClassName(@NonNull EPackage ePackage, String typeName, Class<?> javaClass) {
 		EClassifier eClassifier = ePackage.getEClassifier(typeName);
 		if (eClassifier != null) {
 			if (eClassifier instanceof EClass) {
-				//				assert false;
+								assert false;
 				String name = eClassifier.getName();
 				ePackage.getEClassifiers().remove(eClassifier);
 				eClassifier = EcoreFactory.eINSTANCE.createEDataType();
@@ -415,12 +423,6 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				log.error("Wrong " + typeName + "::instanceClassName - " + eClassifierInstanceClassName + " rather than " + javaClass.getName());
 			}
 		//	eClassifier.setInstanceClassName(javaClass.getName());
-			if (comment != null) {
-				EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-				eAnnotation.setSource(GenModelPackage.eNS_URI);
-				eAnnotation.getDetails().put("body", comment);
-				eClassifier.getEAnnotations().add(eAnnotation);
-			}
 		}
 	}
 

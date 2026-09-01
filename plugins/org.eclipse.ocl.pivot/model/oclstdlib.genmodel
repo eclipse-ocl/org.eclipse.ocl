@@ -384,7 +384,38 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/size"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/values"/>
     </genClasses>
-    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclAny"/>
+    <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclAny">
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/_eq_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/_eq_/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/_ne_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/_ne_/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclAsSet"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclAsType">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/oclAsType/type"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OclAny/oclAsType/TT"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclIsInState">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/oclIsInState/statespec"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclIsInvalid"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclIsKindOf">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/oclIsKindOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclIsNew"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclIsTypeOf">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/oclIsTypeOf/type"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclIsUndefined"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclLog"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclLog.1">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/oclLog.1/message"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclType"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclTypes"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/toString"/>
+    </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclComparable">
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/_ge_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/_ge_/that"/>

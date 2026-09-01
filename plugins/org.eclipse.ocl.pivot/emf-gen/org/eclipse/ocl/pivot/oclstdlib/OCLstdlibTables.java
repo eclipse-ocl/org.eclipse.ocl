@@ -802,35 +802,35 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _Map__values = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___VALUES, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			42 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclAny___ne_ = LIBRARY.createOperation(Types._OclAny, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclAny___ne_ = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny___eq_ = LIBRARY.createOperation(Types._OclAny, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclAny___eq_ = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclAsSet = LIBRARY.createOperation(Types._OclAny, "oclAsSet", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, true),
+		public static final @NonNull Operation _OclAny__oclAsSet = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_AS_SET, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, true),
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclAsType = LIBRARY.createOperation(Types._OclAny, "oclAsType", null, Parameters._typeof_$$0, TypeParameters.$$0,
+		public static final @NonNull Operation _OclAny__oclAsType = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_AS_TYPE__OBJECT, Parameters._typeof_$$0, TypeParameters.$$0,
 			3 | IsInvalidating | IsRequired, new TemplateParameters(TypeParameters._0_OclAny_oclAsType_TT), org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsInState = LIBRARY.createOperation(Types._OclAny, "oclIsInState", null, Parameters._OclState, Types._Boolean,
+		public static final @NonNull Operation _OclAny__oclIsInState = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_IS_IN_STATE__OBJECT, Parameters._OclState, Types._Boolean,
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInStateOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsInvalid = LIBRARY.createOperation(Types._OclAny, "oclIsInvalid", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclAny__oclIsInvalid = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_IS_INVALID, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			5 | IsRequired | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsKindOf = LIBRARY.createOperation(Types._OclAny, "oclIsKindOf", null, Parameters._OclType, Types._Boolean,
+		public static final @NonNull Operation _OclAny__oclIsKindOf = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_IS_KIND_OF__OBJECT, Parameters._OclType, Types._Boolean,
 			6 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsKindOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsNew = LIBRARY.createOperation(Types._OclAny, "oclIsNew", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclAny__oclIsNew = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_IS_NEW, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			7 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsTypeOf = LIBRARY.createOperation(Types._OclAny, "oclIsTypeOf", null, Parameters._OclType, Types._Boolean,
+		public static final @NonNull Operation _OclAny__oclIsTypeOf = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_IS_TYPE_OF__OBJECT, Parameters._OclType, Types._Boolean,
 			8 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsTypeOfOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclIsUndefined = LIBRARY.createOperation(Types._OclAny, "oclIsUndefined", null, ParameterTypes.EMPTY_LIST, Types._Boolean,
+		public static final @NonNull Operation _OclAny__oclIsUndefined = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_IS_UNDEFINED, ParameterTypes.EMPTY_LIST, Types._Boolean,
 			9 | IsRequired | IsValidating, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__0_oclLog = LIBRARY.createOperation(Types._OclAny, "oclLog", null, ParameterTypes.EMPTY_LIST, Types._OclSelf,
+		public static final @NonNull Operation _OclAny__0_oclLog = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_LOG, ParameterTypes.EMPTY_LIST, Types._OclSelf,
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__1_oclLog = LIBRARY.createOperation(Types._OclAny, "oclLog", null, Parameters._String, Types._OclSelf,
+		public static final @NonNull Operation _OclAny__1_oclLog = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_LOG__STRING, Parameters._String, Types._OclSelf,
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclLogOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclType = LIBRARY.createOperation(Types._OclAny, "oclType", null, ParameterTypes.EMPTY_LIST, Types._OclSelf,
+		public static final @NonNull Operation _OclAny__oclType = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_TYPE, ParameterTypes.EMPTY_LIST, Types._OclSelf,
 			12 | IsRequired | IsTypeof, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__oclTypes = LIBRARY.createOperation(Types._OclAny, "oclTypes", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, false),
+		public static final @NonNull Operation _OclAny__oclTypes = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___OCL_TYPES, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, false),
 			13 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
-		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation(Types._OclAny, "toString", null, ParameterTypes.EMPTY_LIST, Types._String,
+		public static final @NonNull Operation _OclAny__toString = LIBRARY.createOperation(Types._OclAny, OCLstdlibPackage.Literals.OCL_ANY___TO_STRING, ParameterTypes.EMPTY_LIST, Types._String,
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
 		public static final @NonNull Operation _OclComparable___lt_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___LT____OBJECT, Parameters._OclSelf, Types._Boolean,

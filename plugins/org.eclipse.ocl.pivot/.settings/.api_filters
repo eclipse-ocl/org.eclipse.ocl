@@ -1540,6 +1540,81 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="OCL_ANY___EQ____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___NE____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_AS_SET"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_AS_TYPE__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_IS_INVALID"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_IS_IN_STATE__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_IS_KIND_OF__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_IS_NEW"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_IS_TYPE_OF__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_IS_UNDEFINED"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_LOG"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_LOG__STRING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_TYPE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___OCL_TYPES"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_ANY___TO_STRING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="OCL_COMPARABLE___COMPARE_TO__OBJECT"/>
             </message_arguments>
         </filter>
