@@ -1523,6 +1523,23 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * Convert element's name to ensure that it is suitable for use with Ecore and consequently Java without further mangling.
+	 * <br>
+	 * Special names such as "=" are converted to familiar equivalents such as "_lt_". The arity distinguishes between
+	 * the two "-" alternatives.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull String encodeNameForEcore(@NonNull NamedElement element) {
+		String name = ClassUtil.requireNonNull(element.getName());
+		int arity = 0;
+		if (element instanceof Operation) {
+			arity = ((Operation)element).getOwnedParameters().size();
+		}
+		return encodeNameForEcore(name, arity);
+	}
+
+	/**
 	 * Convert name to ensure that it is suitable for use with Ecore and consequently Java without further mangling.
 	 * <br>
 	 * Special names such as "=" are converted to familiar equivalents such as "_lt_". The arity distinguishes between

@@ -1243,7 +1243,7 @@ public class OCLstdlib extends ASResourceImpl
 			superClasses.add(_OclLambda);
 		}
 
-		private final @NonNull Operation op_Boolean__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_Boolean__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Boolean__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Boolean_and = createOperation("and", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		private final @NonNull Operation op_Boolean_and2 = createOperation("and2", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2.INSTANCE);
@@ -1259,7 +1259,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Integer__mul_ = createOperation("*", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation", org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
 		private final @NonNull Operation op_Integer__add_ = createOperation("+", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation", org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
 		private final @NonNull Operation op_Integer__neg_ = createOperation("-", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation", org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
-		private final @NonNull Operation op_Integer__neg__1 = createOperation("-", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation", org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
+		private final @NonNull Operation op_Integer__sub_ = createOperation("-", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation", org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
 		private final @NonNull Operation op_Integer__div_ = createOperation("/", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation", org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
 		private final @NonNull Operation op_Integer_abs = createOperation("abs", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation", org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
 		private final @NonNull Operation op_Integer_div = createOperation("div", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericDivOperation", org.eclipse.ocl.pivot.library.numeric.NumericDivOperation.INSTANCE);
@@ -1271,9 +1271,9 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Real__mul_ = createOperation("*", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation", org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation.INSTANCE);
 		private final @NonNull Operation op_Real__add_ = createOperation("+", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation", org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation.INSTANCE);
 		private final @NonNull Operation op_Real__neg_ = createOperation("-", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation", org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation.INSTANCE);
-		private final @NonNull Operation op_Real__neg__1 = createOperation("-", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation", org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
+		private final @NonNull Operation op_Real__sub_ = createOperation("-", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation", org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
 		private final @NonNull Operation op_Real__div_ = createOperation("/", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation", org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
-		private final @NonNull Operation op_Real__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_Real__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Real__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Real_abs = createOperation("abs", _Real, "org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation", org.eclipse.ocl.pivot.library.numeric.NumericAbsOperation.INSTANCE);
 		private final @NonNull Operation op_Real_floor = createOperation("floor", _Integer, "org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation", org.eclipse.ocl.pivot.library.numeric.NumericFloorOperation.INSTANCE);
@@ -1283,11 +1283,11 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Real_toString = createOperation("toString", _String, "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 		private final @NonNull Operation op_String__add_ = createOperation("+", _String, "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		private final @NonNull Operation op_String__lt_ = createOperation("<", _Boolean, "org.eclipse.ocl.pivot.library.string.StringLessThanOperation", org.eclipse.ocl.pivot.library.string.StringLessThanOperation.INSTANCE);
-		private final @NonNull Operation op_String__lt__eq_ = createOperation("<=", _Boolean, "org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation", org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation.INSTANCE);
-		private final @NonNull Operation op_String__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_String__le_ = createOperation("<=", _Boolean, "org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation", org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation.INSTANCE);
+		private final @NonNull Operation op_String__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_String__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_String__gt_ = createOperation(">", _Boolean, "org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation", org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation.INSTANCE);
-		private final @NonNull Operation op_String__gt__eq_ = createOperation(">=", _Boolean, "org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation", org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation.INSTANCE);
+		private final @NonNull Operation op_String__ge_ = createOperation(">=", _Boolean, "org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation", org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation.INSTANCE);
 		private final @NonNull Operation op_String_at = createOperation("at", _String, "org.eclipse.ocl.pivot.library.string.StringAtOperation", org.eclipse.ocl.pivot.library.string.StringAtOperation.INSTANCE);
 		private final @NonNull Operation op_String_characters = createOperation("characters", _Sequence_String_T, "org.eclipse.ocl.pivot.library.string.StringCharactersOperation", org.eclipse.ocl.pivot.library.string.StringCharactersOperation.INSTANCE);
 		private final @NonNull Operation op_String_compareTo = createOperation("compareTo", _Integer, "org.eclipse.ocl.pivot.library.string.StringCompareToOperation", org.eclipse.ocl.pivot.library.string.StringCompareToOperation.INSTANCE);
@@ -1320,7 +1320,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_UnlimitedNatural_min = createOperation("min", _UnlimitedNatural, "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalMinOperation.INSTANCE);
 		private final @NonNull Operation op_UnlimitedNatural_oclAsType = createOperation("oclAsType", $$0, "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation.INSTANCE, tp_UnlimitedNatural_oclAsType_TT);
 		private final @NonNull Operation op_UnlimitedNatural_toInteger = createOperation("toInteger", _Integer, "org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation", org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalToIntegerOperation.INSTANCE);
-		private final @NonNull Operation op_Bag__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_Bag__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Bag__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Bag_excluding = createOperation("excluding", _Bag_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		private final @NonNull Operation op_Bag_excludingAll = createOperation("excludingAll", _Bag_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
@@ -1331,7 +1331,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Bag_selectByType = createOperation("selectByType", _Bag_$$1_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Bag_selectByType_TT);
 		private final @NonNull Operation op_BooleanType_allInstances = createOperation("allInstances", _Set_OclSelf_T_L2_U2, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_Class_allInstances = createOperation("allInstances", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
-		private final @NonNull Operation op_Collection__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_Collection__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Collection__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asBag = createOperation("asBag", _Bag_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsBagOperation.INSTANCE);
 		private final @NonNull Operation op_Collection_asOrderedSet = createOperation("asOrderedSet", _OrderedSet_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.CollectionAsOrderedSetOperation.INSTANCE);
@@ -1361,7 +1361,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Collection_union = createOperation("union", _Bag_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
 		private final @NonNull Operation op_Enumeration_allInstances = createOperation("allInstances", _Set_OclSelf_T_L1_U1, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_InvalidType_allInstances = createOperation("allInstances", _Set_OclSelf_F, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
-		private final @NonNull Operation op_Map__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_Map__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Map__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Map_at = createOperation("at", $$1, "org.eclipse.ocl.pivot.library.map.MapAtOperation", org.eclipse.ocl.pivot.library.map.MapAtOperation.INSTANCE);
 		private final @NonNull Operation op_Map_excludes = createOperation("excludes", _Boolean, "org.eclipse.ocl.pivot.library.map.MapExcludesOperation", org.eclipse.ocl.pivot.library.map.MapExcludesOperation.INSTANCE);
@@ -1385,7 +1385,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Map_notEmpty = createOperation("notEmpty", _Boolean, "org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation", org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation.INSTANCE);
 		private final @NonNull Operation op_Map_size = createOperation("size", _Integer, "org.eclipse.ocl.pivot.library.map.MapSizeOperation", org.eclipse.ocl.pivot.library.map.MapSizeOperation.INSTANCE);
 		private final @NonNull Operation op_Map_values = createOperation("values", _Bag_$$1_F, "org.eclipse.ocl.pivot.library.map.MapValuesOperation", org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
-		private final @NonNull Operation op_OclAny__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_OclAny__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclAny__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclAny_oclAsSet = createOperation("oclAsSet", _Set_OclSelf_T_L1_U1, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsSetOperation.INSTANCE);
 		private final @NonNull Operation op_OclAny_oclAsType = createOperation("oclAsType", $$0, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation.INSTANCE, tp_OclAny_oclAsType_TT);
@@ -1401,9 +1401,9 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclAny_oclTypes = createOperation("oclTypes", _Set_OclSelf_F_L1_U1, "org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypesOperation.INSTANCE);
 		private final @NonNull Operation op_OclAny_toString = createOperation("toString", _String, "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 		private final @NonNull Operation op_OclComparable__lt_ = createOperation("<", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation.INSTANCE);
-		private final @NonNull Operation op_OclComparable__lt__eq_ = createOperation("<=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation.INSTANCE);
+		private final @NonNull Operation op_OclComparable__le_ = createOperation("<=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclComparable__gt_ = createOperation(">", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation.INSTANCE);
-		private final @NonNull Operation op_OclComparable__gt__eq_ = createOperation(">=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation.INSTANCE);
+		private final @NonNull Operation op_OclComparable__ge_ = createOperation(">=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclComparable_compareTo = createOperation("compareTo", _Integer, "org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation", org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclAsModelType = createOperation("oclAsModelType", $$0, "org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation.INSTANCE, tp_OclElement_oclAsModelType_TT);
 		private final @NonNull Operation op_OclElement_oclBase = createOperation("oclBase", _OclType, "org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclBaseOperation.INSTANCE);
@@ -1416,7 +1416,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclElement_oclIsModelKindOf = createOperation("oclIsModelKindOf", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclIsModelKindOfOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclModelType = createOperation("oclModelType", _OclSelf, "org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation.INSTANCE);
 		private final @NonNull Operation op_OclElement_oclModelTypes = createOperation("oclModelTypes", _Set_OclSelf_F_L1_U1, "org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation", org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
-		private final @NonNull Operation op_OclInvalid__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_OclInvalid__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_and = createOperation("and", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanAndOperation", org.eclipse.ocl.pivot.library.logical.BooleanAndOperation.INSTANCE);
 		private final @NonNull Operation op_OclInvalid_implies = createOperation("implies", _Boolean, "org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation", org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation.INSTANCE);
@@ -1436,11 +1436,11 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OclMessage_result = createOperation("result", _OclAny, "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation.INSTANCE);
 		private final @NonNull Operation op_OclSummable_sum = createOperation("sum", _OclSelf, null, null);
 		private final @NonNull Operation op_OclSummable_zero = createOperation("zero", _OclSelf, null, null);
-		private final @NonNull Operation op_OclTuple__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_OclTuple__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclTuple__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclType_conformsTo = createOperation("conformsTo", _Boolean, "org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation", org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid__add_ = createOperation("+", _String, "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
-		private final @NonNull Operation op_OclVoid__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_OclVoid__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_and = createOperation("and", _Boolean, "org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation", org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation.INSTANCE);
 		private final @NonNull Operation op_OclVoid_concat = createOperation("concat", _String, "org.eclipse.ocl.pivot.library.string.StringConcatOperation", org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
@@ -1461,8 +1461,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OrderedCollection_first = createOperation("first", $$0, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedCollection_indexOf = createOperation("indexOf", _Integer, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionIndexOfOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedCollection_last = createOperation("last", $$0, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet__neg_ = createOperation("-", _OrderedSet_$$0_F, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-		private final @NonNull Operation op_OrderedSet__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet__sub_ = createOperation("-", _OrderedSet_$$0_F, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+		private final @NonNull Operation op_OrderedSet__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet_append = createOperation("append", _OrderedSet_$$0_F, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
 		private final @NonNull Operation op_OrderedSet_appendAll = createOperation("appendAll", _OrderedSet_$$0_F, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
@@ -1478,7 +1478,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_OrderedSet_selectByKind = createOperation("selectByKind", _OrderedSet_$$1_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_OrderedSet_selectByKind_TT);
 		private final @NonNull Operation op_OrderedSet_selectByType = createOperation("selectByType", _OrderedSet_$$1_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_OrderedSet_selectByType_TT);
 		private final @NonNull Operation op_OrderedSet_subOrderedSet = createOperation("subOrderedSet", _OrderedSet_$$0_F, "org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation", org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation.INSTANCE);
-		private final @NonNull Operation op_Sequence__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_Sequence__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence_append = createOperation("append", _Sequence_$$0_F, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendOperation.INSTANCE);
 		private final @NonNull Operation op_Sequence_appendAll = createOperation("appendAll", _Sequence_$$0_F, "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation", org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation.INSTANCE);
@@ -1494,8 +1494,8 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Sequence_selectByKind = createOperation("selectByKind", _Sequence_$$1_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByKindOperation.INSTANCE, tp_Sequence_selectByKind_TT);
 		private final @NonNull Operation op_Sequence_selectByType = createOperation("selectByType", _Sequence_$$1_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Sequence_selectByType_TT);
 		private final @NonNull Operation op_Sequence_subSequence = createOperation("subSequence", _Sequence_$$0_F, "org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation", org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation.INSTANCE);
-		private final @NonNull Operation op_Set__neg_ = createOperation("-", _Set_$$0_F, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-		private final @NonNull Operation op_Set__lt__gt_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
+		private final @NonNull Operation op_Set__sub_ = createOperation("-", _Set_$$0_F, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+		private final @NonNull Operation op_Set__ne_ = createOperation("<>", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Set__eq_ = createOperation("=", _Boolean, "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		private final @NonNull Operation op_Set_excluding = createOperation("excluding", _Set_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingOperation.INSTANCE);
 		private final @NonNull Operation op_Set_excludingAll = createOperation("excludingAll", _Set_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation", org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation.INSTANCE);
@@ -1506,7 +1506,7 @@ public class OCLstdlib extends ASResourceImpl
 		private final @NonNull Operation op_Set_selectByType = createOperation("selectByType", _Set_$$1_T, "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation", org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation.INSTANCE, tp_Set_selectByType_TT);
 		private final @NonNull Operation op_Stereotype_allInstances = createOperation("allInstances", _Set_OclSelf_T, "org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation", org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 		private final @NonNull Operation op_Type_conformsTo = createOperation("conformsTo", _Boolean, "org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation", org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation.INSTANCE);
-		private final @NonNull Operation op_UniqueCollection__neg_ = createOperation("-", _UniqueCollection_$$0_F, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
+		private final @NonNull Operation op_UniqueCollection__sub_ = createOperation("-", _UniqueCollection_$$0_F, "org.eclipse.ocl.pivot.library.collection.SetMinusOperation", org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
 		private final @NonNull Operation op_UniqueCollection_intersection = createOperation("intersection", _Set_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation", org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation.INSTANCE);
 		private final @NonNull Operation op_UniqueCollection_symmetricDifference = createOperation("symmetricDifference", _Set_$$0_F, "org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation", org.eclipse.ocl.pivot.library.collection.SetSymmetricDifferenceOperation.INSTANCE);
 		private final @NonNull Operation op_UniqueCollection_union = createOperation("union", _Set_$$0_F, "org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation", org.eclipse.ocl.pivot.library.collection.CollectionUnionOperation.INSTANCE);
@@ -1519,7 +1519,7 @@ public class OCLstdlib extends ASResourceImpl
 			Parameter parameter;
 
 			ownedOperations = _Boolean.getOwnedOperations();
-			ownedOperations.add(operation = op_Boolean__lt__gt_);
+			ownedOperations.add(operation = op_Boolean__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -1593,7 +1593,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("i", _OclSelf, true));
 			ownedOperations.add(operation = op_Integer__neg_);
 			operation.setIsRequired(true);
-			ownedOperations.add(operation = op_Integer__neg__1);
+			ownedOperations.add(operation = op_Integer__sub_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("i", _OclSelf, true));
@@ -1636,7 +1636,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, true));
 			ownedOperations.add(operation = op_Real__neg_);
 			operation.setIsRequired(true);
-			ownedOperations.add(operation = op_Real__neg__1);
+			ownedOperations.add(operation = op_Real__sub_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, true));
@@ -1645,7 +1645,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("r", _OclSelf, true));
-			ownedOperations.add(operation = op_Real__lt__gt_);
+			ownedOperations.add(operation = op_Real__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -1679,11 +1679,11 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _OclSelf, true));
-			ownedOperations.add(operation = op_String__lt__eq_);
+			ownedOperations.add(operation = op_String__le_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _OclSelf, true));
-			ownedOperations.add(operation = op_String__lt__gt_);
+			ownedOperations.add(operation = op_String__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -1695,7 +1695,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _OclSelf, true));
-			ownedOperations.add(operation = op_String__gt__eq_);
+			ownedOperations.add(operation = op_String__ge_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _OclSelf, true));
@@ -1811,7 +1811,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedOperations.add(operation = op_UnlimitedNatural_toInteger);
 
 			ownedOperations = _Bag_Bag_T.getOwnedOperations();
-			ownedOperations.add(operation = op_Bag__lt__gt_);
+			ownedOperations.add(operation = op_Bag__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -1857,7 +1857,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 
 			ownedOperations = _Collection_Collection_T.getOwnedOperations();
-			ownedOperations.add(operation = op_Collection__lt__gt_);
+			ownedOperations.add(operation = op_Collection__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -1959,7 +1959,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 
 			ownedOperations = _Map_Map_K_Map_V.getOwnedOperations();
-			ownedOperations.add(operation = op_Map__lt__gt_);
+			ownedOperations.add(operation = op_Map__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2045,7 +2045,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 
 			ownedOperations = _OclAny.getOwnedOperations();
-			ownedOperations.add(operation = op_OclAny__lt__gt_);
+			ownedOperations.add(operation = op_OclAny__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2100,7 +2100,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
-			ownedOperations.add(operation = op_OclComparable__lt__eq_);
+			ownedOperations.add(operation = op_OclComparable__le_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
@@ -2108,7 +2108,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
-			ownedOperations.add(operation = op_OclComparable__gt__eq_);
+			ownedOperations.add(operation = op_OclComparable__ge_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("that", _OclSelf, true));
@@ -2152,7 +2152,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 
 			ownedOperations = _OclInvalid.getOwnedOperations();
-			ownedOperations.add(operation = op_OclInvalid__lt__gt_);
+			ownedOperations.add(operation = op_OclInvalid__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2218,7 +2218,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 
 			ownedOperations = _OclTuple.getOwnedOperations();
-			ownedOperations.add(operation = op_OclTuple__lt__gt_);
+			ownedOperations.add(operation = op_OclTuple__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2238,7 +2238,7 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _String, false));
-			ownedOperations.add(operation = op_OclVoid__lt__gt_);
+			ownedOperations.add(operation = op_OclVoid__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2314,11 +2314,11 @@ public class OCLstdlib extends ASResourceImpl
 			operation.setIsInvalidating(true);
 
 			ownedOperations = _OrderedSet_OrderedSet_T.getOwnedOperations();
-			ownedOperations.add(operation = op_OrderedSet__neg_);
+			ownedOperations.add(operation = op_OrderedSet__sub_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _UniqueCollection_OclAny_F, true));
-			ownedOperations.add(operation = op_OrderedSet__lt__gt_);
+			ownedOperations.add(operation = op_OrderedSet__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2386,7 +2386,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("upper", _Integer, true));
 
 			ownedOperations = _Sequence_Sequence_T.getOwnedOperations();
-			ownedOperations.add(operation = op_Sequence__lt__gt_);
+			ownedOperations.add(operation = op_Sequence__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2454,11 +2454,11 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("upper", _Integer, true));
 
 			ownedOperations = _Set_Set_T.getOwnedOperations();
-			ownedOperations.add(operation = op_Set__neg_);
+			ownedOperations.add(operation = op_Set__sub_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _UniqueCollection_OclAny_F, true));
-			ownedOperations.add(operation = op_Set__lt__gt_);
+			ownedOperations.add(operation = op_Set__ne_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("object2", _OclSelf, false));
@@ -2506,7 +2506,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedParameters.add(parameter = createParameter("type2", _Type, false));
 
 			ownedOperations = _UniqueCollection_UniqueCollection_T.getOwnedOperations();
-			ownedOperations.add(operation = op_UniqueCollection__neg_);
+			ownedOperations.add(operation = op_UniqueCollection__sub_);
 			operation.setIsRequired(true);
 			ownedParameters = operation.getOwnedParameters();
 			ownedParameters.add(parameter = createParameter("s", _UniqueCollection_OclAny_F, true));
@@ -3186,7 +3186,7 @@ public class OCLstdlib extends ASResourceImpl
 			ownedPrecedences.add(prec_XOR);
 			ownedPrecedences.add(prec_IMPLIES);
 
-			op_Boolean__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_Boolean__ne_.setPrecedence(prec_EQUALITY);
 			op_Boolean__eq_.setPrecedence(prec_EQUALITY);
 			op_Boolean_and.setPrecedence(prec_AND);
 			op_Boolean_and2.setPrecedence(prec_AND);
@@ -3201,63 +3201,63 @@ public class OCLstdlib extends ASResourceImpl
 			op_Integer__mul_.setPrecedence(prec_MULTIPLICATIVE);
 			op_Integer__add_.setPrecedence(prec_ADDITIVE);
 			op_Integer__neg_.setPrecedence(prec_UNARY);
-			op_Integer__neg__1.setPrecedence(prec_ADDITIVE);
+			op_Integer__sub_.setPrecedence(prec_ADDITIVE);
 			op_Integer__div_.setPrecedence(prec_MULTIPLICATIVE);
 			op_Real__mul_.setPrecedence(prec_MULTIPLICATIVE);
 			op_Real__add_.setPrecedence(prec_ADDITIVE);
 			op_Real__neg_.setPrecedence(prec_UNARY);
-			op_Real__neg__1.setPrecedence(prec_ADDITIVE);
+			op_Real__sub_.setPrecedence(prec_ADDITIVE);
 			op_Real__div_.setPrecedence(prec_MULTIPLICATIVE);
-			op_Real__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_Real__ne_.setPrecedence(prec_EQUALITY);
 			op_Real__eq_.setPrecedence(prec_EQUALITY);
 			op_String__add_.setPrecedence(prec_ADDITIVE);
 			op_String__lt_.setPrecedence(prec_RELATIONAL);
-			op_String__lt__eq_.setPrecedence(prec_RELATIONAL);
-			op_String__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_String__le_.setPrecedence(prec_RELATIONAL);
+			op_String__ne_.setPrecedence(prec_EQUALITY);
 			op_String__eq_.setPrecedence(prec_EQUALITY);
 			op_String__gt_.setPrecedence(prec_RELATIONAL);
-			op_String__gt__eq_.setPrecedence(prec_RELATIONAL);
-			op_Bag__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_String__ge_.setPrecedence(prec_RELATIONAL);
+			op_Bag__ne_.setPrecedence(prec_EQUALITY);
 			op_Bag__eq_.setPrecedence(prec_EQUALITY);
-			op_Collection__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_Collection__ne_.setPrecedence(prec_EQUALITY);
 			op_Collection__eq_.setPrecedence(prec_EQUALITY);
-			op_Map__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_Map__ne_.setPrecedence(prec_EQUALITY);
 			op_Map__eq_.setPrecedence(prec_EQUALITY);
-			op_OclAny__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_OclAny__ne_.setPrecedence(prec_EQUALITY);
 			op_OclAny__eq_.setPrecedence(prec_EQUALITY);
 			op_OclComparable__lt_.setPrecedence(prec_RELATIONAL);
-			op_OclComparable__lt__eq_.setPrecedence(prec_RELATIONAL);
+			op_OclComparable__le_.setPrecedence(prec_RELATIONAL);
 			op_OclComparable__gt_.setPrecedence(prec_RELATIONAL);
-			op_OclComparable__gt__eq_.setPrecedence(prec_RELATIONAL);
-			op_OclInvalid__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_OclComparable__ge_.setPrecedence(prec_RELATIONAL);
+			op_OclInvalid__ne_.setPrecedence(prec_EQUALITY);
 			op_OclInvalid__eq_.setPrecedence(prec_EQUALITY);
 			op_OclInvalid_and.setPrecedence(prec_AND);
 			op_OclInvalid_implies.setPrecedence(prec_IMPLIES);
 			op_OclInvalid_or.setPrecedence(prec_OR);
-			op_OclTuple__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_OclTuple__ne_.setPrecedence(prec_EQUALITY);
 			op_OclTuple__eq_.setPrecedence(prec_EQUALITY);
 			op_OclVoid__add_.setPrecedence(prec_ADDITIVE);
-			op_OclVoid__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_OclVoid__ne_.setPrecedence(prec_EQUALITY);
 			op_OclVoid__eq_.setPrecedence(prec_EQUALITY);
 			op_OclVoid_and.setPrecedence(prec_AND);
 			op_OclVoid_implies.setPrecedence(prec_IMPLIES);
 			op_OclVoid_not.setPrecedence(prec_UNARY);
 			op_OclVoid_or.setPrecedence(prec_OR);
 			op_OclVoid_xor.setPrecedence(prec_XOR);
-			op_OrderedSet__neg_.setPrecedence(prec_ADDITIVE);
-			op_OrderedSet__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_OrderedSet__sub_.setPrecedence(prec_ADDITIVE);
+			op_OrderedSet__ne_.setPrecedence(prec_EQUALITY);
 			op_OrderedSet__eq_.setPrecedence(prec_EQUALITY);
-			op_Sequence__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_Sequence__ne_.setPrecedence(prec_EQUALITY);
 			op_Sequence__eq_.setPrecedence(prec_EQUALITY);
-			op_Set__neg_.setPrecedence(prec_ADDITIVE);
-			op_Set__lt__gt_.setPrecedence(prec_EQUALITY);
+			op_Set__sub_.setPrecedence(prec_ADDITIVE);
+			op_Set__ne_.setPrecedence(prec_EQUALITY);
 			op_Set__eq_.setPrecedence(prec_EQUALITY);
-			op_UniqueCollection__neg_.setPrecedence(prec_ADDITIVE);
+			op_UniqueCollection__sub_.setPrecedence(prec_ADDITIVE);
 		}
 
 		private void installComments() {
 			installComment(_Boolean, "The standard type Boolean represents the common true/false values.\nBoolean is itself an instance of the metatype PrimitiveType (from UML).");
-			installComment(op_Boolean__lt__gt_, "Returns oclText[true] if the logical value of oclText[self] is the not same as the numeric value of object2, oclText[false] otherwise.");
+			installComment(op_Boolean__ne_, "Returns oclText[true] if the logical value of oclText[self] is the not same as the numeric value of object2, oclText[false] otherwise.");
 			installComment(op_Boolean__eq_, "Returns oclText[true] if the logical value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.");
 			installComment(op_Boolean_and, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[invalid] if either oclText[self] or oclText[b] is oclText[invalid] .\nOtherwise oclText[null] if either oclText[self] or oclText[b] is oclText[null].\nOtherwise oclText[true].");
 			installComment(op_Boolean_and2, "oclText[false] if either oclText[self] or oclText[b] is oclText[false].\nOtherwise oclText[true].");
@@ -3274,7 +3274,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Integer__mul_, "The value of the multiplication of oclText[self] and i.");
 			installComment(op_Integer__add_, "The value of the addition of oclText[self] and i.");
 			installComment(op_Integer__neg_, "The negative value of oclText[self].");
-			installComment(op_Integer__neg__1, "The value of the subtraction of i from oclText[self].");
+			installComment(op_Integer__sub_, "The value of the subtraction of i from oclText[self].");
 			installComment(op_Integer__div_, "The value of oclText[self] divided by i.\nEvaluates to oclText[invalid] if r is equal to zero.");
 			installComment(op_Integer_abs, "The absolute value of oclText[self].");
 			installComment(op_Integer_div, "The number of times that i fits completely within oclText[self].");
@@ -3287,9 +3287,9 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Real__mul_, "The value of the multiplication of oclText[self] and r.");
 			installComment(op_Real__add_, "The value of the addition of oclText[self] and r.");
 			installComment(op_Real__neg_, "The negative value of oclText[self].");
-			installComment(op_Real__neg__1, "The value of the subtraction of r from oclText[self].");
+			installComment(op_Real__sub_, "The value of the subtraction of r from oclText[self].");
 			installComment(op_Real__div_, "The value of oclText[self] divided by r. Evaluates to oclText[invalid] if r is equal to zero.");
-			installComment(op_Real__lt__gt_, "Returns oclText[true] if the numeric value of oclText[self] is the not the same as the numeric value of object2, oclText[false] otherwise.");
+			installComment(op_Real__ne_, "Returns oclText[true] if the numeric value of oclText[self] is the not the same as the numeric value of object2, oclText[false] otherwise.");
 			installComment(op_Real__eq_, "Returns oclText[true] if the numeric value of oclText[self] is the same as the numeric value of object2, oclText[false] otherwise.");
 			installComment(op_Real_abs, "The absolute value of oclText[self].");
 			installComment(op_Real_floor, "The largest integer that is less than or equal to oclText[self].");
@@ -3300,9 +3300,9 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(_String, "The standard type String represents strings, which can be both ASCII or Unicode.\nString is itself an instance of the metatype PrimitiveType (from UML).");
 			installComment(op_String__add_, "The concatenation of oclText[self] and s.");
 			installComment(op_String__lt_, "True if oclText[self] is less than s, using the locale defined by looking up oclLocale in the current environment.");
-			installComment(op_String__lt__eq_, "True if oclText[self] is less than or equal to s, using the locale defined by looking up oclLocale in the current environment.");
+			installComment(op_String__le_, "True if oclText[self] is less than or equal to s, using the locale defined by looking up oclLocale in the current environment.");
 			installComment(op_String__gt_, "True if oclText[self] is greater than s, using the locale defined by looking up oclLocale in the current environment.");
-			installComment(op_String__gt__eq_, "True if oclText[self] is greater than or equal to s, using the locale defined by looking up oclLocale in the current environment.");
+			installComment(op_String__ge_, "True if oclText[self] is greater than or equal to s, using the locale defined by looking up oclLocale in the current environment.");
 			installComment(op_String_at, "Queries the character at position i in oclText[self].");
 			installComment(op_String_characters, "Obtains the characters of oclText[self] as a sequence.");
 			installComment(op_String_compareTo, "The comparison of oclText[self] with oclText[that]. -ve if less than, 0 if equal, +ve if greater than.");
@@ -3338,7 +3338,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_UnlimitedNatural_toInteger, "Converts oclText[self] to an Integer value unless oclText[self] is e[unlimited] in which case oclText[self] is converted to oclText[null].");
 			installComment(library, "This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.\nThis sub clause contains all standard types defined within OCL, including all the operations defined on those types.\nFor each operation the signature and a description of the semantics is given.\nWithin the description, the reserved word \u2018result\u2019 is used to refer to the value that results from evaluating the operation.\nIn several places, post conditions are used to describe properties of the result.\nWhen there is more than one postcondition, all postconditions must be true.\nA similar thing is true for multiple preconditions.\nIf these are used, the operation is only defined if all preconditions evaluate to oclText[true].\n\nheading:1[Introduction]\n\nThe structure, syntax, and semantics of the OCL is defined in Clauses 8 (\u201CAbstract Syntax\u201D), 9 (\u201CConcrete Syntax\u201D),\nand 10 (\u201CSemantics Described using UML\u201D).\nThis sub clause adds another part to the OCL definition: a library of predefined types and operations.\nAny implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,\nwhere the language definition and the standard libraries are both mandatory parts of the complete language definition.\n\nThe OCL standard library defines a number of types.\nIt includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.\nThese are familiar from many other languages. The second part of the standard library consists of the collection types.\nThey are Bag, Set, Sequence, and Collection where Collection is an abstract type.\nNote that all types defined in the OCL standard library are instances of an abstract syntax class.\nThe OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.\n\nNext to definitions of types the OCL standard library defines a number of template expressions.\nMany operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.\nFor each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.\n\nThe Standard Library may be extended with new types, new operations and new iterators.\nIn particular new operations can be defined for collections.\n\nCertain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted\nin an appropriate fashion.\nA locale is defined as a concatenation of up to three character sequences separated by underscores,\nwith the first sequence identifying the language and the second sequence identifying the country.\nThe third sequence is empty but may encode an implementation-specific variant.\nTrailing empty strings and separators may be omitted.\n\nThe character sequences for languages are defined by ISO 639.\n\nThe character sequences for countries are defined by ISO 3166.\n\n\u2018fr_CA\u2019 therefore identifies the locale for the French language in the Canada country.\n\nComparison of strings and consequently the collation order of Collection::sortedBy()\nconforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.\n\nThe locale is \u2018en_us\u2019 by default but may be configured by a property constraint on OclAny::oclLocale.\n\nThe prevailing locale is defined by the prevailing value of oclLocale within the current environment;\nit may therefore be changed temporarily by using a Let expression.\nlet oclLocale : String = \u2018fr_CA\u2019 in aString.toUpperCase()\n\nheading:1[Iterators]\n\nThis sub clause defines the standard OCL iterator expressions.\nIn the abstract syntax these are all instances of IteratorExp.\nThese iterator expressions always have a collection expression as their source,\nas is defined in the well-formedness rules in Clause 8 (\u201CAbstract Syntax\u201D).\nThe defined iterator expressions are shown per source collection type.\nThe semantics of each iterator expression is defined through a mapping from the iterator to the \u2018iterate\u2019 construct.\nThis means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.\n\nIn all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,\nand the righthand side of the equals sign is the equivalent as an IterateExp.\nThe names source, body, and iterator refer to the role names in the abstract syntax:\n\nsource\tThe source expression of the IteratorExp.\n\nbody\tThe body expression of the IteratorExp.\n\niterator\tThe iterator variable of the IteratorExp.\n\nresult\tThe result variable of the IterateExp.\n\nheading:2[Extending the Standard Library with Iterator Expressions]\n\nIt is possible to add new iterator expressions in the standard library.\nIf this is done the semantics of a new iterator should be defined by mapping it to existing constructs,\nin the same way the semantics of pre-defined iterators is done (see sub clause 11.9)");
 			installComment(_Bag_Bag_T, "A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.\nThere is no ordering defined on the elements in a bag.\nBag is itself an instance of the metatype BagType.");
-			installComment(op_Bag__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_Bag__ne_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Bag__eq_, "True if oclText[self] and bag contain the same elements, the same number of times.");
 			installComment(it_Bag_closure, "The closure of applying body transitively to every distinct non-null element of the source collection.");
 			installComment(it_Bag_collectNested, "The Bag of elements which results from applying body to every member of the source nonordered collection.");
@@ -3359,7 +3359,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(pr_CollectionType_lower, "Evaluates to the lower bound on the number of collection elements.");
 			installComment(pr_CollectionType_upper, "Evaluates to the upper bound on the number of collection elements.");
 			installComment(_Collection_Collection_T, "*\nCollection is the abstract supertype of all collection types in the OCL Standard Library.\nEach occurrence of an object in a collection is called an element.\nIf an object occurs twice in a collection, there are two elements.\n\nThis sub clause defines the properties on Collections that have identical semantics for all collection subtypes.\nSome operations may be defined within the subtype as well,\nwhich means that there is an additional postcondition or a more specialized return value.\nCollection is itself an instance of the metatype CollectionType.\n\nThe definition of several common operations is different for each subtype.\nThese operations are not mentioned in this sub clause.\n\nThe semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.\nThe semantics of those constructs is defined in Clause 10 (\u201CSemantics Described using UML\u201D).\nIn several cases the postcondition refers to other collection operations,\nwhich in turn are defined in terms of the IterateExp or IteratorExp constructs.\n\nWell-formedness rules\n\n[1] A collection cannot contain oclText[invalid] values.\n\ncontext Collection\ninv: self->forAll(not oclIsInvalid())");
-			installComment(op_Collection__lt__gt_, "True if c is not equal to oclText[self].");
+			installComment(op_Collection__ne_, "True if c is not equal to oclText[self].");
 			installComment(op_Collection__eq_, "True if c is a collection of the same kind as oclText[self] and contains the same elements in the same quantities and in the same order,\nin the case of an ordered collection type.");
 			installComment(it_Collection_any, "Returns any element in the e[source] null-free collection for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any element,\notherwise if there are one or more elements for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the result is oclText[null].\n\nlet source : Collection(T) = ..., body : Lambda T() : Boolean = ... in\nsource->any(iterator | body) = source->select(iterator | body)->asSequence()->first()");
 			installComment(op_Collection_asBag, "The Bag that contains all the elements from oclText[self].");
@@ -3418,7 +3418,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(_EnumerationLiteral, "The standard type EnumerationLiteral represents a named constant value of an Enumeration.");
 			installComment(op_InvalidType_allInstances, "Returns oclText[invalid].");
 			installComment(_Map_Map_K_Map_V, "A Map provides a Set of key values, each of which has an associated value.\nKeys and values may be null, but neither may be invalid.");
-			installComment(op_Map__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_Map__ne_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Map__eq_, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
 			installComment(it_Map_any, "Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].\nReturns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,\notherwise if there are one or more kets for which the e[body] is oclText[true],\nan indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].\n\nlet source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in\nsource->any(key <- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()");
 			installComment(op_Map_at, "The value of the map at oclText[key].");
@@ -3462,7 +3462,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Map_size, "The number of key-value pairs in oclText[self].");
 			installComment(op_Map_values, "The Bag comprising all the values of the key-value pairs in oclText[self].");
 			installComment(_OclAny, "The number of elements in the collection oclText[self].essions.\nOclAny is itself an instance of the metatype AnyType.\n\nAll classes in a UML model inherit all operations defined on OclAny.\nTo avoid name conflicts between properties in the model and the properties inherited from OclAny,\nall names on the properties of OclAny start with \u2018ocl.\u2019\nAlthough theoretically there may still be name conflicts, they can be avoided.\nOne can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.\n\nOperations of OclAny, where the instance of OclAny is called object.");
-			installComment(op_OclAny__lt__gt_, "True if oclText[self] is a different object from object2. Infix operator.");
+			installComment(op_OclAny__ne_, "True if oclText[self] is a different object from object2. Infix operator.");
 			installComment(op_OclAny__eq_, "True if oclText[self] is the same object as object2. Infix operator.");
 			installComment(op_OclAny_oclAsSet, "Returns a Set with oclText[self] as the sole content, unless oclText[self] is oclText[null] in which case returns an empty set,");
 			installComment(op_OclAny_oclAsType, "Evaluates to oclText[self], where oclText[self] is of the type identified by oclText[TT].\nThe type oclText[TT] may be any classifier defined by OCL or a user metamodel;\nif the actual type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsType call is not well-formed if\nthe classification is ambiguous.\n\nIn the case of feature redefinition, casting an object to a supertype of its actual type\ndoes not access the supertype\u2019s definition of the feature;\naccording to the semantics of redefinition, the redefined feature simply does not exist for the object.\nHowever, when casting to a supertype, any features additionally defined by the subtype are suppressed.\n\nFIXME Bug 578060 return should be optional to support OclVoid returning null.");
@@ -3479,9 +3479,9 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OclAny_toString, "Returns a string representation of oclText[self].");
 			installComment(_OclComparable, "The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived\ncompareTo implementation may be sorted.");
 			installComment(op_OclComparable__lt_, "True if oclText[self] is less than oclText[that].");
-			installComment(op_OclComparable__lt__eq_, "True if oclText[self] is less than or equal to oclText[that].");
+			installComment(op_OclComparable__le_, "True if oclText[self] is less than or equal to oclText[that].");
 			installComment(op_OclComparable__gt_, "True if oclText[self] is greater than oclText[that].");
-			installComment(op_OclComparable__gt__eq_, "True if oclText[self] is greater than or equal to oclText[that].");
+			installComment(op_OclComparable__ge_, "True if oclText[self] is greater than or equal to oclText[that].");
 			installComment(op_OclComparable_compareTo, "Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.\n\nThe compareTo operation should be commutative.");
 			installComment(_OclElement, "The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined\nfor OclElement are therefore applicable to all user-defined types.");
 			installComment(op_OclElement_oclAsModelType, "Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].\n\nMost model elements have metamodel types for use with oclAsType, but no model type and so the return is oclText[invalid].\n\nModel elements such as UML\'s InstnaceSpecification that do support distinct model and metamodel types return oclText[self]\nwith the cast type oclText[TT] that may be used for further navigation.\nIf the actual model type of oclText[self] at evaluation time does not conform to oclText[TT],\nthen the oclAsType operation evaluates to oclText[invalid].\n\nIf oclText[self] is a multiply classified instance, the current classification used for OCL navigation\nis changed to the classification to which oclText[TT] conforms. The oclAsModelType call is not well-formed if\nthe classification is ambiguous.");
@@ -3499,7 +3499,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OclElement_oclModelTypes, "Evaluates to all of the most derived model types of which oclText[self] is an instance. The return from oclText[oclModelTypes()]\nis normally equivalent to that from oclText[oclModelType()] unless oclText[self] is an instance of multiply classified model type.\n\nThe return is normally oclText[invalid] since few model elements have model types. UML\'s InstanceSpecification::classifier provides\na multiple classification for a model type.");
 			installComment(_OclEnumeration, "The OclEnumeration type is the implicit supertype of any user Enumeration type.\nFIXME This is probably obsolete now that static / meta-types clarified.");
 			installComment(_OclInvalid, "The type OclInvalid is a type that conforms to all other types.\nIt has one single instance, identified as  oclText[invalid].\nAny property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().\nOclInvalid is itself an instance of the metatype InvalidType.");
-			installComment(op_OclInvalid__lt__gt_, "Returns oclText[invalid].");
+			installComment(op_OclInvalid__ne_, "Returns oclText[invalid].");
 			installComment(op_OclInvalid__eq_, "Returns oclText[invalid].");
 			installComment(op_OclInvalid_oclBadOperation, "An oclBadOperation may be used as a placeholder in an unsuccessfully created OCLExpression.");
 			installComment(pr_OclInvalid_oclBadProperty, "An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression.");
@@ -3530,8 +3530,8 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_OrderedCollection_indexOf, "The index of object obj in the ordered collection. Returns null for an out of bound index.");
 			installComment(op_OrderedCollection_last, "The last element in oclText[self].");
 			installComment(_OrderedSet_OrderedSet_T, "The OrderedSet is a Set, the elements of which are ordered.\nIt contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.\nAn OrderedSet is not a subtype of Set, neither a subtype of Sequence.\nThe common supertype of Sets and OrderedSets is Collection.");
-			installComment(op_OrderedSet__neg_, "The elements of oclText[self], which are not in s.");
-			installComment(op_OrderedSet__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_OrderedSet__sub_, "The elements of oclText[self], which are not in s.");
+			installComment(op_OrderedSet__ne_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_OrderedSet__eq_, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
 			installComment(op_OrderedSet_append, "The set of elements, consisting of all elements of oclText[self], followed by object.");
 			installComment(op_OrderedSet_appendAll, "The set of elements, consisting of all elements of oclText[self], followed by objects.");
@@ -3553,7 +3553,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(it_OrderedSet_sortedBy, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
 			installComment(op_OrderedSet_subOrderedSet, "The sub-set of oclText[self] starting at number lower, up to and including element number upper.");
 			installComment(_Sequence_Sequence_T, "A sequence is a collection where the elements are ordered.\nAn element may be part of a sequence more than once.\nSequence is itself an instance of the metatype SequenceType.\nA Sentence is not a subtype of Bag.\nThe common supertype of Sentence and Bags is Collection.");
-			installComment(op_Sequence__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_Sequence__ne_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Sequence__eq_, "True if oclText[self] contains the same elements as s in the same order.");
 			installComment(op_Sequence_append, "The sequence of elements, consisting of all elements of oclText[self], followed by object.");
 			installComment(op_Sequence_appendAll, "The sequence of elements, consisting of all elements of oclText[self], followed by objects.");
@@ -3575,8 +3575,8 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(op_Sequence_selectByType, "The sequence containing all elements of oclText[self] whose type is oclText[type].");
 			installComment(it_Sequence_sortedBy, "Results in the Sequence containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c then a < c).");
 			installComment(op_Sequence_subSequence, "The sub-sequence of oclText[self] starting at number lower, up to and including element number upper.");
-			installComment(op_Set__neg_, "The elements of oclText[self], which are not in s.");
-			installComment(op_Set__lt__gt_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
+			installComment(op_Set__sub_, "The elements of oclText[self], which are not in s.");
+			installComment(op_Set__ne_, "Evaluates to oclText[true] unless oclText[self] and s contain the same elements.");
 			installComment(op_Set__eq_, "Evaluates to oclText[true] if oclText[self] and s contain the same elements.");
 			installComment(it_Set_closure, "The closure of applying body transitively to every distinct non-null element of the source collection.");
 			installComment(it_Set_collectNested, "The Bag of elements which results from applying body to every member of the source nonordered collection.");
@@ -3595,7 +3595,7 @@ public class OCLstdlib extends ASResourceImpl
 			installComment(_Type, "The UML Type is the supertype of anything that may be used as a type.");
 			installComment(op_Type_conformsTo, "Returns true if type2 conforms to self.");
 			installComment(_UniqueCollection_UniqueCollection_T, "The UniqueCollection type provides the shared functionality of the OrderedSet and Set\ncollections for which the elements are unique.\nThe common supertype of UniqueCollection is Collection.");
-			installComment(op_UniqueCollection__neg_, "The elements of oclText[self], which are not in s.");
+			installComment(op_UniqueCollection__sub_, "The elements of oclText[self], which are not in s.");
 			installComment(op_UniqueCollection_intersection, "The intersection of oclText[self] and c (i.e., the set of all elements that are in both oclText[self] and c).");
 			installComment(it_UniqueCollection_sortedBy, "Results in the ordered set containing all elements of the source collection.\nThe element for which body has the lowest value comes first, and so on.\nThe type of the body expression must have the < operation defined.\nThe < operation must return a Boolean value and must be transitive (i.e., if a < b and b < c, then a < c).");
 			installComment(op_UniqueCollection_symmetricDifference, "The set containing all the elements that are in oclText[self] or s, but not in both.");

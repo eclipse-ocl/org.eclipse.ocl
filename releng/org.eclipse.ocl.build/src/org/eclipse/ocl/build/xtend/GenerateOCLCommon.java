@@ -1461,7 +1461,7 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 	}
 
 	protected @NonNull String javaName(@NonNull NamedElement element) {
-		return NameQueries.rawEncodeName(element.getName(), 0);
+		return PivotUtil.encodeNameForEcore(element);
 	}
 
 	protected @NonNull String javaString(@NonNull Comment aComment) {
