@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
@@ -234,7 +236,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			}
 		}
 		if (asOperation instanceof Iteration) {
-			return name + ((Iteration)asOperation).getOwnedIterators().size();
+			name += ((Iteration)asOperation).getOwnedIterators().size();
 		}
 		return name;
 	}
@@ -249,32 +251,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			}
 		}
 		return name;
-	}
-
-	private static @NonNull String wellFormedIdentifier(@NonNull String name) {
-		if (name.length() == 0) {
-			return name;
-		}
-		boolean isOk = Character.isJavaIdentifierStart(name.charAt(0));
-		for (int i = 1; isOk && (i < name.length()); ++i) {
-			if (!Character.isJavaIdentifierPart(name.charAt(i))) {
-				isOk = false;
-			}
-		}
-		if (isOk) {
-			return name;
-		}
-		StringBuilder s = new StringBuilder();
-		for (int i = 0; i < name.length(); ++i) {
-			char ch = name.charAt(i);
-			if (i == 0 ? Character.isJavaIdentifierStart(ch) : Character.isJavaIdentifierPart(ch)) {
-				s.append(ch);
-			}
-			else {
-				s.append("_" + Integer.toString(ch));
-			}
-		}
-		return s.toString();
 	}
 
 	protected final @NonNull DelegateInstaller delegateInstaller;
@@ -355,10 +331,12 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		String originalName = pivotNamedElement.getName();
 		String name;
 		String implementationClassName = null;
+		int arity = 0;
 		if (pivotNamedElement instanceof Operation) {
 			Operation asOperation = (Operation)pivotNamedElement;
 			name = getEOperationName(asOperation);
 			implementationClassName = asOperation.getImplementationClass();
+			arity = asOperation.getOwnedParameters().size();
 		}
 		else if (pivotNamedElement instanceof Property) {
 			Property asProperty = (Property)pivotNamedElement;
@@ -369,7 +347,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			name = originalName;
 		}
 		if (name != null) {
-			String validName = wellFormedIdentifier(name);
+			String validName = PivotUtil.encodeNameForEcore(name, arity);
 			if (!originalName.equals(validName)) {
 				NameUtil.setOriginalName(eNamedElement, originalName);
 				name = validName;
@@ -400,13 +378,35 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	/**
 	 * @since 7.0
 	 */
+	protected void copyOperations(@NonNull EClass eClass, org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
+		Iterable<@NonNull Operation> asOperations = PivotUtil.getOwnedOperations(pivotClass);
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(asOperations, nonDuplicateOperationsFilter);
+		@SuppressWarnings("null")@NonNull EList<@NonNull EOperation> eOperations = eClass.getEOperations();
+		safeVisitAll(eOperations, nonDuplicateOperations);
+	//	ECollections.sort(eOperations, NameUtil.ENAMED_ELEMENT_COMPARATOR);		// JUnit tests expect AS order
+	}
+
+	/**
+	 * @since 7.0
+	 */
 	protected void copyOperations(@NonNull EDataType eDataType, @NonNull DataType pivotDataType) {
 		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotDataType.getOwnedOperations(), copyOperationsFilter);
 		if (!Iterables.isEmpty(nonDuplicateOperations)) {
 			EAnnotation eCoClass = getCoEClass(eDataType);
-			@SuppressWarnings("null")@NonNull List<EObject> eOperations = eCoClass.getContents();
+			@SuppressWarnings("null")@NonNull EList<@NonNull EObject> eOperations = eCoClass.getContents();
 			safeVisitAll(eOperations, nonDuplicateOperations);
+			ECollections.sort(eOperations, NameUtil.EObjectByNameComparator.INSTANCE);
 		}
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected void copyProperties(@NonNull EClass eClass, org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
+		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotClass.getOwnedProperties(), nonDuplicatePropertiesFilter);
+		@SuppressWarnings("null")@NonNull EList<@NonNull EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
+		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
+	//	ECollections.sort(eStructuralFeatures, NameUtil.ENAMED_ELEMENT_COMPARATOR);		// JUnit tests expect AS order
 	}
 
 	/**
@@ -416,8 +416,9 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotDataType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		if (!Iterables.isEmpty(nonDuplicateProperties)) {
 			EAnnotation eCoClass = getCoEClass(eDataType);
-			@SuppressWarnings("null")@NonNull List<EObject> eProperties = eCoClass.getContents();
+			@SuppressWarnings("null")@NonNull EList<@NonNull EObject> eProperties = eCoClass.getContents();
 			safeVisitAll(eProperties, nonDuplicateProperties);
+			ECollections.sort(eProperties, NameUtil.EObjectByNameComparator.INSTANCE);
 		}
 	}
 
@@ -522,16 +523,13 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		eClass.setAbstract(pivotClass.isIsAbstract());
 		eClass.setInterface(pivotClass.isIsInterface());
 		context.defer(pivotClass);		// Defer superclass resolution
-		@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
-		@SuppressWarnings("null")@NonNull Iterable<@NonNull Constraint> nonDuplicateConstraints = Iterables.filter(pivotClass.getOwnedInvariants(), nonDuplicateConstraintsFilter);
+		copyOperations(eClass, pivotClass);
+		copyProperties(eClass, pivotClass);
+			@SuppressWarnings("null")@NonNull Iterable<@NonNull Constraint> nonDuplicateConstraints = Iterables.filter(pivotClass.getOwnedInvariants(), nonDuplicateConstraintsFilter);
 		//		safeVisitAll(eOperations, nonDuplicateConstraints);
-		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotClass.getOwnedOperations(), nonDuplicateOperationsFilter);
-		safeVisitAll(eOperations, nonDuplicateOperations);
-		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotClass.getOwnedProperties(), nonDuplicatePropertiesFilter);
-		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
 		Map<@NonNull String, @Nullable Object> options = context.getOptions();
 		String invariantPrefix = AS2Ecore.getInvariantPrefix(options);
+		@SuppressWarnings("null")@NonNull EList<@NonNull EOperation> eOperations = eClass.getEOperations();
 		for (Constraint pivotInvariant : nonDuplicateConstraints) {
 			if (pivotInvariant.isIsCallable()) {
 				@NonNull String name = PivotUtil.getName(pivotInvariant);
@@ -591,6 +589,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				PivotUtil.refreshList(eAnnotation.getContents(), true, eDuplicates);
 			}
 		}
+		ECollections.sort(eOperations, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		return eClass;
 	}
 
@@ -625,14 +624,8 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		else if ("UniqueCollection".equals(name)) {
 			instanceClass = Collection.class;
 		}
-		@SuppressWarnings("null")@NonNull List<EOperation> eOperations = eClass.getEOperations();
-		@SuppressWarnings("null")@NonNull Iterable<@NonNull Operation> nonDuplicateOperations = Iterables.filter(pivotCollectionType.getOwnedOperations(), nonDuplicateOperationsFilter);
-		safeVisitAll(eOperations, nonDuplicateOperations);
-		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
-		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotCollectionType.getOwnedProperties(), nonDuplicatePropertiesFilter);
-		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
-//		copyOperations(eDataType, pivotCollectionType);
-//		copyProperties(eDataType, pivotCollectionType);
+		copyOperations(eClass, pivotCollectionType);
+		copyProperties(eClass, pivotCollectionType);
 		eClass.setInstanceClass(instanceClass);
 		eClass.setAbstract(true);
 		eClass.setInterface(true);

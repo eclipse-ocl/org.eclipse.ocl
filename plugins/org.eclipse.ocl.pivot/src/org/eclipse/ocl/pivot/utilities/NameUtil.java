@@ -40,6 +40,9 @@ public class NameUtil
 		}
 	}
 
+	/**
+	 * Support sorting of a List<? extends NamedElement> sorting by getName().
+	 */
 	public static final class NameableComparator implements Comparator<Nameable>
 	{
 		public static final @NonNull NameableComparator INSTANCE = new NameableComparator();
@@ -52,6 +55,9 @@ public class NameUtil
 		}
 	}
 
+	/**
+	 * Support sorting of a List<? extends ENamedElement> sorting by getName() qualifioed by package name.
+	 */
 	public static final class ENamedElementComparator implements Comparator<@NonNull ENamedElement>
 	{
 		public static final @NonNull ENamedElementComparator INSTANCE = new ENamedElementComparator();
@@ -59,7 +65,7 @@ public class NameUtil
 		@Override
 		public int compare(@NonNull ENamedElement o1, @NonNull ENamedElement o2) {
 			if (o1 == o2) {
-				return 0;		// Short circuit containment compare / independent searches
+				return 0;
 			}
 			String n1 = o1.getName();
 			String n2 = o2.getName();
@@ -81,6 +87,29 @@ public class NameUtil
 				return compare((ENamedElement)p1, (ENamedElement)p2);
 			}
 			return comparison;
+		}
+	}
+
+	/**
+	 * Support sorting of a List<? extends EObject> sorting by getName() qualified by package name where possible.
+	 *
+	 * @since 7.0
+	 */
+	public static final class EObjectByNameComparator implements Comparator<@NonNull EObject>
+	{
+		public static final @NonNull EObjectByNameComparator INSTANCE = new EObjectByNameComparator();
+
+		@Override
+		public int compare(@NonNull EObject o1, @NonNull EObject o2) {
+			if (o1 == o2) {
+				return 0;
+			}
+			if ((o1 instanceof ENamedElement) && (o2 instanceof ENamedElement)) {
+				return ENamedElementComparator.INSTANCE.compare((ENamedElement)o1, (ENamedElement)o2);
+			}
+			String s1 = o1.toString();
+			String s2 = o2.toString();
+			return s1.compareTo(s2);
 		}
 	}
 

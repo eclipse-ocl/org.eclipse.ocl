@@ -1464,10 +1464,6 @@ public abstract class GenerateOCLCommon extends GenerateMetamodelWorkflowCompone
 		return NameQueries.rawEncodeName(element.getName(), 0);
 	}
 
-	protected @NonNull String javaName(@Nullable Object element, @NonNull String string) {
-		return NameQueries.rawEncodeName(string, 0);
-	}
-
 	protected @NonNull String javaString(@NonNull Comment aComment) {
 		return Strings.convertToJavaString(aComment.getBody().trim());
 	}

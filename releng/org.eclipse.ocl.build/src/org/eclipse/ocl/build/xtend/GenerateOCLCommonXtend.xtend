@@ -916,7 +916,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			org.eclipse.ocl.pivot.Class case element.basicGetOwnedTemplateArguments !== null: return '''«element.javaName()»«FOR TemplateArgument tps : element.getOwnedTemplateArguments()»_«tps.getActual.simpleName()»«ENDFOR»'''
 			org.eclipse.ocl.pivot.Class: return element.javaName()
 			Comment case element.body === null: return "null"
-			Comment: return element.javaName(element.body.substring(0, Math.min(11, element.body.length() - 1)))
+			Comment: return NameQueries.rawEncodeName(element.body.substring(0, Math.min(11, element.body.length() - 1)), 0)
 			EnumerationLiteral case element.owningEnumeration === null: return "null"
 			EnumerationLiteral: return element.owningEnumeration.partialName() + "_" + element.javaName()
 			LambdaParameter: return element.javaName()

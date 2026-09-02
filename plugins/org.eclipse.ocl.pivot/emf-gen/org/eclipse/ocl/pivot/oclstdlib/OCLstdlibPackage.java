@@ -360,54 +360,54 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_60(java.lang.Object) <em>60</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_lt_(java.lang.Object) <em>lt </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60</em>' operation.
-	 * @see java.lang.Object#_60(java.lang.Object)
+	 * @return the meta object for the '<em>lt </em>' operation.
+	 * @see java.lang.Object#_lt_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclComparable___60__Object() {
-		return oclComparableEClass.getEOperations().get(0);
+	public EOperation getOclComparable___lt___Object() {
+		return oclComparableEClass.getEOperations().get(3);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_60_61(java.lang.Object) <em>60 61</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_le_(java.lang.Object) <em>le </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 61</em>' operation.
-	 * @see java.lang.Object#_60_61(java.lang.Object)
+	 * @return the meta object for the '<em>le </em>' operation.
+	 * @see java.lang.Object#_le_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclComparable___60_61__Object() {
-		return oclComparableEClass.getEOperations().get(1);
-	}
-
-
-	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_62(java.lang.Object) <em>62</em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>62</em>' operation.
-	 * @see java.lang.Object#_62(java.lang.Object)
-	 * @generated
-	 */
-	public EOperation getOclComparable___62__Object() {
+	public EOperation getOclComparable___le___Object() {
 		return oclComparableEClass.getEOperations().get(2);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_62_61(java.lang.Object) <em>62 61</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_gt_(java.lang.Object) <em>gt </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>62 61</em>' operation.
-	 * @see java.lang.Object#_62_61(java.lang.Object)
+	 * @return the meta object for the '<em>gt </em>' operation.
+	 * @see java.lang.Object#_gt_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclComparable___62_61__Object() {
-		return oclComparableEClass.getEOperations().get(3);
+	public EOperation getOclComparable___gt___Object() {
+		return oclComparableEClass.getEOperations().get(1);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#_ge_(java.lang.Object) <em>ge </em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>ge </em>' operation.
+	 * @see java.lang.Object#_ge_(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclComparable___ge___Object() {
+		return oclComparableEClass.getEOperations().get(0);
 	}
 
 
@@ -664,28 +664,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see java.lang.Object#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.lang.Object#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclInvalid___60_62__Object() {
-		return oclInvalidEClass.getEOperations().get(0);
+	public EOperation getOclInvalid___ne___Object() {
+		return oclInvalidEClass.getEOperations().get(1);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see java.lang.Object#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see java.lang.Object#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclInvalid___61__Object() {
-		return oclInvalidEClass.getEOperations().get(1);
+	public EOperation getOclInvalid___eq___Object() {
+		return oclInvalidEClass.getEOperations().get(0);
 	}
 
 
@@ -1015,28 +1015,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see java.lang.Object#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.lang.Object#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclTuple___60_62__Object() {
-		return oclTupleEClass.getEOperations().get(0);
+	public EOperation getOclTuple___ne___Object() {
+		return oclTupleEClass.getEOperations().get(1);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see java.lang.Object#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see java.lang.Object#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclTuple___61__Object() {
-		return oclTupleEClass.getEOperations().get(1);
+	public EOperation getOclTuple___eq___Object() {
+		return oclTupleEClass.getEOperations().get(0);
 	}
 
 
@@ -1080,41 +1080,41 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_43(java.lang.String) <em>43</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_add_(java.lang.String) <em>add </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>43</em>' operation.
-	 * @see java.lang.Object#_43(java.lang.String)
+	 * @return the meta object for the '<em>add </em>' operation.
+	 * @see java.lang.Object#_add_(java.lang.String)
 	 * @generated
 	 */
-	public EOperation getOclVoid___43__String() {
+	public EOperation getOclVoid___add___String() {
 		return oclVoidEClass.getEOperations().get(0);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see java.lang.Object#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.lang.Object#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclVoid___60_62__Object() {
-		return oclVoidEClass.getEOperations().get(1);
+	public EOperation getOclVoid___ne___Object() {
+		return oclVoidEClass.getEOperations().get(2);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see java.lang.Object#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see java.lang.Object#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclVoid___61__Object() {
-		return oclVoidEClass.getEOperations().get(2);
+	public EOperation getOclVoid___eq___Object() {
+		return oclVoidEClass.getEOperations().get(1);
 	}
 
 
@@ -1470,27 +1470,27 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see java.util.Map#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.util.Map#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap___60_62__Object() {
+	public EOperation getMap___ne___Object() {
 		return mapEClass.getEOperations().get(0);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see java.util.Map#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see java.util.Map#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap___61__Object() {
+	public EOperation getMap___eq___Object() {
 		return mapEClass.getEOperations().get(1);
 	}
 
@@ -2077,27 +2077,27 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.Bag#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.Bag#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getBag___60_62__Object() {
+	public EOperation getBag___ne___Object() {
 		return bagEClass.getEOperations().get(0);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.Bag#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.Bag#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getBag___61__Object() {
+	public EOperation getBag___eq___Object() {
 		return bagEClass.getEOperations().get(1);
 	}
 
@@ -2284,27 +2284,27 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see java.util.Collection#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.util.Collection#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection___60_62__Object() {
+	public EOperation getCollection___ne___Object() {
 		return collectionEClass.getEOperations().get(0);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see java.util.Collection#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see java.util.Collection#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection___61__Object() {
+	public EOperation getCollection___eq___Object() {
 		return collectionEClass.getEOperations().get(1);
 	}
 
@@ -2920,40 +2920,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#_45(org.eclipse.emf.common.util.EList) <em>45</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#_sub_(org.eclipse.emf.common.util.EList) <em>sub </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>45</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#_45(org.eclipse.emf.common.util.EList)
+	 * @return the meta object for the '<em>sub </em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#_sub_(org.eclipse.emf.common.util.EList)
 	 * @generated
 	 */
-	public EOperation getOrderedSet___45__EList() {
+	public EOperation getOrderedSet___sub___EList() {
 		return orderedSetEClass.getEOperations().get(0);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedSet___60_62__Object() {
+	public EOperation getOrderedSet___ne___Object() {
 		return orderedSetEClass.getEOperations().get(1);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedSet___61__Object() {
+	public EOperation getOrderedSet___eq___Object() {
 		return orderedSetEClass.getEOperations().get(2);
 	}
 
@@ -3231,27 +3231,27 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
-	 * Returns the meta object for the '{@link java.util.List#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.List#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see java.util.List#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.util.List#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSequence___60_62__Object() {
+	public EOperation getSequence___ne___Object() {
 		return sequenceEClass.getEOperations().get(0);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.List#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.List#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see java.util.List#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see java.util.List#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSequence___61__Object() {
+	public EOperation getSequence___eq___Object() {
 		return sequenceEClass.getEOperations().get(1);
 	}
 
@@ -3529,40 +3529,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#_45(org.eclipse.emf.common.util.EList) <em>45</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#_sub_(org.eclipse.emf.common.util.EList) <em>sub </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>45</em>' operation.
-	 * @see java.util.Set#_45(org.eclipse.emf.common.util.EList)
+	 * @return the meta object for the '<em>sub </em>' operation.
+	 * @see java.util.Set#_sub_(org.eclipse.emf.common.util.EList)
 	 * @generated
 	 */
-	public EOperation getSet___45__EList() {
+	public EOperation getSet___sub___EList() {
 		return setEClass.getEOperations().get(0);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#_60_62(java.lang.Object) <em>60 62</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#_ne_(java.lang.Object) <em>ne </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>60 62</em>' operation.
-	 * @see java.util.Set#_60_62(java.lang.Object)
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.util.Set#_ne_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSet___60_62__Object() {
+	public EOperation getSet___ne___Object() {
 		return setEClass.getEOperations().get(1);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#_61(java.lang.Object) <em>61</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>61</em>' operation.
-	 * @see java.util.Set#_61(java.lang.Object)
+	 * @return the meta object for the '<em>eq </em>' operation.
+	 * @see java.util.Set#_eq_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSet___61__Object() {
+	public EOperation getSet___eq___Object() {
 		return setEClass.getEOperations().get(2);
 	}
 
@@ -3749,14 +3749,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 	}
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#_45(org.eclipse.emf.common.util.EList) <em>45</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#_sub_(org.eclipse.emf.common.util.EList) <em>sub </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>45</em>' operation.
-	 * @see java.util.Collection#_45(org.eclipse.emf.common.util.EList)
+	 * @return the meta object for the '<em>sub </em>' operation.
+	 * @see java.util.Collection#_sub_(org.eclipse.emf.common.util.EList)
 	 * @generated
 	 */
-	public EOperation getUniqueCollection___45__EList() {
+	public EOperation getUniqueCollection___sub___EList() {
 		return uniqueCollectionEClass.getEOperations().get(0);
 	}
 
@@ -4267,10 +4267,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		// Initialize classes, features, and operations; add parameters
 		initEClass(bagEClass, Bag.class, "Bag", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		EOperation op = initEOperation(getBag___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		EOperation op = initEOperation(getBag___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getBag___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getBag___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getBag__Closure1__Object(), null, "closure1", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
@@ -4355,10 +4355,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(collectionEClass, Collection.class, "Collection", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getCollection___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getCollection__Any1__Object(), null, "any1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -4624,10 +4624,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(mapEClass, Map.class, "Map", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getMap___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getMap__Any1__Object(), null, "any1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -4902,16 +4902,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(oclComparableEClass, Object.class, "OclComparable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getOclComparable___60__Object(), this.getBoolean(), "_60", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclComparable___ge___Object(), this.getBoolean(), "_ge_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclComparable___60_61__Object(), this.getBoolean(), "_60_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclComparable___gt___Object(), this.getBoolean(), "_gt_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclComparable___62__Object(), this.getBoolean(), "_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclComparable___le___Object(), this.getBoolean(), "_le_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclComparable___62_61__Object(), this.getBoolean(), "_62_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclComparable___lt___Object(), this.getBoolean(), "_lt_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOclComparable__CompareTo__Object(), this.getInteger(), "compareTo", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -4957,10 +4957,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEClass(oclInvalidEClass, Object.class, "OclInvalid", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getOclInvalid_OclBadProperty(), this.getOclAny(), null, "oclBadProperty", null, 0, 1, Object.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclInvalid___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclInvalid___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclInvalid___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclInvalid___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOclInvalid__And__Boolean(), this.getBoolean(), "and", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -5024,10 +5024,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(oclTupleEClass, Object.class, "OclTuple", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getOclTuple___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclTuple___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclTuple___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclTuple___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(oclTypeEClass, Object.class, "OclType", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -5037,13 +5037,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(oclVoidEClass, Object.class, "OclVoid", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getOclVoid___43__String(), this.getString(), "_43", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclVoid___add___String(), this.getString(), "_add_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getString(), "s", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclVoid___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclVoid___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclVoid___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclVoid___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOclVoid__And__Boolean(), this.getBoolean(), "and", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -5115,15 +5115,15 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(orderedSetEClass, OrderedSet.class, "OrderedSet", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getOrderedSet___45__EList(), null, "_45", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet___sub___EList(), null, "_sub_", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclAny(), "s", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(orderedSetEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getOrderedSet___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOrderedSet___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOrderedSet__Append__Object(), null, "append", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -5249,10 +5249,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(sequenceEClass, List.class, "Sequence", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getSequence___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSequence___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getSequence___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSequence___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getSequence__Append__Object(), null, "append", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -5378,15 +5378,15 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(setEClass, Set.class, "Set", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getSet___45__EList(), null, "_45", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet___sub___EList(), null, "_sub_", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclAny(), "s", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(setEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSet___60_62__Object(), this.getBoolean(), "_60_62", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getSet___61__Object(), this.getBoolean(), "_61", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getSet__Closure1__Object(), null, "closure1", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
@@ -5471,7 +5471,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(uniqueCollectionEClass, Collection.class, "UniqueCollection", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getUniqueCollection___45__EList(), null, "_45", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getUniqueCollection___sub___EList(), null, "_sub_", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclAny(), "s", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(uniqueCollectionEClass_T);
 		initEOperation(op, g1);
@@ -5551,13 +5551,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 	protected void createUMLAnnotations() {
 		String source = "http://www.eclipse.org/uml2/2.0.0/UML"; //$NON-NLS-1$
 		addAnnotation
-		  (getBag___60_62__Object(),
+		  (getBag___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag___61__Object(),
+		  (getBag___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
@@ -5599,13 +5599,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection___60_62__Object(),
+		  (getCollection___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection___61__Object(),
+		  (getCollection___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
@@ -5731,13 +5731,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap___60_62__Object(),
+		  (getMap___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap___61__Object(),
+		  (getMap___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
@@ -5857,70 +5857,70 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclComparable___60__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "<" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclComparable___60_61__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "<=" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclComparable___62__Object(),
-		   source,
-		   new String[] {
-			   "originalName", ">" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclComparable___62_61__Object(),
+		  (getOclComparable___ge___Object(),
 		   source,
 		   new String[] {
 			   "originalName", ">=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclInvalid___60_62__Object(),
+		  (getOclComparable___gt___Object(),
 		   source,
 		   new String[] {
-			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
+			   "originalName", ">" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclInvalid___61__Object(),
+		  (getOclComparable___le___Object(),
+		   source,
+		   new String[] {
+			   "originalName", "<=" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___lt___Object(),
+		   source,
+		   new String[] {
+			   "originalName", "<" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclTuple___60_62__Object(),
+		  (getOclInvalid___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclTuple___61__Object(),
+		  (getOclTuple___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclVoid___43__String(),
+		  (getOclTuple___ne___Object(),
+		   source,
+		   new String[] {
+			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid___add___String(),
 		   source,
 		   new String[] {
 			   "originalName", "+" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclVoid___60_62__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclVoid___61__Object(),
+		  (getOclVoid___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid___ne___Object(),
+		   source,
+		   new String[] {
+			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOrderedCollection__Gather1__Object(),
@@ -5929,19 +5929,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "gather" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet___45__EList(),
+		  (getOrderedSet___sub___EList(),
 		   source,
 		   new String[] {
 			   "originalName", "-" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet___60_62__Object(),
+		  (getOrderedSet___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet___61__Object(),
+		  (getOrderedSet___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
@@ -5983,13 +5983,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence___60_62__Object(),
+		  (getSequence___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence___61__Object(),
+		  (getSequence___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6031,19 +6031,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet___45__EList(),
+		  (getSet___sub___EList(),
 		   source,
 		   new String[] {
 			   "originalName", "-" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet___60_62__Object(),
+		  (getSet___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet___61__Object(),
+		  (getSet___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6085,7 +6085,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getUniqueCollection___45__EList(),
+		  (getUniqueCollection___sub___EList(),
 		   source,
 		   new String[] {
 			   "originalName", "-" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6108,13 +6108,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 	protected void createPivotAnnotations() {
 		String source = "http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot"; //$NON-NLS-1$
 		addAnnotation
-		  (getBag___60_62__Object(),
+		  (getBag___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag___61__Object(),
+		  (getBag___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6198,13 +6198,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection___60_62__Object(),
+		  (getCollection___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection___61__Object(),
+		  (getCollection___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6498,13 +6498,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.map.EntryValueProperty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap___60_62__Object(),
+		  (getMap___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap___61__Object(),
+		  (getMap___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6756,28 +6756,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.map.MapValuesOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclComparable___60__Object(),
+		  (getOclComparable___ge___Object(),
 		   source,
 		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation" //$NON-NLS-1$ //$NON-NLS-2$
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclComparable___60_61__Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclComparable___62__Object(),
+		  (getOclComparable___gt___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclComparable___62_61__Object(),
+		  (getOclComparable___le___Object(),
 		   source,
 		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___lt___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclComparable__CompareTo__Object(),
@@ -6865,16 +6865,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclInvalid___60_62__Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclInvalid___61__Object(),
+		  (getOclInvalid___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid___ne___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclInvalid__And__Boolean(),
@@ -6967,16 +6967,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclTuple___60_62__Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclTuple___61__Object(),
+		  (getOclTuple___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclTuple___ne___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclType__ConformsTo__Object(),
@@ -6985,22 +6985,22 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.classifier.OclTypeConformsToOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclVoid___43__String(),
+		  (getOclVoid___add___String(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.string.StringConcatOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclVoid___60_62__Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclVoid___61__Object(),
+		  (getOclVoid___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid___ne___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclVoid__And__Boolean(),
@@ -7123,19 +7123,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet___45__EList(),
+		  (getOrderedSet___sub___EList(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet___60_62__Object(),
+		  (getOrderedSet___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet___61__Object(),
+		  (getOrderedSet___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7264,13 +7264,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence___60_62__Object(),
+		  (getSequence___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence___61__Object(),
+		  (getSequence___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7396,19 +7396,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet___45__EList(),
+		  (getSet___sub___EList(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet___60_62__Object(),
+		  (getSet___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet___61__Object(),
+		  (getSet___eq___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7492,7 +7492,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getUniqueCollection___45__EList(),
+		  (getUniqueCollection___sub___EList(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.collection.SetMinusOperation" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7672,36 +7672,36 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass OCL_COMPARABLE = eINSTANCE.getOclComparable();
 
 		/**
-		 * The meta object literal for the '<em><b>60</b></em>' operation.
+		 * The meta object literal for the '<em><b>lt </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_COMPARABLE___60__OBJECT = eINSTANCE.getOclComparable___60__Object();
+		public static final EOperation OCL_COMPARABLE___LT____OBJECT = eINSTANCE.getOclComparable___lt___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>60 61</b></em>' operation.
+		 * The meta object literal for the '<em><b>le </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_COMPARABLE___60_61__OBJECT = eINSTANCE.getOclComparable___60_61__Object();
+		public static final EOperation OCL_COMPARABLE___LE____OBJECT = eINSTANCE.getOclComparable___le___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>62</b></em>' operation.
+		 * The meta object literal for the '<em><b>gt </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_COMPARABLE___62__OBJECT = eINSTANCE.getOclComparable___62__Object();
+		public static final EOperation OCL_COMPARABLE___GT____OBJECT = eINSTANCE.getOclComparable___gt___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>62 61</b></em>' operation.
+		 * The meta object literal for the '<em><b>ge </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_COMPARABLE___62_61__OBJECT = eINSTANCE.getOclComparable___62_61__Object();
+		public static final EOperation OCL_COMPARABLE___GE____OBJECT = eINSTANCE.getOclComparable___ge___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Compare To</b></em>' operation.
@@ -7867,20 +7867,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EReference OCL_INVALID__OCL_BAD_PROPERTY = eINSTANCE.getOclInvalid_OclBadProperty();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_INVALID___60_62__OBJECT = eINSTANCE.getOclInvalid___60_62__Object();
+		public static final EOperation OCL_INVALID___NE____OBJECT = eINSTANCE.getOclInvalid___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_INVALID___61__OBJECT = eINSTANCE.getOclInvalid___61__Object();
+		public static final EOperation OCL_INVALID___EQ____OBJECT = eINSTANCE.getOclInvalid___eq___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>And</b></em>' operation.
@@ -8098,20 +8098,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass OCL_TUPLE = eINSTANCE.getOclTuple();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_TUPLE___60_62__OBJECT = eINSTANCE.getOclTuple___60_62__Object();
+		public static final EOperation OCL_TUPLE___NE____OBJECT = eINSTANCE.getOclTuple___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_TUPLE___61__OBJECT = eINSTANCE.getOclTuple___61__Object();
+		public static final EOperation OCL_TUPLE___EQ____OBJECT = eINSTANCE.getOclTuple___eq___Object();
 
 		/**
 		 * The meta object literal for the '{@link java.lang.Object <em>Ocl Type</em>}' class.
@@ -8142,28 +8142,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass OCL_VOID = eINSTANCE.getOclVoid();
 
 		/**
-		 * The meta object literal for the '<em><b>43</b></em>' operation.
+		 * The meta object literal for the '<em><b>add </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_VOID___43__STRING = eINSTANCE.getOclVoid___43__String();
+		public static final EOperation OCL_VOID___ADD____STRING = eINSTANCE.getOclVoid___add___String();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_VOID___60_62__OBJECT = eINSTANCE.getOclVoid___60_62__Object();
+		public static final EOperation OCL_VOID___NE____OBJECT = eINSTANCE.getOclVoid___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_VOID___61__OBJECT = eINSTANCE.getOclVoid___61__Object();
+		public static final EOperation OCL_VOID___EQ____OBJECT = eINSTANCE.getOclVoid___eq___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>And</b></em>' operation.
@@ -8392,20 +8392,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass MAP = eINSTANCE.getMap();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___60_62__OBJECT = eINSTANCE.getMap___60_62__Object();
+		public static final EOperation MAP___NE____OBJECT = eINSTANCE.getMap___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___61__OBJECT = eINSTANCE.getMap___61__Object();
+		public static final EOperation MAP___EQ____OBJECT = eINSTANCE.getMap___eq___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Any1</b></em>' operation.
@@ -8776,20 +8776,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass BAG = eINSTANCE.getBag();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation BAG___60_62__OBJECT = eINSTANCE.getBag___60_62__Object();
+		public static final EOperation BAG___NE____OBJECT = eINSTANCE.getBag___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation BAG___61__OBJECT = eINSTANCE.getBag___61__Object();
+		public static final EOperation BAG___EQ____OBJECT = eINSTANCE.getBag___eq___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Closure1</b></em>' operation.
@@ -8906,20 +8906,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass COLLECTION = eINSTANCE.getCollection();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___60_62__OBJECT = eINSTANCE.getCollection___60_62__Object();
+		public static final EOperation COLLECTION___NE____OBJECT = eINSTANCE.getCollection___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___61__OBJECT = eINSTANCE.getCollection___61__Object();
+		public static final EOperation COLLECTION___EQ____OBJECT = eINSTANCE.getCollection___eq___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Any1</b></em>' operation.
@@ -9300,28 +9300,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass ORDERED_SET = eINSTANCE.getOrderedSet();
 
 		/**
-		 * The meta object literal for the '<em><b>45</b></em>' operation.
+		 * The meta object literal for the '<em><b>sub </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___45__ELIST = eINSTANCE.getOrderedSet___45__EList();
+		public static final EOperation ORDERED_SET___SUB____ELIST = eINSTANCE.getOrderedSet___sub___EList();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___60_62__OBJECT = eINSTANCE.getOrderedSet___60_62__Object();
+		public static final EOperation ORDERED_SET___NE____OBJECT = eINSTANCE.getOrderedSet___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___61__OBJECT = eINSTANCE.getOrderedSet___61__Object();
+		public static final EOperation ORDERED_SET___EQ____OBJECT = eINSTANCE.getOrderedSet___eq___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Append</b></em>' operation.
@@ -9494,20 +9494,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass SEQUENCE = eINSTANCE.getSequence();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SEQUENCE___60_62__OBJECT = eINSTANCE.getSequence___60_62__Object();
+		public static final EOperation SEQUENCE___NE____OBJECT = eINSTANCE.getSequence___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SEQUENCE___61__OBJECT = eINSTANCE.getSequence___61__Object();
+		public static final EOperation SEQUENCE___EQ____OBJECT = eINSTANCE.getSequence___eq___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Append</b></em>' operation.
@@ -9680,28 +9680,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass SET = eINSTANCE.getSet();
 
 		/**
-		 * The meta object literal for the '<em><b>45</b></em>' operation.
+		 * The meta object literal for the '<em><b>sub </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___45__ELIST = eINSTANCE.getSet___45__EList();
+		public static final EOperation SET___SUB____ELIST = eINSTANCE.getSet___sub___EList();
 
 		/**
-		 * The meta object literal for the '<em><b>60 62</b></em>' operation.
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___60_62__OBJECT = eINSTANCE.getSet___60_62__Object();
+		public static final EOperation SET___NE____OBJECT = eINSTANCE.getSet___ne___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>61</b></em>' operation.
+		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___61__OBJECT = eINSTANCE.getSet___61__Object();
+		public static final EOperation SET___EQ____OBJECT = eINSTANCE.getSet___eq___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Closure1</b></em>' operation.
@@ -9818,12 +9818,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass UNIQUE_COLLECTION = eINSTANCE.getUniqueCollection();
 
 		/**
-		 * The meta object literal for the '<em><b>45</b></em>' operation.
+		 * The meta object literal for the '<em><b>sub </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation UNIQUE_COLLECTION___45__ELIST = eINSTANCE.getUniqueCollection___45__EList();
+		public static final EOperation UNIQUE_COLLECTION___SUB____ELIST = eINSTANCE.getUniqueCollection___sub___EList();
 
 		/**
 		 * The meta object literal for the '<em><b>Intersection</b></em>' operation.

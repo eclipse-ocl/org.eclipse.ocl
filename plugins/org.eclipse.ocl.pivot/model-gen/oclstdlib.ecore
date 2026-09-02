@@ -5,7 +5,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
       </eAnnotations>
@@ -17,7 +17,7 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;True if oclText[self] and bag contain the same elements, the same number of times.&#xA;"/>
       </eAnnotations>
@@ -212,7 +212,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Collection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;True if c is not equal to oclText[self].&#xA;"/>
       </eAnnotations>
@@ -224,7 +224,7 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;True if c is a collection of the same kind as oclText[self] and contains the same elements in the same quantities and in the same order,&#xA;in the case of an ordered collection type.&#xA;"/>
       </eAnnotations>
@@ -846,7 +846,7 @@
       abstract="true" interface="true">
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
       </eAnnotations>
@@ -858,7 +858,7 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[true] if oclText[self] and s contain the same elements.&#xA;"/>
       </eAnnotations>
@@ -1438,31 +1438,19 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclComparable" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny">
-    <eOperations name="_60" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_ge_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;True if oclText[self] is less than oclText[that].&#xA;"/>
+        <details key="documentation" value="&#xA;True if oclText[self] is greater than or equal to oclText[that].&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="&lt;"/>
+        <details key="originalName" value=">="/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation"/>
+        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation"/>
       </eAnnotations>
       <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="_60_61" lowerBound="1" eType="#//Boolean">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;True if oclText[self] is less than or equal to oclText[that].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="&lt;="/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation"/>
-      </eAnnotations>
-      <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
-    </eOperations>
-    <eOperations name="_62" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_gt_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;True if oclText[self] is greater than oclText[that].&#xA;"/>
       </eAnnotations>
@@ -1474,15 +1462,27 @@
       </eAnnotations>
       <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="_62_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_le_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;True if oclText[self] is greater than or equal to oclText[that].&#xA;"/>
+        <details key="documentation" value="&#xA;True if oclText[self] is less than or equal to oclText[that].&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value=">="/>
+        <details key="originalName" value="&lt;="/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation"/>
+        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation"/>
+      </eAnnotations>
+      <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
+    </eOperations>
+    <eOperations name="_lt_" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;True if oclText[self] is less than oclText[that].&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="&lt;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation"/>
       </eAnnotations>
       <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
     </eOperations>
@@ -1630,19 +1630,7 @@
       abstract="true" interface="true" eSuperTypes="#//OclAny"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclInvalid" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclVoid">
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
-      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;Returns oclText[invalid].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="&lt;>"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
-      </eAnnotations>
-      <eParameters name="object2" eType="#//OclSelf"/>
-    </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Returns oclText[invalid].&#xA;"/>
       </eAnnotations>
@@ -1651,6 +1639,18 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eParameters name="object2" eType="#//OclSelf"/>
+    </eOperations>
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+        <details key="documentation" value="&#xA;Returns oclText[invalid].&#xA;"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="&lt;>"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -1795,21 +1795,21 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclTuple" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny">
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="&lt;>"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
-      </eAnnotations>
-      <eParameters name="object2" eType="#//OclSelf"/>
-    </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="="/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eParameters name="object2" eType="#//OclSelf"/>
+    </eOperations>
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="&lt;>"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -1828,7 +1828,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclVoid" instanceClassName="java.lang.Object"
       abstract="true" interface="true" eSuperTypes="#//OclAny">
-    <eOperations name="_43" lowerBound="1" eType="#//String">
+    <eOperations name="_add_" lowerBound="1" eType="#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The concatenation of oclText[null] and s.&#xA;"/>
       </eAnnotations>
@@ -1840,16 +1840,7 @@
       </eAnnotations>
       <eParameters name="s" eType="#//String"/>
     </eOperations>
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="&lt;>"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
-        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
-      </eAnnotations>
-      <eParameters name="object2" eType="#//OclSelf"/>
-    </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]&#xA;if object is oclText[invalid], oclText[false] otherwise.&#xA;"/>
       </eAnnotations>
@@ -1858,6 +1849,15 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eParameters name="object2" eType="#//OclSelf"/>
+    </eOperations>
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
+      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
+        <details key="originalName" value="&lt;>"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
+        <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -2021,7 +2021,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="OrderedSet" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
-    <eOperations name="_45" upperBound="-1">
+    <eOperations name="_sub_" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The elements of oclText[self], which are not in s.&#xA;"/>
       </eAnnotations>
@@ -2034,7 +2034,7 @@
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
       <eParameters name="s" ordered="false" unique="false" upperBound="-1" eType="#//OclAny"/>
     </eOperations>
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
       </eAnnotations>
@@ -2046,7 +2046,7 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[true] if oclText[self] and s contain the same elements.&#xA;"/>
       </eAnnotations>
@@ -2328,7 +2328,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Sequence" instanceClassName="java.util.List"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
       </eAnnotations>
@@ -2340,7 +2340,7 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;True if oclText[self] contains the same elements as s in the same order.&#xA;"/>
       </eAnnotations>
@@ -2618,7 +2618,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Set" instanceClassName="java.util.Set"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
-    <eOperations name="_45" ordered="false" upperBound="-1">
+    <eOperations name="_sub_" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The elements of oclText[self], which are not in s.&#xA;"/>
       </eAnnotations>
@@ -2631,7 +2631,7 @@
       <eGenericType eTypeParameter="#//Set/T"/>
       <eParameters name="s" ordered="false" unique="false" upperBound="-1" eType="#//OclAny"/>
     </eOperations>
-    <eOperations name="_60_62" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[true] unless oclText[self] and s contain the same elements.&#xA;"/>
       </eAnnotations>
@@ -2643,7 +2643,7 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="_61" lowerBound="1" eType="#//Boolean">
+    <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[true] if oclText[self] and s contain the same elements.&#xA;"/>
       </eAnnotations>
@@ -2841,7 +2841,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="UniqueCollection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
     <eTypeParameters name="T"/>
-    <eOperations name="_45" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="_sub_" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The elements of oclText[self], which are not in s.&#xA;"/>
       </eAnnotations>

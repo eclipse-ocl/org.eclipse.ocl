@@ -1523,6 +1523,79 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * Convert name to ensure that it is suitable for use with Ecore and consequently Java without further mangling.
+	 * <br>
+	 * Special names such as "=" are converted to familiar equivalents such as "_lt_". The arity distinguishes between
+	 * the two "-" alternatives.
+	 *
+	 * @since 7.0
+	 */
+	public static @NonNull String encodeNameForEcore(@NonNull String name, int arity) {
+		assert name.trim().equals(name);
+		if (name.length() == 0) {
+			return name;
+		}
+		else if ("+".equals(name)) {
+			return "_add_";
+		}
+		else if ("/".equals(name)) {
+			return "_div_";
+		}
+		else if ("=".equals(name)) {
+			return "_eq_";
+		}
+		else if (">=".equals(name)) {
+			return "_ge_";
+		}
+		else if (">".equals(name)) {
+			return "_gt_";
+		}
+		else if ("<=".equals(name)) {
+			return "_le_";
+		}
+		else if ("<".equals(name)) {
+			return "_lt_";
+		}
+		else if ("*".equals(name)) {
+			return "_mul_";
+		}
+		else if ("<>".equals(name)) {
+			return "_ne_";
+		}
+		else if ("-".equals(name)) {
+			if (arity == 0) {
+				return "_neg_";
+			}
+			else {
+				return "_sub_";
+			}
+		}
+		boolean isOk = Character.isJavaIdentifierStart(name.charAt(0));
+		for (int i = 1; isOk && (i < name.length()); ++i) {
+			if (!Character.isJavaIdentifierPart(name.charAt(i))) {
+				isOk = false;
+			}
+		}
+		if (isOk) {
+			return name;
+		}
+		StringBuilder s = new StringBuilder();
+		for (int i = 0; i < name.length(); ++i) {
+			char ch = name.charAt(i);
+			if (i == 0 ? Character.isJavaIdentifierStart(ch) : Character.isJavaIdentifierPart(ch)) {
+				if ((i == 0) && ('_' == ch)) {
+					s.append(ch);			// Avoid possible special name replacement conflict
+				}
+				s.append(ch);
+			}
+			else {
+				s.append("_" + Integer.toString(ch));
+			}
+		}
+		return s.toString();
+	}
+
+	/**
 	 * @since 7.0
 	 */
 	public static void errPrintln(@Nullable String string) {

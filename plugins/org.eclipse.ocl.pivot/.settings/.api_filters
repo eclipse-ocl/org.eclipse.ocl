@@ -977,20 +977,7 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibPackage.java">
-        <filter id="0"/>
-    </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/oclstdlib/OCLstdlibPackage.java" type="org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage$Literals">
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="BAG___60_62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="BAG___61__OBJECT"/>
-            </message_arguments>
-        </filter>
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="BAG___CLOSURE1__OBJECT"/>
@@ -1004,6 +991,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="BAG___COLLECT_NESTED1__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="BAG___EQ____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1033,6 +1025,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="BAG___NE____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="BAG___REJECT1__OBJECT"/>
             </message_arguments>
         </filter>
@@ -1054,16 +1051,6 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="BAG___SORTED_BY1__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="COLLECTION___60_62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="COLLECTION___61__OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1109,6 +1096,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="COLLECTION___COUNT__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COLLECTION___EQ____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1228,6 +1220,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="COLLECTION___NE____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="COLLECTION___NOT_EMPTY"/>
             </message_arguments>
         </filter>
@@ -1328,16 +1325,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="MAP___60_62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="MAP___61__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="MAP___ANY1__OBJECT"/>
             </message_arguments>
         </filter>
@@ -1359,6 +1346,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="MAP___COLLECT_NESTED1__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MAP___EQ____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1498,6 +1490,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="MAP___NE____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="MAP___NOT_EMPTY"/>
             </message_arguments>
         </filter>
@@ -1543,27 +1540,27 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="OCL_COMPARABLE___60_61__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="OCL_COMPARABLE___60__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="OCL_COMPARABLE___62_61__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="OCL_COMPARABLE___62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="OCL_COMPARABLE___COMPARE_TO__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_COMPARABLE___GE____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_COMPARABLE___GT____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_COMPARABLE___LE____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_COMPARABLE___LT____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1623,22 +1620,22 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="OCL_INVALID___60_62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="OCL_INVALID___61__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="OCL_INVALID___AND__BOOLEAN"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="OCL_INVALID___EQ____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="OCL_INVALID___IMPLIES__BOOLEAN"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_INVALID___NE____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1723,12 +1720,12 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="OCL_TUPLE___60_62__OBJECT"/>
+                <message_argument value="OCL_TUPLE___EQ____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="OCL_TUPLE___61__OBJECT"/>
+                <message_argument value="OCL_TUPLE___NE____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1738,17 +1735,7 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="OCL_VOID___43__STRING"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="OCL_VOID___60_62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="OCL_VOID___61__OBJECT"/>
+                <message_argument value="OCL_VOID___ADD____STRING"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1763,7 +1750,17 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="OCL_VOID___EQ____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="OCL_VOID___IMPLIES__BOOLEAN"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="OCL_VOID___NE____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1853,21 +1850,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="ORDERED_SET___45__ELIST"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="ORDERED_SET___60_62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="ORDERED_SET___61__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="ORDERED_SET___APPEND_ALL__ELIST"/>
             </message_arguments>
         </filter>
@@ -1889,6 +1871,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ORDERED_SET___COLLECT_NESTED1__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ORDERED_SET___EQ____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1919,6 +1906,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="ORDERED_SET___INSERT_AT__INTEGERVALUE_OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="ORDERED_SET___NE____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1968,12 +1960,7 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="SEQUENCE___60_62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="SEQUENCE___61__OBJECT"/>
+                <message_argument value="ORDERED_SET___SUB____ELIST"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1999,6 +1986,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="SEQUENCE___COLLECT_NESTED1__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SEQUENCE___EQ____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2029,6 +2021,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="SEQUENCE___INSERT_AT__INTEGERVALUE_OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SEQUENCE___NE____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2078,21 +2075,6 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="SET___45__ELIST"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="SET___60_62__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
-                <message_argument value="SET___61__OBJECT"/>
-            </message_arguments>
-        </filter>
-        <filter id="1211105284">
-            <message_arguments>
                 <message_argument value="SET___CLOSURE1__OBJECT"/>
             </message_arguments>
         </filter>
@@ -2104,6 +2086,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="SET___COLLECT_NESTED1__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="SET___EQ____OBJECT"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2133,6 +2120,11 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
+                <message_argument value="SET___NE____OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
                 <message_argument value="SET___REJECT1__OBJECT"/>
             </message_arguments>
         </filter>
@@ -2158,7 +2150,7 @@
         </filter>
         <filter id="1211105284">
             <message_arguments>
-                <message_argument value="UNIQUE_COLLECTION___45__ELIST"/>
+                <message_argument value="SET___SUB____ELIST"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -2169,6 +2161,11 @@
         <filter id="1211105284">
             <message_arguments>
                 <message_argument value="UNIQUE_COLLECTION___SORTED_BY1__OBJECT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="UNIQUE_COLLECTION___SUB____ELIST"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
