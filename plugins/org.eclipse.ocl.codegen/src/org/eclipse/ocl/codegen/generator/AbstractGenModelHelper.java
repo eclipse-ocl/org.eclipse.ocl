@@ -90,13 +90,12 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 	}
 
 	public static @NonNull String encodeName(@NonNull NamedElement element) {
-		int arity = element instanceof Operation ? ((Operation)element).getOwnedParameters().size() : 0;
-		String rawEncodeName = rawEncodeName(ClassUtil.requireNonNull(element.getName()), arity);
+		String rawEncodeName = PivotUtil.encodeNameForEcore(element);
 		if (element instanceof Operation) {
 			int sameNames = 0;
 			int myIndex = 0;
 			for (Operation operation : ((Operation)element).getOwningClass().getOwnedOperations()) {
-				String rawName = rawEncodeName(ClassUtil.requireNonNull(operation.getName()), ClassUtil.requireNonNull(operation.getOwnedParameters().size()));
+				String rawName = PivotUtil.encodeNameForEcore(operation);
 				if (rawName.equals(rawEncodeName)) {
 					if (operation == element) {
 						myIndex = sameNames;
@@ -109,62 +108,6 @@ public abstract class AbstractGenModelHelper implements GenModelHelper
 			}
 		}
 		return rawEncodeName;
-	}
-
-	public static @NonNull String rawEncodeName(@NonNull String name, @NonNull Integer arity) {
-		StringBuilder s = new StringBuilder();
-		//		boolean prevCharIsLower = true;
-		for (int i = 0; i < name.length(); i++) {
-			char ch = name.charAt(i);
-			//			boolean charIsLowerCase = Character.isLowerCase(ch);
-			/*if (charIsLowerCase) {
-				s.append(Character.toUpperCase(ch));
-			}
-			else if (Character.isUpperCase(ch)) {
-				if (prevCharIsLower) {
-					s.append('_');
-				}
-				s.append(ch);
-			}
-			else if (Character.isJavaIdentifierPart(ch)) {
-				s.append(ch);
-			}
-			else*/ if (ch == '<') {
-				s.append("_lt_");
-			}
-			else if (ch == '>') {
-				s.append("_gt_");
-			}
-			else if (ch == '=') {
-				s.append("_eq_");
-			}
-			else if (ch == '+') {
-				s.append("_add_");
-			}
-			else if (ch == '-') {
-				if (arity == 0) {
-					s.append("_neg_");
-				}
-				else {
-					s.append("_sub_");
-				}
-			}
-			else if (ch == '*') {
-				s.append("_mul_");
-			}
-			else if (ch == '/') {
-				s.append("_div_");
-			}
-			else if (!Character.isJavaIdentifierPart(ch)) {
-				s.append("_" + Integer.toString(ch) + "_");
-			}
-			else {
-				s.append(ch);
-			}
-			//			if ((''))
-			//			prevCharIsLower = charIsLowerCase;
-		}
-		return s.toString();
 	}
 
 	protected final @NonNull GenPackageManager genPackageManager;

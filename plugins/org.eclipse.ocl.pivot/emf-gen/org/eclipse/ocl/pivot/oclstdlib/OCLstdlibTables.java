@@ -535,7 +535,7 @@ public class OCLstdlibTables extends AbstractTables
 			Precedences.init();
 		}
 
-		public static final @NonNull Operation _Bag___lt__gt_ = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Bag___ne_ = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Bag___eq_ = LIBRARY.createOperation(Types._Bag, OCLstdlibPackage.Literals.BAG___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -566,7 +566,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Iteration _Bag__sortedBy = LIBRARY.createIteration(Types._Bag, OCLstdlibPackage.Literals.BAG___SORTED_BY1__OBJECT, Parameters._$$0, Parameters._Lambda_self_$$0_F_result_OclComparable_F, MODEL.getCollectionType(Types._Sequence, TypeParameters.$$0, false),
 			14 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.iterator.SortedByIteration.INSTANCE);
 
-		public static final @NonNull Operation _Boolean___lt__gt_ = LIBRARY.createOperation(Types._Boolean, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Boolean___ne_ = LIBRARY.createOperation(Types._Boolean, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Boolean___eq_ = LIBRARY.createOperation(Types._Boolean, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -593,7 +593,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _Boolean__xor2 = LIBRARY.createOperation(Types._Boolean, "xor2", Precedences._XOR, Parameters._Boolean, Types._Boolean,
 			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2.INSTANCE);
 
-		public static final @NonNull Operation _Collection___lt__gt_ = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Collection___ne_ = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Collection___eq_ = LIBRARY.createOperation(Types._Collection, OCLstdlibPackage.Literals.COLLECTION___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -715,7 +715,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _Integer__toUnlimitedNatural = LIBRARY.createOperation(Types._Integer, "toUnlimitedNatural", null, ParameterTypes.EMPTY_LIST, Types._UnlimitedNatural,
 			11 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.IntegerToUnlimitedNaturalOperation.INSTANCE);
 
-		public static final @NonNull Operation _Map___lt__gt_ = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Map___ne_ = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Map___eq_ = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -802,7 +802,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _Map__values = LIBRARY.createOperation(Types._Map, OCLstdlibPackage.Literals.MAP___VALUES, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Bag, TypeParameters.$$1, false),
 			42 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.map.MapValuesOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclAny___lt__gt_ = LIBRARY.createOperation(Types._OclAny, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclAny___ne_ = LIBRARY.createOperation(Types._OclAny, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclAny___eq_ = LIBRARY.createOperation(Types._OclAny, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -835,11 +835,11 @@ public class OCLstdlibTables extends AbstractTables
 
 		public static final @NonNull Operation _OclComparable___lt_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___LT____OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation.INSTANCE);
-		public static final @NonNull Operation _OclComparable___lt__eq_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___LE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclComparable___le_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___LE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclComparable___gt_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___GT____OBJECT, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation.INSTANCE);
-		public static final @NonNull Operation _OclComparable___gt__eq_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___GE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclComparable___ge_ = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___GE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclComparable__compareTo = LIBRARY.createOperation(Types._OclComparable, OCLstdlibPackage.Literals.OCL_COMPARABLE___COMPARE_TO__OBJECT, Parameters._OclSelf, Types._Integer,
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclComparableCompareToOperation.INSTANCE);
@@ -867,7 +867,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _OclElement__oclModelTypes = LIBRARY.createOperation(Types._OclElement, OCLstdlibPackage.Literals.OCL_ELEMENT___OCL_MODEL_TYPES, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(Types._Set, Types._OclSelf, false),
 			10 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypesOperation.INSTANCE);
 
-		public static final @NonNull Operation _OclInvalid___lt__gt_ = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclInvalid___ne_ = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclInvalid___eq_ = LIBRARY.createOperation(Types._OclInvalid, OCLstdlibPackage.Literals.OCL_INVALID___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -910,7 +910,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _OclSummable__zero = LIBRARY.createOperation(Types._OclSummable, OCLstdlibPackage.Literals.OCL_SUMMABLE___ZERO, ParameterTypes.EMPTY_LIST, Types._OclSelf,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _OclTuple___lt__gt_ = LIBRARY.createOperation(Types._OclTuple, OCLstdlibPackage.Literals.OCL_TUPLE___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclTuple___ne_ = LIBRARY.createOperation(Types._OclTuple, OCLstdlibPackage.Literals.OCL_TUPLE___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclTuple___eq_ = LIBRARY.createOperation(Types._OclTuple, OCLstdlibPackage.Literals.OCL_TUPLE___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -920,7 +920,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		public static final @NonNull Operation _OclVoid___add_ = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___ADD____STRING, Parameters._String, Types._String,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
-		public static final @NonNull Operation _OclVoid___lt__gt_ = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OclVoid___ne_ = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OclVoid___eq_ = LIBRARY.createOperation(Types._OclVoid, OCLstdlibPackage.Literals.OCL_VOID___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -968,7 +968,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		public static final @NonNull Operation _OrderedSet___sub_ = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___SUB____ELIST, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._OrderedSet, TypeParameters.$$0, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-		public static final @NonNull Operation _OrderedSet___lt__gt_ = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _OrderedSet___ne_ = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _OrderedSet___eq_ = LIBRARY.createOperation(Types._OrderedSet, OCLstdlibPackage.Literals.ORDERED_SET___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -1023,7 +1023,7 @@ public class OCLstdlibTables extends AbstractTables
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation.INSTANCE);
 		public static final @NonNull Operation _Real___div_ = LIBRARY.createOperation(Types._Real, "/", Precedences._MULTIPLICATIVE, Parameters._OclSelf, Types._Real,
 			4 | IsInvalidating | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation.INSTANCE);
-		public static final @NonNull Operation _Real___lt__gt_ = LIBRARY.createOperation(Types._Real, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Real___ne_ = LIBRARY.createOperation(Types._Real, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
 			5 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Real___eq_ = LIBRARY.createOperation(Types._Real, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
 			6 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -1040,7 +1040,7 @@ public class OCLstdlibTables extends AbstractTables
 		public static final @NonNull Operation _Real__toString = LIBRARY.createOperation(Types._Real, "toString", null, ParameterTypes.EMPTY_LIST, Types._String,
 			12 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation.INSTANCE);
 
-		public static final @NonNull Operation _Sequence___lt__gt_ = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Sequence___ne_ = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Sequence___eq_ = LIBRARY.createOperation(Types._Sequence, OCLstdlibPackage.Literals.SEQUENCE___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -1087,7 +1087,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		public static final @NonNull Operation _Set___sub_ = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___SUB____ELIST, Parameters._UniqueCollection__OclAny__, MODEL.getCollectionType(Types._Set, TypeParameters.$$0, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.collection.SetMinusOperation.INSTANCE);
-		public static final @NonNull Operation _Set___lt__gt_ = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _Set___ne_ = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___NE____OBJECT, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _Set___eq_ = LIBRARY.createOperation(Types._Set, OCLstdlibPackage.Literals.SET___EQ____OBJECT, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
@@ -1122,15 +1122,15 @@ public class OCLstdlibTables extends AbstractTables
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringConcatOperation.INSTANCE);
 		public static final @NonNull Operation _String___lt_ = LIBRARY.createOperation(Types._String, "<", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringLessThanOperation.INSTANCE);
-		public static final @NonNull Operation _String___lt__eq_ = LIBRARY.createOperation(Types._String, "<=", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _String___le_ = LIBRARY.createOperation(Types._String, "<=", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
 			2 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation.INSTANCE);
-		public static final @NonNull Operation _String___lt__gt_ = LIBRARY.createOperation(Types._String, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _String___ne_ = LIBRARY.createOperation(Types._String, "<>", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String___eq_ = LIBRARY.createOperation(Types._String, "=", Precedences._EQUALITY, Parameters._OclSelf, Types._Boolean,
 			4 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String___gt_ = LIBRARY.createOperation(Types._String, ">", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
 			5 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation.INSTANCE);
-		public static final @NonNull Operation _String___gt__eq_ = LIBRARY.createOperation(Types._String, ">=", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
+		public static final @NonNull Operation _String___ge_ = LIBRARY.createOperation(Types._String, ">=", Precedences._RELATIONAL, Parameters._OclSelf, Types._Boolean,
 			6 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation.INSTANCE);
 		public static final @NonNull Operation _String__at = LIBRARY.createOperation(Types._String, "at", null, Parameters._Integer, Types._String,
 			7 | IsInvalidating | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.string.StringAtOperation.INSTANCE);
@@ -1558,7 +1558,7 @@ public class OCLstdlibTables extends AbstractTables
 		}
 
 		private static final @NonNull Operation @NonNull [] _Bag__Bag /* Bag(T) */ = {
-			Operations._Bag___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Bag___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Bag___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Bag__closure /* closure(E)(E[?]|Lambda E() : Collection(E)[?]) */,
 			Operations._Bag__collect /* collect(E)(T[?]|Lambda T() : E[?]) */,
@@ -1575,7 +1575,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Bag__sortedBy /* sortedBy(T[?]|Lambda T() : OclComparable[?]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Bag__Collection /* Bag(T) */ = {
-			Operations._Bag___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Bag___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Bag___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Collection__any /* any(T[1]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__asBag /* asBag() */,
@@ -1625,7 +1625,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__union /* union(Collection(T)) */
 		};
 		private static final @NonNull Operation @NonNull [] _Bag__OclAny /* Bag(T) */ = {
-			Operations._Bag___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Bag___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Bag___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1643,7 +1643,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _Boolean__Boolean /* Boolean */ = {
-			Operations._Boolean___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Boolean___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Boolean___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Boolean__and /* _'and'(Boolean[?]) */,
 			Operations._Boolean__implies /* _'implies'(Boolean[?]) */,
@@ -1658,7 +1658,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Boolean__xor2 /* xor2(Boolean[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Boolean__OclAny /* Boolean */ = {
-			Operations._Boolean___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Boolean___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Boolean___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1676,7 +1676,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _Collection__Collection /* Collection(T) */ = {
-			Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Collection___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Collection___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Collection__any /* any(T[1]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__asBag /* asBag() */,
@@ -1726,7 +1726,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__union /* union(Collection(T)) */
 		};
 		private static final @NonNull Operation @NonNull [] _Collection__OclAny /* Collection(T) */ = {
-			Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Collection___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Collection___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1745,7 +1745,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _Entry__Entry /* Entry(K, V) */ = {};
 		private static final @NonNull Operation @NonNull [] _Entry__OclAny /* Entry(K, V) */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1777,7 +1777,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Integer__toUnlimitedNatural /* toUnlimitedNatural() */
 		};
 		private static final @NonNull Operation @NonNull [] _Integer__OclAny /* Integer */ = {
-			Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Real___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1795,9 +1795,9 @@ public class OCLstdlibTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _Integer__OclComparable /* Integer */ = {
 			Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
-			Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			Operations._OclComparable___le_ /* _'<='(OclSelf[1]) */,
 			Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
-			Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			Operations._OclComparable___ge_ /* _'>='(OclSelf[1]) */,
 			Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Integer__OclSummable /* Integer */ = {
@@ -1810,7 +1810,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Integer___neg_ /* _'-'() */,
 			Operations._Integer___sub_ /* _'-'(OclSelf[1]) */,
 			Operations._Integer___div_ /* _'/'(OclSelf[1]) */,
-			Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Real___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Integer__abs /* abs() */,
 			Operations._Real__floor /* floor() */,
@@ -1821,7 +1821,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _Map__Map /* Map(K, V)(K[?],V[?]) */ = {
-			Operations._Map___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Map___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Map___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Map__any /* any(K[1]|Lambda K() : Boolean[?]) */,
 			Operations._Map__at /* at(K[?]) */,
@@ -1866,7 +1866,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Map__values /* values() */
 		};
 		private static final @NonNull Operation @NonNull [] _Map__OclAny /* Map(K, V)(K[?],V[?]) */ = {
-			Operations._Map___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Map___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Map___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1884,7 +1884,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _OclAny__OclAny /* OclAny */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1903,13 +1903,13 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _OclComparable__OclComparable /* OclComparable */ = {
 			Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
-			Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			Operations._OclComparable___le_ /* _'<='(OclSelf[1]) */,
 			Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
-			Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			Operations._OclComparable___ge_ /* _'>='(OclSelf[1]) */,
 			Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _OclComparable__OclAny /* OclComparable */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1940,7 +1940,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 		private static final @NonNull Operation @NonNull [] _OclElement__OclAny /* OclElement */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1959,7 +1959,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _OclEnumeration__OclEnumeration /* OclEnumeration */ = {};
 		private static final @NonNull Operation @NonNull [] _OclEnumeration__OclAny /* OclEnumeration */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -1993,7 +1993,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _OclInvalid__OclInvalid /* OclInvalid */ = {
-			Operations._OclInvalid___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclInvalid___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclInvalid___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclInvalid__and /* _'and'(Boolean[?]) */,
 			Operations._OclInvalid__implies /* _'implies'(Boolean[?]) */,
@@ -2009,7 +2009,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclInvalid__toString /* toString() */
 		};
 		private static final @NonNull Operation @NonNull [] _OclInvalid__OclAny /* OclInvalid */ = {
-			Operations._OclInvalid___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclInvalid___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclInvalid___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclInvalid__oclAsSet /* oclAsSet() */,
 			Operations._OclInvalid__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2027,7 +2027,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _OclInvalid__OclVoid /* OclInvalid */ = {
 			Operations._OclVoid___add_ /* _'+'(String[?]) */,
-			Operations._OclInvalid___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclInvalid___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclInvalid___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclInvalid__and /* _'and'(Boolean[?]) */,
 			Operations._OclInvalid__implies /* _'implies'(Boolean[?]) */,
@@ -2048,7 +2048,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _OclLambda__OclLambda /* OclLambda */ = {};
 		private static final @NonNull Operation @NonNull [] _OclLambda__OclAny /* OclLambda */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2072,7 +2072,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclMessage__result /* result() */
 		};
 		private static final @NonNull Operation @NonNull [] _OclMessage__OclAny /* OclMessage */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2091,7 +2091,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _OclSelf__OclSelf /* OclSelf */ = {};
 		private static final @NonNull Operation @NonNull [] _OclSelf__OclAny /* OclSelf */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2110,7 +2110,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _OclState__OclState /* OclState */ = {};
 		private static final @NonNull Operation @NonNull [] _OclState__OclAny /* OclState */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2129,7 +2129,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _OclStereotype__OclStereotype /* OclStereotype */ = {};
 		private static final @NonNull Operation @NonNull [] _OclStereotype__OclAny /* OclStereotype */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2167,7 +2167,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclSummable__zero /* zero() */
 		};
 		private static final @NonNull Operation @NonNull [] _OclSummable__OclAny /* OclSummable */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2185,11 +2185,11 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _OclTuple__OclTuple /* OclTuple */ = {
-			Operations._OclTuple___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclTuple___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclTuple___eq_ /* _'='(OclSelf[?]) */
 		};
 		private static final @NonNull Operation @NonNull [] _OclTuple__OclAny /* OclTuple */ = {
-			Operations._OclTuple___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclTuple___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclTuple___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2210,7 +2210,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 		private static final @NonNull Operation @NonNull [] _OclType__OclAny /* OclType */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2242,7 +2242,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _OclVoid__OclVoid /* OclVoid */ = {
 			Operations._OclVoid___add_ /* _'+'(String[?]) */,
-			Operations._OclVoid___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclVoid___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclVoid___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclVoid__and /* _'and'(Boolean[?]) */,
 			Operations._OclVoid__implies /* _'implies'(Boolean[?]) */,
@@ -2261,7 +2261,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OclVoid__toString /* toString() */
 		};
 		private static final @NonNull Operation @NonNull [] _OclVoid__OclAny /* OclVoid */ = {
-			Operations._OclVoid___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclVoid___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclVoid___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclVoid__oclAsSet /* oclAsSet() */,
 			Operations._OclVoid__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2286,7 +2286,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OrderedCollection__last /* last() */
 		};
 		private static final @NonNull Operation @NonNull [] _OrderedCollection__Collection /* OrderedCollection(T) */ = {
-			Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Collection___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Collection___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Collection__any /* any(T[1]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__asBag /* asBag() */,
@@ -2336,7 +2336,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__union /* union(Collection(T)) */
 		};
 		private static final @NonNull Operation @NonNull [] _OrderedCollection__OclAny /* OrderedCollection(T) */ = {
-			Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Collection___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Collection___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2355,7 +2355,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _OrderedSet__OrderedSet /* OrderedSet(T) */ = {
 			Operations._OrderedSet___sub_ /* _'-'(UniqueCollection(OclAny)) */,
-			Operations._OrderedSet___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OrderedSet___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OrderedSet___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OrderedSet__append /* append(T[?]) */,
 			Operations._OrderedSet__appendAll /* appendAll(OrderedCollection(T)) */,
@@ -2379,7 +2379,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._OrderedSet__subOrderedSet /* subOrderedSet(Integer[1],Integer[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _OrderedSet__Collection /* OrderedSet(T) */ = {
-			Operations._OrderedSet___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OrderedSet___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OrderedSet___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Collection__any /* any(T[1]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__asBag /* asBag() */,
@@ -2429,7 +2429,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__union /* union(Collection(T)) */
 		};
 		private static final @NonNull Operation @NonNull [] _OrderedSet__OclAny /* OrderedSet(T) */ = {
-			Operations._OrderedSet___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OrderedSet___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OrderedSet___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2466,7 +2466,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Real___neg_ /* _'-'() */,
 			Operations._Real___sub_ /* _'-'(OclSelf[1]) */,
 			Operations._Real___div_ /* _'/'(OclSelf[1]) */,
-			Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Real___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Real__abs /* abs() */,
 			Operations._Real__floor /* floor() */,
@@ -2476,7 +2476,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Real__toString /* toString() */
 		};
 		private static final @NonNull Operation @NonNull [] _Real__OclAny /* Real */ = {
-			Operations._Real___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Real___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Real___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2494,9 +2494,9 @@ public class OCLstdlibTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _Real__OclComparable /* Real */ = {
 			Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
-			Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			Operations._OclComparable___le_ /* _'<='(OclSelf[1]) */,
 			Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
-			Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			Operations._OclComparable___ge_ /* _'>='(OclSelf[1]) */,
 			Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Real__OclSummable /* Real */ = {
@@ -2505,7 +2505,7 @@ public class OCLstdlibTables extends AbstractTables
 		};
 
 		private static final @NonNull Operation @NonNull [] _Sequence__Sequence /* Sequence(T) */ = {
-			Operations._Sequence___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Sequence___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Sequence___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Sequence__append /* append(T[?]) */,
 			Operations._Sequence__appendAll /* appendAll(OrderedCollection(T)) */,
@@ -2529,7 +2529,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Sequence__subSequence /* subSequence(Integer[1],Integer[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Sequence__Collection /* Sequence(T) */ = {
-			Operations._Sequence___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Sequence___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Sequence___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Collection__any /* any(T[1]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__asBag /* asBag() */,
@@ -2579,7 +2579,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__union /* union(Collection(T)) */
 		};
 		private static final @NonNull Operation @NonNull [] _Sequence__OclAny /* Sequence(T) */ = {
-			Operations._Sequence___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Sequence___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Sequence___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2605,7 +2605,7 @@ public class OCLstdlibTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _Set__Set /* Set(T) */ = {
 			Operations._Set___sub_ /* _'-'(UniqueCollection(OclAny)) */,
-			Operations._Set___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Set___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Set___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Set__closure /* closure(E)(E[?]|Lambda E() : Collection(E)[?]) */,
 			Operations._Set__collect /* collect(E)(T[?]|Lambda T() : E[?]) */,
@@ -2622,7 +2622,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Set__sortedBy /* sortedBy(T[?]|Lambda T() : OclComparable[?]) */
 		};
 		private static final @NonNull Operation @NonNull [] _Set__Collection /* Set(T) */ = {
-			Operations._Set___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Set___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Set___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Collection__any /* any(T[1]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__asBag /* asBag() */,
@@ -2672,7 +2672,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__union /* union(Collection(T)) */
 		};
 		private static final @NonNull Operation @NonNull [] _Set__OclAny /* Set(T) */ = {
-			Operations._Set___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Set___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Set___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2699,11 +2699,11 @@ public class OCLstdlibTables extends AbstractTables
 		private static final @NonNull Operation @NonNull [] _String__String /* String */ = {
 			Operations._String___add_ /* _'+'(String[?]) */,
 			Operations._String___lt_ /* _'<'(OclSelf[1]) */,
-			Operations._String___lt__eq_ /* _'<='(OclSelf[1]) */,
-			Operations._String___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._String___le_ /* _'<='(OclSelf[1]) */,
+			Operations._String___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._String___eq_ /* _'='(OclSelf[?]) */,
 			Operations._String___gt_ /* _'>'(OclSelf[1]) */,
-			Operations._String___gt__eq_ /* _'>='(OclSelf[1]) */,
+			Operations._String___ge_ /* _'>='(OclSelf[1]) */,
 			Operations._String__at /* at(Integer[1]) */,
 			Operations._String__characters /* characters() */,
 			Operations._String__compareTo /* compareTo(OclSelf[1]) */,
@@ -2734,7 +2734,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._String__trim /* trim() */
 		};
 		private static final @NonNull Operation @NonNull [] _String__OclAny /* String */ = {
-			Operations._String___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._String___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._String___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2752,9 +2752,9 @@ public class OCLstdlibTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _String__OclComparable /* String */ = {
 			Operations._String___lt_ /* _'<'(OclSelf[1]) */,
-			Operations._String___lt__eq_ /* _'<='(OclSelf[1]) */,
+			Operations._String___le_ /* _'<='(OclSelf[1]) */,
 			Operations._String___gt_ /* _'>'(OclSelf[1]) */,
-			Operations._String___gt__eq_ /* _'>='(OclSelf[1]) */,
+			Operations._String___ge_ /* _'>='(OclSelf[1]) */,
 			Operations._String__compareTo /* compareTo(OclSelf[1]) */
 		};
 		private static final @NonNull Operation @NonNull [] _String__OclSummable /* String */ = {
@@ -2770,7 +2770,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._UniqueCollection__union /* union(UniqueCollection(T)) */
 		};
 		private static final @NonNull Operation @NonNull [] _UniqueCollection__Collection /* UniqueCollection(T) */ = {
-			Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Collection___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Collection___eq_ /* _'='(OclSelf[?]) */,
 			Operations._Collection__any /* any(T[1]|Lambda T() : Boolean[?]) */,
 			Operations._Collection__asBag /* asBag() */,
@@ -2820,7 +2820,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._Collection__union /* union(Collection(T)) */
 		};
 		private static final @NonNull Operation @NonNull [] _UniqueCollection__OclAny /* UniqueCollection(T) */ = {
-			Operations._Collection___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._Collection___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._Collection___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2844,7 +2844,7 @@ public class OCLstdlibTables extends AbstractTables
 			Operations._UnlimitedNatural__toInteger /* toInteger() */
 		};
 		private static final @NonNull Operation @NonNull [] _UnlimitedNatural__OclAny /* UnlimitedNatural */ = {
-			Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			Operations._OclAny__oclAsSet /* oclAsSet() */,
 			Operations._UnlimitedNatural__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -2862,9 +2862,9 @@ public class OCLstdlibTables extends AbstractTables
 		};
 		private static final @NonNull Operation @NonNull [] _UnlimitedNatural__OclComparable /* UnlimitedNatural */ = {
 			Operations._OclComparable___lt_ /* _'<'(OclSelf[1]) */,
-			Operations._OclComparable___lt__eq_ /* _'<='(OclSelf[1]) */,
+			Operations._OclComparable___le_ /* _'<='(OclSelf[1]) */,
 			Operations._OclComparable___gt_ /* _'>'(OclSelf[1]) */,
-			Operations._OclComparable___gt__eq_ /* _'>='(OclSelf[1]) */,
+			Operations._OclComparable___ge_ /* _'>='(OclSelf[1]) */,
 			Operations._OclComparable__compareTo /* compareTo(OclSelf[1]) */
 		};
 

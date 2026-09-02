@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 // import org.eclipse.ocl.pivot.internal.lookup.LookupPackage;
 // import org.eclipse.ocl.pivot.internal.lookup.LookupTables;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
+import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
@@ -339,7 +340,7 @@ public class LookupTables extends AbstractTables
 
 		private static final @NonNull Operation @NonNull [] _Executor__Executor = {};
 		private static final @NonNull Operation @NonNull [] _Executor__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,
@@ -376,7 +377,7 @@ public class LookupTables extends AbstractTables
 			Operations._LookupEnvironment__hasFinalResult /* hasFinalResult() */
 		};
 		private static final @NonNull Operation @NonNull [] _LookupEnvironment__OclAny = {
-			OCLstdlibTables.Operations._OclAny___lt__gt_ /* _'<>'(OclSelf[?]) */,
+			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
 			OCLstdlibTables.Operations._OclAny__oclAsType /* oclAsType(TT)(TT[1]) */,

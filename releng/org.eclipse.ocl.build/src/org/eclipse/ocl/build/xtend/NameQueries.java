@@ -50,10 +50,6 @@ public class NameQueries
 {
 	public static final Logger logger = Logger.getLogger(NameQueries.class);
 
-	public static @NonNull String rawEncodeName(@NonNull String name, @NonNull Integer arity) {
-		return AbstractGenModelHelper.rawEncodeName(name, arity);
-	}
-
 	protected final @NonNull EnvironmentFactory environmentFactory;
 	protected final @NonNull ASSaver asSaver;
 	protected final @NonNull GenPackageManager genPackageManager;
