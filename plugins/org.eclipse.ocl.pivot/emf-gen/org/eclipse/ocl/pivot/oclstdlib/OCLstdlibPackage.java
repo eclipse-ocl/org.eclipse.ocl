@@ -44,6 +44,91 @@ import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
  * </ul>
  * @noreference This class is not intended to be referenced by clients.
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ *
+ * This clause describes the OCL Standard Library of predefined types, their operations, and predefined expression templates in the OCL.
+ * This sub clause contains all standard types defined within OCL, including all the operations defined on those types.
+ * For each operation the signature and a description of the semantics is given.
+ * Within the description, the reserved word ‘result’ is used to refer to the value that results from evaluating the operation.
+ * In several places, post conditions are used to describe properties of the result.
+ * When there is more than one postcondition, all postconditions must be true.
+ * A similar thing is true for multiple preconditions.
+ * If these are used, the operation is only defined if all preconditions evaluate to oclText[true].
+ *
+ * heading:1[Introduction]
+ *
+ * The structure, syntax, and semantics of the OCL is defined in Clauses 8 (“Abstract Syntax”), 9 (“Concrete Syntax”),
+ * and 10 (“Semantics Described using UML”).
+ * This sub clause adds another part to the OCL definition: a library of predefined types and operations.
+ * Any implementation of OCL must include this library package. This approach has also been taken by e.g., the Java definition,
+ * where the language definition and the standard libraries are both mandatory parts of the complete language definition.
+ *
+ * The OCL standard library defines a number of types.
+ * It includes several primitive types: UnlimitedNatural, Integer, Real, String, and Boolean.
+ * These are familiar from many other languages. The second part of the standard library consists of the collection types.
+ * They are Bag, Set, Sequence, and Collection where Collection is an abstract type.
+ * Note that all types defined in the OCL standard library are instances of an abstract syntax class.
+ * The OCL standard library exists at the modeling level, also referred to as the M1 level, where the abstract syntax is the metalevel or M2 level.
+ *
+ * Next to definitions of types the OCL standard library defines a number of template expressions.
+ * Many operations defined on collections map not on the abstract syntax metaclass FeatureCallExp, but on the IteratorExp.
+ * For each of these a template expression that defines the name and format of the expression is defined in 11.8, Predefined Iterator Expressions.
+ *
+ * The Standard Library may be extended with new types, new operations and new iterators.
+ * In particular new operations can be defined for collections.
+ *
+ * Certain String operations depend on the prevailing locale to ensure that Strings are collated and characters are case-converted
+ * in an appropriate fashion.
+ * A locale is defined as a concatenation of up to three character sequences separated by underscores,
+ * with the first sequence identifying the language and the second sequence identifying the country.
+ * The third sequence is empty but may encode an implementation-specific variant.
+ * Trailing empty strings and separators may be omitted.
+ *
+ * The character sequences for languages are defined by ISO 639.
+ *
+ * The character sequences for countries are defined by ISO 3166.
+ *
+ * ‘fr_CA’ therefore identifies the locale for the French language in the Canada country.
+ *
+ * Comparison of strings and consequently the collation order of Collection::sortedBy()
+ * conforms to the Unicode Collation algorithm defined by Unicode Technical Standard#10.
+ *
+ * The locale is ‘en_us’ by default but may be configured by a property constraint on OclAny::oclLocale.
+ *
+ * The prevailing locale is defined by the prevailing value of oclLocale within the current environment;
+ * it may therefore be changed temporarily by using a Let expression.
+ * let oclLocale : String = ‘fr_CA’ in aString.toUpperCase()
+ *
+ * heading:1[Iterators]
+ *
+ * This sub clause defines the standard OCL iterator expressions.
+ * In the abstract syntax these are all instances of IteratorExp.
+ * These iterator expressions always have a collection expression as their source,
+ * as is defined in the well-formedness rules in Clause 8 (“Abstract Syntax”).
+ * The defined iterator expressions are shown per source collection type.
+ * The semantics of each iterator expression is defined through a mapping from the iterator to the ‘iterate’ construct.
+ * This means that the semantics of the iterator expressions do not need to be defined separately in the semantics sub clauses.
+ *
+ * In all of the following OCL expressions, the lefthand side of the equals sign is the IteratorExp to be defined,
+ * and the righthand side of the equals sign is the equivalent as an IterateExp.
+ * The names source, body, and iterator refer to the role names in the abstract syntax:
+ *
+ * source	The source expression of the IteratorExp.
+ *
+ * body	The body expression of the IteratorExp.
+ *
+ * iterator	The iterator variable of the IteratorExp.
+ *
+ * result	The result variable of the IterateExp.
+ *
+ * heading:2[Extending the Standard Library with Iterator Expressions]
+ *
+ * It is possible to add new iterator expressions in the standard library.
+ * If this is done the semantics of a new iterator should be defined by mapping it to existing constructs,
+ * in the same way the semantics of pre-defined iterators is done (see sub clause 11.9)
+ *
+ *
+ * <!-- end-model-doc -->
  * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibFactory
  * @generated
  */

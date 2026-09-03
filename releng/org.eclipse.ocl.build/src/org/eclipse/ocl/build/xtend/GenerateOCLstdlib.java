@@ -29,6 +29,7 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.Diagnostician;
@@ -345,19 +346,32 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 						}
 					}
 				}
-				ePackage.getEAnnotations().clear();
-				//			EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
-				//			if (eAnnotation != null) {
-				//				ePackage.getEAnnotations().remove(eAnnotation);
-				//			}
-				//			eAnnotation = ePackage.getEAnnotation(GenModelPackage.eNS_URI);
-				//			if (eAnnotation != null) {
-				//				ePackage.getEAnnotations().remove(eAnnotation);
-				//			}
+				EList<EAnnotation> ePackageAnnotations = ePackage.getEAnnotations();
+			//	ePackageAnnotations.clear();
+				EAnnotation eAnnotation = ePackage.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
+				if (eAnnotation != null) {
+					ePackageAnnotations.remove(eAnnotation);
+				}
+			//	eAnnotation = ePackage.getEAnnotation(GenModelPackage.eNS_URI);
+			//	if (eAnnotation != null) {
+			//		ePackageAnnotations.remove(eAnnotation);
+			//	}
+				eAnnotation = ePackage.getEAnnotation(EcorePackage.eNS_URI);
+				if (eAnnotation != null) {
+					ePackageAnnotations.remove(eAnnotation);		// XXX bypass defective delegate CG support for iterations/operations
+				}
+				//
+				EAnnotation asLibraryEAnnotation = ePackage.getEAnnotation(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
 				if (isASLibrary) {
-					EAnnotation eAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
-					eAnnotation.setSource(PivotConstants.AS_LIBRARY_ANNOTATION_SOURCE);
-					ePackage.getEAnnotations().add(eAnnotation);
+					if (asLibraryEAnnotation == null) {
+						asLibraryEAnnotation = EcoreFactory.eINSTANCE.createEAnnotation();
+						ePackageAnnotations.add(asLibraryEAnnotation);
+					}
+				}
+				else {
+					if (asLibraryEAnnotation != null) {
+						ePackageAnnotations.remove(asLibraryEAnnotation);
+					}
 				}
 				log.info("Saving '" + ecoreURI + "'");
 				eResource.save(null);
