@@ -237,10 +237,11 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 		//	log.info("Loading '" + saveURI + "'");
 			log.info("Saving '" + saveURI + "'");
 			asResource.setURI(saveURI);
-			Map<String, Object> options = new HashMap<String, Object>();
+			Map<Object, Object> options = new HashMap<>();
 			options.put(ASResource.OPTION_NORMALIZE_CONTENTS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_LUSSID_COLLISIONS, Boolean.TRUE);
 			options.put(AS2ID.DEBUG_XMIID_COLLISIONS, Boolean.TRUE);
+			options.put(ASSaver.class, saver);
 			asResource.setSaveable(true);
 			asResource.save(options);
 			for (Resource resource : asResource.getResourceSet().getResources()) {
