@@ -52,6 +52,7 @@ import org.eclipse.ocl.pivot.TypedElement;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
+import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.delegate.DelegateInstaller;
 import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
@@ -242,13 +243,19 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 		boolean keyIsTemplate = keyType instanceof TemplateParameter;
 		boolean valueIsTemplate = valueType instanceof TemplateParameter;
 		StringBuilder s = new StringBuilder();
-		s.append("Entry");
+		s.append(TypeId.ENTRY_NAME);
 		s.append(keysAreNullFree ? "_r" : "_o");
-		if (!keyIsTemplate) {
+		/*if (keyType instanceof NormalizedTemplateParameter) {
+			s.append(((NormalizedTemplateParameter)keyType).getIndex());	-- Entry leapfrogs to Map templates
+		}
+		else*/ if (!keyIsTemplate) {
 			s.append(keyType.getName());
 		}
 		s.append(valuesAreNullFree ? "_r" : "_o");
-		if (!valueIsTemplate) {
+		/*if (valueType instanceof NormalizedTemplateParameter) {
+			s.append(((NormalizedTemplateParameter)valueType).getIndex());	-- Entry leapfrogs to Map templates
+		}
+		else*/ if (!valueIsTemplate) {
 			s.append(valueType.getName());
 		}
 		String name = s.toString();

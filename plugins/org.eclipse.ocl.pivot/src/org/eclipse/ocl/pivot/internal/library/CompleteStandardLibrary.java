@@ -595,8 +595,13 @@ public class CompleteStandardLibrary extends ConcreteStandardLibrary
 	public @NonNull EntryType getEntryType(@NonNull Type keyType, boolean keysAreNullFree, @NonNull Type valueType, boolean valuesAreNullFree) {
 		EntryType entryType = getEntryType();
 		assert entryType == PivotUtil.getGenericElement(entryType);
-		if ((keyType == entryType.getKeyType()) && (valueType == entryType.getValueType())) {
-			return entryType;		// XXX ??? never happens now that NormalizedTemplatedParameter in use
+	//	if ((keyType == entryType.getKeyType()) && (valueType == entryType.getValueType())) {
+	//		return entryType;		// XXX ??? never happens now that NormalizedTemplatedParameter in use
+	//	}
+		if ((keyType instanceof NormalizedTemplateParameter) && (((NormalizedTemplateParameter)keyType).getIndex() == 0)
+		 && (valueType instanceof NormalizedTemplateParameter) && (((NormalizedTemplateParameter)valueType).getIndex() == 1)
+		 && (keysAreNullFree == entryType.isKeysAreNullFree()) && (valuesAreNullFree == entryType.isValuesAreNullFree())) {
+			return entryType;	// XXX should not happen; rarely happens since Entry is not nullFree
 		}
 		return super.getEntryType(keyType, keysAreNullFree, valueType, valuesAreNullFree);
 	}
