@@ -879,8 +879,10 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	operation values() : Bag(V) => 'org.eclipse.ocl.pivot.library.map.MapValuesOperation';
 }
 
-	/*
-	The number of elements in the collection oclText[self].essions.
+/*
+All types in the UML model and the primitive and collection types in the OCL standard library conforms to the type OclAny.
+Conceptually, OclAny behaves as a supertype for all the types.
+Features of OclAny are available on each object in all OCL expressions.
 OclAny is itself an instance of the metatype AnyType.
 
 All classes in a UML model inherit all operations defined on OclAny.
