@@ -689,7 +689,7 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 	/*
 	Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].
 	Returns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,
-	otherwise if there are one or more kets for which the e[body] is oclText[true],
+	otherwise if there are one or more keys for which the e[body] is oclText[true],
 	an indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].
 	
 	let source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in
@@ -893,7 +893,7 @@ One can also use qualification by OclAny (name of the type) to explicitly refer 
 
 Operations of OclAny, where the instance of OclAny is called object.
 */
-abstract type OclAny : AnyType => 'org.eclipse.ocl.pivot.AnyType' {
+abstract type OclAny : AnyType => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	True if oclText[self] is the same object as object2. Infix operator.
@@ -1000,7 +1000,7 @@ abstract type OclAny : AnyType => 'org.eclipse.ocl.pivot.AnyType' {
 The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived
 compareTo implementation may be sorted. 
 */
-abstract type OclComparable conformsTo OclAny {
+abstract type OclComparable conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	Return -ve, 0, +ve according to whether self is less than, equal to , or greater than that.
@@ -1030,7 +1030,7 @@ abstract type OclComparable conformsTo OclAny {
 The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined
 for OclElement are therefore applicable to all user-defined types.
 */
-abstract type OclElement conformsTo OclAny {
+abstract type OclElement conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].
@@ -1120,7 +1120,7 @@ It has one single instance, identified as  oclText[invalid].
 Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().
 OclInvalid is itself an instance of the metatype InvalidType.
 */
-abstract type OclInvalid : InvalidType conformsTo OclVoid => 'org.eclipse.ocl.pivot.InvalidType' {
+abstract type OclInvalid : InvalidType conformsTo OclVoid => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	Returns oclText[invalid].
@@ -1160,7 +1160,7 @@ abstract type OclInvalid : InvalidType conformsTo OclVoid => 'org.eclipse.ocl.pi
 The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda
 therefore apply to all lambda expressions.
 */
-abstract type OclLambda conformsTo OclAny {
+abstract type OclLambda conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 }
 
@@ -1181,7 +1181,7 @@ OclMessage is itself an instance of the metatype MessageType.
 
 OclMessage has a number of predefined operations, as shown in the OCL Standard Library.
 */
-abstract type OclMessage conformsTo OclAny {
+abstract type OclMessage conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
 	/*
 	True if type of template parameter is an operation call, and the called operation has returned a value.
@@ -1207,11 +1207,11 @@ abstract type OclMessage conformsTo OclAny {
 The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation
 and Iteration signatures. Instances of OclSelf are never created. 
 */
-abstract type OclSelf : SelfType conformsTo OclAny => 'org.eclipse.ocl.pivot.SelfType' {
+abstract type OclSelf : SelfType conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 }
 
-abstract type OclState conformsTo OclAny {
+abstract type OclState conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
 }
 
@@ -1219,7 +1219,7 @@ abstract type OclState conformsTo OclAny {
 The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined
 for OclStereotype are therefore applicable to all UML stereotypes.
 */
-abstract type OclStereotype conformsTo OclType {
+abstract type OclStereotype conformsTo OclType => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 }
 
@@ -1227,7 +1227,7 @@ abstract type OclStereotype conformsTo OclType {
 The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived
 sum and zero implementations may be summed. 
 */
-abstract type OclSummable conformsTo OclAny {
+abstract type OclSummable conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	Return the sum of self and that.
@@ -1247,7 +1247,7 @@ abstract type OclSummable conformsTo OclAny {
 The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple
 therefore apply to all tuples.
 */
-abstract type OclTuple conformsTo OclAny {
+abstract type OclTuple conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	operation "="(object2 : OclSelf) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation';
 	operation "<>"(object2 : OclSelf) : Boolean[1] precedence=EQUALITY => 'org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation';
@@ -1264,7 +1264,7 @@ If the source is the oclText[null] literal, it is implicitly converted to Bag{}.
 
 OclVoid is itself an instance of the metatype VoidType.
 */
-abstract type OclVoid : VoidType conformsTo OclAny => 'org.eclipse.ocl.pivot.VoidType' {
+abstract type OclVoid : VoidType conformsTo OclAny => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	Redefines the OclAny operation, returning oclText[true] if object is oclText[null], oclText[invalid]
@@ -1927,7 +1927,7 @@ type UnlimitedNatural : PrimitiveType conformsTo OclComparable => 'org.eclipse.o
 The type OclType is the implicit supertype of any UML type. Operations defined
 for OclType are therefore applicable to all UML types.
 */
-abstract type OclType conformsTo OclElement {
+abstract type OclType conformsTo OclElement => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='OCL');
 	/*
 	Returns true if type2 conforms to self.
@@ -1939,7 +1939,7 @@ abstract type OclType conformsTo OclElement {
  The OclEnumeration type is the implicit supertype of any user Enumeration type.
  FIXME This is probably obsolete now that static / meta-types clarified.
  */
-abstract type OclEnumeration conformsTo OclType {
+abstract type OclEnumeration conformsTo OclType => 'java.lang.Object' {
 	annotation 'http://www.omg.org/ocl'(ClassGroup='UML');
 }
 

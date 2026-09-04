@@ -389,12 +389,21 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated
 	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eMetaClass, /*@NonNull*/ EClassifier eClassifier,
 			@Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
+		return createClass(eMetaClass, eClassifier, null, typeId, flags, typeParameters);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	public org.eclipse.ocl.pivot.@NonNull Class createClass(/*@NonNull*/ EClass eMetaClass, /*@NonNull*/ EClassifier eClassifier,
+			@Nullable String instanceClassName, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable ... typeParameters) {
 		assert eMetaClass != null;
 		assert eClassifier != null;
 		ClassImpl asClass = (ClassImpl)PivotFactory.eINSTANCE.create(eMetaClass);
-		initClass(asClass, eClassifier, typeId, flags, typeParameters);
+		initClass(asClass, eClassifier, instanceClassName, typeId, flags, typeParameters);
 		return asClass;
 	}
 
@@ -434,7 +443,7 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	public @NonNull Enumeration createEnumeration(/*@NonNull*/ EEnum eEnum) {
 		assert eEnum != null;
 		EnumerationImpl asClass = (EnumerationImpl)PivotFactory.eINSTANCE.createEnumeration();
-		initClass(asClass, eEnum, null, 0);
+		initClass(asClass, eEnum, null, null, 0);
 		return asClass;
 	}
 
@@ -1222,12 +1231,13 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		return (PrimitiveType) OCLstdlibTables.Types._UnlimitedNatural;
 	}
 
-	private void initClass(@NonNull ClassImpl asClass, @NonNull EClassifier eClassifier, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable... typeParameters) {
+	private void initClass(@NonNull ClassImpl asClass, @NonNull EClassifier eClassifier, @Nullable String instanceClassName, @Nullable TypeId typeId, int flags, @NonNull TemplateParameter @Nullable... typeParameters) {
 		asClass.setESObject(eClassifier);
 		asClass.setName(eClassifier.getName());
 		if (typeId != null) {
 			asClass.setTypeId(typeId);
 		}
+		asClass.setInstanceClassName(instanceClassName);
 		asClass.setIsAbstract((flags & FlatClass.ABSTRACT) != 0);
 		initTemplateParameters(asClass, typeParameters);
 		/*Ecore*/FlatModel flatModel = getFlatModel();					// XXX Migrate to initFragments

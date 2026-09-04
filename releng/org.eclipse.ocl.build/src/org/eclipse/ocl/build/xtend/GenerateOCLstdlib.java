@@ -265,30 +265,11 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 				EClass eOclAny = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ANY_NAME);
 				EClass eOclElement = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_ELEMENT_NAME);
 				EClass eOclType = (EClass) NameUtil.getENamedElement(eClassifiers, TypeId.OCL_TYPE_NAME);
-				for (EClassifier eClassifier : new ArrayList<EClassifier>(eClassifiers)) {
-					if (eClassifier instanceof EClass) {
-						EClass eClass = (EClass) eClassifier;
-						//						eClass.getEGenericSuperTypes().clear();
-					//	eClass.getEOperations().clear();
-						//						eClass.getEStructuralFeatures().clear();
+				for (EClassifier eClassifier : new ArrayList<>(eClassifiers)) {
+					EAnnotation oclAnnotation = eClassifier.getEAnnotation("http://www.omg.org/ocl");
+					if (oclAnnotation != null) {
+						eClassifier.getEAnnotations().remove(oclAnnotation);			// Lose OCL doc gen helper
 					}
-					//		eClassifier.getEAnnotations().clear();
-					EAnnotation zzAnnotation = eClassifier.getEAnnotation("http://www.omg.org/ocl");
-					if (zzAnnotation != null) {
-						eClassifier.getEAnnotations().remove(zzAnnotation);			// Lose OCL doc gen helper
-					}
-					zzAnnotation = eClassifier.getEAnnotation("http://www.eclipse.org/emf/2002/GenModel");
-					if (zzAnnotation != null) {
-						eClassifier.getEAnnotations().remove(zzAnnotation);			// XXX temporarily Lose documentation
-					}
-					//				EAnnotation eAnnotation = eClassifier.getEAnnotation(PivotConstants.OMG_OCL_ANNOTATION_SOURCE);
-					//				if (eAnnotation != null) {
-					//					eClassifier.getEAnnotations().remove(eAnnotation);
-					//				}
-					//				eAnnotation = eClassifier.getEAnnotation(GenModelPackage.eNS_URI);
-					//				if (eAnnotation != null) {
-					//					eClassifier.getEAnnotations().remove(eAnnotation);
-					//				}
 					String name = eClassifier.getName();
 					if ("OclAny".equals(name)) {
 						String comment = "This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.\nTrue functionality is only available once converted to a Pivot model.";
@@ -302,48 +283,6 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 					//
 					if (excludedEClassifierNames.contains(name)) {
 						eClassifiers.remove(eClassifier);
-					}
-					else {
-						//
-						//	Operations/properties referencing non-library classes are removed to avoid dangling references.
-						//
-						if (name.equals(TypeId.OCL_ENUMERATION_NAME)) {
-							EClass eClass = (EClass)eClassifier;
-							assert eClass.isAbstract();
-							eClass.getEOperations().clear();
-							eClass.getEStructuralFeatures().clear();
-						}
-						//
-						//	FIXME Library classes removed for API compatibility.
-						//
-						//					if (name.equals("OclEnumeration")
-						//							  || name.equals("OclSelf")) {
-						//							eClassifiers.remove(eClassifier);
-						//					}
-						//
-						//	Library classes have a non-null instance class name to suppress generation of a Java class
-						//
-						if (name.equals(TypeId.OCL_COMPARABLE_NAME)
-								|| name.equals(TypeId.OCL_ELEMENT_NAME)
-								|| name.equals(TypeId.OCL_ENUMERATION_NAME)
-								|| name.equals(TypeId.OCL_INVALID_NAME)
-								|| name.equals(TypeId.OCL_LAMBDA_NAME)
-								|| name.equals(TypeId.OCL_MESSAGE_NAME)
-								|| name.equals(TypeId.OCL_SELF_NAME)
-								|| name.equals(TypeId.OCL_STATE_NAME)
-								|| name.equals(TypeId.OCL_STEREOTYPE_NAME)
-								|| name.equals(TypeId.OCL_SUMMABLE_NAME)
-								|| name.equals(TypeId.OCL_TUPLE_NAME)
-								|| name.equals(TypeId.OCL_TYPE_NAME)
-								|| name.equals(TypeId.OCL_VOID_NAME)) {
-							EClass eClass = (EClass)eClassifier;
-							assert eClass.isAbstract();
-							eClassifier.setInstanceClass(Object.class);
-							eClass.setInterface(true);
-							if (eClass.getESuperTypes().isEmpty()) {
-								eClass.getESuperTypes().add(name.equals(TypeId.OCL_STEREOTYPE_NAME) ? eOclType : name.equals(TypeId.OCL_TYPE_NAME) ? eOclElement : eOclAny);
-							}
-						}
 					}
 				}
 				EList<EAnnotation> ePackageAnnotations = ePackage.getEAnnotations();

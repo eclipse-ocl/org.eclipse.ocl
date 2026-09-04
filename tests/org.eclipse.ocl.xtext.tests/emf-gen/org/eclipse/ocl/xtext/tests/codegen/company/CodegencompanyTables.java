@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -49,7 +50,6 @@ import org.eclipse.ocl.pivot.ids.TupleTypeId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
-import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
@@ -187,15 +187,15 @@ public class CodegencompanyTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Bug418716 = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.BUG418716, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Company = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.COMPANY, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Bug418716 = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.BUG418716, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Company = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.COMPANY, null, null, 0);
 		public static final @NonNull Enumeration _CompanySizeKind = LIBRARY.createEnumeration(CodegencompanyPackage.Literals.COMPANY_SIZE_KIND);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Employee = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.EMPLOYEE, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Employee = LIBRARY.createClass(PivotPackage.Literals.CLASS, CodegencompanyPackage.Literals.EMPLOYEE, null, null, 0);
 
 		/*
 		 * AS Class indexed by EClassifier.getClassifierID().
 		 */
-		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] eClassifierID2asClass = {
+		private static final org.eclipse.ocl.pivot.@Nullable Class @NonNull [] eClassifierID2asClass = {
 			/* 0 */ _Company,
 			/* 1 */ _Employee,
 			/* 2 */ _CompanySizeKind,
@@ -206,7 +206,7 @@ public class CodegencompanyTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass);
+			LIBRARY.initPackage(MODEL, PACKAGE, eClassifierID2asClass);
 			Init.initEnd();
 		}
 
@@ -460,8 +460,8 @@ public class CodegencompanyTables extends AbstractTables
 			TypeFragments.init();
 		}
 
-		private static final @NonNull Operation @NonNull [] _Bug418716__Bug418716 = {};
-		private static final @NonNull Operation @NonNull [] _Bug418716__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Bug418716__Bug418716 /* Bug418716 */ = {};
+		private static final @NonNull Operation @NonNull [] _Bug418716__OclAny /* Bug418716 */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -478,7 +478,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _Bug418716__OclElement = {
+		private static final @NonNull Operation @NonNull [] _Bug418716__OclElement /* Bug418716 */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -492,8 +492,8 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _Company__Company = {};
-		private static final @NonNull Operation @NonNull [] _Company__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Company__Company /* Company */ = {};
+		private static final @NonNull Operation @NonNull [] _Company__OclAny /* Company */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -510,7 +510,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _Company__OclElement = {
+		private static final @NonNull Operation @NonNull [] _Company__OclElement /* Company */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -524,8 +524,8 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _CompanySizeKind__CompanySizeKind = {};
-		private static final @NonNull Operation @NonNull [] _CompanySizeKind__OclAny = {
+		private static final @NonNull Operation @NonNull [] _CompanySizeKind__CompanySizeKind /* CompanySizeKind */ = {};
+		private static final @NonNull Operation @NonNull [] _CompanySizeKind__OclAny /* CompanySizeKind */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -542,7 +542,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _CompanySizeKind__OclElement = {
+		private static final @NonNull Operation @NonNull [] _CompanySizeKind__OclElement /* CompanySizeKind */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -555,16 +555,16 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
-		private static final @NonNull Operation @NonNull [] _CompanySizeKind__OclEnumeration = {};
-		private static final @NonNull Operation @NonNull [] _CompanySizeKind__OclType = {
+		private static final @NonNull Operation @NonNull [] _CompanySizeKind__OclEnumeration /* CompanySizeKind */ = {};
+		private static final @NonNull Operation @NonNull [] _CompanySizeKind__OclType /* CompanySizeKind */ = {
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
-		private static final @NonNull Operation @NonNull [] _Employee__Employee = {
+		private static final @NonNull Operation @NonNull [] _Employee__Employee /* Employee */ = {
 			Operations._Employee__hasNameAsOperation /* hasNameAsOperation() */,
 			Operations._Employee__reportsTo /* reportsTo(Employee[?]) */
 		};
-		private static final @NonNull Operation @NonNull [] _Employee__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Employee__OclAny /* Employee */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -581,7 +581,7 @@ public class CodegencompanyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _Employee__OclElement = {
+		private static final @NonNull Operation @NonNull [] _Employee__OclElement /* Employee */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,

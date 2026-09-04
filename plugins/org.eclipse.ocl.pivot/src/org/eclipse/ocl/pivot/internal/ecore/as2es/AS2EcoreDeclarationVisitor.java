@@ -12,13 +12,11 @@
 package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -49,7 +47,6 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.common.OCLCommon;
 import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -88,8 +85,6 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
-import org.eclipse.ocl.pivot.values.Bag;
-import org.eclipse.ocl.pivot.values.OrderedSet;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -492,38 +487,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		return eAnnotation;
 	}
 
-	/*	@Override
-	public EObject visitAnyType(@NonNull AnyType pivotAnyType) {
-		if (pivotAnyType.basicGetOwnedTemplateArguments() != null) {
-			return null;
-		}
-		@SuppressWarnings("null")
-		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-		copyClassifier(eClass, pivotAnyType);
-		Class<?> instanceClass = null;
-		String name = pivotAnyType.getName();
-		if (TypeId.OCL_ANY_NAME.equals(name)) {
-			instanceClass = Object.class;
-		}
-		eClass.setInstanceClass(instanceClass);
-		eClass.setAbstract(true);
-		eClass.setInterface(true);
-		copyOperations(eClass, pivotAnyType);
-		copyProperties(eClass, pivotAnyType);
-		return eClass;
-	} */
-
-	@Override
-	public EObject visitAnyType(@NonNull AnyType pivotAnyType) {
-		EClass eClass = (EClass)super.visitAnyType(pivotAnyType);
-		if (eClass != null) {
-			eClass.setInstanceClass(Object.class);			// XXX
-			eClass.setAbstract(true);
-			eClass.setInterface(true);
-		}
-		return eClass;
-	}
-
 	@Override
 	public EObject visitClass(org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
 		if (pivotClass.basicGetOwnedTemplateArguments() != null) {
@@ -533,7 +496,11 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		copyClassifier(eClass, pivotClass);
 		eClass.setAbstract(pivotClass.isIsAbstract());
-		eClass.setInterface(pivotClass.isIsInterface());
+		boolean isInterface = pivotClass.isIsInterface();
+		if (pivotClass.eIsSet(PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME)) {
+			isInterface = pivotClass.isIsAbstract();
+		}
+		eClass.setInterface(isInterface);
 		context.defer(pivotClass);		// Defer superclass resolution
 		copyOperations(eClass, pivotClass);
 		copyProperties(eClass, pivotClass);
@@ -613,34 +580,10 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EClass eClass = EcoreFactory.eINSTANCE.createEClass();
 		copyClassifier(eClass, pivotCollectionType);
-		Class<?> instanceClass = null;
-		String name = pivotCollectionType.getName();
-		if ("Bag".equals(name)) {
-			instanceClass = Bag.class;
-		}
-		else if ("Collection".equals(name)) {
-			instanceClass = Collection.class;
-		}
-		else if ("OrderedCollection".equals(name)) {
-			instanceClass = Collection.class;
-		}
-		else if ("OrderedSet".equals(name)) {
-			instanceClass = OrderedSet.class;
-		}
-		else if ("Sequence".equals(name)) {
-			instanceClass = List.class;
-		}
-		else if ("Set".equals(name)) {
-			instanceClass = Set.class;
-		}
-		else if ("UniqueCollection".equals(name)) {
-			instanceClass = Collection.class;
-		}
+		eClass.setAbstract(true);				// CollectionValue classes are irregular
+		eClass.setInterface(true);
 		copyOperations(eClass, pivotCollectionType);
 		copyProperties(eClass, pivotCollectionType);
-		eClass.setInstanceClass(instanceClass);
-		eClass.setAbstract(true);
-		eClass.setInterface(true);
 		context.defer(pivotCollectionType);		// Defer superclass resolution
 		return eClass;
 	}
@@ -686,7 +629,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotEntryType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
 		eClass.setInstanceClass(java.util.Map.Entry.class);
-		eClass.setAbstract(true);
+		eClass.setAbstract(true);			// EntryValue class is irregular
 		eClass.setInterface(true);
 		context.defer(pivotEntryType);		// Defer superclass resolution
 		return eClass;
@@ -742,10 +685,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")@NonNull List<EStructuralFeature> eStructuralFeatures = eClass.getEStructuralFeatures();
 		@SuppressWarnings("null")@NonNull Iterable<@NonNull Property> nonDuplicateProperties = Iterables.filter(pivotMapType.getOwnedProperties(), nonDuplicatePropertiesFilter);
 		safeVisitAll(eStructuralFeatures, nonDuplicateProperties);
-//		copyOperations(eDataType, pivotMapType);
-//		copyProperties(eDataType, pivotMapType);
-		eClass.setInstanceClass(Map.class);
-		eClass.setAbstract(true);
+		eClass.setAbstract(true);			// MapValue class is irregular
 		eClass.setInterface(true);
 		context.defer(pivotMapType);		// Defer superclass resolution
 		return eClass;
@@ -860,35 +800,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		copyTypedElement(eParameter, pivotParameter);
 		return eParameter;
 	}
-
-/*	@Override
-	public EObject visitPrimitiveType(@NonNull PrimitiveType pivotPrimitiveType) {
-		if (pivotPrimitiveType.basicGetOwnedTemplateArguments() != null) {
-			return null;
-		}
-		@SuppressWarnings("null")
-		@NonNull EDataType eDataType = EcoreFactory.eINSTANCE.createEDataType();
-		copyDataTypeOrEnum(eDataType, pivotPrimitiveType);
-		/ *		Class<?> instanceClass = null;
-		String name = pivotPrimitiveType.getName();
-		if ("Boolean".equals(name)) {
-			instanceClass = Boolean.class;
-		}
-		else if ("Integer".equals(name)) {
-			instanceClass = IntegerValue.class;
-		}
-		else if ("Real".equals(name)) {
-			instanceClass = RealValue.class;
-		}
-		else if ("String".equals(name)) {
-			instanceClass = String.class;
-		}
-		else if ("UnlimitedNatural".equals(name)) {
-			instanceClass = UnlimitedNaturalValue.class;
-		}
-		eDataType.setInstanceClass(instanceClass); * /
-		return eDataType;
-	} */
 
 	@Override
 	public EObject visitProperty(@NonNull Property pivotProperty) {

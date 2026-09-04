@@ -7,6 +7,9 @@
   </eAnnotations>
   <eClassifiers xsi:type="ecore:EClass" name="Bag" instanceClassName="org.eclipse.ocl.pivot.values.Bag"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;A bag is a collection with duplicates allowed. That is, one object can be an element of a bag many times.&#xA;There is no ordering defined on the elements in a bag.&#xA;Bag is itself an instance of the metatype BagType.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -212,6 +215,9 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Boolean" instanceClassName="java.lang.Boolean">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The standard type Boolean represents the common true/false values.&#xA;Boolean is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/OCL/CoEClass">
       <contents xsi:type="ecore:EOperation" name="_eq_" lowerBound="1" eType="#//Boolean">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -350,6 +356,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Collection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="*&#xA;Collection is the abstract supertype of all collection types in the OCL Standard Library.&#xA;Each occurrence of an object in a collection is called an element.&#xA;If an object occurs twice in a collection, there are two elements.&#xA;&#xA;This sub clause defines the properties on Collections that have identical semantics for all collection subtypes.&#xA;Some operations may be defined within the subtype as well,&#xA;which means that there is an additional postcondition or a more specialized return value.&#xA;Collection is itself an instance of the metatype CollectionType.&#xA;&#xA;The definition of several common operations is different for each subtype.&#xA;These operations are not mentioned in this sub clause.&#xA;&#xA;The semantics of the collection operations is given in the form of a postcondition that uses the IterateExp of the IteratorExp construct.&#xA;The semantics of those constructs is defined in Clause 10 (“Semantics Described using UML”).&#xA;In several cases the postcondition refers to other collection operations,&#xA;which in turn are defined in terms of the IterateExp or IteratorExp constructs.&#xA;&#xA;Well-formedness rules&#xA;&#xA;[1] A collection cannot contain oclText[invalid] values.&#xA;&#xA;context Collection&#xA;inv: self->forAll(not oclIsInvalid())&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -959,6 +968,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Entry" instanceClassName="java.util.Map$Entry"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;An Entry provides a key-value pair suitable for identifying an entry in a Map.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="key">
@@ -981,6 +993,9 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Integer" instanceClassName="org.eclipse.ocl.pivot.values.IntegerValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The standard type Integer represents the mathematical concept of integer.&#xA;Integer is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/OCL/CoEClass">
       <contents xsi:type="ecore:EOperation" name="_add_" lowerBound="1" eType="#//Integer">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1106,6 +1121,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Map" instanceClassName="java.util.Map"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;A Map provides a Set of key values, each of which has an associated value.&#xA;Keys and values may be null, but neither may be invalid.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="K"/>
     <eTypeParameters name="V"/>
     <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
@@ -1134,7 +1152,7 @@
     </eOperations>
     <eOperations name="any1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
-        <details key="documentation" value="&#xA;Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].&#xA;Returns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,&#xA;otherwise if there are one or more kets for which the e[body] is oclText[true],&#xA;an indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].&#xA;&#xA;let source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in&#xA;source->any(key &lt;- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()&#xA;"/>
+        <details key="documentation" value="&#xA;Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].&#xA;Returns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,&#xA;otherwise if there are one or more keys for which the e[body] is oclText[true],&#xA;an indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].&#xA;&#xA;let source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in&#xA;source->any(key &lt;- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()&#xA;"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="any"/>
@@ -1695,6 +1713,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="OclAny" instanceClassName="java.lang.Object"
       abstract="true" interface="true">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;All types in the UML model and the primitive and collection types in the OCL standard library conforms to the type OclAny.&#xA;Conceptually, OclAny behaves as a supertype for all the types.&#xA;Features of OclAny are available on each object in all OCL expressions.&#xA;OclAny is itself an instance of the metatype AnyType.&#xA;&#xA;All classes in a UML model inherit all operations defined on OclAny.&#xA;To avoid name conflicts between properties in the model and the properties inherited from OclAny,&#xA;all names on the properties of OclAny start with ‘ocl.’&#xA;Although theoretically there may still be name conflicts, they can be avoided.&#xA;One can also use qualification by OclAny (name of the type) to explicitly refer to the OclAny properties.&#xA;&#xA;Operations of OclAny, where the instance of OclAny is called object.&#xA;"/>
+    </eAnnotations>
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
       <details key="documentation" value="This Ecore representation of the pivot OclAny exists solely to support serialization of Ecore metamodels.&#xA;True functionality is only available once converted to a Pivot model."/>
     </eAnnotations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -1842,7 +1863,10 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclComparable" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny">
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclComparable defines the compareTo operation used by the sortedBy iteration. Only types that provide a derived&#xA;compareTo implementation may be sorted.&#xA;"/>
+    </eAnnotations>
     <eOperations name="_ge_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;True if oclText[self] is greater than or equal to oclText[that].&#xA;"/>
@@ -1902,7 +1926,10 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclElement" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny">
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclElement is the implicit supertype of any user-defined type that has no explicit supertypes. Operations defined&#xA;for OclElement are therefore applicable to all user-defined types.&#xA;"/>
+    </eAnnotations>
     <eOperations name="oclAsModelType" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Evaluates to oclText[self], where oclText[self] is of the model type identified by oclText[TT].&#xA;&#xA;Most model elements have metamodel types for use with oclAsType, but no model type and so the return is oclText[invalid].&#xA;&#xA;Model elements such as UML's InstnaceSpecification that do support distinct model and metamodel types return oclText[self]&#xA;with the cast type oclText[TT] that may be used for further navigation.&#xA;If the actual model type of oclText[self] at evaluation time does not conform to oclText[TT],&#xA;then the oclAsType operation evaluates to oclText[invalid].&#xA;&#xA;If oclText[self] is a multiply classified instance, the current classification used for OCL navigation&#xA;is changed to the classification to which oclText[TT] conforms. The oclAsModelType call is not well-formed if&#xA;the classification is ambiguous.&#xA;"/>
@@ -2032,9 +2059,16 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclEnumeration" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The OclEnumeration type is the implicit supertype of any user Enumeration type.&#xA;FIXME This is probably obsolete now that static / meta-types clarified.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclInvalid" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclVoid">
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclInvalid is a type that conforms to all other types.&#xA;It has one single instance, identified as  oclText[invalid].&#xA;Any property call applied on invalid results in oclText[invalid], except for the operations oclIsUndefined() and oclIsInvalid().&#xA;OclInvalid is itself an instance of the metatype InvalidType.&#xA;"/>
+    </eAnnotations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Returns oclText[invalid].&#xA;"/>
@@ -2142,9 +2176,16 @@
     </eStructuralFeatures>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclLambda" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda&#xA;therefore apply to all lambda expressions.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclMessage" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny">
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;OclMessage&#xA;This sub clause contains the definition of the standard type OclMessage.&#xA;As defined in this sub clause, each ocl message type is actually a template type with one parameter.&#xA;‘T’ denotes the parameter.&#xA;A concrete ocl message type is created by substituting an operation or signal for the T.&#xA;&#xA;The predefined type OclMessage is an instance of MessageType.&#xA;Every OclMessage is fully determined by either the operation, or signal given as parameter.&#xA;Note that there is conceptually an undefined (infinite) number of these types,&#xA;as each is determined by a different operation or signal.&#xA;These types are unnamed. Every type has as attributes the name of the operation or signal,&#xA;and either all formal parameters of the operation, or all attributes of the signal.&#xA;OclMessage is itself an instance of the metatype MessageType.&#xA;&#xA;OclMessage has a number of predefined operations, as shown in the OCL Standard Library.&#xA;"/>
+    </eAnnotations>
     <eOperations name="hasReturned" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;True if type of template parameter is an operation call, and the called operation has returned a value.&#xA;This implies the fact that the message has been sent. False in all other cases.&#xA;"/>
@@ -2179,13 +2220,24 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclSelf" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation&#xA;and Iteration signatures. Instances of OclSelf are never created.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclState" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny"/>
+      abstract="true" interface="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="OclStereotype" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclType"/>
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined&#xA;for OclStereotype are therefore applicable to all UML stereotypes.&#xA;"/>
+    </eAnnotations>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclSummable" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny">
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclSummable defines the sum and zero operations used by the Collection::sum iteration. Only types that provide derived&#xA;sum and zero implementations may be summed.&#xA;"/>
+    </eAnnotations>
     <eOperations name="sum" lowerBound="1" eType="#//OclSelf">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Return the sum of self and that.&#xA;&#xA;The sum operation should be associative.&#xA;"/>
@@ -2199,7 +2251,10 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclTuple" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny">
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclTuple is the implicit supertype of all Tuple types. The operations defined for OclTuple&#xA;therefore apply to all tuples.&#xA;"/>
+    </eAnnotations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
         <details key="originalName" value="="/>
@@ -2220,7 +2275,10 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclType" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclElement">
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclType is the implicit supertype of any UML type. Operations defined&#xA;for OclType are therefore applicable to all UML types.&#xA;"/>
+    </eAnnotations>
     <eOperations name="conformsTo" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Returns true if type2 conforms to self.&#xA;"/>
@@ -2232,7 +2290,10 @@
     </eOperations>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OclVoid" instanceClassName="java.lang.Object"
-      abstract="true" interface="true" eSuperTypes="#//OclAny">
+      abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The type OclVoid is a type that conforms to all other types except OclInvalid.&#xA;It has one single instance, identified as oclText[null], that corresponds with the UML LiteralNull value specification.&#xA;Any property call applied on oclText[null] results in oclText[invalid], except for the&#xA;oclIsUndefined(), oclIsInvalid(), =(OclAny) and &lt;>(OclAny) operations.&#xA;However, by virtue of the implicit conversion to a collection literal,&#xA;an expression evaluating to oclText[null] can be used as source of collection operations (such as ‘isEmpty’).&#xA;If the source is the oclText[null] literal, it is implicitly converted to Bag{}.&#xA;&#xA;OclVoid is itself an instance of the metatype VoidType.&#xA;"/>
+    </eAnnotations>
     <eOperations name="_add_" lowerBound="1" eType="#//String">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The concatenation of oclText[null] and s.&#xA;"/>
@@ -2365,6 +2426,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedCollection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The OrderedCollection type provides the shared functionality of the OrderedSet and Sequence&#xA;collections for which the elements are ordered.&#xA;The common supertype of OrderedCollection is Collection.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eOperations name="at">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2425,6 +2489,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OrderedSet" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The OrderedSet is a Set, the elements of which are ordered.&#xA;It contains no duplicates. OrderedSet is itself an instance of the metatype OrderedSetType.&#xA;An OrderedSet is not a subtype of Set, neither a subtype of Sequence.&#xA;The common supertype of Sets and OrderedSets is Collection.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eOperations name="_sub_" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2730,6 +2797,9 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="Real" instanceClassName="org.eclipse.ocl.pivot.values.RealValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The standard type Real represents the mathematical concept of real.&#xA;Note that Integer is a subclass of Real,&#xA;so for each parameter of type Real, you can use an integer as the actual parameter.&#xA;Real is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/OCL/CoEClass">
       <contents xsi:type="ecore:EOperation" name="_add_" lowerBound="1" eType="#//Real">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2868,6 +2938,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Sequence" instanceClassName="java.util.List"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;A sequence is a collection where the elements are ordered.&#xA;An element may be part of a sequence more than once.&#xA;Sequence is itself an instance of the metatype SequenceType.&#xA;A Sentence is not a subtype of Bag.&#xA;The common supertype of Sentence and Bags is Collection.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -3379,6 +3452,9 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="String" instanceClassName="java.lang.String">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The standard type String represents strings, which can be both ASCII or Unicode.&#xA;String is itself an instance of the metatype PrimitiveType (from UML).&#xA;"/>
+    </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/OCL/CoEClass">
       <contents xsi:type="ecore:EOperation" name="_add_" lowerBound="1" eType="#//String">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -3726,6 +3802,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UniqueCollection" instanceClassName="java.util.Collection"
       abstract="true" interface="true">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The UniqueCollection type provides the shared functionality of the OrderedSet and Set&#xA;collections for which the elements are unique.&#xA;The common supertype of UniqueCollection is Collection.&#xA;"/>
+    </eAnnotations>
     <eTypeParameters name="T"/>
     <eOperations name="_sub_" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -3794,6 +3873,9 @@
     </eGenericSuperTypes>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EDataType" name="UnlimitedNatural" instanceClassName="org.eclipse.ocl.pivot.values.UnlimitedNaturalValue">
+    <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
+      <details key="documentation" value="&#xA;The standard type UnlimitedNatural is used to encode the non-negative values of a multiplicity specification.&#xA;This includes a special e[unlimited] value (*) that encodes the upper value of a multiplicity specification.&#xA;UnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.&#xA;&#xA;Note that UnlimitedNatural is not a subclass of Integer.&#xA;"/>
+    </eAnnotations>
     <eAnnotations source="http://www.eclipse.org/OCL/CoEClass">
       <contents xsi:type="ecore:EOperation" name="max" lowerBound="1" eType="#//UnlimitedNatural">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

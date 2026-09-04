@@ -209,6 +209,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 				«IF type.isAbstract»
 				type.setIsAbstract(true);
 				«ENDIF»
+				«IF type.instanceClassName !== null»
+					type.setInstanceClassName("«type.instanceClassName»");
+				«ENDIF»
 				«IF !(type instanceof AnyType)»
 					«type.emitSuperClasses("type")»
 				«ENDIF»
@@ -283,6 +286,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 						type = «type.getSymbolName()»;
+						«IF type.instanceClassName !== null»
+						type.setInstanceClassName("«type.instanceClassName»");
+						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
 					«ENDFOR»
@@ -458,6 +464,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						type.getOwnedParameters().add(createLambdaParameter("«parameter.name»", «parameter.type.getTemplateIndex()», «parameter.isRequired ? "true" : "false"»));
 					«ENDFOR»
 					type.setOwnedResult(createLambdaParameter("«type.ownedResult.name»", «type.ownedResult.type.getTemplateIndex()», «type.ownedResult.isRequired ? "true" : "false"»));
+					«IF type.instanceClassName !== null»
+					type.setInstanceClassName("«type.instanceClassName»");
+					«ENDIF»
 					«type.emitSuperClasses("type")»
 				«ENDFOR»
 			}
@@ -479,6 +488,9 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 						type = «type.getSymbolName()»;
+						«IF type.instanceClassName !== null»
+						type.setInstanceClassName("«type.instanceClassName»");
+						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
 					«ENDFOR»
@@ -746,7 +758,10 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 							«property.getSymbolName()».setImplementation(«property.implementationClass».INSTANCE);
 						«ENDIF»
 					«ENDFOR»
-					«type.emitSuperClasses("type")»
+					«IF type.instanceClassName !== null»
+						type.setInstanceClassName("«type.instanceClassName»");
+					«ENDIF»
+				«type.emitSuperClasses("type")»
 				«ENDFOR»
 			}
 		'''

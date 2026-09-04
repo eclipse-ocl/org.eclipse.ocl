@@ -23,7 +23,6 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.NsURIPackageId;
 import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
-import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
 // import org.eclipse.ocl.xtext.tests.dummy.DummyPackage;
@@ -109,7 +108,7 @@ public class DummyTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final org.eclipse.ocl.pivot.Class _Dummy = LIBRARY.createClass(PivotPackage.Literals.CLASS, DummyPackage.Literals.DUMMY, null, 0);
+		public static final org.eclipse.ocl.pivot.Class _Dummy = LIBRARY.createClass(PivotPackage.Literals.CLASS, DummyPackage.Literals.DUMMY, null, null, 0);
 
 		/*
 		 * AS Class indexed by EClassifier.getClassifierID().
@@ -122,7 +121,7 @@ public class DummyTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass);
+			LIBRARY.initPackage(MODEL, PACKAGE, eClassifierID2asClass);
 			Init.initEnd();
 		}
 
@@ -293,8 +292,8 @@ public class DummyTables extends AbstractTables
 			TypeFragments.init();
 		}
 
-		private static final Operation /*@NonNull*/ [] _Dummy__Dummy = {};
-		private static final Operation /*@NonNull*/ [] _Dummy__OclAny = {
+		private static final Operation /*@NonNull*/ [] _Dummy__Dummy /* Dummy */ = {};
+		private static final Operation /*@NonNull*/ [] _Dummy__OclAny /* Dummy */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -311,7 +310,7 @@ public class DummyTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final Operation /*@NonNull*/ [] _Dummy__OclElement = {
+		private static final Operation /*@NonNull*/ [] _Dummy__OclElement /* Dummy */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,

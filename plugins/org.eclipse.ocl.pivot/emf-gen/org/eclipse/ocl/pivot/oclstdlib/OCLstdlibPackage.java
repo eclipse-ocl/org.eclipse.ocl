@@ -445,28 +445,15 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_lt_(java.lang.Object) <em>lt </em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_ge_(java.lang.Object) <em>ge </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>lt </em>' operation.
-	 * @see java.lang.Object#_lt_(java.lang.Object)
+	 * @return the meta object for the '<em>ge </em>' operation.
+	 * @see java.lang.Object#_ge_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclComparable___lt___Object() {
-		return oclComparableEClass.getEOperations().get(3);
-	}
-
-
-	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_le_(java.lang.Object) <em>le </em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>le </em>' operation.
-	 * @see java.lang.Object#_le_(java.lang.Object)
-	 * @generated
-	 */
-	public EOperation getOclComparable___le___Object() {
-		return oclComparableEClass.getEOperations().get(2);
+	public EOperation getOclComparable___ge___Object() {
+		return oclComparableEClass.getEOperations().get(0);
 	}
 
 
@@ -484,15 +471,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_ge_(java.lang.Object) <em>ge </em>}' operation.
+	 * Returns the meta object for the '{@link java.lang.Object#_le_(java.lang.Object) <em>le </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>ge </em>' operation.
-	 * @see java.lang.Object#_ge_(java.lang.Object)
+	 * @return the meta object for the '<em>le </em>' operation.
+	 * @see java.lang.Object#_le_(java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOclComparable___ge___Object() {
-		return oclComparableEClass.getEOperations().get(0);
+	public EOperation getOclComparable___le___Object() {
+		return oclComparableEClass.getEOperations().get(2);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#_lt_(java.lang.Object) <em>lt </em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>lt </em>' operation.
+	 * @see java.lang.Object#_lt_(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclComparable___lt___Object() {
+		return oclComparableEClass.getEOperations().get(3);
 	}
 
 
@@ -944,19 +944,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>ne </em>' operation.
-	 * @see java.lang.Object#_ne_(java.lang.Object)
-	 * @generated
-	 */
-	public EOperation getOclInvalid___ne___Object() {
-		return oclInvalidEClass.getEOperations().get(1);
-	}
-
-
-	/**
 	 * Returns the meta object for the '{@link java.lang.Object#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -966,6 +953,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 */
 	public EOperation getOclInvalid___eq___Object() {
 		return oclInvalidEClass.getEOperations().get(0);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.lang.Object#_ne_(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclInvalid___ne___Object() {
+		return oclInvalidEClass.getEOperations().get(1);
 	}
 
 
@@ -1295,19 +1295,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>ne </em>' operation.
-	 * @see java.lang.Object#_ne_(java.lang.Object)
-	 * @generated
-	 */
-	public EOperation getOclTuple___ne___Object() {
-		return oclTupleEClass.getEOperations().get(1);
-	}
-
-
-	/**
 	 * Returns the meta object for the '{@link java.lang.Object#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1317,6 +1304,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 */
 	public EOperation getOclTuple___eq___Object() {
 		return oclTupleEClass.getEOperations().get(0);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.lang.Object#_ne_(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclTuple___ne___Object() {
+		return oclTupleEClass.getEOperations().get(1);
 	}
 
 
@@ -1373,19 +1373,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>ne </em>' operation.
-	 * @see java.lang.Object#_ne_(java.lang.Object)
-	 * @generated
-	 */
-	public EOperation getOclVoid___ne___Object() {
-		return oclVoidEClass.getEOperations().get(2);
-	}
-
-
-	/**
 	 * Returns the meta object for the '{@link java.lang.Object#_eq_(java.lang.Object) <em>eq </em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1395,6 +1382,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 */
 	public EOperation getOclVoid___eq___Object() {
 		return oclVoidEClass.getEOperations().get(1);
+	}
+
+
+	/**
+	 * Returns the meta object for the '{@link java.lang.Object#_ne_(java.lang.Object) <em>ne </em>}' operation.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the '<em>ne </em>' operation.
+	 * @see java.lang.Object#_ne_(java.lang.Object)
+	 * @generated
+	 */
+	public EOperation getOclVoid___ne___Object() {
+		return oclVoidEClass.getEOperations().get(2);
 	}
 
 
@@ -1675,6 +1675,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * Returns the meta object for data type '{@link java.lang.Boolean <em>Boolean</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *
+     * The standard type Boolean represents the common true/false values.
+     * Boolean is itself an instance of the metatype PrimitiveType (from UML).
+     *
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Boolean</em>'.
 	 * @see java.lang.Boolean
 	 * @generated
@@ -1728,6 +1734,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.IntegerValue <em>Integer</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *
+     * The standard type Integer represents the mathematical concept of integer.
+     * Integer is itself an instance of the metatype PrimitiveType (from UML).
+     *
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Integer</em>'.
 	 * @see org.eclipse.ocl.pivot.values.IntegerValue
 	 * @generated
@@ -2312,6 +2324,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *
+     * The standard type Real represents the mathematical concept of real.
+     * Note that Integer is a subclass of Real,
+     * so for each parameter of type Real, you can use an integer as the actual parameter.
+     * Real is itself an instance of the metatype PrimitiveType (from UML).
+     *
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Real</em>'.
 	 * @see org.eclipse.ocl.pivot.values.RealValue
 	 * @generated
@@ -2324,6 +2344,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * Returns the meta object for data type '{@link java.lang.String <em>String</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *
+     * The standard type String represents strings, which can be both ASCII or Unicode.
+     * String is itself an instance of the metatype PrimitiveType (from UML).
+     *
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>String</em>'.
 	 * @see java.lang.String
 	 * @generated
@@ -2336,6 +2362,15 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.UnlimitedNaturalValue <em>Unlimited Natural</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
+     * <!-- begin-model-doc -->
+     *
+     * The standard type UnlimitedNatural is used to encode the non-negative values of a multiplicity specification.
+     * This includes a special e[unlimited] value (*) that encodes the upper value of a multiplicity specification.
+     * UnlimitedNatural is itself an instance of the metatype UnlimitedNaturalType.
+     *
+     * Note that UnlimitedNatural is not a subclass of Integer.
+     *
+     * <!-- end-model-doc -->
 	 * @return the meta object for data type '<em>Unlimited Natural</em>'.
 	 * @see org.eclipse.ocl.pivot.values.UnlimitedNaturalValue
 	 * @generated
@@ -4298,53 +4333,53 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(oclAnyEClass, 14);
 
 		oclComparableEClass = createEClass(5);
-		createEOperation(oclComparableEClass, 15);
-		createEOperation(oclComparableEClass, 16);
-		createEOperation(oclComparableEClass, 17);
-		createEOperation(oclComparableEClass, 18);
-		createEOperation(oclComparableEClass, 19);
+		createEOperation(oclComparableEClass, 0);
+		createEOperation(oclComparableEClass, 1);
+		createEOperation(oclComparableEClass, 2);
+		createEOperation(oclComparableEClass, 3);
+		createEOperation(oclComparableEClass, 4);
 
 		oclElementEClass = createEClass(6);
 		createEReference(oclElementEClass, 0);
 		createEReference(oclElementEClass, 1);
-		createEOperation(oclElementEClass, 15);
-		createEOperation(oclElementEClass, 16);
-		createEOperation(oclElementEClass, 17);
-		createEOperation(oclElementEClass, 18);
-		createEOperation(oclElementEClass, 19);
-		createEOperation(oclElementEClass, 20);
-		createEOperation(oclElementEClass, 21);
-		createEOperation(oclElementEClass, 22);
-		createEOperation(oclElementEClass, 23);
-		createEOperation(oclElementEClass, 24);
-		createEOperation(oclElementEClass, 25);
+		createEOperation(oclElementEClass, 0);
+		createEOperation(oclElementEClass, 1);
+		createEOperation(oclElementEClass, 2);
+		createEOperation(oclElementEClass, 3);
+		createEOperation(oclElementEClass, 4);
+		createEOperation(oclElementEClass, 5);
+		createEOperation(oclElementEClass, 6);
+		createEOperation(oclElementEClass, 7);
+		createEOperation(oclElementEClass, 8);
+		createEOperation(oclElementEClass, 9);
+		createEOperation(oclElementEClass, 10);
 
 		oclEnumerationEClass = createEClass(7);
 
 		oclInvalidEClass = createEClass(8);
 		createEReference(oclInvalidEClass, 0);
-		createEOperation(oclInvalidEClass, 33);
-		createEOperation(oclInvalidEClass, 34);
-		createEOperation(oclInvalidEClass, 35);
-		createEOperation(oclInvalidEClass, 36);
-		createEOperation(oclInvalidEClass, 37);
-		createEOperation(oclInvalidEClass, 38);
-		createEOperation(oclInvalidEClass, 39);
-		createEOperation(oclInvalidEClass, 40);
-		createEOperation(oclInvalidEClass, 41);
-		createEOperation(oclInvalidEClass, 42);
-		createEOperation(oclInvalidEClass, 43);
-		createEOperation(oclInvalidEClass, 44);
-		createEOperation(oclInvalidEClass, 45);
-		createEOperation(oclInvalidEClass, 46);
+		createEOperation(oclInvalidEClass, 0);
+		createEOperation(oclInvalidEClass, 1);
+		createEOperation(oclInvalidEClass, 2);
+		createEOperation(oclInvalidEClass, 3);
+		createEOperation(oclInvalidEClass, 4);
+		createEOperation(oclInvalidEClass, 5);
+		createEOperation(oclInvalidEClass, 6);
+		createEOperation(oclInvalidEClass, 7);
+		createEOperation(oclInvalidEClass, 8);
+		createEOperation(oclInvalidEClass, 9);
+		createEOperation(oclInvalidEClass, 10);
+		createEOperation(oclInvalidEClass, 11);
+		createEOperation(oclInvalidEClass, 12);
+		createEOperation(oclInvalidEClass, 13);
 
 		oclLambdaEClass = createEClass(9);
 
 		oclMessageEClass = createEClass(10);
-		createEOperation(oclMessageEClass, 15);
-		createEOperation(oclMessageEClass, 16);
-		createEOperation(oclMessageEClass, 17);
-		createEOperation(oclMessageEClass, 18);
+		createEOperation(oclMessageEClass, 0);
+		createEOperation(oclMessageEClass, 1);
+		createEOperation(oclMessageEClass, 2);
+		createEOperation(oclMessageEClass, 3);
 
 		oclSelfEClass = createEClass(11);
 
@@ -4353,35 +4388,35 @@ public class OCLstdlibPackage extends EPackageImpl {
 		oclStereotypeEClass = createEClass(13);
 
 		oclSummableEClass = createEClass(14);
-		createEOperation(oclSummableEClass, 15);
-		createEOperation(oclSummableEClass, 16);
+		createEOperation(oclSummableEClass, 0);
+		createEOperation(oclSummableEClass, 1);
 
 		oclTupleEClass = createEClass(15);
-		createEOperation(oclTupleEClass, 15);
-		createEOperation(oclTupleEClass, 16);
+		createEOperation(oclTupleEClass, 0);
+		createEOperation(oclTupleEClass, 1);
 
 		oclTypeEClass = createEClass(16);
-		createEOperation(oclTypeEClass, 26);
+		createEOperation(oclTypeEClass, 0);
 
 		oclVoidEClass = createEClass(17);
+		createEOperation(oclVoidEClass, 0);
+		createEOperation(oclVoidEClass, 1);
+		createEOperation(oclVoidEClass, 2);
+		createEOperation(oclVoidEClass, 3);
+		createEOperation(oclVoidEClass, 4);
+		createEOperation(oclVoidEClass, 5);
+		createEOperation(oclVoidEClass, 6);
+		createEOperation(oclVoidEClass, 7);
+		createEOperation(oclVoidEClass, 8);
+		createEOperation(oclVoidEClass, 9);
+		createEOperation(oclVoidEClass, 10);
+		createEOperation(oclVoidEClass, 11);
+		createEOperation(oclVoidEClass, 12);
+		createEOperation(oclVoidEClass, 13);
+		createEOperation(oclVoidEClass, 14);
 		createEOperation(oclVoidEClass, 15);
 		createEOperation(oclVoidEClass, 16);
 		createEOperation(oclVoidEClass, 17);
-		createEOperation(oclVoidEClass, 18);
-		createEOperation(oclVoidEClass, 19);
-		createEOperation(oclVoidEClass, 20);
-		createEOperation(oclVoidEClass, 21);
-		createEOperation(oclVoidEClass, 22);
-		createEOperation(oclVoidEClass, 23);
-		createEOperation(oclVoidEClass, 24);
-		createEOperation(oclVoidEClass, 25);
-		createEOperation(oclVoidEClass, 26);
-		createEOperation(oclVoidEClass, 27);
-		createEOperation(oclVoidEClass, 28);
-		createEOperation(oclVoidEClass, 29);
-		createEOperation(oclVoidEClass, 30);
-		createEOperation(oclVoidEClass, 31);
-		createEOperation(oclVoidEClass, 32);
 
 		orderedCollectionEClass = createEClass(18);
 		createEOperation(orderedCollectionEClass, 48);
@@ -4521,19 +4556,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		EGenericType g2 = createEGenericType(bagEClass_T);
 		g1.getETypeArguments().add(g2);
 		bagEClass.getEGenericSuperTypes().add(g1);
-		oclComparableEClass.getESuperTypes().add(this.getOclAny());
-		oclElementEClass.getESuperTypes().add(this.getOclAny());
-		oclEnumerationEClass.getESuperTypes().add(this.getOclAny());
-		oclInvalidEClass.getESuperTypes().add(this.getOclVoid());
-		oclLambdaEClass.getESuperTypes().add(this.getOclAny());
-		oclMessageEClass.getESuperTypes().add(this.getOclAny());
-		oclSelfEClass.getESuperTypes().add(this.getOclAny());
-		oclStateEClass.getESuperTypes().add(this.getOclAny());
-		oclStereotypeEClass.getESuperTypes().add(this.getOclType());
-		oclSummableEClass.getESuperTypes().add(this.getOclAny());
-		oclTupleEClass.getESuperTypes().add(this.getOclAny());
-		oclTypeEClass.getESuperTypes().add(this.getOclElement());
-		oclVoidEClass.getESuperTypes().add(this.getOclAny());
 		g1 = createEGenericType(this.getCollection());
 		g2 = createEGenericType(orderedCollectionEClass_T);
 		g1.getETypeArguments().add(g2);
@@ -8174,20 +8196,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass OCL_COMPARABLE = eINSTANCE.getOclComparable();
 
 		/**
-		 * The meta object literal for the '<em><b>lt </b></em>' operation.
+		 * The meta object literal for the '<em><b>ge </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_COMPARABLE___LT____OBJECT = eINSTANCE.getOclComparable___lt___Object();
-
-		/**
-		 * The meta object literal for the '<em><b>le </b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EOperation OCL_COMPARABLE___LE____OBJECT = eINSTANCE.getOclComparable___le___Object();
+		public static final EOperation OCL_COMPARABLE___GE____OBJECT = eINSTANCE.getOclComparable___ge___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>gt </b></em>' operation.
@@ -8198,12 +8212,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation OCL_COMPARABLE___GT____OBJECT = eINSTANCE.getOclComparable___gt___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>ge </b></em>' operation.
+		 * The meta object literal for the '<em><b>le </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation OCL_COMPARABLE___GE____OBJECT = eINSTANCE.getOclComparable___ge___Object();
+		public static final EOperation OCL_COMPARABLE___LE____OBJECT = eINSTANCE.getOclComparable___le___Object();
+
+		/**
+		 * The meta object literal for the '<em><b>lt </b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_COMPARABLE___LT____OBJECT = eINSTANCE.getOclComparable___lt___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Compare To</b></em>' operation.
@@ -8489,20 +8511,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EReference OCL_INVALID__OCL_BAD_PROPERTY = eINSTANCE.getOclInvalid_OclBadProperty();
 
 		/**
-		 * The meta object literal for the '<em><b>ne </b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EOperation OCL_INVALID___NE____OBJECT = eINSTANCE.getOclInvalid___ne___Object();
-
-		/**
 		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		public static final EOperation OCL_INVALID___EQ____OBJECT = eINSTANCE.getOclInvalid___eq___Object();
+
+		/**
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_INVALID___NE____OBJECT = eINSTANCE.getOclInvalid___ne___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>And</b></em>' operation.
@@ -8720,20 +8742,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EClass OCL_TUPLE = eINSTANCE.getOclTuple();
 
 		/**
-		 * The meta object literal for the '<em><b>ne </b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EOperation OCL_TUPLE___NE____OBJECT = eINSTANCE.getOclTuple___ne___Object();
-
-		/**
 		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		public static final EOperation OCL_TUPLE___EQ____OBJECT = eINSTANCE.getOclTuple___eq___Object();
+
+		/**
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_TUPLE___NE____OBJECT = eINSTANCE.getOclTuple___ne___Object();
 
 		/**
 		 * The meta object literal for the '{@link java.lang.Object <em>Ocl Type</em>}' class.
@@ -8772,20 +8794,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation OCL_VOID___ADD____STRING = eINSTANCE.getOclVoid___add___String();
 
 		/**
-		 * The meta object literal for the '<em><b>ne </b></em>' operation.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		public static final EOperation OCL_VOID___NE____OBJECT = eINSTANCE.getOclVoid___ne___Object();
-
-		/**
 		 * The meta object literal for the '<em><b>eq </b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
 		public static final EOperation OCL_VOID___EQ____OBJECT = eINSTANCE.getOclVoid___eq___Object();
+
+		/**
+		 * The meta object literal for the '<em><b>ne </b></em>' operation.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EOperation OCL_VOID___NE____OBJECT = eINSTANCE.getOclVoid___ne___Object();
 
 		/**
 		 * The meta object literal for the '<em><b>And</b></em>' operation.

@@ -789,6 +789,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				boolean hasAccumulator = (it != null) && (it.getOwnedAccumulator() != null);
 				Precedence precedence = op.getPrecedence();
 				EOperation eOperation = (EOperation)op.getESObject();
+				@NonNull String name = ClassUtil.requireNonNull(eOperation.getName());
+				@NonNull String originalName = ClassUtil.requireNonNull(NameUtil.getOriginalName(eOperation));
 				String literalName = genModelHelper.basicGetQualifiedEcoreLiteralName(eOperation);
 				StringBuilder sFlags = new StringBuilder();
 				sFlags.append(i);
@@ -822,11 +824,11 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append("(");
 				op.getOwningClass().accept(emitReferencedElement);
 				s.append(", " );
-				if (literalName != null) {
+				if ((literalName != null) && (name.equals(originalName))) {
 					s.append(literalName);
 				}
 				else {
-					s.appendString(PivotUtil.getName(op));
+					s.appendString(originalName);
 					if (it == null) {
 						s.append(", ");
 						if (precedence != null) {
@@ -1309,6 +1311,13 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	//	}
 		if (!(asClass instanceof Enumeration)) {
 			s.append(", ");
+			if (asClass.getInstanceClassName() != null) {
+				s.appendString(asClass.getInstanceClassName());
+			}
+			else {
+				s.append("null");
+			}
+			s.append(", ");
 			if (isBuiltInType(asClass)) {
 				s.appendClassReference(null, TypeId.class);
 				s.append(".");
@@ -1397,6 +1406,15 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			normalizedTemplateParameter.accept(emitTypeExpression);
 		}
 		s.append(");\n");
+		for (org.eclipse.ocl.pivot.@NonNull Class asClass : activeClassesSortedByName) {
+			if (asClass.getInstanceClassName() != null) {
+				s.append("			");
+				asClass.accept(emitReferencedElement);
+				s.append(".setInstanceClassName(");
+				s.appendString(asClass.getInstanceClassName());
+				s.append(");\n");
+			}
+		}
 		org.eclipse.ocl.pivot.Package extendedPackage = getExtendedPackage(asPackage);
 		if (extendedPackage != null) {
 			GenPackage genPackage = genModelHelper.basicGetGenPackage(extendedPackage);

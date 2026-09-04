@@ -14,6 +14,7 @@ package org.eclipse.ocl.emf.validation.validity;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
 // import org.eclipse.ocl.emf.validation.validity.ValidityTables;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -35,7 +36,6 @@ import org.eclipse.ocl.pivot.ids.RootPackageId;
 import org.eclipse.ocl.pivot.ids.TypeId;
 import org.eclipse.ocl.pivot.internal.library.PartialStandardLibrary;
 import org.eclipse.ocl.pivot.internal.plugin.CompletePackageIdRegistryReader;
-import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibTables;
 import org.eclipse.ocl.pivot.types.TemplateParameters;
 import org.eclipse.ocl.pivot.utilities.AbstractTables;
@@ -157,27 +157,27 @@ public class ValidityTables extends AbstractTables
 			TypeParameters.init();
 		}
 
-		public static final org.eclipse.ocl.pivot.@NonNull Class _AbstractNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.ABSTRACT_NODE, null, 0 | FlatClass.ABSTRACT);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _ConstrainingNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.CONSTRAINING_NODE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _ConstraintLocator = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.CONSTRAINT_LOCATOR, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _LeafConstrainingNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.LEAF_CONSTRAINING_NODE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Object = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.OBJECT, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Resource = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESOURCE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Result = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESULT, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _ResultConstrainingNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESULT_CONSTRAINING_NODE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _ResultSet = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESULT_SET, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _ResultValidatableNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESULT_VALIDATABLE_NODE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _RootConstrainingNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.ROOT_CONSTRAINING_NODE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _RootNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.ROOT_NODE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _RootValidatableNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.ROOT_VALIDATABLE_NODE, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _AbstractNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.ABSTRACT_NODE, null, null, 0 | FlatClass.ABSTRACT);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _ConstrainingNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.CONSTRAINING_NODE, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _ConstraintLocator = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.CONSTRAINT_LOCATOR, "org.eclipse.ocl.emf.validation.validity.locator.ConstraintLocator", null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _LeafConstrainingNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.LEAF_CONSTRAINING_NODE, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Object = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.OBJECT, "java.lang.Object", null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Resource = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESOURCE, "org.eclipse.emf.ecore.resource.Resource", null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Result = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESULT, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _ResultConstrainingNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESULT_CONSTRAINING_NODE, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _ResultSet = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESULT_SET, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _ResultValidatableNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.RESULT_VALIDATABLE_NODE, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _RootConstrainingNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.ROOT_CONSTRAINING_NODE, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _RootNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.ROOT_NODE, null, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _RootValidatableNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.ROOT_VALIDATABLE_NODE, null, null, 0);
 		public static final @NonNull Enumeration _Severity = LIBRARY.createEnumeration(ValidityPackage.Literals.SEVERITY);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _Throwable = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.THROWABLE, null, 0);
-		public static final org.eclipse.ocl.pivot.@NonNull Class _ValidatableNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.VALIDATABLE_NODE, null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _Throwable = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.THROWABLE, "java.lang.Throwable", null, 0);
+		public static final org.eclipse.ocl.pivot.@NonNull Class _ValidatableNode = LIBRARY.createClass(PivotPackage.Literals.CLASS, ValidityPackage.Literals.VALIDATABLE_NODE, null, null, 0);
 
 		/*
 		 * AS Class indexed by EClassifier.getClassifierID().
 		 */
-		private static final org.eclipse.ocl.pivot.@NonNull Class @NonNull [] eClassifierID2asClass = {
+		private static final org.eclipse.ocl.pivot.@Nullable Class @NonNull [] eClassifierID2asClass = {
 			/* 0 */ _AbstractNode,
 			/* 1 */ _ConstrainingNode,
 			/* 2 */ _LeafConstrainingNode,
@@ -200,7 +200,11 @@ public class ValidityTables extends AbstractTables
 		 *	Install the type descriptors in the package descriptor.
 		 */
 		static {
-			LIBRARY.initPackage(PACKAGE, eClassifierID2asClass);
+			LIBRARY.initPackage(MODEL, PACKAGE, eClassifierID2asClass);
+			_ConstraintLocator.setInstanceClassName("org.eclipse.ocl.emf.validation.validity.locator.ConstraintLocator");
+			_Object.setInstanceClassName("java.lang.Object");
+			_Resource.setInstanceClassName("org.eclipse.emf.ecore.resource.Resource");
+			_Throwable.setInstanceClassName("java.lang.Throwable");
 			Init.initEnd();
 		}
 
@@ -654,11 +658,11 @@ public class ValidityTables extends AbstractTables
 			TypeFragments.init();
 		}
 
-		private static final @NonNull Operation @NonNull [] _AbstractNode__AbstractNode = {
+		private static final @NonNull Operation @NonNull [] _AbstractNode__AbstractNode /* AbstractNode */ = {
 			Operations._AbstractNode__getChildren /* getChildren() */,
 			Operations._AbstractNode__getParent /* getParent() */
 		};
-		private static final @NonNull Operation @NonNull [] _AbstractNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _AbstractNode__OclAny /* AbstractNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -675,7 +679,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _AbstractNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _AbstractNode__OclElement /* AbstractNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -689,12 +693,12 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _ConstrainingNode__ConstrainingNode = {};
-		private static final @NonNull Operation @NonNull [] _ConstrainingNode__AbstractNode = {
+		private static final @NonNull Operation @NonNull [] _ConstrainingNode__ConstrainingNode /* ConstrainingNode */ = {};
+		private static final @NonNull Operation @NonNull [] _ConstrainingNode__AbstractNode /* ConstrainingNode */ = {
 			Operations._AbstractNode__getChildren /* getChildren() */,
 			Operations._AbstractNode__getParent /* getParent() */
 		};
-		private static final @NonNull Operation @NonNull [] _ConstrainingNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _ConstrainingNode__OclAny /* ConstrainingNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -711,7 +715,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _ConstrainingNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _ConstrainingNode__OclElement /* ConstrainingNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -725,8 +729,8 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _ConstraintLocator__ConstraintLocator = {};
-		private static final @NonNull Operation @NonNull [] _ConstraintLocator__OclAny = {
+		private static final @NonNull Operation @NonNull [] _ConstraintLocator__ConstraintLocator /* ConstraintLocator */ = {};
+		private static final @NonNull Operation @NonNull [] _ConstraintLocator__OclAny /* ConstraintLocator */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -744,13 +748,13 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__LeafConstrainingNode = {};
-		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__AbstractNode = {
+		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__LeafConstrainingNode /* LeafConstrainingNode */ = {};
+		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__AbstractNode /* LeafConstrainingNode */ = {
 			Operations._AbstractNode__getChildren /* getChildren() */,
 			Operations._AbstractNode__getParent /* getParent() */
 		};
-		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__ConstrainingNode = {};
-		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__ConstrainingNode /* LeafConstrainingNode */ = {};
+		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__OclAny /* LeafConstrainingNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -767,7 +771,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _LeafConstrainingNode__OclElement /* LeafConstrainingNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -781,8 +785,8 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _Object__Object = {};
-		private static final @NonNull Operation @NonNull [] _Object__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Object__Object /* Object */ = {};
+		private static final @NonNull Operation @NonNull [] _Object__OclAny /* Object */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -800,8 +804,8 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _Resource__Resource = {};
-		private static final @NonNull Operation @NonNull [] _Resource__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Resource__Resource /* Resource */ = {};
+		private static final @NonNull Operation @NonNull [] _Resource__OclAny /* Resource */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -819,8 +823,8 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _Result__Result = {};
-		private static final @NonNull Operation @NonNull [] _Result__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Result__Result /* Result */ = {};
+		private static final @NonNull Operation @NonNull [] _Result__OclAny /* Result */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -837,7 +841,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _Result__OclElement = {
+		private static final @NonNull Operation @NonNull [] _Result__OclElement /* Result */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -851,13 +855,13 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__ResultConstrainingNode = {};
-		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__AbstractNode = {
+		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__ResultConstrainingNode /* ResultConstrainingNode */ = {};
+		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__AbstractNode /* ResultConstrainingNode */ = {
 			Operations._AbstractNode__getChildren /* getChildren() */,
 			Operations._AbstractNode__getParent /* getParent() */
 		};
-		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__ConstrainingNode = {};
-		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__ConstrainingNode /* ResultConstrainingNode */ = {};
+		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__OclAny /* ResultConstrainingNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -874,7 +878,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _ResultConstrainingNode__OclElement /* ResultConstrainingNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -888,8 +892,8 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _ResultSet__ResultSet = {};
-		private static final @NonNull Operation @NonNull [] _ResultSet__OclAny = {
+		private static final @NonNull Operation @NonNull [] _ResultSet__ResultSet /* ResultSet */ = {};
+		private static final @NonNull Operation @NonNull [] _ResultSet__OclAny /* ResultSet */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -906,7 +910,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _ResultSet__OclElement = {
+		private static final @NonNull Operation @NonNull [] _ResultSet__OclElement /* ResultSet */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -920,12 +924,12 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__ResultValidatableNode = {};
-		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__AbstractNode = {
+		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__ResultValidatableNode /* ResultValidatableNode */ = {};
+		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__AbstractNode /* ResultValidatableNode */ = {
 			Operations._AbstractNode__getChildren /* getChildren() */,
 			Operations._AbstractNode__getParent /* getParent() */
 		};
-		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__OclAny /* ResultValidatableNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -942,7 +946,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__OclElement /* ResultValidatableNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -955,15 +959,15 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
-		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__ValidatableNode = {};
+		private static final @NonNull Operation @NonNull [] _ResultValidatableNode__ValidatableNode /* ResultValidatableNode */ = {};
 
-		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__RootConstrainingNode = {};
-		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__AbstractNode = {
+		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__RootConstrainingNode /* RootConstrainingNode */ = {};
+		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__AbstractNode /* RootConstrainingNode */ = {
 			Operations._AbstractNode__getChildren /* getChildren() */,
 			Operations._AbstractNode__getParent /* getParent() */
 		};
-		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__ConstrainingNode = {};
-		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__ConstrainingNode /* RootConstrainingNode */ = {};
+		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__OclAny /* RootConstrainingNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -980,7 +984,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _RootConstrainingNode__OclElement /* RootConstrainingNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -994,8 +998,8 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _RootNode__RootNode = {};
-		private static final @NonNull Operation @NonNull [] _RootNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _RootNode__RootNode /* RootNode */ = {};
+		private static final @NonNull Operation @NonNull [] _RootNode__OclAny /* RootNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -1012,7 +1016,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _RootNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _RootNode__OclElement /* RootNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -1026,12 +1030,12 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _RootValidatableNode__RootValidatableNode = {};
-		private static final @NonNull Operation @NonNull [] _RootValidatableNode__AbstractNode = {
+		private static final @NonNull Operation @NonNull [] _RootValidatableNode__RootValidatableNode /* RootValidatableNode */ = {};
+		private static final @NonNull Operation @NonNull [] _RootValidatableNode__AbstractNode /* RootValidatableNode */ = {
 			Operations._AbstractNode__getChildren /* getChildren() */,
 			Operations._AbstractNode__getParent /* getParent() */
 		};
-		private static final @NonNull Operation @NonNull [] _RootValidatableNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _RootValidatableNode__OclAny /* RootValidatableNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -1048,7 +1052,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _RootValidatableNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _RootValidatableNode__OclElement /* RootValidatableNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -1061,10 +1065,10 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
-		private static final @NonNull Operation @NonNull [] _RootValidatableNode__ValidatableNode = {};
+		private static final @NonNull Operation @NonNull [] _RootValidatableNode__ValidatableNode /* RootValidatableNode */ = {};
 
-		private static final @NonNull Operation @NonNull [] _Severity__Severity = {};
-		private static final @NonNull Operation @NonNull [] _Severity__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Severity__Severity /* Severity */ = {};
+		private static final @NonNull Operation @NonNull [] _Severity__OclAny /* Severity */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -1081,7 +1085,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _Severity__OclElement = {
+		private static final @NonNull Operation @NonNull [] _Severity__OclElement /* Severity */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,
@@ -1094,13 +1098,13 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclElement__oclModelType /* oclModelType() */,
 			OCLstdlibTables.Operations._OclElement__oclModelTypes /* oclModelTypes() */
 		};
-		private static final @NonNull Operation @NonNull [] _Severity__OclEnumeration = {};
-		private static final @NonNull Operation @NonNull [] _Severity__OclType = {
+		private static final @NonNull Operation @NonNull [] _Severity__OclEnumeration /* Severity */ = {};
+		private static final @NonNull Operation @NonNull [] _Severity__OclType /* Severity */ = {
 			OCLstdlibTables.Operations._OclType__conformsTo /* conformsTo(OclType[?]) */
 		};
 
-		private static final @NonNull Operation @NonNull [] _Throwable__Throwable = {};
-		private static final @NonNull Operation @NonNull [] _Throwable__OclAny = {
+		private static final @NonNull Operation @NonNull [] _Throwable__Throwable /* Throwable */ = {};
+		private static final @NonNull Operation @NonNull [] _Throwable__OclAny /* Throwable */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -1118,12 +1122,12 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
 
-		private static final @NonNull Operation @NonNull [] _ValidatableNode__ValidatableNode = {};
-		private static final @NonNull Operation @NonNull [] _ValidatableNode__AbstractNode = {
+		private static final @NonNull Operation @NonNull [] _ValidatableNode__ValidatableNode /* ValidatableNode */ = {};
+		private static final @NonNull Operation @NonNull [] _ValidatableNode__AbstractNode /* ValidatableNode */ = {
 			Operations._AbstractNode__getChildren /* getChildren() */,
 			Operations._AbstractNode__getParent /* getParent() */
 		};
-		private static final @NonNull Operation @NonNull [] _ValidatableNode__OclAny = {
+		private static final @NonNull Operation @NonNull [] _ValidatableNode__OclAny /* ValidatableNode */ = {
 			OCLstdlibTables.Operations._OclAny___ne_ /* _'<>'(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny___eq_ /* _'='(OclSelf[?]) */,
 			OCLstdlibTables.Operations._OclAny__oclAsSet /* oclAsSet() */,
@@ -1140,7 +1144,7 @@ public class ValidityTables extends AbstractTables
 			OCLstdlibTables.Operations._OclAny__oclTypes /* oclTypes() */,
 			OCLstdlibTables.Operations._OclAny__toString /* toString() */
 		};
-		private static final @NonNull Operation @NonNull [] _ValidatableNode__OclElement = {
+		private static final @NonNull Operation @NonNull [] _ValidatableNode__OclElement /* ValidatableNode */ = {
 			OCLstdlibTables.Operations._OclElement__oclAsModelType /* oclAsModelType(TT)(TT[1]) */,
 			OCLstdlibTables.Operations._OclElement__0_oclBase /* oclBase() */,
 			OCLstdlibTables.Operations._OclElement__1_oclBase /* oclBase(OclType[1]) */,

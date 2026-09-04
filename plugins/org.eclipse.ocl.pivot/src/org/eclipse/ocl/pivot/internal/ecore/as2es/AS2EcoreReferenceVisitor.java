@@ -35,7 +35,6 @@ import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
-import org.eclipse.ocl.pivot.AnyType;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
@@ -90,17 +89,10 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	 */
 	protected final @NonNull CompleteStandardLibrary standardLibrary;
 
-	private final @NonNull AnyType oclAnyType;
-	private final org.eclipse.ocl.pivot.@NonNull Class oclElementType;
-	private final org.eclipse.ocl.pivot.@NonNull Class oclTypeType;
-
 	public AS2EcoreReferenceVisitor(@NonNull AS2Ecore context) {
 		super(context);
 		typeRefVisitor = new AS2EcoreTypeRefVisitor(context);
 		standardLibrary = context.getStandardLibrary();
-		oclAnyType = standardLibrary.getOclAnyType();
-		oclElementType = standardLibrary.getOclElementType();
-		oclTypeType = standardLibrary.getOclTypeType();
 	}
 
 	protected @Nullable OptionalType addPropertyRedefinitionEAnnotations(@NonNull EStructuralFeature eStructuralFeature, @NonNull Property pivotProperty) {
@@ -375,26 +367,29 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 	}
 
 	private void resolveSuperClasses(@NonNull EClass eClass, org.eclipse.ocl.pivot.@NonNull Class pivotClass) {
+		// If an EClass has a non-null instanceClass as is ensured by the GenModel PackageClass.javajet template and if
+		// that EClass is used as a superType (e.g. test_containment_navigation) then EFactoryImpl.create gives an IAE.
+		// Therefore all OCL pseudotypes (with null AS instance classes but non-null ES instance classes) must be pruned.
 		Element savedAsScope = typeRefVisitor.pushScope(pivotClass);
 		try {
-			List<org.eclipse.ocl.pivot.Class> superClasses = pivotClass.getSuperClasses();
 			EList<EGenericType> eGenericTypes = eClass.getEGenericSuperTypes();
 			EList<EClass> eTypes = eClass.getESuperTypes();
 			eTypes.clear();
 			eGenericTypes.clear();
-			for (org.eclipse.ocl.pivot.Class pivotObject : superClasses) {
-				// Skip OCL's pseudo-supertypes.
-				if ((pivotObject != oclAnyType) && (pivotObject != oclElementType) && (pivotObject != oclTypeType)) {
-					EObject superEClass = typeRefVisitor.safeVisit(pivotObject, false);
-					if (superEClass != null) {
-						if (superEClass instanceof EGenericType) {
-							eGenericTypes.add((EGenericType)superEClass);
-						}
-						else if (superEClass instanceof EClass){
-							eTypes.add((EClass)superEClass);
-						}
+			for (org.eclipse.ocl.pivot.@NonNull Class superClass : PivotUtil.getSuperClasses(pivotClass)) {
+				// See #2437 for the problems that arise if OCL's injected pseudotypes are reified as Ecore superTypes.
+				// #2438 special cases runtime algorithms that use Ecore supertypes.
+				if (superClass.isIsAbstract() && (superClass.getInstanceClassName() != null)) {	// OCL pseudo type
+					// assert Object.class.getName().equals(superClass.getInstanceClassName());
+				}
+				else {
+					EObject superEClass = typeRefVisitor.safeVisit(superClass, false);
+					if (superEClass instanceof EGenericType) {
+						eGenericTypes.add((EGenericType)superEClass);
 					}
-					// else error
+					else if (superEClass instanceof EClass) {
+						eTypes.add((EClass)superEClass);
+					}
 				}
 			}
 		}
@@ -518,7 +513,6 @@ public class AS2EcoreReferenceVisitor extends AbstractExtendingVisitor<EObject, 
 			}
 		}
 		else if (pivotType instanceof EntryType) {
-			EntryType entryClass = (EntryType)pivotType;
 			for (EObject eContainer = eTypedElement; eContainer != null; eContainer = eContainer.eContainer()) {
 				if (eContainer instanceof EPackage) {
 					EClass entryEClass = getEntryEClass((EPackage)eContainer, (MapType)pivotType);

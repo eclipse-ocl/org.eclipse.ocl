@@ -948,6 +948,26 @@
                 <message_argument value="$$0"/>
             </message_arguments>
         </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$0$4"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$1"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$2"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="$$3"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="emf-gen/org/eclipse/ocl/pivot/internal/values/UndefinedValueImpl.java" type="org.eclipse.ocl.pivot.internal.values.UndefinedValueImpl">
         <filter id="1143996420">
