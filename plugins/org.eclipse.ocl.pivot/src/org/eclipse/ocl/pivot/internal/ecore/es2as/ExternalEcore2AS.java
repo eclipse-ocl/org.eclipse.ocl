@@ -498,7 +498,7 @@ public class ExternalEcore2AS extends Ecore2AS
 		if (libraryEPackage != null) {
 			System.err.println("Suppressing 'when generating OCLstdlib'");
 			libraryEPackage = null;
-		}
+		}			// XXX is this obsolete special case ever needed ?
 		if (libraryEPackage != null) {			 // when generating OCLstdlib
 			newCreateMap = new HashMap<>();
 			AnyType asAnyType = standardLibrary.basicGetOclAnyType();

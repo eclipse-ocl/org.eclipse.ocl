@@ -1389,6 +1389,7 @@ implements org.eclipse.ocl.pivot.Class {
 						}
 					} */
 					assert partialClass != null;
+					assert partialClass != ClassImpl.this;
 					if (classListeners != null) {
 						classListeners.didAddSuperClass(partialClass);
 					}
