@@ -385,11 +385,11 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/values"/>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclAny">
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/_eq_">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/_eq_/object2"/>
-      </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/_ne_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/_ne_/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/_eq_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclAny/_eq_/object2"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclAsSet"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/oclAsType">
@@ -417,17 +417,17 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclAny/toString"/>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclComparable">
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/_ge_">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/_ge_/that"/>
-      </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/_gt_">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/_gt_/that"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/_lt_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/_lt_/that"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/_le_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/_le_/that"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/_lt_">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/_lt_/that"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/_gt_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/_gt_/that"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/_ge_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/_ge_/that"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclComparable/compareTo">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclComparable/compareTo/that"/>
@@ -462,11 +462,11 @@
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclEnumeration"/>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclInvalid">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ../model-gen/oclstdlib.ecore#//OclInvalid/oclBadProperty"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclInvalid/_eq_">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclInvalid/_eq_/object2"/>
-      </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclInvalid/_ne_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclInvalid/_ne_/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclInvalid/_eq_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclInvalid/_eq_/object2"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclInvalid/and">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclInvalid/and/b"/>
@@ -511,11 +511,11 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclSummable/zero"/>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclTuple">
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclTuple/_eq_">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclTuple/_eq_/object2"/>
-      </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclTuple/_ne_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclTuple/_ne_/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclTuple/_eq_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclTuple/_eq_/object2"/>
       </genOperations>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//OclType">
@@ -527,11 +527,11 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclVoid/_add_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclVoid/_add_/s"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclVoid/_eq_">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclVoid/_eq_/object2"/>
-      </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclVoid/_ne_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclVoid/_ne_/object2"/>
+      </genOperations>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclVoid/_eq_">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclVoid/_eq_/object2"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OclVoid/and">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OclVoid/and/b"/>

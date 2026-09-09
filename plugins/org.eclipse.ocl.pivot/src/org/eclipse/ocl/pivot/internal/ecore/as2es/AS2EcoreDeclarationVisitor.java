@@ -12,13 +12,10 @@
 package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.common.util.URI;
@@ -389,7 +386,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			EAnnotation eCoClass = getCoEClass(eDataType);
 			@SuppressWarnings("null")@NonNull EList<@NonNull EObject> eOperations = eCoClass.getContents();
 			safeVisitAll(eOperations, nonDuplicateOperations);
-			ECollections.sort(eOperations, NameUtil.EObjectByNameComparator.INSTANCE);
+		//	ECollections.sort(eOperations, NameUtil.EObjectByNameComparator.INSTANCE);
 		}
 	}
 
@@ -412,7 +409,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 			EAnnotation eCoClass = getCoEClass(eDataType);
 			@SuppressWarnings("null")@NonNull EList<@NonNull EObject> eProperties = eCoClass.getContents();
 			safeVisitAll(eProperties, nonDuplicateProperties);
-			ECollections.sort(eProperties, NameUtil.EObjectByNameComparator.INSTANCE);
+		//	ECollections.sort(eProperties, NameUtil.EObjectByNameComparator.INSTANCE);
 		}
 	}
 
@@ -568,7 +565,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				PivotUtil.refreshList(eAnnotation.getContents(), true, eDuplicates);
 			}
 		}
-		ECollections.sort(eOperations, NameUtil.ENAMED_ELEMENT_COMPARATOR);
+	//	ECollections.sort(eOperations, NameUtil.ENAMED_ELEMENT_COMPARATOR);
 		return eClass;
 	}
 
@@ -710,7 +707,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		if (imports.size() > 0) {
 			if (imports.size() > 0) {
 				imports = new ArrayList<>(imports);
-				Collections.sort(imports, new Comparator<Import>()
+			/*	Collections.sort(imports, new Comparator<Import>()
 				{
 					@Override
 					public int compare(Import o1, Import o2) {
@@ -721,7 +718,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 						return n1.compareTo(n2);
 					}
 				}
-						);
+						); */
 			}
 			URI ecoreURI = context.getEcoreURI();
 			int noNames = 0;

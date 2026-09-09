@@ -453,7 +453,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclComparable___ge___Object() {
-		return oclComparableEClass.getEOperations().get(0);
+		return oclComparableEClass.getEOperations().get(3);
 	}
 
 
@@ -466,7 +466,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclComparable___gt___Object() {
-		return oclComparableEClass.getEOperations().get(1);
+		return oclComparableEClass.getEOperations().get(2);
 	}
 
 
@@ -479,7 +479,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclComparable___le___Object() {
-		return oclComparableEClass.getEOperations().get(2);
+		return oclComparableEClass.getEOperations().get(1);
 	}
 
 
@@ -492,7 +492,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclComparable___lt___Object() {
-		return oclComparableEClass.getEOperations().get(3);
+		return oclComparableEClass.getEOperations().get(0);
 	}
 
 
@@ -730,7 +730,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclAny___eq___Object() {
-		return oclAnyEClass.getEOperations().get(0);
+		return oclAnyEClass.getEOperations().get(1);
 	}
 
 
@@ -743,7 +743,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclAny___ne___Object() {
-		return oclAnyEClass.getEOperations().get(1);
+		return oclAnyEClass.getEOperations().get(0);
 	}
 
 
@@ -952,7 +952,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclInvalid___eq___Object() {
-		return oclInvalidEClass.getEOperations().get(0);
+		return oclInvalidEClass.getEOperations().get(1);
 	}
 
 
@@ -965,7 +965,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclInvalid___ne___Object() {
-		return oclInvalidEClass.getEOperations().get(1);
+		return oclInvalidEClass.getEOperations().get(0);
 	}
 
 
@@ -1303,7 +1303,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclTuple___eq___Object() {
-		return oclTupleEClass.getEOperations().get(0);
+		return oclTupleEClass.getEOperations().get(1);
 	}
 
 
@@ -1316,7 +1316,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclTuple___ne___Object() {
-		return oclTupleEClass.getEOperations().get(1);
+		return oclTupleEClass.getEOperations().get(0);
 	}
 
 
@@ -1381,7 +1381,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclVoid___eq___Object() {
-		return oclVoidEClass.getEOperations().get(1);
+		return oclVoidEClass.getEOperations().get(2);
 	}
 
 
@@ -1394,7 +1394,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * @generated
 	 */
 	public EOperation getOclVoid___ne___Object() {
-		return oclVoidEClass.getEOperations().get(2);
+		return oclVoidEClass.getEOperations().get(1);
 	}
 
 
@@ -5217,10 +5217,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(oclAnyEClass, Object.class, "OclAny", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getOclAny___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclAny___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclAny___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclAny___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEOperation(getOclAny__OclAsSet(), this.getOclSelf(), "oclAsSet", 1, 1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
@@ -5260,16 +5260,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(oclComparableEClass, Object.class, "OclComparable", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getOclComparable___ge___Object(), this.getBoolean(), "_ge_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-
-		op = initEOperation(getOclComparable___gt___Object(), this.getBoolean(), "_gt_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclComparable___lt___Object(), this.getBoolean(), "_lt_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOclComparable___le___Object(), this.getBoolean(), "_le_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclComparable___lt___Object(), this.getBoolean(), "_lt_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclComparable___gt___Object(), this.getBoolean(), "_gt_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+
+		op = initEOperation(getOclComparable___ge___Object(), this.getBoolean(), "_ge_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "that", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOclComparable__CompareTo__Object(), this.getInteger(), "compareTo", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -5315,10 +5315,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		initEClass(oclInvalidEClass, Object.class, "OclInvalid", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 		initEReference(getOclInvalid_OclBadProperty(), this.getOclAny(), null, "oclBadProperty", null, 0, 1, Object.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclInvalid___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclInvalid___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclInvalid___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclInvalid___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOclInvalid__And__Boolean(), this.getBoolean(), "and", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -5382,10 +5382,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEClass(oclTupleEClass, Object.class, "OclTuple", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-		op = initEOperation(getOclTuple___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclTuple___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclTuple___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclTuple___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(oclTypeEClass, Object.class, "OclType", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -5398,10 +5398,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		op = initEOperation(getOclVoid___add___String(), this.getString(), "_add_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getString(), "s", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclVoid___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclVoid___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getOclVoid___ne___Object(), this.getBoolean(), "_ne_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOclVoid___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getOclVoid__And__Boolean(), this.getBoolean(), "and", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -6219,34 +6219,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclAny___eq___Object(),
-		   source,
-		   new String[] {
-			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getOclAny___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclComparable___ge___Object(),
+		  (getOclAny___eq___Object(),
 		   source,
 		   new String[] {
-			   "originalName", ">=" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclComparable___gt___Object(),
-		   source,
-		   new String[] {
-			   "originalName", ">" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclComparable___le___Object(),
-		   source,
-		   new String[] {
-			   "originalName", "<=" //$NON-NLS-1$ //$NON-NLS-2$
+			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclComparable___lt___Object(),
@@ -6255,10 +6237,22 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "<" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclInvalid___eq___Object(),
+		  (getOclComparable___le___Object(),
 		   source,
 		   new String[] {
-			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
+			   "originalName", "<=" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___gt___Object(),
+		   source,
+		   new String[] {
+			   "originalName", ">" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___ge___Object(),
+		   source,
+		   new String[] {
+			   "originalName", ">=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclInvalid___ne___Object(),
@@ -6267,7 +6261,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclTuple___eq___Object(),
+		  (getOclInvalid___eq___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6279,22 +6273,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getOclTuple___eq___Object(),
+		   source,
+		   new String[] {
+			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  (getOclVoid___add___String(),
 		   source,
 		   new String[] {
 			   "originalName", "+" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclVoid___eq___Object(),
-		   source,
-		   new String[] {
-			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getOclVoid___ne___Object(),
 		   source,
 		   new String[] {
 			   "originalName", "<>" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid___eq___Object(),
+		   source,
+		   new String[] {
+			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOrderedCollection__Gather1__Object(),
@@ -7130,18 +7130,18 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.map.MapValuesOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclAny___eq___Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", //$NON-NLS-1$ //$NON-NLS-2$
-			   "post", "result = (self = object2)" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getOclAny___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation", //$NON-NLS-1$ //$NON-NLS-2$
 			   "post", "result = not (self = object2)" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny___eq___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation", //$NON-NLS-1$ //$NON-NLS-2$
+			   "post", "result = (self = object2)" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclAny__OclAsSet(),
@@ -7223,16 +7223,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyToStringOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclComparable___ge___Object(),
+		  (getOclComparable___lt___Object(),
 		   source,
 		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOclComparable___gt___Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation" //$NON-NLS-1$ //$NON-NLS-2$
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclComparable___le___Object(),
@@ -7241,10 +7235,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclComparable___lt___Object(),
+		  (getOclComparable___gt___Object(),
 		   source,
 		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation" //$NON-NLS-1$ //$NON-NLS-2$
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___ge___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclComparable__CompareTo__Object(),
@@ -7332,16 +7332,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclElementOclContentsProperty" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclInvalid___eq___Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getOclInvalid___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid___eq___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclInvalid__And__Boolean(),
@@ -7434,16 +7434,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyUnsupportedOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclTuple___eq___Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getOclTuple___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclTuple___eq___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclType__ConformsTo__Object(),
@@ -7458,16 +7458,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.string.StringConcatOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOclVoid___eq___Object(),
-		   source,
-		   new String[] {
-			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getOclVoid___ne___Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid___eq___Object(),
+		   source,
+		   new String[] {
+			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclVoid__And__Boolean(),
