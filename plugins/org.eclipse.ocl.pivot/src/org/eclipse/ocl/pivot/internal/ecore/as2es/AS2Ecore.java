@@ -11,6 +11,7 @@
 package org.eclipse.ocl.pivot.internal.ecore.as2es;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,12 +19,17 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.ECollections;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EGenericType;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EOperation;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -152,6 +158,49 @@ public class AS2Ecore extends AbstractConversion
 			assert uri.toString().equals(getASModel().getExternalURI());
 		}
 	}
+
+	/**
+	 * SyntheticEClassComparator leaves the AS-declared EClassifiers in order, but sorts the additional synthetic EClassifiers.
+	 */
+	private static class SyntheticEClassComparator implements Comparator<@NonNull EClassifier>
+	{
+		private final @NonNull Map<@NonNull EClassifier, @NonNull Integer> eClassifier2index = new HashMap<>();
+
+		public SyntheticEClassComparator(@NonNull Iterable<@NonNull EClassifier> eClassifiers) {
+			int index = 0;
+			for (@NonNull EClassifier eClassifier : eClassifiers) {
+				if ((eClassifier.getEAnnotation(PivotConstants.ENTRY_ECLASS_ANNOTATION_SOURCE) == null) && (eClassifier.getEAnnotation(PivotConstants.LAMBDA_ECLASS_ANNOTATION_SOURCE) == null)) {
+					eClassifier2index.put(eClassifier, index);
+				}
+				index++;
+			}
+		}
+
+		@Override
+		public int compare(@NonNull EClassifier o1, @NonNull EClassifier o2) {
+			Integer i1 = eClassifier2index.get(o1);
+			Integer i2 = eClassifier2index.get(o2);
+			if (i1 != null) {
+				if (i2 != null) {
+					return i1.intValue() - i2.intValue();
+				}
+				else {
+					return -1;
+				}
+			}
+			else {
+				if (i2 != null) {
+					return +1;
+				}
+				else {
+					String n1 = o1.getName();
+					String n2 = o2.getName();
+					return n1.compareTo(n2);
+				}
+			}
+		}
+	}
+
 
 	public static final Logger logger = Logger.getLogger(AS2Ecore.class);
 
@@ -400,6 +449,14 @@ public class AS2Ecore extends AbstractConversion
 				PivotObjectImpl pivotObjectImpl = (PivotObjectImpl)pivotElement;
 				if (pivotObjectImpl.getESObject() == null) {				// Bug 510729 avoid trashing OCLstdlib
 					pivotObjectImpl.setESObject(eObject);
+				}
+			}
+			for (TreeIterator<EObject> it = ecoreResource.getAllContents(); it.hasNext(); ) {
+				EObject eObject = it.next();
+				if (eObject instanceof EPackage) {
+					EList<EClassifier> eClassifiers = ((EPackage)eObject).getEClassifiers();
+					ECollections.sort(eClassifiers, new SyntheticEClassComparator(eClassifiers));
+					it.prune();
 				}
 			}
 			if (asModel.getExternalURI() == null) {

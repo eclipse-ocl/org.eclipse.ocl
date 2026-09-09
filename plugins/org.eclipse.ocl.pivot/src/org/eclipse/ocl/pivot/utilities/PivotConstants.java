@@ -120,6 +120,12 @@ public interface PivotConstants
 	static final @NonNull String ENTRY_ECLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/EntryEClass";
 
 	/**
+	 * The annotation identifies a lambda class for Ecore serialization of an OCL Lambda.
+	 * @since 7.0
+	 */
+	static final @NonNull String LAMBDA_ECLASS_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/LambdaEClass";
+
+	/**
 	 * The annotated EClass is a co-EClass for the EOperations of an EDataType.
 	 * @since 7.0
 	 */
