@@ -216,25 +216,11 @@ public interface PivotConstants
 	static final @NonNull String OPERATION_INVALIDATING_KEY = "invalidating";
 
 	/**
-	 * EOperation annotation key for the additional iterator names feature.
-	 *
-	 * @since 7.0
-	 */
-	static final @NonNull String OPERATION_ITERATORS_KEY = "iterators";
-
-	/**
 	 * EOperation annotation key for the additional precedence feature.
 	 *
 	 * @since 7.0
 	 */
 	static final @NonNull String OPERATION_PRECEDENCE_KEY = "precedence";
-
-	/**
-	 * EOperation annotation key for the additional iterator result/accumulator name feature.
-	 *
-	 * @since 7.0
-	 */
-	static final @NonNull String OPERATION_RESULT_KEY = "result";
 
 	/**
 	 * EOperation annotation key for the additional validating feature.
@@ -270,6 +256,27 @@ public interface PivotConstants
 	 * @since 7.0
 	 */
 	static final @NonNull String PARAMETER_ISTYPEOF_KEY = "isTypeOf";
+
+	/**
+	 * EParameter annotation key for the additional iterator/accumulator role.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String PARAMETER_ROLE_KEY = "role";
+
+	/**
+	 * EParameter annotation detail for an iterator PARAMETER_ROLE_KEY.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String PARAMETER_ROLE_ACCUMULATOR = "ACCUMULATOR";
+
+	/**
+	 * EParameter annotation detail for an iterator PARAMETER_ROLE_KEY.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String PARAMETER_ROLE_ITERATOR = "ITERATOR";
 
 	/**
 	 * The default non-null of non-aggregates. This is not intended to be changed;

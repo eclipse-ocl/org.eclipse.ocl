@@ -20,7 +20,6 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -69,6 +68,7 @@ import org.eclipse.ocl.pivot.util.Visitable;
 import org.eclipse.ocl.pivot.utilities.ASSaverNormalizeVisitor;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
+import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
 
@@ -80,7 +80,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	/**
 	 * TypeDeclarationDepthComparator supports sorting type declarations into a shallowest first order to ensure
 	 * that simple type declarations can be loaded by loadOrphanage before more complex type declarations that
-	 * might otherwise attempt to create rather than re-use the simpler decalartion.
+	 * might otherwise attempt to create rather than re-use the simpler declaration.
 	 */
 	protected static class TypeDeclarationDepthComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
 	{
@@ -864,8 +864,7 @@ public class SaverStandardLibraryImpl extends PartialStandardLibrary implements 
 	@Override
 	public void normalizeContents() {
 		List<@NonNull EObject> allContents = new ArrayList<>();
-		for (@NonNull TreeIterator<EObject> tit = resource.getAllContents(); tit.hasNext(); ) {
-			EObject eObject = tit.next();
+		for (EObject eObject : new TreeIterable(resource)) {
 			if (eObject instanceof Visitable) {
 				allContents.add(eObject);
 			}

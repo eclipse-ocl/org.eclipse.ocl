@@ -1633,14 +1633,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#gather1(java.lang.Object) <em>Gather1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#gather(java.lang.Object, java.lang.Object) <em>Gather</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Gather1</em>' operation.
-	 * @see java.util.Collection#gather1(java.lang.Object)
+	 * @return the meta object for the '<em>Gather</em>' operation.
+	 * @see java.util.Collection#gather(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedCollection__Gather1__Object() {
+	public EOperation getOrderedCollection__Gather__Object_Object() {
 		return orderedCollectionEClass.getEOperations().get(2);
 	}
 
@@ -1788,14 +1788,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#any1(java.lang.Object) <em>Any1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#any(java.lang.Object, java.lang.Object) <em>Any</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Any1</em>' operation.
-	 * @see java.util.Map#any1(java.lang.Object)
+	 * @return the meta object for the '<em>Any</em>' operation.
+	 * @see java.util.Map#any(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Any1__Object() {
+	public EOperation getMap__Any__Object_Object() {
 		return mapEClass.getEOperations().get(2);
 	}
 
@@ -1814,40 +1814,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#collect1(java.lang.Object) <em>Collect1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#collect(java.lang.Object, java.lang.Object) <em>Collect</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect1</em>' operation.
-	 * @see java.util.Map#collect1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect</em>' operation.
+	 * @see java.util.Map#collect(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Collect1__Object() {
+	public EOperation getMap__Collect__Object_Object() {
 		return mapEClass.getEOperations().get(4);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#collectBy1(java.lang.Object) <em>Collect By1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#collectBy(java.lang.Object, java.lang.Object) <em>Collect By</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect By1</em>' operation.
-	 * @see java.util.Map#collectBy1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect By</em>' operation.
+	 * @see java.util.Map#collectBy(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__CollectBy1__Object() {
+	public EOperation getMap__CollectBy__Object_Object() {
 		return mapEClass.getEOperations().get(5);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#collectNested1(java.lang.Object) <em>Collect Nested1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#collectNested(java.lang.Object, java.lang.Object) <em>Collect Nested</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect Nested1</em>' operation.
-	 * @see java.util.Map#collectNested1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect Nested</em>' operation.
+	 * @see java.util.Map#collectNested(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__CollectNested1__Object() {
+	public EOperation getMap__CollectNested__Object_Object() {
 		return mapEClass.getEOperations().get(6);
 	}
 
@@ -1970,92 +1970,92 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#exists1(java.lang.Object) <em>Exists1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#exists(java.lang.Object, java.lang.Object) <em>Exists</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Exists1</em>' operation.
-	 * @see java.util.Map#exists1(java.lang.Object)
+	 * @return the meta object for the '<em>Exists</em>' operation.
+	 * @see java.util.Map#exists(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Exists1__Object() {
+	public EOperation getMap__Exists__Object_Object() {
 		return mapEClass.getEOperations().get(16);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#exists2(java.lang.Object) <em>Exists2</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#exists(java.lang.Object, java.lang.Object, java.lang.Object) <em>Exists</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Exists2</em>' operation.
-	 * @see java.util.Map#exists2(java.lang.Object)
+	 * @return the meta object for the '<em>Exists</em>' operation.
+	 * @see java.util.Map#exists(java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Exists2__Object() {
+	public EOperation getMap__Exists__Object_Object_Object() {
 		return mapEClass.getEOperations().get(17);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#exists3(java.lang.Object) <em>Exists3</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#exists(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>Exists</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Exists3</em>' operation.
-	 * @see java.util.Map#exists3(java.lang.Object)
+	 * @return the meta object for the '<em>Exists</em>' operation.
+	 * @see java.util.Map#exists(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Exists3__Object() {
+	public EOperation getMap__Exists__Object_Object_Object_Object() {
 		return mapEClass.getEOperations().get(18);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#forAll1(java.lang.Object) <em>For All1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#forAll(java.lang.Object, java.lang.Object) <em>For All</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>For All1</em>' operation.
-	 * @see java.util.Map#forAll1(java.lang.Object)
+	 * @return the meta object for the '<em>For All</em>' operation.
+	 * @see java.util.Map#forAll(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__ForAll1__Object() {
+	public EOperation getMap__ForAll__Object_Object() {
 		return mapEClass.getEOperations().get(19);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#forAll2(java.lang.Object) <em>For All2</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#forAll(java.lang.Object, java.lang.Object, java.lang.Object) <em>For All</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>For All2</em>' operation.
-	 * @see java.util.Map#forAll2(java.lang.Object)
+	 * @return the meta object for the '<em>For All</em>' operation.
+	 * @see java.util.Map#forAll(java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__ForAll2__Object() {
+	public EOperation getMap__ForAll__Object_Object_Object() {
 		return mapEClass.getEOperations().get(20);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#forAll3(java.lang.Object) <em>For All3</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#forAll(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>For All</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>For All3</em>' operation.
-	 * @see java.util.Map#forAll3(java.lang.Object)
+	 * @return the meta object for the '<em>For All</em>' operation.
+	 * @see java.util.Map#forAll(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__ForAll3__Object() {
+	public EOperation getMap__ForAll__Object_Object_Object_Object() {
 		return mapEClass.getEOperations().get(21);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#gather1(java.lang.Object) <em>Gather1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#gather(java.lang.Object, java.lang.Object) <em>Gather</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Gather1</em>' operation.
-	 * @see java.util.Map#gather1(java.lang.Object)
+	 * @return the meta object for the '<em>Gather</em>' operation.
+	 * @see java.util.Map#gather(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Gather1__Object() {
+	public EOperation getMap__Gather__Object_Object() {
 		return mapEClass.getEOperations().get(22);
 	}
 
@@ -2165,27 +2165,27 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#isUnique1(java.lang.Object) <em>Is Unique1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#isUnique(java.lang.Object, java.lang.Object) <em>Is Unique</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Unique1</em>' operation.
-	 * @see java.util.Map#isUnique1(java.lang.Object)
+	 * @return the meta object for the '<em>Is Unique</em>' operation.
+	 * @see java.util.Map#isUnique(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__IsUnique1__Object() {
+	public EOperation getMap__IsUnique__Object_Object() {
 		return mapEClass.getEOperations().get(31);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#iterate1(java.lang.Object) <em>Iterate1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#iterate(java.lang.Object, java.lang.Object, java.lang.Object) <em>Iterate</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Iterate1</em>' operation.
-	 * @see java.util.Map#iterate1(java.lang.Object)
+	 * @return the meta object for the '<em>Iterate</em>' operation.
+	 * @see java.util.Map#iterate(java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Iterate1__Object() {
+	public EOperation getMap__Iterate__Object_Object_Object() {
 		return mapEClass.getEOperations().get(32);
 	}
 
@@ -2217,79 +2217,79 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#one1(java.lang.Object) <em>One1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#one(java.lang.Object, java.lang.Object) <em>One</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>One1</em>' operation.
-	 * @see java.util.Map#one1(java.lang.Object)
+	 * @return the meta object for the '<em>One</em>' operation.
+	 * @see java.util.Map#one(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__One1__Object() {
+	public EOperation getMap__One__Object_Object() {
 		return mapEClass.getEOperations().get(35);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#reject1(java.lang.Object) <em>Reject1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#reject(java.lang.Object, java.lang.Object) <em>Reject</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Reject1</em>' operation.
-	 * @see java.util.Map#reject1(java.lang.Object)
+	 * @return the meta object for the '<em>Reject</em>' operation.
+	 * @see java.util.Map#reject(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Reject1__Object() {
+	public EOperation getMap__Reject__Object_Object() {
 		return mapEClass.getEOperations().get(36);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#search1(java.lang.Object, java.lang.Object, java.lang.Object) <em>Search1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>Search</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Search1</em>' operation.
-	 * @see java.util.Map#search1(java.lang.Object, java.lang.Object, java.lang.Object)
+	 * @return the meta object for the '<em>Search</em>' operation.
+	 * @see java.util.Map#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Search1__Object_Object_Object() {
+	public EOperation getMap__Search__Object_Object_Object_Object_Object() {
 		return mapEClass.getEOperations().get(37);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#search2(java.lang.Object, java.lang.Object, java.lang.Object) <em>Search2</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>Search</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Search2</em>' operation.
-	 * @see java.util.Map#search2(java.lang.Object, java.lang.Object, java.lang.Object)
+	 * @return the meta object for the '<em>Search</em>' operation.
+	 * @see java.util.Map#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Search2__Object_Object_Object() {
+	public EOperation getMap__Search__Object_Object_Object_Object_Object_Object() {
 		return mapEClass.getEOperations().get(38);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#search3(java.lang.Object, java.lang.Object, java.lang.Object) <em>Search3</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>Search</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Search3</em>' operation.
-	 * @see java.util.Map#search3(java.lang.Object, java.lang.Object, java.lang.Object)
+	 * @return the meta object for the '<em>Search</em>' operation.
+	 * @see java.util.Map#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Search3__Object_Object_Object() {
+	public EOperation getMap__Search__Object_Object_Object_Object_Object_Object_Object() {
 		return mapEClass.getEOperations().get(39);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Map#select1(java.lang.Object) <em>Select1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Map#select(java.lang.Object, java.lang.Object) <em>Select</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Select1</em>' operation.
-	 * @see java.util.Map#select1(java.lang.Object)
+	 * @return the meta object for the '<em>Select</em>' operation.
+	 * @see java.util.Map#select(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getMap__Select1__Object() {
+	public EOperation getMap__Select__Object_Object() {
 		return mapEClass.getEOperations().get(40);
 	}
 
@@ -2418,40 +2418,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#closure1(java.lang.Object) <em>Closure1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#closure(java.lang.Object, java.lang.Object) <em>Closure</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Closure1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.Bag#closure1(java.lang.Object)
+	 * @return the meta object for the '<em>Closure</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.Bag#closure(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getBag__Closure1__Object() {
+	public EOperation getBag__Closure__Object_Object() {
 		return bagEClass.getEOperations().get(2);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#collect1(java.lang.Object) <em>Collect1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#collect(java.lang.Object, java.lang.Object) <em>Collect</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.Bag#collect1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.Bag#collect(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getBag__Collect1__Object() {
+	public EOperation getBag__Collect__Object_Object() {
 		return bagEClass.getEOperations().get(3);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#collectNested1(java.lang.Object) <em>Collect Nested1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#collectNested(java.lang.Object, java.lang.Object) <em>Collect Nested</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect Nested1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.Bag#collectNested1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect Nested</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.Bag#collectNested(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getBag__CollectNested1__Object() {
+	public EOperation getBag__CollectNested__Object_Object() {
 		return bagEClass.getEOperations().get(4);
 	}
 
@@ -2522,27 +2522,27 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#reject1(java.lang.Object) <em>Reject1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#reject(java.lang.Object, java.lang.Object) <em>Reject</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Reject1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.Bag#reject1(java.lang.Object)
+	 * @return the meta object for the '<em>Reject</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.Bag#reject(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getBag__Reject1__Object() {
+	public EOperation getBag__Reject__Object_Object() {
 		return bagEClass.getEOperations().get(10);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#select1(java.lang.Object) <em>Select1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#select(java.lang.Object, java.lang.Object) <em>Select</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Select1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.Bag#select1(java.lang.Object)
+	 * @return the meta object for the '<em>Select</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.Bag#select(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getBag__Select1__Object() {
+	public EOperation getBag__Select__Object_Object() {
 		return bagEClass.getEOperations().get(11);
 	}
 
@@ -2574,14 +2574,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#sortedBy1(java.lang.Object) <em>Sorted By1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.Bag#sortedBy(java.lang.Object, java.lang.Object) <em>Sorted By</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Sorted By1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.Bag#sortedBy1(java.lang.Object)
+	 * @return the meta object for the '<em>Sorted By</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.Bag#sortedBy(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getBag__SortedBy1__Object() {
+	public EOperation getBag__SortedBy__Object_Object() {
 		return bagEClass.getEOperations().get(14);
 	}
 
@@ -2625,14 +2625,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#any1(java.lang.Object) <em>Any1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#any(java.lang.Object, java.lang.Object) <em>Any</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Any1</em>' operation.
-	 * @see java.util.Collection#any1(java.lang.Object)
+	 * @return the meta object for the '<em>Any</em>' operation.
+	 * @see java.util.Collection#any(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Any1__Object() {
+	public EOperation getCollection__Any__Object_Object() {
 		return collectionEClass.getEOperations().get(2);
 	}
 
@@ -2690,40 +2690,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#collect1(java.lang.Object) <em>Collect1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#collect(java.lang.Object, java.lang.Object) <em>Collect</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect1</em>' operation.
-	 * @see java.util.Collection#collect1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect</em>' operation.
+	 * @see java.util.Collection#collect(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Collect1__Object() {
+	public EOperation getCollection__Collect__Object_Object() {
 		return collectionEClass.getEOperations().get(7);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#collectBy1(java.lang.Object) <em>Collect By1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#collectBy(java.lang.Object, java.lang.Object) <em>Collect By</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect By1</em>' operation.
-	 * @see java.util.Collection#collectBy1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect By</em>' operation.
+	 * @see java.util.Collection#collectBy(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__CollectBy1__Object() {
+	public EOperation getCollection__CollectBy__Object_Object() {
 		return collectionEClass.getEOperations().get(8);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#collectNested1(java.lang.Object) <em>Collect Nested1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#collectNested(java.lang.Object, java.lang.Object) <em>Collect Nested</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect Nested1</em>' operation.
-	 * @see java.util.Collection#collectNested1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect Nested</em>' operation.
+	 * @see java.util.Collection#collectNested(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__CollectNested1__Object() {
+	public EOperation getCollection__CollectNested__Object_Object() {
 		return collectionEClass.getEOperations().get(9);
 	}
 
@@ -2794,40 +2794,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#exists1(java.lang.Object) <em>Exists1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#exists(java.lang.Object, java.lang.Object) <em>Exists</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Exists1</em>' operation.
-	 * @see java.util.Collection#exists1(java.lang.Object)
+	 * @return the meta object for the '<em>Exists</em>' operation.
+	 * @see java.util.Collection#exists(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Exists1__Object() {
+	public EOperation getCollection__Exists__Object_Object() {
 		return collectionEClass.getEOperations().get(15);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#exists2(java.lang.Object) <em>Exists2</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#exists(java.lang.Object, java.lang.Object, java.lang.Object) <em>Exists</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Exists2</em>' operation.
-	 * @see java.util.Collection#exists2(java.lang.Object)
+	 * @return the meta object for the '<em>Exists</em>' operation.
+	 * @see java.util.Collection#exists(java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Exists2__Object() {
+	public EOperation getCollection__Exists__Object_Object_Object() {
 		return collectionEClass.getEOperations().get(16);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#exists3(java.lang.Object) <em>Exists3</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#exists(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>Exists</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Exists3</em>' operation.
-	 * @see java.util.Collection#exists3(java.lang.Object)
+	 * @return the meta object for the '<em>Exists</em>' operation.
+	 * @see java.util.Collection#exists(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Exists3__Object() {
+	public EOperation getCollection__Exists__Object_Object_Object_Object() {
 		return collectionEClass.getEOperations().get(17);
 	}
 
@@ -2846,53 +2846,53 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#forAll1(java.lang.Object) <em>For All1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#forAll(java.lang.Object, java.lang.Object) <em>For All</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>For All1</em>' operation.
-	 * @see java.util.Collection#forAll1(java.lang.Object)
+	 * @return the meta object for the '<em>For All</em>' operation.
+	 * @see java.util.Collection#forAll(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__ForAll1__Object() {
+	public EOperation getCollection__ForAll__Object_Object() {
 		return collectionEClass.getEOperations().get(19);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#forAll2(java.lang.Object) <em>For All2</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#forAll(java.lang.Object, java.lang.Object, java.lang.Object) <em>For All</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>For All2</em>' operation.
-	 * @see java.util.Collection#forAll2(java.lang.Object)
+	 * @return the meta object for the '<em>For All</em>' operation.
+	 * @see java.util.Collection#forAll(java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__ForAll2__Object() {
+	public EOperation getCollection__ForAll__Object_Object_Object() {
 		return collectionEClass.getEOperations().get(20);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#forAll3(java.lang.Object) <em>For All3</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#forAll(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>For All</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>For All3</em>' operation.
-	 * @see java.util.Collection#forAll3(java.lang.Object)
+	 * @return the meta object for the '<em>For All</em>' operation.
+	 * @see java.util.Collection#forAll(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__ForAll3__Object() {
+	public EOperation getCollection__ForAll__Object_Object_Object_Object() {
 		return collectionEClass.getEOperations().get(21);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#gather1(java.lang.Object) <em>Gather1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#gather(java.lang.Object, java.lang.Object) <em>Gather</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Gather1</em>' operation.
-	 * @see java.util.Collection#gather1(java.lang.Object)
+	 * @return the meta object for the '<em>Gather</em>' operation.
+	 * @see java.util.Collection#gather(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Gather1__Object() {
+	public EOperation getCollection__Gather__Object_Object() {
 		return collectionEClass.getEOperations().get(22);
 	}
 
@@ -2989,27 +2989,27 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#isUnique1(java.lang.Object) <em>Is Unique1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#isUnique(java.lang.Object, java.lang.Object) <em>Is Unique</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Is Unique1</em>' operation.
-	 * @see java.util.Collection#isUnique1(java.lang.Object)
+	 * @return the meta object for the '<em>Is Unique</em>' operation.
+	 * @see java.util.Collection#isUnique(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__IsUnique1__Object() {
+	public EOperation getCollection__IsUnique__Object_Object() {
 		return collectionEClass.getEOperations().get(30);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#iterate1(java.lang.Object) <em>Iterate1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#iterate(java.lang.Object, java.lang.Object, java.lang.Object) <em>Iterate</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Iterate1</em>' operation.
-	 * @see java.util.Collection#iterate1(java.lang.Object)
+	 * @return the meta object for the '<em>Iterate</em>' operation.
+	 * @see java.util.Collection#iterate(java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Iterate1__Object() {
+	public EOperation getCollection__Iterate__Object_Object_Object() {
 		return collectionEClass.getEOperations().get(31);
 	}
 
@@ -3054,14 +3054,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#one1(java.lang.Object) <em>One1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#one(java.lang.Object, java.lang.Object) <em>One</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>One1</em>' operation.
-	 * @see java.util.Collection#one1(java.lang.Object)
+	 * @return the meta object for the '<em>One</em>' operation.
+	 * @see java.util.Collection#one(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__One1__Object() {
+	public EOperation getCollection__One__Object_Object() {
 		return collectionEClass.getEOperations().get(35);
 	}
 
@@ -3080,66 +3080,66 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#reject1(java.lang.Object) <em>Reject1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#reject(java.lang.Object, java.lang.Object) <em>Reject</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Reject1</em>' operation.
-	 * @see java.util.Collection#reject1(java.lang.Object)
+	 * @return the meta object for the '<em>Reject</em>' operation.
+	 * @see java.util.Collection#reject(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Reject1__Object() {
+	public EOperation getCollection__Reject__Object_Object() {
 		return collectionEClass.getEOperations().get(37);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#search1(java.lang.Object, java.lang.Object, java.lang.Object) <em>Search1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>Search</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Search1</em>' operation.
-	 * @see java.util.Collection#search1(java.lang.Object, java.lang.Object, java.lang.Object)
+	 * @return the meta object for the '<em>Search</em>' operation.
+	 * @see java.util.Collection#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Search1__Object_Object_Object() {
+	public EOperation getCollection__Search__Object_Object_Object_Object_Object() {
 		return collectionEClass.getEOperations().get(38);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#search2(java.lang.Object, java.lang.Object, java.lang.Object) <em>Search2</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>Search</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Search2</em>' operation.
-	 * @see java.util.Collection#search2(java.lang.Object, java.lang.Object, java.lang.Object)
+	 * @return the meta object for the '<em>Search</em>' operation.
+	 * @see java.util.Collection#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Search2__Object_Object_Object() {
+	public EOperation getCollection__Search__Object_Object_Object_Object_Object_Object() {
 		return collectionEClass.getEOperations().get(39);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#search3(java.lang.Object, java.lang.Object, java.lang.Object) <em>Search3</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object) <em>Search</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Search3</em>' operation.
-	 * @see java.util.Collection#search3(java.lang.Object, java.lang.Object, java.lang.Object)
+	 * @return the meta object for the '<em>Search</em>' operation.
+	 * @see java.util.Collection#search(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Search3__Object_Object_Object() {
+	public EOperation getCollection__Search__Object_Object_Object_Object_Object_Object_Object() {
 		return collectionEClass.getEOperations().get(40);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#select1(java.lang.Object) <em>Select1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#select(java.lang.Object, java.lang.Object) <em>Select</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Select1</em>' operation.
-	 * @see java.util.Collection#select1(java.lang.Object)
+	 * @return the meta object for the '<em>Select</em>' operation.
+	 * @see java.util.Collection#select(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__Select1__Object() {
+	public EOperation getCollection__Select__Object_Object() {
 		return collectionEClass.getEOperations().get(41);
 	}
 
@@ -3184,14 +3184,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#sortedBy1(java.lang.Object) <em>Sorted By1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#sortedBy(java.lang.Object, java.lang.Object) <em>Sorted By</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Sorted By1</em>' operation.
-	 * @see java.util.Collection#sortedBy1(java.lang.Object)
+	 * @return the meta object for the '<em>Sorted By</em>' operation.
+	 * @see java.util.Collection#sortedBy(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getCollection__SortedBy1__Object() {
+	public EOperation getCollection__SortedBy__Object_Object() {
 		return collectionEClass.getEOperations().get(45);
 	}
 
@@ -3300,40 +3300,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#closure1(java.lang.Object) <em>Closure1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#closure(java.lang.Object, java.lang.Object) <em>Closure</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Closure1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#closure1(java.lang.Object)
+	 * @return the meta object for the '<em>Closure</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#closure(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedSet__Closure1__Object() {
+	public EOperation getOrderedSet__Closure__Object_Object() {
 		return orderedSetEClass.getEOperations().get(5);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#collect1(java.lang.Object) <em>Collect1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#collect(java.lang.Object, java.lang.Object) <em>Collect</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#collect1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#collect(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedSet__Collect1__Object() {
+	public EOperation getOrderedSet__Collect__Object_Object() {
 		return orderedSetEClass.getEOperations().get(6);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#collectNested1(java.lang.Object) <em>Collect Nested1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#collectNested(java.lang.Object, java.lang.Object) <em>Collect Nested</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect Nested1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#collectNested1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect Nested</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#collectNested(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedSet__CollectNested1__Object() {
+	public EOperation getOrderedSet__CollectNested__Object_Object() {
 		return orderedSetEClass.getEOperations().get(7);
 	}
 
@@ -3443,14 +3443,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#reject1(java.lang.Object) <em>Reject1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#reject(java.lang.Object, java.lang.Object) <em>Reject</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Reject1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#reject1(java.lang.Object)
+	 * @return the meta object for the '<em>Reject</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#reject(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedSet__Reject1__Object() {
+	public EOperation getOrderedSet__Reject__Object_Object() {
 		return orderedSetEClass.getEOperations().get(16);
 	}
 
@@ -3469,14 +3469,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#select1(java.lang.Object) <em>Select1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#select(java.lang.Object, java.lang.Object) <em>Select</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Select1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#select1(java.lang.Object)
+	 * @return the meta object for the '<em>Select</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#select(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedSet__Select1__Object() {
+	public EOperation getOrderedSet__Select__Object_Object() {
 		return orderedSetEClass.getEOperations().get(18);
 	}
 
@@ -3508,14 +3508,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#sortedBy1(java.lang.Object) <em>Sorted By1</em>}' operation.
+	 * Returns the meta object for the '{@link org.eclipse.ocl.pivot.values.OrderedSet#sortedBy(java.lang.Object, java.lang.Object) <em>Sorted By</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Sorted By1</em>' operation.
-	 * @see org.eclipse.ocl.pivot.values.OrderedSet#sortedBy1(java.lang.Object)
+	 * @return the meta object for the '<em>Sorted By</em>' operation.
+	 * @see org.eclipse.ocl.pivot.values.OrderedSet#sortedBy(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getOrderedSet__SortedBy1__Object() {
+	public EOperation getOrderedSet__SortedBy__Object_Object() {
 		return orderedSetEClass.getEOperations().get(21);
 	}
 
@@ -3598,40 +3598,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.List#closure1(java.lang.Object) <em>Closure1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.List#closure(java.lang.Object, java.lang.Object) <em>Closure</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Closure1</em>' operation.
-	 * @see java.util.List#closure1(java.lang.Object)
+	 * @return the meta object for the '<em>Closure</em>' operation.
+	 * @see java.util.List#closure(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSequence__Closure1__Object() {
+	public EOperation getSequence__Closure__Object_Object() {
 		return sequenceEClass.getEOperations().get(4);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.List#collect1(java.lang.Object) <em>Collect1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.List#collect(java.lang.Object, java.lang.Object) <em>Collect</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect1</em>' operation.
-	 * @see java.util.List#collect1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect</em>' operation.
+	 * @see java.util.List#collect(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSequence__Collect1__Object() {
+	public EOperation getSequence__Collect__Object_Object() {
 		return sequenceEClass.getEOperations().get(5);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.List#collectNested1(java.lang.Object) <em>Collect Nested1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.List#collectNested(java.lang.Object, java.lang.Object) <em>Collect Nested</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect Nested1</em>' operation.
-	 * @see java.util.List#collectNested1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect Nested</em>' operation.
+	 * @see java.util.List#collectNested(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSequence__CollectNested1__Object() {
+	public EOperation getSequence__CollectNested__Object_Object() {
 		return sequenceEClass.getEOperations().get(6);
 	}
 
@@ -3741,14 +3741,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.List#reject1(java.lang.Object) <em>Reject1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.List#reject(java.lang.Object, java.lang.Object) <em>Reject</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Reject1</em>' operation.
-	 * @see java.util.List#reject1(java.lang.Object)
+	 * @return the meta object for the '<em>Reject</em>' operation.
+	 * @see java.util.List#reject(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSequence__Reject1__Object() {
+	public EOperation getSequence__Reject__Object_Object() {
 		return sequenceEClass.getEOperations().get(15);
 	}
 
@@ -3767,14 +3767,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.List#select1(java.lang.Object) <em>Select1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.List#select(java.lang.Object, java.lang.Object) <em>Select</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Select1</em>' operation.
-	 * @see java.util.List#select1(java.lang.Object)
+	 * @return the meta object for the '<em>Select</em>' operation.
+	 * @see java.util.List#select(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSequence__Select1__Object() {
+	public EOperation getSequence__Select__Object_Object() {
 		return sequenceEClass.getEOperations().get(17);
 	}
 
@@ -3806,14 +3806,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.List#sortedBy1(java.lang.Object) <em>Sorted By1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.List#sortedBy(java.lang.Object, java.lang.Object) <em>Sorted By</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Sorted By1</em>' operation.
-	 * @see java.util.List#sortedBy1(java.lang.Object)
+	 * @return the meta object for the '<em>Sorted By</em>' operation.
+	 * @see java.util.List#sortedBy(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSequence__SortedBy1__Object() {
+	public EOperation getSequence__SortedBy__Object_Object() {
 		return sequenceEClass.getEOperations().get(20);
 	}
 
@@ -3883,40 +3883,40 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#closure1(java.lang.Object) <em>Closure1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#closure(java.lang.Object, java.lang.Object) <em>Closure</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Closure1</em>' operation.
-	 * @see java.util.Set#closure1(java.lang.Object)
+	 * @return the meta object for the '<em>Closure</em>' operation.
+	 * @see java.util.Set#closure(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSet__Closure1__Object() {
+	public EOperation getSet__Closure__Object_Object() {
 		return setEClass.getEOperations().get(3);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#collect1(java.lang.Object) <em>Collect1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#collect(java.lang.Object, java.lang.Object) <em>Collect</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect1</em>' operation.
-	 * @see java.util.Set#collect1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect</em>' operation.
+	 * @see java.util.Set#collect(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSet__Collect1__Object() {
+	public EOperation getSet__Collect__Object_Object() {
 		return setEClass.getEOperations().get(4);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#collectNested1(java.lang.Object) <em>Collect Nested1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#collectNested(java.lang.Object, java.lang.Object) <em>Collect Nested</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Collect Nested1</em>' operation.
-	 * @see java.util.Set#collectNested1(java.lang.Object)
+	 * @return the meta object for the '<em>Collect Nested</em>' operation.
+	 * @see java.util.Set#collectNested(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSet__CollectNested1__Object() {
+	public EOperation getSet__CollectNested__Object_Object() {
 		return setEClass.getEOperations().get(5);
 	}
 
@@ -3987,27 +3987,27 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#reject1(java.lang.Object) <em>Reject1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#reject(java.lang.Object, java.lang.Object) <em>Reject</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Reject1</em>' operation.
-	 * @see java.util.Set#reject1(java.lang.Object)
+	 * @return the meta object for the '<em>Reject</em>' operation.
+	 * @see java.util.Set#reject(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSet__Reject1__Object() {
+	public EOperation getSet__Reject__Object_Object() {
 		return setEClass.getEOperations().get(11);
 	}
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#select1(java.lang.Object) <em>Select1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#select(java.lang.Object, java.lang.Object) <em>Select</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Select1</em>' operation.
-	 * @see java.util.Set#select1(java.lang.Object)
+	 * @return the meta object for the '<em>Select</em>' operation.
+	 * @see java.util.Set#select(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSet__Select1__Object() {
+	public EOperation getSet__Select__Object_Object() {
 		return setEClass.getEOperations().get(12);
 	}
 
@@ -4039,14 +4039,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Set#sortedBy1(java.lang.Object) <em>Sorted By1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Set#sortedBy(java.lang.Object, java.lang.Object) <em>Sorted By</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Sorted By1</em>' operation.
-	 * @see java.util.Set#sortedBy1(java.lang.Object)
+	 * @return the meta object for the '<em>Sorted By</em>' operation.
+	 * @see java.util.Set#sortedBy(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getSet__SortedBy1__Object() {
+	public EOperation getSet__SortedBy__Object_Object() {
 		return setEClass.getEOperations().get(15);
 	}
 
@@ -4090,14 +4090,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
-	 * Returns the meta object for the '{@link java.util.Collection#sortedBy1(java.lang.Object) <em>Sorted By1</em>}' operation.
+	 * Returns the meta object for the '{@link java.util.Collection#sortedBy(java.lang.Object, java.lang.Object) <em>Sorted By</em>}' operation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the '<em>Sorted By1</em>' operation.
-	 * @see java.util.Collection#sortedBy1(java.lang.Object)
+	 * @return the meta object for the '<em>Sorted By</em>' operation.
+	 * @see java.util.Collection#sortedBy(java.lang.Object, java.lang.Object)
 	 * @generated
 	 */
-	public EOperation getUniqueCollection__SortedBy1__Object() {
+	public EOperation getUniqueCollection__SortedBy__Object_Object() {
 		return uniqueCollectionEClass.getEOperations().get(2);
 	}
 
@@ -4590,20 +4590,26 @@ public class OCLstdlibPackage extends EPackageImpl {
 		op = initEOperation(getBag___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getBag__Closure1__Object(), null, "closure1", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getBag__Closure__Object_Object(), null, "closure", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		ETypeParameter t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getBag__Collect1__Object(), null, "collect1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getBag__Collect__Object_Object(), null, "collect", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(bagEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getBag__CollectNested1__Object(), null, "collectNested1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getBag__CollectNested__Object_Object(), null, "collectNested", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(bagEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -4641,12 +4647,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(bagEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getBag__Reject1__Object(), null, "reject1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getBag__Reject__Object_Object(), null, "reject", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(bagEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(bagEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getBag__Select1__Object(), null, "select1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getBag__Select__Object_Object(), null, "select", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(bagEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(bagEClass_T);
 		initEOperation(op, g1);
@@ -4665,7 +4675,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getBag__SortedBy1__Object(), null, "sortedBy1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getBag__SortedBy__Object_Object(), null, "sortedBy", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(bagEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(bagEClass_T);
 		initEOperation(op, g1);
@@ -4678,7 +4690,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		op = initEOperation(getCollection___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__Any1__Object(), null, "any1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Any__Object_Object(), null, "any", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(collectionEClass_T);
 		initEOperation(op, g1);
@@ -4699,16 +4713,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(collectionEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__Collect1__Object(), null, "collect1", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Collect__Object_Object(), null, "collect", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(this.getCollection());
 		g2 = createEGenericType(t1);
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__CollectBy1__Object(), null, "collectBy1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__CollectBy__Object_Object(), null, "collectBy", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(this.getEntry_r_r());
 		g2 = createEGenericType(collectionEClass_T);
@@ -4717,8 +4735,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__CollectNested1__Object(), null, "collectNested1", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__CollectNested__Object_Object(), null, "collectNested", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(this.getCollection());
 		g2 = createEGenericType(t1);
@@ -4758,13 +4778,25 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__Exists1__Object(), this.getBoolean(), "exists1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Exists__Object_Object(), this.getBoolean(), "exists", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__Exists2__Object(), this.getBoolean(), "exists2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Exists__Object_Object_Object(), this.getBoolean(), "exists", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "j", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__Exists3__Object(), this.getBoolean(), "exists3", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Exists__Object_Object_Object_Object(), this.getBoolean(), "exists", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "j", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getCollection__Flatten(), null, "flatten", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
@@ -4774,17 +4806,31 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__ForAll1__Object(), this.getBoolean(), "forAll1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__ForAll__Object_Object(), this.getBoolean(), "forAll", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__ForAll2__Object(), this.getBoolean(), "forAll2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__ForAll__Object_Object_Object(), this.getBoolean(), "forAll", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "j", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__ForAll3__Object(), this.getBoolean(), "forAll3", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__ForAll__Object_Object_Object_Object(), this.getBoolean(), "forAll", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "j", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__Gather1__Object(), null, "gather1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Gather__Object_Object(), null, "gather", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "V"); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -4834,11 +4880,17 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEOperation(getCollection__IsEmpty(), this.getBoolean(), "isEmpty", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__IsUnique1__Object(), this.getBoolean(), "isUnique1", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__IsUnique__Object_Object(), this.getBoolean(), "isUnique", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__Iterate1__Object(), null, "iterate1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Iterate__Object_Object_Object(), null, "iterate", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "Tacc"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "acc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -4853,7 +4905,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEOperation(getCollection__NotEmpty(), this.getBoolean(), "notEmpty", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__One1__Object(), this.getBoolean(), "one1", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__One__Object_Object(), this.getBoolean(), "one", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
 		op = initEOperation(getCollection__Product__Collection(), this.getOclTuple(), "product", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
@@ -4863,41 +4917,63 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1.getETypeArguments().add(g2);
 		addEParameter(op, g1, "c2", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__Reject1__Object(), null, "reject1", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Reject__Object_Object(), null, "reject", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(this.getCollection());
 		g2 = createEGenericType(collectionEClass_T);
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__Search1__Object_Object_Object(), null, "search1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addETypeParameter(op, "Q"); //$NON-NLS-1$
+		op = initEOperation(getCollection__Search__Object_Object_Object_Object_Object(), null, "search", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "Q"); //$NON-NLS-1$
 		ETypeParameter t2 = addETypeParameter(op, "R"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "acc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "nextAcc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "break_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "return_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__Search2__Object_Object_Object(), null, "search2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addETypeParameter(op, "Q"); //$NON-NLS-1$
+		op = initEOperation(getCollection__Search__Object_Object_Object_Object_Object_Object(), null, "search", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "Q"); //$NON-NLS-1$
 		t2 = addETypeParameter(op, "R"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "acc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "j", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "nextAcc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "break_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "return_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__Search3__Object_Object_Object(), null, "search3", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addETypeParameter(op, "Q"); //$NON-NLS-1$
+		op = initEOperation(getCollection__Search__Object_Object_Object_Object_Object_Object_Object(), null, "search", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "Q"); //$NON-NLS-1$
 		t2 = addETypeParameter(op, "R"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "acc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "j", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "nextAcc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "break_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "return_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getCollection__Select1__Object(), null, "select1", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__Select__Object_Object(), null, "select", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(this.getCollection());
 		g2 = createEGenericType(collectionEClass_T);
@@ -4916,7 +4992,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEOperation(getCollection__Size(), this.getInteger(), "size", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getCollection__SortedBy1__Object(), null, "sortedBy1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getCollection__SortedBy__Object_Object(), null, "sortedBy", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(collectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(collectionEClass_T);
 		initEOperation(op, g1);
@@ -4947,7 +5025,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		op = initEOperation(getMap___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__Any1__Object(), null, "any1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Any__Object_Object(), null, "any", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(mapEClass_K);
 		initEOperation(op, g1);
@@ -4958,14 +5038,18 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(mapEClass_V);
 		initEOperation(op, g1);
 
-		op = initEOperation(getMap__Collect1__Object(), null, "collect1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Collect__Object_Object(), null, "collect", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getMap__CollectBy1__Object(), null, "collectBy1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__CollectBy__Object_Object(), null, "collectBy", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(this.getEntry_r_r());
 		g2 = createEGenericType(mapEClass_K);
@@ -4974,8 +5058,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getMap__CollectNested1__Object(), null, "collectNested1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__CollectNested__Object_Object(), null, "collectNested", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -5061,26 +5147,52 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getMap__Exists1__Object(), this.getBoolean(), "exists1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Exists__Object_Object(), this.getBoolean(), "exists", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__Exists2__Object(), this.getBoolean(), "exists2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Exists__Object_Object_Object(), this.getBoolean(), "exists", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__Exists3__Object(), this.getBoolean(), "exists3", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Exists__Object_Object_Object_Object(), this.getBoolean(), "exists", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k3", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__ForAll1__Object(), this.getBoolean(), "forAll1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__ForAll__Object_Object(), this.getBoolean(), "forAll", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__ForAll2__Object(), this.getBoolean(), "forAll2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__ForAll__Object_Object_Object(), this.getBoolean(), "forAll", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__ForAll3__Object(), this.getBoolean(), "forAll3", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__ForAll__Object_Object_Object_Object(), this.getBoolean(), "forAll", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k3", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__Gather1__Object(), null, "gather1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Gather__Object_Object(), null, "gather", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -5146,11 +5258,17 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEOperation(getMap__IsEmpty(), this.getBoolean(), "isEmpty", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__IsUnique1__Object(), this.getBoolean(), "isUnique1", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__IsUnique__Object_Object(), this.getBoolean(), "isUnique", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__Iterate1__Object(), null, "iterate1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Iterate__Object_Object_Object(), null, "iterate", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "Tacc"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "acc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -5161,10 +5279,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 		initEOperation(getMap__NotEmpty(), this.getBoolean(), "notEmpty", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__One1__Object(), this.getBoolean(), "one1", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__One__Object_Object(), this.getBoolean(), "one", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getMap__Reject1__Object(), null, "reject1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Reject__Object_Object(), null, "reject", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(this.getEntry_r_r());
 		g2 = createEGenericType(mapEClass_K);
@@ -5173,34 +5295,54 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1.getETypeArguments().add(g2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getMap__Search1__Object_Object_Object(), null, "search1", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addETypeParameter(op, "Q"); //$NON-NLS-1$
+		op = initEOperation(getMap__Search__Object_Object_Object_Object_Object(), null, "search", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "Q"); //$NON-NLS-1$
 		t2 = addETypeParameter(op, "R"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "acc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "nextAcc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "break_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "return_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getMap__Search2__Object_Object_Object(), null, "search2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addETypeParameter(op, "Q"); //$NON-NLS-1$
+		op = initEOperation(getMap__Search__Object_Object_Object_Object_Object_Object(), null, "search", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "Q"); //$NON-NLS-1$
 		t2 = addETypeParameter(op, "R"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "acc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "j", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "nextAcc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "break_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "return_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getMap__Search3__Object_Object_Object(), null, "search3", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
-		addETypeParameter(op, "Q"); //$NON-NLS-1$
+		op = initEOperation(getMap__Search__Object_Object_Object_Object_Object_Object_Object(), null, "search", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		t1 = addETypeParameter(op, "Q"); //$NON-NLS-1$
 		t2 = addETypeParameter(op, "R"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "acc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "j", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "k", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "nextAcc", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "break_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "return_", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t2);
 		initEOperation(op, g1);
 
-		op = initEOperation(getMap__Select1__Object(), null, "select1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getMap__Select__Object_Object(), null, "select", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(mapEClass_K);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(this.getEntry_r_r());
 		g2 = createEGenericType(mapEClass_K);
@@ -5457,8 +5599,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(orderedCollectionEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getOrderedCollection__Gather1__Object(), null, "gather1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedCollection__Gather__Object_Object(), null, "gather", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(orderedCollectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -5496,20 +5640,26 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(orderedSetEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getOrderedSet__Closure1__Object(), null, "closure1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet__Closure__Object_Object(), null, "closure", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getOrderedSet__Collect1__Object(), null, "collect1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet__Collect__Object_Object(), null, "collect", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(orderedSetEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getOrderedSet__CollectNested1__Object(), null, "collectNested1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet__CollectNested__Object_Object(), null, "collectNested", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(orderedSetEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -5566,7 +5716,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(orderedSetEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getOrderedSet__Reject1__Object(), null, "reject1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet__Reject__Object_Object(), null, "reject", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(orderedSetEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(orderedSetEClass_T);
 		initEOperation(op, g1);
@@ -5575,7 +5727,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(orderedSetEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getOrderedSet__Select1__Object(), null, "select1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet__Select__Object_Object(), null, "select", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(orderedSetEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(orderedSetEClass_T);
 		initEOperation(op, g1);
@@ -5594,7 +5748,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getOrderedSet__SortedBy1__Object(), null, "sortedBy1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getOrderedSet__SortedBy__Object_Object(), null, "sortedBy", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(orderedSetEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(orderedSetEClass_T);
 		initEOperation(op, g1);
@@ -5625,20 +5781,26 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(sequenceEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSequence__Closure1__Object(), null, "closure1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSequence__Closure__Object_Object(), null, "closure", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSequence__Collect1__Object(), null, "collect1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSequence__Collect__Object_Object(), null, "collect", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(sequenceEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSequence__CollectNested1__Object(), null, "collectNested1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSequence__CollectNested__Object_Object(), null, "collectNested", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(sequenceEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -5695,7 +5857,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(sequenceEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSequence__Reject1__Object(), null, "reject1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSequence__Reject__Object_Object(), null, "reject", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(sequenceEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(sequenceEClass_T);
 		initEOperation(op, g1);
@@ -5704,7 +5868,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(sequenceEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSequence__Select1__Object(), null, "select1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSequence__Select__Object_Object(), null, "select", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(sequenceEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(sequenceEClass_T);
 		initEOperation(op, g1);
@@ -5723,7 +5889,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSequence__SortedBy1__Object(), null, "sortedBy1", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSequence__SortedBy__Object_Object(), null, "sortedBy", 0, -1, !IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(sequenceEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(sequenceEClass_T);
 		initEOperation(op, g1);
@@ -5747,20 +5915,26 @@ public class OCLstdlibPackage extends EPackageImpl {
 		op = initEOperation(getSet___eq___Object(), this.getBoolean(), "_eq_", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclSelf(), "object2", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-		op = initEOperation(getSet__Closure1__Object(), null, "closure1", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet__Closure__Object_Object(), null, "closure", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(t1);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSet__Collect1__Object(), null, "collect1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet__Collect__Object_Object(), null, "collect", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(setEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSet__CollectNested1__Object(), null, "collectNested1", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet__CollectNested__Object_Object(), null, "collectNested", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		t1 = addETypeParameter(op, "E"); //$NON-NLS-1$
+		g1 = createEGenericType(setEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
@@ -5798,12 +5972,16 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(setEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSet__Reject1__Object(), null, "reject1", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet__Reject__Object_Object(), null, "reject", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(setEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(setEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSet__Select1__Object(), null, "select1", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet__Select__Object_Object(), null, "select", 0, -1, IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(setEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(setEClass_T);
 		initEOperation(op, g1);
@@ -5822,7 +6000,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(t1);
 		initEOperation(op, g1);
 
-		op = initEOperation(getSet__SortedBy1__Object(), null, "sortedBy1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getSet__SortedBy__Object_Object(), null, "sortedBy", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(setEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(setEClass_T);
 		initEOperation(op, g1);
@@ -5842,7 +6022,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		g1 = createEGenericType(uniqueCollectionEClass_T);
 		initEOperation(op, g1);
 
-		op = initEOperation(getUniqueCollection__SortedBy1__Object(), null, "sortedBy1", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		op = initEOperation(getUniqueCollection__SortedBy__Object_Object(), null, "sortedBy", 0, -1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+		g1 = createEGenericType(uniqueCollectionEClass_T);
+		addEParameter(op, g1, "i", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		addEParameter(op, this.getOclLambda(), "lambda", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(uniqueCollectionEClass_T);
 		initEOperation(op, g1);
@@ -5929,42 +6111,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag__Closure1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "closure" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getBag__Collect1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collect" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getBag__CollectNested1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collectNested" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getBag__Reject1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "reject" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getBag__Select1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getBag__SortedBy1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getCollection___ne___Object(),
 		   source,
 		   new String[] {
@@ -5977,126 +6123,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Any1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "any" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Collect1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collect" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__CollectBy1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collectBy" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__CollectNested1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collectNested" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Exists1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "exists" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Exists2__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "exists" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Exists3__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "exists" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__ForAll1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "forAll" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__ForAll2__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "forAll" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__ForAll3__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "forAll" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Gather1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "gather" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__IsUnique1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "isUnique" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Iterate1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "iterate" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__One1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "one" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Reject1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "reject" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Search1__Object_Object_Object(),
-		   source,
-		   new String[] {
-			   "originalName", "search" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Search2__Object_Object_Object(),
-		   source,
-		   new String[] {
-			   "originalName", "search" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Search3__Object_Object_Object(),
-		   source,
-		   new String[] {
-			   "originalName", "search" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__Select1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getCollection__SortedBy1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getMap___ne___Object(),
 		   source,
 		   new String[] {
@@ -6107,120 +6133,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Any1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "any" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Collect1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collect" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__CollectBy1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collectBy" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__CollectNested1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collectNested" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Exists1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "exists" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Exists2__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "exists" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Exists3__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "exists" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__ForAll1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "forAll" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__ForAll2__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "forAll" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__ForAll3__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "forAll" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Gather1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "gather" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__IsUnique1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "isUnique" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Iterate1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "iterate" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__One1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "one" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Reject1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "reject" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Search1__Object_Object_Object(),
-		   source,
-		   new String[] {
-			   "originalName", "search" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Search2__Object_Object_Object(),
-		   source,
-		   new String[] {
-			   "originalName", "search" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Search3__Object_Object_Object(),
-		   source,
-		   new String[] {
-			   "originalName", "search" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getMap__Select1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getOclAny___ne___Object(),
@@ -6301,12 +6213,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedCollection__Gather1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "gather" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getOrderedSet___sub___EList(),
 		   source,
 		   new String[] {
@@ -6325,42 +6231,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet__Closure1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "closure" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOrderedSet__Collect1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collect" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOrderedSet__CollectNested1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collectNested" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOrderedSet__Reject1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "reject" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOrderedSet__Select1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getOrderedSet__SortedBy1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getSequence___ne___Object(),
 		   source,
 		   new String[] {
@@ -6371,42 +6241,6 @@ public class OCLstdlibPackage extends EPackageImpl {
 		   source,
 		   new String[] {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSequence__Closure1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "closure" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSequence__Collect1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collect" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSequence__CollectNested1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collectNested" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSequence__Reject1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "reject" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSequence__Select1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSequence__SortedBy1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  (getSet___sub___EList(),
@@ -6427,52 +6261,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "originalName", "=" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet__Closure1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "closure" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSet__Collect1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collect" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSet__CollectNested1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "collectNested" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSet__Reject1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "reject" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSet__Select1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "select" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getSet__SortedBy1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
 		  (getUniqueCollection___sub___EList(),
 		   source,
 		   new String[] {
 			   "originalName", "-" //$NON-NLS-1$ //$NON-NLS-2$
-		   });
-		addAnnotation
-		  (getUniqueCollection__SortedBy1__Object(),
-		   source,
-		   new String[] {
-			   "originalName", "sortedBy" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 
@@ -6498,19 +6290,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag__Closure1__Object(),
+		  (getBag__Closure__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag__Collect1__Object(),
+		  (getBag__Collect__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag__CollectNested1__Object(),
+		  (getBag__CollectNested__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6546,13 +6338,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag__Reject1__Object(),
+		  (getBag__Reject__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.RejectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag__Select1__Object(),
+		  (getBag__Select__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SelectIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6570,7 +6362,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getBag__SortedBy1__Object(),
+		  (getBag__SortedBy__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6588,7 +6380,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Any1__Object(),
+		  (getCollection__Any__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.AnyIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6618,19 +6410,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionAsSetOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Collect1__Object(),
+		  (getCollection__Collect__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__CollectBy1__Object(),
+		  (getCollection__CollectBy__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__CollectNested1__Object(),
+		  (getCollection__CollectNested__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6666,19 +6458,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionExcludingAllOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Exists1__Object(),
+		  (getCollection__Exists__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Exists2__Object(),
+		  (getCollection__Exists__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Exists3__Object(),
+		  (getCollection__Exists__Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6690,25 +6482,25 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionFlattenOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__ForAll1__Object(),
+		  (getCollection__ForAll__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__ForAll2__Object(),
+		  (getCollection__ForAll__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__ForAll3__Object(),
+		  (getCollection__ForAll__Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Gather1__Object(),
+		  (getCollection__Gather__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.GatherIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6756,13 +6548,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__IsUnique1__Object(),
+		  (getCollection__IsUnique__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Iterate1__Object(),
+		  (getCollection__Iterate__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.IterateIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6786,7 +6578,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__One1__Object(),
+		  (getCollection__One__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.OneIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6798,31 +6590,31 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionProductOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Reject1__Object(),
+		  (getCollection__Reject__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.RejectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Search1__Object_Object_Object(),
+		  (getCollection__Search__Object_Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SearchIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Search2__Object_Object_Object(),
+		  (getCollection__Search__Object_Object_Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SearchIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Search3__Object_Object_Object(),
+		  (getCollection__Search__Object_Object_Object_Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SearchIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Select1__Object(),
+		  (getCollection__Select__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SelectIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6846,7 +6638,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__SortedBy1__Object(),
+		  (getCollection__SortedBy__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6888,7 +6680,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Any1__Object(),
+		  (getMap__Any__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.AnyIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6900,19 +6692,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.map.MapAtOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Collect1__Object(),
+		  (getMap__Collect__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__CollectBy1__Object(),
+		  (getMap__CollectBy__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectByIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__CollectNested1__Object(),
+		  (getMap__CollectNested__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -6972,43 +6764,43 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.map.MapExcludingMapOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Exists1__Object(),
+		  (getMap__Exists__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Exists2__Object(),
+		  (getMap__Exists__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Exists3__Object(),
+		  (getMap__Exists__Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ExistsIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__ForAll1__Object(),
+		  (getMap__ForAll__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__ForAll2__Object(),
+		  (getMap__ForAll__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__ForAll3__Object(),
+		  (getMap__ForAll__Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ForAllIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Gather1__Object(),
+		  (getMap__Gather__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.GatherIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7062,13 +6854,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__IsUnique1__Object(),
+		  (getMap__IsUnique__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Iterate1__Object(),
+		  (getMap__Iterate__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.IterateIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7086,37 +6878,37 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__One1__Object(),
+		  (getMap__One__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.OneIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Reject1__Object(),
+		  (getMap__Reject__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.MapRejectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Search1__Object_Object_Object(),
+		  (getMap__Search__Object_Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SearchIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Search2__Object_Object_Object(),
+		  (getMap__Search__Object_Object_Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SearchIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Search3__Object_Object_Object(),
+		  (getMap__Search__Object_Object_Object_Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SearchIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Select1__Object(),
+		  (getMap__Select__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.MapSelectIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7576,7 +7368,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedCollection__Gather1__Object(),
+		  (getOrderedCollection__Gather__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.GatherIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7624,19 +7416,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet__Closure1__Object(),
+		  (getOrderedSet__Closure__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet__Collect1__Object(),
+		  (getOrderedSet__Collect__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet__CollectNested1__Object(),
+		  (getOrderedSet__CollectNested__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7693,7 +7485,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet__Reject1__Object(),
+		  (getOrderedSet__Reject__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.RejectIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7705,7 +7497,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet__Select1__Object(),
+		  (getOrderedSet__Select__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SelectIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7723,7 +7515,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet__SortedBy1__Object(),
+		  (getOrderedSet__SortedBy__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7759,19 +7551,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionAppendAllOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence__Closure1__Object(),
+		  (getSequence__Closure__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence__Collect1__Object(),
+		  (getSequence__Collect__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence__CollectNested1__Object(),
+		  (getSequence__CollectNested__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7825,7 +7617,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionPrependAllOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence__Reject1__Object(),
+		  (getSequence__Reject__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.RejectIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7837,7 +7629,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.OrderedCollectionReverseOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence__Select1__Object(),
+		  (getSequence__Select__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SelectIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7855,7 +7647,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence__SortedBy1__Object(),
+		  (getSequence__SortedBy__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7885,19 +7677,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet__Closure1__Object(),
+		  (getSet__Closure__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.ClosureIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet__Collect1__Object(),
+		  (getSet__Collect__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet__CollectNested1__Object(),
+		  (getSet__CollectNested__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7933,13 +7725,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionIncludingAllOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet__Reject1__Object(),
+		  (getSet__Reject__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.RejectIteration" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet__Select1__Object(),
+		  (getSet__Select__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SelectIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7957,7 +7749,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionSelectByTypeOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet__SortedBy1__Object(),
+		  (getSet__SortedBy__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -7975,7 +7767,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "class", "org.eclipse.ocl.pivot.library.collection.CollectionIntersectionOperation" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getUniqueCollection__SortedBy1__Object(),
+		  (getUniqueCollection__SortedBy__Object_Object(),
 		   source,
 		   new String[] {
 			   "class", "org.eclipse.ocl.pivot.library.iterator.SortedByIteration" //$NON-NLS-1$ //$NON-NLS-2$
@@ -8028,42 +7820,42 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Exists1__Object(),
+		  (getCollection__Exists__Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Exists2__Object(),
+		  (getCollection__Exists__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__Exists3__Object(),
+		  (getCollection__Exists__Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__ForAll1__Object(),
+		  (getCollection__ForAll__Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__ForAll2__Object(),
+		  (getCollection__ForAll__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getCollection__ForAll3__Object(),
+		  (getCollection__ForAll__Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
@@ -8088,42 +7880,42 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Exists1__Object(),
+		  (getMap__Exists__Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Exists2__Object(),
+		  (getMap__Exists__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__Exists3__Object(),
+		  (getMap__Exists__Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__ForAll1__Object(),
+		  (getMap__ForAll__Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__ForAll2__Object(),
+		  (getMap__ForAll__Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
 			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getMap__ForAll3__Object(),
+		  (getMap__ForAll__Object_Object_Object_Object(),
 		   source,
 		   new String[] {
 			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
@@ -8434,7 +8226,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 	protected void createCollectionAnnotations() {
 		String source = "http://www.eclipse.org/OCL/Collection"; //$NON-NLS-1$
 		addAnnotation
-		  (getBag__Closure1__Object(),
+		  (getBag__Closure__Object_Object(),
 		   source,
 		   new String[] {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
@@ -8500,7 +8292,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getOrderedSet__Closure1__Object(),
+		  (getOrderedSet__Closure__Object_Object(),
 		   source,
 		   new String[] {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
@@ -8518,7 +8310,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSequence__Closure1__Object(),
+		  (getSequence__Closure__Object_Object(),
 		   source,
 		   new String[] {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
@@ -8536,7 +8328,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
-		  (getSet__Closure1__Object(),
+		  (getSet__Closure__Object_Object(),
 		   source,
 		   new String[] {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
@@ -8564,6 +8356,36 @@ public class OCLstdlibPackage extends EPackageImpl {
 	protected void createParameterAnnotations() {
 		String source = "http://www.eclipse.org/OCL/Parameter"; //$NON-NLS-1$
 		addAnnotation
+		  ((getBag__Closure__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getBag__Collect__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getBag__CollectNested__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getBag__Reject__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getBag__Select__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  ((getBag__SelectByKind__Object()).getEParameters().get(0),
 		   source,
 		   new String[] {
@@ -8576,6 +8398,204 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  ((getBag__SortedBy__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Any__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Collect__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__CollectBy__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__CollectNested__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Exists__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Exists__Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Exists__Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Exists__Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Exists__Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Exists__Object_Object_Object_Object()).getEParameters().get(2),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__ForAll__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__ForAll__Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__ForAll__Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__ForAll__Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__ForAll__Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__ForAll__Object_Object_Object_Object()).getEParameters().get(2),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Gather__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__IsUnique__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Iterate__Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ACCUMULATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Iterate__Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__One__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Reject__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ACCUMULATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ACCUMULATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object_Object()).getEParameters().get(2),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ACCUMULATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object_Object_Object()).getEParameters().get(2),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Search__Object_Object_Object_Object_Object_Object_Object()).getEParameters().get(3),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__Select__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  ((getCollection__SelectByKind__Object()).getEParameters().get(0),
 		   source,
 		   new String[] {
@@ -8586,6 +8606,204 @@ public class OCLstdlibPackage extends EPackageImpl {
 		   source,
 		   new String[] {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__SortedBy__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Any__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Collect__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__CollectBy__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__CollectNested__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Exists__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Exists__Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Exists__Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Exists__Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Exists__Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Exists__Object_Object_Object_Object()).getEParameters().get(2),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__ForAll__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__ForAll__Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__ForAll__Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__ForAll__Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__ForAll__Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__ForAll__Object_Object_Object_Object()).getEParameters().get(2),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Gather__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__IsUnique__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Iterate__Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ACCUMULATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Iterate__Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__One__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Reject__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ACCUMULATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ACCUMULATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object_Object()).getEParameters().get(2),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object_Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ACCUMULATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object_Object_Object()).getEParameters().get(1),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object_Object_Object()).getEParameters().get(2),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Search__Object_Object_Object_Object_Object_Object_Object()).getEParameters().get(3),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getMap__Select__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  ((getOclAny__OclAsType__Object()).getEParameters().get(0),
@@ -8636,6 +8854,42 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  ((getOrderedCollection__Gather__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOrderedSet__Closure__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOrderedSet__Collect__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOrderedSet__CollectNested__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOrderedSet__Reject__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOrderedSet__Select__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  ((getOrderedSet__SelectByKind__Object()).getEParameters().get(0),
 		   source,
 		   new String[] {
@@ -8646,6 +8900,42 @@ public class OCLstdlibPackage extends EPackageImpl {
 		   source,
 		   new String[] {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOrderedSet__SortedBy__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSequence__Closure__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSequence__Collect__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSequence__CollectNested__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSequence__Reject__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSequence__Select__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
 		  ((getSequence__SelectByKind__Object()).getEParameters().get(0),
@@ -8660,6 +8950,42 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  ((getSequence__SortedBy__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSet__Closure__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSet__Collect__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSet__CollectNested__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSet__Reject__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSet__Select__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  ((getSet__SelectByKind__Object()).getEParameters().get(0),
 		   source,
 		   new String[] {
@@ -8670,6 +8996,18 @@ public class OCLstdlibPackage extends EPackageImpl {
 		   source,
 		   new String[] {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSet__SortedBy__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getUniqueCollection__SortedBy__Object_Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "role", "ITERATOR" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
 
@@ -9509,12 +9847,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation ORDERED_COLLECTION___FIRST = eINSTANCE.getOrderedCollection__First();
 
 		/**
-		 * The meta object literal for the '<em><b>Gather1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Gather</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_COLLECTION___GATHER1__OBJECT = eINSTANCE.getOrderedCollection__Gather1__Object();
+		public static final EOperation ORDERED_COLLECTION___GATHER__OBJECT_OBJECT = eINSTANCE.getOrderedCollection__Gather__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Index Of</b></em>' operation.
@@ -9605,12 +9943,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation MAP___EQ____OBJECT = eINSTANCE.getMap___eq___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Any1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Any</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___ANY1__OBJECT = eINSTANCE.getMap__Any1__Object();
+		public static final EOperation MAP___ANY__OBJECT_OBJECT = eINSTANCE.getMap__Any__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>At</b></em>' operation.
@@ -9621,28 +9959,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation MAP___AT__OBJECT = eINSTANCE.getMap__At__Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___COLLECT1__OBJECT = eINSTANCE.getMap__Collect1__Object();
+		public static final EOperation MAP___COLLECT__OBJECT_OBJECT = eINSTANCE.getMap__Collect__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect By1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect By</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___COLLECT_BY1__OBJECT = eINSTANCE.getMap__CollectBy1__Object();
+		public static final EOperation MAP___COLLECT_BY__OBJECT_OBJECT = eINSTANCE.getMap__CollectBy__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect Nested1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect Nested</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___COLLECT_NESTED1__OBJECT = eINSTANCE.getMap__CollectNested1__Object();
+		public static final EOperation MAP___COLLECT_NESTED__OBJECT_OBJECT = eINSTANCE.getMap__CollectNested__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Excludes</b></em>' operation.
@@ -9717,60 +10055,60 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation MAP___EXCLUDING_MAP__EMAP = eINSTANCE.getMap__ExcludingMap__EMap();
 
 		/**
-		 * The meta object literal for the '<em><b>Exists1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Exists</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___EXISTS1__OBJECT = eINSTANCE.getMap__Exists1__Object();
+		public static final EOperation MAP___EXISTS__OBJECT_OBJECT = eINSTANCE.getMap__Exists__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Exists2</b></em>' operation.
+		 * The meta object literal for the '<em><b>Exists</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___EXISTS2__OBJECT = eINSTANCE.getMap__Exists2__Object();
+		public static final EOperation MAP___EXISTS__OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Exists__Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Exists3</b></em>' operation.
+		 * The meta object literal for the '<em><b>Exists</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___EXISTS3__OBJECT = eINSTANCE.getMap__Exists3__Object();
+		public static final EOperation MAP___EXISTS__OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Exists__Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>For All1</b></em>' operation.
+		 * The meta object literal for the '<em><b>For All</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___FOR_ALL1__OBJECT = eINSTANCE.getMap__ForAll1__Object();
+		public static final EOperation MAP___FOR_ALL__OBJECT_OBJECT = eINSTANCE.getMap__ForAll__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>For All2</b></em>' operation.
+		 * The meta object literal for the '<em><b>For All</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___FOR_ALL2__OBJECT = eINSTANCE.getMap__ForAll2__Object();
+		public static final EOperation MAP___FOR_ALL__OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__ForAll__Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>For All3</b></em>' operation.
+		 * The meta object literal for the '<em><b>For All</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___FOR_ALL3__OBJECT = eINSTANCE.getMap__ForAll3__Object();
+		public static final EOperation MAP___FOR_ALL__OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__ForAll__Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Gather1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Gather</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___GATHER1__OBJECT = eINSTANCE.getMap__Gather1__Object();
+		public static final EOperation MAP___GATHER__OBJECT_OBJECT = eINSTANCE.getMap__Gather__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Includes</b></em>' operation.
@@ -9837,20 +10175,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation MAP___IS_EMPTY = eINSTANCE.getMap__IsEmpty();
 
 		/**
-		 * The meta object literal for the '<em><b>Is Unique1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Is Unique</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___IS_UNIQUE1__OBJECT = eINSTANCE.getMap__IsUnique1__Object();
+		public static final EOperation MAP___IS_UNIQUE__OBJECT_OBJECT = eINSTANCE.getMap__IsUnique__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Iterate1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Iterate</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___ITERATE1__OBJECT = eINSTANCE.getMap__Iterate1__Object();
+		public static final EOperation MAP___ITERATE__OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Iterate__Object_Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Keys</b></em>' operation.
@@ -9869,52 +10207,52 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation MAP___NOT_EMPTY = eINSTANCE.getMap__NotEmpty();
 
 		/**
-		 * The meta object literal for the '<em><b>One1</b></em>' operation.
+		 * The meta object literal for the '<em><b>One</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___ONE1__OBJECT = eINSTANCE.getMap__One1__Object();
+		public static final EOperation MAP___ONE__OBJECT_OBJECT = eINSTANCE.getMap__One__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Reject1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Reject</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___REJECT1__OBJECT = eINSTANCE.getMap__Reject1__Object();
+		public static final EOperation MAP___REJECT__OBJECT_OBJECT = eINSTANCE.getMap__Reject__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Search1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Search</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___SEARCH1__OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Search1__Object_Object_Object();
+		public static final EOperation MAP___SEARCH__OBJECT_OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Search__Object_Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Search2</b></em>' operation.
+		 * The meta object literal for the '<em><b>Search</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___SEARCH2__OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Search2__Object_Object_Object();
+		public static final EOperation MAP___SEARCH__OBJECT_OBJECT_OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Search__Object_Object_Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Search3</b></em>' operation.
+		 * The meta object literal for the '<em><b>Search</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___SEARCH3__OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Search3__Object_Object_Object();
+		public static final EOperation MAP___SEARCH__OBJECT_OBJECT_OBJECT_OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getMap__Search__Object_Object_Object_Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Select1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Select</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation MAP___SELECT1__OBJECT = eINSTANCE.getMap__Select1__Object();
+		public static final EOperation MAP___SELECT__OBJECT_OBJECT = eINSTANCE.getMap__Select__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Size</b></em>' operation.
@@ -9989,28 +10327,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation BAG___EQ____OBJECT = eINSTANCE.getBag___eq___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Closure1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Closure</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation BAG___CLOSURE1__OBJECT = eINSTANCE.getBag__Closure1__Object();
+		public static final EOperation BAG___CLOSURE__OBJECT_OBJECT = eINSTANCE.getBag__Closure__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation BAG___COLLECT1__OBJECT = eINSTANCE.getBag__Collect1__Object();
+		public static final EOperation BAG___COLLECT__OBJECT_OBJECT = eINSTANCE.getBag__Collect__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect Nested1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect Nested</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation BAG___COLLECT_NESTED1__OBJECT = eINSTANCE.getBag__CollectNested1__Object();
+		public static final EOperation BAG___COLLECT_NESTED__OBJECT_OBJECT = eINSTANCE.getBag__CollectNested__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Excluding</b></em>' operation.
@@ -10053,20 +10391,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation BAG___INCLUDING_ALL__COLLECTION = eINSTANCE.getBag__IncludingAll__Collection();
 
 		/**
-		 * The meta object literal for the '<em><b>Reject1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Reject</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation BAG___REJECT1__OBJECT = eINSTANCE.getBag__Reject1__Object();
+		public static final EOperation BAG___REJECT__OBJECT_OBJECT = eINSTANCE.getBag__Reject__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Select1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Select</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation BAG___SELECT1__OBJECT = eINSTANCE.getBag__Select1__Object();
+		public static final EOperation BAG___SELECT__OBJECT_OBJECT = eINSTANCE.getBag__Select__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Select By Kind</b></em>' operation.
@@ -10085,12 +10423,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation BAG___SELECT_BY_TYPE__OBJECT = eINSTANCE.getBag__SelectByType__Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Sorted By1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Sorted By</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation BAG___SORTED_BY1__OBJECT = eINSTANCE.getBag__SortedBy1__Object();
+		public static final EOperation BAG___SORTED_BY__OBJECT_OBJECT = eINSTANCE.getBag__SortedBy__Object_Object();
 
 		/**
 		 * The meta object literal for the '{@link java.util.Collection <em>Collection</em>}' class.
@@ -10119,12 +10457,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation COLLECTION___EQ____OBJECT = eINSTANCE.getCollection___eq___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Any1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Any</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___ANY1__OBJECT = eINSTANCE.getCollection__Any1__Object();
+		public static final EOperation COLLECTION___ANY__OBJECT_OBJECT = eINSTANCE.getCollection__Any__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>As Bag</b></em>' operation.
@@ -10159,28 +10497,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation COLLECTION___AS_SET = eINSTANCE.getCollection__AsSet();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___COLLECT1__OBJECT = eINSTANCE.getCollection__Collect1__Object();
+		public static final EOperation COLLECTION___COLLECT__OBJECT_OBJECT = eINSTANCE.getCollection__Collect__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect By1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect By</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___COLLECT_BY1__OBJECT = eINSTANCE.getCollection__CollectBy1__Object();
+		public static final EOperation COLLECTION___COLLECT_BY__OBJECT_OBJECT = eINSTANCE.getCollection__CollectBy__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect Nested1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect Nested</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___COLLECT_NESTED1__OBJECT = eINSTANCE.getCollection__CollectNested1__Object();
+		public static final EOperation COLLECTION___COLLECT_NESTED__OBJECT_OBJECT = eINSTANCE.getCollection__CollectNested__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Count</b></em>' operation.
@@ -10223,28 +10561,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation COLLECTION___EXCLUDING_ALL__COLLECTION = eINSTANCE.getCollection__ExcludingAll__Collection();
 
 		/**
-		 * The meta object literal for the '<em><b>Exists1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Exists</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___EXISTS1__OBJECT = eINSTANCE.getCollection__Exists1__Object();
+		public static final EOperation COLLECTION___EXISTS__OBJECT_OBJECT = eINSTANCE.getCollection__Exists__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Exists2</b></em>' operation.
+		 * The meta object literal for the '<em><b>Exists</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___EXISTS2__OBJECT = eINSTANCE.getCollection__Exists2__Object();
+		public static final EOperation COLLECTION___EXISTS__OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Exists__Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Exists3</b></em>' operation.
+		 * The meta object literal for the '<em><b>Exists</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___EXISTS3__OBJECT = eINSTANCE.getCollection__Exists3__Object();
+		public static final EOperation COLLECTION___EXISTS__OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Exists__Object_Object_Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Flatten</b></em>' operation.
@@ -10255,36 +10593,36 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation COLLECTION___FLATTEN = eINSTANCE.getCollection__Flatten();
 
 		/**
-		 * The meta object literal for the '<em><b>For All1</b></em>' operation.
+		 * The meta object literal for the '<em><b>For All</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___FOR_ALL1__OBJECT = eINSTANCE.getCollection__ForAll1__Object();
+		public static final EOperation COLLECTION___FOR_ALL__OBJECT_OBJECT = eINSTANCE.getCollection__ForAll__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>For All2</b></em>' operation.
+		 * The meta object literal for the '<em><b>For All</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___FOR_ALL2__OBJECT = eINSTANCE.getCollection__ForAll2__Object();
+		public static final EOperation COLLECTION___FOR_ALL__OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__ForAll__Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>For All3</b></em>' operation.
+		 * The meta object literal for the '<em><b>For All</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___FOR_ALL3__OBJECT = eINSTANCE.getCollection__ForAll3__Object();
+		public static final EOperation COLLECTION___FOR_ALL__OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__ForAll__Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Gather1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Gather</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___GATHER1__OBJECT = eINSTANCE.getCollection__Gather1__Object();
+		public static final EOperation COLLECTION___GATHER__OBJECT_OBJECT = eINSTANCE.getCollection__Gather__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Includes</b></em>' operation.
@@ -10343,20 +10681,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation COLLECTION___IS_EMPTY = eINSTANCE.getCollection__IsEmpty();
 
 		/**
-		 * The meta object literal for the '<em><b>Is Unique1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Is Unique</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___IS_UNIQUE1__OBJECT = eINSTANCE.getCollection__IsUnique1__Object();
+		public static final EOperation COLLECTION___IS_UNIQUE__OBJECT_OBJECT = eINSTANCE.getCollection__IsUnique__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Iterate1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Iterate</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___ITERATE1__OBJECT = eINSTANCE.getCollection__Iterate1__Object();
+		public static final EOperation COLLECTION___ITERATE__OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Iterate__Object_Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Max</b></em>' operation.
@@ -10383,12 +10721,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation COLLECTION___NOT_EMPTY = eINSTANCE.getCollection__NotEmpty();
 
 		/**
-		 * The meta object literal for the '<em><b>One1</b></em>' operation.
+		 * The meta object literal for the '<em><b>One</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___ONE1__OBJECT = eINSTANCE.getCollection__One1__Object();
+		public static final EOperation COLLECTION___ONE__OBJECT_OBJECT = eINSTANCE.getCollection__One__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Product</b></em>' operation.
@@ -10399,44 +10737,44 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation COLLECTION___PRODUCT__COLLECTION = eINSTANCE.getCollection__Product__Collection();
 
 		/**
-		 * The meta object literal for the '<em><b>Reject1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Reject</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___REJECT1__OBJECT = eINSTANCE.getCollection__Reject1__Object();
+		public static final EOperation COLLECTION___REJECT__OBJECT_OBJECT = eINSTANCE.getCollection__Reject__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Search1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Search</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___SEARCH1__OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Search1__Object_Object_Object();
+		public static final EOperation COLLECTION___SEARCH__OBJECT_OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Search__Object_Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Search2</b></em>' operation.
+		 * The meta object literal for the '<em><b>Search</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___SEARCH2__OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Search2__Object_Object_Object();
+		public static final EOperation COLLECTION___SEARCH__OBJECT_OBJECT_OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Search__Object_Object_Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Search3</b></em>' operation.
+		 * The meta object literal for the '<em><b>Search</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___SEARCH3__OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Search3__Object_Object_Object();
+		public static final EOperation COLLECTION___SEARCH__OBJECT_OBJECT_OBJECT_OBJECT_OBJECT_OBJECT_OBJECT = eINSTANCE.getCollection__Search__Object_Object_Object_Object_Object_Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Select1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Select</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___SELECT1__OBJECT = eINSTANCE.getCollection__Select1__Object();
+		public static final EOperation COLLECTION___SELECT__OBJECT_OBJECT = eINSTANCE.getCollection__Select__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Select By Kind</b></em>' operation.
@@ -10463,12 +10801,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation COLLECTION___SIZE = eINSTANCE.getCollection__Size();
 
 		/**
-		 * The meta object literal for the '<em><b>Sorted By1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Sorted By</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation COLLECTION___SORTED_BY1__OBJECT = eINSTANCE.getCollection__SortedBy1__Object();
+		public static final EOperation COLLECTION___SORTED_BY__OBJECT_OBJECT = eINSTANCE.getCollection__SortedBy__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Sum</b></em>' operation.
@@ -10537,28 +10875,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation ORDERED_SET___APPEND_ALL__ELIST = eINSTANCE.getOrderedSet__AppendAll__EList();
 
 		/**
-		 * The meta object literal for the '<em><b>Closure1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Closure</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___CLOSURE1__OBJECT = eINSTANCE.getOrderedSet__Closure1__Object();
+		public static final EOperation ORDERED_SET___CLOSURE__OBJECT_OBJECT = eINSTANCE.getOrderedSet__Closure__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___COLLECT1__OBJECT = eINSTANCE.getOrderedSet__Collect1__Object();
+		public static final EOperation ORDERED_SET___COLLECT__OBJECT_OBJECT = eINSTANCE.getOrderedSet__Collect__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect Nested1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect Nested</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___COLLECT_NESTED1__OBJECT = eINSTANCE.getOrderedSet__CollectNested1__Object();
+		public static final EOperation ORDERED_SET___COLLECT_NESTED__OBJECT_OBJECT = eINSTANCE.getOrderedSet__CollectNested__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Excluding</b></em>' operation.
@@ -10625,12 +10963,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation ORDERED_SET___PREPEND_ALL__ELIST = eINSTANCE.getOrderedSet__PrependAll__EList();
 
 		/**
-		 * The meta object literal for the '<em><b>Reject1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Reject</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___REJECT1__OBJECT = eINSTANCE.getOrderedSet__Reject1__Object();
+		public static final EOperation ORDERED_SET___REJECT__OBJECT_OBJECT = eINSTANCE.getOrderedSet__Reject__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Reverse</b></em>' operation.
@@ -10641,12 +10979,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation ORDERED_SET___REVERSE = eINSTANCE.getOrderedSet__Reverse();
 
 		/**
-		 * The meta object literal for the '<em><b>Select1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Select</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___SELECT1__OBJECT = eINSTANCE.getOrderedSet__Select1__Object();
+		public static final EOperation ORDERED_SET___SELECT__OBJECT_OBJECT = eINSTANCE.getOrderedSet__Select__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Select By Kind</b></em>' operation.
@@ -10665,12 +11003,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation ORDERED_SET___SELECT_BY_TYPE__OBJECT = eINSTANCE.getOrderedSet__SelectByType__Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Sorted By1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Sorted By</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation ORDERED_SET___SORTED_BY1__OBJECT = eINSTANCE.getOrderedSet__SortedBy1__Object();
+		public static final EOperation ORDERED_SET___SORTED_BY__OBJECT_OBJECT = eINSTANCE.getOrderedSet__SortedBy__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Sub Ordered Set</b></em>' operation.
@@ -10723,28 +11061,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation SEQUENCE___APPEND_ALL__ELIST = eINSTANCE.getSequence__AppendAll__EList();
 
 		/**
-		 * The meta object literal for the '<em><b>Closure1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Closure</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SEQUENCE___CLOSURE1__OBJECT = eINSTANCE.getSequence__Closure1__Object();
+		public static final EOperation SEQUENCE___CLOSURE__OBJECT_OBJECT = eINSTANCE.getSequence__Closure__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SEQUENCE___COLLECT1__OBJECT = eINSTANCE.getSequence__Collect1__Object();
+		public static final EOperation SEQUENCE___COLLECT__OBJECT_OBJECT = eINSTANCE.getSequence__Collect__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect Nested1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect Nested</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SEQUENCE___COLLECT_NESTED1__OBJECT = eINSTANCE.getSequence__CollectNested1__Object();
+		public static final EOperation SEQUENCE___COLLECT_NESTED__OBJECT_OBJECT = eINSTANCE.getSequence__CollectNested__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Excluding</b></em>' operation.
@@ -10811,12 +11149,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation SEQUENCE___PREPEND_ALL__ELIST = eINSTANCE.getSequence__PrependAll__EList();
 
 		/**
-		 * The meta object literal for the '<em><b>Reject1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Reject</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SEQUENCE___REJECT1__OBJECT = eINSTANCE.getSequence__Reject1__Object();
+		public static final EOperation SEQUENCE___REJECT__OBJECT_OBJECT = eINSTANCE.getSequence__Reject__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Reverse</b></em>' operation.
@@ -10827,12 +11165,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation SEQUENCE___REVERSE = eINSTANCE.getSequence__Reverse();
 
 		/**
-		 * The meta object literal for the '<em><b>Select1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Select</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SEQUENCE___SELECT1__OBJECT = eINSTANCE.getSequence__Select1__Object();
+		public static final EOperation SEQUENCE___SELECT__OBJECT_OBJECT = eINSTANCE.getSequence__Select__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Select By Kind</b></em>' operation.
@@ -10851,12 +11189,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation SEQUENCE___SELECT_BY_TYPE__OBJECT = eINSTANCE.getSequence__SelectByType__Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Sorted By1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Sorted By</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SEQUENCE___SORTED_BY1__OBJECT = eINSTANCE.getSequence__SortedBy1__Object();
+		public static final EOperation SEQUENCE___SORTED_BY__OBJECT_OBJECT = eINSTANCE.getSequence__SortedBy__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Sub Sequence</b></em>' operation.
@@ -10901,28 +11239,28 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation SET___EQ____OBJECT = eINSTANCE.getSet___eq___Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Closure1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Closure</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___CLOSURE1__OBJECT = eINSTANCE.getSet__Closure1__Object();
+		public static final EOperation SET___CLOSURE__OBJECT_OBJECT = eINSTANCE.getSet__Closure__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___COLLECT1__OBJECT = eINSTANCE.getSet__Collect1__Object();
+		public static final EOperation SET___COLLECT__OBJECT_OBJECT = eINSTANCE.getSet__Collect__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Collect Nested1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Collect Nested</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___COLLECT_NESTED1__OBJECT = eINSTANCE.getSet__CollectNested1__Object();
+		public static final EOperation SET___COLLECT_NESTED__OBJECT_OBJECT = eINSTANCE.getSet__CollectNested__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Excluding</b></em>' operation.
@@ -10965,20 +11303,20 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation SET___INCLUDING_ALL__COLLECTION = eINSTANCE.getSet__IncludingAll__Collection();
 
 		/**
-		 * The meta object literal for the '<em><b>Reject1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Reject</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___REJECT1__OBJECT = eINSTANCE.getSet__Reject1__Object();
+		public static final EOperation SET___REJECT__OBJECT_OBJECT = eINSTANCE.getSet__Reject__Object_Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Select1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Select</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___SELECT1__OBJECT = eINSTANCE.getSet__Select1__Object();
+		public static final EOperation SET___SELECT__OBJECT_OBJECT = eINSTANCE.getSet__Select__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Select By Kind</b></em>' operation.
@@ -10997,12 +11335,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation SET___SELECT_BY_TYPE__OBJECT = eINSTANCE.getSet__SelectByType__Object();
 
 		/**
-		 * The meta object literal for the '<em><b>Sorted By1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Sorted By</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation SET___SORTED_BY1__OBJECT = eINSTANCE.getSet__SortedBy1__Object();
+		public static final EOperation SET___SORTED_BY__OBJECT_OBJECT = eINSTANCE.getSet__SortedBy__Object_Object();
 
 		/**
 		 * The meta object literal for the '{@link java.util.Collection <em>Unique Collection</em>}' class.
@@ -11031,12 +11369,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		public static final EOperation UNIQUE_COLLECTION___INTERSECTION__COLLECTION = eINSTANCE.getUniqueCollection__Intersection__Collection();
 
 		/**
-		 * The meta object literal for the '<em><b>Sorted By1</b></em>' operation.
+		 * The meta object literal for the '<em><b>Sorted By</b></em>' operation.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		public static final EOperation UNIQUE_COLLECTION___SORTED_BY1__OBJECT = eINSTANCE.getUniqueCollection__SortedBy1__Object();
+		public static final EOperation UNIQUE_COLLECTION___SORTED_BY__OBJECT_OBJECT = eINSTANCE.getUniqueCollection__SortedBy__Object_Object();
 
 		/**
 		 * The meta object literal for the '<em><b>Symmetric Difference</b></em>' operation.

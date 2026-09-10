@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.ExpressionInOCL;
 import org.eclipse.ocl.pivot.InvalidType;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.LanguageExpression;
 import org.eclipse.ocl.pivot.Library;
 import org.eclipse.ocl.pivot.MapType;
@@ -583,16 +584,45 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	protected @NonNull Operation convertEOperation2Operation(@NonNull EOperation eOperation) {
-		Operation pivotElement = converter.refreshElement(Operation.class, PivotPackage.Literals.OPERATION, eOperation);
-		copyTypedElement(pivotElement, eOperation);
-		doSwitchAll(pivotElement.getOwnedParameters(), eOperation.getEParameters());
+		List<EParameter> eParameters = eOperation.getEParameters();
+		boolean hasRoleEAnnotation = false;
+		if (eParameters.size() > 0) {
+			EParameter eParameter = eParameters.get(0);
+			hasRoleEAnnotation = EcoreUtil.getAnnotation(eParameter, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ROLE_KEY) != null;
+		}
+		Operation asOperation;
+		Iteration asIteration = null;
+		if (hasRoleEAnnotation) {
+			asOperation = asIteration = converter.refreshElement(Iteration.class, PivotPackage.Literals.ITERATION, eOperation);
+		}
+		else {
+			asOperation = converter.refreshElement(Operation.class, PivotPackage.Literals.OPERATION, eOperation);
+		}
+		copyTypedElement(asOperation, eOperation);
+		for (EParameter eParameter : eParameters) {
+			Parameter asParameter = (Parameter)doInPackageSwitch(eParameter);
+			if (asIteration != null) {
+				String role = EcoreUtil.getAnnotation(eParameter, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ROLE_KEY);
+				if (PivotConstants.PARAMETER_ROLE_ACCUMULATOR.equals(role)) {
+					asIteration.setOwnedAccumulator(asParameter);
+					continue;
+				}
+				else if (PivotConstants.PARAMETER_ROLE_ITERATOR.equals(role)) {
+					asIteration.getOwnedIterators().add(asParameter);
+					continue;
+				}
+			}
+			asOperation.getOwnedParameters().add(asParameter);
+		}
+	//	List<EParameter> eParameters = eOperation.getEParameters();
+	//	doSwitchAll(asOperation.getOwnedParameters(), eParameters);
 		@SuppressWarnings("null") @NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
-		copyTemplateParameters(pivotElement, eTypeParameters);
+		copyTemplateParameters(asOperation, eTypeParameters);
 		List<@NonNull WildcardType> wildcards = popWildcards(eOperation);
-		PivotUtil.refreshList(pivotElement.getOwnedWildcards(), true, wildcards);
+		PivotUtil.refreshList(asOperation.getOwnedWildcards(), true, wildcards);
 		doSwitchAll(eOperation.getEGenericExceptions());
 		converter.queueReference(eOperation);				// For superclasses
-		return pivotElement;
+		return asOperation;
 	}
 
 	/**

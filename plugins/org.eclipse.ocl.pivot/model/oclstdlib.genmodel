@@ -30,17 +30,20 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/_eq_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/_eq_/object2"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/closure1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/closure1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Bag/closure1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/closure">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/closure/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/closure/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Bag/closure/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/collect1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/collect1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Bag/collect1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/collect">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/collect/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Bag/collect/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/collectNested1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/collectNested1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Bag/collectNested1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/collectNested">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/collectNested/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Bag/collectNested/E"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/excluding">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/excluding/object"/>
@@ -57,11 +60,13 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/includingAll">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/includingAll/objects"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/reject1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/reject1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/reject">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/reject/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/reject/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/select1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/select1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/select">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/select/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/select/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/selectByKind">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/selectByKind/type"/>
@@ -71,8 +76,9 @@
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/selectByType/type"/>
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Bag/selectByType/TT"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/sortedBy1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/sortedBy1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Bag/sortedBy">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/sortedBy/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Bag/sortedBy/lambda"/>
       </genOperations>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//Collection">
@@ -83,24 +89,28 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/_eq_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/_eq_/object2"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/any1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/any1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/any">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/any/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/any/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/asBag"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/asOrderedSet"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/asSequence"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/asSet"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/collect1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collect1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/collect1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/collect">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collect/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/collect/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/collectBy1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collectBy1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/collectBy1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/collectBy">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collectBy/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collectBy/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/collectBy/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/collectNested1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collectNested1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/collectNested1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/collectNested">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collectNested/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/collectNested/E"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/count">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/count/object"/>
@@ -118,30 +128,43 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/excludingAll">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/excludingAll/objects"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/exists1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/exists">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/exists2">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists2/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/exists.1">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists.1/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists.1/j"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists.1/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/exists3">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists3/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/exists.2">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists.2/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists.2/j"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists.2/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/exists.2/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/flatten">
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/flatten/T2"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/forAll1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/forAll">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/forAll2">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll2/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/forAll.1">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll.1/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll.1/j"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll.1/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/forAll3">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll3/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/forAll.2">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll.2/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll.2/j"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll.2/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/forAll.2/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/gather1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/gather1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/gather1/V"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/gather">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/gather/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/gather/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/gather/V"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/includes">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/includes/object"/>
@@ -163,49 +186,64 @@
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/intersection.1/u"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/isEmpty"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/isUnique1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/isUnique1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/isUnique">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/isUnique/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/isUnique/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/iterate1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/iterate1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/iterate1/Tacc"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/iterate">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/iterate/acc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/iterate/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/iterate/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/iterate/Tacc"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/max"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/min"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/notEmpty"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/one1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/one1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/one">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/one/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/one/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/product">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/product/c2"/>
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/product/T2"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/reject1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/reject1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/reject">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/reject/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/reject/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/search1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search1/nextAcc"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search1/break"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search1/return"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search1/Q"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search1/R"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/search">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search/acc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search/nextAcc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search/break"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search/return"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search/Q"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search/R"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/search2">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search2/nextAcc"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search2/break"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search2/return"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search2/Q"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search2/R"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/search.1">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.1/acc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.1/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.1/j"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.1/nextAcc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.1/break"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.1/return"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search.1/Q"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search.1/R"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/search3">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search3/nextAcc"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search3/break"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search3/return"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search3/Q"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search3/R"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/search.2">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/acc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/j"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/nextAcc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/break"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/return"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/Q"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/search.2/R"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/select1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/select1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/select">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/select/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/select/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/selectByKind">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/selectByKind/type"/>
@@ -216,8 +254,9 @@
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Collection/selectByType/TT"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/size"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/sortedBy1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/sortedBy1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/sortedBy">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/sortedBy/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Collection/sortedBy/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/sum"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Collection/union">
@@ -239,23 +278,27 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/_eq_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/_eq_/object2"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/any1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/any1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/any">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/any/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/any/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/at">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/at/key"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/collect1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collect1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/collect1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/collect">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collect/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/collect/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/collectBy1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collectBy1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/collectBy1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/collectBy">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collectBy/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collectBy/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/collectBy/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/collectNested1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collectNested1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/collectNested1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/collectNested">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collectNested/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/collectNested/E"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/excludes">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/excludes/key"/>
@@ -291,27 +334,40 @@
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/excludingMap/K2"/>
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/excludingMap/V2"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/exists1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/exists">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/exists2">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists2/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/exists.1">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists.1/k1"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists.1/k2"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists.1/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/exists3">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists3/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/exists.2">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists.2/k1"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists.2/k2"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists.2/k3"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/exists.2/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/forAll1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/forAll">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/forAll2">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll2/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/forAll.1">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll.1/k1"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll.1/k2"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll.1/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/forAll3">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll3/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/forAll.2">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll.2/k1"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll.2/k2"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll.2/k3"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/forAll.2/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/gather1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/gather1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/gather1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/gather">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/gather/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/gather/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/gather/E"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/includes">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/includes/key"/>
@@ -342,44 +398,59 @@
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/includingMap/V2"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/isEmpty"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/isUnique1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/isUnique1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/isUnique">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/isUnique/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/isUnique/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/iterate1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/iterate1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/iterate1/Tacc"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/iterate">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/iterate/acc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/iterate/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/iterate/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/iterate/Tacc"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/keys"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/notEmpty"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/one1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/one1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/one">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/one/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/one/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/reject1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/reject1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/reject">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/reject/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/reject/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/search1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search1/nextAcc"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search1/break"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search1/return"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search1/Q"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search1/R"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/search">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search/acc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search/nextAcc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search/break"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search/return"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search/Q"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search/R"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/search2">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search2/nextAcc"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search2/break"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search2/return"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search2/Q"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search2/R"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/search.1">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.1/acc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.1/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.1/j"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.1/nextAcc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.1/break"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.1/return"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search.1/Q"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search.1/R"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/search3">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search3/nextAcc"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search3/break"/>
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search3/return"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search3/Q"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search3/R"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/search.2">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.2/acc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.2/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.2/j"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.2/k"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.2/nextAcc"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.2/break"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/search.2/return"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search.2/Q"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Map/search.2/R"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/select1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/select1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/select">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/select/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Map/select/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/size"/>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Map/values"/>
@@ -572,9 +643,10 @@
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedCollection/at/index"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedCollection/first"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedCollection/gather1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedCollection/gather1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedCollection/gather1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedCollection/gather">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedCollection/gather/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedCollection/gather/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedCollection/gather/E"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedCollection/indexOf">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedCollection/indexOf/obj"/>
@@ -598,17 +670,20 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/appendAll">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/appendAll/objects"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/closure1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/closure1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedSet/closure1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/closure">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/closure/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/closure/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedSet/closure/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/collect1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collect1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collect1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/collect">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collect/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collect/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/collectNested1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collectNested1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collectNested1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/collectNested">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collectNested/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedSet/collectNested/E"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/excluding">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/excluding/object"/>
@@ -635,12 +710,14 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/prependAll">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/prependAll/objects"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/reject1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/reject1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/reject">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/reject/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/reject/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/reverse"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/select1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/select1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/select">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/select/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/select/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/selectByKind">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/selectByKind/type"/>
@@ -650,8 +727,9 @@
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/selectByType/type"/>
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//OrderedSet/selectByType/TT"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/sortedBy1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/sortedBy1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/sortedBy">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/sortedBy/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/sortedBy/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//OrderedSet/subOrderedSet">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//OrderedSet/subOrderedSet/lower"/>
@@ -672,17 +750,20 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/appendAll">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/appendAll/objects"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/closure1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/closure1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Sequence/closure1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/closure">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/closure/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/closure/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Sequence/closure/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/collect1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/collect1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Sequence/collect1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/collect">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/collect/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Sequence/collect/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/collectNested1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/collectNested1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Sequence/collectNested1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/collectNested">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/collectNested/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Sequence/collectNested/E"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/excluding">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/excluding/object"/>
@@ -709,12 +790,14 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/prependAll">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/prependAll/objects"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/reject1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/reject1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/reject">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/reject/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/reject/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/reverse"/>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/select1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/select1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/select">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/select/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/select/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/selectByKind">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/selectByKind/type"/>
@@ -724,8 +807,9 @@
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/selectByType/type"/>
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Sequence/selectByType/TT"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/sortedBy1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/sortedBy1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/sortedBy">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/sortedBy/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/sortedBy/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Sequence/subSequence">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Sequence/subSequence/lower"/>
@@ -743,17 +827,20 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/_eq_">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/_eq_/object2"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/closure1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/closure1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Set/closure1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/closure">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/closure/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/closure/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Set/closure/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/collect1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/collect1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Set/collect1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/collect">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/collect/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/collect/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Set/collect/E"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/collectNested1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/collectNested1/lambda"/>
-        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Set/collectNested1/E"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/collectNested">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/collectNested/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/collectNested/lambda"/>
+        <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Set/collectNested/E"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/excluding">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/excluding/object"/>
@@ -770,11 +857,13 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/includingAll">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/includingAll/objects"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/reject1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/reject1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/reject">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/reject/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/reject/lambda"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/select1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/select1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/select">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/select/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/select/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/selectByKind">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/selectByKind/type"/>
@@ -784,8 +873,9 @@
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/selectByType/type"/>
         <genTypeParameters ecoreTypeParameter="../model-gen/oclstdlib.ecore#//Set/selectByType/TT"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/sortedBy1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/sortedBy1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//Set/sortedBy">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/sortedBy/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//Set/sortedBy/lambda"/>
       </genOperations>
     </genClasses>
     <genClasses image="false" ecoreClass="../model-gen/oclstdlib.ecore#//UniqueCollection">
@@ -796,8 +886,9 @@
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//UniqueCollection/intersection">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//UniqueCollection/intersection/c"/>
       </genOperations>
-      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//UniqueCollection/sortedBy1">
-        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//UniqueCollection/sortedBy1/lambda"/>
+      <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//UniqueCollection/sortedBy">
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//UniqueCollection/sortedBy/i"/>
+        <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//UniqueCollection/sortedBy/lambda"/>
       </genOperations>
       <genOperations ecoreOperation="../model-gen/oclstdlib.ecore#//UniqueCollection/symmetricDifference">
         <genParameters ecoreParameter="../model-gen/oclstdlib.ecore#//UniqueCollection/symmetricDifference/s"/>

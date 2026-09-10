@@ -41,12 +41,9 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="closure1" ordered="false" upperBound="-1">
+    <eOperations name="closure" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="closure"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"/>
@@ -54,33 +51,45 @@
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
         <details key="nullFree" value="true"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Bag/closure1/E"/>
+      <eGenericType eTypeParameter="#//Bag/closure/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Bag/closure/E"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collect1" ordered="false" unique="false" upperBound="-1">
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collect"/>
-      </eAnnotations>
+    <eOperations name="collect" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Bag/collect1/E"/>
+      <eGenericType eTypeParameter="#//Bag/collect/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Bag/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collectNested1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="collectNested" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Bag of elements which results from applying body to every member of the source nonordered collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collectNested"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Bag/collectNested1/E"/>
+      <eGenericType eTypeParameter="#//Bag/collectNested/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Bag/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excluding" ordered="false" unique="false" upperBound="-1">
@@ -145,30 +154,36 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="reject1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="reject" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The sub-bag of the source bag for which body is oclText[false].&#xA;&#xA;oclCode[self->reject(iterator | body) = self->select(iterator | not body)].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="reject"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Bag/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="select1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="select" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The sub-bag of the source bag for which body is oclText[true].&#xA;&#xA;oclCode[self->select(iterator | body) =&#xA;self->iterate(iterator; result : Bag(T) = Bag{} |&#xA;if body then result->including(iterator)&#xA;else result&#xA;endif)]&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="select"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Bag/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" ordered="false" unique="false" upperBound="-1">
@@ -209,17 +224,20 @@
         <eGenericType eTypeParameter="#//Bag/selectByType/TT"/>
       </eParameters>
     </eOperations>
-    <eOperations name="sortedBy1" unique="false" upperBound="-1">
+    <eOperations name="sortedBy" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in the Sequence containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="sortedBy"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Bag/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Bag/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eGenericSuperTypes eClassifier="#//Collection">
@@ -449,17 +467,20 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="any1">
+    <eOperations name="any">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Returns any element in the e[source] null-free collection for which e[body] evaluates to oclText[true].&#xA;Returns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any element,&#xA;otherwise if there are one or more elements for which the e[body] is oclText[true],&#xA;an indeterminate choice of one of them is returned, otherwise the result is oclText[null].&#xA;&#xA;let source : Collection(T) = ..., body : Lambda T() : Boolean = ... in&#xA;source->any(iterator | body) = source->select(iterator | body)->asSequence()->first()&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="any"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.AnyIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Collection/T"/>
+      <eParameters name="i" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="asBag" ordered="false" unique="false" upperBound="-1">
@@ -498,53 +519,62 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Collection/T"/>
     </eOperations>
-    <eOperations name="collect1" lowerBound="1">
+    <eOperations name="collect" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Collection of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collect"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectIteration"/>
       </eAnnotations>
       <eGenericType eClassifier="#//Collection">
-        <eTypeArguments eTypeParameter="#//Collection/collect1/E"/>
+        <eTypeArguments eTypeParameter="#//Collection/collect/E"/>
       </eGenericType>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collectBy1" upperBound="-1">
+    <eOperations name="collectBy" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.&#xA;The result is not flattened.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collectBy"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectByIteration"/>
       </eAnnotations>
       <eGenericType eClassifier="#//Entry_r_r">
         <eTypeArguments eTypeParameter="#//Collection/T"/>
-        <eTypeArguments eTypeParameter="#//Collection/collectBy1/E"/>
+        <eTypeArguments eTypeParameter="#//Collection/collectBy/E"/>
       </eGenericType>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collectNested1" lowerBound="1">
+    <eOperations name="collectNested" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Collection of elements which results from applying body to every member of the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collectNested"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"/>
       </eAnnotations>
       <eGenericType eClassifier="#//Collection">
-        <eTypeArguments eTypeParameter="#//Collection/collectNested1/E"/>
+        <eTypeArguments eTypeParameter="#//Collection/collectNested/E"/>
       </eGenericType>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="count" lowerBound="1" eType="#//Integer">
@@ -613,13 +643,10 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="exists1" eType="#//Boolean">
+    <eOperations name="exists" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one element oclText[i] in the source collection.&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="exists"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
@@ -627,15 +654,18 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="exists2" eType="#//Boolean">
+    <eOperations name="exists" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j] in the source collection.&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="exists"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
@@ -643,15 +673,24 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="j">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="exists3" eType="#//Boolean">
+    <eOperations name="exists" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of elements oclText[i], oclText[j], oclText[k] in the source collection.&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="exists"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
@@ -659,6 +698,24 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="j">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="flatten" lowerBound="1">
@@ -673,13 +730,10 @@
       </eGenericType>
       <eTypeParameters name="T2"/>
     </eOperations>
-    <eOperations name="forAll1" eType="#//Boolean">
+    <eOperations name="forAll" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each element oclText[i] in the source collection; otherwise, result is oclText[false].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="forAll"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
@@ -687,15 +741,18 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="forAll2" eType="#//Boolean">
+    <eOperations name="forAll" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j], oclText[k] in the source collection; otherwise, result is oclText[false].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="forAll"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
@@ -703,15 +760,24 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="j">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="forAll3" eType="#//Boolean">
+    <eOperations name="forAll" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of elements oclText[i], oclText[j] in the source collection; otherwise, result is oclText[false].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="forAll"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
@@ -719,20 +785,41 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="j">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="gather1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="gather" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The bag of elements which results from applying oclText[lambda] to every member of the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="gather"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.GatherIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Collection/gather1/V"/>
+      <eGenericType eTypeParameter="#//Collection/gather/V"/>
       <eTypeParameters name="V"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="includes" lowerBound="1" eType="#//Boolean">
@@ -824,30 +911,42 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.CollectionIsEmptyOperation"/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="isUnique1" lowerBound="1" eType="#//Boolean">
+    <eOperations name="isUnique" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.&#xA;The result is not flattened.&#xA;&#xA;Results in oclText[true] if body evaluates to a different value for each element oclText[i] in the source collection; otherwise, result is oclText[false].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="isUnique"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="iterate1">
+    <eOperations name="iterate">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="iterate"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.IterateIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Collection/iterate1/Tacc"/>
+      <eGenericType eTypeParameter="#//Collection/iterate/Tacc"/>
       <eTypeParameters name="Tacc"/>
+      <eParameters name="acc">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ACCUMULATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/iterate/Tacc"/>
+      </eParameters>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="max" lowerBound="1">
@@ -876,16 +975,19 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.CollectionNotEmptyOperation"/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="one1" lowerBound="1" eType="#//Boolean">
+    <eOperations name="one" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if there is exactly one element in the source collection for which body is oclText[true].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="one"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.OneIteration"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="product" ordered="false" upperBound="-1" eType="#//OclTuple">
@@ -905,12 +1007,9 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="reject1" lowerBound="1">
+    <eOperations name="reject" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The sub-collection of the source collection for which body is oclText[false].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="reject"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
@@ -918,65 +1017,113 @@
       <eGenericType eClassifier="#//Collection">
         <eTypeArguments eTypeParameter="#//Collection/T"/>
       </eGenericType>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="search1">
+    <eOperations name="search">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Search the source elements one-dimensionally using each element in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i)].&#xA;For an empty collection the final result is determined by oclText[source.return(nextAcc,null)].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="search"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SearchIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Collection/search1/R"/>
+      <eGenericType eTypeParameter="#//Collection/search/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
+      <eParameters name="acc">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ACCUMULATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/search/Q"/>
+      </eParameters>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="nextAcc" eType="#//OclLambda"/>
       <eParameters name="break" eType="#//OclLambda"/>
       <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="search2">
+    <eOperations name="search">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Search the source elements two-dimensionally using each element pair in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i,j)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j)].&#xA;For an empty collection the final result is determined by oclText[source.return(nextAcc,null,null)].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="search"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SearchIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Collection/search2/R"/>
+      <eGenericType eTypeParameter="#//Collection/search.1/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
+      <eParameters name="acc">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ACCUMULATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/search.1/Q"/>
+      </eParameters>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="j">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="nextAcc" eType="#//OclLambda"/>
       <eParameters name="break" eType="#//OclLambda"/>
       <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="search3">
+    <eOperations name="search">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Search the source elements three-dimensionally using each element triple in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j,k)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i,j,k)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j,k)].&#xA;For an empty collection the final result is determined by oclText[source.return(nextAcc,null,null,null)].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="search"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SearchIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Collection/search3/R"/>
+      <eGenericType eTypeParameter="#//Collection/search.2/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
+      <eParameters name="acc">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ACCUMULATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/search.2/Q"/>
+      </eParameters>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="j">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="nextAcc" eType="#//OclLambda"/>
       <eParameters name="break" eType="#//OclLambda"/>
       <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="select1" lowerBound="1">
+    <eOperations name="select" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The sub-collection of the source collection for which body is oclText[true].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="select"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
@@ -984,6 +1131,12 @@
       <eGenericType eClassifier="#//Collection">
         <eTypeArguments eTypeParameter="#//Collection/T"/>
       </eGenericType>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" lowerBound="1">
@@ -1024,17 +1177,20 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.CollectionSizeOperation"/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="sortedBy1" unique="false" upperBound="-1">
+    <eOperations name="sortedBy" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in the Collection containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="sortedBy"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Collection/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Collection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="sum" lowerBound="1">
@@ -1267,17 +1423,20 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="any1">
+    <eOperations name="any">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Returns the key of any element in the e[source] map for which e[body] evaluates to oclText[true].&#xA;Returns oclText[invalid] if the e[body] evaluates to oclText[invalid] for any key,&#xA;otherwise if there are one or more keys for which the e[body] is oclText[true],&#xA;an indeterminate choice of one of them is returned, otherwise the null is oclText[invalid].&#xA;&#xA;let source : Map(K,V) = ..., body : Lambda K(V) : Boolean = ... in&#xA;source->any(key &lt;- value | body) = source->select(key | let value = source->at(key) in body)->asSequence()->first()&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="any"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.AnyIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/K"/>
+      <eParameters name="k" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="at">
@@ -1295,49 +1454,58 @@
         <eGenericType eTypeParameter="#//Map/K"/>
       </eParameters>
     </eOperations>
-    <eOperations name="collect1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="collect" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Collection of results from applying body to every key-value of the source map.&#xA;The result is flattened.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collect"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/collect1/E"/>
+      <eGenericType eTypeParameter="#//Map/collect/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collectBy1" upperBound="-1">
+    <eOperations name="collectBy" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Map from each element oclText[i] of the source collection, the key, to the set of values to and values that results from applying body to every value of the source map.&#xA;The result is not flattened.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collectBy"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectByIteration"/>
       </eAnnotations>
       <eGenericType eClassifier="#//Entry_r_r">
         <eTypeArguments eTypeParameter="#//Map/K"/>
-        <eTypeArguments eTypeParameter="#//Map/collectBy1/E"/>
+        <eTypeArguments eTypeParameter="#//Map/collectBy/E"/>
       </eGenericType>
       <eTypeParameters name="E"/>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collectNested1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="collectNested" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Collection of results from applying body to every key-value of the source map.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collectNested"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/collectNested1/E"/>
+      <eGenericType eTypeParameter="#//Map/collectNested/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excludes" lowerBound="1" eType="#//Boolean">
@@ -1476,13 +1644,10 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="exists1" eType="#//Boolean">
+    <eOperations name="exists" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one key oclText[k] in the source map.&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="exists"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
@@ -1490,15 +1655,18 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="exists2" eType="#//Boolean">
+    <eOperations name="exists" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2] in the source map.&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="exists"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
@@ -1506,15 +1674,24 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="k1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="k2">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="exists3" eType="#//Boolean">
+    <eOperations name="exists" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if body evaluates to oclText[true] for at least one permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map.&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="exists"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
@@ -1522,15 +1699,30 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="k1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="k2">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="k3">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="forAll1" eType="#//Boolean">
+    <eOperations name="forAll" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each key oclText[k] in the source map; otherwise, result is oclText[false].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="forAll"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
@@ -1538,15 +1730,18 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="forAll2" eType="#//Boolean">
+    <eOperations name="forAll" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2] in the source map; otherwise, result is oclText[false].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="forAll"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
@@ -1554,15 +1749,24 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="k1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="k2">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="forAll3" eType="#//Boolean">
+    <eOperations name="forAll" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if the body expression evaluates to oclText[true] for each permutation of keys oclText[k1], oclText[k2], oclText[k3] in the source map; otherwise, result is oclText[false].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="forAll"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
@@ -1570,20 +1774,41 @@
         <details key="invalidating" value="true"/>
         <details key="validating" value="true"/>
       </eAnnotations>
+      <eParameters name="k1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="k2">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="k3">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="gather1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="gather" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The bag of elements which results from applying oclText[lambda] to every member of the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="gather"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.GatherIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/gather1/E"/>
+      <eGenericType eTypeParameter="#//Map/gather/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="includes" lowerBound="1" eType="#//Boolean">
@@ -1698,30 +1923,42 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.map.MapIsEmptyOperation"/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="isUnique1" lowerBound="1" eType="#//Boolean">
+    <eOperations name="isUnique" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if body evaluates to a different value for each key oclText[k] in the source map; otherwise, result is oclText[false].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="isUnique"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.IsUniqueIteration"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="iterate1">
+    <eOperations name="iterate">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in the final value of the accumulator oclText[acc] whose value is updated by evaluation of oclText[lambda] for each element oclText[i] in the source map.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="iterate"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.IterateIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/iterate1/Tacc"/>
+      <eGenericType eTypeParameter="#//Map/iterate/Tacc"/>
       <eTypeParameters name="Tacc"/>
+      <eParameters name="acc">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ACCUMULATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/iterate/Tacc"/>
+      </eParameters>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="keys" ordered="false" upperBound="-1">
@@ -1741,24 +1978,24 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.map.MapNotEmptyOperation"/>
       </eAnnotations>
     </eOperations>
-    <eOperations name="one1" lowerBound="1" eType="#//Boolean">
+    <eOperations name="one" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in oclText[true] if there is exactly one element in the source map for which body is oclText[true].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="one"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.OneIteration"/>
       </eAnnotations>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="reject1" upperBound="-1">
+    <eOperations name="reject" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The subset of the source set for which body is oclText[false].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="reject"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.MapRejectIteration"/>
@@ -1767,65 +2004,113 @@
         <eTypeArguments eTypeParameter="#//Map/K"/>
         <eTypeArguments eTypeParameter="#//Map/V"/>
       </eGenericType>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="search1">
+    <eOperations name="search">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Search the source keys one-dimensionally using each key in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i)].&#xA;For an empty map the final result is determined by oclText[source.return(nextAcc,null)].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="search"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SearchIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/search1/R"/>
+      <eGenericType eTypeParameter="#//Map/search/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
+      <eParameters name="acc">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ACCUMULATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/search/Q"/>
+      </eParameters>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="nextAcc" eType="#//OclLambda"/>
       <eParameters name="break" eType="#//OclLambda"/>
       <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="search2">
+    <eOperations name="search">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Search the source keys two-dimensionally using each key pair in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i,j)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j)].&#xA;For an empty map the final result is determined by oclText[source.return(nextAcc,null,null)].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="search"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SearchIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/search2/R"/>
+      <eGenericType eTypeParameter="#//Map/search.1/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
+      <eParameters name="acc">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ACCUMULATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/search.1/Q"/>
+      </eParameters>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="j">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="nextAcc" eType="#//OclLambda"/>
       <eParameters name="break" eType="#//OclLambda"/>
       <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="search3">
+    <eOperations name="search">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Search the source keys three-dimensionally using each key triple in turn to update oclText[acc] with oclText[next] the result of oclText[source.nextAcc(nextAcc,i,j,k)].&#xA;The search proceeds so long as oclText[source.break(nextAcc,i,j,k)] returns oclText[true].&#xA;The final result for a non-empty collection is determined by oclText[source.return(nextAcc,i,j,k)].&#xA;For an empty map the final result is determined by oclText[source.return(nextAcc,null,null,null)].&#xA;"/>
       </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="search"/>
-      </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SearchIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Map/search3/R"/>
+      <eGenericType eTypeParameter="#//Map/search.2/R"/>
       <eTypeParameters name="Q"/>
       <eTypeParameters name="R"/>
+      <eParameters name="acc">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ACCUMULATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/search.2/Q"/>
+      </eParameters>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="j">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
+      <eParameters name="k">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="nextAcc" eType="#//OclLambda"/>
       <eParameters name="break" eType="#//OclLambda"/>
       <eParameters name="return" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="select1" upperBound="-1">
+    <eOperations name="select" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The subset of set for which expr is oclText[true].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="select"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.MapSelectIteration"/>
@@ -1834,6 +2119,12 @@
         <eTypeArguments eTypeParameter="#//Map/K"/>
         <eTypeArguments eTypeParameter="#//Map/V"/>
       </eGenericType>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Map/K"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="size" lowerBound="1" eType="#//Integer">
@@ -2727,18 +3018,21 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedCollection/T"/>
     </eOperations>
-    <eOperations name="gather1" unique="false" upperBound="-1">
+    <eOperations name="gather" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The sequence of elements which results from applying oclText[lambda] to every member of the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="gather"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.GatherIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//OrderedCollection/gather1/E"/>
+      <eGenericType eTypeParameter="#//OrderedCollection/gather/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//OrderedCollection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="indexOf" eType="#//Integer">
@@ -2844,12 +3138,9 @@
         <eGenericType eTypeParameter="#//OrderedSet/T"/>
       </eParameters>
     </eOperations>
-    <eOperations name="closure1" upperBound="-1">
+    <eOperations name="closure" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="closure"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"/>
@@ -2857,36 +3148,48 @@
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
         <details key="nullFree" value="true"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//OrderedSet/closure1/E"/>
+      <eGenericType eTypeParameter="#//OrderedSet/closure/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//OrderedSet/closure/E"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collect1" unique="false" upperBound="-1">
+    <eOperations name="collect" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Sequence of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collect"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//OrderedSet/collect1/E"/>
+      <eGenericType eTypeParameter="#//OrderedSet/collect/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//OrderedSet/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collectNested1" unique="false" upperBound="-1">
+    <eOperations name="collectNested" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The sequence of elements that results from applying body to every member of the source ordered collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collectNested"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//OrderedSet/collectNested1/E"/>
+      <eGenericType eTypeParameter="#//OrderedSet/collectNested/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//OrderedSet/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excluding" upperBound="-1">
@@ -2991,17 +3294,20 @@
         <eGenericType eTypeParameter="#//OrderedSet/T"/>
       </eParameters>
     </eOperations>
-    <eOperations name="reject1" upperBound="-1">
+    <eOperations name="reject" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The ordered set of the source ordered set for which body is oclText[false].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="reject"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//OrderedSet/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="reverse" upperBound="-1">
@@ -3013,17 +3319,20 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
     </eOperations>
-    <eOperations name="select1" upperBound="-1">
+    <eOperations name="select" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The ordered set of the source ordered set for which body is oclText[true]&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="select"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//OrderedSet/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" upperBound="-1">
@@ -3064,17 +3373,20 @@
         <eGenericType eTypeParameter="#//OrderedSet/selectByType/TT"/>
       </eParameters>
     </eOperations>
-    <eOperations name="sortedBy1" upperBound="-1">
+    <eOperations name="sortedBy" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="sortedBy"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//OrderedSet/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="subOrderedSet" upperBound="-1">
@@ -3320,12 +3632,9 @@
         <eGenericType eTypeParameter="#//Sequence/T"/>
       </eParameters>
     </eOperations>
-    <eOperations name="closure1" upperBound="-1">
+    <eOperations name="closure" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="closure"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"/>
@@ -3333,36 +3642,48 @@
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
         <details key="nullFree" value="true"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Sequence/closure1/E"/>
+      <eGenericType eTypeParameter="#//Sequence/closure/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Sequence/closure/E"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collect1" unique="false" upperBound="-1">
+    <eOperations name="collect" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Bag of elements that results from applying body to every member of the source sequence.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collect"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Sequence/collect1/E"/>
+      <eGenericType eTypeParameter="#//Sequence/collect/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Sequence/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collectNested1" unique="false" upperBound="-1">
+    <eOperations name="collectNested" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The sequence of elements that results from applying body to every member of the source ordered collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collectNested"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Sequence/collectNested1/E"/>
+      <eGenericType eTypeParameter="#//Sequence/collectNested/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Sequence/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excluding" unique="false" upperBound="-1">
@@ -3467,17 +3788,20 @@
         <eGenericType eTypeParameter="#//Sequence/T"/>
       </eParameters>
     </eOperations>
-    <eOperations name="reject1" unique="false" upperBound="-1">
+    <eOperations name="reject" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The subsequence of the source sequence for which body is oclText[false].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="reject"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Sequence/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="reverse" unique="false" upperBound="-1">
@@ -3489,17 +3813,20 @@
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
     </eOperations>
-    <eOperations name="select1" unique="false" upperBound="-1">
+    <eOperations name="select" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The subsequence of the source sequence for which body is oclText[true].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="select"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Sequence/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" unique="false" upperBound="-1">
@@ -3540,17 +3867,20 @@
         <eGenericType eTypeParameter="#//Sequence/selectByType/TT"/>
       </eParameters>
     </eOperations>
-    <eOperations name="sortedBy1" unique="false" upperBound="-1">
+    <eOperations name="sortedBy" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in the Sequence containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c then a &lt; c).&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="sortedBy"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Sequence/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="subSequence" unique="false" upperBound="-1">
@@ -3620,12 +3950,9 @@
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
-    <eOperations name="closure1" ordered="false" upperBound="-1">
+    <eOperations name="closure" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The closure of applying body transitively to every distinct non-null element of the source collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="closure"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ClosureIteration"/>
@@ -3633,36 +3960,48 @@
       <eAnnotations source="http://www.eclipse.org/OCL/Collection">
         <details key="nullFree" value="true"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Set/closure1/E"/>
+      <eGenericType eTypeParameter="#//Set/closure/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Set/closure/E"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collect1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="collect" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Bag of elements that results from applying body to every member of the source set.&#xA;The result is flattened. Notice that this is based on collectNested, which can be of different type depending on the type of source.&#xA;collectNested is defined individually for each subclass of CollectionType.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collect"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Set/collect1/E"/>
+      <eGenericType eTypeParameter="#//Set/collect/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Set/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="collectNested1" ordered="false" unique="false" upperBound="-1">
+    <eOperations name="collectNested" ordered="false" unique="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The Bag of elements which results from applying body to every member of the source nonordered collection.&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="collectNested"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.CollectNestedIteration"/>
       </eAnnotations>
-      <eGenericType eTypeParameter="#//Set/collectNested1/E"/>
+      <eGenericType eTypeParameter="#//Set/collectNested/E"/>
       <eTypeParameters name="E"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Set/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="excluding" ordered="false" upperBound="-1">
@@ -3727,30 +4066,36 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="reject1" ordered="false" upperBound="-1">
+    <eOperations name="reject" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The subset of the source set for which body is oclText[false].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="reject"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.RejectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Set/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
-    <eOperations name="select1" ordered="false" upperBound="-1">
+    <eOperations name="select" ordered="false" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;The subset of set for which expr is oclText[true].&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="select"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SelectIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Set/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="selectByKind" ordered="false" upperBound="-1">
@@ -3791,17 +4136,20 @@
         <eGenericType eTypeParameter="#//Set/selectByType/TT"/>
       </eParameters>
     </eOperations>
-    <eOperations name="sortedBy1" upperBound="-1">
+    <eOperations name="sortedBy" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="sortedBy"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Set/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//Set/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eGenericSuperTypes eClassifier="#//UniqueCollection">
@@ -4220,17 +4568,20 @@
         </eGenericType>
       </eParameters>
     </eOperations>
-    <eOperations name="sortedBy1" upperBound="-1">
+    <eOperations name="sortedBy" upperBound="-1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="&#xA;Results in the ordered set containing all elements of the source collection.&#xA;The element for which body has the lowest value comes first, and so on.&#xA;The type of the body expression must have the &lt; operation defined.&#xA;The &lt; operation must return a Boolean value and must be transitive (i.e., if a &lt; b and b &lt; c, then a &lt; c).&#xA;"/>
-      </eAnnotations>
-      <eAnnotations source="http://www.eclipse.org/uml2/2.0.0/UML">
-        <details key="originalName" value="sortedBy"/>
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.SortedByIteration"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//UniqueCollection/T"/>
+      <eParameters name="i">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="role" value="ITERATOR"/>
+        </eAnnotations>
+        <eGenericType eTypeParameter="#//UniqueCollection/T"/>
+      </eParameters>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="symmetricDifference" ordered="false" upperBound="-1">

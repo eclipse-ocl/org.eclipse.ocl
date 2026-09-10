@@ -40,9 +40,7 @@ import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
-import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.NamedElement;
-import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
@@ -56,7 +54,6 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
-import org.eclipse.ocl.pivot.internal.manager.Orphanage;
 import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
@@ -195,7 +192,8 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 			}
 			doSwitchAll(Type.class, ClassUtil.<Type>nullFree(asOperation.getRaisedExceptions()), eOperation.getEGenericExceptions());
 			asOperation.setIsInvalidating(Boolean.valueOf(EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_INVALIDATING_KEY)));
-			asOperation.setIsValidating(Boolean.valueOf(EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_VALIDATING_KEY)));
+			Boolean isValidating = Boolean.valueOf(EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_VALIDATING_KEY));
+			asOperation.setIsValidating(isValidating);
 			String precedenceString = EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_PRECEDENCE_KEY);
 			Precedence asPrecedence = null;
 			if (precedenceString != null) {
@@ -213,7 +211,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				}
 			}
 			asOperation.setPrecedence(asPrecedence);
-			if (asOperation instanceof Iteration) {
+		/*	if (asOperation instanceof Iteration) {
 				Iteration asIteration = (Iteration)asOperation;
 				org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.getLocalOrphanPackage(PivotUtil.getContainingModel(asIteration));
 			//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(asIteration);
@@ -224,15 +222,15 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 					String name = iteratorName.substring(0, index);
 					Integer templateParameterNumber = Integer.valueOf(iteratorName.substring(index+1));
 					NormalizedTemplateParameter type = Orphanage.getNormalizedTemplateParameter(localOrphanPackage, templateParameterNumber, null);
-					Parameter asIterator = PivotUtil.createParameter(name, type, false);
+					Parameter asIterator = PivotUtil.createParameter(name, type, !isValidating);
 					asIteration.getOwnedIterators().add(asIterator);
 				}
 				String resultName = EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_RESULT_KEY);
 				if (resultName != null) {
-					Parameter asAccumulator = PivotUtil.createParameter(resultName, asIteration.getType(), false);
+					Parameter asAccumulator = PivotUtil.createParameter(resultName, asIteration.getType(), asOperation.isIsRequired());
 					asIteration.setOwnedAccumulator(asAccumulator);
 				}
-			}
+			} */
 			return asOperation;
 		}
 	}

@@ -227,9 +227,6 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 				return "ActivityNode_" + name;
 			}
 		}
-		if (asOperation instanceof Iteration) {
-			name += ((Iteration)asOperation).getOwnedIterators().size();
-		}
 		return name;
 	}
 
@@ -754,7 +751,24 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		copyTemplateParameters(eTypeParameters, asOperation);
 		ClassUtil.setEAnnotationDetail(eOperation, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ISTYPEOF_KEY, asOperation.isIsTypeof());
 		@SuppressWarnings("null")@NonNull List<EParameter> eParameters = eOperation.getEParameters();
-		safeVisitAll(eParameters, asOperation.getOwnedParameters());
+		if (asOperation instanceof Iteration) {
+			Iteration asIteration = (Iteration) asOperation;
+			Parameter asAccumulator = asIteration.getOwnedAccumulator();
+			if (asAccumulator != null) {
+				EParameter eAccumulator = (EParameter)safeVisit(asAccumulator);
+				ClassUtil.setEAnnotationDetail(eAccumulator, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ROLE_KEY, PivotConstants.PARAMETER_ROLE_ACCUMULATOR);
+				eParameters.add(eAccumulator);
+			}
+			for (Parameter asIterator : asIteration.getOwnedIterators()) {
+				EParameter eIterator = (EParameter)safeVisit(asIterator);
+				ClassUtil.setEAnnotationDetail(eIterator, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ROLE_KEY, PivotConstants.PARAMETER_ROLE_ITERATOR);
+				eParameters.add(eIterator);
+			}
+		}
+		for (Parameter asParameter : asOperation.getOwnedParameters()) {
+			EParameter eParameter = (EParameter)safeVisit(asParameter);
+			eParameters.add(eParameter);
+		}
 		//		safeVisitAll(eOperation.getEGenericExceptions(), pivotOperation.getRaisedException());
 		LanguageExpression bodyExpression = asOperation.getBodyExpression();
 		if (bodyExpression != null) {
