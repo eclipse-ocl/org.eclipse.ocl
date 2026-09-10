@@ -2519,6 +2519,12 @@
     <ownedPrecedences xmi:id="1Odhg" name="IMPLIES"/>
   </ownedPackages>
   <ownedPackages URI="http://www.eclipse.org/ocl/2015/Orphanage" name="$$">
+    <ownedClasses xmi:id="Xt1f+" name="$$">
+      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="YVcXo" name="$$0"/>
+      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="ZVcXo" name="$$1"/>
+      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="aVcXo" name="$$2"/>
+      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="bVcXo" name="$$3"/>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="SafGH" generic="#yEcHF" name="Bag" superClasses="#o1HIW">
       <ownedTemplateArguments actual="#YVcXo"/>
     </ownedClasses>
@@ -2866,12 +2872,6 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="tpcVm" generic="#5a0EE" name="UniqueCollection" superClasses="#8usZ2">
       <ownedTemplateArguments actual="#,5eVD" actualIsRequired="true"/>
-    </ownedClasses>
-    <ownedClasses xmi:id="Xt1f+" name="$$">
-      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="YVcXo" name="$$0"/>
-      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="ZVcXo" name="$$1"/>
-      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="aVcXo" name="$$2"/>
-      <ownedTemplateParameters xsi:type="pivot:NormalizedTemplateParameter" xmi:id="bVcXo" name="$$3"/>
     </ownedClasses>
   </ownedPackages>
 </pivot:Model>

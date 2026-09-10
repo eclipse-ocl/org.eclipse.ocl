@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.jdt.annotation.NonNull;
+import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.Class;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Operation;
@@ -102,24 +104,40 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AS
 		}
 	}
 
+	/**
+	 * TypeComparator sorts types/classes into serialized alphabetical order ensuring that the frequently accessed orphan class
+	 * is first.
+	 */
 	protected static final class TypeComparator implements Comparator<org.eclipse.ocl.pivot.@NonNull Class>
 	{
-		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull String> class2string = new HashMap<>();
+		/**
+		 * @since 7.0
+		 */
+		public static void sort(org.eclipse.ocl.pivot.@NonNull Package asPackage) {
+			boolean isOrphanage = Orphanage.isOrphanage(asPackage);
+			org.eclipse.ocl.pivot.@Nullable Class orphanClass = isOrphanage ? Orphanage.getOrphanClass(asPackage) : null;
+			Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull String> class2string = new HashMap<>();
+			List<@NonNull Class> asClasses = PivotUtil.getOwnedClassesList(asPackage);
+			for (org.eclipse.ocl.pivot.@NonNull Class asClass : asClasses) {
+				String name = asClass == orphanClass ? "\0" : PrettyPrinter.printType(asClass);		// Ensure orphanClass is first
+				class2string.put(asClass, name);
+			}
+			ClassUtil.sort(asClasses, new TypeComparator(class2string));
+		}
+
+		private final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull String> class2string;
+
+		private TypeComparator(@NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull String> class2string) {
+			this.class2string = class2string;
+		}
 
 		@Override
 		public int compare(org.eclipse.ocl.pivot.@NonNull Class o1, org.eclipse.ocl.pivot.@NonNull Class o2) {
-			String n1 = getName(o1);
-			String n2 = getName(o2);
+			String n1 = class2string.get(o1);
+			String n2 = class2string.get(o2);
+			assert n1 != null;
+			assert n2 != null;
 			return n1.compareTo(n2);
-		}
-
-		private @NonNull String getName(org.eclipse.ocl.pivot.@NonNull Class o) {
-			String name = class2string.get(o);
-			if (name == null) {
-				name = PrettyPrinter.printType(o);
-				class2string.put(o, name);
-			}
-			return name;
 		}
 	}
 
@@ -163,8 +181,8 @@ public class ASSaverNormalizeVisitor extends AbstractExtendingVisitor<Object, AS
 
 	@Override
 	public Object visitPackage(org.eclipse.ocl.pivot.@NonNull Package object) {
-		if (!(object instanceof Orphanage)) {			// The Orphanage is not assignable/sortable
-			ClassUtil.sort(PivotUtil.getOwnedClassesList(object), new TypeComparator());
+		if (!(object instanceof Orphanage)) {			// The global Orphanage is not assignable/sortable
+			TypeComparator.sort(object);
 		}
 		return null;
 	}
