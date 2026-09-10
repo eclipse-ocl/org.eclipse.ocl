@@ -13,6 +13,7 @@ package org.eclipse.ocl.pivot.internal.ecore.es2as;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -86,6 +87,7 @@ import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.StringUtil;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
+import org.eclipse.ocl.pivot.utilities.UniqueList;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
 import org.eclipse.ocl.pivot.values.IntegerValue;
 import org.eclipse.ocl.pivot.values.UnlimitedNaturalValue;
@@ -1076,14 +1078,40 @@ public class ExternalEcore2AS extends Ecore2AS
 	 */
 	protected void resolveReferences() {
 		Ecore2ASReferenceSwitch referencePass = new Ecore2ASReferenceSwitch(this);
-		Set<@NonNull EObject> theReferencers = referencers;
+		List<@NonNull EObject> theReferencers = new ArrayList<>(referencers);
+		Collections.sort(theReferencers, new Comparator<@NonNull EObject>()	// EClass first to get super classes before use
+		{
+			@Override
+			public int compare(@NonNull EObject o1, @NonNull EObject o2) {
+				boolean c1 = o1 instanceof EClass;
+				boolean c2 = o2 instanceof EClass;
+				boolean d1 = o1 instanceof EDataType;
+				boolean d2 = o2 instanceof EDataType;
+				if (c1 && !c2) {
+					return -1;
+				}
+				else if (!c1 && c2) {
+					return +1;
+				}
+				else if (c1 == c2) {
+					return 0;
+				}
+				if (d1 && !d2) {
+					return -1;
+				}
+				else if (!d1 && d2) {
+					return +1;
+				}
+				return 0;
+			}
+		});
 		while (theReferencers != null) {
-			Set<@NonNull EObject> moreReferencers = null;
+			List<@NonNull EObject> moreReferencers = null;
 			for (EObject eObject : theReferencers) {
 				Object asElement = referencePass.doInPackageSwitch(eObject);
 				if (asElement == referencePass) {
 					if (moreReferencers == null) {
-						moreReferencers = new HashSet<>();
+						moreReferencers = new UniqueList<>();
 					}
 					moreReferencers.add(eObject);
 				}
