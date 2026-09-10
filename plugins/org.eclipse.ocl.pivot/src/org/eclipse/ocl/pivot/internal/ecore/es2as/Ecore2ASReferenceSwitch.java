@@ -35,14 +35,18 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Annotation;
 import org.eclipse.ocl.pivot.AnyType;
+import org.eclipse.ocl.pivot.AssociativityKind;
 import org.eclipse.ocl.pivot.CollectionType;
 import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
+import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.NamedElement;
+import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotFactory;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.Stereotype;
@@ -52,12 +56,15 @@ import org.eclipse.ocl.pivot.ids.CollectionTypeId;
 import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.internal.library.CompleteStandardLibrary;
 import org.eclipse.ocl.pivot.internal.library.JavaCompareToOperation;
+import org.eclipse.ocl.pivot.internal.manager.Orphanage;
+import org.eclipse.ocl.pivot.internal.manager.PrecedenceManager;
 import org.eclipse.ocl.pivot.internal.utilities.OppositePropertyDetails;
 import org.eclipse.ocl.pivot.internal.utilities.PivotConstantsInternal;
 import org.eclipse.ocl.pivot.library.LibraryConstants;
 import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
+import org.eclipse.ocl.pivot.utilities.PivotConstants;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.ocl.pivot.utilities.ValueUtil;
 import org.eclipse.ocl.pivot.values.CollectionTypeArguments;
@@ -187,6 +194,45 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 				}
 			}
 			doSwitchAll(Type.class, ClassUtil.<Type>nullFree(asOperation.getRaisedExceptions()), eOperation.getEGenericExceptions());
+			asOperation.setIsInvalidating(Boolean.valueOf(EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_INVALIDATING_KEY)));
+			asOperation.setIsValidating(Boolean.valueOf(EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_VALIDATING_KEY)));
+			String precedenceString = EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_PRECEDENCE_KEY);
+			Precedence asPrecedence = null;
+			if (precedenceString != null) {
+				int index = precedenceString.indexOf("-");
+				AssociativityKind associativityKind = AssociativityKind.get(precedenceString.substring(0, index));
+				PrecedenceManager precedenceManager = environmentFactory.getPrecedenceManager();
+				List<@NonNull Precedence> asPrecedences = precedenceManager.getPrecedences(precedenceString.substring(index+1));
+				if (asPrecedences != null) {
+					for (Precedence aPrecedence : asPrecedences) {
+						if (associativityKind == aPrecedence.getAssociativity()) {
+							asPrecedence = aPrecedence;
+							break;
+						}
+					}
+				}
+			}
+			asOperation.setPrecedence(asPrecedence);
+			if (asOperation instanceof Iteration) {
+				Iteration asIteration = (Iteration)asOperation;
+				org.eclipse.ocl.pivot.Package localOrphanPackage = Orphanage.getLocalOrphanPackage(PivotUtil.getContainingModel(asIteration));
+			//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(asIteration);
+			//	int templateParameterCount = templateParameterization.size();
+				String iteratorNames = EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_ITERATORS_KEY);
+				for (String iteratorName : iteratorNames.split(" ")) {
+					int index = iteratorName.indexOf(":");
+					String name = iteratorName.substring(0, index);
+					Integer templateParameterNumber = Integer.valueOf(iteratorName.substring(index+1));
+					NormalizedTemplateParameter type = Orphanage.getNormalizedTemplateParameter(localOrphanPackage, templateParameterNumber, null);
+					Parameter asIterator = PivotUtil.createParameter(name, type, false);
+					asIteration.getOwnedIterators().add(asIterator);
+				}
+				String resultName = EcoreUtil.getAnnotation(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_RESULT_KEY);
+				if (resultName != null) {
+					Parameter asAccumulator = PivotUtil.createParameter(resultName, asIteration.getType(), false);
+					asIteration.setOwnedAccumulator(asAccumulator);
+				}
+			}
 			return asOperation;
 		}
 	}

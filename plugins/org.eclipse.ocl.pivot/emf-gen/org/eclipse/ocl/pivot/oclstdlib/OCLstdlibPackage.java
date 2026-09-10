@@ -5881,8 +5881,12 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createUMLAnnotations();
 		// http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot
 		createPivotAnnotations();
+		// http://www.eclipse.org/OCL/Operation
+		createOperationAnnotations();
 		// http://www.eclipse.org/OCL/Collection
 		createCollectionAnnotations();
+		// http://www.eclipse.org/OCL/Parameter
+		createParameterAnnotations();
 		// http://www.eclipse.org/OCL/CoEClass
 		createCoEClassAnnotations();
 		// http://www.eclipse.org/OCL/EntryEClass
@@ -7992,6 +7996,436 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Operation</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createOperationAnnotations() {
+		String source = "http://www.eclipse.org/OCL/Operation"; //$NON-NLS-1$
+		addAnnotation
+		  (getBag___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getBag___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection__Exists1__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection__Exists2__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection__Exists3__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection__ForAll1__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection__ForAll2__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getCollection__ForAll3__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap__At__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap__Exists1__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap__Exists2__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap__Exists3__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap__ForAll1__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap__ForAll2__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getMap__ForAll3__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclAsType__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclIsInvalid(),
+		   source,
+		   new String[] {
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclAny__OclIsUndefined(),
+		   source,
+		   new String[] {
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___lt___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-RELATIONAL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___le___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-RELATIONAL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___gt___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-RELATIONAL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclComparable___ge___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-RELATIONAL" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclElement__OclAsModelType__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclElement__OclExtension__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid__And__Boolean(),
+		   source,
+		   new String[] {
+			   "precedence", "left-AND", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid__Implies__Boolean(),
+		   source,
+		   new String[] {
+			   "precedence", "left-IMPLIES", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid__OclIsInvalid(),
+		   source,
+		   new String[] {
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid__OclIsUndefined(),
+		   source,
+		   new String[] {
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclInvalid__Or__Boolean(),
+		   source,
+		   new String[] {
+			   "precedence", "left-OR", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclTuple___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclTuple___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid___add___String(),
+		   source,
+		   new String[] {
+			   "precedence", "left-ADDITIVE" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__And__Boolean(),
+		   source,
+		   new String[] {
+			   "precedence", "left-AND", //$NON-NLS-1$ //$NON-NLS-2$
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__Implies__Boolean(),
+		   source,
+		   new String[] {
+			   "precedence", "left-IMPLIES", //$NON-NLS-1$ //$NON-NLS-2$
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__Not(),
+		   source,
+		   new String[] {
+			   "precedence", "left-UNARY", //$NON-NLS-1$ //$NON-NLS-2$
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__OclAsType__Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__OclIsInvalid(),
+		   source,
+		   new String[] {
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__OclIsUndefined(),
+		   source,
+		   new String[] {
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__Or__Boolean(),
+		   source,
+		   new String[] {
+			   "precedence", "left-OR", //$NON-NLS-1$ //$NON-NLS-2$
+			   "invalidating", "true", //$NON-NLS-1$ //$NON-NLS-2$
+			   "validating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__Xor__Boolean(),
+		   source,
+		   new String[] {
+			   "precedence", "left-XOR" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOrderedCollection__At__IntegerValue(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOrderedCollection__First(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOrderedCollection__Last(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOrderedSet___sub___EList(),
+		   source,
+		   new String[] {
+			   "precedence", "left-ADDITIVE" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOrderedSet___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOrderedSet___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOrderedSet__InsertAt__IntegerValue_Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOrderedSet__SubOrderedSet__IntegerValue_IntegerValue(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getSequence___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getSequence___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getSequence__InsertAt__IntegerValue_Object(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getSequence__SubSequence__IntegerValue_IntegerValue(),
+		   source,
+		   new String[] {
+			   "invalidating", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getSet___sub___EList(),
+		   source,
+		   new String[] {
+			   "precedence", "left-ADDITIVE" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getSet___ne___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getSet___eq___Object(),
+		   source,
+		   new String[] {
+			   "precedence", "left-EQUALITY" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getUniqueCollection___sub___EList(),
+		   source,
+		   new String[] {
+			   "precedence", "left-ADDITIVE" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
+
+	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Collection</b>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -8120,6 +8554,101 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "nullFree", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 	}
+
+	/**
+	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/Parameter</b>.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void createParameterAnnotations() {
+		String source = "http://www.eclipse.org/OCL/Parameter"; //$NON-NLS-1$
+		addAnnotation
+		  ((getBag__SelectByKind__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getBag__SelectByType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__SelectByKind__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getCollection__SelectByType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOclAny__OclAsType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOclElement__OclAsModelType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOclInvalid__OclAsType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOclVoid__OclAsType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOrderedSet__SelectByKind__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getOrderedSet__SelectByType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSequence__SelectByKind__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSequence__SelectByType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSet__SelectByKind__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  ((getSet__SelectByType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+	}
+
 
 	/**
 	 * Initializes the annotations for <b>http://www.eclipse.org/OCL/CoEClass</b>.

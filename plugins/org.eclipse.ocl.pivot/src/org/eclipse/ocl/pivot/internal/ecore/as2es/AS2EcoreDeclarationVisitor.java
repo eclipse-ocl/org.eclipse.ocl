@@ -63,6 +63,7 @@ import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Package;
 import org.eclipse.ocl.pivot.Parameter;
 import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
 import org.eclipse.ocl.pivot.TemplateableElement;
@@ -742,32 +743,37 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 	}
 
 	@Override
-	public EObject visitOperation(@NonNull Operation pivotOperation) {
-		if (pivotOperation.basicGetOwnedTemplateArguments() != null) {
+	public EObject visitOperation(@NonNull Operation asOperation) {
+		if (asOperation.basicGetOwnedTemplateArguments() != null) {
 			return null;
 		}
 		@SuppressWarnings("null")
 		@NonNull EOperation eOperation = EcoreFactory.eINSTANCE.createEOperation();
-		copyTypedElement(eOperation, pivotOperation);
+		copyTypedElement(eOperation, asOperation);
 		@SuppressWarnings("null")@NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
-		copyTemplateParameters(eTypeParameters, pivotOperation);
+		copyTemplateParameters(eTypeParameters, asOperation);
 		@SuppressWarnings("null")@NonNull List<EParameter> eParameters = eOperation.getEParameters();
-		safeVisitAll(eParameters, pivotOperation.getOwnedParameters());
+		safeVisitAll(eParameters, asOperation.getOwnedParameters());
 		//		safeVisitAll(eOperation.getEGenericExceptions(), pivotOperation.getRaisedException());
-		LanguageExpression bodyExpression = pivotOperation.getBodyExpression();
+		LanguageExpression bodyExpression = asOperation.getBodyExpression();
 		if (bodyExpression != null) {
 			EAnnotation eBodyConstraint = delegateInstaller.createOperationDelegate(eOperation, bodyExpression, context.getEcoreURI());
 			if (eBodyConstraint != null) {
 				//				AS2Ecore.copyComments(eBodyConstraint, bodyExpression);
 			}
 		}
-		for (Constraint pivotConstraint : pivotOperation.getOwnedPreconditions()) {
+		for (Constraint pivotConstraint : asOperation.getOwnedPreconditions()) {
 			safeVisit(pivotConstraint);		// Results are inserted directly
 		}
-		for (Constraint pivotConstraint : pivotOperation.getOwnedPostconditions()) {
+		for (Constraint pivotConstraint : asOperation.getOwnedPostconditions()) {
 			safeVisit(pivotConstraint);		// Results are inserted directly
 		}
-		OCL_Pivot_Operation_EAnnotationConverter.getInstance().convertAnnotations(pivotOperation, eOperation);
+		Precedence asPrecedence = asOperation.getPrecedence();
+		String name = asPrecedence != null ? asPrecedence.getAssociativity().getName() + "-" + asPrecedence.getName() : null;
+		ClassUtil.setEAnnotationDetail(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_PRECEDENCE_KEY, name);
+		ClassUtil.setEAnnotationDetail(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_INVALIDATING_KEY, asOperation.isIsInvalidating());
+		ClassUtil.setEAnnotationDetail(eOperation, PivotConstants.OPERATION_ANNOTATION_SOURCE, PivotConstants.OPERATION_VALIDATING_KEY, asOperation.isIsValidating());
+		OCL_Pivot_Operation_EAnnotationConverter.getInstance().convertAnnotations(asOperation, eOperation);
 		return eOperation;
 	}
 
@@ -795,6 +801,14 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EParameter eParameter = EcoreFactory.eINSTANCE.createEParameter();
 		copyTypedElement(eParameter, pivotParameter);
+		boolean isTypeOf = pivotParameter.isIsTypeof();
+		if (isTypeOf) {
+			EAnnotation eAnnotation = ClassUtil.getEAnnotation(eParameter, PivotConstants.PARAMETER_ANNOTATION_SOURCE);
+			eAnnotation.getDetails().put(PivotConstants.PARAMETER_ISTYPEOF_KEY, String.valueOf(true));
+		}
+		else {
+			ClassUtil.removeEAnnotationDetail(eParameter, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ISTYPEOF_KEY);
+		}
 		return eParameter;
 	}
 

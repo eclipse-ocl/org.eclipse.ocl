@@ -21,6 +21,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -32,6 +35,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -178,6 +184,9 @@
       <eGenericType eTypeParameter="#//Bag/selectByKind/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//Bag/selectByKind/TT"/>
       </eParameters>
     </eOperations>
@@ -194,6 +203,9 @@
       <eGenericType eTypeParameter="#//Bag/selectByType/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//Bag/selectByType/TT"/>
       </eParameters>
     </eOperations>
@@ -229,6 +241,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-EQUALITY"/>
+        </eAnnotations>
         <eParameters name="object2" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -240,6 +255,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-EQUALITY"/>
         </eAnnotations>
         <eParameters name="object2" eType="#//OclSelf"/>
       </contents>
@@ -254,6 +272,11 @@
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation"/>
           <details key="body" value="if self.oclIsInvalid() then&#xA;&#x9;&#x9;&#x9;&#x9;if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;&#x9;elseif b = false then false&#xA;&#x9;&#x9;&#x9;&#x9;else self&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;  elseif self = false then false&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif b = false then false&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then null&#xA;&#x9;&#x9;&#x9;  else true&#xA;&#x9;&#x9;&#x9;  endif"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-AND"/>
+          <details key="invalidating" value="true"/>
+          <details key="validating" value="true"/>
+        </eAnnotations>
         <eParameters name="b" eType="#//Boolean"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="and2" lowerBound="1" eType="#//Boolean">
@@ -263,6 +286,10 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation2"/>
           <details key="body" value="if self = false then false&#xA;&#x9;&#x9;&#x9;  elseif b = false then false&#xA;&#x9;&#x9;&#x9;  else true&#xA;&#x9;&#x9;&#x9;  endif"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-AND"/>
+          <details key="validating" value="true"/>
         </eAnnotations>
         <eParameters name="b" lowerBound="1" eType="#//Boolean"/>
       </contents>
@@ -274,6 +301,11 @@
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation"/>
           <details key="body" value="if self.oclIsInvalid() then&#xA;&#x9;&#x9;&#x9;&#x9;if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;&#x9;elseif b = true then true&#xA;&#x9;&#x9;&#x9;&#x9;else self&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;  elseif self = false then true&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then b&#xA;&#x9;&#x9;&#x9;  else false&#xA;&#x9;&#x9;&#x9;  endif"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-IMPLIES"/>
+          <details key="invalidating" value="true"/>
+          <details key="validating" value="true"/>
+        </eAnnotations>
         <eParameters name="b" eType="#//Boolean"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="implies2" lowerBound="1" eType="#//Boolean">
@@ -283,6 +315,10 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation2"/>
           <details key="body" value="if self = false then true&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;&#x9;  else false&#xA;&#x9;&#x9;&#x9;  endif"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-IMPLIES"/>
+          <details key="validating" value="true"/>
         </eAnnotations>
         <eParameters name="b" lowerBound="1" eType="#//Boolean"/>
       </contents>
@@ -294,6 +330,11 @@
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation"/>
           <details key="body" value="if self.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  else self = false&#xA;&#x9;&#x9;&#x9;  endif"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-UNARY"/>
+          <details key="invalidating" value="true"/>
+          <details key="validating" value="true"/>
+        </eAnnotations>
       </contents>
       <contents xsi:type="ecore:EOperation" name="not2" lowerBound="1" eType="#//Boolean">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -302,6 +343,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation2"/>
           <details key="body" value="if self then false else true endif"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-UNARY"/>
         </eAnnotations>
       </contents>
       <contents xsi:type="ecore:EOperation" name="or" eType="#//Boolean">
@@ -312,6 +356,11 @@
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation"/>
           <details key="body" value="if self.oclIsInvalid() then&#xA;&#x9;&#x9;&#x9;&#x9;if b.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;&#x9;elseif b = true then true&#xA;&#x9;&#x9;&#x9;&#x9;else self&#xA;&#x9;&#x9;&#x9;&#x9;endif&#xA;&#x9;&#x9;&#x9;  elseif self = true then true&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then null&#xA;&#x9;&#x9;&#x9;  else false&#xA;&#x9;&#x9;&#x9;  endif"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-OR"/>
+          <details key="invalidating" value="true"/>
+          <details key="validating" value="true"/>
+        </eAnnotations>
         <eParameters name="b" eType="#//Boolean"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="or2" lowerBound="1" eType="#//Boolean">
@@ -321,6 +370,10 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanOrOperation2"/>
           <details key="body" value="if self = true then true&#xA;&#x9;&#x9;&#x9;  elseif b = true then true&#xA;&#x9;&#x9;&#x9;  else false&#xA;&#x9;&#x9;&#x9;  endif"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-OR"/>
+          <details key="validating" value="true"/>
         </eAnnotations>
         <eParameters name="b" lowerBound="1" eType="#//Boolean"/>
       </contents>
@@ -340,6 +393,9 @@
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation"/>
           <details key="body" value="if self.oclIsInvalid() then self&#xA;&#x9;&#x9;&#x9;  elseif b.oclIsInvalid() then b&#xA;&#x9;&#x9;&#x9;  elseif self = null then null&#xA;&#x9;&#x9;&#x9;  elseif b = null then null&#xA;&#x9;&#x9;&#x9;  else self &lt;> b&#xA;&#x9;&#x9;&#x9;  endif"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-XOR"/>
+        </eAnnotations>
         <eParameters name="b" eType="#//Boolean"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="xor2" lowerBound="1" eType="#//Boolean">
@@ -349,6 +405,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation2"/>
           <details key="body" value="self &lt;> b"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-XOR"/>
         </eAnnotations>
         <eParameters name="b" lowerBound="1" eType="#//Boolean"/>
       </contents>
@@ -370,6 +429,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -381,6 +443,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -558,6 +623,10 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="exists2" eType="#//Boolean">
@@ -570,6 +639,10 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="exists3" eType="#//Boolean">
@@ -581,6 +654,10 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
@@ -606,6 +683,10 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll2" eType="#//Boolean">
@@ -618,6 +699,10 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll3" eType="#//Boolean">
@@ -629,6 +714,10 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
@@ -906,6 +995,9 @@
       </eAnnotations>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//Collection/selectByKind/TT"/>
       </eParameters>
     </eOperations>
@@ -918,6 +1010,9 @@
       </eAnnotations>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//Collection/selectByType/TT"/>
       </eParameters>
     </eOperations>
@@ -1007,6 +1102,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-MULTIPLICATIVE"/>
+        </eAnnotations>
         <eParameters name="i" lowerBound="1" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_add_" lowerBound="1" eType="#//Integer">
@@ -1018,6 +1116,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-ADDITIVE"/>
         </eAnnotations>
         <eParameters name="i" lowerBound="1" eType="#//OclSelf"/>
       </contents>
@@ -1031,6 +1132,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-UNARY"/>
+        </eAnnotations>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_sub_" lowerBound="1" eType="#//Integer">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -1041,6 +1145,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-ADDITIVE"/>
         </eAnnotations>
         <eParameters name="i" lowerBound="1" eType="#//OclSelf"/>
       </contents>
@@ -1053,6 +1160,10 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-MULTIPLICATIVE"/>
+          <details key="invalidating" value="true"/>
         </eAnnotations>
         <eParameters name="i" lowerBound="1" eType="#//OclSelf"/>
       </contents>
@@ -1136,6 +1247,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -1147,6 +1261,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -1169,6 +1286,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.map.MapAtOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//Map/V"/>
       <eParameters name="key">
@@ -1366,6 +1486,10 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="exists2" eType="#//Boolean">
@@ -1377,6 +1501,10 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
@@ -1390,6 +1518,10 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ExistsIteration"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll1" eType="#//Boolean">
@@ -1401,6 +1533,10 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
@@ -1414,6 +1550,10 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
     <eOperations name="forAll3" eType="#//Boolean">
@@ -1425,6 +1565,10 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.iterator.ForAllIteration"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
       <eParameters name="lambda" eType="#//OclLambda"/>
     </eOperations>
@@ -1729,6 +1873,9 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
         <details key="post" value="result = not (self = object2)"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -1741,6 +1888,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
         <details key="post" value="result = (self = object2)"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -1763,9 +1913,15 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation"/>
         <details key="post_IsSelf" value="result = self"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//OclAny/oclAsType/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//OclAny/oclAsType/TT"/>
       </eParameters>
     </eOperations>
@@ -1784,6 +1940,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="validating" value="true"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="oclIsKindOf" lowerBound="1" eType="#//Boolean">
@@ -1818,6 +1977,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="validating" value="true"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="oclLog" lowerBound="1" eType="#//OclSelf">
@@ -1877,6 +2039,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-RELATIONAL"/>
+      </eAnnotations>
       <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_le_" lowerBound="1" eType="#//Boolean">
@@ -1888,6 +2053,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableLessThanEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-RELATIONAL"/>
       </eAnnotations>
       <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
     </eOperations>
@@ -1901,6 +2069,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-RELATIONAL"/>
+      </eAnnotations>
       <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_ge_" lowerBound="1" eType="#//Boolean">
@@ -1912,6 +2083,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclComparableGreaterThanEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-RELATIONAL"/>
       </eAnnotations>
       <eParameters name="that" lowerBound="1" eType="#//OclSelf"/>
     </eOperations>
@@ -1938,9 +2112,15 @@
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclElementOclAsModelTypeOperation"/>
         <details key="post_IsSelf" value="result = self"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//OclElement/oclAsModelType/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//OclElement/oclAsModelType/TT"/>
       </eParameters>
     </eOperations>
@@ -1986,6 +2166,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclElementOclExtensionOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
       </eAnnotations>
       <eParameters name="stereotype" lowerBound="1" eType="#//OclStereotype"/>
     </eOperations>
@@ -2079,6 +2262,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -2091,17 +2277,28 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="and" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-AND"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="b" eType="#//Boolean"/>
     </eOperations>
     <eOperations name="implies" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanImpliesOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-IMPLIES"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
       <eParameters name="b" eType="#//Boolean"/>
     </eOperations>
@@ -2120,6 +2317,9 @@
       <eGenericType eTypeParameter="#//OclInvalid/oclAsType/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//OclInvalid/oclAsType/TT"/>
       </eParameters>
     </eOperations>
@@ -2131,6 +2331,9 @@
     <eOperations name="oclIsInvalid" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="validating" value="true"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="oclIsKindOf" lowerBound="1" eType="#//Boolean">
@@ -2149,6 +2352,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="validating" value="true"/>
+      </eAnnotations>
     </eOperations>
     <eOperations name="oclType" lowerBound="1" eType="#//OclSelf">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
@@ -2158,6 +2364,10 @@
     <eOperations name="or" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanAndOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-OR"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
       <eParameters name="b" eType="#//Boolean"/>
     </eOperations>
@@ -2262,6 +2472,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -2270,6 +2483,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -2304,6 +2520,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.string.StringConcatOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-ADDITIVE"/>
+      </eAnnotations>
       <eParameters name="s" eType="#//String"/>
     </eOperations>
     <eOperations name="_ne_" lowerBound="1" eType="#//Boolean">
@@ -2312,6 +2531,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -2325,11 +2547,19 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="and" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclvoid.OclVoidAndOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-AND"/>
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
       <eParameters name="b" eType="#//Boolean"/>
     </eOperations>
@@ -2346,11 +2576,21 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclvoid.OclVoidImpliesOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-IMPLIES"/>
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="b" eType="#//Boolean"/>
     </eOperations>
     <eOperations name="not" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanNotOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-UNARY"/>
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="oclAsSet" ordered="false" eType="#//OclSelf">
@@ -2365,15 +2605,24 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclAsTypeOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//OclVoid/oclAsType/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//OclVoid/oclAsType/TT"/>
       </eParameters>
     </eOperations>
     <eOperations name="oclIsInvalid" lowerBound="1" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsInvalidOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="validating" value="true"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="oclIsKindOf" lowerBound="1" eType="#//Boolean">
@@ -2392,6 +2641,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclIsUndefinedOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="validating" value="true"/>
+      </eAnnotations>
     </eOperations>
     <eOperations name="oclType" lowerBound="1" eType="#//OclSelf">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
@@ -2407,6 +2659,11 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclvoid.OclVoidOrOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-OR"/>
+        <details key="invalidating" value="true"/>
+        <details key="validating" value="true"/>
+      </eAnnotations>
       <eParameters name="b" eType="#//Boolean"/>
     </eOperations>
     <eOperations name="toString" lowerBound="1" eType="#//String">
@@ -2420,6 +2677,9 @@
     <eOperations name="xor" eType="#//Boolean">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.logical.BooleanXorOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-XOR"/>
       </eAnnotations>
       <eParameters name="b" eType="#//Boolean"/>
     </eOperations>
@@ -2437,6 +2697,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.OrderedCollectionAtOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedCollection/T"/>
       <eParameters name="index" lowerBound="1" eType="#//Integer"/>
     </eOperations>
@@ -2446,6 +2709,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.OrderedCollectionFirstOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedCollection/T"/>
     </eOperations>
@@ -2481,6 +2747,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.OrderedCollectionLastOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedCollection/T"/>
     </eOperations>
     <eGenericSuperTypes eClassifier="#//Collection">
@@ -2503,6 +2772,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.SetMinusOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-ADDITIVE"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
       <eParameters name="s" ordered="false" unique="false" upperBound="-1" eType="#//OclAny"/>
     </eOperations>
@@ -2516,6 +2788,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -2527,6 +2802,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -2665,6 +2943,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
       <eParameters name="index" lowerBound="1" eType="#//Integer"/>
       <eParameters name="object">
@@ -2746,6 +3027,9 @@
       <eGenericType eTypeParameter="#//OrderedSet/selectByKind/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//OrderedSet/selectByKind/TT"/>
       </eParameters>
     </eOperations>
@@ -2762,6 +3046,9 @@
       <eGenericType eTypeParameter="#//OrderedSet/selectByType/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//OrderedSet/selectByType/TT"/>
       </eParameters>
     </eOperations>
@@ -2784,6 +3071,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.OrderedSetSubOrderedSetOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
       </eAnnotations>
       <eGenericType eTypeParameter="#//OrderedSet/T"/>
       <eParameters name="lower" lowerBound="1" eType="#//Integer"/>
@@ -2811,6 +3101,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericTimesOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-MULTIPLICATIVE"/>
+        </eAnnotations>
         <eParameters name="r" lowerBound="1" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_add_" lowerBound="1" eType="#//Real">
@@ -2822,6 +3115,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericPlusOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-ADDITIVE"/>
         </eAnnotations>
         <eParameters name="r" lowerBound="1" eType="#//OclSelf"/>
       </contents>
@@ -2835,6 +3131,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericNegateOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-UNARY"/>
+        </eAnnotations>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_sub_" lowerBound="1" eType="#//Real">
         <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2845,6 +3144,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericMinusOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-ADDITIVE"/>
         </eAnnotations>
         <eParameters name="r" lowerBound="1" eType="#//OclSelf"/>
       </contents>
@@ -2858,6 +3160,10 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.NumericDivideOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-MULTIPLICATIVE"/>
+          <details key="invalidating" value="true"/>
+        </eAnnotations>
         <eParameters name="r" lowerBound="1" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_ne_" lowerBound="1" eType="#//Boolean">
@@ -2870,6 +3176,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-EQUALITY"/>
+        </eAnnotations>
         <eParameters name="object2" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -2881,6 +3190,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-EQUALITY"/>
         </eAnnotations>
         <eParameters name="object2" eType="#//OclSelf"/>
       </contents>
@@ -2952,6 +3264,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -2963,6 +3278,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -3104,6 +3422,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.OrderedCollectionInsertAtOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
       <eParameters name="index" lowerBound="1" eType="#//Integer"/>
       <eParameters name="object">
@@ -3182,6 +3503,9 @@
       <eGenericType eTypeParameter="#//Sequence/selectByKind/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//Sequence/selectByKind/TT"/>
       </eParameters>
     </eOperations>
@@ -3198,6 +3522,9 @@
       <eGenericType eTypeParameter="#//Sequence/selectByType/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//Sequence/selectByType/TT"/>
       </eParameters>
     </eOperations>
@@ -3221,6 +3548,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.SequenceSubSequenceOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="invalidating" value="true"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//Sequence/T"/>
       <eParameters name="lower" lowerBound="1" eType="#//Integer"/>
       <eParameters name="upper" lowerBound="1" eType="#//Integer"/>
@@ -3242,6 +3572,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.SetMinusOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-ADDITIVE"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//Set/T"/>
       <eParameters name="s" ordered="false" unique="false" upperBound="-1" eType="#//OclAny"/>
     </eOperations>
@@ -3255,6 +3588,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
+      </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
     <eOperations name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -3266,6 +3602,9 @@
       </eAnnotations>
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-EQUALITY"/>
       </eAnnotations>
       <eParameters name="object2" eType="#//OclSelf"/>
     </eOperations>
@@ -3415,6 +3754,9 @@
       <eGenericType eTypeParameter="#//Set/selectByKind/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//Set/selectByKind/TT"/>
       </eParameters>
     </eOperations>
@@ -3431,6 +3773,9 @@
       <eGenericType eTypeParameter="#//Set/selectByType/TT"/>
       <eTypeParameters name="TT"/>
       <eParameters name="type" lowerBound="1">
+        <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+          <details key="isTypeOf" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//Set/selectByType/TT"/>
       </eParameters>
     </eOperations>
@@ -3466,6 +3811,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.string.StringConcatOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-ADDITIVE"/>
+        </eAnnotations>
         <eParameters name="s" eType="#//String"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_lt_" lowerBound="1" eType="#//Boolean">
@@ -3477,6 +3825,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.string.StringLessThanOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-RELATIONAL"/>
         </eAnnotations>
         <eParameters name="s" lowerBound="1" eType="#//OclSelf"/>
       </contents>
@@ -3490,6 +3841,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.string.StringLessThanEqualOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-RELATIONAL"/>
+        </eAnnotations>
         <eParameters name="s" lowerBound="1" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_ne_" lowerBound="1" eType="#//Boolean">
@@ -3499,6 +3853,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyNotEqualOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-EQUALITY"/>
+        </eAnnotations>
         <eParameters name="object2" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_eq_" lowerBound="1" eType="#//Boolean">
@@ -3507,6 +3864,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyEqualOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-EQUALITY"/>
         </eAnnotations>
         <eParameters name="object2" eType="#//OclSelf"/>
       </contents>
@@ -3520,6 +3880,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.string.StringGreaterThanOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-RELATIONAL"/>
+        </eAnnotations>
         <eParameters name="s" lowerBound="1" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="_ge_" lowerBound="1" eType="#//Boolean">
@@ -3532,6 +3895,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.string.StringGreaterThanEqualOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="precedence" value="left-RELATIONAL"/>
+        </eAnnotations>
         <eParameters name="s" lowerBound="1" eType="#//OclSelf"/>
       </contents>
       <contents xsi:type="ecore:EOperation" name="at" lowerBound="1" eType="#//String">
@@ -3540,6 +3906,9 @@
         </eAnnotations>
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.string.StringAtOperation"/>
+        </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="invalidating" value="true"/>
         </eAnnotations>
         <eParameters name="i" lowerBound="1" eType="#//Integer"/>
       </contents>
@@ -3684,6 +4053,9 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.string.StringSubstringOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="invalidating" value="true"/>
+        </eAnnotations>
         <eParameters name="lower" lowerBound="1" eType="#//Integer"/>
         <eParameters name="upper" lowerBound="1" eType="#//Integer"/>
       </contents>
@@ -3816,6 +4188,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.collection.SetMinusOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+        <details key="precedence" value="left-ADDITIVE"/>
+      </eAnnotations>
       <eGenericType eTypeParameter="#//UniqueCollection/T"/>
       <eParameters name="s" ordered="false" unique="false" upperBound="-1" eType="#//OclAny"/>
     </eOperations>
@@ -3902,9 +4277,15 @@
         <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
           <details key="class" value="org.eclipse.ocl.pivot.library.numeric.UnlimitedNaturalOclAsTypeOperation"/>
         </eAnnotations>
+        <eAnnotations source="http://www.eclipse.org/OCL/Operation">
+          <details key="invalidating" value="true"/>
+        </eAnnotations>
         <eGenericType eTypeParameter="#//UnlimitedNatural/%http:%2F%2Fwww.eclipse.org%2FOCL%2FCoEClass%/oclAsType/TT"/>
         <eTypeParameters name="TT"/>
         <eParameters name="type" lowerBound="1">
+          <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+            <details key="isTypeOf" value="true"/>
+          </eAnnotations>
           <eGenericType eTypeParameter="#//UnlimitedNatural/%http:%2F%2Fwww.eclipse.org%2FOCL%2FCoEClass%/oclAsType/TT"/>
         </eParameters>
       </contents>

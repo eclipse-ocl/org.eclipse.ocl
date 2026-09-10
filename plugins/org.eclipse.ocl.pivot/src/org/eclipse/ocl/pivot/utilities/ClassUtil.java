@@ -292,6 +292,22 @@ public class ClassUtil
 	}
 
 	/**
+	 * Remove the key detail from the source URI of eModeElement (if it exists at all).
+	 * If the resulting details are empty, the sourceURI eAnnotation is removed too.
+	 *
+	 * @since 7.0
+	 */
+	public static void removeEAnnotationDetail(@NonNull EModelElement eModelElement, @NonNull String sourceURI, @NonNull String key) {
+		EAnnotation eAnnotation = eModelElement.getEAnnotation(sourceURI);
+		if (eAnnotation != null) {
+			eAnnotation.getDetails().removeKey(key);
+			if (eAnnotation.getDetails().isEmpty()) {
+				eModelElement.getEAnnotations().remove(eAnnotation);
+			}
+		}
+	}
+
+	/**
 	 * Check for an in appropriate program state. This should not happen, but is not impossible. For instance
 	 * a Resource should be contained in a ResourceSet, but that doesn't mean it always is.
 	 *<p>
@@ -322,6 +338,38 @@ public class ClassUtil
 		}
 		else {
 			return otherObject == null ? -1 : object.compareTo(otherObject);
+		}
+	}
+
+	/**
+	 * Define a key=>value detail for the sourceURI EAnnotation of eModelElement.
+	 * If value is null the detail is removed and if the details are then empty the EAnnotation is removed tool.
+	 *
+	 * @since 7.0
+	 */
+	public static void setEAnnotationDetail(@NonNull EModelElement eModelElement, @NonNull String sourceURI, @NonNull String key, @Nullable String value) {
+		if (value != null) {
+			EAnnotation eAnnotation = getEAnnotation(eModelElement, sourceURI);
+			eAnnotation.getDetails().put(key, value);
+		}
+		else {
+			removeEAnnotationDetail(eModelElement, sourceURI, key);
+		}
+	}
+
+	/**
+	 * Define a key=>"true" detail for the sourceURI EAnnotation of eModelElement.
+	 * If value is false the detail is removed and if the details are then empty the EAnnotation is removed tool.
+	 *
+	 * @since 7.0
+	 */
+	public static void setEAnnotationDetail(@NonNull EModelElement eModelElement, @NonNull String sourceURI, @NonNull String key, boolean value) {
+		if (value) {
+			EAnnotation eAnnotation = getEAnnotation(eModelElement, sourceURI);
+			eAnnotation.getDetails().put(key, String.valueOf(true));
+		}
+		else {
+			removeEAnnotationDetail(eModelElement, sourceURI, key);
 		}
 	}
 

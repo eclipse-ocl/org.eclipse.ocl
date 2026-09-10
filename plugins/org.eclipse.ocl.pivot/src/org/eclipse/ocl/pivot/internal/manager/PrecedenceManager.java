@@ -214,6 +214,13 @@ public class PrecedenceManager
 		return ClassUtil.requireNonNull(precedence2order.get(precedence));
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public @Nullable List<@NonNull Precedence> getPrecedences(@NonNull String name) {
+		return nameToPrecedencesMap.get(name);
+	}
+
 	public @Nullable Precedence getPrefixPrecedence(@NonNull String operatorName) {
 		String precedenceName = prefixToPrecedenceNameMap.get(operatorName);
 		if (precedenceName == null) {

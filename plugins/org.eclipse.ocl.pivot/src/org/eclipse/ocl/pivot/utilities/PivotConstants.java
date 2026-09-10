@@ -202,6 +202,76 @@ public interface PivotConstants
 	static final @NonNull String COLLECTION_UPPER = "upper";
 
 	/**
+	 * EOperation annotation source for the additional precedence feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String OPERATION_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Operation";
+
+	/**
+	 * EOperation annotation key for the additional invalidating feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String OPERATION_INVALIDATING_KEY = "invalidating";
+
+	/**
+	 * EOperation annotation key for the additional iterator names feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String OPERATION_ITERATORS_KEY = "iterators";
+
+	/**
+	 * EOperation annotation key for the additional precedence feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String OPERATION_PRECEDENCE_KEY = "precedence";
+
+	/**
+	 * EOperation annotation key for the additional iterator result/accumulator name feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String OPERATION_RESULT_KEY = "result";
+
+	/**
+	 * EOperation annotation key for the additional validating feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String OPERATION_VALIDATING_KEY = "validating";
+
+	/**
+	 * EPackage annotation source for the additional ownedPrecedences feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String PACKAGE_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Package";
+
+	/**
+	 * EPackage annotation source for the additional ownedPrecedences feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String PACKAGE_PRECEDENCES_KEY = "precedences";
+
+	/**
+	 * EParameter annotation source for the additional isTypeOf feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String PARAMETER_ANNOTATION_SOURCE = "http://www.eclipse.org/OCL/Parameter";
+
+	/**
+	 * EParameter annotation key for the additional isTypeOf feature.
+	 *
+	 * @since 7.0
+	 */
+	static final @NonNull String PARAMETER_ISTYPEOF_KEY = "isTypeOf";
+
+	/**
 	 * The default non-null of non-aggregates. This is not intended to be changed;
 	 * just to document where the default is hardwired.
 	 * \br
