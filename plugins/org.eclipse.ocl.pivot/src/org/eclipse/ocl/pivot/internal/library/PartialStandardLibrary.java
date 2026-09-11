@@ -488,6 +488,16 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	 * Create an iteration. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
+	public @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull EOperation eOperation, @NonNull ParameterDescriptor @NonNull [] iteratorDescriptors, @NonNull ParameterDescriptor @NonNull [] parameterDescriptors, @NonNull Type asType,
+			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
+		return createIteration(asClass, eOperation.getName(), iteratorDescriptors, parameterDescriptors, asType,
+			operationFlagsAndIndex, typeParameters, implementation);
+	}
+
+	/**
+	 * Create an iteration. asType may be null for a self-dependent templating that is set later.
+	 * @since 7.0
+	 */
 	public @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull ParameterDescriptor @NonNull [] iteratorDescriptors, @NonNull ParameterDescriptor @NonNull [] parameterDescriptors, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 	//	return new ExecutorOperation(name, parameterDescriptors, asClass, index, typeParameters, implementation);
