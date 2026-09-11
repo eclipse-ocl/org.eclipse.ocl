@@ -33,6 +33,7 @@ import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterDescriptor;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateArgument;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -603,11 +604,15 @@ public final class IdManager
 		return getParametersId(parameterIds);
 	}
 
-	public static @NonNull ParametersId getParametersId(@NonNull Type @NonNull [] parameterTypes) {
+	/**
+	 * @since 7.0
+	 */
+	public static @NonNull ParametersId getParametersId(@NonNull ParameterDescriptor @NonNull [] parameterTypes) {
 		int iSize = parameterTypes.length;
 		@NonNull ParameterId @NonNull [] parameterIds = new @NonNull ParameterId[parameterTypes.length];
 		for (int i = 0; i < iSize; i++) {
-			parameterIds[i] = getParameterId(parameterTypes[i].getTypeId(), false);
+			ParameterDescriptor parameterType = parameterTypes[i];
+			parameterIds[i] = getParameterId(parameterType.getTypeId(), parameterType.isTypeof());
 		}
 		return getParametersId(parameterIds);
 	}

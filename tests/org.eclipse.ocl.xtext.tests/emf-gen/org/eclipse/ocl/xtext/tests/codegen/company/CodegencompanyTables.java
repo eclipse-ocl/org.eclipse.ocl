@@ -33,7 +33,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.ParameterDescriptor;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.flat.FlatFragment;
@@ -266,7 +266,10 @@ public class CodegencompanyTables extends AbstractTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _Employee = new ParameterTypes(Types._Employee);
+		public static final @NonNull ParameterDescriptor __Employee_F = new ParameterDescriptor(Types._Employee, false, false);
+
+		public static final @NonNull ParameterDescriptor [] _$$ = new @NonNull ParameterDescriptor[] {};
+		public static final @NonNull ParameterDescriptor [] _Employee_F = new @NonNull ParameterDescriptor[] {__Employee_F};
 
 		static {
 			Init.initEnd();
@@ -320,9 +323,9 @@ public class CodegencompanyTables extends AbstractTables
 			Constraints.init();
 		}
 
-		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___HAS_NAME_AS_OPERATION, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+		public static final @NonNull Operation _Employee__hasNameAsOperation = LIBRARY.createOperation(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___HAS_NAME_AS_OPERATION, Parameters._$$, OCLstdlibTables.Types._Boolean,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___REPORTS_TO__EMPLOYEE, Parameters._Employee, OCLstdlibTables.Types._Boolean,
+		public static final @NonNull Operation _Employee__reportsTo = LIBRARY.createOperation(Types._Employee, CodegencompanyPackage.Literals.EMPLOYEE___REPORTS_TO__EMPLOYEE, Parameters._Employee_F, OCLstdlibTables.Types._Boolean,
 			1 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
 		static {

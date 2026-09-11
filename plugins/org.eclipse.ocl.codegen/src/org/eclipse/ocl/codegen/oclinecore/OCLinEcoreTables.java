@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;
@@ -55,7 +56,7 @@ import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.ParameterDescriptor;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -83,6 +84,7 @@ import org.eclipse.ocl.pivot.utilities.ClassUtil;
 import org.eclipse.ocl.pivot.utilities.NameUtil;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class OCLinEcoreTables extends OCLinEcoreTablesUtils
@@ -266,15 +268,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 		emitReferencedElement.setNestedClassName(null);
 	}
 
-	protected void appendParameterTypesName(@NonNull ParameterTypes parameterTypes) {	// Workaround deprecated _ name
-		if (parameterTypes.size() > 0) {
-			s.append("Parameters.");
-			s.append(getTemplateBindingsName(parameterTypes));
-		}
-		else {
-			s.appendClassReference(null, ParameterTypes.class);
-			s.append(".EMPTY_LIST");
-		}
+	protected void appendParameterDescriptorsName(@NonNull ParameterDescriptors parameterDescriptors) {	// Workaround deprecated _ name
+		s.append("Parameters.");
+		s.append(getParameterDescriptorsName(parameterDescriptors));
 	}
 
 	protected void appendTypeFlags(@NonNull Type type) {
@@ -841,8 +837,8 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				}
 				s.append(", ");
 				if (it != null) {
-					ParameterTypes iteratorTypes = new ParameterTypes(getIteratorsAndAccumulator(it));
-					appendParameterTypesName(iteratorTypes);
+					ParameterDescriptors iteratorTypes = new ParameterDescriptors(getIteratorsAndAccumulator(it));
+					appendParameterDescriptorsName(iteratorTypes);
 					s.append(", ");
 				}
 				Iterable<@NonNull Parameter> asParameters = PivotUtil.getOwnedParameters(op);
@@ -851,7 +847,7 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 					deferredSetParameters.add(op);
 				}
 				else {
-					appendParameterTypesName(new ParameterTypes(asParameters));
+					appendParameterDescriptorsName(new ParameterDescriptors(asParameters));
 				}
 				s.append(", ");
 				Type resultType = op.getType();
@@ -943,17 +939,17 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 	}
 
 	protected void declareParameterLists() {
-		Map<@NonNull String, @NonNull ParameterTypes> name2parameterTypes = new HashMap<>();
 		Map<@NonNull String, @NonNull LambdaParameter> name2lambdaParameter = new HashMap<>();
-		Set<@NonNull ParameterTypes> allParameterTypes = new HashSet<>();
+		Map<@NonNull ParameterDescriptors, @NonNull String> parameterDescriptors2name = new HashMap<>();
+		Map<@NonNull ParameterDescriptor, @NonNull String> parameterDescriptor2name = new HashMap<>();
 		for (org.eclipse.ocl.pivot.@NonNull Class pClass : activeClassesSortedByName) {
 			for (@NonNull Operation operation : getOperations(pClass)) {
 				if ("addElements".equals(operation.getName())) {
 					getClass();			// XXX
 				}
-				declareParameterLists_ParameterTypes(name2parameterTypes, name2lambdaParameter, allParameterTypes, PivotUtil.getOwnedParameters(operation));
+				declareParameterLists_ParameterDescriptors(parameterDescriptor2name, name2lambdaParameter, parameterDescriptors2name, PivotUtil.getOwnedParameters(operation));
 				if (operation instanceof Iteration) {
-					declareParameterLists_ParameterTypes(name2parameterTypes, name2lambdaParameter, allParameterTypes, getIteratorsAndAccumulator((Iteration)operation));
+					declareParameterLists_ParameterDescriptors(parameterDescriptor2name, name2lambdaParameter, parameterDescriptors2name, getIteratorsAndAccumulator((Iteration)operation));
 				}
 			}
 		}
@@ -985,55 +981,101 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 				s.append(");\n");
 			}
 		}
-		if (name2parameterTypes.size() > 0) {
-			s.append("\n");
-			List<@NonNull String> sortedNames = new ArrayList<>(name2parameterTypes.keySet());
+		if (parameterDescriptor2name.size() > 0) {
+			Map<@NonNull String, @NonNull ParameterDescriptor> name2parameterDescriptor = new HashMap<>();
+			List<@NonNull String> sortedNames = new ArrayList<>();
+			for (@NonNull Entry<@NonNull ParameterDescriptor, @NonNull String> entry : parameterDescriptor2name.entrySet()) {
+				ParameterDescriptor old = name2parameterDescriptor.put(entry.getValue(), entry.getKey());
+				assert old == null;
+				sortedNames.add(entry.getValue());
+			}
 			Collections.sort(sortedNames);
+			s.append("\n");
 			for (@NonNull String name : sortedNames) {
-				ParameterTypes parameterTypes = name2parameterTypes.get(name);
-				assert parameterTypes != null;
-				if (parameterTypes.size() > 0) {				// Bug 471118 avoid deprecated _ identifier
-					s.append("		public static final ");
-					s.appendClassReference(true, ParameterTypes.class);
-					s.append(" ");
-					s.append(name);
-					s.append(" = new ");
-					s.appendClassReference(null, ParameterTypes.class);
-					s.append("(");
-					for (int i = 0; i < parameterTypes.size(); i++) {
-						if (i > 0) {
-							s.append(", ");
-						}
-						Type type = parameterTypes.getType(i);		// XXX isTypeOf
-						type.accept(emitTypeExpression);
+				ParameterDescriptor parameterDescriptor = name2parameterDescriptor.get(name);
+				assert parameterDescriptor != null;
+				s.append("		public static final ");
+				s.appendClassReference(true, ParameterDescriptor.class);
+				s.append(" ");
+				s.append(parameterDescriptor2name.get(parameterDescriptor));
+				s.append(" = new ");
+				s.appendClassReference(null, ParameterDescriptor.class);
+				s.append("(");
+			//	s.appendString(parameterDescriptor.getName());
+			//	s.append(", ");
+				Type type = parameterDescriptor.getType();
+				type.accept(emitTypeExpression);
+				s.append(", ");
+				s.append(String.valueOf(parameterDescriptor.isRequired()));
+				s.append(", ");
+				s.append(String.valueOf(parameterDescriptor.isTypeof()));
+				s.append(");\n");
+			}
+		}
+		if (parameterDescriptors2name.size() > 0) {
+			Map<@NonNull String, @NonNull ParameterDescriptors> name2parameterDescriptors = new HashMap<>();
+			List<@NonNull String> sortedNames = new ArrayList<>();
+			for (@NonNull Entry<@NonNull ParameterDescriptors, @NonNull String> entry : parameterDescriptors2name.entrySet()) {
+				ParameterDescriptors old = name2parameterDescriptors.put(entry.getValue(), entry.getKey());
+				assert old == null;
+				sortedNames.add(entry.getValue());
+			}
+			Collections.sort(sortedNames);
+			s.append("\n");
+			for (@NonNull String name : sortedNames) {
+				ParameterDescriptors parameterDescriptors = name2parameterDescriptors.get(name);
+				assert parameterDescriptors != null;
+				s.append("		public static final ");
+				s.appendClassReference(true, ParameterDescriptor.class);
+				s.append(" ");
+				s.append("[]");			// @NonNull
+				s.append(" ");
+				s.append(name);
+				s.append(" = new ");
+				s.appendClassReference(true, ParameterDescriptor.class);
+				s.append("[] {");
+				for (int i = 0; i < parameterDescriptors.size(); i++) {
+					if (i > 0) {
+						s.append(", ");
 					}
-					s.append(");\n");
+					s.append(parameterDescriptor2name.get(parameterDescriptors.get(i)));
 				}
+				s.append("};\n");
 			}
 		}
 		appendInitializationEnd(false);
 		s.append("	}\n");
 	}
 
-	private void declareParameterLists_ParameterTypes(@NonNull Map<@NonNull String, @NonNull ParameterTypes> name2parameterTypes,
+	private void declareParameterLists_ParameterDescriptors(@NonNull Map<@NonNull ParameterDescriptor, @NonNull String> parameterDescriptor2name,
 			@NonNull Map<@NonNull String, @NonNull LambdaParameter> name2lambdaParameter,
-			@NonNull Set<@NonNull ParameterTypes> allParameterTypes, @NonNull Iterable<@NonNull Parameter> parameters) {
+			@NonNull Map<@NonNull ParameterDescriptors, @NonNull String> parameterDescriptors2name, @NonNull Iterable<@NonNull Parameter> parameters) {
 		if (usesOperationTemplateParameter(parameters)) {
 			return;					// Cannot pre-declare since operation TemplateParameter is not yet owned.
 		}
-		ParameterTypes parameterTypes = new ParameterTypes(parameters);
-		allParameterTypes.add(parameterTypes);
-		if (parameterTypes.size() > 0) {
-			String name = getTemplateBindingsName(parameterTypes);
-			name2parameterTypes.put(name, parameterTypes);
+		if (Iterables.size(parameters) <= 0) {
+			getClass();		// XXX
 		}
-		for (Parameter parameter : parameters) {
-			Type parameterType = parameter.getType();
-			if (parameterType instanceof LambdaType) {
-				LambdaType lambdaType = (LambdaType)parameterType;
+		{
+			for (@NonNull Parameter parameter : parameters) {
+				ParameterDescriptor parameterDescriptor = new ParameterDescriptor(parameter);
+				StringBuilder s = new StringBuilder();
+				s.append("__");
+				getParameterDescriptorName(s, parameterDescriptor.getType(), parameterDescriptor.isRequired(), parameterDescriptor.isTypeof());
+				String name = s.toString();
+				parameterDescriptor2name.put(parameterDescriptor, name);
+			}
+		}
+		ParameterDescriptors parameterDescriptors = new ParameterDescriptors(parameters);
+		String name = getParameterDescriptorsName(parameterDescriptors);
+		parameterDescriptors2name.put(parameterDescriptors, name);
+		for (@NonNull Parameter parameter : parameters) {
+			Type parameterDescriptor = parameter.getType();
+			if (parameterDescriptor instanceof LambdaType) {
+				LambdaType lambdaType = (LambdaType)parameterDescriptor;
 				LambdaParameter contextParameter = PivotUtil.getOwnedContext(lambdaType);
 				name2lambdaParameter.put(getLambdaParameterName(contextParameter), contextParameter);		// Any one of a multiple is ok
-				for (LambdaParameter lambdaParameter : PivotUtil.getOwnedParameters(lambdaType)) {
+				for (@NonNull LambdaParameter lambdaParameter : PivotUtil.getOwnedParameters(lambdaType)) {
 					name2lambdaParameter.put(getLambdaParameterName(lambdaParameter), lambdaParameter);		// Any one of a multiple is ok
 				}
 				LambdaParameter resultParameter = PivotUtil.getOwnedResult(lambdaType);

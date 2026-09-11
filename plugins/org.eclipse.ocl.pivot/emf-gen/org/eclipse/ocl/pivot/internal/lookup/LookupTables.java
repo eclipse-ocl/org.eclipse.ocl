@@ -25,7 +25,7 @@ import org.eclipse.jdt.annotation.Nullable;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.ParameterDescriptor;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.PivotTables;
 import org.eclipse.ocl.pivot.Property;
@@ -210,7 +210,10 @@ public class LookupTables extends AbstractTables
 			Fragments.init();
 		}
 
-		public static final @NonNull ParameterTypes _NamedElement = new ParameterTypes(PivotTables.Types._NamedElement);
+		public static final @NonNull ParameterDescriptor __NamedElement_F = new ParameterDescriptor(PivotTables.Types._NamedElement, false, false);
+
+		public static final @NonNull ParameterDescriptor [] _$$ = new @NonNull ParameterDescriptor[] {};
+		public static final @NonNull ParameterDescriptor [] _NamedElement_F = new @NonNull ParameterDescriptor[] {__NamedElement_F};
 
 		static {
 			Init.initEnd();
@@ -235,13 +238,13 @@ public class LookupTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _LookupEnvironment__addElement = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___ADD_ELEMENT__NAMEDELEMENT, Parameters._NamedElement, Types._LookupEnvironment,
+		public static final @NonNull Operation _LookupEnvironment__addElement = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___ADD_ELEMENT__NAMEDELEMENT, Parameters._NamedElement_F, Types._LookupEnvironment,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _LookupEnvironment__addElements = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___ADD_ELEMENTS__COLLECTION, null, Types._LookupEnvironment,
 			1 | IsRequired, new TemplateParameters(TypeParameters._0_LookupEnvironment_addElements_NE), null);
-		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___GET_EXECUTOR, ParameterTypes.EMPTY_LIST, Types._Executor,
+		public static final @NonNull Operation _LookupEnvironment__getExecutor = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___GET_EXECUTOR, Parameters._$$, Types._Executor,
 			2, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___HAS_FINAL_RESULT, ParameterTypes.EMPTY_LIST, OCLstdlibTables.Types._Boolean,
+		public static final @NonNull Operation _LookupEnvironment__hasFinalResult = LIBRARY.createOperation(Types._LookupEnvironment, LookupPackage.Literals.LOOKUP_ENVIRONMENT___HAS_FINAL_RESULT, Parameters._$$, OCLstdlibTables.Types._Boolean,
 			3 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
 		/*

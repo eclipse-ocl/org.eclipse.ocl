@@ -20,7 +20,7 @@ import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.ParameterDescriptor;
 import org.eclipse.ocl.pivot.PivotPackage;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.flat.FlatClass;
@@ -320,6 +320,8 @@ public class ValidityTables extends AbstractTables
 			Fragments.init();
 		}
 
+		public static final @NonNull ParameterDescriptor [] _$$ = new @NonNull ParameterDescriptor[] {};
+
 		static {
 			Init.initEnd();
 		}
@@ -343,9 +345,9 @@ public class ValidityTables extends AbstractTables
 			Parameters.init();
 		}
 
-		public static final @NonNull Operation _AbstractNode__getChildren = LIBRARY.createOperation(Types._AbstractNode, ValidityPackage.Literals.ABSTRACT_NODE___GET_CHILDREN, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._AbstractNode, false),
+		public static final @NonNull Operation _AbstractNode__getChildren = LIBRARY.createOperation(Types._AbstractNode, ValidityPackage.Literals.ABSTRACT_NODE___GET_CHILDREN, Parameters._$$, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._AbstractNode, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
-		public static final @NonNull Operation _AbstractNode__getParent = LIBRARY.createOperation(Types._AbstractNode, ValidityPackage.Literals.ABSTRACT_NODE___GET_PARENT, ParameterTypes.EMPTY_LIST, Types._AbstractNode,
+		public static final @NonNull Operation _AbstractNode__getParent = LIBRARY.createOperation(Types._AbstractNode, ValidityPackage.Literals.ABSTRACT_NODE___GET_PARENT, Parameters._$$, Types._AbstractNode,
 			1, TemplateParameters.EMPTY_LIST, null);
 
 		static {

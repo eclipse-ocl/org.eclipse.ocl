@@ -18,43 +18,39 @@ import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
 
-import com.google.common.collect.Iterables;
-
 /**
- * ParameterTypes provides a hashable list of operation
- * parameter types suitable for use when indexing operation overloads.
+ * ParameterDescriptors provides a hashable list of operation parameters.
+ *
+ * @since 7.0
  */
+@Deprecated /* Replaced by org.eclipse.ocl.codegen.ParameterDescriptors once PivotTables regenerated */
 public class ParameterTypes
 {
-	public static final @NonNull ParameterTypes EMPTY_LIST = new ParameterTypes();
+	public static final @NonNull ParameterDescriptor @NonNull [] EMPTY_LIST = new @NonNull ParameterDescriptor [0];
 
+	private static @NonNull ParameterDescriptor @NonNull [] convertParameterTypes(@NonNull Type @NonNull ... types) {
+		int iMax = types.length;
+		@NonNull ParameterDescriptor parameterDescriptors @NonNull [] = new @NonNull ParameterDescriptor[iMax];
+		int i = 0;
+		for (@NonNull Type type : types) {
+			parameterDescriptors[i] = new ParameterDescriptor(/*"_" + i,*/ type, false, false);
+			i++;
+		}
+		return parameterDescriptors;
+	}
+
+	private final @NonNull ParameterDescriptor @NonNull [] parameterDescriptors;
 	private final @NonNull ParametersId parametersId;
-	private final @NonNull Type @NonNull [] parameterTypes;
-//	private final @NonNull ParameterId @NonNull [] parameterIds;
 	private final int hashCode;
 	private /*@LazyNonNull*/ List<@NonNull Parameter> parameters = null;  // XXX init from ctor
 
-	public ParameterTypes(@NonNull Iterable<@NonNull Parameter> parameters) {
-		int iMax = Iterables.size(parameters);
-		@NonNull Type @NonNull [] types = new @NonNull Type[iMax];
-		@NonNull ParameterId @NonNull [] parameterIds = new @NonNull ParameterId[iMax];
-		int i = 0;
-		for (@NonNull Parameter parameter : parameters) {
-			ParameterId parameterId = IdManager.getParameterId(parameter);
-			parameterIds[i] = parameterId;
-			Type type = parameter.getType();
-			assert type != null;
-			types[i] = type;
-			i++;
-		}
-		this.parametersId = IdManager.getParametersId(parameterIds);
-		this.parameterTypes = types;
-		hashCode = parametersId.hashCode() + 0x999;
+	public ParameterTypes(@NonNull Type @NonNull ... parameterDescriptors) {
+		this(convertParameterTypes(parameterDescriptors));
 	}
 
-	public ParameterTypes(@NonNull Type @NonNull ... parameterTypes) {
-		this.parametersId = IdManager.getParametersId(parameterTypes);
-		this.parameterTypes = parameterTypes;
+	private ParameterTypes(@NonNull ParameterDescriptor @NonNull ... parameterDescriptors) {
+		this.parameterDescriptors = parameterDescriptors;
+		this.parametersId = IdManager.getParametersId(parameterDescriptors);
 		hashCode = parametersId.hashCode() + 0x999;
 	}
 
@@ -67,31 +63,29 @@ public class ParameterTypes
 		if (hashCode() != that.hashCode()) {
 			return false;
 		}
-		Type[] thoseParameters = that.parameterTypes;
-		if (parameterTypes.length != thoseParameters.length) {
+		ParameterDescriptor[] thoseParameters = that.parameterDescriptors;
+		if (parameterDescriptors.length != thoseParameters.length) {
 			return false;
 		}
-		for (int i = 0; i < parameterTypes.length; i++) {
-			if (!parameterTypes[i].equals(thoseParameters[i])) {
+		for (int i = 0; i < parameterDescriptors.length; i++) {
+			if (!parameterDescriptors[i].equals(thoseParameters[i])) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-//	public @NonNull Type get(int index) {
-//		Type parameterType = parameterTypes[index];
-//		assert parameterType != null;
-//		return parameterType;
-//	}
+	public @NonNull ParameterDescriptor get(int index) {
+		return parameterDescriptors[index];
+	}
+
+	public @NonNull ParameterDescriptor @NonNull [] getParameterDescriptors() {
+		return parameterDescriptors;
+	}
 
 	public @NonNull ParameterId getParameterId(int index) {
 		return parametersId.get(index);
 	}
-
-//	public @NonNull Type @NonNull [] get() {
-//		return parameterTypes;
-//	}
 
 	public @NonNull ParametersId getParametersId() {
 		return parametersId;
@@ -100,15 +94,15 @@ public class ParameterTypes
 	public @NonNull List<@NonNull Parameter> getParameters() {
 		List<@NonNull Parameter> parameters2 = parameters;
 		if (parameters2 == null) {
-			parameters = parameters2 = new ArrayList<>(parameterTypes.length);
-			for (int i = 0; i < parameterTypes.length; i++) {
-				Type type = parameterTypes[i];
+			parameters = parameters2 = new ArrayList<>(parameterDescriptors.length);
+			for (int i = 0; i < parameterDescriptors.length; i++) {
+				ParameterDescriptor parameterType = parameterDescriptors[i];
 //				parameters2.add(new AbstractExecutorParameter("_" + i, type, false));
 				String name = "_" + i;
 			//	AbstractExecutorParameter asParameter = new AbstractExecutorParameter(name, type, false);
 				Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 				asParameter.setName(name);
-				asParameter.setType(type);
+				asParameter.setType(parameterType.getType());
 				asParameter.setIsTypeof(false);
 				parameters2.add(asParameter);
 			}
@@ -118,9 +112,9 @@ public class ParameterTypes
 
 	@Deprecated	// recode to support isTypeOf
 	public @NonNull Type getType(int index) {
-		Type parameterType = parameterTypes[index];
+		ParameterDescriptor parameterType = parameterDescriptors[index];
 		assert parameterType != null;
-		return parameterType;
+		return parameterType.getType();
 	}
 
 	@Override
@@ -129,18 +123,18 @@ public class ParameterTypes
 	}
 
 	public int size() {
-		return parameterTypes.length;
+		return parameterDescriptors.length;
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		s.append('(');
-		for (int i = 0; i < parameterTypes.length; i++) {
+		for (int i = 0; i < parameterDescriptors.length; i++) {
 			if (i > 0) {
 				s.append(',');
 			}
-			s.append(parameterTypes[i].toString());
+			s.append(parameterDescriptors[i].toString());
 		}
 		s.append(')');
 		return s.toString();

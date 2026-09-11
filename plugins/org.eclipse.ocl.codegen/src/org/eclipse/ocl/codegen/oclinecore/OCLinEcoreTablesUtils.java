@@ -52,7 +52,8 @@ import org.eclipse.ocl.pivot.NamedElement;
 import org.eclipse.ocl.pivot.Namespace;
 import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
-import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.Parameter;
+import org.eclipse.ocl.pivot.ParameterDescriptor;
 import org.eclipse.ocl.pivot.PrimitiveType;
 import org.eclipse.ocl.pivot.Property;
 import org.eclipse.ocl.pivot.TemplateParameter;
@@ -61,6 +62,7 @@ import org.eclipse.ocl.pivot.TupleType;
 import org.eclipse.ocl.pivot.Type;
 import org.eclipse.ocl.pivot.VoidType;
 import org.eclipse.ocl.pivot.ids.BuiltInTypeId;
+import org.eclipse.ocl.pivot.ids.IdManager;
 import org.eclipse.ocl.pivot.ids.LambdaTypeId;
 import org.eclipse.ocl.pivot.ids.ParameterId;
 import org.eclipse.ocl.pivot.ids.ParametersId;
@@ -81,21 +83,10 @@ import org.eclipse.ocl.pivot.utilities.Nameable;
 import org.eclipse.ocl.pivot.utilities.PivotUtil;
 import org.eclipse.xtext.util.Strings;
 
+import com.google.common.collect.Iterables;
+
 public class OCLinEcoreTablesUtils
 {
-//	private static int SHOW_TABLES_PACKAGE = 1;
-//	private static int SHOW_TABLES_SUBPACKAGE = 2;
-
-	public Comparator<@NonNull ParameterTypes> templateBindingNameComparator = new Comparator<@NonNull ParameterTypes>()
-	{
-		@Override
-		public int compare(@NonNull ParameterTypes o1, @NonNull ParameterTypes o2) {
-			String n1 = getTemplateBindingsName(o1);
-			String n2 = getTemplateBindingsName(o2);
-			return n1.compareTo(n2);
-		}
-	};
-
 	public static Comparator<@NonNull Nameable> nameComparator = new Comparator<@NonNull Nameable>()
 	{
 		@Override
@@ -154,62 +145,6 @@ public class OCLinEcoreTablesUtils
 		}
 	};
 
-/*	private static @Nullable <T extends GenFeature> T getGenFeature(@Nullable List<T> genFeatures, @NonNull String name) {
-		if (genFeatures != null) {
-			for (T genFeature : genFeatures) {
-				assert genFeature != null;
-				EStructuralFeature eFeature = genFeature.getEcoreFeature();
-				if (genModelHelper.getName(eFeature).equals(name)) {
-					return genFeature;
-				}
-			}
-		}
-		return null;
-	} */
-
-/*	private static @Nullable <T extends GenPackage> T getGenPackage(@Nullable List<T> genPackages, @NonNull String name) {
-		if (genPackages != null) {
-			for (T genPackage : genPackages) {
-				assert genPackage != null;
-				EPackage ePackage = genPackage.getEcorePackage();
-				if (getName(ePackage).equals(name)) {
-					return genPackage;
-				}
-			}
-		}
-		return null;
-	} */
-
-/*	private static <@NonNull T extends GenPackage> @Nullable T getLibraryGenPackage(List<T> genPackages) {
-		for (T genPackage : genPackages) {
-			EPackage ecorePackage = genPackage.getEcorePackage();
-			GenClassifier genClassifier = getGenClassifier(genPackage.getGenClassifiers(), "_Dummy");
-			EClassifier eClassifier = ecorePackage.getEClassifier("_Dummy");		/ / F I X M E
-			if (eClassifier != null) {
-				assert genClassifier != null;
-				assert eClassifier == genClassifier.getEcoreClassifier();
-				return genPackage;
-			}
-			assert genClassifier == null;
-		}
-		return null;
-	} */
-
-/*	private static <@NonNull T extends GenPackage> @Nullable T getMetamodelGenPackage(@NonNull List<T> genPackages) {
-		for (T genPackage : genPackages) {
-			EPackage ecorePackage = genPackage.getEcorePackage();
-			GenClassifier genClassifier = getGenClassifier(genPackage.getGenClassifiers(), "Element");
-			EClassifier eClassifier = ecorePackage.getEClassifier("Element");
-			if (eClassifier != null) {
-				assert genClassifier != null;
-				assert eClassifier == genClassifier.getEcoreClassifier();
-				return genPackage;
-			}
-			assert genClassifier == null;
-		}
-		return null;
-	} */
-
 	public @NonNull String getPagedName(@NonNull String name, int i, int iMax) {
 		if (i < iMax) {
 			return name + i;
@@ -223,14 +158,6 @@ public class OCLinEcoreTablesUtils
 		//		System.out.println(ClassUtil.debugSimpleName(type) + " + " + ClassUtil.debugSimpleName(type.getTypeId()) + " + " + type.getTypeId());
 		return type.getTypeId() instanceof BuiltInTypeId;
 	}
-
-/*	private static @NonNull GenPackage loadGenPackage(@NonNull ResourceSet resourceSet, @NonNull URI genModelURI) {
-		Resource resource = resourceSet.getResource(genModelURI, true);
-		GenModel genModel = (GenModel) resource.getContents().get(0);
-		GenPackage genPackage = genModel.getGenPackages().get(0);
-		assert genPackage != null;
-		return genPackage;
-	} */
 
 	/**
 	 * CodeGenString elaborates a StringBuilder with helpers for Java generation.
@@ -586,7 +513,7 @@ public class OCLinEcoreTablesUtils
 
 		@Override
 		public @Nullable Object visiting(@NonNull Visitable visitable) {
-			throw new UnsupportedOperationException("Unsupported DeclareParameterTypeVisitor for " + visitable.eClass().getName());
+			throw new UnsupportedOperationException("Unsupported EmitTypeExpressionVisitor for " + visitable.eClass().getName());
 		}
 
 		@Override
@@ -709,6 +636,120 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
+	/**
+	 * ParameterDescriptors provides a hashable list of operation parameters.
+	 *
+	 * @since 7.0
+	 */
+	public static class ParameterDescriptors //implements Iterable<@NonNull ParameterDescriptor>
+	{
+	/*	protected class Iterator implements java.util.Iterator<@NonNull ParameterDescriptor>
+		{
+			private int index = 0;
+
+			@Override
+			public boolean hasNext() {
+				return index < parameterDescriptors.length;
+			}
+
+			@Override
+			public @NonNull ParameterDescriptor next() {
+				return parameterDescriptors[index++];
+			}
+
+			@Override
+			public void remove() {
+				throw new UnsupportedOperationException();
+			}
+		} */
+
+		private final @NonNull ParameterDescriptor @NonNull [] parameterDescriptors;
+		private final @NonNull ParametersId parametersId;
+		private final int hashCode;
+		private /*@LazyNonNull*/ List<@NonNull Parameter> parameters = null;  // XXX init from ctor
+
+		public ParameterDescriptors(@NonNull Iterable<@NonNull Parameter> parameters) {
+			int iMax = Iterables.size(parameters);
+			@NonNull ParameterDescriptor @NonNull [] parameterDescriptors = new @NonNull ParameterDescriptor[iMax];
+			@NonNull ParameterId @NonNull [] parameterIds = new @NonNull ParameterId[iMax];
+			int i = 0;
+			for (@NonNull Parameter parameter : parameters) {
+				ParameterId parameterId = IdManager.getParameterId(parameter);
+				parameterIds[i] = parameterId;
+				parameterDescriptors[i] = new ParameterDescriptor(parameter);
+				i++;
+			}
+			this.parametersId = IdManager.getParametersId(parameterIds);
+			this.parameterDescriptors = parameterDescriptors;
+			hashCode = parametersId.hashCode() + 0x999;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (!(obj instanceof ParameterDescriptors)) {
+				return false;
+			}
+			ParameterDescriptors that = (ParameterDescriptors)obj;
+			if (hashCode() != that.hashCode()) {
+				return false;
+			}
+			ParameterDescriptor[] thoseParameters = that.parameterDescriptors;
+			if (parameterDescriptors.length != thoseParameters.length) {
+				return false;
+			}
+			for (int i = 0; i < parameterDescriptors.length; i++) {
+				if (!parameterDescriptors[i].equals(thoseParameters[i])) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		public @NonNull ParameterDescriptor get(int index) {
+			return parameterDescriptors[index];
+		}
+
+		public @NonNull ParameterDescriptor @NonNull [] getParameterDescriptors() {
+			return parameterDescriptors;
+		}
+
+		public @NonNull ParameterId getParameterId(int index) {
+			return parametersId.get(index);
+		}
+
+		public @NonNull ParametersId getParametersId() {
+			return parametersId;
+		}
+
+		@Override
+		public int hashCode() {
+			return hashCode;
+		}
+
+	//	@Override
+	//	public @NonNull Iterator iterator() {
+	//		return new Iterator();
+	//	}
+
+		public int size() {
+			return parameterDescriptors.length;
+		}
+
+		@Override
+		public String toString() {
+			StringBuilder s = new StringBuilder();
+			s.append('(');
+			for (int i = 0; i < parameterDescriptors.length; i++) {
+				if (i > 0) {
+					s.append(',');
+				}
+				s.append(parameterDescriptors[i].toString());
+			}
+			s.append(')');
+			return s.toString();
+		}
+	}
+
 	protected final boolean useNullAnnotations;
 	protected final @NonNull GenPackage genPackage;
 	protected final @NonNull EnvironmentFactory environmentFactory;
@@ -720,8 +761,7 @@ public class OCLinEcoreTablesUtils
 	protected final @NonNull EmitDeclaredNameVisitor emitDeclaredName;				// emit _ZZZ
 	protected final @NonNull EmitReferencedElementVisitor emitReferencedElement;	// emit XXXTables.YYY._ZZZ
 	protected final @NonNull Iterable<org.eclipse.ocl.pivot.@NonNull Class> activeClassesSortedByName;
-	protected final @NonNull Map<@NonNull ParameterTypes,@NonNull  String> legacyTemplateBindingsNames = new HashMap<>();
-	protected final @NonNull Map<@NonNull ParameterTypes, @NonNull String> templateBindingsNames = new HashMap<>();
+	protected final @NonNull Map<@NonNull ParameterDescriptors, @NonNull String> parameterDescriptorsNames = new HashMap<>();
 	protected final @NonNull Map<@NonNull TemplateParameter, @NonNull String> templateParameter2name = new HashMap<>();
 	protected final @NonNull GenModelHelper genModelHelper;
 	protected final @NonNull Map<org.eclipse.ocl.pivot.@NonNull Class, @NonNull List<@NonNull Constraint>> class2sortedMemberConstraints = new HashMap<>();
@@ -1003,69 +1043,12 @@ public class OCLinEcoreTablesUtils
 		}
 	}
 
-	protected @NonNull String getLegacyTemplateBindingsName(@NonNull ParameterTypes templateBindings) {
-		String name2 = legacyTemplateBindingsNames.get(templateBindings);
-		if (name2 == null) {
-			StringBuilder s = new StringBuilder();
-			s.append("_");
-			if (templateBindings.size() > 0 ) {
-				for (int i = 0; i < templateBindings.size(); i++) {
-					if (i > 0) {
-						s.append("___");
-					}
-					Type element = templateBindings.getType(i);
-					getLegacyTemplateBindingsName(s, element);
-				}
-			}
-			name2 = s.toString();
-			legacyTemplateBindingsNames.put(templateBindings, name2);
-		}
-		return name2;
-	}
-	private void getLegacyTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element) {
-		TemplateParameter templateParameter = element.isTemplateParameter();
-		if (templateParameter != null) {
-			TemplateableElement template = templateParameter.getOwningTemplateableElement();
-			if (template instanceof Operation) {
-				s.append(AbstractGenModelHelper.encodeName(ClassUtil.requireNonNull(((Operation) template).getOwningClass())));
-				s.append("_");
-			}
-			s.append(AbstractGenModelHelper.encodeName(ClassUtil.requireNonNull((NamedElement) template)));
-			s.append("_");
-		}
-		s.append(AbstractGenModelHelper.encodeName(element));
-		if (element instanceof TemplateableElement) {
-			BasicTemplateSpecialization templateSpecialization = TemplateSpecialization.basicGetTemplateSpecialization(element);
-			if (templateSpecialization != null) {
-				s.append("_");
-				for (@NonNull Type actual : templateSpecialization) {
-					s.append("_");
-					getLegacyTemplateBindingsName(s, actual);
-				}
-				s.append("__");
-			}
-		}
-		if (element instanceof LambdaType) {
-			LambdaType lambdaType = (LambdaType)element;
-			s.append("_");
-			getLegacyTemplateBindingsName(s, PivotUtil.getType(PivotUtil.getOwnedContext(lambdaType)));
-			for (@NonNull LambdaParameter parameter : PivotUtil.getOwnedParameters(lambdaType)) {
-				s.append("_");
-				getLegacyTemplateBindingsName(s, PivotUtil.getType(parameter));
-			}
-			s.append("_");
-			getLegacyTemplateBindingsName(s, PivotUtil.getType(PivotUtil.getOwnedResult(lambdaType)));
-		}
-	}
-
 	protected @NonNull String getLambdaParameterName(LambdaParameter lambdaParameter) {
 		StringBuilder s = new StringBuilder();
 		s.append("_");
 		s.append(lambdaParameter.getName());
 		s.append("_");
-		getTemplateBindingsName(s, PivotUtil.getType(lambdaParameter), lambdaParameter.isIsTypeof());
-		s.append("_");
-		s.append(lambdaParameter.isIsRequired() ? "T" : "F");
+		getParameterDescriptorName(s, PivotUtil.getType(lambdaParameter), lambdaParameter.isIsRequired(), lambdaParameter.isIsTypeof());
 		return s.toString();
 	}
 
@@ -1160,6 +1143,74 @@ public class OCLinEcoreTablesUtils
 		}
 		assert best != null;
 		return best;
+	}
+
+	private void getParameterDescriptorsName(@NonNull StringBuilder s, @NonNull LambdaParameter lambdaParameter) {
+		s.append(AbstractGenModelHelper.encodeName(lambdaParameter));
+		s.append("_");
+		getParameterDescriptorName(s, PivotUtil.getType(lambdaParameter), lambdaParameter.isIsRequired(), lambdaParameter.isIsTypeof());
+	}
+
+	protected @NonNull String getParameterDescriptorsName(@NonNull ParameterDescriptors parameterTypes) {
+		String name2 = parameterDescriptorsNames.get(parameterTypes);
+		if (name2 == null) {
+			StringBuilder s = new StringBuilder();
+			s.append("_");
+			if (parameterTypes.size() > 0 ) {
+				for (int i = 0; i < parameterTypes.size(); i++) {
+					if (i > 0) {
+						s.append("___");
+					}
+					ParameterDescriptor parameterType = parameterTypes.get(i);
+					getParameterDescriptorName(s, parameterType.getType(), parameterType.isRequired(), parameterType.isTypeof());
+				}
+			}
+			else {
+				s.append("$$");					// Avoids deprecated _ identifier (see Bug 471118 avoid , Issue 1567)
+
+			}
+			name2 = s.toString();
+			parameterDescriptorsNames.put(parameterTypes, name2);
+		}
+		return name2;
+	}
+	protected void getParameterDescriptorName(@NonNull StringBuilder s, @NonNull Type element, @Nullable Boolean isRequired, boolean isTypeOf) {
+	//	TemplateParameter templateParameter = element.isTemplateParameter();
+	//	if (templateParameter != null) {
+	//		s.append(Integer.toString(templateParameter.getTemplateParameterId().getIndex()));
+	//		s.append("_");
+	//	}
+		if (isTypeOf) {
+			s.append("typeof_");
+		}
+		s.append(AbstractGenModelHelper.encodeName(element));
+		if (element instanceof TemplateableElement) {
+			BasicTemplateSpecialization templateSpecialization = TemplateSpecialization.basicGetTemplateSpecialization(element);
+			if (templateSpecialization != null) {
+				s.append("_");
+				for (@NonNull Type actual : templateSpecialization) {
+					s.append("_");
+					getParameterDescriptorName(s, actual, null, isTypeOf);		// XXX ?? isTypeOf ?? isRequired
+				}
+				s.append("__");
+			}
+		}
+		if (element instanceof LambdaType) {
+			LambdaType lambdaType = (LambdaType)element;
+			s.append("_");
+			getParameterDescriptorsName(s, PivotUtil.getOwnedContext(lambdaType));
+			for (/*@NonNull*/ LambdaParameter parameter : lambdaType.getOwnedParameters()) {
+				assert parameter != null;
+				s.append("_");
+				getParameterDescriptorsName(s, parameter);
+			}
+			s.append("_");
+			getParameterDescriptorsName(s, PivotUtil.getOwnedResult(lambdaType));
+		}
+		if (isRequired != null) {
+			s.append("_");
+			s.append(isRequired ? "T" : "F");
+		}
 	}
 
 	protected org.eclipse.ocl.pivot.Package getPivotPackage(@NonNull GenPackage genPackage) {
@@ -1259,68 +1310,6 @@ public class OCLinEcoreTablesUtils
 
 	protected @NonNull String getTablesClassName(@NonNull GenPackage genPackage) {
 		return genPackage.getPrefix() + AbstractGenModelHelper.TABLES_CLASS_SUFFIX;
-	}
-
-	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull LambdaParameter lambdaParameter) {
-		s.append(AbstractGenModelHelper.encodeName(lambdaParameter));
-		s.append("_");
-		getTemplateBindingsName(s, PivotUtil.getType(lambdaParameter), lambdaParameter.isIsTypeof());
-		s.append("_");
-		s.append(lambdaParameter.isIsRequired() ? "T" : "F");
-	}
-
-	protected @NonNull String getTemplateBindingsName(@NonNull ParameterTypes templateBindings) {
-		String name2 = templateBindingsNames.get(templateBindings);
-		if (name2 == null) {
-			StringBuilder s = new StringBuilder();
-			s.append("_");
-			if (templateBindings.size() > 0 ) {
-				for (int i = 0; i < templateBindings.size(); i++) {
-					if (i > 0) {
-						s.append("___");
-					}
-					Type element = templateBindings.getType(i);
-					getTemplateBindingsName(s, element, templateBindings.getParameterId(i).isTypeOf());
-				}
-			}
-			name2 = s.toString();
-			templateBindingsNames.put(templateBindings, name2);
-		}
-		return name2;
-	}
-	private void getTemplateBindingsName(@NonNull StringBuilder s, @NonNull Type element, boolean isTypeOf) {
-	//	TemplateParameter templateParameter = element.isTemplateParameter();
-	//	if (templateParameter != null) {
-	//		s.append(Integer.toString(templateParameter.getTemplateParameterId().getIndex()));
-	//		s.append("_");
-	//	}
-		if (isTypeOf) {
-			s.append("typeof_");
-		}
-		s.append(AbstractGenModelHelper.encodeName(element));
-		if (element instanceof TemplateableElement) {
-			BasicTemplateSpecialization templateSpecialization = TemplateSpecialization.basicGetTemplateSpecialization(element);
-			if (templateSpecialization != null) {
-				s.append("_");
-				for (@NonNull Type actual : templateSpecialization) {
-					s.append("_");
-					getTemplateBindingsName(s, actual, false);		// XXX ?? isTypeOf
-				}
-				s.append("__");
-			}
-		}
-		if (element instanceof LambdaType) {
-			LambdaType lambdaType = (LambdaType)element;
-			s.append("_");
-			getTemplateBindingsName(s, PivotUtil.getOwnedContext(lambdaType));
-			for (/*@NonNull*/ LambdaParameter parameter : lambdaType.getOwnedParameters()) {
-				assert parameter != null;
-				s.append("_");
-				getTemplateBindingsName(s, parameter);
-			}
-			s.append("_");
-			getTemplateBindingsName(s, PivotUtil.getOwnedResult(lambdaType));
-		}
 	}
 
 	protected @NonNull String getTemplateParameterNameCandidate(@NonNull TemplateParameter asTemplateParameter) {

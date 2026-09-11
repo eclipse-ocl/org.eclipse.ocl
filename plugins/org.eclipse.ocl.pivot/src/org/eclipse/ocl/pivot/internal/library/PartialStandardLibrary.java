@@ -52,7 +52,7 @@ import org.eclipse.ocl.pivot.NormalizedTemplateParameter;
 import org.eclipse.ocl.pivot.Operation;
 import org.eclipse.ocl.pivot.OrderedSetType;
 import org.eclipse.ocl.pivot.Parameter;
-import org.eclipse.ocl.pivot.ParameterTypes;
+import org.eclipse.ocl.pivot.ParameterDescriptor;
 import org.eclipse.ocl.pivot.PivotFactory;
 import org.eclipse.ocl.pivot.Precedence;
 import org.eclipse.ocl.pivot.PrimitiveType;
@@ -82,7 +82,6 @@ import org.eclipse.ocl.pivot.internal.ClassImpl;
 import org.eclipse.ocl.pivot.internal.ConstraintImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationImpl;
 import org.eclipse.ocl.pivot.internal.EnumerationLiteralImpl;
-import org.eclipse.ocl.pivot.internal.IterationImpl;
 import org.eclipse.ocl.pivot.internal.NormalizedTemplateParameterImpl;
 import org.eclipse.ocl.pivot.internal.OperationImpl;
 import org.eclipse.ocl.pivot.internal.PackageImpl;
@@ -98,7 +97,6 @@ import org.eclipse.ocl.pivot.internal.manager.BasicTemplateSpecialization;
 import org.eclipse.ocl.pivot.internal.manager.TemplateParameterization;
 import org.eclipse.ocl.pivot.internal.resource.BuiltInASResourceFactory;
 import org.eclipse.ocl.pivot.library.LibraryFeature;
-import org.eclipse.ocl.pivot.library.LibraryIteration;
 import org.eclipse.ocl.pivot.library.LibraryProperty;
 import org.eclipse.ocl.pivot.manager.CollectionTypeManager;
 import org.eclipse.ocl.pivot.manager.EntryTypeManager;
@@ -490,9 +488,9 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	 * Create an iteration. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
-	public @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, /*@NonNull*/ ParameterTypes iteratorTypes, @NonNull ParameterTypes parameterTypes, @NonNull Type asType,
+	public @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @NonNull ParameterDescriptor @NonNull [] iteratorDescriptors, @NonNull ParameterDescriptor @NonNull [] parameterDescriptors, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
-	//	return new ExecutorOperation(name, parameterTypes, asClass, index, typeParameters, implementation);
+	//	return new ExecutorOperation(name, parameterDescriptors, asClass, index, typeParameters, implementation);
 		Iteration asIteration = PivotFactory.eINSTANCE.createIteration();
 		asIteration.setName(name);
 		asIteration.setType(asType);		// OclInvalid if set later for nested specialization
@@ -512,67 +510,29 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 				asTemplateParameters.add(asTemplateParameter);
 			}
 		}
-		for (int i = 0; i < iteratorTypes.size(); i++) {
-			@NonNull Type iteratorType = iteratorTypes.getType(i);
-			Parameter asIterator = PivotFactory.eINSTANCE.createParameter();
-			asIterator.setName("_" + n++);
-			asIterator.setType(iteratorType);
-			if ((i == iteratorTypes.size()-1) && ((operationFlagsAndIndex & AbstractTables.HasAccumulator) != 0)) {
-				asIteration.setOwnedAccumulator(asIterator);
-			}
-			else {
-				asIteration.getOwnedIterators().add(asIterator);
-			}
-		}
-		for (int i = 0; i < parameterTypes.size(); i++) {
-			@NonNull Type parameterType = parameterTypes.getType(i);
-			Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
-			asParameter.setName("_" + n++);
-			asParameter.setType(parameterType);
-			asIteration.getOwnedParameters().add(asParameter);
-		}
-		setOperationFlagsAndIndex(asIteration, operationFlagsAndIndex);
-		asClass.getOwnedOperations().add(asIteration);
-		return asIteration;
-	}
-
-	public @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, /*@NonNull*/ EOperation eOperation,
-			@NonNull ParameterTypes iteratorParameterTypes, @NonNull ParameterTypes parameterTypes,
-			@NonNull Type asType, int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @NonNull LibraryIteration implementation) {
-		String name = eOperation.getName();
-		assert name != null;
-		// iteratorParameterTypes
-		return createIteration(asClass, eOperation, name, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
-	}
-
-	private @NonNull Iteration createIteration(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable EOperation eOperation, @NonNull String name, @NonNull ParameterTypes parameterTypes, @NonNull Type asType,
-			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryIteration implementation) {
-		Iteration asIteration = PivotFactory.eINSTANCE.createIteration();
-		asIteration.setName(name);
-		asIteration.setType(asType);		// OclInvalid if set later for nested specialization
-		if (eOperation != null) {
-			((IterationImpl)asIteration).setESObject(eOperation);
-		}
-	//	asOperation.setIndex(index);
-		asIteration.setImplementation(implementation);
-		int n = 0;
-		if (typeParameters.parametersSize() > 0) {
-			List<@NonNull TemplateParameter> asTemplateParameters = PivotUtil.getOwnedTemplateParametersList(asIteration, true);
-			for (int i = 0; i < typeParameters.parametersSize(); i++) {
-				TemplateParameter asTemplateParameter = typeParameters.get(i);
-				asTemplateParameters.add(asTemplateParameter);
+		if (iteratorDescriptors != null) {
+			for (int i = 0; i < iteratorDescriptors.length; i++) {
+				@NonNull Type iteratorType = iteratorDescriptors[i].getType();
+				Parameter asIterator = PivotFactory.eINSTANCE.createParameter();
+				asIterator.setName("_" + n++);
+				asIterator.setType(iteratorType);
+				if ((i == iteratorDescriptors.length-1) && ((operationFlagsAndIndex & AbstractTables.HasAccumulator) != 0)) {
+					asIteration.setOwnedAccumulator(asIterator);
+				}
+				else {
+					asIteration.getOwnedIterators().add(asIterator);
+				}
 			}
 		}
-		// iteratorParameterTypes
-	//	if (parameterTypes != null) {
-			for (int i = 0; i < parameterTypes.size(); i++) {
-				@NonNull Type parameterType = parameterTypes.getType(i);
+		if (parameterDescriptors != null) {
+			for (int i = 0; i < parameterDescriptors.length; i++) {
+				@NonNull Type parameterType = parameterDescriptors[i].getType();
 				Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 				asParameter.setName("_" + n++);
 				asParameter.setType(parameterType);
 				asIteration.getOwnedParameters().add(asParameter);
 			}
-	//	}
+		}
 		setOperationFlagsAndIndex(asIteration, operationFlagsAndIndex);
 		asClass.getOwnedOperations().add(asIteration);
 		return asIteration;
@@ -620,28 +580,23 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 	 * Create an operation. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
-	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @Nullable Precedence precedence, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
+	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @Nullable Precedence precedence, @NonNull ParameterDescriptor @NonNull [] parameterDescriptors, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
-		return createOperation(asClass, null, name, precedence, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
-	}
-	@Deprecated
-	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull String name, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
-			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
-		return createOperation(asClass, null, name, null, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
+		return createOperation(asClass, null, name, precedence, parameterDescriptors, asType, operationFlagsAndIndex, typeParameters, implementation);
 	}
 
 	/**
 	 * Create an operation. asType may be null for a self-dependent templating that is set later.
 	 * @since 7.0
 	 */
-	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, /*@NonNull*/ EOperation eOperation, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
+	public @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, /*@NonNull*/ EOperation eOperation, @NonNull ParameterDescriptor @Nullable [] parameterDescriptors, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 		String name = eOperation.getName();
 		assert name != null;
-		return createOperation(asClass, eOperation, name, null, parameterTypes, asType, operationFlagsAndIndex, typeParameters, implementation);
+		return createOperation(asClass, eOperation, name, null, parameterDescriptors, asType, operationFlagsAndIndex, typeParameters, implementation);
 	}
 
-	private @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable EOperation eOperation, @NonNull String name, @Nullable Precedence precedence, @Nullable ParameterTypes parameterTypes, @NonNull Type asType,
+	private @NonNull Operation createOperation(org.eclipse.ocl.pivot.@NonNull Class asClass, @Nullable EOperation eOperation, @NonNull String name, @Nullable Precedence precedence, @NonNull ParameterDescriptor @Nullable [] parameterDescriptors, @NonNull Type asType,
 			int operationFlagsAndIndex, @NonNull TemplateParameters typeParameters, @Nullable LibraryFeature implementation) {
 		Operation asOperation = PivotFactory.eINSTANCE.createOperation();
 		asOperation.setName(name);
@@ -666,9 +621,9 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 				asTemplateParameters.add(asTemplateParameter);
 			}
 		}
-		if (parameterTypes != null) {
-			for (int i = 0; i < parameterTypes.size(); i++) {
-				@NonNull Type parameterType = parameterTypes.getType(i);
+		if (parameterDescriptors != null) {
+			for (int i = 0; i < parameterDescriptors.length; i++) {
+				@NonNull Type parameterType = parameterDescriptors[i].getType();
 				Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 				asParameter.setName("_" + n++);
 				asParameter.setType(parameterType);
@@ -684,11 +639,11 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 		installImplicitOppositeProperty(asProperty, name);
 	}
 
-	public void setParameters(@NonNull Operation asOperation, @NonNull Type @NonNull ... parameterTypes) {
+	public void setParameters(@NonNull Operation asOperation, @NonNull Type @NonNull ... parameterDescriptors) {
 		List<@NonNull Parameter> asParameters = PivotUtil.getOwnedParametersList(asOperation);
 		List<@NonNull TemplateParameter> asTemplateParameters = asOperation.basicGetOwnedTemplateParameters();
 		int n = asTemplateParameters != null ? asTemplateParameters.size() : 0;
-		for (@NonNull Type parameterType : parameterTypes) {
+		for (@NonNull Type parameterType : parameterDescriptors) {
 			Parameter asParameter = PivotFactory.eINSTANCE.createParameter();
 			asParameter.setName("_" + n++);
 			asParameter.setType(parameterType);
