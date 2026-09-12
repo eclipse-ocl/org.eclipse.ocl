@@ -752,6 +752,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		copyTypedElement(eOperation, asOperation);
 		@SuppressWarnings("null")@NonNull List<ETypeParameter> eTypeParameters = eOperation.getETypeParameters();
 		copyTemplateParameters(eTypeParameters, asOperation);
+		ClassUtil.setEAnnotationDetail(eOperation, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ISTYPEOF_KEY, asOperation.isIsTypeof());
 		@SuppressWarnings("null")@NonNull List<EParameter> eParameters = eOperation.getEParameters();
 		safeVisitAll(eParameters, asOperation.getOwnedParameters());
 		//		safeVisitAll(eOperation.getEGenericExceptions(), pivotOperation.getRaisedException());
@@ -801,14 +802,7 @@ extends AbstractExtendingVisitor<Object, AS2Ecore>
 		@SuppressWarnings("null")
 		@NonNull EParameter eParameter = EcoreFactory.eINSTANCE.createEParameter();
 		copyTypedElement(eParameter, pivotParameter);
-		boolean isTypeOf = pivotParameter.isIsTypeof();
-		if (isTypeOf) {
-			EAnnotation eAnnotation = ClassUtil.getEAnnotation(eParameter, PivotConstants.PARAMETER_ANNOTATION_SOURCE);
-			eAnnotation.getDetails().put(PivotConstants.PARAMETER_ISTYPEOF_KEY, String.valueOf(true));
-		}
-		else {
-			ClassUtil.removeEAnnotationDetail(eParameter, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ISTYPEOF_KEY);
-		}
+		ClassUtil.setEAnnotationDetail(eParameter, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ISTYPEOF_KEY, pivotParameter.isIsTypeof());
 		return eParameter;
 	}
 

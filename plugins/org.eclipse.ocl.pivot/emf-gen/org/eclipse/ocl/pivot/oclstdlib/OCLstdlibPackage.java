@@ -8594,7 +8594,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getOclAny__OclType(),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  ((getOclElement__OclAsModelType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclElement__OclModelType(),
 		   source,
 		   new String[] {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
@@ -8606,7 +8618,19 @@ public class OCLstdlibPackage extends EPackageImpl {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
 		   });
 		addAnnotation
+		  (getOclInvalid__OclType(),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
 		  ((getOclVoid__OclAsType__Object()).getEParameters().get(0),
+		   source,
+		   new String[] {
+			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$
+		   });
+		addAnnotation
+		  (getOclVoid__OclType(),
 		   source,
 		   new String[] {
 			   "isTypeOf", "true" //$NON-NLS-1$ //$NON-NLS-2$

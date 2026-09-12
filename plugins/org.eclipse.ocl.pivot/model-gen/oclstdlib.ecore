@@ -2006,6 +2006,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+        <details key="isTypeOf" value="true"/>
+      </eAnnotations>
     </eOperations>
     <eOperations name="oclTypes" ordered="false" lowerBound="1" eType="#//OclSelf">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2211,6 +2214,9 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclElementOclModelTypeOperation"/>
       </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+        <details key="isTypeOf" value="true"/>
+      </eAnnotations>
     </eOperations>
     <eOperations name="oclModelTypes" ordered="false" lowerBound="1" eType="#//OclSelf">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
@@ -2359,6 +2365,9 @@
     <eOperations name="oclType" lowerBound="1" eType="#//OclSelf">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+        <details key="isTypeOf" value="true"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="or" eType="#//Boolean">
@@ -2648,6 +2657,9 @@
     <eOperations name="oclType" lowerBound="1" eType="#//OclSelf">
       <eAnnotations source="http://www.eclipse.org/emf/2002/Ecore/OCL/Pivot">
         <details key="class" value="org.eclipse.ocl.pivot.library.oclany.OclAnyOclTypeOperation"/>
+      </eAnnotations>
+      <eAnnotations source="http://www.eclipse.org/OCL/Parameter">
+        <details key="isTypeOf" value="true"/>
       </eAnnotations>
     </eOperations>
     <eOperations name="oclTypes" ordered="false" lowerBound="1" eType="#//OclSelf">

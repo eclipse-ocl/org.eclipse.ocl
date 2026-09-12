@@ -505,11 +505,12 @@ public class Ecore2ASDeclarationSwitch extends EcoreSwitch<Object>
 	}
 
 	@Override
-	public Object caseEParameter(EParameter eObject) {
-		@SuppressWarnings("null") @NonNull EParameter eObject2 = eObject;
-		Parameter pivotElement = converter.refreshElement(Parameter.class, PivotPackage.Literals.PARAMETER, eObject2);
-		copyTypedElement(pivotElement, eObject2);
-		return pivotElement;
+	public Object caseEParameter(EParameter eParameter) {
+		assert eParameter != null;
+		Parameter asParameter = converter.refreshElement(Parameter.class, PivotPackage.Literals.PARAMETER, eParameter);
+		copyTypedElement(asParameter, eParameter);
+		asParameter.setIsTypeof(Boolean.valueOf(EcoreUtil.getAnnotation(eParameter, PivotConstants.PARAMETER_ANNOTATION_SOURCE, PivotConstants.PARAMETER_ISTYPEOF_KEY)));
+		return asParameter;
 	}
 
 	@Override
