@@ -11,7 +11,8 @@
       </ownedDetails>
     </ownedAnnotations>
     <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.eclipse.org/OCL/ASLibrary"/>
-    <ownedClasses xsi:type="pivot:BagType" xmi:id="yEcHF" instanceClassName="org.eclipse.ocl.pivot.values.Bag" name="Bag" superClasses="#o1HIW">
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="yEcHF" instanceClassName="org.eclipse.ocl.pivot.values.Bag" isAbstract="true" isInterface="true"
+        name="Bag" superClasses="#o1HIW">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Collection</values>
@@ -506,8 +507,8 @@
         <ownedComments body="&#xA;Return a set of all instances of the type and derived types of self.&#xA;"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="IgEJU" instanceClassName="java.util.Collection" isAbstract="true" name="Collection"
-        superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="IgEJU" instanceClassName="java.util.Collection" isAbstract="true" isInterface="true"
+        name="Collection" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Collection</values>
@@ -1226,7 +1227,19 @@
         </ownedDetails>
       </ownedAnnotations>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:AnyType" xmi:id="jbMkR" instanceClassName="java.lang.Object" isAbstract="true" name="OclAny">
+    <ownedClasses xmi:id="9QQRW" isAbstract="true" name="NonNullType" superClasses="#hlrMH">
+      <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
+        <ownedDetails name="ClassGroup">
+          <values>Collection</values>
+        </ownedDetails>
+      </ownedAnnotations>
+      <ownedComments body="&#xA;NonNullType wraps a nullable Type for use as a non-null type.&#xA;"/>
+      <ownedProperties xmi:id="couUP" isRequired="true" name="nullableType" opposite="#66nrE" type="#YVcXo">
+        <ownedComments body="&#xA;The nullable type wrapped as non-null by this type.&#xA;"/>
+      </ownedProperties>
+      <ownedTemplateParameters xmi:id="Kd9r3" name="T"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:AnyType" xmi:id="jbMkR" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclAny">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1344,9 +1357,10 @@
       </ownedOperations>
       <ownedProperties xmi:id="azPW," isImplicit="true" isRequired="true" name="Entry" opposite="#whC6E" type="#fCthp"/>
       <ownedProperties xmi:id="YJaBu" isImplicit="true" isRequired="true" name="Entry" opposite="#CuxkL" type="#fCthp"/>
+      <ownedProperties xmi:id="66nrE" isImplicit="true" isRequired="true" name="NonNullType" opposite="#couUP" type="#vQtf8"/>
       <ownedProperties xmi:id="c8rKW" isImplicit="true" isRequired="true" name="OclInvalid" opposite="#QSjNW" type="#4eSgX"/>
     </ownedClasses>
-    <ownedClasses xmi:id="BEwMu" instanceClassName="java.lang.Object" isAbstract="true" name="OclComparable" superClasses="#jbMkR">
+    <ownedClasses xmi:id="BEwMu" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclComparable" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1379,7 +1393,7 @@
         <ownedParameters xmi:id="yeOWn" isRequired="true" name="that" type="#zlfMH"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="zfDWR" instanceClassName="java.lang.Object" isAbstract="true" name="OclElement" superClasses="#jbMkR">
+    <ownedClasses xmi:id="zfDWR" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclElement" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1458,7 +1472,7 @@
       <ownedProperties xmi:id="i+8xQ" isImplicit="true" isRequired="true" name="OclElement" opposite="#IcnIy" type="#158KG"/>
       <ownedProperties xmi:id="hXMRj" isImplicit="true" isRequired="true" name="OclElement" opposite="#REFNQ" type="#158KG"/>
     </ownedClasses>
-    <ownedClasses xmi:id="+8+by" instanceClassName="java.lang.Object" isAbstract="true" name="OclEnumeration" superClasses="#hlrMH">
+    <ownedClasses xmi:id="+8+by" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclEnumeration" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -1466,8 +1480,8 @@
       </ownedAnnotations>
       <ownedComments body="&#xA;The OclEnumeration type is the implicit supertype of any user Enumeration type.&#xA;FIXME This is probably obsolete now that static / meta-types clarified.&#xA;"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:InvalidType" xmi:id="urQRp" instanceClassName="java.lang.Object" isAbstract="true" name="OclInvalid"
-        superClasses="#7u3MH">
+    <ownedClasses xsi:type="pivot:InvalidType" xmi:id="urQRp" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true"
+        name="OclInvalid" superClasses="#7u3MH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1528,7 +1542,7 @@
         <ownedComments body="&#xA;An oclBadProperty may be used as a placeholder in an unsuccessfully created OCLExpression.&#xA;"/>
       </ownedProperties>
     </ownedClasses>
-    <ownedClasses xmi:id="ufpqK" instanceClassName="java.lang.Object" isAbstract="true" name="OclLambda" superClasses="#jbMkR">
+    <ownedClasses xmi:id="ufpqK" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclLambda" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1536,7 +1550,7 @@
       </ownedAnnotations>
       <ownedComments body="&#xA;The type OclLambda is the implicit supertype of all Lambda types. The operations defined for OclLambda&#xA;therefore apply to all lambda expressions.&#xA;"/>
     </ownedClasses>
-    <ownedClasses xmi:id="+jBYt" instanceClassName="java.lang.Object" isAbstract="true" name="OclMessage" superClasses="#jbMkR">
+    <ownedClasses xmi:id="+jBYt" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclMessage" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
@@ -1560,7 +1574,8 @@
         <ownedComments body="&#xA;Returns the result of the called operation, if type of template parameter is an operation call,&#xA;and the called operation has returned a value. Otherwise the oclText[invalid] value is returned.&#xA;"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SelfType" xmi:id="zlfMH" instanceClassName="java.lang.Object" isAbstract="true" name="OclSelf" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:SelfType" xmi:id="zlfMH" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclSelf"
+        superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1568,14 +1583,14 @@
       </ownedAnnotations>
       <ownedComments body="&#xA;The pseudo-type OclSelf denotes the statically determinate type of oclText[self] in Operation&#xA;and Iteration signatures. Instances of OclSelf are never created.&#xA;"/>
     </ownedClasses>
-    <ownedClasses xmi:id="IebtF" instanceClassName="java.lang.Object" isAbstract="true" name="OclState" superClasses="#jbMkR">
+    <ownedClasses xmi:id="IebtF" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclState" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>UML</values>
         </ownedDetails>
       </ownedAnnotations>
     </ownedClasses>
-    <ownedClasses xmi:id="ZNWlJ" instanceClassName="java.lang.Object" isAbstract="true" name="OclStereotype" superClasses="#hlrMH">
+    <ownedClasses xmi:id="ZNWlJ" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclStereotype" superClasses="#hlrMH">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1583,7 +1598,7 @@
       </ownedAnnotations>
       <ownedComments body="&#xA;The type OclStereotype is the implicit supertype of any UML stereotype. Operations defined&#xA;for OclStereotype are therefore applicable to all UML stereotypes.&#xA;"/>
     </ownedClasses>
-    <ownedClasses xmi:id="D4eXY" instanceClassName="java.lang.Object" isAbstract="true" name="OclSummable" superClasses="#jbMkR">
+    <ownedClasses xmi:id="D4eXY" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclSummable" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1598,7 +1613,7 @@
         <ownedComments body="&#xA;Return the 'zero' value of self to initialize a summation.&#xA;&#xA;zero().sum(self) = self.&#xA;"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id=",qHxF" instanceClassName="java.lang.Object" isAbstract="true" name="OclTuple" superClasses="#jbMkR">
+    <ownedClasses xmi:id=",qHxF" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclTuple" superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1614,7 +1629,7 @@
         <ownedParameters xmi:id="6Odpl" name="object2" type="#zlfMH"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xmi:id="hlrMH" instanceClassName="java.lang.Object" isAbstract="true" name="OclType" superClasses="#zfDWR">
+    <ownedClasses xmi:id="hlrMH" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclType" superClasses="#zfDWR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1627,7 +1642,8 @@
         <ownedParameters xmi:id="sunLB" name="type2" type="#hlrMH"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:VoidType" xmi:id="7u3MH" instanceClassName="java.lang.Object" isAbstract="true" name="OclVoid" superClasses="#jbMkR">
+    <ownedClasses xsi:type="pivot:VoidType" xmi:id="7u3MH" instanceClassName="java.lang.Object" isAbstract="true" isInterface="true" name="OclVoid"
+        superClasses="#jbMkR">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>OCL</values>
@@ -1699,8 +1715,8 @@
         <ownedParameters xmi:id="TLn8p" name="b" type="#XEMMs"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Vw5fK" instanceClassName="java.util.Collection" isAbstract="true" name="OrderedCollection"
-        superClasses="#o1HIW">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="Vw5fK" instanceClassName="java.util.Collection" isAbstract="true" isInterface="true"
+        name="OrderedCollection" superClasses="#o1HIW">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Collection</values>
@@ -1734,8 +1750,8 @@
       </ownedOperations>
       <ownedTemplateParameters xmi:id="C,2XF" name="T"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="fIXUp" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet" name="OrderedSet"
-        superClasses="#1F9eM #Zw3DG">
+    <ownedClasses xsi:type="pivot:OrderedSetType" xmi:id="fIXUp" instanceClassName="org.eclipse.ocl.pivot.values.OrderedSet" isAbstract="true"
+        isInterface="true" name="OrderedSet" superClasses="#1F9eM #Zw3DG">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Collection</values>
@@ -2004,7 +2020,8 @@
         <ownedComments body="&#xA;Converts oclText[self] to a string value.&#xA;"/>
       </ownedOperations>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="rk5ZZ" instanceClassName="java.util.List" name="Sequence" superClasses="#1F9eM">
+    <ownedClasses xsi:type="pivot:SequenceType" xmi:id="rk5ZZ" instanceClassName="java.util.List" isAbstract="true" isInterface="true"
+        name="Sequence" superClasses="#1F9eM">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Collection</values>
@@ -2135,7 +2152,8 @@
       </ownedOperations>
       <ownedTemplateParameters xmi:id="AC9m4" name="T"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:SetType" xmi:id="MGgHF" instanceClassName="java.util.Set" name="Set" superClasses="#Zw3DG">
+    <ownedClasses xsi:type="pivot:SetType" xmi:id="MGgHF" instanceClassName="java.util.Set" isAbstract="true" isInterface="true" name="Set"
+        superClasses="#Zw3DG">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Collection</values>
@@ -2435,8 +2453,8 @@
       </ownedOperations>
       <ownedProperties xmi:id="PjpFg" isImplicit="true" isRequired="true" name="CollectionType" opposite="#5RgO0" type="#JSczz"/>
     </ownedClasses>
-    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="5a0EE" instanceClassName="java.util.Collection" isAbstract="true" name="UniqueCollection"
-        superClasses="#o1HIW">
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="5a0EE" instanceClassName="java.util.Collection" isAbstract="true" isInterface="true"
+        name="UniqueCollection" superClasses="#o1HIW">
       <ownedAnnotations xsi:type="pivot:Annotation" name="http://www.omg.org/ocl">
         <ownedDetails name="ClassGroup">
           <values>Collection</values>
@@ -2543,6 +2561,9 @@
     <ownedClasses xsi:type="pivot:BagType" xmi:id="fCthp" generic="#yEcHF" name="Bag" superClasses="#1dVj4">
       <ownedTemplateArguments actual="#tYNHJ"/>
     </ownedClasses>
+    <ownedClasses xsi:type="pivot:BagType" xmi:id="vQtf8" generic="#yEcHF" name="Bag" superClasses="#FsVhL">
+      <ownedTemplateArguments actual="#9QQRW"/>
+    </ownedClasses>
     <ownedClasses xsi:type="pivot:BagType" xmi:id="158KG" generic="#yEcHF" name="Bag" superClasses="#LVlMV">
       <ownedTemplateArguments actual="#zfDWR"/>
     </ownedClasses>
@@ -2569,6 +2590,9 @@
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="6c1Sm" generic="#IgEJU" name="Collection" superClasses="#jbMkR">
       <ownedTemplateArguments actual="#tYtCd" actualIsRequired="true"/>
+    </ownedClasses>
+    <ownedClasses xsi:type="pivot:CollectionType" xmi:id="FsVhL" generic="#IgEJU" name="Collection" superClasses="#jbMkR">
+      <ownedTemplateArguments actual="#9QQRW"/>
     </ownedClasses>
     <ownedClasses xsi:type="pivot:CollectionType" xmi:id="7aA3o" generic="#IgEJU" name="Collection" superClasses="#jbMkR">
       <ownedTemplateArguments actual="#jbMkR"/>

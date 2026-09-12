@@ -880,6 +880,17 @@ type Map(K,V) : MapType conformsTo OclAny => 'java.util.Map' {
 }
 
 /*
+NonNullType wraps a nullable Type for use as a non-null type.
+ */
+abstract type NonNullType(T) : Class conformsTo OclType {
+	annotation 'http://www.omg.org/ocl'(ClassGroup='Collection');
+	/*
+	The nullable type wrapped as non-null by this type.
+	*/
+	property nullableType : T[1];
+}
+
+/*
 All types in the UML model and the primitive and collection types in the OCL standard library conforms to the type OclAny.
 Conceptually, OclAny behaves as a supertype for all the types.
 Features of OclAny are available on each object in all OCL expressions.

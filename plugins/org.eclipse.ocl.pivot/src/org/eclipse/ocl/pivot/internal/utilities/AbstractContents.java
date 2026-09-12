@@ -372,6 +372,18 @@ public abstract class AbstractContents extends PivotUtil
 		return PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 
+	/**
+	 * @since 7.0
+	 */
+	public void createTemplateSignature(org.eclipse.ocl.pivot.@NonNull Class asClass, @NonNull TemplateParameter @Nullable ... asTemplateParameters) {
+		if (asTemplateParameters != null) {
+			List<TemplateParameter> ownedTemplateParameters = asClass.getOwnedTemplateParameters();
+			for (@NonNull TemplateParameter asTemplateParameter : asTemplateParameters) {
+				ownedTemplateParameters.add(asTemplateParameter);
+			}
+		}
+	}
+
 	protected @NonNull AnyType getAnyType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
 		return (AnyType) ClassUtil.requireNonNull(asPackage.getOwnedClass(name));
 	}

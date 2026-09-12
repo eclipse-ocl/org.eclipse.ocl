@@ -224,6 +224,36 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 			//				return;
 			//			}
 			Model pivotModel = (Model)ClassUtil.requireNonNull(asResource.getContents().get(0));
+			//
+			//	Define the unmodelled interfaces inhibiting generation of bloated EClasses.
+			//
+			for (org.eclipse.ocl.pivot.Package asPackage : pivotModel.getOwnedPackages()) {
+				if (asPackage instanceof Library) {
+					Library asLibrary = (Library)asPackage;
+					setInterface(asLibrary, "NonNull");
+					setInterface(asLibrary, TypeId.BAG_NAME);
+					setInterface(asLibrary, TypeId.COLLECTION_NAME);
+					setInterface(asLibrary, TypeId.OCL_ANY_NAME);
+					setInterface(asLibrary, TypeId.OCL_COMPARABLE_NAME);
+					setInterface(asLibrary, TypeId.OCL_ELEMENT_NAME);
+					setInterface(asLibrary, TypeId.OCL_ENUMERATION_NAME);
+					setInterface(asLibrary, TypeId.OCL_INVALID_NAME);
+					setInterface(asLibrary, TypeId.OCL_LAMBDA_NAME);
+					setInterface(asLibrary, TypeId.OCL_MESSAGE_NAME);
+					setInterface(asLibrary, TypeId.OCL_SELF_NAME);
+					setInterface(asLibrary, TypeId.OCL_STATE_NAME);
+					setInterface(asLibrary, TypeId.OCL_STEREOTYPE_NAME);
+					setInterface(asLibrary, TypeId.OCL_SUMMABLE_NAME);
+					setInterface(asLibrary, TypeId.OCL_TUPLE_NAME);
+					setInterface(asLibrary, TypeId.OCL_TYPE_NAME);
+					setInterface(asLibrary, TypeId.OCL_VOID_NAME);
+					setInterface(asLibrary, TypeId.ORDERED_COLLECTION_NAME);
+					setInterface(asLibrary, TypeId.ORDERED_SET_NAME);
+					setInterface(asLibrary, TypeId.SEQUENCE_NAME);
+					setInterface(asLibrary, TypeId.SET_NAME);
+					setInterface(asLibrary, TypeId.UNIQUE_COLLECTION_NAME);
+				}
+			}
 		//	assert pivotModel.getOwnedPackages().size() == 1;				// No orphanage, but may have an implicit package, so 100% to synthesize
 			ASSaver saver = new SaverStandardLibraryImpl(asResource);
 			saver.localize();					// XXX redundant
@@ -347,6 +377,14 @@ public abstract class GenerateOCLstdlib extends GenerateOCLCommonXtend
 	 */
 	public void setEcoreFile(String ecoreFile) {
 		this.ecoreFile = ecoreFile;
+	}
+
+	private void setInterface(@NonNull Library asLibrary, @NonNull String name) {
+		org.eclipse.ocl.pivot.Class asClass = asLibrary.getOwnedClass(name);
+		if (asClass != null) {		// null for a new class
+			asClass.setIsAbstract(true);
+			asClass.setIsInterface(true);
+		}
 	}
 
 	/**

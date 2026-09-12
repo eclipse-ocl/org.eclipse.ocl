@@ -76,6 +76,10 @@ public interface TypeId extends ElementId
 	public static final @NonNull String MAP_NAME = "Map";
 	public static final @NonNull String MAP_TYPE_NAME = "MapType";
 	public static final @NonNull String METACLASS_NAME = "Metaclass";
+	/**
+	 * @since 7.0
+	 */
+	public static final @NonNull String NON_NULL_TYPE_NAME = "NonNullType";
 	public static final @NonNull String OCL_ANY_NAME = "OclAny";
 	public static final @NonNull String OCL_COMPARABLE_NAME = "OclComparable";
 	/**
@@ -158,6 +162,11 @@ public interface TypeId extends ElementId
 	 * @since 1.1
 	 */
 	public static final @NonNull PrimitiveTypeId OCL_ENUMERATION = IdManager.getPrimitiveTypeId(OCL_ENUMERATION_NAME);
+
+	/**
+	 * @since 7.0
+	 */
+	public static final @Nullable TypeId NON_NULL_TYPE = IdManager.getPrimitiveTypeId(NON_NULL_TYPE_NAME);
 
 	/**
 	 * OclInvalid has a distinct Id that captures its conformance to everything and very limited validity.

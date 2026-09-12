@@ -199,6 +199,13 @@ public class OCLstdlibPackage extends EPackageImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass nonNullTypeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EClass oclAnyEClass = null;
 
 	/**
@@ -2321,6 +2328,33 @@ public class OCLstdlibPackage extends EPackageImpl {
 
 
 	/**
+	 * Returns the meta object for class '{@link org.eclipse.ocl.pivot.oclstdlib.NonNullType <em>Non Null Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Non Null Type</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.NonNullType
+	 * @generated
+	 */
+	public EClass getNonNullType() {
+		return nonNullTypeEClass;
+	}
+
+
+	/**
+	 * Returns the meta object for the reference '{@link org.eclipse.ocl.pivot.oclstdlib.NonNullType#getNullableType <em>Nullable Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Nullable Type</em>'.
+	 * @see org.eclipse.ocl.pivot.oclstdlib.NonNullType#getNullableType()
+	 * @see #getNonNullType()
+	 * @generated
+	 */
+	public EReference getNonNullType_NullableType() {
+		return (EReference)nonNullTypeEClass.getEStructuralFeatures().get(0);
+	}
+
+
+	/**
 	 * Returns the meta object for data type '{@link org.eclipse.ocl.pivot.values.RealValue <em>Real</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -4315,7 +4349,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(mapEClass, 41);
 		createEOperation(mapEClass, 42);
 
-		oclAnyEClass = createEClass(4);
+		nonNullTypeEClass = createEClass(4);
+		createEReference(nonNullTypeEClass, 0);
+
+		oclAnyEClass = createEClass(5);
 		createEOperation(oclAnyEClass, 0);
 		createEOperation(oclAnyEClass, 1);
 		createEOperation(oclAnyEClass, 2);
@@ -4332,14 +4369,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(oclAnyEClass, 13);
 		createEOperation(oclAnyEClass, 14);
 
-		oclComparableEClass = createEClass(5);
+		oclComparableEClass = createEClass(6);
 		createEOperation(oclComparableEClass, 0);
 		createEOperation(oclComparableEClass, 1);
 		createEOperation(oclComparableEClass, 2);
 		createEOperation(oclComparableEClass, 3);
 		createEOperation(oclComparableEClass, 4);
 
-		oclElementEClass = createEClass(6);
+		oclElementEClass = createEClass(7);
 		createEReference(oclElementEClass, 0);
 		createEReference(oclElementEClass, 1);
 		createEOperation(oclElementEClass, 0);
@@ -4354,9 +4391,9 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(oclElementEClass, 9);
 		createEOperation(oclElementEClass, 10);
 
-		oclEnumerationEClass = createEClass(7);
+		oclEnumerationEClass = createEClass(8);
 
-		oclInvalidEClass = createEClass(8);
+		oclInvalidEClass = createEClass(9);
 		createEReference(oclInvalidEClass, 0);
 		createEOperation(oclInvalidEClass, 0);
 		createEOperation(oclInvalidEClass, 1);
@@ -4373,32 +4410,32 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(oclInvalidEClass, 12);
 		createEOperation(oclInvalidEClass, 13);
 
-		oclLambdaEClass = createEClass(9);
+		oclLambdaEClass = createEClass(10);
 
-		oclMessageEClass = createEClass(10);
+		oclMessageEClass = createEClass(11);
 		createEOperation(oclMessageEClass, 0);
 		createEOperation(oclMessageEClass, 1);
 		createEOperation(oclMessageEClass, 2);
 		createEOperation(oclMessageEClass, 3);
 
-		oclSelfEClass = createEClass(11);
+		oclSelfEClass = createEClass(12);
 
-		oclStateEClass = createEClass(12);
+		oclStateEClass = createEClass(13);
 
-		oclStereotypeEClass = createEClass(13);
+		oclStereotypeEClass = createEClass(14);
 
-		oclSummableEClass = createEClass(14);
+		oclSummableEClass = createEClass(15);
 		createEOperation(oclSummableEClass, 0);
 		createEOperation(oclSummableEClass, 1);
 
-		oclTupleEClass = createEClass(15);
+		oclTupleEClass = createEClass(16);
 		createEOperation(oclTupleEClass, 0);
 		createEOperation(oclTupleEClass, 1);
 
-		oclTypeEClass = createEClass(16);
+		oclTypeEClass = createEClass(17);
 		createEOperation(oclTypeEClass, 0);
 
-		oclVoidEClass = createEClass(17);
+		oclVoidEClass = createEClass(18);
 		createEOperation(oclVoidEClass, 0);
 		createEOperation(oclVoidEClass, 1);
 		createEOperation(oclVoidEClass, 2);
@@ -4418,14 +4455,14 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(oclVoidEClass, 16);
 		createEOperation(oclVoidEClass, 17);
 
-		orderedCollectionEClass = createEClass(18);
+		orderedCollectionEClass = createEClass(19);
 		createEOperation(orderedCollectionEClass, 48);
 		createEOperation(orderedCollectionEClass, 49);
 		createEOperation(orderedCollectionEClass, 50);
 		createEOperation(orderedCollectionEClass, 51);
 		createEOperation(orderedCollectionEClass, 52);
 
-		orderedSetEClass = createEClass(19);
+		orderedSetEClass = createEClass(20);
 		createEOperation(orderedSetEClass, 58);
 		createEOperation(orderedSetEClass, 59);
 		createEOperation(orderedSetEClass, 60);
@@ -4450,7 +4487,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(orderedSetEClass, 79);
 		createEOperation(orderedSetEClass, 80);
 
-		sequenceEClass = createEClass(20);
+		sequenceEClass = createEClass(21);
 		createEOperation(sequenceEClass, 53);
 		createEOperation(sequenceEClass, 54);
 		createEOperation(sequenceEClass, 55);
@@ -4474,7 +4511,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(sequenceEClass, 73);
 		createEOperation(sequenceEClass, 74);
 
-		setEClass = createEClass(21);
+		setEClass = createEClass(22);
 		createEOperation(setEClass, 53);
 		createEOperation(setEClass, 54);
 		createEOperation(setEClass, 55);
@@ -4492,23 +4529,23 @@ public class OCLstdlibPackage extends EPackageImpl {
 		createEOperation(setEClass, 67);
 		createEOperation(setEClass, 68);
 
-		uniqueCollectionEClass = createEClass(22);
+		uniqueCollectionEClass = createEClass(23);
 		createEOperation(uniqueCollectionEClass, 48);
 		createEOperation(uniqueCollectionEClass, 49);
 		createEOperation(uniqueCollectionEClass, 50);
 		createEOperation(uniqueCollectionEClass, 51);
 		createEOperation(uniqueCollectionEClass, 52);
 
-		entry_r_rEClass = createEClass(23);
+		entry_r_rEClass = createEClass(24);
 		createEReference(entry_r_rEClass, 0);
 		createEReference(entry_r_rEClass, 1);
 
 		// Create data types
-		booleanEDataType = createEDataType(24);
-		integerEDataType = createEDataType(25);
-		realEDataType = createEDataType(26);
-		stringEDataType = createEDataType(27);
-		unlimitedNaturalEDataType = createEDataType(28);
+		booleanEDataType = createEDataType(25);
+		integerEDataType = createEDataType(26);
+		realEDataType = createEDataType(27);
+		stringEDataType = createEDataType(28);
+		unlimitedNaturalEDataType = createEDataType(29);
 	}
 
 	/**
@@ -4541,6 +4578,7 @@ public class OCLstdlibPackage extends EPackageImpl {
 		ETypeParameter entryEClass_V = addETypeParameter(entryEClass, "V"); //$NON-NLS-1$
 		ETypeParameter mapEClass_K = addETypeParameter(mapEClass, "K"); //$NON-NLS-1$
 		ETypeParameter mapEClass_V = addETypeParameter(mapEClass, "V"); //$NON-NLS-1$
+		ETypeParameter nonNullTypeEClass_T = addETypeParameter(nonNullTypeEClass, "T"); //$NON-NLS-1$
 		ETypeParameter orderedCollectionEClass_T = addETypeParameter(orderedCollectionEClass, "T"); //$NON-NLS-1$
 		ETypeParameter orderedSetEClass_T = addETypeParameter(orderedSetEClass, "T"); //$NON-NLS-1$
 		ETypeParameter sequenceEClass_T = addETypeParameter(sequenceEClass, "T"); //$NON-NLS-1$
@@ -5356,6 +5394,10 @@ public class OCLstdlibPackage extends EPackageImpl {
 		op = initEOperation(getMap__Values(), null, "values", 0, -1, !IS_UNIQUE, !IS_ORDERED); //$NON-NLS-1$
 		g1 = createEGenericType(mapEClass_V);
 		initEOperation(op, g1);
+
+		initEClass(nonNullTypeEClass, NonNullType.class, "NonNullType", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+		g1 = createEGenericType(nonNullTypeEClass_T);
+		initEReference(getNonNullType_NullableType(), g1, null, "nullableType", null, 1, 1, NonNullType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED); //$NON-NLS-1$
 
 		initEClass(oclAnyEClass, Object.class, "OclAny", IS_ABSTRACT, IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
@@ -10269,6 +10311,24 @@ public class OCLstdlibPackage extends EPackageImpl {
 		 * @generated
 		 */
 		public static final EOperation MAP___VALUES = eINSTANCE.getMap__Values();
+
+		/**
+		 * The meta object literal for the '{@link org.eclipse.ocl.pivot.oclstdlib.NonNullType <em>Non Null Type</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.eclipse.ocl.pivot.oclstdlib.NonNullType
+		 * @see org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage#getNonNullType()
+		 * @generated
+		 */
+		public static final EClass NON_NULL_TYPE = eINSTANCE.getNonNullType();
+
+		/**
+		 * The meta object literal for the '<em><b>Nullable Type</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		public static final EReference NON_NULL_TYPE__NULLABLE_TYPE = eINSTANCE.getNonNullType_NullableType();
 
 		/**
 		 * The meta object literal for the '<em>Real</em>' data type.

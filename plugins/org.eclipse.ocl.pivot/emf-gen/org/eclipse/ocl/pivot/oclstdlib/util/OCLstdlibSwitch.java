@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
 import org.eclipse.jdt.annotation.Nullable;
+import org.eclipse.ocl.pivot.oclstdlib.NonNullType;
 import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 import org.eclipse.ocl.pivot.values.Bag;
 import org.eclipse.ocl.pivot.values.OrderedSet;
@@ -108,114 +109,103 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				return result;
 			}
 			case 4: {
+				NonNullType<?> nonNullType = (NonNullType<?>)theEObject;
+				T1 result = caseNonNullType(nonNullType);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 5: {
 				Object oclAny = theEObject;
 				T1 result = caseOclAny(oclAny);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 5: {
+			case 6: {
 				Object oclComparable = theEObject;
 				T1 result = caseOclComparable(oclComparable);
-				if (result == null) result = caseOclAny(oclComparable);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case 6: {
-				Object oclElement = theEObject;
-				T1 result = caseOclElement(oclElement);
-				if (result == null) result = caseOclAny(oclElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 7: {
-				Object oclEnumeration = theEObject;
-				T1 result = caseOclEnumeration(oclEnumeration);
-				if (result == null) result = caseOclAny(oclEnumeration);
+				Object oclElement = theEObject;
+				T1 result = caseOclElement(oclElement);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 8: {
-				Object oclInvalid = theEObject;
-				T1 result = caseOclInvalid(oclInvalid);
-				if (result == null) result = caseOclVoid(oclInvalid);
-				if (result == null) result = caseOclAny(oclInvalid);
+				Object oclEnumeration = theEObject;
+				T1 result = caseOclEnumeration(oclEnumeration);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 9: {
-				Object oclLambda = theEObject;
-				T1 result = caseOclLambda(oclLambda);
-				if (result == null) result = caseOclAny(oclLambda);
+				Object oclInvalid = theEObject;
+				T1 result = caseOclInvalid(oclInvalid);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 10: {
-				Object oclMessage = theEObject;
-				T1 result = caseOclMessage(oclMessage);
-				if (result == null) result = caseOclAny(oclMessage);
+				Object oclLambda = theEObject;
+				T1 result = caseOclLambda(oclLambda);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 11: {
-				Object oclSelf = theEObject;
-				T1 result = caseOclSelf(oclSelf);
-				if (result == null) result = caseOclAny(oclSelf);
+				Object oclMessage = theEObject;
+				T1 result = caseOclMessage(oclMessage);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 12: {
-				Object oclState = theEObject;
-				T1 result = caseOclState(oclState);
-				if (result == null) result = caseOclAny(oclState);
+				Object oclSelf = theEObject;
+				T1 result = caseOclSelf(oclSelf);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 13: {
-				Object oclStereotype = theEObject;
-				T1 result = caseOclStereotype(oclStereotype);
-				if (result == null) result = caseOclType(oclStereotype);
-				if (result == null) result = caseOclElement(oclStereotype);
-				if (result == null) result = caseOclAny(oclStereotype);
+				Object oclState = theEObject;
+				T1 result = caseOclState(oclState);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 14: {
-				Object oclSummable = theEObject;
-				T1 result = caseOclSummable(oclSummable);
-				if (result == null) result = caseOclAny(oclSummable);
+				Object oclStereotype = theEObject;
+				T1 result = caseOclStereotype(oclStereotype);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 15: {
-				Object oclTuple = theEObject;
-				T1 result = caseOclTuple(oclTuple);
-				if (result == null) result = caseOclAny(oclTuple);
+				Object oclSummable = theEObject;
+				T1 result = caseOclSummable(oclSummable);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 16: {
-				Object oclType = theEObject;
-				T1 result = caseOclType(oclType);
-				if (result == null) result = caseOclElement(oclType);
-				if (result == null) result = caseOclAny(oclType);
+				Object oclTuple = theEObject;
+				T1 result = caseOclTuple(oclTuple);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 17: {
-				Object oclVoid = theEObject;
-				T1 result = caseOclVoid(oclVoid);
-				if (result == null) result = caseOclAny(oclVoid);
+				Object oclType = theEObject;
+				T1 result = caseOclType(oclType);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
 			case 18: {
+				Object oclVoid = theEObject;
+				T1 result = caseOclVoid(oclVoid);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case 19: {
 				Collection<?> orderedCollection = (Collection<?>)theEObject;
 				T1 result = caseOrderedCollection(orderedCollection);
 				if (result == null) result = caseCollection(orderedCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 19: {
+			case 20: {
 				OrderedSet<?> orderedSet = (OrderedSet<?>)theEObject;
 				T1 result = caseOrderedSet(orderedSet);
 				if (result == null) result = caseOrderedCollection(orderedSet);
@@ -224,7 +214,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 20: {
+			case 21: {
 				List<?> sequence = (List<?>)theEObject;
 				T1 result = caseSequence(sequence);
 				if (result == null) result = caseOrderedCollection(sequence);
@@ -232,7 +222,7 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 21: {
+			case 22: {
 				Set<?> set = (Set<?>)theEObject;
 				T1 result = caseSet(set);
 				if (result == null) result = caseUniqueCollection(set);
@@ -240,14 +230,14 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 22: {
+			case 23: {
 				Collection<?> uniqueCollection = (Collection<?>)theEObject;
 				T1 result = caseUniqueCollection(uniqueCollection);
 				if (result == null) result = caseCollection(uniqueCollection);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case 23: {
+			case 24: {
 				@SuppressWarnings("unchecked") Map.Entry<?, ?> entry_r_r = (Map.Entry<?, ?>)theEObject;
 				T1 result = caseEntry_r_r(entry_r_r);
 				if (result == null) result = defaultCase(theEObject);
@@ -314,6 +304,21 @@ public class OCLstdlibSwitch<@Nullable T1> extends Switch<T1> {
 	 * @generated
 	 */
 	public <K, V> T1 caseMap(Map<K, V> object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Non Null Type</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Non Null Type</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public <T> T1 caseNonNullType(NonNullType<T> object) {
 		return null;
 	}
 
