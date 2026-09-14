@@ -30,6 +30,11 @@
       location="${jre.location-21}"
       name="JRE for JavaSE-21"/>
   <setupTask
+      xsi:type="jdt:JRETask"
+      version="JavaSE-25"
+      location="${jre.location-25}"
+      name="JRE for JavaSE-25"/>
+  <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Xmx"
       value="2048m"
@@ -62,7 +67,7 @@
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
-      defaultValue="2026-03"
+      defaultValue="2026-09"
       storageURI="scope://Workspace"/>
   <setupTask
       xsi:type="setup.p2:P2Task">
@@ -121,6 +126,13 @@
             url="https://download.eclipse.org/releases/latest"/>
         <repository
             url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/release/latest"/>
+      </repositoryList>
+      <repositoryList
+          name="2026-09">
+        <repository
+            url="https://download.eclipse.org/releases/2026-09"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/2026-09"/>
       </repositoryList>
       <repositoryList
           name="2026-06">
@@ -668,6 +680,9 @@
         name="master"
         label="Master (Latest)"/>
     <stream
+        name="6.24.0"
+        label="6.24.0 (2026-06)"/>
+    <stream
         name="6.23.0"
         label="6.23.0 (2026-03)"/>
     <stream
@@ -885,6 +900,9 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.24.0"
+        label="6.24.0 (2026-06)"/>
     <stream
         name="6.23.0"
         label="6.23.0 (2026-03)"/>
@@ -1475,6 +1493,9 @@
     <stream
         name="master"
         label="Master (Latest)"/>
+    <stream
+        name="6.24.0"
+        label="6.24.0 (2026-06)"/>
     <stream
         name="6.23.0"
         label="6.23.0 (2026-03)"/>
