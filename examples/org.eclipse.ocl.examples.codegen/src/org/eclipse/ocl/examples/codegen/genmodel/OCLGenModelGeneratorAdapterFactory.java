@@ -17,9 +17,9 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.jdt.annotation.NonNull;
 
 /**
- * OCLGenModelGeneratorAdapterFactory is a hopefully temporary facility awaiting a fix for EMF Bug 543870.
+ * OCLGenModelGeneratorAdapterFactory configures the redirection of overridden EMF codegen templates
+ * to their OCL overrides.
  */
-@Deprecated		/* @deprecated temporary workaround for Bug 543870 */
 public class OCLGenModelGeneratorAdapterFactory extends GenModelGeneratorAdapterFactory
 {
 	/**

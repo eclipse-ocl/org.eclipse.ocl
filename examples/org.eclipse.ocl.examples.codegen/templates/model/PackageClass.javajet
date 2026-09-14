@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.ecore.* org.eclipse.emf.ecore.util.EcoreUtil org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.impl.Literals org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil" class="PackageClass"%>
+<%@ jet package="org.eclipse.ocl.examples.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.ecore.* org.eclipse.emf.ecore.util.EcoreUtil org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.emf.codegen.ecore.genmodel.impl.Literals org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil" class="PackageClass"%>
 <%
 /**
  * Copyright (c) 2002-2019 IBM Corporation and others.

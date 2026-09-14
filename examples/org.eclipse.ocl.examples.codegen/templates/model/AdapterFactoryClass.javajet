@@ -1,4 +1,4 @@
-<%@ jet package="org.eclipse.emf.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil" class="AdapterFactoryClass"%>
+<%@ jet package="org.eclipse.ocl.examples.codegen.ecore.templates.model" imports="java.util.* org.eclipse.emf.codegen.ecore.genmodel.* org.eclipse.ocl.examples.codegen.genmodel.OCLGenModelUtil" class="AdapterFactoryClass"%>
 <%
 /**
  * Copyright (c) 2002-2019 IBM Corporation and others.

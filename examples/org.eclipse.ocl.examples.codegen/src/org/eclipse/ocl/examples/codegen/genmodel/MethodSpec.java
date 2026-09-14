@@ -17,7 +17,7 @@ import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
 
 /**
- * MethodSpec captures the requirements for insering a merthod hierarchy into a genmodel interface/implementation hierarchy.
+ * MethodSpec captures the requirements for inserting a method hierarchy into a genmodel interface/implementation hierarchy.
  * The derived getBody() method provides the implementation contents.
  */
 public abstract class MethodSpec

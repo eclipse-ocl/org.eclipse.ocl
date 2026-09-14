@@ -1,4 +1,4 @@
-package org.eclipse.emf.codegen.ecore.templates.model;
+package org.eclipse.ocl.examples.codegen.ecore.templates.model;
 
 import java.util.*;
 import org.eclipse.emf.ecore.*;
