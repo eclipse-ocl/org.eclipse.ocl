@@ -17,6 +17,9 @@ import java.io.Reader;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -30,6 +33,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.xmi.XMIException;
+import org.eclipse.emf.ecore.xmi.XMLLoad;
+import org.eclipse.emf.ecore.xmi.impl.XMILoadImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jdt.annotation.NonNull;
 import org.eclipse.jdt.annotation.Nullable;
@@ -52,6 +57,7 @@ import org.eclipse.ocl.pivot.utilities.TracingAdapter;
 import org.eclipse.ocl.pivot.utilities.TracingOption;
 import org.eclipse.ocl.pivot.utilities.TreeIterable;
 import org.eclipse.ocl.pivot.utilities.XMIUtil;
+import org.xml.sax.SAXException;
 
 /**
  * ASResourceImpl is the mandatory implementation of the ASResource interface that refines an
@@ -338,6 +344,43 @@ public class ASResourceImpl extends XMIResourceImpl implements ASResource
 	@Override
 	protected @NonNull PivotXMIHelperImpl createXMLHelper() {
 		return new PivotXMIHelperImpl(this);
+	}
+
+	/**
+	 * Overloaded to revert Java 25 java.xml limits to the pre Java 25 values avoiding problems with
+	 * not very 'big' XML files. Without this, 3 QVTd JUnit tests fail.
+	 *
+	 * See org.eclipse.equinox.internal.p2.persistence.XMLParser,
+	 * https://github.com/eclipse-platform/eclipse.platform/discussions/2918,
+	 * https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/module-summary.html#IN_ISFPtable
+	 */
+	@Override
+	protected XMLLoad createXMLLoad() {
+	    return new XMILoadImpl(createXMLHelper())
+	    {
+	    	private static final int MAX_ENTITIES = 0;
+
+			@Override
+			protected SAXParser makeParser() throws ParserConfigurationException, SAXException {
+				SAXParser theParser = super.makeParser();
+				try {
+					theParser.setProperty("jdk.xml.totalEntitySizeLimit", Integer.getInteger("jdk.xml.totalEntitySizeLimit", MAX_ENTITIES));
+				} catch (SAXException se) {
+					// Maybe not supported.
+				}
+				try {
+					theParser.setProperty("jdk.xml.maxGeneralEntitySizeLimit", Integer.getInteger("jdk.xml.maxGeneralEntitySizeLimit", MAX_ENTITIES));
+				} catch (SAXException se) {
+					// Maybe not supported.
+				}
+				try {
+					theParser.setProperty("jdk.xml.entityExpansionLimit", Integer.getInteger("jdk.xml.entityExpansionLimit", MAX_ENTITIES));
+				} catch (SAXException se) {
+					// Maybe not supported.
+				}
+				return theParser;
+			}
+	    };
 	}
 
 	/**
