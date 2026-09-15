@@ -1,4 +1,6 @@
 def targetPlatformToJavaVersionMap = [
+  '2026-09' : '21',
+  '2026-06' : '21',
   '2026-03' : '21',
   '2025-12' : '21',
   '2025-09' : '21',
@@ -50,8 +52,8 @@ pipeline {
 <ul>
 <li> reload -- to reload the parameter definitions from GIT and bypass testing
 <li> branch-21 -- to test the latest ocl-branch build on latest Eclipse
-<li> 2025-03 2026-03 -- to test a list of (two) specific platforms
-<li> &lt;blank&gt; -- to test all of the 2025-03 to 2026-03 inclusive platforms
+<li> 2025-03 2026-09 -- to test a list of (two) specific platforms
+<li> &lt;blank&gt; -- to test all of the 2025-03 to 2026-09 inclusive platforms
 </ul>'''
 		)
 

@@ -52,4 +52,14 @@
  	  <jdkHome>E:/Tools/Java/jdk-21.0.5/bin</jdkHome>
    </configuration>
   </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>25.0</version>
+      <vendor>oracle</vendor>
+    </provides>
+    <configuration>
+ 	  <jdkHome>E:/Tools/Java/jdk-25.0.4.1/bin</jdkHome>
+   </configuration>
+  </toolchain>
 </toolchains>

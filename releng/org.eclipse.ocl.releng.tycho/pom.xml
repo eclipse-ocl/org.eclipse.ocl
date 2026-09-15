@@ -69,7 +69,7 @@
     <maven-surefire-version>3.5.2</maven-surefire-version>
     <maven-toolchains-version>3.2.0</maven-toolchains-version>
     <!-- see ocl#2354 for problems progressing to Tycho 4.0.4 -->
-    <tycho-version>3.0.5</tycho-version>
+    <tycho-version>5.0.4</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
     <BUILD_ALIAS></BUILD_ALIAS>
@@ -147,10 +147,7 @@
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <configuration>
-          <!--resolver>p2</resolver-->
-          <!-- See Bug 541797, org.eclipse.equinox.http.jetty seemed to need JavaSE-1.8 to be explicit.
-           Since moving to a Java 11-build environment, it no longer appears to be necessary. -->
-          <!--executionEnvironment>JavaSE-1.8</executionEnvironment-->
+          <executionEnvironment>JavaSE-25</executionEnvironment>
           <target>
             <artifact>
               <groupId>org.eclipse.ocl</groupId>

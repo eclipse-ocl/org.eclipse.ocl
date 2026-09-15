@@ -72,8 +72,7 @@
     <maven-site-version>4.0.0-M16</maven-site-version>
     <maven-surefire-version>3.5.2</maven-surefire-version>
     <maven-toolchains-version>3.2.0</maven-toolchains-version>
-    <!-- see ocl#2354 for problems progressing to Tycho 4.0.4 -->
-    <tycho-version>3.0.5</tycho-version>
+    <tycho-version>5.0.4</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
 
     <argLineTail>-Declipse.e4.inject.javax.disabled=true -ea</argLineTail>

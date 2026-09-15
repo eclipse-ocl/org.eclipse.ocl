@@ -73,9 +73,7 @@
     <maven-site-version>4.0.0-M16</maven-site-version>
     <maven-surefire-version>3.5.2</maven-surefire-version>
     <maven-toolchains-version>3.2.0</maven-toolchains-version>
-    <!-- see ocl#2354 for problems progressing to Tycho 4.0.4 -->
-    <!-- Default to placate editor - overridden applied for execution-->
-    <tycho-version>3.0.5</tycho-version>
+    <tycho-version>5.0.4</tycho-version>
     <tycho-extras-version>${tycho-version}</tycho-extras-version>
     
     <BUILD_ALIAS></BUILD_ALIAS>
@@ -866,6 +864,19 @@
       </properties>
     </profile>
     <profile>
+      <id>2026-09</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+      </activation>
+      <properties>
+        <buildType></buildType>
+        <executionEnvironment>JavaSE-21</executionEnvironment>
+        <runtime-jdk-version>21.0</runtime-jdk-version>
+        <targetRelease>2026-09</targetRelease>
+        <tycho-version>3.0.5</tycho-version>
+      </properties>
+    </profile>
+    <profile>
       <id>branch-11</id>
       <activation>
         <activeByDefault>false</activeByDefault>
@@ -875,7 +886,7 @@
         <executionEnvironment>JavaSE-11</executionEnvironment>
         <runtime-jdk-version>11.0</runtime-jdk-version>
         <targetRelease>branch</targetRelease>
-        <tycho-version>3.0.5</tycho-version>
+        <tycho-version>5.0.4</tycho-version>
       </properties>
     </profile>
     <profile>
@@ -888,7 +899,7 @@
         <executionEnvironment>JavaSE-17</executionEnvironment>
         <runtime-jdk-version>17.0</runtime-jdk-version>
         <targetRelease>branch</targetRelease>
-        <tycho-version>3.0.5</tycho-version>
+        <tycho-version>5.0.4</tycho-version>
       </properties>
     </profile>
     <profile>
@@ -901,7 +912,7 @@
         <executionEnvironment>JavaSE-21</executionEnvironment>
         <runtime-jdk-version>21.0</runtime-jdk-version>
         <targetRelease>branch</targetRelease>
-        <tycho-version>3.0.5</tycho-version>
+        <tycho-version>5.0.4</tycho-version>
       </properties>
     </profile>
   </profiles>
