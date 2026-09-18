@@ -50,6 +50,7 @@ public class EssentialOCLAS2CS extends BaseAS2CS
 				PivotPackage.Literals.BAG_TYPE,
 				PivotPackage.Literals.BOOLEAN_TYPE,
 				PivotPackage.Literals.COLLECTION_TYPE,
+				PivotPackage.Literals.ENTRY_TYPE,
 				PivotPackage.Literals.MAP_TYPE,
 				PivotPackage.Literals.NORMALIZED_TEMPLATE_PARAMETER,
 				PivotPackage.Literals.ORDERED_SET_TYPE,

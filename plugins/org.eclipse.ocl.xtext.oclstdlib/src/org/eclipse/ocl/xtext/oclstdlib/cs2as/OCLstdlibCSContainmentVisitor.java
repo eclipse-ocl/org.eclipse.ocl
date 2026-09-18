@@ -171,6 +171,9 @@ public class OCLstdlibCSContainmentVisitor extends AbstractOCLstdlibCSContainmen
 			else if (Collection.class.isAssignableFrom(instanceClass)) {
 				eClass = PivotPackage.Literals.COLLECTION_TYPE;
 			}
+			else if (java.util.Map.Entry.class.isAssignableFrom(instanceClass)) {
+				eClass = PivotPackage.Literals.ENTRY_TYPE;
+			}
 			else if (Map.class.isAssignableFrom(instanceClass)) {
 				eClass = PivotPackage.Literals.MAP_TYPE;
 			}

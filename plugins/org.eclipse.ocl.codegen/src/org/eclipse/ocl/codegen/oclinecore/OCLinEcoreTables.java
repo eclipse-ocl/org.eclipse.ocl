@@ -42,6 +42,7 @@ import org.eclipse.ocl.pivot.BagType;
 import org.eclipse.ocl.pivot.BooleanType;
 import org.eclipse.ocl.pivot.CompleteClass;
 import org.eclipse.ocl.pivot.Constraint;
+import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
 import org.eclipse.ocl.pivot.InvalidType;
@@ -1852,6 +1853,9 @@ public class OCLinEcoreTables extends OCLinEcoreTablesUtils
 			else {
 				return PivotPackage.Literals.COLLECTION_TYPE;
 			}
+		}
+		else if (asClass instanceof EntryType) {
+			return PivotPackage.Literals.ENTRY_TYPE;
 		}
 		else if (asClass instanceof Enumeration) {
 			return PivotPackage.Literals.ENUMERATION;
