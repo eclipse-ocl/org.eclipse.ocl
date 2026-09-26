@@ -490,11 +490,11 @@ public class MapTypeImpl extends KeyValueTypeImpl implements MapType
 			case 24:
 				return getKeyType() != null;
 			case 25:
-				return ((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0) != KEYS_ARE_NULL_FREE_EDEFAULT;
+				return isKeysAreNullFree() != KEYS_ARE_NULL_FREE_EDEFAULT;
 			case 26:
 				return getValueType() != null;
 			case 27:
-				return ((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0) != VALUES_ARE_NULL_FREE_EDEFAULT;
+				return isValuesAreNullFree() != VALUES_ARE_NULL_FREE_EDEFAULT;
 			case 28:
 				return entryClass != null;
 		}

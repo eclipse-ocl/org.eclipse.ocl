@@ -48,8 +48,11 @@ import org.eclipse.ocl.pivot.internal.library.StandardLibraryContribution;
 import org.eclipse.ocl.pivot.internal.resource.ASResourceImpl;
 import org.eclipse.ocl.pivot.internal.resource.OCLASResourceFactory;
 import org.eclipse.ocl.pivot.internal.utilities.AbstractContents;
+import org.eclipse.ocl.pivot.model.OCLstdlib;
 import org.eclipse.ocl.pivot.utilities.EnvironmentFactory;
 import org.eclipse.ocl.pivot.utilities.PivotConstants;
+import org.eclipse.ocl.pivot.PivotPackage;
+import org.eclipse.ocl.pivot.oclstdlib.OCLstdlibPackage;
 
 /**
  * This is the pivot representation of the http://www.eclipse.org/ocl/2015/Pivot metamodel
@@ -3515,8 +3518,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsVolatile(true);
 			property.setOpposite(pr_Type_KeyValueType_keyType);
 			ownedProperties.add(property = pr_KeyValueType_keysAreNullFree);
+			property.setIsDerived(true);
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
+			property.setIsTransient(true);
+			property.setIsVolatile(true);
 			property.setDefaultValueString("true");
 			ownedProperties.add(property = pr_KeyValueType_valueType);
 			property.setIsDerived(true);
@@ -3525,8 +3531,11 @@ public class OCLmetamodel extends ASResourceImpl
 			property.setIsVolatile(true);
 			property.setOpposite(pr_Type_KeyValueType_valueType);
 			ownedProperties.add(property = pr_KeyValueType_valuesAreNullFree);
+			property.setIsDerived(true);
 			property.setIsRequired(true);
 			property.setIsResolveProxies(true);
+			property.setIsTransient(true);
+			property.setIsVolatile(true);
 			property.setDefaultValueString("true");
 
 			ownedProperties = _LambdaParameter.getOwnedProperties();

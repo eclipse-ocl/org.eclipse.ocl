@@ -12,9 +12,7 @@ package org.eclipse.ocl.pivot.internal;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.ocl.pivot.Behavior;
 import org.eclipse.ocl.pivot.Comment;
 import org.eclipse.ocl.pivot.Constraint;
@@ -79,16 +77,6 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	protected static final boolean KEYS_ARE_NULL_FREE_EDEFAULT = true;
 
 	/**
-	 * The flag representing the value of the '{@link #isKeysAreNullFree() <em>Keys Are Null Free</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isKeysAreNullFree()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int KEYS_ARE_NULL_FREE_EFLAG = 1 << 12;
-
-	/**
 	 * The default value of the '{@link #isValuesAreNullFree() <em>Values Are Null Free</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -99,17 +87,6 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	protected static final boolean VALUES_ARE_NULL_FREE_EDEFAULT = true;
 
 	/**
-	 * The flag representing the value of the '{@link #isValuesAreNullFree() <em>Values Are Null Free</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isValuesAreNullFree()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int VALUES_ARE_NULL_FREE_EFLAG = 1 << 13;
-
-
-	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -117,8 +94,6 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	protected KeyValueTypeImpl()
 	{
 		super();
-		eFlags |= KEYS_ARE_NULL_FREE_EFLAG;
-		eFlags |= VALUES_ARE_NULL_FREE_EFLAG;
 	}
 
 	/**
@@ -166,7 +141,12 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	@Override
 	public boolean isKeysAreNullFree()
 	{
-		return (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
+		if (ownedTemplateParameters != null) {
+			return false;
+		}
+		else {
+			return ownedTemplateArguments.get(0).isActualIsRequired();
+		}
 	}
 
 	/**
@@ -177,10 +157,8 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	@Override
 	public void setKeysAreNullFree(boolean newKeysAreNullFree)
 	{
-		boolean oldKeysAreNullFree = (eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0;
-		if (newKeysAreNullFree) eFlags |= KEYS_ARE_NULL_FREE_EFLAG; else eFlags &= ~KEYS_ARE_NULL_FREE_EFLAG;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldKeysAreNullFree, newKeysAreNullFree));
+//		getOwnedTemplateArguments().get(0).setActualIsRequired(newKeysAreNullFree);
+		System.err.println(eClass().getName() + ".setKeysAreNullFree() is ignored");
 	}
 
 	/**
@@ -217,7 +195,12 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	@Override
 	public boolean isValuesAreNullFree()
 	{
-		return (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
+		if (ownedTemplateParameters != null) {
+			return false;
+		}
+		else {
+			return ownedTemplateArguments.get(1).isActualIsRequired();
+		}
 	}
 
 	/**
@@ -228,10 +211,8 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	@Override
 	public void setValuesAreNullFree(boolean newValuesAreNullFree)
 	{
-		boolean oldValuesAreNullFree = (eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0;
-		if (newValuesAreNullFree) eFlags |= VALUES_ARE_NULL_FREE_EFLAG; else eFlags &= ~VALUES_ARE_NULL_FREE_EFLAG;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 27, oldValuesAreNullFree, newValuesAreNullFree));
+//		getOwnedTemplateArguments().get(1).setActualIsRequired(newValuesAreNullFree);
+		System.err.println(eClass().getName() + ".setValuesAreNullFree() is ignored");
 	}
 
 	/**
@@ -572,11 +553,11 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 			case 24:
 				return getKeyType() != null;
 			case 25:
-				return ((eFlags & KEYS_ARE_NULL_FREE_EFLAG) != 0) != KEYS_ARE_NULL_FREE_EDEFAULT;
+				return isKeysAreNullFree() != KEYS_ARE_NULL_FREE_EDEFAULT;
 			case 26:
 				return getValueType() != null;
 			case 27:
-				return ((eFlags & VALUES_ARE_NULL_FREE_EFLAG) != 0) != VALUES_ARE_NULL_FREE_EDEFAULT;
+				return isValuesAreNullFree() != VALUES_ARE_NULL_FREE_EDEFAULT;
 		}
 		return eDynamicIsSet(featureID);
 	}

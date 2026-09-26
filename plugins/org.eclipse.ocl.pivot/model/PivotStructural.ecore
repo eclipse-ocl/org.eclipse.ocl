@@ -578,11 +578,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="keyType" lowerBound="1"
         eType="#//Type" volatile="true" transient="true" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="keysAreNullFree" lowerBound="1"
-        eType="#//Boolean" defaultValueLiteral="true"/>
+        eType="#//Boolean" volatile="true" transient="true" defaultValueLiteral="true"
+        derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="valueType" lowerBound="1"
         eType="#//Type" volatile="true" transient="true" derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="valuesAreNullFree" lowerBound="1"
-        eType="#//Boolean" defaultValueLiteral="true"/>
+        eType="#//Boolean" volatile="true" transient="true" defaultValueLiteral="true"
+        derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LambdaParameter" eSuperTypes="#//Parameter">
     <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">

@@ -1617,12 +1617,14 @@
         name="keyType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-KeyValueType-keysAreNullFree"
-        name="keysAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
+        name="keysAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" volatile="true"
+        transient="true" defaultValueLiteral="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" xmi:id="F-pivot-KeyValueType-valueType"
         name="valueType" lowerBound="1" eType="#T-pivot-Type" volatile="true" transient="true"
         derived="true" resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" xmi:id="F-pivot-KeyValueType-valuesAreNullFree"
-        name="valuesAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" defaultValueLiteral="true"/>
+        name="valuesAreNullFree" lowerBound="1" eType="#T-pivot-Boolean" volatile="true"
+        transient="true" defaultValueLiteral="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" xmi:id="T-pivot-LambdaParameter" name="LambdaParameter"
       eSuperTypes="#T-pivot-Parameter">

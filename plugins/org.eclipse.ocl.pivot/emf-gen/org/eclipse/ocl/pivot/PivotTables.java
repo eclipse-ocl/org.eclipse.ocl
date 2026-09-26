@@ -2352,9 +2352,9 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _IteratorVariable__LoopExp__ownedCoIterators = LIBRARY.createOppositeProperty(Types._IteratorVariable, "LoopExp", Types._LoopExp, 0 | IsImplicit | IsResolveProxies);
 
 		public static final @NonNull Property _KeyValueType__keyType = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__KEY_TYPE, Types._Type, 0 | IsDerived | IsRequired | IsTransient | IsVolatile);
-		public static final @NonNull Property _KeyValueType__keysAreNullFree = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__KEYS_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _KeyValueType__keysAreNullFree = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__KEYS_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 1 | IsDerived | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 		public static final @NonNull Property _KeyValueType__valueType = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__VALUE_TYPE, Types._Type, 2 | IsDerived | IsRequired | IsTransient | IsVolatile);
-		public static final @NonNull Property _KeyValueType__valuesAreNullFree = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__VALUES_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 3 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _KeyValueType__valuesAreNullFree = LIBRARY.createProperty(Types._KeyValueType, PivotPackage.Literals.KEY_VALUE_TYPE__VALUES_ARE_NULL_FREE, OCLstdlibTables.Types._Boolean, 3 | IsDerived | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 
 		public static final @NonNull Property _LambdaParameter__LambdaType__ownedContext = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", Types._LambdaType, 0 | IsImplicit | IsResolveProxies);
 		public static final @NonNull Property _LambdaParameter__LambdaType__ownedParameters = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", Types._LambdaType, 1 | IsImplicit | IsResolveProxies);

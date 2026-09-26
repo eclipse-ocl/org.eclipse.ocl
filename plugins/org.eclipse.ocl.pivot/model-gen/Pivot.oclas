@@ -516,10 +516,12 @@
     <ownedClasses xmi:id="dxgVa" isAbstract="true" name="KeyValueType" superClasses="#1mHCJ">
       <ownedProperties xmi:id="6GQeF" isDerived="true" isRequired="true" isResolveProxies="false" isTransient="true" isVolatile="true"
           name="keyType" opposite="#yA2hU" type="#rrwsa"/>
-      <ownedProperties xmi:id="0,h,5" defaultValueString="true" isRequired="true" name="keysAreNullFree" type="#ZuwnB"/>
+      <ownedProperties xmi:id="0,h,5" defaultValueString="true" isDerived="true" isRequired="true" isTransient="true" isVolatile="true"
+          name="keysAreNullFree" type="#ZuwnB"/>
       <ownedProperties xmi:id="MvBcI" isDerived="true" isRequired="true" isResolveProxies="false" isTransient="true" isVolatile="true"
           name="valueType" opposite="#waRSp" type="#rrwsa"/>
-      <ownedProperties xmi:id="GgwC2" defaultValueString="true" isRequired="true" name="valuesAreNullFree" type="#ZuwnB"/>
+      <ownedProperties xmi:id="GgwC2" defaultValueString="true" isDerived="true" isRequired="true" isTransient="true" isVolatile="true"
+          name="valuesAreNullFree" type="#ZuwnB"/>
     </ownedClasses>
     <ownedClasses xmi:id="T8YnB" name="LambdaParameter" superClasses="#as9eG">
       <ownedComments body="A LambdaParameter specifies the name, type and multiplicity of a LambdaType context, parameter or result."/>
