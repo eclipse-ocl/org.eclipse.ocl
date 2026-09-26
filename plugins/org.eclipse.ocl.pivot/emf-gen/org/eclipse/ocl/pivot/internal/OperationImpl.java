@@ -947,19 +947,21 @@ implements Operation {
 					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPreconditions = this.getOwnedPreconditions();
 					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPreconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPreconditions);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPreconditions.iterator();
+					@Nullable Iterator<Object> ITERATOR__1 = BOXED_ownedPreconditions.iterator();
 					/*@Thrown*/ boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
 							result = true;
 							break;
 						}
-						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITERATOR__1.next();
+						/*@NonInvalid*/ @Nullable Constraint _1 = (@Nullable Constraint)ITERATOR__1.next();
 						/**
 						 * name
 						 */
-						final /*@NonInvalid*/ @Nullable String name = _1.getName();
+						if (_1 == null) {
+							throw new InvalidValueException("Null \'source\' for \'NamedElement::name\'");
+						}
+						final /*@Thrown*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
 							result = false;
@@ -1021,19 +1023,21 @@ implements Operation {
 					final /*@NonInvalid*/ @NonNull List<Constraint> ownedPostconditions = this.getOwnedPostconditions();
 					final /*@NonInvalid*/ @NonNull SetValue BOXED_ownedPostconditions = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Constraint, ownedPostconditions);
 					/*@Thrown*/ @NonNull Accumulator accumulator = ValueUtil.createSetAccumulatorValue(PivotTables.SET_CLSSid_Constraint);
-					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedPostconditions.iterator();
+					@Nullable Iterator<Object> ITERATOR__1 = BOXED_ownedPostconditions.iterator();
 					/*@Thrown*/ boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
 							result = true;
 							break;
 						}
-						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull Constraint _1 = (@NonNull Constraint)ITERATOR__1.next();
+						/*@NonInvalid*/ @Nullable Constraint _1 = (@Nullable Constraint)ITERATOR__1.next();
 						/**
 						 * name
 						 */
-						final /*@NonInvalid*/ @Nullable String name = _1.getName();
+						if (_1 == null) {
+							throw new InvalidValueException("Null \'source\' for \'NamedElement::name\'");
+						}
+						final /*@Thrown*/ @Nullable String name = _1.getName();
 						//
 						if (accumulator.includes(name) == ValueUtil.TRUE_VALUE) {
 							result = false;

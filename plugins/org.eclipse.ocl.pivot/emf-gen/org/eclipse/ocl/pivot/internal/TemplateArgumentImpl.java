@@ -89,7 +89,7 @@ public class TemplateArgumentImpl
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean ACTUAL_IS_REQUIRED_EDEFAULT = true;
+	protected static final boolean ACTUAL_IS_REQUIRED_EDEFAULT = false;
 
 	/**
 	 * The flag representing the value of the '{@link #isActualIsRequired() <em>Actual Is Required</em>}' attribute.
@@ -108,7 +108,6 @@ public class TemplateArgumentImpl
 	 */
 	protected TemplateArgumentImpl() {
 		super();
-		eFlags |= ACTUAL_IS_REQUIRED_EFLAG;
 	}
 
 	/**

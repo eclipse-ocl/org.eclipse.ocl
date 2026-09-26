@@ -59,7 +59,6 @@ public interface KeyValueType extends DataType
 
 	/**
 	 * Returns the value of the '<em><b>Keys Are Null Free</b></em>' attribute.
-	 * The default value is <code>"true"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Keys Are Null Free</em>' attribute isn't clear,
@@ -110,7 +109,6 @@ public interface KeyValueType extends DataType
 
 	/**
 	 * Returns the value of the '<em><b>Values Are Null Free</b></em>' attribute.
-	 * The default value is <code>"true"</code>.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Values Are Null Free</em>' attribute isn't clear,

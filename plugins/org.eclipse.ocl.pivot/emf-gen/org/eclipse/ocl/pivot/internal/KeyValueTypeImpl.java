@@ -74,7 +74,7 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean KEYS_ARE_NULL_FREE_EDEFAULT = true;
+	protected static final boolean KEYS_ARE_NULL_FREE_EDEFAULT = false;
 
 	/**
 	 * The default value of the '{@link #isValuesAreNullFree() <em>Values Are Null Free</em>}' attribute.
@@ -84,7 +84,7 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	 * @generated
 	 * @ordered
 	 */
-	protected static final boolean VALUES_ARE_NULL_FREE_EDEFAULT = true;
+	protected static final boolean VALUES_ARE_NULL_FREE_EDEFAULT = false;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -136,7 +136,7 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public boolean isKeysAreNullFree()
@@ -152,7 +152,7 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void setKeysAreNullFree(boolean newKeysAreNullFree)
@@ -190,7 +190,7 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public boolean isValuesAreNullFree()
@@ -206,7 +206,7 @@ public abstract class KeyValueTypeImpl extends DataTypeImpl implements KeyValueT
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void setValuesAreNullFree(boolean newValuesAreNullFree)

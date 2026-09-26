@@ -223,8 +223,8 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull IntegerValue INT_1 = ValueUtil.integerValueOf("1");
 	public static final /*@NonInvalid*/ @NonNull PartId PARTid_ = IdManager.getPartId(1, "status", TypeId.BOOLEAN, false);
 	public static final /*@NonInvalid*/ @NonNull PartId PARTid__0 = IdManager.getPartId(0, "message", TypeId.STRING, true);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_PRIMid_Integer = TypeId.SEQUENCE.getSpecializedId(TypeId.INTEGER, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_PRIMid_String = TypeId.SET.getSpecializedId(TypeId.STRING, false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull String STR_Missing_32_initializers_c = "Missing initializers:";
 	public static final /*@NonInvalid*/ @NonNull String STR_Unexpected_32_initializers_c = "Unexpected initializers:";
 	public static final /*@NonInvalid*/ @NonNull String STR__32 = " ";
@@ -262,7 +262,6 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_PrimitiveType = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_PrimitiveType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Property = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Property, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_PropertyCallExp = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_PropertyCallExp, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Property_0 = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_Region = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_Region, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_SendSignalAction = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_SendSignalAction, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId BAG_CLSSid_ShadowPart = TypeId.BAG.getSpecializedId(PivotTables.CLSSid_ShadowPart, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -284,64 +283,63 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_OrderedSet = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("OrderedSet");
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Sequence = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Sequence");
 	public static final /*@NonInvalid*/ @NonNull EnumerationLiteralId ELITid_Set = PivotTables.ENUMid_CollectionKind.getEnumerationLiteralId("Set");
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_CollectionLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_CollectionLiteralPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Detail = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Detail, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Element = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Element, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_EnumerationLiteral = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_EnumerationLiteral, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Import = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Import, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_CollectionLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_CollectionLiteralPart, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Detail = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Detail, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Element = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Element, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_EnumerationLiteral = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_EnumerationLiteral, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Import = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Import, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_IteratorVariable = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_IteratorVariable, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_LambdaParameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_LambdaParameter, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_MapLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_MapLiteralPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_NamedElement = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_NamedElement, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_OCLExpression = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_OCLExpression_0 = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Operation = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Operation, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Parameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Parameter, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Parameter_0 = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Parameter, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Precedence = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Precedence, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Property = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_ShadowPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_ShadowPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_TemplateParameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_TemplateParameter, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_TupleLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_TupleLiteralPart, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_ValueSpecification = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_ValueSpecification, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Variable = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Variable, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_WildcardType = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_WildcardType, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_CLSSid_Property = TypeId.SEQUENCE.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Behavior = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Behavior, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CallOperationAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CallOperationAction, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Class = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Class, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Class_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Class, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Comment = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Comment, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CompleteClass = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CompleteClass, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CompletePackage = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CompletePackage, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ConnectionPointReference = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ConnectionPointReference, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Constraint = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Constraint, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_DynamicProperty = TypeId.SET.getSpecializedId(PivotTables.CLSSid_DynamicProperty, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Element = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Element, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ElementExtension = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ElementExtension, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Element_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Element, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_InstanceSpecification = TypeId.SET.getSpecializedId(PivotTables.CLSSid_InstanceSpecification, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Model = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Model, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_NamedElement = TypeId.SET.getSpecializedId(PivotTables.CLSSid_NamedElement, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_OCLExpression = TypeId.SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_OclElement = TypeId.SET.getSpecializedId(PivotTables.CLSSid_OclElement, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Operation = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Operation, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Package = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Package, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ProfileApplication = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ProfileApplication, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Property = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Pseudostate = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Pseudostate, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_SendSignalAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_SendSignalAction, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Slot = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Slot, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_State = TypeId.SET.getSpecializedId(PivotTables.CLSSid_State, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_StateMachine = TypeId.SET.getSpecializedId(PivotTables.CLSSid_StateMachine, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_StereotypeExtender = TypeId.SET.getSpecializedId(PivotTables.CLSSid_StereotypeExtender, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_TemplateArgument = TypeId.SET.getSpecializedId(PivotTables.CLSSid_TemplateArgument, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Transition = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Transition, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Trigger = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Trigger, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Type = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Type, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Vertex = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Vertex, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_LambdaParameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_LambdaParameter, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_MapLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_MapLiteralPart, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_NamedElement = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_NamedElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_OCLExpression = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_OCLExpression_0 = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Operation = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Operation, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Parameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Parameter, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Precedence = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Precedence, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Property = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Property, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_ShadowPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_ShadowPart, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_TemplateParameter = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_TemplateParameter, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_TupleLiteralPart = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_TupleLiteralPart, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_ValueSpecification = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_ValueSpecification, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_Variable = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_Variable, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_WildcardType = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_WildcardType, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_CLSSid_Property = TypeId.SEQUENCE.getSpecializedId(PivotTables.CLSSid_Property, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Behavior = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Behavior, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CallOperationAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CallOperationAction, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Class = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Class, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Class_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Class, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Comment = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Comment, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CompleteClass = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CompleteClass, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CompletePackage = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CompletePackage, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ConnectionPointReference = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ConnectionPointReference, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Constraint = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Constraint, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_DynamicProperty = TypeId.SET.getSpecializedId(PivotTables.CLSSid_DynamicProperty, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Element = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Element, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ElementExtension = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ElementExtension, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Element_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Element, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_InstanceSpecification = TypeId.SET.getSpecializedId(PivotTables.CLSSid_InstanceSpecification, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Model = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Model, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_NamedElement = TypeId.SET.getSpecializedId(PivotTables.CLSSid_NamedElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_OCLExpression = TypeId.SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_OclElement = TypeId.SET.getSpecializedId(PivotTables.CLSSid_OclElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Operation = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Operation, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Package = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Package, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ProfileApplication = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ProfileApplication, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Property = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Property, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Pseudostate = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Pseudostate, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, false, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_SendSignalAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_SendSignalAction, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Slot = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Slot, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_State = TypeId.SET.getSpecializedId(PivotTables.CLSSid_State, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_StateMachine = TypeId.SET.getSpecializedId(PivotTables.CLSSid_StateMachine, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_StereotypeExtender = TypeId.SET.getSpecializedId(PivotTables.CLSSid_StereotypeExtender, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_TemplateArgument = TypeId.SET.getSpecializedId(PivotTables.CLSSid_TemplateArgument, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Transition = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Transition, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Trigger = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Trigger, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Type = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Type, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Vertex = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Vertex, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull TupleTypeId TUPLid_ = IdManager.getTupleTypeId(PivotTables.PARTid__0, PivotTables.PARTid_);
 
 	/**
@@ -2080,10 +2078,10 @@ public class PivotTables extends AbstractTables
 			Constraints.init();
 		}
 
-		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation(Types._BooleanType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
+		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation(Types._BooleanType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation(Types._Class, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
+		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation(Types._Class, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _CompleteModel__getOwnedCompletePackage = LIBRARY.createOperation(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL___GET_OWNED_COMPLETE_PACKAGE__STRING, Parameters._String, Types._CompletePackage,
@@ -2092,12 +2090,12 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _CompletePackage__getOwnedCompleteClass = LIBRARY.createOperation(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE___GET_OWNED_COMPLETE_CLASS__STRING, Parameters._String, Types._CompleteClass,
 			0, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Element__allOwnedElements = LIBRARY.createOperation(Types._Element, PivotPackage.Literals.ELEMENT___ALL_OWNED_ELEMENTS, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Element, true),
+		public static final @NonNull Operation _Element__allOwnedElements = LIBRARY.createOperation(Types._Element, PivotPackage.Literals.ELEMENT___ALL_OWNED_ELEMENTS, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Element, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 		public static final @NonNull Operation _Element__getValue = LIBRARY.createOperation(Types._Element, PivotPackage.Literals.ELEMENT___GET_VALUE__TYPE_STRING, Parameters._Type___String, Types._Element,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation(Types._Enumeration, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
+		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation(Types._Enumeration, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation(Types._InvalidType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
@@ -2125,7 +2123,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _SelfType__specializeIn = LIBRARY.createOperation(Types._SelfType, PivotPackage.Literals.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE, Parameters._CallExp___Type, Types._Type,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation(Types._Stereotype, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
+		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation(Types._Stereotype, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _Type__conformsTo = LIBRARY.createOperation(Types._Type, "conformsTo", null, Parameters._Type, OCLstdlibTables.Types._Boolean,
@@ -2181,11 +2179,11 @@ public class PivotTables extends AbstractTables
 			Operations.init();
 		}
 
-		public static final @NonNull Property _Annotation__ownedContents = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__OWNED_CONTENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Element, true), 0 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Annotation__ownedDetails = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__OWNED_DETAILS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Detail, true), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Annotation__references = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__REFERENCES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Element, true), 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Annotation__ownedContents = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__OWNED_CONTENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Element, false), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Annotation__ownedDetails = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__OWNED_DETAILS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Detail, false), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Annotation__references = LIBRARY.createProperty(Types._Annotation, PivotPackage.Literals.ANNOTATION__REFERENCES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Element, false), 2 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _AssociationClass__unownedAttributes = LIBRARY.createProperty(Types._AssociationClass, PivotPackage.Literals.ASSOCIATION_CLASS__UNOWNED_ATTRIBUTES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Property, true), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _AssociationClass__unownedAttributes = LIBRARY.createProperty(Types._AssociationClass, PivotPackage.Literals.ASSOCIATION_CLASS__UNOWNED_ATTRIBUTES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Property, false), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _AssociationClass__AssociationClassCallExp__referredAssociationClass = LIBRARY.createOppositeProperty(Types._AssociationClass, "AssociationClassCallExp", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._AssociationClassCallExp, false), 1 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _AssociationClassCallExp__referredAssociationClass = LIBRARY.createProperty(Types._AssociationClassCallExp, PivotPackage.Literals.ASSOCIATION_CLASS_CALL_EXP__REFERRED_ASSOCIATION_CLASS, Types._AssociationClass, 0 | IsResolveProxies);
@@ -2205,17 +2203,17 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _CallOperationAction__operation = LIBRARY.createProperty(Types._CallOperationAction, PivotPackage.Literals.CALL_OPERATION_ACTION__OPERATION, Types._Operation, 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _CallOperationAction__MessageExp__ownedCalledOperation = LIBRARY.createOppositeProperty(Types._CallOperationAction, "MessageExp", Types._MessageExp, 1 | IsImplicit | IsResolveProxies);
 
-		public static final @NonNull Property _Class__extenders = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__EXTENDERS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._StereotypeExtender, true), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__extenders = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__EXTENDERS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._StereotypeExtender, false), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Class__instanceClassName = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__INSTANCE_CLASS_NAME, OCLstdlibTables.Types._String, 1 | IsResolveProxies);
 		public static final @NonNull Property _Class__isAbstract = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__IS_ABSTRACT, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Class__isActive = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__IS_ACTIVE, OCLstdlibTables.Types._Boolean, 3 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Class__isInterface = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__IS_INTERFACE, OCLstdlibTables.Types._Boolean, 4 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Class__ownedBehaviors = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_BEHAVIORS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Behavior, true), 5 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Class__ownedInvariants = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_INVARIANTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, true), 6 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Class__ownedOperations = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_OPERATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Operation, true), 7 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Class__ownedProperties = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_PROPERTIES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Property, true), 8 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__ownedBehaviors = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_BEHAVIORS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Behavior, false), 5 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__ownedInvariants = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_INVARIANTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, false), 6 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__ownedOperations = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_OPERATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Operation, false), 7 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__ownedProperties = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNED_PROPERTIES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Property, false), 8 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Class__owningPackage = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__OWNING_PACKAGE, Types._Package, 9 | IsResolveProxies);
-		public static final @NonNull Property _Class__superClasses = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__SUPER_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, true), 10 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Class__superClasses = LIBRARY.createProperty(Types._Class, PivotPackage.Literals.CLASS__SUPER_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, false), 10 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Class__Class__superClasses = LIBRARY.createOppositeProperty(Types._Class, "Class", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Class, false), 11 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Class__CompleteClass__partialClasses = LIBRARY.createOppositeProperty(Types._Class, "CompleteClass", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._CompleteClass, false), 12 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Class__DataType__behavioralClass = LIBRARY.createOppositeProperty(Types._Class, "DataType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._DataType, false), 13 | IsImplicit | IsRequired | IsResolveProxies);
@@ -2226,7 +2224,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _CollectionItem__ownedItem = LIBRARY.createProperty(Types._CollectionItem, PivotPackage.Literals.COLLECTION_ITEM__OWNED_ITEM, Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _CollectionLiteralExp__kind = LIBRARY.createProperty(Types._CollectionLiteralExp, PivotPackage.Literals.COLLECTION_LITERAL_EXP__KIND, Types._CollectionKind, 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _CollectionLiteralExp__ownedParts = LIBRARY.createProperty(Types._CollectionLiteralExp, PivotPackage.Literals.COLLECTION_LITERAL_EXP__OWNED_PARTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._CollectionLiteralPart, true), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CollectionLiteralExp__ownedParts = LIBRARY.createProperty(Types._CollectionLiteralExp, PivotPackage.Literals.COLLECTION_LITERAL_EXP__OWNED_PARTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._CollectionLiteralPart, false), 1 | IsComposite | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _CollectionLiteralPart__CollectionLiteralExp__ownedParts = LIBRARY.createOppositeProperty(Types._CollectionLiteralPart, "CollectionLiteralExp", Types._CollectionLiteralExp, 0 | IsImplicit | IsResolveProxies);
 
@@ -2234,33 +2232,33 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _CollectionRange__ownedLast = LIBRARY.createProperty(Types._CollectionRange, PivotPackage.Literals.COLLECTION_RANGE__OWNED_LAST, Types._OCLExpression, 1 | IsComposite | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _CollectionType__elementType = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__ELEMENT_TYPE, Types._Type, 0 | IsDerived | IsRequired | IsTransient | IsVolatile);
-		public static final @NonNull Property _CollectionType__isNullFree = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CollectionType__isNullFree = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__IS_NULL_FREE, OCLstdlibTables.Types._Boolean, 1 | IsDerived | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 		public static final @NonNull Property _CollectionType__lower = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__LOWER, OCLstdlibTables.Types._Integer, 2 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _CollectionType__upper = LIBRARY.createProperty(Types._CollectionType, PivotPackage.Literals.COLLECTION_TYPE__UPPER, OCLstdlibTables.Types._UnlimitedNatural, 3 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _Comment__annotatedElements = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__ANNOTATED_ELEMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Element, true), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Comment__annotatedElements = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__ANNOTATED_ELEMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Element, false), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Comment__body = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__BODY, OCLstdlibTables.Types._String, 1 | IsResolveProxies);
 		public static final @NonNull Property _Comment__owningElement = LIBRARY.createProperty(Types._Comment, PivotPackage.Literals.COMMENT__OWNING_ELEMENT, Types._Element, 2 | IsResolveProxies);
 
 		public static final @NonNull Property _CompleteClass__owningCompletePackage = LIBRARY.createProperty(Types._CompleteClass, PivotPackage.Literals.COMPLETE_CLASS__OWNING_COMPLETE_PACKAGE, Types._CompletePackage, 0 | IsResolveProxies);
-		public static final @NonNull Property _CompleteClass__partialClasses = LIBRARY.createProperty(Types._CompleteClass, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, true), 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompleteClass__partialClasses = LIBRARY.createProperty(Types._CompleteClass, PivotPackage.Literals.COMPLETE_CLASS__PARTIAL_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, false), 1 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _CompleteModel__orphanCompletePackage = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__ORPHAN_COMPLETE_PACKAGE, Types._OrphanCompletePackage, 0 | IsDerived | IsReadOnly | IsTransient);
-		public static final @NonNull Property _CompleteModel__ownedCompletePackages = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._CompletePackage, true), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _CompleteModel__partialModels = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Model, true), 2 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompleteModel__ownedCompletePackages = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__OWNED_COMPLETE_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._CompletePackage, false), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompleteModel__partialModels = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PARTIAL_MODELS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Model, false), 2 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _CompleteModel__primitiveCompletePackage = LIBRARY.createProperty(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL__PRIMITIVE_COMPLETE_PACKAGE, Types._PrimitiveCompletePackage, 3 | IsDerived | IsReadOnly | IsTransient);
 
-		public static final @NonNull Property _CompletePackage__ownedCompleteClasses = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._CompleteClass, true), 0 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _CompletePackage__ownedCompletePackages = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._CompletePackage, true), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompletePackage__ownedCompleteClasses = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._CompleteClass, false), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompletePackage__ownedCompletePackages = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNED_COMPLETE_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._CompletePackage, false), 1 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _CompletePackage__owningCompleteModel = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_MODEL, Types._CompleteModel, 2 | IsResolveProxies);
 		public static final @NonNull Property _CompletePackage__owningCompletePackage = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__OWNING_COMPLETE_PACKAGE, Types._CompletePackage, 3 | IsResolveProxies);
-		public static final @NonNull Property _CompletePackage__partialPackages = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Package, true), 4 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _CompletePackage__partialPackages = LIBRARY.createProperty(Types._CompletePackage, PivotPackage.Literals.COMPLETE_PACKAGE__PARTIAL_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Package, false), 4 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _ConnectionPointReference__entries = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate, true), 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _ConnectionPointReference__exits = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate, true), 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ConnectionPointReference__entries = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__ENTRIES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate, false), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ConnectionPointReference__exits = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__EXITS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate, false), 1 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _ConnectionPointReference__owningState = LIBRARY.createProperty(Types._ConnectionPointReference, PivotPackage.Literals.CONNECTION_POINT_REFERENCE__OWNING_STATE, Types._State, 2 | IsResolveProxies);
 
-		public static final @NonNull Property _Constraint__constrainedElements = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__CONSTRAINED_ELEMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Element, true), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Constraint__constrainedElements = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__CONSTRAINED_ELEMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Element, false), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Constraint__context = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__CONTEXT, Types._Namespace, 1 | IsDerived | IsReadOnly | IsTransient | IsVolatile);
 		public static final @NonNull Property _Constraint__isCallable = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__IS_CALLABLE, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Constraint__ownedSpecification = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNED_SPECIFICATION, Types._LanguageExpression, 3 | IsComposite | IsRequired | IsResolveProxies);
@@ -2268,7 +2266,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Constraint__owningPreContext = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNING_PRE_CONTEXT, Types._Operation, 5 | IsResolveProxies);
 		public static final @NonNull Property _Constraint__owningState = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNING_STATE, Types._State, 6 | IsResolveProxies);
 		public static final @NonNull Property _Constraint__owningTransition = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__OWNING_TRANSITION, Types._Transition, 7 | IsResolveProxies);
-		public static final @NonNull Property _Constraint__redefinedConstraints = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__REDEFINED_CONSTRAINTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, true), 8 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Constraint__redefinedConstraints = LIBRARY.createProperty(Types._Constraint, PivotPackage.Literals.CONSTRAINT__REDEFINED_CONSTRAINTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, false), 8 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Constraint__Class__ownedInvariants = LIBRARY.createOppositeProperty(Types._Constraint, "Class", Types._Class, 9 | IsImplicit | IsResolveProxies);
 		public static final @NonNull Property _Constraint__Constraint__redefinedConstraints = LIBRARY.createOppositeProperty(Types._Constraint, "Constraint", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Constraint, false), 10 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Constraint__Namespace__ownedConstraints = LIBRARY.createOppositeProperty(Types._Constraint, "Namespace", Types._Namespace, 11 | IsImplicit | IsResolveProxies);
@@ -2277,7 +2275,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _DataType__isSerializable = LIBRARY.createProperty(Types._DataType, PivotPackage.Literals.DATA_TYPE__IS_SERIALIZABLE, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _DataType__value = LIBRARY.createProperty(Types._DataType, PivotPackage.Literals.DATA_TYPE__VALUE, OCLstdlibTables.Types._String, 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 
-		public static final @NonNull Property _Detail__values = LIBRARY.createProperty(Types._Detail, PivotPackage.Literals.DETAIL__VALUES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._String, true), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Detail__values = LIBRARY.createProperty(Types._Detail, PivotPackage.Literals.DETAIL__VALUES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._String, false), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Detail__Annotation__ownedDetails = LIBRARY.createOppositeProperty(Types._Detail, "Annotation", Types._Annotation, 1 | IsImplicit | IsResolveProxies);
 
 		public static final @NonNull Property _DynamicElement__metaType = LIBRARY.createProperty(Types._DynamicElement, PivotPackage.Literals.DYNAMIC_ELEMENT__META_TYPE, Types._Type, 0 | IsRequired | IsResolveProxies);
@@ -2286,12 +2284,12 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _DynamicProperty__referredProperty = LIBRARY.createProperty(Types._DynamicProperty, PivotPackage.Literals.DYNAMIC_PROPERTY__REFERRED_PROPERTY, Types._Property, 1 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _DynamicProperty__DynamicType__ownedDynamicProperties = LIBRARY.createOppositeProperty(Types._DynamicProperty, "DynamicType", Types._DynamicType, 2 | IsImplicit | IsResolveProxies);
 
-		public static final @NonNull Property _DynamicType__ownedDynamicProperties = LIBRARY.createProperty(Types._DynamicType, PivotPackage.Literals.DYNAMIC_TYPE__OWNED_DYNAMIC_PROPERTIES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._DynamicProperty, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _DynamicType__ownedDynamicProperties = LIBRARY.createProperty(Types._DynamicType, PivotPackage.Literals.DYNAMIC_TYPE__OWNED_DYNAMIC_PROPERTIES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._DynamicProperty, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _Element__annotatingComments = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__ANNOTATING_COMMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Comment, true), 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Element__ownedAnnotations = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Element, true), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Element__ownedComments = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_COMMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Comment, true), 2 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Element__ownedExtensions = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_EXTENSIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._ElementExtension, true), 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Element__annotatingComments = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__ANNOTATING_COMMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Comment, false), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Element__ownedAnnotations = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_ANNOTATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Element, false), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Element__ownedComments = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_COMMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Comment, false), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Element__ownedExtensions = LIBRARY.createProperty(Types._Element, PivotPackage.Literals.ELEMENT__OWNED_EXTENSIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._ElementExtension, false), 3 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Element__Annotation__ownedContents = LIBRARY.createOppositeProperty(Types._Element, "Annotation", Types._Annotation, 4 | IsImplicit | IsResolveProxies);
 		public static final @NonNull Property _Element__Annotation__references = LIBRARY.createOppositeProperty(Types._Element, "Annotation", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Annotation, false), 5 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Element__Constraint__constrainedElements = LIBRARY.createOppositeProperty(Types._Element, "Constraint", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Constraint, false), 6 | IsImplicit | IsRequired | IsResolveProxies);
@@ -2306,7 +2304,7 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _EnumLiteralExp__referredLiteral = LIBRARY.createProperty(Types._EnumLiteralExp, PivotPackage.Literals.ENUM_LITERAL_EXP__REFERRED_LITERAL, Types._EnumerationLiteral, 0 | IsResolveProxies);
 
-		public static final @NonNull Property _Enumeration__ownedLiterals = LIBRARY.createProperty(Types._Enumeration, PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._EnumerationLiteral, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Enumeration__ownedLiterals = LIBRARY.createProperty(Types._Enumeration, PivotPackage.Literals.ENUMERATION__OWNED_LITERALS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._EnumerationLiteral, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _EnumerationLiteral__literal = LIBRARY.createProperty(Types._EnumerationLiteral, PivotPackage.Literals.ENUMERATION_LITERAL__LITERAL, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
 		public static final @NonNull Property _EnumerationLiteral__owningEnumeration = LIBRARY.createProperty(Types._EnumerationLiteral, PivotPackage.Literals.ENUMERATION_LITERAL__OWNING_ENUMERATION, Types._Enumeration, 1 | IsRequired | IsResolveProxies);
@@ -2315,7 +2313,7 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _ExpressionInOCL__ownedBody = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_BODY, Types._OCLExpression, 0 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _ExpressionInOCL__ownedContext = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_CONTEXT, Types._Variable, 1 | IsComposite | IsResolveProxies);
-		public static final @NonNull Property _ExpressionInOCL__ownedParameters = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Variable, true), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ExpressionInOCL__ownedParameters = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Variable, false), 2 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _ExpressionInOCL__ownedResult = LIBRARY.createProperty(Types._ExpressionInOCL, PivotPackage.Literals.EXPRESSION_IN_OCL__OWNED_RESULT, Types._Variable, 3 | IsComposite | IsResolveProxies);
 
 		public static final @NonNull Property _Feature__implementation = LIBRARY.createProperty(Types._Feature, PivotPackage.Literals.FEATURE__IMPLEMENTATION, Types._LibraryFeature, 0 | IsResolveProxies | IsTransient);
@@ -2333,18 +2331,18 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Import__xmiidVersion = LIBRARY.createProperty(Types._Import, PivotPackage.Literals.IMPORT__XMIID_VERSION, OCLstdlibTables.Types._Integer, 1 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Import__Model__ownedImports = LIBRARY.createOppositeProperty(Types._Import, "Model", Types._Model, 2 | IsImplicit | IsResolveProxies);
 
-		public static final @NonNull Property _InstanceSpecification__classes = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, true), 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _InstanceSpecification__ownedSlots = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SLOTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Slot, true), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _InstanceSpecification__classes = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, false), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _InstanceSpecification__ownedSlots = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SLOTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Slot, false), 1 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _InstanceSpecification__ownedSpecification = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNED_SPECIFICATION, Types._LanguageExpression, 2 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _InstanceSpecification__owningPackage = LIBRARY.createProperty(Types._InstanceSpecification, PivotPackage.Literals.INSTANCE_SPECIFICATION__OWNING_PACKAGE, Types._Package, 3 | IsResolveProxies);
 
 		public static final @NonNull Property _IntegerLiteralExp__integerSymbol = LIBRARY.createProperty(Types._IntegerLiteralExp, PivotPackage.Literals.INTEGER_LITERAL_EXP__INTEGER_SYMBOL, OCLstdlibTables.Types._Integer, 0 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _IterateExp__ownedBodies = LIBRARY.createProperty(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _IterateExp__ownedBodies = LIBRARY.createProperty(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP__OWNED_BODIES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _IterateExp__ownedResult = LIBRARY.createProperty(Types._IterateExp, PivotPackage.Literals.ITERATE_EXP__OWNED_RESULT, Types._Variable, 1 | IsComposite | IsResolveProxies);
 
 		public static final @NonNull Property _Iteration__ownedAccumulator = LIBRARY.createProperty(Types._Iteration, PivotPackage.Literals.ITERATION__OWNED_ACCUMULATOR, Types._Parameter, 0 | IsComposite | IsResolveProxies);
-		public static final @NonNull Property _Iteration__ownedIterators = LIBRARY.createProperty(Types._Iteration, PivotPackage.Literals.ITERATION__OWNED_ITERATORS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Parameter, true), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Iteration__ownedIterators = LIBRARY.createProperty(Types._Iteration, PivotPackage.Literals.ITERATION__OWNED_ITERATORS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Parameter, false), 1 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Iteration__LoopExp__referredIteration = LIBRARY.createOppositeProperty(Types._Iteration, "LoopExp", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._LoopExp, false), 2 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _IteratorExp__ownedBody = LIBRARY.createProperty(Types._IteratorExp, PivotPackage.Literals.ITERATOR_EXP__OWNED_BODY, Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
@@ -2361,7 +2359,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _LambdaParameter__LambdaType__ownedResult = LIBRARY.createOppositeProperty(Types._LambdaParameter, "LambdaType", Types._LambdaType, 2 | IsImplicit | IsResolveProxies);
 
 		public static final @NonNull Property _LambdaType__ownedContext = LIBRARY.createProperty(Types._LambdaType, PivotPackage.Literals.LAMBDA_TYPE__OWNED_CONTEXT, Types._LambdaParameter, 0 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _LambdaType__ownedParameters = LIBRARY.createProperty(Types._LambdaType, PivotPackage.Literals.LAMBDA_TYPE__OWNED_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._LambdaParameter, true), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _LambdaType__ownedParameters = LIBRARY.createProperty(Types._LambdaType, PivotPackage.Literals.LAMBDA_TYPE__OWNED_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._LambdaParameter, false), 1 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _LambdaType__ownedResult = LIBRARY.createProperty(Types._LambdaType, PivotPackage.Literals.LAMBDA_TYPE__OWNED_RESULT, Types._LambdaParameter, 2 | IsComposite | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _LanguageExpression__body = LIBRARY.createProperty(Types._LanguageExpression, PivotPackage.Literals.LANGUAGE_EXPRESSION__BODY, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
@@ -2374,14 +2372,14 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _LetExp__ownedIn = LIBRARY.createProperty(Types._LetExp, PivotPackage.Literals.LET_EXP__OWNED_IN, Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _LetExp__ownedVariable = LIBRARY.createProperty(Types._LetExp, PivotPackage.Literals.LET_EXP__OWNED_VARIABLE, Types._Variable, 1 | IsComposite | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _Library__ownedPrecedences = LIBRARY.createProperty(Types._Library, PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Precedence, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Library__ownedPrecedences = LIBRARY.createProperty(Types._Library, PivotPackage.Literals.LIBRARY__OWNED_PRECEDENCES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Precedence, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _LoopExp__firstOwnedBody = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__FIRST_OWNED_BODY, Types._OCLExpression, 0 | IsDerived | IsRequired | IsTransient | IsVolatile);
 		public static final @NonNull Property _LoopExp__ownedCoIterators = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__OWNED_CO_ITERATORS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._IteratorVariable, false), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _LoopExp__ownedIterators = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Variable, true), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _LoopExp__ownedIterators = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__OWNED_ITERATORS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Variable, false), 2 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _LoopExp__referredIteration = LIBRARY.createProperty(Types._LoopExp, PivotPackage.Literals.LOOP_EXP__REFERRED_ITERATION, Types._Iteration, 3 | IsResolveProxies);
 
-		public static final @NonNull Property _MapLiteralExp__ownedParts = LIBRARY.createProperty(Types._MapLiteralExp, PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._MapLiteralPart, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _MapLiteralExp__ownedParts = LIBRARY.createProperty(Types._MapLiteralExp, PivotPackage.Literals.MAP_LITERAL_EXP__OWNED_PARTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._MapLiteralPart, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _MapLiteralPart__ownedKey = LIBRARY.createProperty(Types._MapLiteralPart, PivotPackage.Literals.MAP_LITERAL_PART__OWNED_KEY, Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _MapLiteralPart__ownedValue = LIBRARY.createProperty(Types._MapLiteralPart, PivotPackage.Literals.MAP_LITERAL_PART__OWNED_VALUE, Types._OCLExpression, 1 | IsComposite | IsRequired | IsResolveProxies);
@@ -2389,7 +2387,7 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _MapType__entryClass = LIBRARY.createProperty(Types._MapType, PivotPackage.Literals.MAP_TYPE__ENTRY_CLASS, Types._Class, 0 | IsResolveProxies);
 
-		public static final @NonNull Property _MessageExp__ownedArguments = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _MessageExp__ownedArguments = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _MessageExp__ownedCalledOperation = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_CALLED_OPERATION, Types._CallOperationAction, 1 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _MessageExp__ownedSentSignal = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_SENT_SIGNAL, Types._SendSignalAction, 2 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _MessageExp__ownedTarget = LIBRARY.createProperty(Types._MessageExp, PivotPackage.Literals.MESSAGE_EXP__OWNED_TARGET, Types._OCLExpression, 3 | IsComposite | IsRequired | IsResolveProxies);
@@ -2398,19 +2396,19 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _MessageType__referredSignal = LIBRARY.createProperty(Types._MessageType, PivotPackage.Literals.MESSAGE_TYPE__REFERRED_SIGNAL, Types._Signal, 1 | IsResolveProxies);
 
 		public static final @NonNull Property _Model__externalURI = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__EXTERNAL_URI, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
-		public static final @NonNull Property _Model__ownedImports = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__OWNED_IMPORTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Import, true), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Model__ownedPackages = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__OWNED_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Package, true), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Model__ownedImports = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__OWNED_IMPORTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Import, false), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Model__ownedPackages = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__OWNED_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Package, false), 2 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Model__xmiidVersion = LIBRARY.createProperty(Types._Model, PivotPackage.Literals.MODEL__XMIID_VERSION, OCLstdlibTables.Types._Integer, 3 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Model__CompleteModel__partialModels = LIBRARY.createOppositeProperty(Types._Model, "CompleteModel", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._CompleteModel, false), 4 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _NamedElement__name = LIBRARY.createProperty(Types._NamedElement, PivotPackage.Literals.NAMED_ELEMENT__NAME, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
 
-		public static final @NonNull Property _Namespace__ownedConstraints = LIBRARY.createProperty(Types._Namespace, PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Namespace__ownedConstraints = LIBRARY.createProperty(Types._Namespace, PivotPackage.Literals.NAMESPACE__OWNED_CONSTRAINTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Namespace__Constraint__context = LIBRARY.createOppositeProperty(Types._Namespace, "Constraint", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Constraint, false), 1 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Namespace__Import__importedNamespace = LIBRARY.createOppositeProperty(Types._Namespace, "Import", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Import, false), 2 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _NavigationCallExp__navigationSource = LIBRARY.createProperty(Types._NavigationCallExp, PivotPackage.Literals.NAVIGATION_CALL_EXP__NAVIGATION_SOURCE, Types._Property, 0 | IsResolveProxies);
-		public static final @NonNull Property _NavigationCallExp__qualifiers = LIBRARY.createProperty(Types._NavigationCallExp, PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, true), 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _NavigationCallExp__qualifiers = LIBRARY.createProperty(Types._NavigationCallExp, PivotPackage.Literals.NAVIGATION_CALL_EXP__QUALIFIERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, false), 1 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _NormalizedTemplateParameter__index = LIBRARY.createProperty(Types._NormalizedTemplateParameter, PivotPackage.Literals.NORMALIZED_TEMPLATE_PARAMETER__INDEX, OCLstdlibTables.Types._Integer, 0 | IsDerived | IsReadOnly | IsResolveProxies | IsTransient);
 
@@ -2442,13 +2440,13 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Operation__isTransient = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__IS_TRANSIENT, OCLstdlibTables.Types._Boolean, 2 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Operation__isTypeof = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__IS_TYPEOF, OCLstdlibTables.Types._Boolean, 3 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Operation__isValidating = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__IS_VALIDATING, OCLstdlibTables.Types._Boolean, 4 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Operation__ownedParameters = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Parameter, true), 5 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Operation__ownedPostconditions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, true), 6 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Operation__ownedPreconditions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, true), 7 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__ownedParameters = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Parameter, false), 5 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__ownedPostconditions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_POSTCONDITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, false), 6 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__ownedPreconditions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNED_PRECONDITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Constraint, false), 7 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Operation__owningClass = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__OWNING_CLASS, Types._Class, 8 | IsResolveProxies);
 		public static final @NonNull Property _Operation__precedence = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__PRECEDENCE, Types._Precedence, 9 | IsResolveProxies);
-		public static final @NonNull Property _Operation__raisedExceptions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Type, true), 10 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Operation__redefinedOperations = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Operation, true), 11 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__raisedExceptions = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__RAISED_EXCEPTIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Type, false), 10 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Operation__redefinedOperations = LIBRARY.createProperty(Types._Operation, PivotPackage.Literals.OPERATION__REDEFINED_OPERATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Operation, false), 11 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Operation__CallOperationAction__operation = LIBRARY.createOppositeProperty(Types._Operation, "CallOperationAction", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._CallOperationAction, false), 12 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Operation__MessageType__referredOperation = LIBRARY.createOppositeProperty(Types._Operation, "MessageType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._MessageType, false), 13 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Operation__Operation__redefinedOperations = LIBRARY.createOppositeProperty(Types._Operation, "Operation", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Operation, false), 14 | IsImplicit | IsRequired | IsResolveProxies);
@@ -2456,7 +2454,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Operation__PrimitiveType__coercions = LIBRARY.createOppositeProperty(Types._Operation, "PrimitiveType", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._PrimitiveType, false), 16 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _OperationCallExp__isVirtual = LIBRARY.createProperty(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP__IS_VIRTUAL, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _OperationCallExp__ownedArguments = LIBRARY.createProperty(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, true), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _OperationCallExp__ownedArguments = LIBRARY.createProperty(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP__OWNED_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._OCLExpression, false), 1 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _OperationCallExp__referredOperation = LIBRARY.createProperty(Types._OperationCallExp, PivotPackage.Literals.OPERATION_CALL_EXP__REFERRED_OPERATION, Types._Operation, 2 | IsResolveProxies);
 
 		public static final @NonNull Property _OppositePropertyCallExp__referredProperty = LIBRARY.createProperty(Types._OppositePropertyCallExp, PivotPackage.Literals.OPPOSITE_PROPERTY_CALL_EXP__REFERRED_PROPERTY, Types._Property, 0 | IsResolveProxies);
@@ -2464,12 +2462,12 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _OrphanCompletePackage__CompleteModel__orphanCompletePackage = LIBRARY.createOppositeProperty(Types._OrphanCompletePackage, "CompleteModel", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._CompleteModel, false), 0 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _Package__URI = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__URI, OCLstdlibTables.Types._String, 0 | IsResolveProxies);
-		public static final @NonNull Property _Package__importedPackages = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__IMPORTED_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Package, true), 1 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__importedPackages = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__IMPORTED_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Package, false), 1 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Package__nsPrefix = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__NS_PREFIX, OCLstdlibTables.Types._String, 2 | IsResolveProxies);
-		public static final @NonNull Property _Package__ownedClasses = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, true), 3 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Package__ownedInstances = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_INSTANCES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._InstanceSpecification, true), 4 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Package__ownedPackages = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Package, true), 5 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Package__ownedProfileApplications = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_PROFILE_APPLICATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._ProfileApplication, true), 6 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__ownedClasses = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, false), 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__ownedInstances = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_INSTANCES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._InstanceSpecification, false), 4 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__ownedPackages = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_PACKAGES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Package, false), 5 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Package__ownedProfileApplications = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNED_PROFILE_APPLICATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._ProfileApplication, false), 6 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Package__owningPackage = LIBRARY.createProperty(Types._Package, PivotPackage.Literals.PACKAGE__OWNING_PACKAGE, Types._Package, 7 | IsResolveProxies);
 		public static final @NonNull Property _Package__CompletePackage__partialPackages = LIBRARY.createOppositeProperty(Types._Package, "CompletePackage", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._CompletePackage, false), 8 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Package__Model__ownedPackages = LIBRARY.createOppositeProperty(Types._Package, "Model", Types._Model, 9 | IsImplicit | IsResolveProxies);
@@ -2487,9 +2485,9 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _PrimitiveCompletePackage__CompleteModel__primitiveCompletePackage = LIBRARY.createOppositeProperty(Types._PrimitiveCompletePackage, "CompleteModel", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._CompleteModel, false), 0 | IsImplicit | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _PrimitiveType__coercions = LIBRARY.createProperty(Types._PrimitiveType, PivotPackage.Literals.PRIMITIVE_TYPE__COERCIONS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Operation, true), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _PrimitiveType__coercions = LIBRARY.createProperty(Types._PrimitiveType, PivotPackage.Literals.PRIMITIVE_TYPE__COERCIONS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._Operation, false), 0 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _Profile__profileApplications = LIBRARY.createProperty(Types._Profile, PivotPackage.Literals.PROFILE__PROFILE_APPLICATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._ProfileApplication, true), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Profile__profileApplications = LIBRARY.createProperty(Types._Profile, PivotPackage.Literals.PROFILE__PROFILE_APPLICATIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._ProfileApplication, false), 0 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _ProfileApplication__appliedProfile = LIBRARY.createProperty(Types._ProfileApplication, PivotPackage.Literals.PROFILE_APPLICATION__APPLIED_PROFILE, Types._Profile, 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _ProfileApplication__isStrict = LIBRARY.createProperty(Types._ProfileApplication, PivotPackage.Literals.PROFILE_APPLICATION__IS_STRICT, OCLstdlibTables.Types._Boolean, 1 | IsRequired | IsResolveProxies);
@@ -2507,13 +2505,13 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Property__isTransient = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_TRANSIENT, OCLstdlibTables.Types._Boolean, 9 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Property__isUnsettable = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_UNSETTABLE, OCLstdlibTables.Types._Boolean, 10 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Property__isVolatile = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__IS_VOLATILE, OCLstdlibTables.Types._Boolean, 11 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Property__keys = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__KEYS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Property, true), 12 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__keys = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__KEYS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Property, false), 12 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Property__opposite = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__OPPOSITE, Types._Property, 13 | IsResolveProxies);
 		public static final @NonNull Property _Property__ownedExpression = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__OWNED_EXPRESSION, Types._LanguageExpression, 14 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _Property__owningClass = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__OWNING_CLASS, Types._Class, 15 | IsResolveProxies);
-		public static final @NonNull Property _Property__redefinedProperties = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__REDEFINED_PROPERTIES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Property, true), 16 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__redefinedProperties = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__REDEFINED_PROPERTIES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Property, false), 16 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Property__referredProperty = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__REFERRED_PROPERTY, Types._Property, 17 | IsResolveProxies);
-		public static final @NonNull Property _Property__subsettedProperty = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__SUBSETTED_PROPERTY, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Property, true), 18 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Property__subsettedProperty = LIBRARY.createProperty(Types._Property, PivotPackage.Literals.PROPERTY__SUBSETTED_PROPERTY, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Property, false), 18 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Property__DynamicProperty__referredProperty = LIBRARY.createOppositeProperty(Types._Property, "DynamicProperty", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._DynamicProperty, false), 19 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Property__NavigationCallExp__navigationSource = LIBRARY.createOppositeProperty(Types._Property, "NavigationCallExp", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._NavigationCallExp, false), 20 | IsImplicit | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Property__OppositePropertyCallExp__referredProperty = LIBRARY.createOppositeProperty(Types._Property, "OppositePropertyCallExp", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._OppositePropertyCallExp, false), 21 | IsImplicit | IsRequired | IsResolveProxies);
@@ -2537,8 +2535,8 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _RealLiteralExp__realSymbol = LIBRARY.createProperty(Types._RealLiteralExp, PivotPackage.Literals.REAL_LITERAL_EXP__REAL_SYMBOL, OCLstdlibTables.Types._Real, 0 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _Region__extendedRegion = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__EXTENDED_REGION, Types._Region, 0 | IsResolveProxies);
-		public static final @NonNull Property _Region__ownedSubvertexes = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNED_SUBVERTEXES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Vertex, true), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Region__ownedTransitions = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNED_TRANSITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Transition, true), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Region__ownedSubvertexes = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNED_SUBVERTEXES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Vertex, false), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Region__ownedTransitions = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNED_TRANSITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Transition, false), 2 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Region__owningState = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNING_STATE, Types._State, 3 | IsResolveProxies);
 		public static final @NonNull Property _Region__owningStateMachine = LIBRARY.createProperty(Types._Region, PivotPackage.Literals.REGION__OWNING_STATE_MACHINE, Types._StateMachine, 4 | IsResolveProxies);
 		public static final @NonNull Property _Region__Region__extendedRegion = LIBRARY.createOppositeProperty(Types._Region, "Region", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._Region, false), 5 | IsImplicit | IsRequired | IsResolveProxies);
@@ -2546,7 +2544,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _SendSignalAction__signal = LIBRARY.createProperty(Types._SendSignalAction, PivotPackage.Literals.SEND_SIGNAL_ACTION__SIGNAL, Types._Signal, 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _SendSignalAction__MessageExp__ownedSentSignal = LIBRARY.createOppositeProperty(Types._SendSignalAction, "MessageExp", Types._MessageExp, 1 | IsImplicit | IsResolveProxies);
 
-		public static final @NonNull Property _ShadowExp__ownedParts = LIBRARY.createProperty(Types._ShadowExp, PivotPackage.Literals.SHADOW_EXP__OWNED_PARTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._ShadowPart, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _ShadowExp__ownedParts = LIBRARY.createProperty(Types._ShadowExp, PivotPackage.Literals.SHADOW_EXP__OWNED_PARTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._ShadowPart, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _ShadowExp__value = LIBRARY.createProperty(Types._ShadowExp, PivotPackage.Literals.SHADOW_EXP__VALUE, OCLstdlibTables.Types._String, 1 | IsResolveProxies);
 
 		public static final @NonNull Property _ShadowPart__ownedInit = LIBRARY.createProperty(Types._ShadowPart, PivotPackage.Literals.SHADOW_PART__OWNED_INIT, Types._OCLExpression, 0 | IsComposite | IsRequired | IsResolveProxies);
@@ -2557,20 +2555,20 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Signal__SendSignalAction__signal = LIBRARY.createOppositeProperty(Types._Signal, "SendSignalAction", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._SendSignalAction, false), 1 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _Slot__definingProperty = LIBRARY.createProperty(Types._Slot, PivotPackage.Literals.SLOT__DEFINING_PROPERTY, Types._Property, 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Slot__ownedValues = LIBRARY.createProperty(Types._Slot, PivotPackage.Literals.SLOT__OWNED_VALUES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._ValueSpecification, true), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Slot__ownedValues = LIBRARY.createProperty(Types._Slot, PivotPackage.Literals.SLOT__OWNED_VALUES, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._ValueSpecification, false), 1 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Slot__owningInstance = LIBRARY.createProperty(Types._Slot, PivotPackage.Literals.SLOT__OWNING_INSTANCE, Types._InstanceSpecification, 2 | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _State__isComposite = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__IS_COMPOSITE, OCLstdlibTables.Types._Boolean, 0 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 		public static final @NonNull Property _State__isOrthogonal = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__IS_ORTHOGONAL, OCLstdlibTables.Types._Boolean, 1 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 		public static final @NonNull Property _State__isSimple = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__IS_SIMPLE, OCLstdlibTables.Types._Boolean, 2 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
 		public static final @NonNull Property _State__isSubmachineState = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__IS_SUBMACHINE_STATE, OCLstdlibTables.Types._Boolean, 3 | IsDerived | IsReadOnly | IsRequired | IsResolveProxies | IsTransient | IsVolatile);
-		public static final @NonNull Property _State__ownedConnectionPoints = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_CONNECTION_POINTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate, true), 4 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _State__ownedConnections = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_CONNECTIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._ConnectionPointReference, true), 5 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _State__ownedDeferrableTriggers = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_DEFERRABLE_TRIGGERS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Trigger, true), 6 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _State__ownedConnectionPoints = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_CONNECTION_POINTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate, false), 4 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _State__ownedConnections = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_CONNECTIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._ConnectionPointReference, false), 5 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _State__ownedDeferrableTriggers = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_DEFERRABLE_TRIGGERS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Trigger, false), 6 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _State__ownedDoActivity = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_DO_ACTIVITY, Types._Behavior, 7 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _State__ownedEntry = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_ENTRY, Types._Behavior, 8 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _State__ownedExit = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_EXIT, Types._Behavior, 9 | IsComposite | IsResolveProxies);
-		public static final @NonNull Property _State__ownedRegions = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_REGIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Region, true), 10 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _State__ownedRegions = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_REGIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Region, false), 10 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _State__ownedStateInvariant = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__OWNED_STATE_INVARIANT, Types._Constraint, 11 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _State__redefinedState = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__REDEFINED_STATE, Types._State, 12 | IsResolveProxies);
 		public static final @NonNull Property _State__submachines = LIBRARY.createProperty(Types._State, PivotPackage.Literals.STATE__SUBMACHINES, Types._StateMachine, 13 | IsResolveProxies);
@@ -2579,13 +2577,13 @@ public class PivotTables extends AbstractTables
 
 		public static final @NonNull Property _StateExp__referredState = LIBRARY.createProperty(Types._StateExp, PivotPackage.Literals.STATE_EXP__REFERRED_STATE, Types._State, 0 | IsResolveProxies);
 
-		public static final @NonNull Property _StateMachine__extendedStateMachines = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__EXTENDED_STATE_MACHINES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._StateMachine, true), 0 | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _StateMachine__ownedConnectionPoints = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__OWNED_CONNECTION_POINTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate, true), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _StateMachine__ownedRegions = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__OWNED_REGIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Region, true), 2 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _StateMachine__submachineStates = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__SUBMACHINE_STATES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._State, true), 3 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StateMachine__extendedStateMachines = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__EXTENDED_STATE_MACHINES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._StateMachine, false), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StateMachine__ownedConnectionPoints = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__OWNED_CONNECTION_POINTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Pseudostate, false), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StateMachine__ownedRegions = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__OWNED_REGIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Region, false), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _StateMachine__submachineStates = LIBRARY.createProperty(Types._StateMachine, PivotPackage.Literals.STATE_MACHINE__SUBMACHINE_STATES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._State, false), 3 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _StateMachine__StateMachine__extendedStateMachines = LIBRARY.createOppositeProperty(Types._StateMachine, "StateMachine", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._StateMachine, false), 4 | IsImplicit | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _Stereotype__ownedExtenders = LIBRARY.createProperty(Types._Stereotype, PivotPackage.Literals.STEREOTYPE__OWNED_EXTENDERS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._StereotypeExtender, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Stereotype__ownedExtenders = LIBRARY.createProperty(Types._Stereotype, PivotPackage.Literals.STEREOTYPE__OWNED_EXTENDERS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._StereotypeExtender, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Stereotype__ElementExtension__stereotype = LIBRARY.createOppositeProperty(Types._Stereotype, "ElementExtension", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._ElementExtension, false), 1 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _StereotypeExtender__class = LIBRARY.createProperty(Types._StereotypeExtender, PivotPackage.Literals.STEREOTYPE_EXTENDER__CLASS, Types._Class, 0 | IsRequired | IsResolveProxies);
@@ -2599,20 +2597,20 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _TemplateArgument__formal = LIBRARY.createProperty(Types._TemplateArgument, PivotPackage.Literals.TEMPLATE_ARGUMENT__FORMAL, Types._TemplateParameter, 2 | IsDerived | IsReadOnly | IsRequired | IsTransient | IsVolatile);
 		public static final @NonNull Property _TemplateArgument__owningTemplateableElement = LIBRARY.createProperty(Types._TemplateArgument, PivotPackage.Literals.TEMPLATE_ARGUMENT__OWNING_TEMPLATEABLE_ELEMENT, Types._TemplateableElement, 3 | IsRequired | IsResolveProxies);
 
-		public static final @NonNull Property _TemplateParameter__constrainingClasses = LIBRARY.createProperty(Types._TemplateParameter, PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, true), 0 | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateParameter__constrainingClasses = LIBRARY.createProperty(Types._TemplateParameter, PivotPackage.Literals.TEMPLATE_PARAMETER__CONSTRAINING_CLASSES, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Class, false), 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _TemplateParameter__owningTemplateableElement = LIBRARY.createProperty(Types._TemplateParameter, PivotPackage.Literals.TEMPLATE_PARAMETER__OWNING_TEMPLATEABLE_ELEMENT, Types._TemplateableElement, 1 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _TemplateParameter__TemplateArgument__formal = LIBRARY.createOppositeProperty(Types._TemplateParameter, "TemplateArgument", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateArgument, false), 2 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _TemplateableElement__generic = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__GENERIC, Types._TemplateableElement, 0 | IsResolveProxies);
-		public static final @NonNull Property _TemplateableElement__ownedTemplateArguments = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._TemplateArgument, true), 1 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateableElement__ownedTemplateParameters = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._TemplateParameter, true), 2 | IsComposite | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _TemplateableElement__ownedWildcards = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_WILDCARDS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._WildcardType, true), 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__ownedTemplateArguments = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_ARGUMENTS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._TemplateArgument, false), 1 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__ownedTemplateParameters = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_TEMPLATE_PARAMETERS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._TemplateParameter, false), 2 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TemplateableElement__ownedWildcards = LIBRARY.createProperty(Types._TemplateableElement, PivotPackage.Literals.TEMPLATEABLE_ELEMENT__OWNED_WILDCARDS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._WildcardType, false), 3 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _TemplateableElement__TemplateableElement__generic = LIBRARY.createOppositeProperty(Types._TemplateableElement, "TemplateableElement", MODEL.getCollectionType(OCLstdlibTables.Types._Bag, Types._TemplateableElement, false), 4 | IsImplicit | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _Transition__kind = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__KIND, Types._TransitionKind, 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Transition__ownedEffect = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_EFFECT, Types._Behavior, 1 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _Transition__ownedGuard = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_GUARD, Types._Constraint, 2 | IsComposite | IsResolveProxies);
-		public static final @NonNull Property _Transition__ownedTriggers = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_TRIGGERS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Trigger, true), 3 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Transition__ownedTriggers = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNED_TRIGGERS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Trigger, false), 3 | IsComposite | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Transition__owningRegion = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__OWNING_REGION, Types._Region, 4 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Transition__source = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__SOURCE, Types._Vertex, 5 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Transition__target = LIBRARY.createProperty(Types._Transition, PivotPackage.Literals.TRANSITION__TARGET, Types._Vertex, 6 | IsRequired | IsResolveProxies);
@@ -2620,7 +2618,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _Trigger__owningState = LIBRARY.createProperty(Types._Trigger, PivotPackage.Literals.TRIGGER__OWNING_STATE, Types._State, 0 | IsResolveProxies);
 		public static final @NonNull Property _Trigger__owningTransition = LIBRARY.createProperty(Types._Trigger, PivotPackage.Literals.TRIGGER__OWNING_TRANSITION, Types._Transition, 1 | IsResolveProxies);
 
-		public static final @NonNull Property _TupleLiteralExp__ownedParts = LIBRARY.createProperty(Types._TupleLiteralExp, PivotPackage.Literals.TUPLE_LITERAL_EXP__OWNED_PARTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._TupleLiteralPart, true), 0 | IsComposite | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _TupleLiteralExp__ownedParts = LIBRARY.createProperty(Types._TupleLiteralExp, PivotPackage.Literals.TUPLE_LITERAL_EXP__OWNED_PARTS, MODEL.getCollectionType(OCLstdlibTables.Types._OrderedSet, Types._TupleLiteralPart, false), 0 | IsComposite | IsRequired | IsResolveProxies);
 
 		public static final @NonNull Property _TupleLiteralPart__ownedInit = LIBRARY.createProperty(Types._TupleLiteralPart, PivotPackage.Literals.TUPLE_LITERAL_PART__OWNED_INIT, Types._OCLExpression, 0 | IsComposite | IsResolveProxies);
 		public static final @NonNull Property _TupleLiteralPart__TupleLiteralExp__ownedParts = LIBRARY.createOppositeProperty(Types._TupleLiteralPart, "TupleLiteralExp", Types._TupleLiteralExp, 1 | IsImplicit | IsResolveProxies);
@@ -2664,8 +2662,8 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Property _VariableExp__isImplicit = LIBRARY.createProperty(Types._VariableExp, PivotPackage.Literals.VARIABLE_EXP__IS_IMPLICIT, OCLstdlibTables.Types._Boolean, 0 | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _VariableExp__referredVariable = LIBRARY.createProperty(Types._VariableExp, PivotPackage.Literals.VARIABLE_EXP__REFERRED_VARIABLE, Types._VariableDeclaration, 1 | IsResolveProxies);
 
-		public static final @NonNull Property _Vertex__incomingTransitions = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__INCOMING_TRANSITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Transition, true), 0 | IsReadOnly | IsRequired | IsResolveProxies);
-		public static final @NonNull Property _Vertex__outgoingTransitions = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__OUTGOING_TRANSITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Transition, true), 1 | IsReadOnly | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Vertex__incomingTransitions = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__INCOMING_TRANSITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Transition, false), 0 | IsReadOnly | IsRequired | IsResolveProxies);
+		public static final @NonNull Property _Vertex__outgoingTransitions = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__OUTGOING_TRANSITIONS, MODEL.getCollectionType(OCLstdlibTables.Types._Set, Types._Transition, false), 1 | IsReadOnly | IsRequired | IsResolveProxies);
 		public static final @NonNull Property _Vertex__owningRegion = LIBRARY.createProperty(Types._Vertex, PivotPackage.Literals.VERTEX__OWNING_REGION, Types._Region, 2 | IsResolveProxies);
 
 		public static final @NonNull Property _WildcardType__lowerBound = LIBRARY.createProperty(Types._WildcardType, PivotPackage.Literals.WILDCARD_TYPE__LOWER_BOUND, Types._Type, 0 | IsResolveProxies);
@@ -2834,9 +2832,7 @@ public class PivotTables extends AbstractTables
 			_IteratorVariable__LoopExp__ownedCoIterators.setOpposite(_LoopExp__ownedCoIterators);
 
 			_KeyValueType__keyType.setOpposite(_Type__KeyValueType__keyType);
-			_KeyValueType__keysAreNullFree.setDefaultValueString("true");
 			_KeyValueType__valueType.setOpposite(_Type__KeyValueType__valueType);
-			_KeyValueType__valuesAreNullFree.setDefaultValueString("true");
 
 			_LambdaParameter__LambdaType__ownedContext.setOpposite(_LambdaType__ownedContext);
 			_LambdaParameter__LambdaType__ownedParameters.setOpposite(_LambdaType__ownedParameters);
@@ -3062,7 +3058,7 @@ public class PivotTables extends AbstractTables
 
 
 			_TemplateArgument__actual.setOpposite(_Type__TemplateArgument__actual);
-			_TemplateArgument__actualIsRequired.setDefaultValueString("true");
+			_TemplateArgument__actualIsRequired.setDefaultValueString("false");
 			_TemplateArgument__formal.setOpposite(_TemplateParameter__TemplateArgument__formal);
 			_TemplateArgument__owningTemplateableElement.setOpposite(_TemplateableElement__ownedTemplateArguments);
 

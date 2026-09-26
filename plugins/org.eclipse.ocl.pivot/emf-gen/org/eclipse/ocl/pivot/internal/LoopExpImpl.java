@@ -729,7 +729,7 @@ implements LoopExp {
 					final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
 					final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
 					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-					@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+					@Nullable Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
 					/*@Thrown*/ @Nullable Boolean result;
 					while (true) {
 						if (!ITERATOR__1.hasNext()) {
@@ -741,14 +741,16 @@ implements LoopExp {
 							}
 							break;
 						}
-						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
+						/*@NonInvalid*/ @Nullable Variable _1 = (@Nullable Variable)ITERATOR__1.next();
 						/**
 						 * ownedInit->isEmpty()
 						 */
 						/*@Caught*/ @NonNull Object CAUGHT_isEmpty;
 						try {
-							final /*@NonInvalid*/ @Nullable OCLExpression ownedInit = _1.getOwnedInit();
+							if (_1 == null) {
+								throw new InvalidValueException("Null \'source\' for \'Variable::ownedInit\'");
+							}
+							final /*@Thrown*/ @Nullable OCLExpression ownedInit = _1.getOwnedInit();
 							final /*@Thrown*/ @NonNull SetValue oclAsSet = OclAnyOclAsSetOperation.INSTANCE.evaluate(executor, PivotTables.SET_CLSSid_OCLExpression, ownedInit);
 							final /*@Thrown*/ boolean isEmpty = CollectionIsEmptyOperation.INSTANCE.evaluate(oclAsSet).booleanValue();
 							CAUGHT_isEmpty = isEmpty;

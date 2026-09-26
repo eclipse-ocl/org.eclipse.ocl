@@ -700,7 +700,7 @@ implements DataType {
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-							@NonNull Iterator<Object> ITERATOR_b = closure.iterator();
+							@Nullable Iterator<Object> ITERATOR_b = closure.iterator();
 							/*@Thrown*/ @Nullable Boolean forAll;
 							while (true) {
 								if (!ITERATOR_b.hasNext()) {
@@ -712,21 +712,33 @@ implements DataType {
 									}
 									break;
 								}
-								@SuppressWarnings("null")
-								/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class b = (org.eclipse.ocl.pivot.@NonNull Class)ITERATOR_b.next();
+								/*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class b = (org.eclipse.ocl.pivot.@Nullable Class)ITERATOR_b.next();
 								/**
 								 * b.name <> name
 								 */
-								final /*@NonInvalid*/ @Nullable String name = b.getName();
-								final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
-								final /*@NonInvalid*/ boolean ne_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
+								/*@Caught*/ @NonNull Object CAUGHT_ne_0;
+								try {
+									if (b == null) {
+										throw new InvalidValueException("Null \'source\' for \'NamedElement::name\'");
+									}
+									final /*@Thrown*/ @Nullable String name = b.getName();
+									final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
+									final /*@Thrown*/ boolean ne_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
+									CAUGHT_ne_0 = ne_0;
+								}
+								catch (Exception e) {
+									CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
+								}
 								//
-								if (!ne_0) {					// Normal unsuccessful body evaluation result
+								if (CAUGHT_ne_0 == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
 									forAll = ValueUtil.FALSE_VALUE;
 									break;														// Stop immediately
 								}
-								else if (ne_0) {				// Normal successful body evaluation result
+								else if (CAUGHT_ne_0 == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
 									;															// Carry on
+								}
+								else if (CAUGHT_ne_0 instanceof InvalidValueException) {		// Abnormal exception evaluation result
+									accumulator = CAUGHT_ne_0;									// Cache an exception failure
 								}
 								else {															// Impossible badly typed result
 									accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");

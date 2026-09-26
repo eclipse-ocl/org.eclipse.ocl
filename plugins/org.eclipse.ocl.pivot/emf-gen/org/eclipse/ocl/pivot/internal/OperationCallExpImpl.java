@@ -611,7 +611,7 @@ implements OperationCallExp {
 			 *               Sequence{1..ownedArguments->size()
 			 *               }
 			 *               ->forAll(i |
-			 *                 let argument : OCLExpression[1] = ownedArguments->at(i)
+			 *                 let argument : OCLExpression[?] = ownedArguments->at(i)
 			 *                 in
 			 *                   let parameter : Parameter[1] = parameters?->at(i)
 			 *                   in
@@ -666,7 +666,7 @@ implements OperationCallExp {
 					final /*@NonInvalid*/ @NonNull IntegerRange RNG = ValueUtil.createRange(PivotTables.INT_1, size);
 					final /*@NonInvalid*/ @NonNull SequenceValue Sequence = ValueUtil.createSequenceRange(PivotTables.SEQ_PRIMid_Integer, RNG);
 					/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-					@NonNull Iterator<Object> ITERATOR_i = Sequence.iterator();
+					@Nullable Iterator<Object> ITERATOR_i = Sequence.iterator();
 					/*@Thrown*/ @Nullable Boolean forAll;
 					while (true) {
 						if (!ITERATOR_i.hasNext()) {
@@ -681,11 +681,10 @@ implements OperationCallExp {
 							}
 							break;
 						}
-						@SuppressWarnings("null")
-						/*@NonInvalid*/ @NonNull IntegerValue i = (@NonNull IntegerValue)ITERATOR_i.next();
+						/*@NonInvalid*/ @Nullable IntegerValue i = (@Nullable IntegerValue)ITERATOR_i.next();
 						/**
 						 *
-						 * let argument : OCLExpression[1] = ownedArguments->at(i)
+						 * let argument : OCLExpression[?] = ownedArguments->at(i)
 						 * in
 						 *   let parameter : Parameter[1] = parameters?->at(i)
 						 *   in
@@ -700,12 +699,20 @@ implements OperationCallExp {
 						 */
 						/*@Caught*/ @Nullable Object CAUGHT_safe_conformsTo_source;
 						try {
-							@SuppressWarnings("null")
-							final /*@Thrown*/ @NonNull OCLExpression argument = (@NonNull OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
+							if (i == null) {
+								throw new InvalidValueException("Null \'source\' for \'Integer\'");
+							}
+							if (i instanceof InvalidValueException) {
+								throw (InvalidValueException)i;
+							}
+							final /*@Thrown*/ @Nullable OCLExpression argument = (@Nullable OCLExpression)OrderedCollectionAtOperation.INSTANCE.evaluate(BOXED_ownedArguments, i);
 							if (safe_ownedParameters_source == null) {
 								throw new InvalidValueException("Null \'source\' for \'Collection(T)::excluding($$0) : Collection($$0)\'");
 							}
 							final /*@Thrown*/ @NonNull OrderedSetValue safe_at_sources = (@Nullable OrderedSetValue)CollectionExcludingOperation.INSTANCE.evaluate(safe_ownedParameters_source, (Object)null);
+							if (i instanceof InvalidValueException) {
+								throw (InvalidValueException)i;
+							}
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull Parameter parameter = (@NonNull Parameter)OrderedCollectionAtOperation.INSTANCE.evaluate(safe_at_sources, i);
 							final /*@Thrown*/ @Nullable Type parameterType = parameter.getType();
@@ -735,6 +742,9 @@ implements OperationCallExp {
 									safe_specializeIn_source = specializeIn_0;
 								}
 								requiredType = safe_specializeIn_source;
+							}
+							if (argument == null) {
+								throw new InvalidValueException("Null \'source\' for \'TypedElement::type\'");
 							}
 							final /*@Thrown*/ @Nullable Type type = argument.getType();
 							/*@Caught*/ @Nullable Object CAUGHT_type;

@@ -102,7 +102,7 @@ public interface TemplateArgument
 
 	/**
 	 * Returns the value of the '<em><b>Actual Is Required</b></em>' attribute.
-	 * The default value is <code>"true"</code>.
+	 * The default value is <code>"false"</code>.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * <!-- begin-model-doc -->

@@ -90,16 +90,6 @@ implements CollectionType {
 	protected static final boolean IS_NULL_FREE_EDEFAULT = false;
 
 	/**
-	 * The flag representing the value of the '{@link #isIsNullFree() <em>Is Null Free</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see #isIsNullFree()
-	 * @generated
-	 * @ordered
-	 */
-	protected static final int IS_NULL_FREE_EFLAG = 1 << 12;
-
-	/**
 	 * The default value of the '{@link #getLower() <em>Lower</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -158,26 +148,29 @@ implements CollectionType {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public boolean isIsNullFree()
 	{
-		return (eFlags & IS_NULL_FREE_EFLAG) != 0;
+		if (ownedTemplateParameters != null) {
+			return false;
+		}
+		else {
+			return ownedTemplateArguments.get(0).isActualIsRequired();
+		}
 	}
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @generated
+	 * @generated NOT
 	 */
 	@Override
 	public void setIsNullFree(boolean newIsNullFree)
 	{
-		boolean oldIsNullFree = (eFlags & IS_NULL_FREE_EFLAG) != 0;
-		if (newIsNullFree) eFlags |= IS_NULL_FREE_EFLAG; else eFlags &= ~IS_NULL_FREE_EFLAG;
-		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, 25, oldIsNullFree, newIsNullFree));
+//		getOwnedTemplateArguments().get(0).setActualIsRequired(newIsNullFree);
+		System.err.println(eClass().getName() + ".setIsNullFree() is ignored");
 	}
 
 	/**
@@ -564,7 +557,7 @@ implements CollectionType {
 			case 24:
 				return getElementType() != null;
 			case 25:
-				return ((eFlags & IS_NULL_FREE_EFLAG) != 0) != IS_NULL_FREE_EDEFAULT;
+				return isIsNullFree() != IS_NULL_FREE_EDEFAULT;
 			case 26:
 				return LOWER_EDEFAULT == null ? lower != null : !LOWER_EDEFAULT.equals(lower);
 			case 27:

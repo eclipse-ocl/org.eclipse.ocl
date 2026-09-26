@@ -644,45 +644,67 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 							and = ValueUtil.FALSE_VALUE;
 						}
 						else {
-							@SuppressWarnings("null")
-							final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.FALSE_VALUE;
-							@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-							/*@NonInvalid*/ @Nullable Boolean exists;
-							while (true) {
-								if (!ITERATOR__1.hasNext()) {
-									if (accumulator == ValueUtil.FALSE_VALUE) {
-										exists = ValueUtil.FALSE_VALUE;
-									}
-									else {
-										throw (InvalidValueException)accumulator;
-									}
-									break;
-								}
+							/*@Caught*/ @Nullable Object CAUGHT_exists;
+							try {
 								@SuppressWarnings("null")
-								/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
-								/**
-								 * isRequired
-								 */
-								final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
-								//
-								if (isRequired) {					// Normal successful body evaluation result
-									exists = ValueUtil.TRUE_VALUE;
-									break;														// Stop immediately
+								final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+								final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+								/*@Thrown*/ @Nullable Object accumulator = ValueUtil.FALSE_VALUE;
+								@Nullable Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+								/*@Thrown*/ @Nullable Boolean exists;
+								while (true) {
+									if (!ITERATOR__1.hasNext()) {
+										if (accumulator == ValueUtil.FALSE_VALUE) {
+											exists = ValueUtil.FALSE_VALUE;
+										}
+										else {
+											throw (InvalidValueException)accumulator;
+										}
+										break;
+									}
+									/*@NonInvalid*/ @Nullable Variable _1 = (@Nullable Variable)ITERATOR__1.next();
+									/**
+									 * isRequired
+									 */
+									/*@Caught*/ @NonNull Object CAUGHT_isRequired;
+									try {
+										if (_1 == null) {
+											throw new InvalidValueException("Null \'source\' for \'TypedElement::isRequired\'");
+										}
+										final /*@Thrown*/ boolean isRequired = _1.isIsRequired();
+										CAUGHT_isRequired = isRequired;
+									}
+									catch (Exception e) {
+										CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
+									}
+									//
+									if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {					// Normal successful body evaluation result
+										exists = ValueUtil.TRUE_VALUE;
+										break;														// Stop immediately
+									}
+									else if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {				// Normal unsuccessful body evaluation result
+										;															// Carry on
+									}
+									else if (CAUGHT_isRequired instanceof InvalidValueException) {		// Abnormal exception evaluation result
+										accumulator = CAUGHT_isRequired;									// Cache an exception failure
+									}
+									else {															// Impossible badly typed result
+										accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
+									}
 								}
-								else if (!isRequired) {				// Normal unsuccessful body evaluation result
-									;															// Carry on
-								}
-								else {															// Impossible badly typed result
-									accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "exists");
-								}
+								CAUGHT_exists = exists;
 							}
-							if (exists == ValueUtil.FALSE_VALUE) {
+							catch (Exception e) {
+								CAUGHT_exists = ValueUtil.createInvalidValue(e);
+							}
+							if (CAUGHT_exists == ValueUtil.FALSE_VALUE) {
 								and = ValueUtil.FALSE_VALUE;
 							}
 							else {
-								if ((not == null) || (exists == null)) {
+								if (CAUGHT_exists instanceof InvalidValueException) {
+									throw (InvalidValueException)CAUGHT_exists;
+								}
+								if ((not == null) || (CAUGHT_exists == null)) {
 									and = null;
 								}
 								else {
@@ -836,45 +858,67 @@ public class IterateExpImpl extends LoopExpImpl implements IterateExp
 						result = ValueUtil.TRUE_VALUE;
 					}
 					else {
-						@SuppressWarnings("null")
-						final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
-						final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
-						/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-						@NonNull Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
-						/*@NonInvalid*/ @Nullable Boolean forAll;
-						while (true) {
-							if (!ITERATOR__1.hasNext()) {
-								if (accumulator == ValueUtil.TRUE_VALUE) {
-									forAll = ValueUtil.TRUE_VALUE;
-								}
-								else {
-									throw (InvalidValueException)accumulator;
-								}
-								break;
-							}
+						/*@Caught*/ @Nullable Object CAUGHT_forAll;
+						try {
 							@SuppressWarnings("null")
-							/*@NonInvalid*/ @NonNull Variable _1 = (@NonNull Variable)ITERATOR__1.next();
-							/**
-							 * isRequired
-							 */
-							final /*@NonInvalid*/ boolean isRequired = _1.isIsRequired();
-							//
-							if (!isRequired) {					// Normal unsuccessful body evaluation result
-								forAll = ValueUtil.FALSE_VALUE;
-								break;														// Stop immediately
+							final /*@NonInvalid*/ @NonNull List<Variable> ownedIterators = this.getOwnedIterators();
+							final /*@NonInvalid*/ @NonNull OrderedSetValue BOXED_ownedIterators = idResolver.createOrderedSetOfAll(PivotTables.ORD_CLSSid_Variable, ownedIterators);
+							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
+							@Nullable Iterator<Object> ITERATOR__1 = BOXED_ownedIterators.iterator();
+							/*@Thrown*/ @Nullable Boolean forAll;
+							while (true) {
+								if (!ITERATOR__1.hasNext()) {
+									if (accumulator == ValueUtil.TRUE_VALUE) {
+										forAll = ValueUtil.TRUE_VALUE;
+									}
+									else {
+										throw (InvalidValueException)accumulator;
+									}
+									break;
+								}
+								/*@NonInvalid*/ @Nullable Variable _1 = (@Nullable Variable)ITERATOR__1.next();
+								/**
+								 * isRequired
+								 */
+								/*@Caught*/ @NonNull Object CAUGHT_isRequired;
+								try {
+									if (_1 == null) {
+										throw new InvalidValueException("Null \'source\' for \'TypedElement::isRequired\'");
+									}
+									final /*@Thrown*/ boolean isRequired = _1.isIsRequired();
+									CAUGHT_isRequired = isRequired;
+								}
+								catch (Exception e) {
+									CAUGHT_isRequired = ValueUtil.createInvalidValue(e);
+								}
+								//
+								if (CAUGHT_isRequired == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
+									forAll = ValueUtil.FALSE_VALUE;
+									break;														// Stop immediately
+								}
+								else if (CAUGHT_isRequired == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
+									;															// Carry on
+								}
+								else if (CAUGHT_isRequired instanceof InvalidValueException) {		// Abnormal exception evaluation result
+									accumulator = CAUGHT_isRequired;									// Cache an exception failure
+								}
+								else {															// Impossible badly typed result
+									accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
+								}
 							}
-							else if (isRequired) {				// Normal successful body evaluation result
-								;															// Carry on
-							}
-							else {															// Impossible badly typed result
-								accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
-							}
+							CAUGHT_forAll = forAll;
 						}
-						if (forAll == ValueUtil.TRUE_VALUE) {
+						catch (Exception e) {
+							CAUGHT_forAll = ValueUtil.createInvalidValue(e);
+						}
+						if (CAUGHT_forAll == ValueUtil.TRUE_VALUE) {
 							result = ValueUtil.TRUE_VALUE;
 						}
 						else {
-							if (forAll == null) {
+							if (CAUGHT_forAll instanceof InvalidValueException) {
+								throw (InvalidValueException)CAUGHT_forAll;
+							}
+							if (CAUGHT_forAll == null) {
 								result = null;
 							}
 							else {
