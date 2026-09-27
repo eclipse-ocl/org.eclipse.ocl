@@ -105,8 +105,9 @@ public interface ASResourceFactory extends Resource.Factory, ASResourceFactoryCo
 
 	/**
 	 * Create a visitor to provide a debug representation of one or more elements in the resource.
+	 * @since 7.0
 	 */
-	@NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s);
+	@NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s, @NonNull Element element);
 
 	/**
 	 * Return the OCL AS element corresponding to eObject using metamodelManager to supervise

@@ -607,7 +607,7 @@ implements PropertyCallExp {
 							}
 							else {
 								if (safe_type_source == null) {
-									throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type) : Boolean[1]\'");
+									throw new InvalidValueException("Null \'source\' for \'Type::conformsTo(Type[?]) : Boolean[1]\'");
 								}
 								@SuppressWarnings("null")
 								final /*@NonInvalid*/ @NonNull Type getSpecializedReferredPropertyOwningType = this.getSpecializedReferredPropertyOwningType();

@@ -54,12 +54,12 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.KeyValueType;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LetExp;
 import org.eclipse.ocl.pivot.MapLiteralExp;
 import org.eclipse.ocl.pivot.MapLiteralPart;
-import org.eclipse.ocl.pivot.MapType;
 import org.eclipse.ocl.pivot.MessageExp;
 import org.eclipse.ocl.pivot.Model;
 import org.eclipse.ocl.pivot.NamedElement;
@@ -127,7 +127,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	private static final Logger logger = Logger.getLogger(ToStringVisitor.class);
 
 	public static interface Factory {
-		@NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s);
+		/**
+		 * @since 7.0
+		 */
+		@NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s, @NonNull Element asElement);
 		@NonNull EPackage getEPackage();
 	}
 
@@ -166,7 +169,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		Resource resource = asElement.eResource();
 		if (resource instanceof ASResource) {
 			StringBuilder s = new StringBuilder();
-			ToStringVisitor v = ((ASResource)resource).getASResourceFactory().createToStringVisitor(s);
+			ToStringVisitor v = ((ASResource)resource).getASResourceFactory().createToStringVisitor(s, asElement);
 			asElement.accept(v);
 			return s.toString();
 		}
@@ -175,7 +178,7 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			return StringUtil.NULL_PLACEHOLDER;
 		}
 		StringBuilder s = new StringBuilder();
-		ToStringVisitor v = factory.createToStringVisitor(s);
+		ToStringVisitor v = factory.createToStringVisitor(s, asElement);
 		asElement.accept(v);
 		return s.toString();
 	}
@@ -188,8 +191,8 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		}
 
 		@Override
-		public @NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s) {
-			return new ToStringVisitor(s);
+		public @NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s, @NonNull Element asElement) {
+			return new ToStringVisitor(s, asElement);
 		}
 
 		@Override
@@ -211,11 +214,16 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Deprecated
 	protected static @NonNull String NULL_PLACEHOLDER = StringUtil.NULL_PLACEHOLDER;
 
+	private @NonNull Element element;
+	private @Nullable TemplateParameterization templateParameterization = null;
+
 	/**
 	 * Initializes me.
+	 * @since 7.0
 	 */
-	public ToStringVisitor(@NonNull StringBuilder s) {
+	public ToStringVisitor(@NonNull StringBuilder s, @NonNull Element asElement) {
 		super(s);
+		this.element = asElement;
 	}
 
 	/*
@@ -251,16 +259,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		}
 		else {
 			Type type = typedElement.getType();
-			if (type instanceof NormalizedTemplateParameter) {
+		/*	if (type instanceof NormalizedTemplateParameter) {
 			//	TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(typedElement);
 			//	appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
 				appendName(type);
-			}
-			else {
-				safeVisit(type);
-			}
+			} */
+			appendTypeReference(type);
 			if (!typedElement.isIsRequired()) {
-			//	append("[?]");
+				append("[?]");
 			}
 			else if (!(type instanceof IterableType) && !(type instanceof LambdaType) && !(type instanceof TupleType)) {
 				append("[1]");
@@ -400,7 +406,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			String prefix = ""; //$NON-NLS-1$
 			for (TemplateArgument templateArgument : templateArguments) {
 				append(prefix);
-				appendTypedElement(asTemplateableElement, templateArgument.getActual());
+				appendTypeReference(templateArgument.getActual());
+				if (collectionType == null) {
+					append(templateArgument.isActualIsRequired() ? "[1]" : "[?]");
+				}
 				prefix = ",";
 			}
 			if (collectionType != null) {
@@ -408,9 +417,9 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				Number upper = collectionType.getUpper();
 				long lowerValue = lower != null ? lower.longValue() : 0l;		// FIXME Handle BigInteger
 				long upperValue = (upper != null) && !(upper instanceof Unlimited) ? upper.longValue() : -1l;
-				if (SHOW_ALL_MULTIPLICITIES || (lowerValue != 0) || (upperValue != -1) || (collectionType.isIsNullFree() != PivotConstants.DEFAULT_IS_NULL_FREE)) {
+			//	if (SHOW_ALL_MULTIPLICITIES || (lowerValue != 0) || (upperValue != -1) || (collectionType.isIsNullFree() != PivotConstants.DEFAULT_IS_NULL_FREE)) {
 					StringUtil.appendMultiplicity(context, lowerValue, upperValue, collectionType.isIsNullFree());
-				}
+			//	}
 			}
 			append(")");
 		}
@@ -447,11 +456,17 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	/**
 	 * @since 7.0
 	 */
-	protected void appendTypedElement(@NonNull Element object, Type type) {
+	protected void appendTypeReference(Type type) {
 		if (type instanceof NormalizedTemplateParameter) {
-			TemplateParameterization templateParameterization = TemplateParameterization.getTemplateParameterization(object);
-			if (!templateParameterization.isEmpty()) {
-				appendName(templateParameterization.get(((NormalizedTemplateParameter)type).getIndex()));
+			TemplateParameterization templateParameterization = basicGetTemplateParameterization();
+			if ((templateParameterization != null) && !templateParameterization.isEmpty()) {
+				int index = ((NormalizedTemplateParameter)type).getIndex();
+				if (index < templateParameterization.size()) {
+					appendName(templateParameterization.get(index));
+				}
+				else {
+					append("$$?");			// typically occurs when invoked in debugger before container path established
+				}
 			}
 			else {
 				append(type.getName());
@@ -461,6 +476,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 			safeVisit(type);
 	//		appendType(type);
 		}
+	}
+
+	private @Nullable TemplateParameterization basicGetTemplateParameterization() {
+		TemplateParameterization templateParameterization2 = templateParameterization;
+		if (templateParameterization2 == null) {
+			templateParameterization = templateParameterization2 = TemplateParameterization.basicGetTemplateParameterization(element);
+		}
+		return templateParameterization2;
 	}
 
 	/**
@@ -479,10 +502,10 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 				v.accept(this);
 			}
 			catch (ClassCastException e) {
-				if (v instanceof EObject) {
+				if (v instanceof Element) {
 					Factory factory = getFactory((EObject)v);
 					if (factory != null) {
-						ToStringVisitor stringVisitor2 = factory.createToStringVisitor(this.context);
+						ToStringVisitor stringVisitor2 = factory.createToStringVisitor(this.context, (Element)v);
 						Class<?> thatClass = stringVisitor2.getClass();
 						Class<?> thisClass = getClass();
 						if ((thatClass != thisClass) && thisClass.isAssignableFrom(thatClass)) {
@@ -956,6 +979,36 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	 * @since 7.0
 	 */
 	@Override
+	public String visitKeyValueType(@NonNull KeyValueType object) {
+		appendName(object);
+		List<@NonNull TemplateArgument> templateArguments = object.basicGetOwnedTemplateArguments();
+		//	appendTemplateBindings(ownedBindings, null);		// FIXME show Map key/value-multiplicities
+		if (templateArguments != null) {
+			append("(");
+			String prefix = ""; //$NON-NLS-1$
+			int index = 0;
+			for (TemplateArgument templateArgument : templateArguments) {
+				append(prefix);
+				safeVisit(templateArgument.getActual());
+				if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
+					append("[?]");
+				}
+				else {//if (SHOW_ALL_MULTIPLICITIES) {
+					append("[1]");
+				}
+				prefix = ",";
+				index++;
+			}
+			append(")");
+		}
+		appendTemplateParameters(object);
+		return null;
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	@Override
 	public @Nullable String visitLambdaParameter(@NonNull LambdaParameter lambdaParameter) {
 		appendName(lambdaParameter);
 		Type type = lambdaParameter.getType();
@@ -1037,33 +1090,6 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		return null;
 	}
 
-	@Override
-	public String visitMapType(@NonNull MapType object) {
-		appendName(object);
-		List<@NonNull TemplateArgument> templateArguments = object.basicGetOwnedTemplateArguments();
-		//	appendTemplateBindings(ownedBindings, null);		// FIXME show Map key/value-multiplicities
-		if (templateArguments != null) {
-			append("(");
-			String prefix = ""; //$NON-NLS-1$
-			int index = 0;
-			for (TemplateArgument templateArgument : templateArguments) {
-				append(prefix);
-				safeVisit(templateArgument.getActual());
-				if (((index == 0) && !object.isKeysAreNullFree()) || ((index == 1) && !object.isValuesAreNullFree())) {
-				//	append("[?]");
-				}
-				else {//if (SHOW_ALL_MULTIPLICITIES) {
-					append("[1]");
-				}
-				prefix = ",";
-				index++;
-			}
-			append(")");
-		}
-		appendTemplateParameters(object);
-		return null;
-	}
-
 	/**
 	 * Visits the message expression's target and then its arguments.
 	 */
@@ -1099,6 +1125,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 	@Override
 	public String visitNormalizedTemplateParameter(@NonNull NormalizedTemplateParameter object) {
 		appendName(object);
+		List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses = object.basicGetConstrainingClasses();
+		if ((constrainingClasses != null) && !constrainingClasses.isEmpty()) {
+			append(" extends");
+			for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : constrainingClasses) {
+				append(" ");
+				appendName(constrainingClass);
+			}
+		}
 		return null;
 	}
 
@@ -1345,6 +1379,14 @@ public class ToStringVisitor extends AbstractExtendingVisitor<@Nullable String, 
 		appendName(templateableElement != null ? (NamedElement)templateableElement : null);
 		append(".");
 		appendName(object);
+		List<org.eclipse.ocl.pivot.@NonNull Class> constrainingClasses = object.basicGetConstrainingClasses();
+		if ((constrainingClasses != null) && !constrainingClasses.isEmpty()) {
+			append(" extends");
+			for (org.eclipse.ocl.pivot.@NonNull Class constrainingClass : constrainingClasses) {
+				append(" ");
+				appendName(constrainingClass);
+			}
+		}
 		return null;
 	}
 

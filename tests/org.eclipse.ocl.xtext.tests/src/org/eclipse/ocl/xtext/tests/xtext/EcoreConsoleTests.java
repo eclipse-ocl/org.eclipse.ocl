@@ -107,7 +107,7 @@ public class EcoreConsoleTests extends AbstractConsoleTests
 			+ "ecore::EClass::eAllSuperTypes : OrderedSet(ecore::EClass)\n"
 			+ "ecore::EClass::eAttributes : OrderedSet(ecore::EAttribute)\n"
 			+ "ecore::EClass::eGenericSuperTypes : OrderedSet(ecore::EGenericType)\n"
-			+ "ecore::EClass::eIDAttribute : ecore::EAttribute\n"
+			+ "ecore::EClass::eIDAttribute : ecore::EAttribute[?]\n"
 			+ "ecore::EClass::eOperations : OrderedSet(ecore::EOperation)\n"
 			+ "ecore::EClass::eReferences : OrderedSet(ecore::EReference)\n"
 			+ "ecore::EClass::eStructuralFeatures : OrderedSet(ecore::EStructuralFeature)\n"

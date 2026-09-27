@@ -123,6 +123,7 @@ public class SerializeTests extends XtextTestCase
 	//	TEST_START.setState(true);
 	//	AbstractEnvironmentFactory.ENVIRONMENT_FACTORY_ATTACH.setState(true);
 	//	ThreadLocalExecutor.THREAD_LOCAL_ENVIRONMENT_FACTORY.setState(true);
+	//	StandardLibraryContribution.STANDARD_LIBRARY_CONTRIBUTION.setState(true);
 		super.setUp();
 	}
 
@@ -140,9 +141,6 @@ public class SerializeTests extends XtextTestCase
 	}
 
 	public void doSerialize(@NonNull URI inputURI, @NonNull URI referenceURI, @NonNull SerializeTestHelper testHelper) throws Exception {
-	//	ResourceSetInitializer resourceSetInitializer = options != null ? (ResourceSetInitializer)options.get(ResourceSetInitializer.class) : null;
-	//	ResourceSet resourceSet9 = new ResourceSetImpl();
-	//	getProjectMap().initializeResourceSet(resourceSet9);
 		boolean needsBowdlerization = testHelper.needsBowdlerization();
 		String stem = inputURI.trimFileExtension().lastSegment();
 		String outputName = stem + ".serialized.oclinecore";
@@ -819,8 +817,8 @@ public class SerializeTests extends XtextTestCase
 			@Override
 			public @NonNull String @NonNull [] asFirstValidationMessages() {
 				return new @NonNull String[] {
-					"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»'",
-					"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»'"
+					"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C1::o1() : «null»[?]'",
+					"The 'Feature::TypeIsNotNull' constraint is violated for 'Model::C2::o2() : «null»[?]'"
 				};
 			}
 

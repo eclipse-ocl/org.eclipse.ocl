@@ -223,9 +223,12 @@ public abstract class AbstractASResourceFactory extends ResourceFactoryImpl impl
 		return this;
 	}
 
+	/**
+	 * @since 7.0
+	 */
 	@Override
-	public @NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s) {
-		return new ToStringVisitor(s);
+	public @NonNull ToStringVisitor createToStringVisitor(@NonNull StringBuilder s, @NonNull Element element) {
+		return new ToStringVisitor(s, element);
 	}
 
 	/**

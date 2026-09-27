@@ -376,7 +376,7 @@ public class EmployeeImpl extends EObjectImpl implements Employee {
 				safe_reportingChain_source = BOXED_reportingChain_0;
 			}
 			if (safe_reportingChain_source == null) {
-				throw new InvalidValueException("Null \'source\' for \'OrderedSet(T)::prepend($$0) : OrderedSet($$0)\'");
+				throw new InvalidValueException("Null \'source\' for \'OrderedSet(T)::prepend(T[?]) : OrderedSet(T)\'");
 			}
 			final /*@Thrown*/ @NonNull OrderedSetValue prepend = (@Nullable OrderedSetValue)OrderedCollectionPrependOperation.INSTANCE.evaluate(safe_reportingChain_source, manager_2);
 			IF_oclIsUndefined = prepend;

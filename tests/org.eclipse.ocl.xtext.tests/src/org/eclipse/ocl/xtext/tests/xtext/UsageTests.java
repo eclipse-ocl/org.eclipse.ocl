@@ -1510,6 +1510,7 @@ public class UsageTests extends PivotTestSuite// XtextTestCase
 	}
 
 	public void testCSE() throws Throwable {
+		// plugin version fails if _OCL_UsageTests__testCSE open; close it
 		doTestRunnable(new TestRunnable() {
 			@Override
 			public void runWithThrowable() throws Exception {
