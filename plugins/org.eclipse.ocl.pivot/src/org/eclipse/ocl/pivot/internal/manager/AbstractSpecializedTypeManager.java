@@ -66,7 +66,7 @@ public abstract class AbstractSpecializedTypeManager implements SpecializedTypeM
 			if (templateArgument instanceof Type) {
 				Type actualType = (Type) templateArgument;
 				Type primaryActualType = standardLibrary.getPrimaryType(actualType);
-				TemplateArgument templateArgument2 = PivotUtil.createTemplateArgument(primaryActualType);
+				TemplateArgument templateArgument2 = PivotUtil.createTemplateArgument(primaryActualType, false);
 				asTemplateArguments.add(templateArgument2);
 			}
 		}

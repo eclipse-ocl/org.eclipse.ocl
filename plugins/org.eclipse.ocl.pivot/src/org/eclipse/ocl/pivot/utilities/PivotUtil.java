@@ -67,7 +67,6 @@ import org.eclipse.ocl.pivot.Constraint;
 import org.eclipse.ocl.pivot.DataType;
 import org.eclipse.ocl.pivot.Element;
 import org.eclipse.ocl.pivot.ElementExtension;
-import org.eclipse.ocl.pivot.EntryType;
 import org.eclipse.ocl.pivot.EnumLiteralExp;
 import org.eclipse.ocl.pivot.Enumeration;
 import org.eclipse.ocl.pivot.EnumerationLiteral;
@@ -81,6 +80,7 @@ import org.eclipse.ocl.pivot.IterateExp;
 import org.eclipse.ocl.pivot.Iteration;
 import org.eclipse.ocl.pivot.IteratorExp;
 import org.eclipse.ocl.pivot.IteratorVariable;
+import org.eclipse.ocl.pivot.KeyValueType;
 import org.eclipse.ocl.pivot.LambdaParameter;
 import org.eclipse.ocl.pivot.LambdaType;
 import org.eclipse.ocl.pivot.LanguageExpression;
@@ -712,10 +712,9 @@ public class PivotUtil implements PivotConstants
 		CollectionType specializedCollectionType = (CollectionType) eFactoryInstance.create(eClass);
 		specializedCollectionType.setName(genericCollectionType.getName());
 		specializedCollectionType.setGeneric(genericCollectionType);
-		TemplateArgument templateArgument = createTemplateArgument(elementType);
+		TemplateArgument templateArgument = createTemplateArgument(elementType, isNullFree);
 		specializedCollectionType.getOwnedTemplateArguments().add(templateArgument);
 		assert specializedCollectionType.getElementType() == elementType;
-		specializedCollectionType.setIsNullFree(isNullFree);
 		specializedCollectionType.setLowerValue(lower);
 		specializedCollectionType.setUpperValue(upper);
 		// NB no superClasses
@@ -961,14 +960,12 @@ public class PivotUtil implements PivotConstants
 		MapType specializedMapType = PivotFactory.eINSTANCE.createMapType();
 		specializedMapType.setName(TypeId.MAP_NAME);
 		specializedMapType.setGeneric(genericMapType);
-		TemplateArgument templateArgument1 = createTemplateArgument(keyType);
-		TemplateArgument templateArgument2 = createTemplateArgument(valueType);
+		TemplateArgument templateArgument1 = createTemplateArgument(keyType, keysAreNullFree);
+		TemplateArgument templateArgument2 = createTemplateArgument(valueType, valuesAreNullFree);
 		specializedMapType.getOwnedTemplateArguments().add(templateArgument1);
 		specializedMapType.getOwnedTemplateArguments().add(templateArgument2);
 		assert specializedMapType.getKeyType() == keyType;
 		assert specializedMapType.getValueType() == valueType;
-		specializedMapType.setKeysAreNullFree(keysAreNullFree);
-		specializedMapType.setValuesAreNullFree(valuesAreNullFree);
 		// NB no superClasses
 		return specializedMapType;
 	}
@@ -1262,11 +1259,13 @@ public class PivotUtil implements PivotConstants
 	}
 
 	/**
+	 * @param isRequired
 	 * @since 7.0
 	 */
-	public static @NonNull TemplateArgument createTemplateArgument(@NonNull Type actual) {
+	public static @NonNull TemplateArgument createTemplateArgument(@NonNull Type actual, boolean isRequired) {
 		TemplateArgument asTemplateArgument = PivotFactory.eINSTANCE.createTemplateArgument();
 		asTemplateArgument.setActual(actual);
+		asTemplateArgument.setActualIsRequired(isRequired);
 		return asTemplateArgument;
 	}
 
@@ -1961,15 +1960,8 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull Type getKeyType(@NonNull EntryType entryType) {
+	public static @NonNull Type getKeyType(@NonNull KeyValueType entryType) {
 		return ClassUtil.requireNonNull(entryType.getKeyType());
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public static @NonNull Type getKeyType(@NonNull MapType mapType) {
-		return ClassUtil.requireNonNull(mapType.getKeyType());
 	}
 
 /*	public static @NonNull Type @NonNull [] getLambdaParameterTypes(@NonNull LambdaType lambdaType) {
@@ -2914,15 +2906,8 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull Type getValueType(@NonNull EntryType entryType) {
+	public static @NonNull Type getValueType(@NonNull KeyValueType entryType) {
 		return ClassUtil.requireNonNull(entryType.getValueType());
-	}
-
-	/**
-	 * @since 1.7
-	 */
-	public static @NonNull Type getValueType(@NonNull MapType mapType) {
-		return ClassUtil.requireNonNull(mapType.getValueType());
 	}
 
 	public static @NonNull Operation initOperation(@NonNull Operation asOperation, @NonNull ExpressionInOCL asExpressionInOCL) {

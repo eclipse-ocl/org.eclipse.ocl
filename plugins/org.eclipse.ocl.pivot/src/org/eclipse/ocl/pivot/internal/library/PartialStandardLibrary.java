@@ -1202,14 +1202,14 @@ public class PartialStandardLibrary extends ConcreteStandardLibrary
 								int specializedIndex = specializedTemplateParameterId.getIndex();
 								if (specializedFormal == superActual) {
 									Type specializedActual = PivotUtil.getActual(specializedTemplateArgument);
-									superSpecializedTemplateArgument = PivotUtil.createTemplateArgument(specializedActual);
+									superSpecializedTemplateArgument = PivotUtil.createTemplateArgument(specializedActual, false);
 									break;
 								}
 								else if (superActual instanceof NormalizedTemplateParameter) {
 									int superIndex = ((NormalizedTemplateParameter)superActual).getIndex();
 									if (specializedIndex == superIndex) {
 										Type specializedActual = PivotUtil.getActual(specializedTemplateArgument);
-										superSpecializedTemplateArgument = PivotUtil.createTemplateArgument(specializedActual);
+										superSpecializedTemplateArgument = PivotUtil.createTemplateArgument(specializedActual, false);
 										break;
 									}
 								}

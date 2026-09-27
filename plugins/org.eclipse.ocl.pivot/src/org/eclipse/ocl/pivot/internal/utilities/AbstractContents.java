@@ -103,7 +103,7 @@ public abstract class AbstractContents extends PivotUtil
 		TemplateableElement genericType = specializedType.getGeneric();
 		assert genericType != null;
 		List<@NonNull TemplateArgument> templateArguments = PivotUtil.getOwnedTemplateArgumentsList(specializedType, true);
-		TemplateArgument templateArgument = createTemplateArgument(actualType);
+		TemplateArgument templateArgument = createTemplateArgument(actualType, false);
 		templateArguments.add(templateArgument);
 	}
 
