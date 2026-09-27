@@ -308,10 +308,9 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId ORD_CLSSid_WildcardType = TypeId.ORDERED_SET.getSpecializedId(PivotTables.CLSSid_WildcardType, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SEQ_CLSSid_Property = TypeId.SEQUENCE.getSpecializedId(PivotTables.CLSSid_Property, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Behavior = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Behavior, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CallOperationAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CallOperationAction, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CallOperationAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CallOperationAction, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Class = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Class, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Class_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Class, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Class_1 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Class, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Class_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Class, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Comment = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Comment, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CompleteClass = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CompleteClass, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_CompletePackage = TypeId.SET.getSpecializedId(PivotTables.CLSSid_CompletePackage, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -320,13 +319,12 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_DynamicProperty = TypeId.SET.getSpecializedId(PivotTables.CLSSid_DynamicProperty, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Element = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Element, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ElementExtension = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ElementExtension, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Element_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Element, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Element_1 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Element, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Element_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Element, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_InstanceSpecification = TypeId.SET.getSpecializedId(PivotTables.CLSSid_InstanceSpecification, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Model = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Model, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_NamedElement = TypeId.SET.getSpecializedId(PivotTables.CLSSid_NamedElement, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_OCLExpression = TypeId.SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_OclElement = TypeId.SET.getSpecializedId(PivotTables.CLSSid_OclElement, false, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_OCLExpression = TypeId.SET.getSpecializedId(PivotTables.CLSSid_OCLExpression, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_OclElement = TypeId.SET.getSpecializedId(PivotTables.CLSSid_OclElement, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Operation = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Operation, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Package = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Package, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_ProfileApplication = TypeId.SET.getSpecializedId(PivotTables.CLSSid_ProfileApplication, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -334,7 +332,7 @@ public class PivotTables extends AbstractTables
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Pseudostate = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Pseudostate, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Region_0 = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Region, true, ValueUtil.ONE_VALUE, ValueUtil.UNLIMITED_VALUE);
-	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_SendSignalAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_SendSignalAction, false, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
+	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_SendSignalAction = TypeId.SET.getSpecializedId(PivotTables.CLSSid_SendSignalAction, true, ValueUtil.ONE_VALUE, ValueUtil.ONE_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_Slot = TypeId.SET.getSpecializedId(PivotTables.CLSSid_Slot, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_State = TypeId.SET.getSpecializedId(PivotTables.CLSSid_State, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
 	public static final /*@NonInvalid*/ @NonNull CollectionTypeId SET_CLSSid_StateMachine = TypeId.SET.getSpecializedId(PivotTables.CLSSid_StateMachine, true, ValueUtil.ZERO_VALUE, ValueUtil.UNLIMITED_VALUE);
@@ -2082,10 +2080,10 @@ public class PivotTables extends AbstractTables
 			Constraints.init();
 		}
 
-		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation(Types._BooleanType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
+		public static final @NonNull Operation _BooleanType__allInstances = LIBRARY.createOperation(Types._BooleanType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
-		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation(Types._Class, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
+		public static final @NonNull Operation _Class__allInstances = LIBRARY.createOperation(Types._Class, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _CompleteModel__getOwnedCompletePackage = LIBRARY.createOperation(Types._CompleteModel, PivotPackage.Literals.COMPLETE_MODEL___GET_OWNED_COMPLETE_PACKAGE__STRING, Parameters._String, Types._CompletePackage,
@@ -2099,7 +2097,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _Element__getValue = LIBRARY.createOperation(Types._Element, PivotPackage.Literals.ELEMENT___GET_VALUE__TYPE_STRING, Parameters._Type___String, Types._Element,
 			1, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation(Types._Enumeration, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
+		public static final @NonNull Operation _Enumeration__allInstances = LIBRARY.createOperation(Types._Enumeration, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _InvalidType__allInstances = LIBRARY.createOperation(Types._InvalidType, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
@@ -2127,7 +2125,7 @@ public class PivotTables extends AbstractTables
 		public static final @NonNull Operation _SelfType__specializeIn = LIBRARY.createOperation(Types._SelfType, PivotPackage.Literals.SELF_TYPE___SPECIALIZE_IN__CALLEXP_TYPE, Parameters._CallExp___Type, Types._Type,
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, null);
 
-		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation(Types._Stereotype, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, false),
+		public static final @NonNull Operation _Stereotype__allInstances = LIBRARY.createOperation(Types._Stereotype, "allInstances", null, ParameterTypes.EMPTY_LIST, MODEL.getCollectionType(OCLstdlibTables.Types._Set, OCLstdlibTables.Types._OclSelf, true),
 			0 | IsRequired, TemplateParameters.EMPTY_LIST, org.eclipse.ocl.pivot.library.classifier.ClassifierAllInstancesOperation.INSTANCE);
 
 		public static final @NonNull Operation _Type__conformsTo = LIBRARY.createOperation(Types._Type, "conformsTo", null, Parameters._Type, OCLstdlibTables.Types._Boolean,

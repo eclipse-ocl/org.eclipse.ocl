@@ -39,6 +39,7 @@ import org.eclipse.ocl.pivot.LambdaParameter
 import org.eclipse.ocl.pivot.internal.manager.Orphanage
 import org.eclipse.ocl.pivot.TemplateArgument
 import org.eclipse.ocl.pivot.EntryType
+import org.eclipse.ocl.pivot.IterableType
 
 abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 {
@@ -71,7 +72,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
 			«IF type.basicGetOwnedTemplateParameters() === null»
-			private final «getEClassReference(true, type)» «typeName» = create«type.eClass.name»(«type.getGeneric().getSymbolName()», «type.isNullFree»);
+			private final «getEClassReference(true, type)» «typeName» = create«type.eClass.name»(«type.getGeneric().getSymbolName()», «type.elementType.getTemplateIndex()», «type.isNullFree»);
 			«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -94,7 +95,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 				«IF type.basicGetOwnedTemplateParameters() === null»
 					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
-					eClass.name»(«type.getGeneric().getSymbolName()»);
+					eClass.name»(«type.getGeneric().getSymbolName()», «type.getKeyType()», «type.isKeysAreNullFree()», «type.getValueType()», «type.isValuesAreNullFree()»);
 				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -136,7 +137,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 				«IF type.basicGetOwnedTemplateParameters() === null»
 					private final «getEClassReference(true, type)» «type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getKeyType().partialName() + "_" + type.getValueType().partialName())» = create«type.
-					eClass.name»(«type.getGeneric().getSymbolName()»);
+					eClass.name»(«type.getGeneric().getSymbolName()», «type.getKeyType()», «type.isKeysAreNullFree()», «type.getValueType()», «type.isValuesAreNullFree()»);
 				«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -283,12 +284,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 						type = «type.getSymbolName()»;
-						«IF type.keysAreNullFree»
-						type.setKeysAreNullFree(true);
-						«ENDIF»
-						«IF type.valuesAreNullFree»
-						type.setValuesAreNullFree(true);
-						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
 					«ENDFOR»
@@ -485,12 +480,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 						type = «type.getSymbolName()»;
-						«IF type.keysAreNullFree»
-						type.setKeysAreNullFree(true);
-						«ENDIF»
-						«IF type.valuesAreNullFree»
-						type.setValuesAreNullFree(true);
-						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
 					«ENDFOR»
@@ -717,9 +706,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 
 			private void installTemplateArguments() {
 				«FOR templateableElement : allTemplateableElements»
-					«FOR templateArgument : templateableElement.ownedTemplateArguments»
-						addBinding(«templateableElement.getSymbolName()», «templateArgument.getActual.getTemplateIndex()»);
-					«ENDFOR»
+					«IF !(templateableElement instanceof IterableType)»
+						«FOR templateArgument : templateableElement.ownedTemplateArguments»
+							addBinding(«templateableElement.getSymbolName()», «templateArgument.getActual.getTemplateIndex()»);
+						«ENDFOR»
+					«ENDIF»
 				«ENDFOR»
 			}
 		'''

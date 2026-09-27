@@ -99,6 +99,7 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated
 	protected static void addBinding(@NonNull TemplateableElement specializedType, @NonNull Type actualType) {
 		TemplateableElement genericType = specializedType.getGeneric();
 		assert genericType != null;
@@ -130,7 +131,7 @@ public abstract class AbstractContents extends PivotUtil
 	 * @since 7.0
 	 */
 	protected @NonNull BagType createBagType(@NonNull BagType genericType, @NonNull Type elementType, boolean isNullFree) {
-		return (BagType)PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+		return PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 
 	/**
@@ -205,7 +206,7 @@ public abstract class AbstractContents extends PivotUtil
 		return entryType;
 	}
 
-	protected @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation, TemplateParameter... templateParameters) {
+	protected @NonNull Iteration createIteration(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @NonNull LibraryFeature implementation, @NonNull TemplateParameter... templateParameters) {
 		Iteration pivotIteration = createIteration(name, type, implementationClass, implementation);
 		initTemplateParameters(pivotIteration, templateParameters);
 		return pivotIteration;
@@ -253,6 +254,7 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated
 	protected @NonNull MapType createMapType(@NonNull MapType genericType) {
 		MapType specializedType = PivotFactory.eINSTANCE.createMapType();
 		specializedType.setName(genericType.getName());
@@ -269,7 +271,7 @@ public abstract class AbstractContents extends PivotUtil
 		return pivotModel;
 	}
 
-	protected @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, TemplateParameter... templateParameters) {
+	protected @NonNull Operation createOperation(@NonNull String name, @NonNull Type type, @Nullable String implementationClass, @Nullable LibraryFeature implementation, @NonNull TemplateParameter... templateParameters) {
 		Operation pivotOperation = createOperation(name, type, implementationClass, implementation);
 		initTemplateParameters(pivotOperation, templateParameters);
 		return pivotOperation;
@@ -298,7 +300,7 @@ public abstract class AbstractContents extends PivotUtil
 	 * @since 7.0
 	 */
 	protected @NonNull OrderedSetType createOrderedSetType(@NonNull OrderedSetType genericType, @NonNull Type elementType, boolean isNullFree) {
-		return (OrderedSetType)PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+		return PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 
 	/**
@@ -341,7 +343,7 @@ public abstract class AbstractContents extends PivotUtil
 	 * @since 7.0
 	 */
 	protected @NonNull SequenceType createSequenceType(@NonNull SequenceType genericType, @NonNull Type elementType, boolean isNullFree) {
-		return (SequenceType)PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+		return PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 
 	/**
@@ -367,7 +369,7 @@ public abstract class AbstractContents extends PivotUtil
 	 * @since 7.0
 	 */
 	protected @NonNull SetType createSetType(@NonNull SetType genericType, @NonNull Type elementType, boolean isNullFree) {
-		return (SetType)PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
+		return PivotUtil.createCollectionType(genericType, elementType, isNullFree, PivotConstants.DEFAULT_LOWER_BOUND, PivotConstants.DEFAULT_UPPER_BOUND);
 	}
 
 	protected @NonNull AnyType getAnyType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {

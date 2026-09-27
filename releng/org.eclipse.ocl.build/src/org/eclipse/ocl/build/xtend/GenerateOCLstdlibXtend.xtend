@@ -451,9 +451,9 @@ class GenerateOCLstdlibXtend extends GenerateOCLstdlib
 					«thisModel.declareEnumerations()»
 					«thisModel.defineTemplateParameters()»
 					«thisModel.declareTupleTypes()»
-					«thisModel.declareCollectionTypes()»
 					«thisModel.declareEntryTypes()»
 					«thisModel.declareMapTypes()»
+					«thisModel.declareCollectionTypes()»
 					«thisModel.defineClassTypes()»
 					«thisModel.definePrimitiveTypes()»
 					«thisModel.defineEnumerations()»

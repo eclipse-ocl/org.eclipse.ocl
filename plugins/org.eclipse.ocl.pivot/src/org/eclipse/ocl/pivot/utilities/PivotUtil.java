@@ -698,7 +698,7 @@ public class PivotUtil implements PivotConstants
 	/**
 	 * @since 7.0
 	 */
-	public static @NonNull CollectionType createCollectionType(@NonNull CollectionType genericCollectionType, @NonNull Type elementType,
+	public static <T extends CollectionType> @NonNull T createCollectionType(@NonNull T genericCollectionType, @NonNull Type elementType,
 			boolean isNullFree, @NonNull IntegerValue lower, @NonNull UnlimitedNaturalValue upper) {
 		//
 		assert genericCollectionType.getGeneric() == null;
@@ -709,7 +709,7 @@ public class PivotUtil implements PivotConstants
 		//
 		EClass eClass = genericCollectionType.eClass();
 		EFactory eFactoryInstance = eClass.getEPackage().getEFactoryInstance();
-		CollectionType specializedCollectionType = (CollectionType) eFactoryInstance.create(eClass);
+		@SuppressWarnings("unchecked") T specializedCollectionType = (T) eFactoryInstance.create(eClass);
 		specializedCollectionType.setName(genericCollectionType.getName());
 		specializedCollectionType.setGeneric(genericCollectionType);
 		TemplateArgument templateArgument = createTemplateArgument(elementType, isNullFree);
@@ -958,12 +958,11 @@ public class PivotUtil implements PivotConstants
 		assert getGenericElement(genericMapType) == genericMapType;
 		//
 		MapType specializedMapType = PivotFactory.eINSTANCE.createMapType();
-		specializedMapType.setName(TypeId.MAP_NAME);
+		specializedMapType.setName(genericMapType.getName());
 		specializedMapType.setGeneric(genericMapType);
-		TemplateArgument templateArgument1 = createTemplateArgument(keyType, keysAreNullFree);
-		TemplateArgument templateArgument2 = createTemplateArgument(valueType, valuesAreNullFree);
-		specializedMapType.getOwnedTemplateArguments().add(templateArgument1);
-		specializedMapType.getOwnedTemplateArguments().add(templateArgument2);
+		List<@NonNull TemplateArgument> templateArguments = PivotUtil.getOwnedTemplateArgumentsList(specializedMapType, true);
+		templateArguments.add(createTemplateArgument(keyType, keysAreNullFree));
+		templateArguments.add(createTemplateArgument(valueType, valuesAreNullFree));
 		assert specializedMapType.getKeyType() == keyType;
 		assert specializedMapType.getValueType() == valueType;
 		// NB no superClasses
@@ -1871,7 +1870,7 @@ public class PivotUtil implements PivotConstants
 			}
 			if (executor == null) {
 				Resource eResource = eObject.eResource();
-				Set<Model> asModels = new HashSet<>();
+				Set<@NonNull Model> asModels = new HashSet<>();
 				Set<@NonNull EPackage> ePackagesWithoutAS = new HashSet<>();
 				gatherModels(eResource, asModels, ePackagesWithoutAS);
 				boolean needsCompleteStandardLibrary = false;

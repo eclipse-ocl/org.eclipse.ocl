@@ -676,7 +676,7 @@ implements DataType {
 							final /*@NonInvalid*/ @NonNull SetValue BOXED_superClasses = idResolver.createSetOfAll(PivotTables.SET_CLSSid_Class, superClasses);
 							final org.eclipse.ocl.pivot.@NonNull Class TYPE_closure_0 = executor.getStaticClassOf(BOXED_superClasses);
 							final @NonNull LibraryIteration IMPL_closure_0 = (LibraryIteration)TYPE_closure_0.lookupImplementation(standardLibrary, OCLstdlibTables.Operations._Set__closure);
-							final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class_0, PivotTables.SET_CLSSid_Class);
+							final @NonNull Object ACC_closure_0 = IMPL_closure_0.createAccumulatorValue(executor, PivotTables.SET_CLSSid_Class, PivotTables.SET_CLSSid_Class);
 							/**
 							 * Implementation of the iteration evaluation body.
 							 */
@@ -696,11 +696,11 @@ implements DataType {
 									return BOXED_superClasses_0;
 								}
 							};
-							final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class_0, BODY0_closure_1, BOXED_superClasses, ACC_closure_0);
+							final @NonNull ExecutorSingleIterationManager MGR_closure_0 = new ExecutorSingleIterationManager(executor, PivotTables.SET_CLSSid_Class, BODY0_closure_1, BOXED_superClasses, ACC_closure_0);
 							@SuppressWarnings("null")
 							final /*@Thrown*/ @NonNull SetValue closure = (@NonNull SetValue)IMPL_closure_0.evaluateIteration(MGR_closure_0);
 							/*@Thrown*/ @Nullable Object accumulator = ValueUtil.TRUE_VALUE;
-							@Nullable Iterator<Object> ITERATOR_b = closure.iterator();
+							@NonNull Iterator<Object> ITERATOR_b = closure.iterator();
 							/*@Thrown*/ @Nullable Boolean forAll;
 							while (true) {
 								if (!ITERATOR_b.hasNext()) {
@@ -712,33 +712,21 @@ implements DataType {
 									}
 									break;
 								}
-								/*@NonInvalid*/ org.eclipse.ocl.pivot.@Nullable Class b = (org.eclipse.ocl.pivot.@Nullable Class)ITERATOR_b.next();
+								@SuppressWarnings("null")
+								/*@NonInvalid*/ org.eclipse.ocl.pivot.@NonNull Class b = (org.eclipse.ocl.pivot.@NonNull Class)ITERATOR_b.next();
 								/**
 								 * b.name <> name
 								 */
-								/*@Caught*/ @NonNull Object CAUGHT_ne_0;
-								try {
-									if (b == null) {
-										throw new InvalidValueException("Null \'source\' for \'NamedElement::name\'");
-									}
-									final /*@Thrown*/ @Nullable String name = b.getName();
-									final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
-									final /*@Thrown*/ boolean ne_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
-									CAUGHT_ne_0 = ne_0;
-								}
-								catch (Exception e) {
-									CAUGHT_ne_0 = ValueUtil.createInvalidValue(e);
-								}
+								final /*@NonInvalid*/ @Nullable String name = b.getName();
+								final /*@NonInvalid*/ @Nullable String name_0 = this.getName();
+								final /*@NonInvalid*/ boolean ne_0 = (name != null) ? !name.equals(name_0) : (name_0 != null);
 								//
-								if (CAUGHT_ne_0 == ValueUtil.FALSE_VALUE) {					// Normal unsuccessful body evaluation result
+								if (!ne_0) {					// Normal unsuccessful body evaluation result
 									forAll = ValueUtil.FALSE_VALUE;
 									break;														// Stop immediately
 								}
-								else if (CAUGHT_ne_0 == ValueUtil.TRUE_VALUE) {				// Normal successful body evaluation result
+								else if (ne_0) {				// Normal successful body evaluation result
 									;															// Carry on
-								}
-								else if (CAUGHT_ne_0 instanceof InvalidValueException) {		// Abnormal exception evaluation result
-									accumulator = CAUGHT_ne_0;									// Cache an exception failure
 								}
 								else {															// Impossible badly typed result
 									accumulator = new InvalidValueException(PivotMessages.NonBooleanBody, "forAll");
