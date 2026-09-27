@@ -71,7 +71,7 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 			«ENDFOR»
 			«FOR type : ClassUtil.nullFree(pkge2collectionTypes.get(pkge))»«var typeName = type.getPrefixedSymbolName("_" + type.getName() + "_" + type.getElementType().partialName() + (if (type.isIsNullFree()) "_NullFree" else "") )»
 			«IF type.basicGetOwnedTemplateParameters() === null»
-			private final «getEClassReference(true, type)» «typeName» = create«type.eClass.name»(«type.getGeneric().getSymbolName()»);
+			private final «getEClassReference(true, type)» «typeName» = create«type.eClass.name»(«type.getGeneric().getSymbolName()», «type.isNullFree»);
 			«ENDIF»
 			«ENDFOR»
 		«ENDFOR»
@@ -247,9 +247,6 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 						«IF !(type.upper instanceof Unlimited)»
 						type.setUpper(«type.upper.intValue()»);
 						«ENDIF»
-						«IF type.isNullFree»
-						type.setIsNullFree(true);
-						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
 					«ENDFOR»
@@ -286,11 +283,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 						type = «type.getSymbolName()»;
-						«IF !type.keysAreNullFree»
-						type.setKeysAreNullFree(false);
+						«IF type.keysAreNullFree»
+						type.setKeysAreNullFree(true);
 						«ENDIF»
-						«IF !type.valuesAreNullFree»
-						type.setValuesAreNullFree(false);
+						«IF type.valuesAreNullFree»
+						type.setValuesAreNullFree(true);
 						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);
@@ -488,11 +485,11 @@ abstract class GenerateOCLCommonXtend extends GenerateOCLCommon
 					ownedClasses = «pkge.getSymbolName()».getOwnedClasses();
 					«FOR type : ClassUtil.nullFree(pkge2mapTypes.get(pkge))»
 						type = «type.getSymbolName()»;
-						«IF !type.keysAreNullFree»
-						type.setKeysAreNullFree(false);
+						«IF type.keysAreNullFree»
+						type.setKeysAreNullFree(true);
 						«ENDIF»
-						«IF !type.valuesAreNullFree»
-						type.setValuesAreNullFree(false);
+						«IF type.valuesAreNullFree»
+						type.setValuesAreNullFree(true);
 						«ENDIF»
 						«type.emitSuperClasses("type")»
 						ownedClasses.add(type);

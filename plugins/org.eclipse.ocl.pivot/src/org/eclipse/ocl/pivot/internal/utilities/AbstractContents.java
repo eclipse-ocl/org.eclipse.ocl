@@ -121,8 +121,18 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated
 	protected @NonNull BagType createBagType(@NonNull BagType genericType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createBagType(), genericType);
+		return createBagType(genericType, false);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull BagType createBagType(@NonNull BagType genericType, boolean isNullFree) {
+		BagType asBagType = createCollectionType(PivotFactory.eINSTANCE.createBagType(), genericType);
+		asBagType.setIsNullFree(isNullFree);
+		return asBagType;
 	}
 
 	/**
@@ -163,8 +173,18 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated
 	protected @NonNull CollectionType createCollectionType(@NonNull CollectionType genericType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), genericType);
+		return createCollectionType(genericType, false);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull CollectionType createCollectionType(@NonNull CollectionType genericType, boolean isNullFree) {
+		CollectionType asCollectionType = createCollectionType(PivotFactory.eINSTANCE.createCollectionType(), genericType);
+		asCollectionType.setIsNullFree(isNullFree);
+		return asCollectionType;
 	}
 
 	/**
@@ -273,8 +293,18 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated
 	protected @NonNull OrderedSetType createOrderedSetType(@NonNull OrderedSetType genericType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), genericType);
+		return createOrderedSetType(genericType, false);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull OrderedSetType createOrderedSetType(@NonNull OrderedSetType genericType, boolean isNullFree) {
+		OrderedSetType asOrderedSetType = createCollectionType(PivotFactory.eINSTANCE.createOrderedSetType(), genericType);
+		asOrderedSetType.setIsNullFree(isNullFree);
+		return asOrderedSetType;
 	}
 
 	/**
@@ -308,8 +338,18 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated
 	protected @NonNull SequenceType createSequenceType(@NonNull SequenceType genericType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), genericType);
+		return createSequenceType(genericType, false);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull SequenceType createSequenceType(@NonNull SequenceType genericType, boolean isNullFree) {
+		SequenceType asSequenceType = createCollectionType(PivotFactory.eINSTANCE.createSequenceType(), genericType);
+		asSequenceType.setIsNullFree(isNullFree);
+		return asSequenceType;
 	}
 
 	/**
@@ -326,8 +366,18 @@ public abstract class AbstractContents extends PivotUtil
 	/**
 	 * @since 1.4
 	 */
+	@Deprecated
 	protected @NonNull SetType createSetType(@NonNull SetType genericType) {
-		return createCollectionType(PivotFactory.eINSTANCE.createSetType(), genericType);
+		return createSetType(genericType, false);
+	}
+
+	/**
+	 * @since 7.0
+	 */
+	protected @NonNull SetType createSetType(@NonNull SetType genericType, boolean isNullFree) {
+		SetType asSetType = createCollectionType(PivotFactory.eINSTANCE.createSetType(), genericType);
+		asSetType.setIsNullFree(isNullFree);
+		return asSetType;
 	}
 
 	protected @NonNull AnyType getAnyType(org.eclipse.ocl.pivot.@NonNull Package asPackage, @NonNull String name) {
