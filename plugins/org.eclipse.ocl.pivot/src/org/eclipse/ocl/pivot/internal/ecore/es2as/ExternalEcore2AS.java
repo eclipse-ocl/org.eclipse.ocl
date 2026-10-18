@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EParameter;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.ETypeParameter;
+import org.eclipse.emf.ecore.ETypedElement;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
@@ -282,7 +283,11 @@ public class ExternalEcore2AS extends Ecore2AS
 	private List<Resource.@NonNull Diagnostic> errors = null;
 
 	protected Model pivotModel = null;						// Set by importResource
-	private @NonNull Map</*@NonNull*/ EClassifier, @NonNull Type> ecore2asMap = new HashMap<>();
+
+	/**
+	 * The equivalences between the Ecore type of a non-null instance and the corresponding AS type.
+	 */
+	private @Nullable Map<@NonNull EClassifier, @NonNull Type> ecore2asMap = null;
 
 	/**
 	 * The loadableURI of the ecoreResource, which may differ from ecoreResource.getURI() when
@@ -620,18 +625,6 @@ public class ExternalEcore2AS extends Ecore2AS
 		}
 	}
 
-	public void initializeEcore2ASMap() {
-		org.eclipse.ocl.pivot.Class booleanType = standardLibrary.getBooleanType();
-		org.eclipse.ocl.pivot.Class integerType = standardLibrary.getIntegerType();
-		org.eclipse.ocl.pivot.Class realType = standardLibrary.getRealType();
-		org.eclipse.ocl.pivot.Class stringType = standardLibrary.getStringType();
-		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN_OBJECT, booleanType);
-		ecore2asMap.put(EcorePackage.Literals.EBOOLEAN, booleanType);
-		ecore2asMap.put(EcorePackage.Literals.EBIG_INTEGER, integerType);
-		ecore2asMap.put(EcorePackage.Literals.EBIG_DECIMAL, realType);
-		ecore2asMap.put(EcorePackage.Literals.ESTRING, stringType);
-	}
-
 	/**
 	 * @since 1.17
 	 */
@@ -911,10 +904,31 @@ public class ExternalEcore2AS extends Ecore2AS
 		return castElement;
 	}
 
-	protected Type resolveDataType(@NonNull EDataType eClassifier) {
+
+	protected Type resolveDataType(@NonNull EGenericType eGenericType) {
+		assert eGenericType.getETypeArguments().isEmpty();
+		EClassifier eClassifier = eGenericType.getEClassifier();
+		assert eClassifier != null;
+		EObject eContainer = eGenericType.eContainer();
+		boolean isRequired = eContainer instanceof ETypedElement ? ((ETypedElement)eContainer).isRequired() : true;
+		assert ecore2asMap != null;
 		Type pivotType = ecore2asMap.get(eClassifier);
 		if (pivotType == null) {
-			pivotType = getASType(eClassifier);
+			if (eClassifier == EcorePackage.Literals.EBIG_DECIMAL) {
+				pivotType = standardLibrary.getRealType();
+			}
+			else if (eClassifier == EcorePackage.Literals.EBIG_INTEGER) {
+				pivotType = standardLibrary.getIntegerType();
+			}
+			else if (eClassifier == (isRequired ? EcorePackage.Literals.EBOOLEAN : EcorePackage.Literals.EBOOLEAN_OBJECT)) {
+				pivotType = standardLibrary.getBooleanType();
+			}
+			else if (eClassifier == EcorePackage.Literals.ESTRING) {
+				pivotType = standardLibrary.getStringType();
+			}
+			else {
+				pivotType = getASType(eClassifier);
+			}
 		}
 		return pivotType;
 	}
@@ -923,13 +937,17 @@ public class ExternalEcore2AS extends Ecore2AS
 	 * @since 1.17
 	 */
 	protected void resolveDataTypeMappings() {
-		ecore2asMap = new HashMap<>();
-		initializeEcore2ASMap();
+		ecore2asMap = new HashMap<>();				// discarding a possibly stale map when reloading
+		@SuppressWarnings("null") Map<EClassifier, @NonNull Type> ecore2asMap2 = (Map<EClassifier, @NonNull Type>)ecore2asMap;
+		ecore2asMap2.put(EcorePackage.Literals.EBOOLEAN, standardLibrary.getBooleanType());
+		ecore2asMap2.put(EcorePackage.Literals.EBIG_INTEGER, standardLibrary.getIntegerType());
+		ecore2asMap2.put(EcorePackage.Literals.EBIG_DECIMAL, standardLibrary.getRealType());
+		ecore2asMap2.put(EcorePackage.Literals.ESTRING, standardLibrary.getStringType());
 		assert eDataTypes != null;
 		for (@NonNull EDataType eDataType : eDataTypes) {
-			Type pivotType = ecore2asMap.get(eDataType);
-			if (pivotType != null) {  		// If eObject is a known synonym such as EString
-				addCreated(eDataType, pivotType);	// remap to the library type
+			Type pivotType = ecore2asMap2.get(eDataType);
+			if (pivotType != null) {  				// If eObject is a known synonym such as EString
+				addCreated(eDataType, pivotType);	// remap to the precisely equivalent library type
 			}
 		}
 		eDataTypes = null;
@@ -1133,10 +1151,7 @@ public class ExternalEcore2AS extends Ecore2AS
 	protected void resolveSpecializations() {
 		assert genericTypes != null;
 		for (@NonNull EGenericType eGenericType : genericTypes) {
-			Type pivotType = resolveType(eGenericType);
-			if (pivotType != null) {
-				addCreated(eGenericType, pivotType);
-			}
+			resolveType(eGenericType);
 		}
 		genericTypes = null;
 	}
@@ -1208,8 +1223,7 @@ public class ExternalEcore2AS extends Ecore2AS
 			pivotType = getNormalizedType(pivotType);			// XXX ??? clearer normalized/wildcard flow
 		}
 		else if (eClassifier instanceof EDataType) {
-			assert eGenericType.getETypeArguments().isEmpty();
-			pivotType = resolveDataType((EDataType) eClassifier);
+			pivotType = resolveDataType(eGenericType);
 		}
 		else {
 			assert eGenericType.getETypeArguments().isEmpty();

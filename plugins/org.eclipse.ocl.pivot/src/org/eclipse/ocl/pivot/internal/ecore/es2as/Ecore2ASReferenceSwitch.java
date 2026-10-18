@@ -364,7 +364,7 @@ public class Ecore2ASReferenceSwitch extends EcoreSwitch<Object>
 						Type pivotType;
 						if (type != null) {
 							pivotType = type;
-							if (upperValue.equals(ValueUtil.ONE_VALUE)) {
+							if (upperValue.equals(ValueUtil.UNLIMITED_ONE_VALUE)) {
 								isRequired = lowerValue.equals(ValueUtil.ONE_VALUE);
 							}
 							else {

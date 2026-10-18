@@ -85,6 +85,7 @@ public abstract class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * @since 7.0
 	 */
+	@Deprecated /* @deprecated use NonNullType */
 	public static boolean getCollectionIsNullFreeDetail(@Nullable EMap<String, String> eDetails) {
 		if (eDetails != null) {
 			String isNullFreeText = eDetails.get(PivotConstants.COLLECTION_IS_NULL_FREE);
@@ -139,6 +140,7 @@ public abstract class Ecore2AS extends AbstractExternal2AS
 	/**
 	 * @since 1.18
 	 */
+	@Deprecated /* @deprecated use NonNullType */
 	public static boolean isNullFree(@NonNull ENamedElement eObject) {
 		boolean isNullFree;
 		EAnnotation eAnnotation = eObject.getEAnnotation(PivotConstants.COLLECTION_ANNOTATION_SOURCE);

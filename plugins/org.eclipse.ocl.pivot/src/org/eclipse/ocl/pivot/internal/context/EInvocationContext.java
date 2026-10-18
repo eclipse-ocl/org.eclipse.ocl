@@ -38,7 +38,7 @@ public class EInvocationContext extends EClassContext
 
 	public @NonNull Map<String, Type> getParameters() {
 		if (parameters == null) {
-			parameters = new HashMap<String, Type>();
+			parameters = new HashMap<>();
 			if (eParameters != null) {
 				for (Map.Entry<String, EClassifier> entry : eParameters.entrySet()) {
 					Type type = getMetamodelManager().getASOfEcore(Type.class, entry.getValue());
